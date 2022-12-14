@@ -49,7 +49,7 @@ const Folder = {
           update: data,
         })
         .then((folder) => {
-          console.log("create folder with id: ", folder.id);
+          console.log("init folder with id: ", folder.id);
         });
     });
   },
@@ -70,8 +70,8 @@ const Folder = {
 
     // 不同的文件夹 每次执行 应该只有一条
     const diffFolder = _.differenceWith(
-      lastFoldersCache,
       newFolders,
+      lastFoldersCache,
       _.isEqual
     );
 
@@ -101,7 +101,7 @@ const Folder = {
           where: {
             id: diffFolder[0].id,
           },
-          data: diffFolder[0],
+          data: handleFolderItem(diffFolder[0]),
         })
         .then((folder) => {
           console.log("update folder with id: ", folder.id);

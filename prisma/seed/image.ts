@@ -18,46 +18,48 @@ export const initImage = (prisma: PrismaClient) => {
   chokidar
     .watch(_path)
     .on("add", (file) => {
-      (async () => {
-        const json = readJSONSync(file);
-        const getImage = await prisma.image.findUnique({
+      const json = readJSONSync(file);
+
+      prisma.image
+        .upsert({
           where: {
             id: json.id,
           },
+          update: handleImage(json),
+          create: handleImage(json),
+        })
+        .then((image) => {
+          console.log("init image with id: ", image.id);
         });
-        if (!getImage) {
-          const image = await prisma.image.create({
-            data: handleImage(json),
-          });
-
-          console.log("create image with id: ", image.id);
-        }
-      })();
     })
     .on("change", (file) => {
-      (async () => {
-        const json = readJSONSync(file);
-        const image = await prisma.image.update({
+      const json = readJSONSync(file);
+
+      prisma.image
+        .update({
           where: {
             id: json.id,
           },
           data: handleImage(json),
+        })
+        .then((image) => {
+          console.log("update image with id: ", image.id);
         });
-
-        console.log("update image with id: ", image.id);
-      })();
     })
-    .on("unlink", async (file) => {
+    .on("unlink", (file) => {
       const id = file
         .match(/\/(\d|[a-zA-Z])+.info/)[0]
         .split(".")[0]
         .replace("/", "");
-      const image = await prisma.image.delete({
-        where: {
-          id,
-        },
-      });
 
-      console.log("delete image with id: ", image.id);
+      prisma.image
+        .delete({
+          where: {
+            id,
+          },
+        })
+        .then((image) => {
+          console.log("delete image with id: ", image.id);
+        });
     });
 };
