@@ -4,25 +4,41 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./eagleuse.db?connection_limit=1"
+  url      = env("DATABASE_URL")
 }
 
 model Image {
-  id               String   @id
+  id                String   @id
+  name              String
+  size              Int
+  btime             BigInt
+  mtime             BigInt
+  ext               String
+  tags              String
+  folders           String
+  url               String
+  annotation        String
+  modificationTime  BigInt
+  width             Int
+  height            Int
+  palettes          String
+  lastModified      BigInt
+  isDeleted         Boolean?
+  deletedTime       BigInt?
+  processingPalette Boolean?
+}
+
+model Folder {
+  id               String  @id
   name             String
-  size             Int
-  btime            BigInt
-  mtime            BigInt
-  ext              String
-  tags             String
-  folders          String
-  url              String
-  annotation       String
+  description      String
+  // id[]
+  children         String
+  // 父级id
+  pid              String?
   modificationTime BigInt
-  width            Int
-  height           Int
-  palettes         String
-  lastModified     BigInt
-  isDeleted        Boolean?
-  deletedTime      BigInt?
+  tags             String
+  iconColor        String?
+  password         String
+  passwordTips     String
 }
