@@ -1,0 +1,9 @@
+node_modules/
+.next/
+yarn-*.log
+
+prisma/*
+!prisma/schema.prisma
+!prisma/seed.ts
+
+.env
