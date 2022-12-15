@@ -8,3 +8,5 @@ prisma/*
 !prisma/seed
 
 .env
+
+public/swagger.json

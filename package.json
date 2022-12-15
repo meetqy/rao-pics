@@ -1,7 +1,7 @@
 {
   "name": "eagleuse",
   "version": "0.0.1",
-  "description": "",
+  "description": "把 eagle 变成我的图片（后台）管理系统。",
   "keywords": [
     "eagle",
     "next.js",
@@ -11,12 +11,13 @@
   "license": "MIT",
   "author": "meetqy",
   "scripts": {
-    "dev": "pnpm run db:watch & next --port 9623",
+    "dev": "pnpm run db:watch & pnpm run swagger:watch & next --port 9623",
     "build": "next build",
     "start": "next start",
     "db:init": "prisma migrate dev --name init",
     "db:watch": "prisma db seed",
-    "db:preview": "prisma studio"
+    "db:preview": "prisma studio",
+    "swagger:watch": "ts-node swagger"
   },
   "dependencies": {
     "@prisma/client": "4.7.1",
@@ -25,7 +26,9 @@
     "next": "13.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-markdown": "8.0.4"
+    "react-markdown": "8.0.4",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-react": "^4.15.5"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
