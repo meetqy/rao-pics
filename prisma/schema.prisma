@@ -32,8 +32,6 @@ model Folder {
   id               String  @id
   name             String
   description      String
-  // id[]
-  children         String
   // 父级id
   pid              String?
   modificationTime BigInt

@@ -17,7 +17,7 @@ const demotionFolder = (folders: { [key: string]: string }[]) => {
       callback(v);
     });
 
-    item.children = item.children.map((item) => item.id);
+    delete item.children;
     newFolders.push(item);
   };
 
@@ -28,7 +28,6 @@ const demotionFolder = (folders: { [key: string]: string }[]) => {
 const handleFolderItem = (json) => {
   return {
     ...json,
-    children: JSON.stringify(json.children),
     tags: JSON.stringify(json.tags),
   };
 };
