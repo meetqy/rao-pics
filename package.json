@@ -17,10 +17,12 @@
     "start": "next start",
     "db:init": "prisma migrate dev --name init",
     "db:watch": "prisma db seed",
-    "db:preview": "prisma studio"
+    "db:preview": "prisma studio",
+    "lint": "next lint"
   },
   "dependencies": {
     "@prisma/client": "4.7.1",
+    "antd": "^5.0.7",
     "chokidar": "^3.5.3",
     "encoding": "^0.1.13",
     "lodash": "^4.17.21",
