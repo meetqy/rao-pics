@@ -11,13 +11,13 @@
   "license": "MIT",
   "author": "meetqy",
   "scripts": {
-    "dev": "pnpm run db:watch & pnpm run swagger:watch & next --port 9623",
+    "dev": "pnpm run db:watch & next --port 9623",
     "build": "next build",
     "start": "next start",
     "db:init": "prisma migrate dev --name init",
     "db:watch": "prisma db seed",
     "db:preview": "prisma studio",
-    "swagger:watch": "ts-node swagger"
+    "swagger:create": "ts-node swagger"
   },
   "dependencies": {
     "@prisma/client": "4.7.1",

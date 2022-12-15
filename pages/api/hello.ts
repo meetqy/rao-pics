@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 /**
- * @swagger
+ * @openapi
  * /api/hello:
  *   get:
- *     description: Returns the hello world
+ *     description: Welcome to swagger-jsdoc!
  *     responses:
  *       200:
- *         description: hello world
+ *         description: Returns a mysterious string.
  */
 const handler = (_req: NextApiRequest, res: NextApiResponse) => {
   res.status(200).json({
