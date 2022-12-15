@@ -1,5 +1,6 @@
 import { ConfigProvider, Layout } from "antd";
 import zhCN from "antd/locale/zh_CN";
+import "antd/dist/reset.css";
 import styles from "./index.module.css";
 
 export const MyLayout = ({ children }) => {
