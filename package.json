@@ -22,6 +22,7 @@
   "dependencies": {
     "@prisma/client": "4.7.1",
     "chokidar": "^3.5.3",
+    "encoding": "^0.1.13",
     "lodash": "^4.17.21",
     "next": "13.0.6",
     "react": "18.2.0",
