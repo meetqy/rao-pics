@@ -40,3 +40,10 @@ model Folder {
   password         String
   passwordTips     String
 }
+
+model Tag {
+  id      String  @id
+  name    String
+  // 是否为常用
+  starred Boolean @default(false)
+}
