@@ -49,7 +49,7 @@ const Folder = {
           update: data,
         })
         .then((folder) => {
-          console.log("init folder with id: ", folder.id);
+          // console.log("init folder with id: ", folder.id);
         });
     });
   },
@@ -57,56 +57,58 @@ const Folder = {
   change: (prisma: PrismaClient, file) => {
     const json = readJSONSync(file);
     const newFolders = demotionFolder(json["folders"]);
-    // 当次操作的状态
-    let optStatus;
 
-    if (newFolders.length > lastFoldersCache.length) {
-      optStatus = "add";
-    } else if (newFolders.length === lastFoldersCache.length) {
-      optStatus = "update";
+    // 当次操作的状态 >0 新增 || <0 删除 =0 修改
+    const optStatus = newFolders.length - lastFoldersCache.length;
+
+    let diffFolder = [];
+    if (optStatus > 0) {
+      diffFolder = _.differenceWith(newFolders, lastFoldersCache, _.isEqual);
+    } else if (optStatus < 0) {
+      diffFolder = _.differenceWith(lastFoldersCache, newFolders, _.isEqual);
     } else {
-      optStatus = "delete";
+      diffFolder = _.differenceWith(newFolders, lastFoldersCache, _.isEqual);
     }
-
-    // 不同的文件夹 每次执行 应该只有一条
-    const diffFolder = _.differenceWith(
-      newFolders,
-      lastFoldersCache,
-      _.isEqual
-    );
 
     lastFoldersCache = newFolders;
 
-    if (optStatus === "add") {
-      prisma.folder
-        .create({
-          data: diffFolder[0],
-        })
-        .then((folder) => {
-          console.log("add folder with id: ", folder.id);
-        });
-    } else if (optStatus === "delete") {
-      prisma.folder
-        .delete({
-          where: {
-            id: diffFolder[0].id,
-          },
-        })
-        .then((folder) => {
-          console.log("update folder with id: ", folder.id);
-        });
-    } else {
-      prisma.folder
-        .update({
-          where: {
-            id: diffFolder[0].id,
-          },
-          data: handleFolderItem(diffFolder[0]),
-        })
-        .then((folder) => {
-          console.log("update folder with id: ", folder.id);
-        });
-    }
+    diffFolder.map((f) => {
+      const item = handleFolderItem(f);
+      if (optStatus > 0) {
+        prisma.folder
+          .upsert({
+            where: {
+              id: item.id,
+            },
+            create: item,
+            update: item,
+          })
+          .then((folder) => {
+            console.log("upsert folder with id: ", folder.id);
+          });
+      } else if (optStatus < 0) {
+        prisma.folder
+          .delete({
+            where: {
+              id: item.id,
+            },
+          })
+          .then((folder) => {
+            console.log("delete folder with id: ", folder.id);
+          });
+      } else {
+        prisma.folder
+          .update({
+            where: {
+              id: item.id,
+            },
+            data: item,
+          })
+          .then((folder) => {
+            console.log("update folder with id: ", folder.id);
+          });
+      }
+    });
   },
 };
 

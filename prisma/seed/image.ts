@@ -29,7 +29,7 @@ export const initImage = (prisma: PrismaClient) => {
           create: handleImage(json),
         })
         .then((image) => {
-          console.log("init image with id: ", image.id);
+          // console.log("init image with id: ", image.id);
         });
     })
     .on("change", (file) => {
