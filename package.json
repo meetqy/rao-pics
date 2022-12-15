@@ -6,7 +6,8 @@
     "eagle",
     "next.js",
     "prisma",
-    "sqlite"
+    "sqlite",
+    "swagger"
   ],
   "license": "MIT",
   "author": "meetqy",
@@ -16,8 +17,7 @@
     "start": "next start",
     "db:init": "prisma migrate dev --name init",
     "db:watch": "prisma db seed",
-    "db:preview": "prisma studio",
-    "swagger:create": "ts-node swagger"
+    "db:preview": "prisma studio"
   },
   "dependencies": {
     "@prisma/client": "4.7.1",
