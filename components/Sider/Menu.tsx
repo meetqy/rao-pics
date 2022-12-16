@@ -1,4 +1,4 @@
-import { activeMenuState, ConstantMenu } from "@/store";
+import { activeMenuState } from "@/store";
 import {
   DeleteOutlined,
   FileImageOutlined,
@@ -45,7 +45,7 @@ export const SiderMenu = () => {
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
 
   useEffect(() => {
-    setActiveMenu(router.route as ConstantMenu);
+    setActiveMenu(router.route as EagleUse.Menu);
   }, [router.route]);
 
   const items: MenuProps["items"] = [

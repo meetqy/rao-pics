@@ -7,4 +7,6 @@ declare global {
   }
 }
 
-export {};
+namespace EagleUse {
+  export type Menu = "/" | "/tags" | "/not-tag" | "recycle" | "/folder/";
+}
