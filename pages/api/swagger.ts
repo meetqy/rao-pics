@@ -13,7 +13,7 @@ export default function handler(_req, res) {
           version: pkg.version,
         },
       },
-      apis: ["./pages/api/*.ts"],
+      apis: ["./pages/api/**/*.ts"],
     })
   );
 }

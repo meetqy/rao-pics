@@ -1,3 +1,4 @@
+import { activeMenuState, ConstantMenu } from "@/store";
 import {
   DeleteOutlined,
   FileImageOutlined,
@@ -6,6 +7,9 @@ import {
   TagsOutlined,
 } from "@ant-design/icons";
 import { Col, Menu, MenuProps, Row, Typography } from "antd";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -37,25 +41,46 @@ function handleLabel(name: string, desc: number) {
 }
 
 export const SiderMenu = () => {
+  const router = useRouter();
+  const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
+
+  useEffect(() => {
+    setActiveMenu(router.route as ConstantMenu);
+  }, [router.route]);
+
   const items: MenuProps["items"] = [
-    getItem(handleLabel("全部", 100), "all", <FileImageOutlined />),
-    getItem(handleLabel("未标签", 12), "not-tag", <FileUnknownOutlined />),
-    getItem(handleLabel("标签管理", 123), "tags", <TagsOutlined />),
-    getItem(handleLabel("回收站", 34), "recycle", <DeleteOutlined />),
+    getItem(handleLabel("全部", 100), "/", <FileImageOutlined />),
+    getItem(handleLabel("未标签", 12), "/not-tag", <FileUnknownOutlined />),
+    getItem(handleLabel("标签管理", 123), "/tags", <TagsOutlined />),
+    getItem(handleLabel("回收站", 34), "/recycle", <DeleteOutlined />),
     getItem(
       "文件夹",
-      "folders",
+      "/folders",
       null,
       [
         getItem(
           handleLabel("文件夹1", 0),
-          1,
-          <FolderOpenFilled style={{ color: "red", fontSize: 16 }} />
+          "/folder/1",
+          <FolderOpenFilled style={{ color: "red" }} />
+        ),
+        getItem(
+          handleLabel("文件夹2", 0),
+          "/folder/2",
+          <FolderOpenFilled style={{ color: "red" }} />
         ),
       ],
       "group"
     ),
   ];
 
-  return <Menu mode="inline" items={items} theme="light" />;
+  return (
+    <Menu
+      mode="inline"
+      items={items}
+      selectedKeys={[activeMenu]}
+      onSelect={(e) => {
+        router.push(e.key);
+      }}
+    />
+  );
 };

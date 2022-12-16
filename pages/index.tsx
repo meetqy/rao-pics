@@ -1,4 +1,4 @@
-import { MyLayout } from "@/components/Layout/index";
+import { MyLayout } from "@/components/Layout";
 import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "./_app";
 
