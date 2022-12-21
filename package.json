@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "pnpm run db:watch & next --port 9623",
     "build": "next build",
-    "start": "next start",
+    "start": "next start  --port 9623",
     "db:init": "prisma migrate dev --name init",
     "db:watch": "prisma db seed",
     "db:preview": "prisma studio",
