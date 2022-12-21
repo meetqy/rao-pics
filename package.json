@@ -18,7 +18,8 @@
     "db:init": "prisma migrate dev --name init --skip-seed",
     "db:watch": "prisma db seed",
     "db:preview": "prisma studio",
-    "lint": "next lint"
+    "lint": "next lint",
+    "create:symlink": "ts-node scripts/symlink.ts"
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
