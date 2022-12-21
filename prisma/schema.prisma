@@ -34,7 +34,6 @@ model Folder {
   id               String  @id
   name             String
   description      String
-  // 父级id
   pid              String?
   modificationTime BigInt
   tags             String
@@ -46,6 +45,5 @@ model Folder {
 model Tag {
   id      String  @id
   name    String
-  // 是否为常用
   starred Boolean @default(false)
 }

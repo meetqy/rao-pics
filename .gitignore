@@ -2,11 +2,6 @@ node_modules/
 .next/
 yarn-*.log
 
-prisma/*
-!prisma/schema.prisma
-!prisma/seed.ts
-!prisma/seed
-
 .env
 
 public/swagger.json
