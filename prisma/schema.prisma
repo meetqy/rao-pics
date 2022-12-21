@@ -26,6 +26,7 @@ model Image {
   isDeleted         Boolean?
   deletedTime       BigInt?
   processingPalette Boolean?
+  noThumbnail       Boolean?
 }
 
 model Folder {

@@ -8,13 +8,13 @@ import prisma from "@/lib/prisma";
  *       - Image
  *     summary: 获取图片列表
  *     parameters:
- *       - name: skip
+ *       - name: page
  *         in: query
- *         description: skip
+ *         description: page
  *         schema:
  *            type: int
  *            default: 0
- *       - name: take
+ *       - name: pageSize
  *         in: query
  *         description: pageSize
  *         schema:
@@ -27,20 +27,20 @@ import prisma from "@/lib/prisma";
 export default async function handler(req, res) {
   // findMany参考：https://www.prisma.io/docs/reference/api-reference/prisma-client-reference?query=t&page=1#findmany
 
-  const { skip = 0, take = 50 } = req.query;
+  const { page = 1, pageSize = 50 } = req.query;
 
   const [count, data] = await Promise.all([
     prisma.image.count({}),
     prisma.image.findMany({
-      skip: parseInt(skip),
-      take: parseInt(take),
+      skip: (parseInt(page) - 1) * pageSize,
+      take: parseInt(pageSize),
     }),
   ]);
 
   res.json({
     count,
-    take,
-    skip,
+    page,
+    pageSize,
     data,
   });
 }

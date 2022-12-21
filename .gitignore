@@ -10,3 +10,4 @@ prisma/*
 .env
 
 public/swagger.json
+public/library

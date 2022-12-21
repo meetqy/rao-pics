@@ -9,4 +9,33 @@ declare global {
 
 namespace EagleUse {
   export type Menu = "/" | "/tags" | "/not-tag" | "recycle" | "/folder/";
+
+  export interface Image {
+    id: string;
+    name: string;
+    size: number;
+    btime: number;
+    mtime: number;
+    ext: string;
+    tags: string;
+    folders: string;
+    url: string;
+    annotation: string;
+    modificationTime: number;
+    width: number;
+    height: number;
+    palettes: Palette[];
+    lastModified: number;
+    isDeleted: boolean;
+    deletedTime: number;
+    // json字符串
+    processingPalette: string;
+    noThumbnail: boolean;
+  }
+
+  export interface ImagePalette {
+    color: number[];
+    ratio: number;
+    $$hashKey: string;
+  }
 }
