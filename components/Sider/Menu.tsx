@@ -45,8 +45,8 @@ export const SiderMenu = () => {
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
 
   useEffect(() => {
-    setActiveMenu(router.route as EagleUse.Menu);
-  }, [router.route]);
+    setActiveMenu(router.asPath as EagleUse.Menu);
+  }, [router.asPath]);
 
   const items: MenuProps["items"] = [
     getItem(handleLabel("全部", 100), "/", <FileImageOutlined />),
