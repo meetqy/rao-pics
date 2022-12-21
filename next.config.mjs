@@ -3,7 +3,7 @@
  */
 const nextConfig = {
   experimental: {
-    transpilePackages: ["swagger-ui-react"],
+    transpilePackages: ["swagger-ui-react", "swagger-client"],
   },
 };
 
