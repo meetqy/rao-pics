@@ -14,7 +14,10 @@ function main() {
   initMetadata(prisma);
   initTag(prisma);
 
-  ensureSymlinkSync(process.env.LIBRARY, join(__dirname, `../public/library`));
+  ensureSymlinkSync(
+    process.env.LIBRARY + "/images",
+    join(__dirname, `../public/library`)
+  );
   console.log("library 软连接创建成功！");
 }
 

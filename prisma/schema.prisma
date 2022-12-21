@@ -21,6 +21,7 @@ model Image {
   modificationTime  BigInt
   width             Int
   height            Int
+  star              Int?
   palettes          String
   lastModified      BigInt
   isDeleted         Boolean?
