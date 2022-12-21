@@ -4,7 +4,9 @@ import prisma from "@/lib/prisma";
  * @openapi
  * /api/tag:
  *   get:
- *     description: 获取所有标签信息
+ *     tags:
+ *        - Tag
+ *     summary: 获取所有标签信息
  *     responses:
  *       200:
  *         description: Returns Object

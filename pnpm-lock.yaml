@@ -4,6 +4,7 @@ specifiers:
   '@ant-design/icons': ^4.8.0
   '@prisma/client': 4.7.1
   '@types/fs-extra': ^9.0.13
+  '@types/justified-layout': ^4.1.0
   '@types/lodash': ^4.14.191
   '@types/node': 18.11.12
   '@types/react': 18.0.26
@@ -12,6 +13,7 @@ specifiers:
   dotenv: ^16.0.3
   encoding: ^0.1.13
   fs-extra: ^11.1.0
+  justified-layout: ^4.1.0
   lodash: ^4.17.21
   next: 13.0.6
   prisma: 4.7.1
@@ -27,9 +29,11 @@ specifiers:
 dependencies:
   '@ant-design/icons': 4.8.0_biqbaboplfbrettd7655fr4n2y
   '@prisma/client': 4.7.1_prisma@4.7.1
+  '@types/justified-layout': 4.1.0
   antd: 5.0.7_biqbaboplfbrettd7655fr4n2y
   chokidar: 3.5.3
   encoding: 0.1.13
+  justified-layout: 4.1.0
   lodash: 4.17.21
   next: 13.0.6_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -428,6 +432,10 @@ packages:
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+    dev: false
+
+  /@types/justified-layout/4.1.0:
+    resolution: {integrity: sha512-D8u3yfJjx1xjRJxWUVJlTmFxSN0ph5BpkQo9dTIO1LpYFu0WS1XcWJoNAKJZql+jyiZB5eHt0UKxC1wsmO3/LQ==}
     dev: false
 
   /@types/lodash/4.14.191:
@@ -1164,6 +1172,10 @@ packages:
     optionalDependencies:
       graceful-fs: 4.2.10
     dev: true
+
+  /justified-layout/4.1.0:
+    resolution: {integrity: sha512-M5FimNMXgiOYerVRGsXZ2YK9YNCaTtwtYp7Hb2308U1Q9TXXHx5G0p08mcVR5O53qf8bWY4NJcPBxE6zuayXSg==}
+    dev: false
 
   /klaw-sync/6.0.0:
     resolution: {integrity: sha512-nIeuVSzdCCs6TDPTqI8w1Yre34sSq7AkZ4B3sfOBbI2CgVSB4Du4aLQijFU2+lhAFCwt9+42Hel6lQNIv6AntQ==}

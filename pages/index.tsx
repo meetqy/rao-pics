@@ -1,9 +1,20 @@
 import { MyLayout } from "@/components/Layout";
-import type { ReactElement } from "react";
+import { Layout } from "antd";
+import { ReactElement, useEffect } from "react";
 import type { NextPageWithLayout } from "./_app";
 
 const Page: NextPageWithLayout = () => {
-  return <p>hello world</p>;
+  useEffect(() => {}, []);
+
+  // const getImageList = () => {
+  //   fetch("/api/image/list", {});
+  // };
+
+  return (
+    <Layout>
+      <Layout.Content style={{ position: "relative" }}></Layout.Content>
+    </Layout>
+  );
 };
 
 Page.getLayout = function getLayout(page: ReactElement) {

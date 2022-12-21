@@ -11,7 +11,7 @@
 - [eagle-web](https://github.com/meetqy/eagle-web) - eagle 图片管理工具的 web 版本
 - [eagle-api](https://github.com/meetqy/eagle-api) - 让你的 eagle 拥有查询 api 能力,基于 json-server
 
-在线体验: https://rao.pics
+在线体验: https://play.rao.pics
 
 > 本项目会集成他们的优点，并且把 UI、API 查询、监听等功能集成到一起，选择更加合适的技术栈。
 

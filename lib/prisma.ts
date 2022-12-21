@@ -13,4 +13,12 @@ if (process.env.NODE_ENV === "production") {
   }
   prisma = global.prisma;
 }
+
+// Prisma Studio or Data Browser: Do not know how to serialize a BigInt
+// https://github.com/prisma/studio/issues/614
+(BigInt.prototype as any).toJSON = function () {
+  const int = Number.parseInt(this.toString());
+  return int ?? this.toString();
+};
+
 export default prisma;

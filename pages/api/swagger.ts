@@ -9,7 +9,7 @@ export default function handler(_req, res) {
       definition: {
         openapi: "3.0.0",
         info: {
-          title: pkg.name,
+          title: "EagleUse",
           version: pkg.version,
         },
       },
