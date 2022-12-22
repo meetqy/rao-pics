@@ -1,8 +1,7 @@
-import { MyLayout } from "@/components/Layout";
 import Image from "next/image";
 import justifyLayout from "justified-layout";
-import { Card, Layout } from "antd";
-import { ReactElement, useEffect, useMemo, useState } from "react";
+import { Button, Card, Layout, Row, Col } from "antd";
+import { useEffect, useState } from "react";
 import { handleImageUrl } from "@/utils";
 
 interface LayoutBox {
@@ -24,6 +23,7 @@ const Page = () => {
   const [images, setImages] = useState<EagleUse.Image[]>([]);
   const pageSize = 50;
   const [page, setPage] = useState(1);
+  const [isLoad, setIsLoad] = useState<boolean>(false);
   const [layoutPos, setLayoutPos] = useState<JustifiedLayoutResult>();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Page = () => {
   useEffect(() => {
     setLayoutPos(
       justifyLayout([...images], {
-        containerWidth: document.body.clientWidth - 480,
+        containerWidth: document.body.clientWidth - 490,
         targetRowHeight: 260,
         boxSpacing: {
           horizontal: 10,
@@ -49,15 +49,41 @@ const Page = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        setImages(images.concat(res.data));
+        setImages(page === 1 ? res.data : images.concat(res.data));
+        setIsLoad(false);
       });
+  };
+
+  useEffect(() => {
+    getImageList();
+  }, [page]);
+
+  const loadmore = () => {
+    return (
+      <Button
+        type="link"
+        disabled={isLoad}
+        onClick={() => {
+          setIsLoad(true);
+          setPage(page + 1);
+        }}
+      >
+        加载更多
+      </Button>
+    );
   };
 
   if (!layoutPos) return null;
 
   return (
     <Layout
-      style={{ overflowY: "scroll", overflowX: "hidden", height: "100%" }}
+      className="scroll-bar"
+      style={{
+        overflowY: "scroll",
+        overflowX: "hidden",
+        height: "100%",
+        paddingLeft: 5,
+      }}
     >
       <Layout.Content style={{ position: "relative" }}>
         <div
@@ -67,6 +93,7 @@ const Page = () => {
         >
           {layoutPos.boxes.map((item, i: number) => {
             const image = images[i];
+            const palettes: EagleUse.ImagePalette = JSON.parse(image.palettes);
 
             return (
               <Card
@@ -75,7 +102,7 @@ const Page = () => {
                 style={{
                   ...item,
                   position: "absolute",
-                  background: `rgb(${image.palettes[0].color}, .25)`,
+                  background: `rgb(${palettes[0].color}, .25)`,
                   overflow: "hidden",
                 }}
                 bodyStyle={{ padding: 0, ...item }}
@@ -95,6 +122,10 @@ const Page = () => {
             );
           })}
         </div>
+
+        <Row style={{ paddingBottom: 20 }} justify="center">
+          <Col>{loadmore()}</Col>
+        </Row>
       </Layout.Content>
     </Layout>
   );

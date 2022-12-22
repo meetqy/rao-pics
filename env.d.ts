@@ -24,7 +24,7 @@ namespace EagleUse {
     modificationTime: number;
     width: number;
     height: number;
-    palettes: Palette[];
+    palettes: string;
     lastModified: number;
     isDeleted: boolean;
     deletedTime: number;
