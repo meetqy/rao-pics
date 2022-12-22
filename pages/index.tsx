@@ -1,8 +1,8 @@
 import Image from "next/image";
 import justifyLayout from "justified-layout";
-import { Button, Card, Layout, Row, Col } from "antd";
+import { Button, Card, Layout, Row, Col, theme } from "antd";
 import { useEffect, useState } from "react";
-import { handleImageUrl } from "@/utils";
+import { handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
 import { activeImageState } from "@/store";
 
@@ -27,7 +27,8 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [layoutPos, setLayoutPos] = useState<JustifiedLayoutResult>();
-  const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
+  const [activeImage, setActiveImage] = useRecoilState(activeImageState);
+  const { token } = theme.useToken();
 
   useEffect(() => {
     getImageList();
@@ -37,9 +38,9 @@ const Page = () => {
     setLayoutPos(
       justifyLayout([...images], {
         containerWidth: document.body.clientWidth - 490,
-        targetRowHeight: 260,
+        targetRowHeight: 200,
         boxSpacing: {
-          horizontal: 10,
+          horizontal: 15,
           vertical: 20,
         },
       })
@@ -107,7 +108,12 @@ const Page = () => {
                   position: "absolute",
                   background: `rgb(${palettes[0].color}, .25)`,
                   overflow: "hidden",
+                  outline:
+                    activeImage.id === image.id
+                      ? `4px solid ${token.colorPrimary}`
+                      : "",
                 }}
+                bordered={false}
                 bodyStyle={{ padding: 0, ...item }}
                 onClick={() => {
                   setActiveImage(image);

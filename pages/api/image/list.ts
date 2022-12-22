@@ -11,6 +11,9 @@ export default async function handler(req, res) {
     prisma.image.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
+      orderBy: {
+        modificationTime: "desc",
+      },
     }),
   ]);
 

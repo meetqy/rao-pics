@@ -21,6 +21,7 @@ namespace EagleUse {
     folders: string;
     url: string;
     annotation: string;
+    // 添加日期
     modificationTime: number;
     width: number;
     height: number;

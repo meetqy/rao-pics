@@ -3,7 +3,7 @@ import { Button, Col, Input, Row, Tooltip } from "antd";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
-import { handleImageUrl } from "@/utils";
+import { handleImageUrl } from "@/hooks";
 
 const SiderBasic = () => {
   const image = useRecoilValue(activeImageState);
