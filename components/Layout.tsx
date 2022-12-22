@@ -4,8 +4,8 @@ import "antd/dist/reset.css";
 import { useRecoilValue } from "recoil";
 import { activeMenuState } from "@/store";
 import { useMemo } from "react";
-import SiderMenu from "./sider/Menu";
-import SiderBasic from "./sider/Basic";
+import SiderMenu from "./Sider/Menu";
+import SiderBasic from "./Sider/Basic";
 
 export const MyLayout = ({ children }) => {
   const activeMenu = useRecoilValue(activeMenuState);
