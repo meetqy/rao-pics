@@ -3,7 +3,6 @@ import Image from "next/image";
 import justifyLayout from "justified-layout";
 import { Card, Layout } from "antd";
 import { ReactElement, useEffect, useMemo, useState } from "react";
-import type { NextPageWithLayout } from "./_app";
 import { handleImageUrl } from "@/utils";
 
 interface LayoutBox {
@@ -21,7 +20,7 @@ interface JustifiedLayoutResult {
   boxes: LayoutBox[];
 }
 
-const Page: NextPageWithLayout = () => {
+const Page = () => {
   const [images, setImages] = useState<EagleUse.Image[]>([]);
   const pageSize = 50;
   const [page, setPage] = useState(1);
@@ -99,10 +98,6 @@ const Page: NextPageWithLayout = () => {
       </Layout.Content>
     </Layout>
   );
-};
-
-Page.getLayout = function getLayout(page: ReactElement) {
-  return <MyLayout>{page}</MyLayout>;
 };
 
 export default Page;

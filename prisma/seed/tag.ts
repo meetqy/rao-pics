@@ -25,7 +25,9 @@ const handleTags = (file, prisma, type) => {
         update: tag,
       })
       .then((tag) => {
-        console.log(type + " tag with id: ", tag.id);
+        if (type != "init") {
+          console.log(type + " tag with id: ", tag.id);
+        }
       });
   });
 };
