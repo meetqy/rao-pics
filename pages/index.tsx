@@ -3,6 +3,8 @@ import justifyLayout from "justified-layout";
 import { Button, Card, Layout, Row, Col } from "antd";
 import { useEffect, useState } from "react";
 import { handleImageUrl } from "@/utils";
+import { useRecoilState } from "recoil";
+import { activeImageState } from "@/store";
 
 interface LayoutBox {
   aspectRatio: number;
@@ -25,6 +27,7 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [layoutPos, setLayoutPos] = useState<JustifiedLayoutResult>();
+  const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
 
   useEffect(() => {
     getImageList();
@@ -106,6 +109,9 @@ const Page = () => {
                   overflow: "hidden",
                 }}
                 bodyStyle={{ padding: 0, ...item }}
+                onClick={() => {
+                  setActiveImage(image);
+                }}
               >
                 <Image
                   priority

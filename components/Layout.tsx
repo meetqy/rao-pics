@@ -1,10 +1,16 @@
 import { ConfigProvider, Layout, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import "antd/dist/reset.css";
-import { SiderMenu } from "./Sider/Menu";
-import { SiderBasic } from "./Sider/Basic";
+import { useRecoilValue } from "recoil";
+import { activeMenuState } from "@/store";
+import { useMemo } from "react";
+import SiderMenu from "./sider/Menu";
+import SiderBasic from "./sider/Basic";
 
 export const MyLayout = ({ children }) => {
+  const activeMenu = useRecoilValue(activeMenuState);
+  const collapsed = useMemo(() => ["/tags"].includes(activeMenu), [activeMenu]);
+
   return (
     <ConfigProvider
       theme={{
@@ -20,7 +26,14 @@ export const MyLayout = ({ children }) => {
           <SiderMenu />
         </Layout.Sider>
         <Layout.Content>{children}</Layout.Content>
-        <SiderBasic />
+        <Layout.Sider
+          width={240}
+          theme="light"
+          collapsed={collapsed}
+          collapsedWidth={0}
+        >
+          <SiderBasic />
+        </Layout.Sider>
       </Layout>
     </ConfigProvider>
   );

@@ -40,7 +40,7 @@ function handleLabel(name: string, desc: number) {
   );
 }
 
-export const SiderMenu = () => {
+const SiderMenu = () => {
   const router = useRouter();
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
 
@@ -84,3 +84,5 @@ export const SiderMenu = () => {
     />
   );
 };
+
+export default SiderMenu;
