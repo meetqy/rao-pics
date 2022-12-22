@@ -109,7 +109,7 @@ const Page = () => {
                   background: `rgb(${palettes[0].color}, .25)`,
                   overflow: "hidden",
                   outline:
-                    activeImage.id === image.id
+                    activeImage?.id === image.id
                       ? `4px solid ${token.colorPrimary}`
                       : "",
                 }}

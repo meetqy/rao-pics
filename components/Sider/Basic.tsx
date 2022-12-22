@@ -51,18 +51,20 @@ const SiderBasic = () => {
         style={{ marginTop: 20, height: 12 }}
         className={styles.palettes}
       >
-        {JSON.parse(image.palettes).map((item, i) => (
-          <Col key={i} flex={1}>
-            <Tooltip title={`rgb(${item.color})`}>
-              <div
-                style={{
-                  backgroundColor: `rgb(${item.color})`,
-                  height: 12,
-                }}
-              />
-            </Tooltip>
-          </Col>
-        ))}
+        {JSON.parse(image.palettes)
+          .slice(0, 8)
+          .map((item, i) => (
+            <Col key={i} flex={1}>
+              <Tooltip title={`rgb(${item.color})`}>
+                <div
+                  style={{
+                    backgroundColor: `rgb(${item.color})`,
+                    height: 12,
+                  }}
+                />
+              </Tooltip>
+            </Col>
+          ))}
       </Row>
 
       <Row style={{ marginTop: 20 }}>
