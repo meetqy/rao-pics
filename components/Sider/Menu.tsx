@@ -1,4 +1,4 @@
-import { activeMenuState } from "@/store";
+import { activeMenuState, countState } from "@/store";
 import {
   DeleteOutlined,
   FileImageOutlined,
@@ -9,7 +9,7 @@ import {
 import { Col, Menu, MenuProps, Row, Typography } from "antd";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -43,16 +43,25 @@ function handleLabel(name: string, desc: number) {
 const SiderMenu = () => {
   const router = useRouter();
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
+  const counts = useRecoilValue(countState);
 
   useEffect(() => {
     setActiveMenu(router.asPath as EagleUse.Menu);
   }, [router.asPath]);
 
   const items: MenuProps["items"] = [
-    getItem(handleLabel("全部", 100), "/", <FileImageOutlined />),
-    getItem(handleLabel("未标签", 12), "/not-tag", <FileUnknownOutlined />),
-    getItem(handleLabel("标签管理", 123), "/tags", <TagsOutlined />),
-    getItem(handleLabel("回收站", 34), "/recycle", <DeleteOutlined />),
+    getItem(handleLabel("全部", counts.all), "/", <FileImageOutlined />),
+    getItem(
+      handleLabel("未标签", counts["not-tag"]),
+      "/not-tag",
+      <FileUnknownOutlined />
+    ),
+    getItem(handleLabel("标签管理", counts.tags), "/tags", <TagsOutlined />),
+    getItem(
+      handleLabel("回收站", counts.recycle),
+      "/recycle",
+      <DeleteOutlined />
+    ),
     getItem(
       "文件夹",
       "/folders",

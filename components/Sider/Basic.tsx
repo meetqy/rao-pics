@@ -1,9 +1,11 @@
-import { activeImageState, tagsState } from "@/store";
+import { activeImageState, countState, tagsState } from "@/store";
 import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
 import { handleImageUrl } from "@/hooks";
+import { useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
 
 const handleTime = (time: number) => {
   const [date, t] = new Date(time)
@@ -24,6 +26,12 @@ const handleTime = (time: number) => {
 const SiderBasic = () => {
   const image = useRecoilValue(activeImageState);
   const tags = useRecoilValue(tagsState);
+  const counts = useRecoilValue(countState);
+  const router = useRouter();
+
+  const fileNumber = useMemo(() => {
+    return counts[router.pathname === "/" ? "all" : router.pathname];
+  }, [router.pathname, counts]);
 
   if (!image) {
     return (
@@ -37,7 +45,7 @@ const SiderBasic = () => {
         <div className={styles.baseInfo} style={{ marginTop: 20 }}>
           <Row align="middle">
             <Col span={8}>文件数</Col>
-            <Col>111</Col>
+            <Col>{fileNumber}</Col>
           </Row>
         </div>
       </div>

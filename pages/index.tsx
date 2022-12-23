@@ -4,7 +4,7 @@ import { Button, Card, Layout, Row, Col, theme } from "antd";
 import { useEffect, useState } from "react";
 import { handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
-import { activeImageState } from "@/store";
+import { activeImageState, countState } from "@/store";
 
 interface LayoutBox {
   aspectRatio: number;
@@ -29,6 +29,7 @@ const Page = () => {
   const [layoutPos, setLayoutPos] = useState<JustifiedLayoutResult>();
   const [activeImage, setActiveImage] = useRecoilState(activeImageState);
   const { token } = theme.useToken();
+  const [counts, setCounts] = useRecoilState(countState);
 
   useEffect(() => {
     getImageList();
@@ -52,8 +53,13 @@ const Page = () => {
       method: "post",
     })
       .then((res) => res.json())
-      .then((res) => {
-        setImages(page === 1 ? res.data : images.concat(res.data));
+      .then(({ data, count }) => {
+        setImages(page === 1 ? data : images.concat(data));
+        setCounts({
+          ...counts,
+          all: count,
+        });
+
         setIsLoad(false);
       });
   };
