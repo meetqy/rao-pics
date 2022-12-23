@@ -17,6 +17,7 @@ namespace EagleUse {
     btime: number;
     mtime: number;
     ext: string;
+    // json字符串
     tags: string;
     folders: string;
     url: string;
@@ -32,11 +33,18 @@ namespace EagleUse {
     // json字符串
     processingPalette: string;
     noThumbnail: boolean;
+    star: number;
   }
 
   export interface ImagePalette {
     color: number[];
     ratio: number;
     $$hashKey: string;
+  }
+
+  export interface Tag {
+    id: string;
+    name: string;
+    starred: boolean;
   }
 }

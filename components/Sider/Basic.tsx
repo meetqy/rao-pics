@@ -1,12 +1,29 @@
-import { activeImageState } from "@/store";
-import { Button, Col, Input, Row, Tooltip } from "antd";
+import { activeImageState, tagsState } from "@/store";
+import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
 import { handleImageUrl } from "@/hooks";
 
+const handleTime = (time: number) => {
+  const [date, t] = new Date(time)
+    .toLocaleString()
+    .replace(/:\d+$/, "")
+    .split(" ");
+
+  return (
+    date
+      .split("/")
+      .map((item) => (item.length === 1 ? "0" + item : item))
+      .join("/") +
+    " " +
+    t
+  );
+};
+
 const SiderBasic = () => {
   const image = useRecoilValue(activeImageState);
+  const tags = useRecoilValue(tagsState);
 
   if (!image) {
     return (
@@ -72,6 +89,84 @@ const SiderBasic = () => {
           <Input value={image.name} disabled />
         </Col>
       </Row>
+
+      <Row style={{ marginTop: 10 }}>
+        <Col flex={1}>
+          <Select
+            mode="multiple"
+            placeholder="暂无标签"
+            style={{ width: "100%" }}
+            disabled
+            value={JSON.parse(image.tags)}
+            options={tags.map((item) => ({ label: item.id, value: item.id }))}
+          />
+        </Col>
+      </Row>
+
+      <Row style={{ marginTop: 10 }}>
+        <Col flex={1}>
+          <Input value={image.annotation} disabled placeholder="暂无注释" />
+        </Col>
+      </Row>
+
+      <Row style={{ marginTop: 10 }}>
+        <Col flex={1}>
+          <Input value={image.url} disabled placeholder="暂无链接" />
+        </Col>
+      </Row>
+
+      <div style={{ marginTop: 20 }}>
+        <Row>
+          <Col>基本信息</Col>
+        </Row>
+
+        <Row align="middle" style={{ marginTop: 10 }}>
+          <Col span={8}>评分</Col>
+          <Col>
+            <Rate value={image.star || 0} disabled />
+          </Col>
+        </Row>
+        <Row align="middle" style={{ marginTop: 10 }}>
+          <Col span={8}>尺寸</Col>
+          <Col>
+            {image.width} x {image.height}
+          </Col>
+        </Row>
+        <Row align="middle" style={{ marginTop: 10 }}>
+          <Col span={8}>文件大小</Col>
+          <Col>{(image.size / 1024).toFixed(2)} KB</Col>
+        </Row>
+        <Row align="middle" style={{ marginTop: 10 }}>
+          <Col span={8}>格式</Col>
+          <Col>{image.ext.toLocaleUpperCase()}</Col>
+        </Row>
+        <Row align="middle" style={{ marginTop: 10 }}>
+          <Col span={8}>添加日期</Col>
+          <Col>{handleTime(image.mtime)}</Col>
+        </Row>
+        <Row align="middle" style={{ marginTop: 10 }}>
+          <Col span={8}>创建日期</Col>
+          <Col>{handleTime(image.btime)}</Col>
+        </Row>
+        <Row align="middle" style={{ marginTop: 10 }}>
+          <Col span={8}>修改日期</Col>
+          <Col>{handleTime(image.lastModified)}</Col>
+        </Row>
+
+        <Row style={{ marginTop: 20 }}>
+          <Col flex={1}>
+            <Button
+              block
+              type="primary"
+              onClick={() => {
+                open(handleImageUrl(image, true));
+              }}
+            >
+              查看原图
+            </Button>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 };
