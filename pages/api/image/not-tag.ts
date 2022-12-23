@@ -6,10 +6,17 @@ export default async function handler(req, res) {
   const pageSize = +(req.query.pageSize || 50);
 
   const [count, data, sum] = await Promise.all([
-    prisma.image.count({}),
+    prisma.image.count({
+      where: {
+        tags: "[]",
+      },
+    }),
     prisma.image.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
+      where: {
+        tags: "[]",
+      },
       orderBy: {
         modificationTime: "desc",
       },
@@ -17,6 +24,9 @@ export default async function handler(req, res) {
     prisma.image.aggregate({
       _sum: {
         size: true,
+      },
+      where: {
+        tags: "[]",
       },
     }),
   ]);

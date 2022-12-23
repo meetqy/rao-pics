@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
 import { handleImageUrl } from "@/hooks";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useRouter } from "next/router";
 
 const handleTime = (time: number) => {
@@ -30,14 +30,23 @@ const SiderBasic = () => {
   const router = useRouter();
 
   const fileNumber = useMemo(() => {
-    return counts[router.pathname === "/" ? "all" : router.pathname];
-  }, [router.pathname, counts]);
+    return counts[
+      router.pathname === "/" ? "all" : router.pathname.replace("/", "")
+    ];
+  }, [counts]);
+
+  const names = {
+    "/": "全部",
+    "/not-tag": "未标签",
+    "/tags": "标签管理",
+    "/recycle": "回收站",
+  };
 
   if (!image) {
     return (
       <div style={{ padding: 20 }}>
         <Button block disabled>
-          全部
+          {names[router.pathname]}
         </Button>
         <Row style={{ marginTop: 20 }}>
           <Col>基本信息</Col>
