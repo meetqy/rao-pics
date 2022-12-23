@@ -58,7 +58,11 @@ const SiderMenu = () => {
         "/not-tag",
         <FileUnknownOutlined />
       ),
-      getItem(handleLabel("标签管理", counts.tags), "/tags", <TagsOutlined />),
+      getItem(
+        handleLabel("标签管理", counts.tags),
+        "/tags/mangage",
+        <TagsOutlined />
+      ),
       getItem(
         handleLabel("回收站", counts.recycle),
         "/recycle",

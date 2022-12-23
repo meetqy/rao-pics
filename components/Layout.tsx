@@ -10,9 +10,9 @@ import Head from "next/head";
 
 export const MyLayout = ({ children }) => {
   const activeMenu = useRecoilValue(activeMenuState);
-  const [tags, setTags] = useRecoilState(tagsState);
+  const [_tags, setTags] = useRecoilState(tagsState);
   const [counts, setCount] = useRecoilState(countState);
-  const collapsed = useMemo(() => ["/tags"].includes(activeMenu), [activeMenu]);
+  const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
 
   useEffect(() => {
     fetch("/api/tag")
