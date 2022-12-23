@@ -6,6 +6,7 @@ import { activeMenuState, countState, tagsState } from "@/store";
 import { useEffect, useMemo } from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
+import Head from "next/head";
 
 export const MyLayout = ({ children }) => {
   const activeMenu = useRecoilValue(activeMenuState);
@@ -35,6 +36,13 @@ export const MyLayout = ({ children }) => {
       }}
       locale={zhCN}
     >
+      <Head>
+        <title>rao.pics - eagleuse搭建的图片站</title>
+        <meta
+          name="description"
+          content="把 eagle 变成我的图片（后台）管理系统。"
+        />
+      </Head>
       <Layout style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
         <Layout.Sider width={240} theme="light">
           <SiderMenu />
