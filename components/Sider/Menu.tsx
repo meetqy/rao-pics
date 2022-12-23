@@ -90,6 +90,7 @@ const SiderMenu = () => {
       mode="inline"
       items={items}
       selectedKeys={[activeMenu]}
+      style={{ borderRight: 0 }}
       onSelect={(e) => {
         setActiveImage(undefined);
         router.push(e.key);

@@ -44,7 +44,11 @@ export const MyLayout = ({ children }) => {
         />
       </Head>
       <Layout style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
-        <Layout.Sider width={240} theme="light">
+        <Layout.Sider
+          width={240}
+          theme="light"
+          style={{ borderRight: "1px solid #eee" }}
+        >
           <SiderMenu />
         </Layout.Sider>
         <Layout.Content>{children}</Layout.Content>
