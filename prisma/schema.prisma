@@ -22,7 +22,7 @@ model Image {
   width             Int
   height            Int
   star              Int?
-  palettes          String
+  palettes          String?
   lastModified      BigInt
   isDeleted         Boolean?
   deletedTime       BigInt?
