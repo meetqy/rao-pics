@@ -36,6 +36,7 @@ const Page = () => {
     <JustifyLayout
       images={images}
       isLoad={isLoad}
+      isEnd={images.length === counts["all"]}
       onLoadmore={() => {
         setPage(page + 1);
         setIsLoad(true);

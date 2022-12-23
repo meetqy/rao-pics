@@ -25,9 +25,10 @@ interface Props {
   images: EagleUse.Image[];
   onLoadmore: () => void;
   isLoad: boolean;
+  isEnd?: boolean;
 }
 
-const JustifyLayout = ({ images, onLoadmore, isLoad }: Props) => {
+const JustifyLayout = ({ images, onLoadmore, isLoad, isEnd }: Props) => {
   const [layoutPos, setLayoutPos] = useState<JustifiedLayoutResult>();
   const [activeImage, setActiveImage] = useRecoilState(activeImageState);
   const { token } = theme.useToken();
@@ -46,6 +47,8 @@ const JustifyLayout = ({ images, onLoadmore, isLoad }: Props) => {
   }, [images]);
 
   const loadmore = () => {
+    if (isEnd) return null;
+
     return (
       <Button type="link" disabled={isLoad} onClick={onLoadmore}>
         加载更多
