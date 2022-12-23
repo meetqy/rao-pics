@@ -96,15 +96,10 @@ const JustifyLayout = ({ images, onLoadmore, isLoad }: Props) => {
                 }}
               >
                 <Image
-                  priority
                   width={item.width}
                   height={item.height}
                   src={handleImageUrl(image)}
                   alt={handleImageUrl(image)}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                  }}
                 />
               </Card>
             );
