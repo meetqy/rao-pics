@@ -43,7 +43,16 @@ model Folder {
 }
 
 model Tag {
-  id      String  @id
-  name    String
-  starred Boolean @default(false)
+  id           String      @id
+  name         String
+  starred      Boolean     @default(false)
+  tagsGroups   TagsGroups? @relation(references: [id], fields: [tagsGroupsId])
+  tagsGroupsId String?
+}
+
+model TagsGroups {
+  id    String  @id
+  name  String
+  color String?
+  Tag   Tag[]
 }

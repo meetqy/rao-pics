@@ -33,8 +33,7 @@ const handleFolderItem = (json) => {
 };
 
 const Folder = {
-  add: (prisma: PrismaClient, file) => {
-    const json = readJSONSync(file);
+  add: (prisma: PrismaClient, json: { [key in string]: any }) => {
     lastFoldersCache = demotionFolder(json["folders"]);
 
     lastFoldersCache.map((item) => {
@@ -53,8 +52,7 @@ const Folder = {
     });
   },
 
-  change: (prisma: PrismaClient, file) => {
-    const json = readJSONSync(file);
+  change: (prisma: PrismaClient, json: { [key in string]: any }) => {
     const newFolders = demotionFolder(json["folders"]);
 
     // 当次操作的状态 >0 新增 || <0 删除 =0 修改
