@@ -1,3 +1,5 @@
+export * from "./pinyin";
+
 export const handleImageUrl = (
   image: EagleUse.Image,
   // 是否返回原图
