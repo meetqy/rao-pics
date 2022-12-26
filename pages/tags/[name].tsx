@@ -38,7 +38,7 @@ function getItem(
   } as MenuItem;
 }
 
-type routeName = "manage" | "no" | "starred";
+type routeName = "manage" | "no" | "starred" | string;
 
 /**
  * 数组转json 首字母开头作为分组
@@ -64,19 +64,18 @@ const tagsArrayToJson = (tags: EagleUse.Tag[]) => {
   return json;
 };
 
+function handleLabel(name: string, desc: number, color?: string) {
+  return (
+    <Row justify="space-between" style={{ color: color }}>
+      <Col flex={1}>{name}</Col>
+      <Col>
+        <Typography.Text type="secondary">{desc}</Typography.Text>
+      </Col>
+    </Row>
+  );
+}
+
 export default function Page() {
-  const items: MenuProps["items"] = [
-    getItem("标签管理", "/tags/manage", <AppstoreFilled />),
-    getItem("未分类", "/tags/no", <QuestionCircleFilled />),
-    getItem("常用标签", "/tags/starred", <StarFilled />),
-    getItem(
-      "标签群组",
-      "",
-      null,
-      [getItem("每日更新", "/tags/[id]", <TagsFilled />)],
-      "group"
-    ),
-  ];
   const router = useRouter();
   const name = router.query.name as routeName;
   const tags = useRecoilValue(tagsState);
@@ -88,12 +87,107 @@ export default function Page() {
     starred: undefined,
   });
 
+  const [items, setItems] = useState<MenuProps["items"]>([
+    getItem(
+      handleLabel("标签管理", undefined),
+      "/tags/manage",
+      <AppstoreFilled />
+    ),
+    getItem("未分类", "/tags/no", <QuestionCircleFilled />),
+    getItem("常用标签", "/tags/starred", <StarFilled />),
+  ]);
+
   // 标签管理
   useEffect(() => {
     setTagsCollection({
       ...tagsCollection,
       manage: tagsArrayToJson(tags),
     });
+
+    items[0] = getItem(
+      handleLabel("标签管理", tags.length),
+      "/tags/manage",
+      <AppstoreFilled />
+    );
+
+    setItems([...items]);
+  }, [name, tags]);
+
+  useEffect(() => {
+    if (name === "no" && !tagsCollection.no) {
+      fetch("/api/tag/no")
+        .then((res) => res.json())
+        .then(({ data, count: _count }) => {
+          setTagsCollection({
+            ...tagsCollection,
+            no: tagsArrayToJson(data),
+          });
+
+          items[1] = getItem(
+            handleLabel("未分类", _count),
+            "/tags/no",
+            <QuestionCircleFilled />
+          );
+
+          setItems([...items]);
+        });
+    }
+  }, [name, tagsCollection]);
+
+  useEffect(() => {
+    if (name === "starred" && !tagsCollection.starred) {
+      fetch("/api/tag/starred")
+        .then((res) => res.json())
+        .then(({ data, count: _count }) => {
+          setTagsCollection({
+            ...tagsCollection,
+            starred: tagsArrayToJson(data),
+          });
+
+          items[2] = getItem(
+            handleLabel("常用标签", _count),
+            "/tags/starred",
+            <StarFilled />
+          );
+
+          setItems([...items]);
+        });
+    }
+  }, [name, tagsCollection]);
+
+  useEffect(() => {
+    if (!tags || !tags.length) return;
+    if (!name) return;
+
+    fetch("/api/tag/group")
+      .then((res) => res.json())
+      .then(({ data, count }) => {
+        data.map((item) => {
+          // 找到有count的标签
+          const newTags = item.tags.map((tag) =>
+            tags.find((item) => tag.id === item.id)
+          );
+          tagsCollection[item.id] = tagsArrayToJson(newTags);
+        });
+
+        setTagsCollection({ ...tagsCollection });
+
+        items[3] = getItem(
+          `标签群组(${count})`,
+          "",
+          null,
+          data.map((item) =>
+            getItem(
+              handleLabel(item.name, item.tags.length, item.color),
+              `/tags/${item.id}`,
+              <TagsFilled style={{ color: item.color }} />
+            )
+          ),
+          "group"
+        );
+
+        setItems([...items]);
+      });
   }, [name, tags]);
 
   // 渲染tags列表
@@ -123,6 +217,13 @@ export default function Page() {
               <Col key={tag.id}>
                 <Button size="small" shape="round">
                   {tag.id}
+                  <Typography.Text
+                    type="secondary"
+                    strong
+                    style={{ marginLeft: 5 }}
+                  >
+                    {tag._count.images}
+                  </Typography.Text>
                 </Button>
               </Col>
             ))}
@@ -144,11 +245,12 @@ export default function Page() {
           paddingLeft: "24px",
         }}
       >
-        标签管理(94)
+        标签管理({tags.length})
       </Layout.Header>
       <Layout>
         <Layout.Sider width={240} theme="light">
           <Menu
+            mode="inline"
             items={items}
             selectedKeys={["/tags/" + name]}
             onSelect={(e) => {

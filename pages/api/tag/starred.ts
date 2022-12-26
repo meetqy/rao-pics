@@ -1,9 +1,17 @@
 import prisma from "@/lib/prisma";
 
+// 未分类
 export default async function handler(_req, res) {
   const [count, data] = await Promise.all([
-    prisma.tag.count(),
+    prisma.tag.count({
+      where: {
+        starred: true,
+      },
+    }),
     prisma.tag.findMany({
+      where: {
+        starred: true,
+      },
       include: {
         _count: {
           select: {

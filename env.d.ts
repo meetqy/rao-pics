@@ -46,5 +46,8 @@ namespace EagleUse {
     id: string;
     name: string;
     starred: boolean;
+    _count: {
+      images: number;
+    };
   }
 }

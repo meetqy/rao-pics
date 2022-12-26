@@ -5,7 +5,9 @@ export default async function handler(req, res) {
     prisma.image.count(),
     prisma.image.count({
       where: {
-        tags: "[]",
+        tags: {
+          none: {},
+        },
       },
     }),
     prisma.tag.count({
