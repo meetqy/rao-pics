@@ -54,5 +54,5 @@ model TagsGroups {
   id    String  @id
   name  String
   color String?
-  Tag   Tag[]
+  tags  Tag[]
 }

@@ -9,9 +9,9 @@ dotenv.config({ path: join(__dirname, "../.env") });
 const prisma = new PrismaClient();
 
 function main() {
-  initImage(prisma);
   initMetadata(prisma);
   initTag(prisma);
+  initImage(prisma);
 }
 
 main();
