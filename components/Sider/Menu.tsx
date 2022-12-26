@@ -48,6 +48,7 @@ const SiderMenu = () => {
 
   useEffect(() => {
     setActiveMenu(router.asPath as EagleUse.Menu);
+    console.log(counts);
   }, [router.asPath]);
 
   const items: MenuProps["items"] = useMemo(() => {

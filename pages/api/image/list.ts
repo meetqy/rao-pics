@@ -13,6 +13,9 @@ export default async function handler(req, res) {
       orderBy: {
         modificationTime: "desc",
       },
+      include: {
+        tags: true,
+      },
     }),
     prisma.image.aggregate({
       _sum: {

@@ -114,7 +114,7 @@ const SiderBasic = () => {
             placeholder="暂无标签"
             style={{ width: "100%" }}
             disabled
-            value={JSON.parse(image.tags)}
+            value={image.tags.map((item) => item.id)}
             options={tags.map((item) => ({ label: item.id, value: item.id }))}
           />
         </Col>
