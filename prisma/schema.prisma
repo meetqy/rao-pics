@@ -14,7 +14,6 @@ model Image {
   btime             BigInt
   mtime             BigInt
   ext               String
-  tags              String
   folders           String
   url               String
   annotation        String
@@ -28,6 +27,15 @@ model Image {
   deletedTime       BigInt?
   processingPalette Boolean?
   noThumbnail       Boolean?
+  tags              Tag[]
+}
+
+model Tag {
+  id         String       @id
+  name       String
+  starred    Boolean      @default(false)
+  tagsGroups TagsGroups[]
+  images     Image[]
 }
 
 model Folder {
@@ -40,14 +48,6 @@ model Folder {
   iconColor        String?
   password         String
   passwordTips     String
-}
-
-model Tag {
-  id           String      @id
-  name         String
-  starred      Boolean     @default(false)
-  tagsGroups   TagsGroups? @relation(references: [id], fields: [tagsGroupsId])
-  tagsGroupsId String?
 }
 
 model TagsGroups {

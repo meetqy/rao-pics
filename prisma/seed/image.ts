@@ -8,7 +8,14 @@ const handleImage = (json) => {
     ...json,
     palettes: JSON.stringify(json.palettes),
     folders: JSON.stringify(json.folders),
-    tags: JSON.stringify(json.tags),
+    tags: {
+      create: json.tags.map((tag) => {
+        return {
+          imageId: json.id,
+          tagId: tag,
+        };
+      }),
+    },
   };
 };
 
@@ -20,13 +27,27 @@ export const initImage = (prisma: PrismaClient) => {
     .on("add", (file) => {
       const json = readJSONSync(file);
 
+      const result = {
+        ...json,
+        palettes: JSON.stringify(json.palettes),
+        folders: JSON.stringify(json.folders),
+        tags: {
+          connectOrCreate: json.tags.map((tag) => ({
+            where: {
+              id: tag,
+            },
+            create: { id: tag, name: tag },
+          })),
+        },
+      };
+
       prisma.image
         .upsert({
           where: {
             id: json.id,
           },
-          update: handleImage(json),
-          create: handleImage(json),
+          update: result,
+          create: result,
         })
         .then((image) => {
           // console.log("init image with id: ", image.id);
