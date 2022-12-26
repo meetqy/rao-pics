@@ -47,8 +47,8 @@ const SiderMenu = () => {
   const counts = useRecoilValue(countState);
 
   useEffect(() => {
-    setActiveMenu(router.asPath as EagleUse.Menu);
-    console.log(counts);
+    const asPath = router.asPath as EagleUse.Menu;
+    setActiveMenu(asPath.includes("/tags") ? "/tags" : asPath);
   }, [router.asPath]);
 
   const items: MenuProps["items"] = useMemo(() => {
@@ -59,11 +59,7 @@ const SiderMenu = () => {
         "/not-tag",
         <FileUnknownOutlined />
       ),
-      getItem(
-        handleLabel("标签管理", counts.tags),
-        "/tags/mangage",
-        <TagsOutlined />
-      ),
+      getItem(handleLabel("标签管理", counts.tags), "/tags", <TagsOutlined />),
       getItem(
         handleLabel("回收站", counts.recycle),
         "/recycle",
@@ -98,7 +94,7 @@ const SiderMenu = () => {
       style={{ borderRight: 0 }}
       onSelect={(e) => {
         setActiveImage(undefined);
-        router.push(e.key);
+        router.push(e.key === "/tags" ? e.key + "/manage" : e.key);
       }}
     />
   );

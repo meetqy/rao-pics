@@ -99,19 +99,21 @@ export default function Page() {
 
   // 标签管理
   useEffect(() => {
-    setTagsCollection({
-      ...tagsCollection,
-      manage: tagsArrayToJson(tags),
-    });
+    if (name === "manage" && !tagsCollection.manage) {
+      setTagsCollection({
+        ...tagsCollection,
+        manage: tagsArrayToJson(tags),
+      });
 
-    items[0] = getItem(
-      handleLabel("标签管理", tags.length),
-      "/tags/manage",
-      <AppstoreFilled />
-    );
+      items[0] = getItem(
+        handleLabel("标签管理", tags.length),
+        "/tags/manage",
+        <AppstoreFilled />
+      );
 
-    setItems([...items]);
-  }, [name, tags]);
+      setItems([...items]);
+    }
+  }, [name, tags, tagsCollection]);
 
   useEffect(() => {
     if (name === "no" && !tagsCollection.no) {
