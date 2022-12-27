@@ -61,8 +61,6 @@ const SiderBasic = () => {
     );
   }
 
-  console.log(image);
-
   return (
     <div style={{ padding: 10 }}>
       <Row justify={"center"}>

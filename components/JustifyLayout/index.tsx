@@ -26,9 +26,16 @@ interface Props {
   onLoadmore: () => void;
   isLoad: boolean;
   isEnd?: boolean;
+  header?: JSX.Element;
 }
 
-const JustifyLayout = ({ images, onLoadmore, isLoad, isEnd }: Props) => {
+const JustifyLayout = ({
+  images,
+  onLoadmore,
+  isLoad,
+  isEnd,
+  header,
+}: Props) => {
   const [layoutPos, setLayoutPos] = useState<JustifiedLayoutResult>();
   const [activeImage, setActiveImage] = useRecoilState(activeImageState);
   const { token } = theme.useToken();
@@ -65,10 +72,10 @@ const JustifyLayout = ({ images, onLoadmore, isLoad, isEnd }: Props) => {
         overflowY: "scroll",
         overflowX: "hidden",
         height: "100%",
-        paddingLeft: 5,
       }}
     >
-      <Layout.Content style={{ position: "relative" }}>
+      {header}
+      <Layout.Content style={{ position: "relative", paddingLeft: 5 }}>
         <div
           style={{
             height: layoutPos.containerHeight,
@@ -76,6 +83,7 @@ const JustifyLayout = ({ images, onLoadmore, isLoad, isEnd }: Props) => {
         >
           {layoutPos.boxes.map((item, i: number) => {
             const image = images[i];
+            if (!image) return null;
             const palettes: EagleUse.ImagePalette = JSON.parse(image.palettes);
 
             return (

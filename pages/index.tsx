@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
+import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 
 const Page = () => {
   const [images, setImages] = useState<EagleUse.Image[]>([]);
@@ -9,18 +10,22 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [counts, setCounts] = useRecoilState(countState);
+  const [params, setParams] = useState(undefined);
 
   const getImageList = () => {
     fetch(`/api/image/list?page=${page}&pageSize=${pageSize}`, {
       method: "post",
+      body: JSON.stringify(params),
     })
       .then((res) => res.json())
       .then(({ data, count }) => {
         setImages(page === 1 ? data : images.concat(data));
-        setCounts({
-          ...counts,
-          all: count,
-        });
+        if (!params) {
+          setCounts({
+            ...counts,
+            all: count,
+          });
+        }
 
         setIsLoad(false);
       });
@@ -28,9 +33,11 @@ const Page = () => {
 
   useEffect(() => {
     getImageList();
-  }, [page]);
+  }, [page, params]);
 
   if (!images) return null;
+
+  console.log(counts);
 
   return (
     <JustifyLayout
@@ -41,6 +48,15 @@ const Page = () => {
         setPage(page + 1);
         setIsLoad(true);
       }}
+      header={
+        <JustifyLayoutSearch
+          count={counts.all}
+          onChange={(params) => {
+            setParams(params);
+            setPage(1);
+          }}
+        />
+      }
     />
   );
 };
