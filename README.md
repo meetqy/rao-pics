@@ -60,6 +60,7 @@ pnpm run dev
 - sqlite 数据文件可视化展示
 - 基于 prisma，更加简单的使用
 - library 静态资源托管
+- 启动项目，随时更新 db 数据
 
 ### 页面
 
