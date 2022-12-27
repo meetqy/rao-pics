@@ -61,6 +61,8 @@ const SiderBasic = () => {
     );
   }
 
+  console.log(image);
+
   return (
     <div style={{ padding: 10 }}>
       <Row justify={"center"}>
@@ -114,7 +116,7 @@ const SiderBasic = () => {
             placeholder="暂无标签"
             style={{ width: "100%" }}
             disabled
-            value={image.tags.map((item) => item.id)}
+            value={image?.tags ? image.tags.map((item) => item.id) : []}
             options={tags.map((item) => ({ label: item.id, value: item.id }))}
           />
         </Col>

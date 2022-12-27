@@ -18,7 +18,7 @@ namespace EagleUse {
     mtime: number;
     ext: string;
     // json字符串
-    tags: Tag[];
+    tags?: Tag[];
     folders: string;
     url: string;
     annotation: string;
