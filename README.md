@@ -52,6 +52,15 @@ pnpm run create:symlink
 pnpm run dev
 ```
 
+# 🎯 起点
+
+下面两个项目是该项目的起点，有着特殊的意义，尽管用起来很麻烦！！！
+
+- json-server 实现 eagle 查询 api 👉🏻 [eagle-api](https://github.com/meetqy/eagle-api)
+- eagle-web 版本 👉🏻 [eagle-web](https://github.com/meetqy/eagle-web)
+
+> 想要完整跑起来，你需要同时启动两个项目。
+
 # 📚 功能列表
 
 ### 基础功能
