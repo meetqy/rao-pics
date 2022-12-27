@@ -1,11 +1,12 @@
 import { tagsState } from "@/store";
 import { Col, Layout, Row, theme, Breadcrumb, Select } from "antd";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 
 interface Props {
   onChange?: (params: Params) => void;
   count?: number;
+  params?: Params;
 }
 
 interface Params {
@@ -16,13 +17,7 @@ const JustifyLayoutSearch = (props: Props) => {
   const { token } = theme.useToken();
   const tags = useRecoilValue(tagsState);
 
-  const [params, setParams] = useState<Params>({
-    tags: [],
-  });
-
-  useEffect(() => {
-    props.onChange && props.onChange(params);
-  }, [params]);
+  const params = useMemo(() => props?.params || { tags: [] }, [props.params]);
 
   return (
     <Layout.Header
@@ -57,7 +52,7 @@ const JustifyLayoutSearch = (props: Props) => {
             }))}
             maxTagCount={1}
             onChange={(e) => {
-              setParams({
+              props?.onChange({
                 ...params,
                 tags: e,
               });

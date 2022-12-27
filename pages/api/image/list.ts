@@ -17,7 +17,6 @@ export default async function handler(req, res) {
       },
     };
   }
-  console.log(where);
 
   const [count, data, sum] = await Promise.all([
     prisma.image.count({
