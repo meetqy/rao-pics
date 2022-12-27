@@ -23,13 +23,24 @@
 
 # 👀 介绍
 
+## 🎯 起点
+
+下面两个项目是该项目的起点，有着特殊的意义，尽管用起来很麻烦！！！
+
+- json-server 实现 eagle 查询 api 👉🏻 [eagle-api](https://github.com/meetqy/eagle-api)
+- eagle-web 版本 👉🏻 [eagle-web](https://github.com/meetqy/eagle-web)
+
+> 想要完整跑起来，你需要同时启动两个项目。
+
+## 📷 截图
+
 **高度还原 Eagle**
 ![](./readme/1.jpg)
 
-**可视化数据展示**
+**可视化数据&结构展示**
 ![](./readme/2.jpg)
 
-**更好的数据管理及迁移**
+**数据管理及迁移**
 ![](./readme/3.jpg)
 
 # 🚀 本地安装
@@ -51,15 +62,6 @@ pnpm run create:symlink
 # 启动项目
 pnpm run dev
 ```
-
-# 🎯 起点
-
-下面两个项目是该项目的起点，有着特殊的意义，尽管用起来很麻烦！！！
-
-- json-server 实现 eagle 查询 api 👉🏻 [eagle-api](https://github.com/meetqy/eagle-api)
-- eagle-web 版本 👉🏻 [eagle-web](https://github.com/meetqy/eagle-web)
-
-> 想要完整跑起来，你需要同时启动两个项目。
 
 # 📚 功能列表
 
