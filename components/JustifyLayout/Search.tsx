@@ -19,6 +19,13 @@ const JustifyLayoutSearch = (props: Props) => {
 
   const params = useMemo(() => props?.params || { tags: [] }, [props.params]);
 
+  const onChange = (tags: string[]) => {
+    props?.onChange({
+      ...params,
+      tags,
+    });
+  };
+
   return (
     <Layout.Header
       style={{
@@ -52,12 +59,10 @@ const JustifyLayoutSearch = (props: Props) => {
               value: item.id,
             }))}
             maxTagCount={1}
-            onChange={(e) => {
-              props?.onChange({
-                ...params,
-                tags: e,
-              });
+            onClear={() => {
+              onChange([]);
             }}
+            onChange={onChange}
           />
         </Col>
       </Row>

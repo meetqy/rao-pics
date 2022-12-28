@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
@@ -6,19 +6,21 @@ import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useRouter } from "next/router";
 import _ from "lodash";
 
+interface Params {
+  body: {
+    tags: string[];
+  };
+  page: number;
+  pageSize: number;
+}
+
 const Page = () => {
   const router = useRouter();
 
   const [images, setImages] = useState<EagleUse.Image[]>([]);
-  const isLoad = useRef<boolean>(false);
   const [counts, setCounts] = useRecoilState(countState);
-  const [params, setParams] = useState<{
-    body: {
-      tags: string[];
-    };
-    page: number;
-    pageSize: number;
-  }>({
+  const isLoad = useRef(false);
+  const [params, setParams] = useState<Params>({
     body: {
       tags: [],
     },
@@ -26,49 +28,59 @@ const Page = () => {
     pageSize: 50,
   });
 
-  const getImageList = () => {
+  const getImageList = (_params: Params) => {
+    if (isLoad.current) return;
+
     isLoad.current = true;
-    fetch(`/api/image/list?page=${params.page}&pageSize=${params.pageSize}`, {
+    fetch(`/api/image/list?page=${_params.page}&pageSize=${_params.pageSize}`, {
       method: "post",
-      body: JSON.stringify(params.body),
+      body: JSON.stringify(_params.body),
     })
       .then((res) => res.json())
       .then(({ data, count }) => {
-        setImages(params.page === 1 ? data : images.concat(data));
+        setImages(_params.page === 1 ? data : images.concat(data));
         setCounts({
           ...counts,
           all: count,
         });
+        setParams(_params);
         isLoad.current = false;
       });
   };
 
   useEffect(() => {
     const tag = router.query.tag ? [router.query.tag as string] : [];
-    if (!_.isEqual(params.body.tags, tag)) {
-      return setParams({
-        ...params,
-        body: {
-          ...params.body,
-          tags: tag,
-        },
-      });
-    }
 
-    if (!isLoad.current) {
-      getImageList();
-    }
-  }, [params, router.query]);
+    const newParams = {
+      ...params,
+      body: {
+        ...params.body,
+        tags: tag,
+      },
+    };
+
+    if (_.isEqual(newParams, params)) return;
+
+    getImageList(newParams);
+  }, [router.query]);
+
+  useEffect(() => {
+    getImageList(params);
+    return () => {
+      params.body.tags = [];
+      params.page = 1;
+    };
+  }, []);
 
   if (!images) return null;
 
   return (
     <JustifyLayout
       images={images}
-      isLoad={isLoad.current}
       isEnd={images.length === counts["all"]}
+      isLoad={isLoad.current}
       onLoadmore={() => {
-        setParams({
+        getImageList({
           ...params,
           page: params.page + 1,
         });
@@ -78,7 +90,7 @@ const Page = () => {
           params={params.body}
           count={counts.all}
           onChange={(body) => {
-            setParams({
+            getImageList({
               ...params,
               body,
               page: 1,

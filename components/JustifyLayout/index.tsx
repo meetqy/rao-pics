@@ -24,7 +24,7 @@ interface JustifiedLayoutResult {
 interface Props {
   images: EagleUse.Image[];
   onLoadmore: () => void;
-  isLoad: boolean;
+  isLoad?: boolean;
   isEnd?: boolean;
   header?: JSX.Element;
 }
