@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
+import { useRouter } from "next/router";
+import _ from "lodash";
 
 const Page = () => {
+  const router = useRouter();
+
   const [images, setImages] = useState<EagleUse.Image[]>([]);
-  const [isLoad, setIsLoad] = useState<boolean>(false);
+  const isLoad = useRef<boolean>(false);
   const [counts, setCounts] = useRecoilState(countState);
   const [params, setParams] = useState<{
     body: {
@@ -23,7 +27,7 @@ const Page = () => {
   });
 
   const getImageList = () => {
-    setIsLoad(true);
+    isLoad.current = true;
     fetch(`/api/image/list?page=${params.page}&pageSize=${params.pageSize}`, {
       method: "post",
       body: JSON.stringify(params.body),
@@ -35,19 +39,33 @@ const Page = () => {
           ...counts,
           all: count,
         });
-
-        setIsLoad(false);
+        isLoad.current = false;
       });
   };
 
-  useEffect(() => getImageList, [params]);
+  useEffect(() => {
+    const tag = router.query.tag ? [router.query.tag as string] : [];
+    if (!_.isEqual(params.body.tags, tag)) {
+      return setParams({
+        ...params,
+        body: {
+          ...params.body,
+          tags: tag,
+        },
+      });
+    }
+
+    if (!isLoad.current) {
+      getImageList();
+    }
+  }, [params, router.query]);
 
   if (!images) return null;
 
   return (
     <JustifyLayout
       images={images}
-      isLoad={isLoad}
+      isLoad={isLoad.current}
       isEnd={images.length === counts["all"]}
       onLoadmore={() => {
         setParams({

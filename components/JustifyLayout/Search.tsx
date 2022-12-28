@@ -43,6 +43,7 @@ const JustifyLayoutSearch = (props: Props) => {
         <Col>
           <Select
             mode="tags"
+            allowClear
             placeholder="按标签筛选"
             value={params.tags}
             style={{ minWidth: 120 }}

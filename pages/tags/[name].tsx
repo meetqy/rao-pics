@@ -217,7 +217,13 @@ export default function Page() {
           <Row gutter={[10, 10]}>
             {item.map((tag) => (
               <Col key={tag.id}>
-                <Button size="small" shape="round">
+                <Button
+                  size="small"
+                  shape="round"
+                  onClick={() => {
+                    router.push(`/?tag=${tag.id}`);
+                  }}
+                >
                   {tag.id}
                   <Typography.Text
                     type="secondary"

@@ -47,8 +47,8 @@ const SiderMenu = () => {
   const counts = useRecoilValue(countState);
 
   useEffect(() => {
-    const asPath = router.asPath as EagleUse.Menu;
-    setActiveMenu(asPath.includes("/tags") ? "/tags" : asPath);
+    const pathname = router.pathname as EagleUse.Menu;
+    setActiveMenu(pathname.includes("/tags") ? "/tags" : pathname);
   }, [router.asPath]);
 
   const items: MenuProps["items"] = useMemo(() => {
