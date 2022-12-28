@@ -13,6 +13,7 @@ export default async function handler(_req, res) {
         starred: true,
       },
       include: {
+        tagsGroups: true,
         _count: {
           select: {
             images: true,

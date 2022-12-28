@@ -17,6 +17,7 @@ export default async function handler(_req, res) {
         },
       },
       include: {
+        tagsGroups: true,
         _count: {
           select: {
             images: true,
