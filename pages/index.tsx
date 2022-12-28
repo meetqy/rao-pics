@@ -57,6 +57,7 @@ const Page = () => {
       }}
       header={
         <JustifyLayoutSearch
+          params={params.body}
           count={counts.all}
           onChange={(body) => {
             setParams({
