@@ -5,6 +5,7 @@ export default async function handler(_req, res) {
     prisma.tag.count(),
     prisma.tag.findMany({
       include: {
+        tagsGroups: true,
         _count: {
           select: {
             images: true,

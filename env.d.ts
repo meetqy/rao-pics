@@ -49,5 +49,12 @@ namespace EagleUse {
     _count: {
       images: number;
     };
+    tagsGroups: TagsGroupsItem[];
+  }
+
+  export interface TagsGroupsItem {
+    id: string;
+    name: string;
+    color?: string;
   }
 }

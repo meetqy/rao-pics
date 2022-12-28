@@ -6,19 +6,20 @@ import {
   TagsFilled,
 } from "@ant-design/icons";
 import {
-  Button,
   Col,
   Divider,
   Layout,
   Menu,
   MenuProps,
   Row,
+  Tag,
   Typography,
 } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { pinyin } from "@/hooks";
+import Link from "next/link";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -199,6 +200,7 @@ export default function Page() {
 
     return result.map((k, index) => {
       const item = tagJson[k];
+
       return (
         <div key={k}>
           <Row>
@@ -217,22 +219,22 @@ export default function Page() {
           <Row gutter={[10, 10]}>
             {item.map((tag) => (
               <Col key={tag.id}>
-                <Button
-                  size="small"
-                  shape="round"
-                  onClick={() => {
-                    router.push(`/?tag=${tag.id}`);
-                  }}
+                <Tag
+                  color={
+                    tag.tagsGroups.length ? tag.tagsGroups[0].color : "default"
+                  }
                 >
-                  {tag.id}
-                  <Typography.Text
-                    type="secondary"
-                    strong
-                    style={{ marginLeft: 5 }}
-                  >
-                    {tag._count.images}
-                  </Typography.Text>
-                </Button>
+                  <Link href={`/?tag=${tag.id}`}>
+                    {tag.id}
+                    <Typography.Text
+                      type="secondary"
+                      strong
+                      style={{ marginLeft: 5 }}
+                    >
+                      {tag._count.images}
+                    </Typography.Text>
+                  </Link>
+                </Tag>
               </Col>
             ))}
           </Row>
