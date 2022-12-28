@@ -266,7 +266,10 @@ export default function Page() {
             }}
           />
         </Layout.Sider>
-        <Layout.Content style={{ padding: 20, overflowY: "scroll" }}>
+        <Layout.Content
+          className="scroll-bar"
+          style={{ padding: 20, overflowY: "scroll" }}
+        >
           {tagsContentElement(tagsCollection[name] || {})}
         </Layout.Content>
       </Layout>
