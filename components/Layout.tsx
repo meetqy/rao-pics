@@ -3,7 +3,7 @@ import zhCN from "antd/locale/zh_CN";
 import "antd/dist/reset.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeMenuState, countState, tagsState } from "@/store";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import Head from "next/head";
@@ -13,17 +13,29 @@ export const MyLayout = ({ children }) => {
   const [_tags, setTags] = useRecoilState(tagsState);
   const [counts, setCount] = useRecoilState(countState);
   const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
+  const isInit = {
+    tags: false,
+  };
 
-  useEffect(() => {
+  const getTag = () => {
+    isInit.tags = true;
     fetch("/api/tag")
       .then((res) => res.json())
       .then(({ count, data }) => {
-        setCount({
-          ...counts,
-          tags: count,
+        setCount((cur) => {
+          return {
+            ...cur,
+            tags: count,
+          };
         });
         setTags(data);
       });
+  };
+
+  useEffect(() => {
+    if (!isInit.tags) {
+      getTag();
+    }
   }, []);
 
   return (

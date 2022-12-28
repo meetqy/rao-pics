@@ -39,9 +39,11 @@ const Page = () => {
       .then((res) => res.json())
       .then(({ data, count }) => {
         setImages(_params.page === 1 ? data : images.concat(data));
-        setCounts({
-          ...counts,
-          all: count,
+        setCounts((cur) => {
+          return {
+            ...cur,
+            all: count,
+          };
         });
         setParams(_params);
         isLoad.current = false;
@@ -77,7 +79,7 @@ const Page = () => {
   return (
     <JustifyLayout
       images={images}
-      isEnd={images.length === counts["all"]}
+      isEnd={images.length === counts.all}
       isLoad={isLoad.current}
       onLoadmore={() => {
         getImageList({
