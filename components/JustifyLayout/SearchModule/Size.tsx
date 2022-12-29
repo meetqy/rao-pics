@@ -53,7 +53,7 @@ const Size = (props: Props) => {
     }
 
     let t = w + ", " + h;
-    t = t.replace(/(,\s)$/, "");
+    t = t.replace(/(,\s)$/, "").replace(/^(,\s)/, "");
 
     return t || "尺寸";
   }, [value]);
