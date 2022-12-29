@@ -2,27 +2,26 @@ import { tagsState } from "@/store";
 import { Col, Layout, Row, theme, Breadcrumb, Select } from "antd";
 import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
+import SearchModule from "./SearchModule";
+import { SearchModuleParams } from "./types";
 
 interface Props {
-  onChange?: (params: Params) => void;
+  onChange?: (params: SearchModuleParams) => void;
   count?: number;
-  params?: Params;
-}
-
-interface Params {
-  tags: string[];
+  params?: SearchModuleParams;
 }
 
 const JustifyLayoutSearch = (props: Props) => {
   const { token } = theme.useToken();
   const tags = useRecoilValue(tagsState);
 
-  const params = useMemo(() => props?.params || { tags: [] }, [props.params]);
+  const params = useMemo(() => props?.params, [props.params]);
 
-  const onChange = (tags: string[]) => {
+  const onChange = ({ tags, size }: SearchModuleParams) => {
     props?.onChange({
       ...params,
       tags,
+      size,
     });
   };
 
@@ -46,9 +45,10 @@ const JustifyLayoutSearch = (props: Props) => {
           </Breadcrumb>
         </Col>
       </Row>
-      <Row style={{ height: 36 }}>
+      <Row style={{ height: 36 }} gutter={[10, 10]}>
         <Col>
           <Select
+            size="small"
             mode="tags"
             allowClear
             placeholder="按标签筛选"
@@ -59,10 +59,19 @@ const JustifyLayoutSearch = (props: Props) => {
               value: item.id,
             }))}
             maxTagCount={1}
-            onClear={() => {
-              onChange([]);
-            }}
-            onChange={onChange}
+            onClear={() => onChange({ tags: [] })}
+            onChange={(e) => onChange({ ...params, tags: e })}
+          />
+        </Col>
+
+        <Col>
+          <SearchModule.Size
+            onChange={(e) =>
+              onChange({
+                ...params,
+                size: e,
+              })
+            }
           />
         </Col>
       </Row>

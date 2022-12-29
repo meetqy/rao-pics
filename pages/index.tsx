@@ -5,11 +5,10 @@ import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useRouter } from "next/router";
 import _ from "lodash";
+import { SearchModuleParams } from "@/components/JustifyLayout/types";
 
 interface Params {
-  body: {
-    tags: string[];
-  };
+  body: SearchModuleParams;
   page: number;
   pageSize: number;
 }
@@ -53,6 +52,7 @@ const Page = () => {
   useEffect(() => {
     const tag = router.query.tag ? [router.query.tag as string] : [];
 
+    // 标签管理跳转到按标签搜索，通过router.query判断tag
     const newParams = {
       ...params,
       body: {
