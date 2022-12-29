@@ -1,7 +1,5 @@
-import { tagsState } from "@/store";
 import { Col, Layout, Row, theme, Breadcrumb, Select } from "antd";
 import { useMemo } from "react";
-import { useRecoilValue } from "recoil";
 import SearchModule from "./SearchModule";
 
 interface Props {
@@ -12,7 +10,6 @@ interface Props {
 
 const JustifyLayoutSearch = (props: Props) => {
   const { token } = theme.useToken();
-  const tags = useRecoilValue(tagsState);
 
   const params = useMemo(() => props?.params, [props.params]);
 
@@ -46,20 +43,13 @@ const JustifyLayoutSearch = (props: Props) => {
       </Row>
       <Row style={{ height: 36 }} gutter={[10, 10]}>
         <Col>
-          <Select
-            size="small"
-            mode="tags"
-            allowClear
-            placeholder="按标签筛选"
-            value={params.tags}
-            style={{ minWidth: 120 }}
-            options={tags.map((item) => ({
-              label: item.id,
-              value: item.id,
-            }))}
-            maxTagCount={1}
-            onClear={() => onChange({ tags: [] })}
-            onChange={(e) => onChange({ ...params, tags: e })}
+          <SearchModule.Tag
+            onChange={(e) => {
+              onChange({
+                ...params,
+                tags: e,
+              });
+            }}
           />
         </Col>
 

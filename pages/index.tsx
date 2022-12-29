@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
-import { useRouter } from "next/router";
-import _ from "lodash";
 import { useRequest } from "ahooks";
 
 interface Params {
@@ -14,15 +12,11 @@ interface Params {
 }
 
 const Page = () => {
-  const router = useRouter();
-
   const [images, setImages] = useState<EagleUse.Image[]>([]);
   const [counts, setCounts] = useRecoilState(countState);
   const isLoad = useRef(false);
   const [params, setParams] = useState<Params>({
-    body: {
-      tags: [],
-    },
+    body: {},
     page: 1,
     pageSize: 50,
   });
@@ -64,34 +58,9 @@ const Page = () => {
   };
 
   const { run } = useRequest(getImageList, {
-    debounceWait: 500,
+    debounceWait: 300,
     manual: true,
   });
-
-  useEffect(() => {
-    const tag = router.query.tag ? [router.query.tag as string] : [];
-
-    // 标签管理跳转到按标签搜索，通过router.query判断tag
-    const newParams = {
-      ...params,
-      body: {
-        ...params.body,
-        tags: tag,
-      },
-    };
-
-    if (_.isEqual(newParams, params)) return;
-
-    getImageList(newParams);
-  }, [router.query]);
-
-  useEffect(() => {
-    getImageList(params);
-    return () => {
-      params.body.tags = [];
-      params.page = 1;
-    };
-  }, []);
 
   if (!images) return null;
 
@@ -116,11 +85,6 @@ const Page = () => {
               body,
               page: 1,
             });
-            // getImageList({
-            //   ...params,
-            //   body,
-            //   page: 1,
-            // });
           }}
         />
       }
