@@ -1,25 +1,69 @@
 import prisma from "@/lib/prisma";
 
 // 尺寸
-const hanleSize = (body: EagleUse.SearchParams) => {};
+const handleSize = ({ size }: EagleUse.SearchParams) => {
+  if (!size) return [];
+
+  const { width, height } = size;
+
+  const and = [];
+
+  // 宽度
+  if (width.min) {
+    and.push({
+      width: { gte: width.min },
+    });
+  }
+
+  if (width.max) {
+    and.push({
+      width: { lte: width.max },
+    });
+  }
+
+  if (height.min) {
+    and.push({
+      height: { gte: height.min },
+    });
+  }
+
+  if (height.max) {
+    and.push({
+      height: { gte: height.max },
+    });
+  }
+
+  return and;
+};
+
+// 标签
+const handleTags = ({ tags }: EagleUse.SearchParams) => {
+  const and = [];
+
+  if (tags && tags.length > 0) {
+    and.push({
+      tags: {
+        some: {
+          id: {
+            in: tags,
+          },
+        },
+      },
+    });
+  }
+
+  return and;
+};
 
 export default async function handler(req, res) {
   // findMany参考：https://www.prisma.io/docs/reference/api-reference/prisma-client-reference?query=t&page=1#findmany
   const page = +(req.query.page || 1);
   const pageSize = +(req.query.pageSize || 50);
-  const body = JSON.parse(req.body || "{}");
+  const body = JSON.parse(req.body || "{}") as EagleUse.SearchParams;
 
-  const where = {};
-
-  if (body.tags && body.tags.length > 0) {
-    where["tags"] = {
-      some: {
-        id: {
-          in: body.tags,
-        },
-      },
-    };
-  }
+  const where = {
+    AND: [...handleTags(body), ...handleSize(body)],
+  };
 
   const [count, data, sum] = await Promise.all([
     prisma.image.count({
@@ -50,5 +94,6 @@ export default async function handler(req, res) {
     page,
     pageSize,
     data,
+    where,
   });
 }

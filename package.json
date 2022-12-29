@@ -25,6 +25,7 @@
     "@ant-design/icons": "^4.8.0",
     "@prisma/client": "4.7.1",
     "@types/justified-layout": "^4.1.0",
+    "ahooks": "^3.7.4",
     "antd": "^5.0.7",
     "chokidar": "^3.5.3",
     "encoding": "^0.1.13",

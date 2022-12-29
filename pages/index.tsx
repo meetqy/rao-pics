@@ -5,6 +5,7 @@ import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useRouter } from "next/router";
 import _ from "lodash";
+import { useRequest } from "ahooks";
 
 interface Params {
   body: EagleUse.SearchParams;
@@ -26,27 +27,46 @@ const Page = () => {
     pageSize: 50,
   });
 
-  const getImageList = (_params: Params) => {
-    if (isLoad.current) return;
+  const getImageList = (
+    _params: Params
+  ): Promise<{
+    data: EagleUse.Image[];
+    count: number;
+  } | null> => {
+    return new Promise((resolve) => {
+      if (isLoad.current) return resolve(null);
 
-    isLoad.current = true;
-    fetch(`/api/image/list?page=${_params.page}&pageSize=${_params.pageSize}`, {
-      method: "post",
-      body: JSON.stringify(_params.body),
-    })
-      .then((res) => res.json())
-      .then(({ data, count }) => {
-        setImages(_params.page === 1 ? data : images.concat(data));
-        setCounts((cur) => {
-          return {
-            ...cur,
-            all: count,
-          };
+      isLoad.current = true;
+      fetch(
+        `/api/image/list?page=${_params.page}&pageSize=${_params.pageSize}`,
+        {
+          method: "post",
+          body: JSON.stringify(_params.body),
+        }
+      )
+        .then((res) => res.json())
+        .then(({ data, count }) => {
+          setImages(_params.page === 1 ? data : images.concat(data));
+          setCounts((cur) => {
+            return {
+              ...cur,
+              all: count,
+            };
+          });
+          setParams(_params);
+          isLoad.current = false;
+          resolve({
+            data,
+            count,
+          });
         });
-        setParams(_params);
-        isLoad.current = false;
-      });
+    });
   };
+
+  const { run } = useRequest(getImageList, {
+    debounceWait: 500,
+    manual: true,
+  });
 
   useEffect(() => {
     const tag = router.query.tag ? [router.query.tag as string] : [];
@@ -91,11 +111,16 @@ const Page = () => {
           params={params.body}
           count={counts.all}
           onChange={(body) => {
-            getImageList({
+            run({
               ...params,
               body,
               page: 1,
             });
+            // getImageList({
+            //   ...params,
+            //   body,
+            //   page: 1,
+            // });
           }}
         />
       }
