@@ -57,4 +57,20 @@ namespace EagleUse {
     name: string;
     color?: string;
   }
+
+  export interface SearchParams {
+    // 标签
+    tags?: string[];
+    //   尺寸
+    size?: {
+      width: {
+        min: number;
+        max: number;
+      };
+      height: {
+        min: number;
+        max: number;
+      };
+    };
+  }
 }

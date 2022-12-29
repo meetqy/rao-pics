@@ -3,12 +3,11 @@ import { Col, Layout, Row, theme, Breadcrumb, Select } from "antd";
 import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import SearchModule from "./SearchModule";
-import { SearchModuleParams } from "./types";
 
 interface Props {
-  onChange?: (params: SearchModuleParams) => void;
+  onChange?: (params: EagleUse.SearchParams) => void;
   count?: number;
-  params?: SearchModuleParams;
+  params?: EagleUse.SearchParams;
 }
 
 const JustifyLayoutSearch = (props: Props) => {
@@ -17,7 +16,7 @@ const JustifyLayoutSearch = (props: Props) => {
 
   const params = useMemo(() => props?.params, [props.params]);
 
-  const onChange = ({ tags, size }: SearchModuleParams) => {
+  const onChange = ({ tags, size }: EagleUse.SearchParams) => {
     props?.onChange({
       ...params,
       tags,

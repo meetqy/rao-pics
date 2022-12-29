@@ -5,10 +5,9 @@ import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useRouter } from "next/router";
 import _ from "lodash";
-import { SearchModuleParams } from "@/components/JustifyLayout/types";
 
 interface Params {
-  body: SearchModuleParams;
+  body: EagleUse.SearchParams;
   page: number;
   pageSize: number;
 }

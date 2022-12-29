@@ -1,14 +1,13 @@
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Col, InputNumber, Popover, Row, Typography } from "antd";
 import { useMemo, useState } from "react";
-import { SearchModuleParams } from "../types";
 
 interface Props {
-  onChange?: (value: SearchModuleParams["size"]) => void;
+  onChange?: (value: EagleUse.SearchParams["size"]) => void;
 }
 
 const Size = (props: Props) => {
-  const [value, setValue] = useState<SearchModuleParams["size"]>({
+  const [value, setValue] = useState<EagleUse.SearchParams["size"]>({
     width: {
       min: 0,
       max: 0,
