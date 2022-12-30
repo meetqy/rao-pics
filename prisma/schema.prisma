@@ -46,6 +46,7 @@ model Folder {
   modificationTime BigInt
   tags             String
   iconColor        String?
+  icon             String?
   password         String
   passwordTips     String
 }
