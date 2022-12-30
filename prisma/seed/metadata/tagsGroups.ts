@@ -132,8 +132,6 @@ const TagGroup = {
             tagsGroup.tags
           );
 
-          console.log(deleteTags);
-
           prisma.tagsGroups
             .update({
               where: {
@@ -151,7 +149,11 @@ const TagGroup = {
               },
             })
             .then((folder) => {
-              console.log("update folder with id: ", folder.id);
+              console.log(
+                "disconnect folder/tags with id: ",
+                folder.id,
+                deleteTags
+              );
             });
         }
       }
