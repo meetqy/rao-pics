@@ -1,7 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 
-// 最后一次的文件，
+// folder 修改缓存
+// 1.add 文件监听中会加入到lastFolderCache
+// 2.change 更新lastFolderCache
 // 如果删除了，进行比对
 // 删除sqlite中的数据
 let lastFoldersCache = [];
@@ -38,7 +40,6 @@ const handleFolderItem = (json) => {
         },
       })),
     },
-    // tags: JSON.stringify(json.tags),
   };
 };
 
@@ -65,7 +66,7 @@ const Folder = {
   change: (prisma: PrismaClient, json: { [key in string]: any }) => {
     const newFolders = demotionFolder(json["folders"]);
 
-    // 当次操作的状态 >0 新增 || <0 删除 =0 修改
+    // 当次操作的状态 >0 新增, <0 删除, =0 修改
     const optStatus = newFolders.length - lastFoldersCache.length;
 
     let diffFolder = [];
