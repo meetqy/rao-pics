@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { readJSONSync } from "fs-extra";
 import _ from "lodash";
 
 // 最后一次的文件，
@@ -28,7 +27,18 @@ const demotionFolder = (folders: { [key: string]: string }[]) => {
 const handleFolderItem = (json) => {
   return {
     ...json,
-    tags: JSON.stringify(json.tags),
+    tags: {
+      connectOrCreate: json.tags.map((tag) => ({
+        where: {
+          id: tag,
+        },
+        create: {
+          name: tag,
+          id: tag,
+        },
+      })),
+    },
+    // tags: JSON.stringify(json.tags),
   };
 };
 

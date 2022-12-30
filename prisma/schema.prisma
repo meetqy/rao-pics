@@ -36,6 +36,7 @@ model Tag {
   starred    Boolean      @default(false)
   tagsGroups TagsGroups[]
   images     Image[]
+  floders    Folder[]
 }
 
 model Folder {
@@ -44,7 +45,7 @@ model Folder {
   description      String
   pid              String?
   modificationTime BigInt
-  tags             String
+  tags             Tag[]
   iconColor        String?
   icon             String?
   password         String
