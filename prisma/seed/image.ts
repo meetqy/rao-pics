@@ -7,14 +7,15 @@ const handleImage = (json) => {
   return {
     ...json,
     palettes: JSON.stringify(json.palettes),
-    folders: JSON.stringify(json.folders),
+    folders: {
+      connect: json.folders.map((folder) => ({
+        id: folder,
+      })),
+    },
     tags: {
-      create: json.tags.map((tag) => {
-        return {
-          imageId: json.id,
-          tagId: tag,
-        };
-      }),
+      connect: json.tags.map((tag) => ({
+        id: tag,
+      })),
     },
   };
 };
@@ -26,20 +27,7 @@ export const initImage = (prisma: PrismaClient) => {
     .watch(_path)
     .on("add", (file) => {
       const json = readJSONSync(file);
-
-      const result = {
-        ...json,
-        palettes: JSON.stringify(json.palettes),
-        folders: JSON.stringify(json.folders),
-        tags: {
-          connectOrCreate: json.tags.map((tag) => ({
-            where: {
-              id: tag,
-            },
-            create: { id: tag, name: tag },
-          })),
-        },
-      };
+      const result = handleImage(json);
 
       prisma.image
         .upsert({
@@ -57,14 +45,35 @@ export const initImage = (prisma: PrismaClient) => {
       const json = readJSONSync(file);
 
       prisma.image
-        .update({
+        .findFirst({
           where: {
             id: json.id,
           },
-          data: handleImage(json),
+          include: {
+            tags: true,
+            folders: true,
+          },
         })
-        .then((image) => {
-          console.log("update image with id: ", image.id);
+        .then((old) => {
+          prisma.image
+            .update({
+              where: {
+                id: old.id,
+              },
+              data: {
+                ...json,
+                palettes: JSON.stringify(json.palettes),
+                tags: {
+                  set: json.tags.map((tag) => ({ id: tag })),
+                },
+                folders: {
+                  set: json.folders.map((folder) => ({ id: folder })),
+                },
+              },
+            })
+            .then((image) => {
+              console.log("update image with id: ", image.id);
+            });
         });
     })
     .on("unlink", (file) => {
