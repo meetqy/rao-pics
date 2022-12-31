@@ -1,4 +1,9 @@
-import { activeImageState, activeMenuState, countState } from "@/store";
+import {
+  activeImageState,
+  activeMenuState,
+  countState,
+  foldersState,
+} from "@/store";
 import {
   DeleteOutlined,
   FileImageOutlined,
@@ -7,6 +12,7 @@ import {
   TagsOutlined,
 } from "@ant-design/icons";
 import { Col, Menu, MenuProps, Row, Typography } from "antd";
+import _ from "lodash";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -45,6 +51,7 @@ const SiderMenu = () => {
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
   const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
   const counts = useRecoilValue(countState);
+  const folders = useRecoilValue(foldersState);
 
   useEffect(() => {
     const pathname = router.pathname as EagleUse.Menu;
@@ -69,29 +76,38 @@ const SiderMenu = () => {
         "文件夹",
         "/folders",
         null,
-        [
-          getItem(
-            handleLabel("文件夹1", 0),
-            "/folder/1",
-            <FolderOpenFilled style={{ color: "red" }} />
-          ),
-          getItem(
-            handleLabel("文件夹2", 0),
-            "/folder/2",
-            <FolderOpenFilled style={{ color: "red" }} />
-          ),
-        ],
+        folders.map((folder) => {
+          const { children = [] } = folder;
+          return getItem(
+            handleLabel(folder.name, folder._count.images),
+            `/folder/${folder.id}`,
+            <FolderOpenFilled style={{ color: folder.iconColor }} />,
+            children.length
+              ? children.map((childFolder) =>
+                  getItem(
+                    handleLabel(childFolder.name, childFolder._count.images),
+                    `/folder/${childFolder.id}`,
+                    <FolderOpenFilled
+                      style={{ color: childFolder.iconColor }}
+                    />
+                  )
+                )
+              : null
+          );
+        }),
         "group"
       ),
     ];
-  }, [counts]);
+  }, [counts, folders]);
 
   return (
     <Menu
       mode="inline"
       items={items}
+      expandIcon={<span></span>}
       selectedKeys={[activeMenu]}
       style={{ borderRight: 0 }}
+      inlineIndent={10}
       onSelect={(e) => {
         setActiveImage(undefined);
         router.push(e.key === "/tags" ? e.key + "/manage" : e.key);

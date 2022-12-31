@@ -1,3 +1,5 @@
+export * from "./constant";
+
 import { atom } from "recoil";
 
 export const activeMenuState = atom({
@@ -8,11 +10,6 @@ export const activeMenuState = atom({
 export const activeImageState = atom({
   key: "activeImageState",
   default: undefined as EagleUse.Image,
-});
-
-export const tagsState = atom({
-  key: "tagsState",
-  default: [] as EagleUse.Tag[],
 });
 
 export const countState = atom({

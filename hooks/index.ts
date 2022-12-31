@@ -1,4 +1,5 @@
 export * from "./pinyin";
+export * from "./transform";
 
 export const handleImageUrl = (
   image: EagleUse.Image,

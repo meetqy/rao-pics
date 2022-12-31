@@ -2,22 +2,35 @@ import { ConfigProvider, Layout, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import "antd/dist/reset.css";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeMenuState, countState, tagsState } from "@/store";
+import { activeMenuState, countState, foldersState, tagsState } from "@/store";
 import { useEffect, useMemo, useState } from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import Head from "next/head";
+import { transformFolderToTree } from "@/hooks";
 
 export const MyLayout = ({ children }) => {
   const activeMenu = useRecoilValue(activeMenuState);
   const [_tags, setTags] = useRecoilState(tagsState);
   const [counts, setCount] = useRecoilState(countState);
+  const [_folders, setFolders] = useRecoilState(foldersState);
   const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
   const isInit = {
     tags: false,
+    folders: false,
   };
 
-  const getTag = () => {
+  // 初始化 folderState
+  const initFolder = () => {
+    isInit.folders = true;
+    fetch("/api/folder")
+      .then((res) => res.json())
+      .then(({ data, count }) => {
+        setFolders(transformFolderToTree(data));
+      });
+  };
+
+  const initTag = () => {
     isInit.tags = true;
     fetch("/api/tag")
       .then((res) => res.json())
@@ -34,7 +47,11 @@ export const MyLayout = ({ children }) => {
 
   useEffect(() => {
     if (!isInit.tags) {
-      getTag();
+      initTag();
+    }
+
+    if (!isInit.folders) {
+      initFolder();
     }
   }, []);
 
@@ -59,7 +76,12 @@ export const MyLayout = ({ children }) => {
         <Layout.Sider
           width={240}
           theme="light"
-          style={{ borderRight: "1px solid #eee" }}
+          className="scroll-bar"
+          style={{
+            borderRight: "1px solid #eee",
+            height: "100%",
+            overflowY: "scroll",
+          }}
         >
           <SiderMenu />
         </Layout.Sider>

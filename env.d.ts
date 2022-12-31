@@ -47,6 +47,10 @@ namespace EagleUse {
     icon: any;
     password: string;
     passwordTips: string;
+    children: Folder[];
+    _count: {
+      images: number;
+    };
   }
 
   // 标签
