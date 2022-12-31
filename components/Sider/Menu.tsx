@@ -8,6 +8,7 @@ import {
   DeleteOutlined,
   FileImageOutlined,
   FileUnknownOutlined,
+  FolderFilled,
   FolderOpenFilled,
   TagsOutlined,
 } from "@ant-design/icons";
@@ -61,6 +62,16 @@ const SiderMenu = () => {
     setActiveMenu(pathname.includes("/tags") ? "/tags" : pathname);
   }, [router.asPath]);
 
+  const onFolderIconClick = (folder: EagleUse.Folder) => {
+    if (!folder.children || !folder.children.length) return;
+    const key = `/folder/${folder.id}`;
+    const index = openKeys.indexOf(key);
+
+    index > -1 ? openKeys.splice(index, 1) : openKeys.push(key);
+
+    setOpenKeys([...openKeys]);
+  };
+
   const items: MenuProps["items"] = useMemo(() => {
     return [
       getItem(handleLabel("全部", counts.all), "/", <FileImageOutlined />),
@@ -84,25 +95,23 @@ const SiderMenu = () => {
           return getItem(
             handleLabel(folder.name, folder._count.images),
             `/folder/${folder.id}`,
-            <FolderOpenFilled
-              style={{ color: folder.iconColor }}
-              onClick={(e) => {
-                const key = `/folder/${folder.id}`;
-                const index = openKeys.indexOf(key);
-
-                index > -1 ? openKeys.splice(index, 1) : openKeys.push(key);
-
-                setOpenKeys([...openKeys]);
-              }}
-            />,
+            openKeys.includes(`/folder/${folder.id}`) ? (
+              <FolderOpenFilled
+                style={{ color: folder.iconColor }}
+                onClick={() => onFolderIconClick(folder)}
+              />
+            ) : (
+              <FolderFilled
+                style={{ color: folder.iconColor }}
+                onClick={() => onFolderIconClick(folder)}
+              />
+            ),
             children.length
               ? children.map((childFolder) =>
                   getItem(
                     handleLabel(childFolder.name, childFolder._count.images),
                     `/folder/${childFolder.id}`,
-                    <FolderOpenFilled
-                      style={{ color: childFolder.iconColor }}
-                    />
+                    <FolderFilled style={{ color: childFolder.iconColor }} />
                   )
                 )
               : null,
@@ -115,7 +124,7 @@ const SiderMenu = () => {
         "group"
       ),
     ];
-  }, [counts, folders]);
+  }, [counts, folders, openKeys]);
 
   return (
     <Menu
