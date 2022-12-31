@@ -10,6 +10,7 @@ declare global {
 namespace EagleUse {
   export type Menu = "/" | "/tags" | "/not-tag" | "recycle" | "/folder/";
 
+  // 图片
   export interface Image {
     id: string;
     name: string;
@@ -17,9 +18,6 @@ namespace EagleUse {
     btime: number;
     mtime: number;
     ext: string;
-    // json字符串
-    tags?: Tag[];
-    folders: string;
     url: string;
     annotation: string;
     // 添加日期
@@ -34,14 +32,24 @@ namespace EagleUse {
     processingPalette: string;
     noThumbnail: boolean;
     star: number;
+    tags?: Tag[];
+    folders?: Folder[];
   }
 
-  export interface ImagePalette {
-    color: number[];
-    ratio: number;
-    $$hashKey: string;
+  // 文件夹
+  export interface Folder {
+    id: string;
+    name: string;
+    description: string;
+    pid: any;
+    modificationTime: number;
+    iconColor: any;
+    icon: any;
+    password: string;
+    passwordTips: string;
   }
 
+  // 标签
   export interface Tag {
     id: string;
     name: string;
@@ -50,6 +58,12 @@ namespace EagleUse {
       images: number;
     };
     tagsGroups: TagsGroupsItem[];
+  }
+
+  export interface ImagePalette {
+    color: number[];
+    ratio: number;
+    $$hashKey: string;
   }
 
   export interface TagsGroupsItem {
@@ -72,5 +86,6 @@ namespace EagleUse {
         max: number;
       };
     };
+    includes?: ("tags" | "folders")[];
   }
 }
