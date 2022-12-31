@@ -24,7 +24,8 @@ function getItem(
   key: React.Key,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: "group"
+  type?: "group",
+  onTitleClick?
 ): MenuItem {
   return {
     key,
@@ -32,6 +33,7 @@ function getItem(
     children,
     label,
     type,
+    onTitleClick,
   } as MenuItem;
 }
 
@@ -52,6 +54,7 @@ const SiderMenu = () => {
   const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
   const counts = useRecoilValue(countState);
   const folders = useRecoilValue(foldersState);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
 
   useEffect(() => {
     const pathname = router.pathname as EagleUse.Menu;
@@ -81,7 +84,17 @@ const SiderMenu = () => {
           return getItem(
             handleLabel(folder.name, folder._count.images),
             `/folder/${folder.id}`,
-            <FolderOpenFilled style={{ color: folder.iconColor }} />,
+            <FolderOpenFilled
+              style={{ color: folder.iconColor }}
+              onClick={(e) => {
+                const key = `/folder/${folder.id}`;
+                const index = openKeys.indexOf(key);
+
+                index > -1 ? openKeys.splice(index, 1) : openKeys.push(key);
+
+                setOpenKeys([...openKeys]);
+              }}
+            />,
             children.length
               ? children.map((childFolder) =>
                   getItem(
@@ -92,7 +105,11 @@ const SiderMenu = () => {
                     />
                   )
                 )
-              : null
+              : null,
+            null,
+            (info) => {
+              router.push(info["key"]);
+            }
           );
         }),
         "group"
@@ -107,6 +124,7 @@ const SiderMenu = () => {
       expandIcon={<span></span>}
       selectedKeys={[activeMenu]}
       style={{ borderRight: 0 }}
+      openKeys={openKeys}
       inlineIndent={10}
       onSelect={(e) => {
         setActiveImage(undefined);
