@@ -14,7 +14,6 @@ model Image {
   btime             BigInt
   mtime             BigInt
   ext               String
-  folders           String
   url               String
   annotation        String
   modificationTime  BigInt
@@ -27,6 +26,7 @@ model Image {
   deletedTime       BigInt?
   processingPalette Boolean?
   noThumbnail       Boolean?
+  folders           Folder[]
   tags              Tag[]
 }
 
@@ -45,11 +45,12 @@ model Folder {
   description      String
   pid              String?
   modificationTime BigInt
-  tags             Tag[]
   iconColor        String?
   icon             String?
   password         String
   passwordTips     String
+  tags             Tag[]
+  images           Image[]
 }
 
 model TagsGroups {
