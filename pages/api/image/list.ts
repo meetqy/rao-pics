@@ -55,12 +55,24 @@ const handleTags = ({ tags }: EagleUse.SearchParams) => {
   return and;
 };
 
+// prisma include
+// https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#include
+const handleIncludes = ({ includes }: EagleUse.SearchParams) => {
+  const json = {};
+  (includes || ["folders", "tags"]).forEach((item) => {
+    json[item] = true;
+  });
+
+  return json;
+};
+
 export default async function handler(req, res) {
   // findMany参考：https://www.prisma.io/docs/reference/api-reference/prisma-client-reference?query=t&page=1#findmany
-  const page = +(req.query.page || 1);
-  const pageSize = +(req.query.pageSize || 50);
   const body = JSON.parse(req.body || "{}") as EagleUse.SearchParams;
 
+  const page = +(req.query.page || 1);
+  const pageSize = +(req.query.pageSize || 50);
+  const include = handleIncludes(body);
   const where = {
     AND: [...handleTags(body), ...handleSize(body)],
   };
@@ -75,9 +87,7 @@ export default async function handler(req, res) {
       orderBy: {
         modificationTime: "desc",
       },
-      include: {
-        tags: true,
-      },
+      include,
       where,
     }),
     prisma.image.aggregate({
