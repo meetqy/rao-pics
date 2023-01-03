@@ -12,7 +12,7 @@ import {
   FolderOpenFilled,
   TagsOutlined,
 } from "@ant-design/icons";
-import { Col, Menu, MenuProps, Row, Typography } from "antd";
+import { Col, Menu, MenuProps, Row, theme, Typography } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
@@ -26,7 +26,7 @@ function getItem(
   icon?: React.ReactNode,
   children?: MenuItem[],
   type?: "group",
-  onTitleClick?
+  onTitleClick?: (info: any) => void
 ): MenuItem {
   return {
     key,
@@ -49,20 +49,59 @@ function handleLabel(name: string, desc: number) {
   );
 }
 
+const _constantMenu = ["/not-tag", "/tags", "/folder", "/recycle"];
+
+interface ItemData {
+  title: string;
+  count: number;
+  route: string;
+  icon: JSX.Element;
+  group?: boolean;
+  children?: ItemData[];
+  onTitleClick?;
+}
+
+// 递归生成 菜单data
+const treeRecursion = (data: ItemData[]) => {
+  return data.map((item) => {
+    return getItem(
+      handleLabel(item.title, item.count),
+      item.route,
+      item.icon,
+      item.children && item.children.length > 0
+        ? treeRecursion(item.children)
+        : null,
+      item.group ? "group" : null,
+      item.onTitleClick
+    );
+  });
+};
+
 const SiderMenu = () => {
   const router = useRouter();
+
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
   const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const counts = useRecoilValue(countState);
   const folders = useRecoilValue(foldersState);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
+  const { token } = theme.useToken();
+
+  const route = useMemo(() => {
+    const asPath = router.asPath;
+    if (asPath === "/") return asPath;
+    if (asPath.includes("/folder")) return asPath;
+
+    return _constantMenu.find((item) => asPath.includes(item));
+  }, [router]);
 
   useEffect(() => {
-    const pathname = router.pathname as EagleUse.Menu;
-    setActiveMenu(pathname.includes("/tags") ? "/tags" : pathname);
-  }, [router.asPath]);
+    setActiveMenu(route as EagleUse.Menu);
+  }, [route]);
 
-  const onFolderIconClick = (folder: EagleUse.Folder) => {
+  const onFolderIconClick = (e: MouseEvent, folder: EagleUse.Folder) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!folder.children || !folder.children.length) return;
     const key = `/folder/${folder.id}`;
     const index = openKeys.indexOf(key);
@@ -72,77 +111,113 @@ const SiderMenu = () => {
     setOpenKeys([...openKeys]);
   };
 
-  const items: MenuProps["items"] = useMemo(() => {
+  const itemsData = useMemo(() => {
     return [
-      getItem(handleLabel("全部", counts.all), "/", <FileImageOutlined />),
-      getItem(
-        handleLabel("未标签", counts["not-tag"]),
-        "/not-tag",
-        <FileUnknownOutlined />
-      ),
-      getItem(handleLabel("标签管理", counts.tags), "/tags", <TagsOutlined />),
-      getItem(
-        handleLabel("回收站", counts.recycle),
-        "/recycle",
-        <DeleteOutlined />
-      ),
-      getItem(
-        "文件夹",
-        "/folders",
-        null,
-        folders.map((folder) => {
+      {
+        title: "全部",
+        count: counts.all,
+        route: "/",
+        icon: <FileImageOutlined />,
+      },
+      {
+        title: "未标签",
+        count: counts["not-tag"],
+        route: "/not-tag",
+        icon: <FileUnknownOutlined />,
+      },
+      {
+        title: "标签管理",
+        count: counts.tags,
+        route: "/tags",
+        icon: <TagsOutlined />,
+      },
+      {
+        title: "回收站",
+        count: counts.recycle,
+        route: "/recycle",
+        icon: <DeleteOutlined />,
+      },
+      {
+        title: "文件夹",
+        count: 0,
+        route: "/folders",
+        icon: null,
+        group: true,
+        children: folders.map((folder) => {
           const { children = [] } = folder;
-          return getItem(
-            handleLabel(folder.name, folder._count.images),
-            `/folder/${folder.id}`,
-            openKeys.includes(`/folder/${folder.id}`) ? (
+
+          return {
+            title: folder.name,
+            count: folder._count.images,
+            route: `/folder/${folder.id}`,
+            icon: openKeys.includes(`/folder/${folder.id}`) ? (
               <FolderOpenFilled
                 style={{ color: folder.iconColor }}
-                onClick={() => onFolderIconClick(folder)}
+                onClick={(e) => onFolderIconClick(e, folder)}
               />
             ) : (
               <FolderFilled
                 style={{ color: folder.iconColor }}
-                onClick={() => onFolderIconClick(folder)}
+                onClick={(e) => onFolderIconClick(e, folder)}
               />
             ),
-            children.length
-              ? children.map((childFolder) =>
-                  getItem(
-                    handleLabel(childFolder.name, childFolder._count.images),
-                    `/folder/${childFolder.id}`,
+            children: children.length
+              ? children.map((childFolder) => ({
+                  title: childFolder.name,
+                  count: childFolder._count.images,
+                  route: `/folder/${childFolder.id}`,
+                  icon: (
                     <FolderFilled style={{ color: childFolder.iconColor }} />
-                  )
-                )
+                  ),
+                }))
               : null,
-            null,
-            (info) => {
+            onTitleClick: (info) => {
+              setActiveMenu(info["key"]);
+              console.log(info);
+              setRightBasic({
+                ...rightBasic,
+                name: (info.domEvent.target as HTMLElement).innerText,
+                image: undefined,
+              });
               router.push(info["key"]);
-            }
-          );
+            },
+          };
         }),
-        "group"
-      ),
+      },
     ];
   }, [counts, folders, openKeys]);
 
+  const items: MenuProps["items"] = useMemo(() => {
+    return treeRecursion(itemsData);
+  }, [itemsData]);
+
   return (
-    <Menu
-      mode="inline"
-      items={items}
-      expandIcon={<span></span>}
-      selectedKeys={[activeMenu]}
-      style={{ borderRight: 0 }}
-      openKeys={openKeys}
-      inlineIndent={10}
-      onSelect={(e) => {
-        setRightBasic({
-          ...rightBasic,
-          image: undefined,
-        });
-        router.push(e.key === "/tags" ? e.key + "/manage" : e.key);
-      }}
-    />
+    <>
+      <style jsx global>{`
+        .ant-menu-submenu-selected > div:first-child {
+          background-color: ${token.colorPrimaryBg}!important;
+          color: ${token.colorPrimaryTextActive}!important;
+        }
+      `}</style>
+      <Menu
+        mode="inline"
+        items={items}
+        expandIcon={<span></span>}
+        selectedKeys={[activeMenu]}
+        style={{ borderRight: 0 }}
+        openKeys={openKeys}
+        inlineIndent={10}
+        onSelect={(e) => {
+          // 点击最外部文件夹，并且子文件夹存在，不会触发改方法
+          setRightBasic({
+            ...rightBasic,
+            name: (e.domEvent.target as HTMLElement).innerText,
+            image: undefined,
+          });
+          router.push(e.key === "/tags" ? e.key + "/manage" : e.key);
+        }}
+      />
+    </>
   );
 };
 

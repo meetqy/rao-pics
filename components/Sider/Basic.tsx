@@ -1,11 +1,10 @@
-import { countState, rightBasicState, tagsState } from "@/store";
+import { rightBasicState, tagsState } from "@/store";
 import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
 import { handleImageUrl } from "@/hooks";
 import { useMemo } from "react";
-import { useRouter } from "next/router";
 
 const handleTime = (time: number) => {
   const [date, t] = new Date(time)
@@ -27,27 +26,12 @@ const SiderBasic = () => {
   const rightBasic = useRecoilValue(rightBasicState);
   const image = useMemo(() => rightBasic.image, [rightBasic]);
   const tags = useRecoilValue(tagsState);
-  const counts = useRecoilValue(countState);
-  const router = useRouter();
-
-  const fileNumber = useMemo(() => {
-    return counts[
-      router.pathname === "/" ? "all" : router.pathname.replace("/", "")
-    ];
-  }, [counts]);
-
-  const names = {
-    "/": "全部",
-    "/not-tag": "未标签",
-    "/tags": "标签管理",
-    "/recycle": "回收站",
-  };
 
   if (!image) {
     return (
       <div style={{ padding: 20 }}>
         <Button block disabled>
-          {names[router.pathname]}
+          {rightBasic.name}
         </Button>
         <Row style={{ marginTop: 20 }}>
           <Col>基本信息</Col>
@@ -55,7 +39,11 @@ const SiderBasic = () => {
         <div className={styles.baseInfo} style={{ marginTop: 20 }}>
           <Row align="middle">
             <Col span={8}>文件数</Col>
-            <Col>{fileNumber}</Col>
+            <Col>{rightBasic.fileCount}</Col>
+          </Row>
+          <Row align={"middle"} style={{ marginTop: 10 }}>
+            <Col span={8}>文件大小</Col>
+            <Col>{rightBasic.fileSize}</Col>
           </Row>
         </div>
       </div>
