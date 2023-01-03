@@ -3,14 +3,14 @@ import zhCN from "antd/locale/zh_CN";
 import "antd/dist/reset.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeMenuState, countState, foldersState, tagsState } from "@/store";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import Head from "next/head";
 import { transformFolderToTree } from "@/hooks";
 
 export const MyLayout = ({ children }) => {
-  const activeMenu = useRecoilValue(activeMenuState);
+  const activeMenu = useRecoilValue(activeMenuState) || "/";
   const [_tags, setTags] = useRecoilState(tagsState);
   const [counts, setCount] = useRecoilState(countState);
   const [_folders, setFolders] = useRecoilState(foldersState);
