@@ -18,6 +18,9 @@ export default async function handler(req, res) {
             images: true,
           },
         },
+        images: {
+          take: 1,
+        },
       },
       orderBy,
     }),
