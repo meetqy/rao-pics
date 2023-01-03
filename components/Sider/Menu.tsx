@@ -118,6 +118,8 @@ const SiderMenu = () => {
       });
     } else {
       const menu = itemsData.find((item) => item.route === route);
+      if (!menu) return;
+
       setRightBasic({
         ...rightBasic,
         name: menu.title,
