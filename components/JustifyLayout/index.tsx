@@ -1,10 +1,10 @@
 import Image from "next/image";
 import justifyLayout from "justified-layout";
 import { Button, Card, Layout, Row, Col, theme } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
-import { activeImageState } from "@/store";
+import { rightBasicState } from "@/store";
 
 interface LayoutBox {
   aspectRatio: number;
@@ -37,8 +37,9 @@ const JustifyLayout = ({
   header,
 }: Props) => {
   const [layoutPos, setLayoutPos] = useState<JustifiedLayoutResult>();
-  const [activeImage, setActiveImage] = useRecoilState(activeImageState);
+  const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const { token } = theme.useToken();
+  const activeImage = useMemo(() => rightBasic.image, [rightBasic]);
 
   useEffect(() => {
     setLayoutPos(
@@ -96,7 +97,10 @@ const JustifyLayout = ({
                 bordered={false}
                 bodyStyle={{ padding: 0, ...item }}
                 onClick={() => {
-                  setActiveImage(image);
+                  setRightBasic({
+                    ...rightBasic,
+                    image,
+                  });
                 }}
               >
                 <Image

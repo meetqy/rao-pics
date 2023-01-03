@@ -1,4 +1,4 @@
-import { activeImageState, countState, tagsState } from "@/store";
+import { countState, rightBasicState, tagsState } from "@/store";
 import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
@@ -24,7 +24,8 @@ const handleTime = (time: number) => {
 };
 
 const SiderBasic = () => {
-  const image = useRecoilValue(activeImageState);
+  const rightBasic = useRecoilValue(rightBasicState);
+  const image = useMemo(() => rightBasic.image, [rightBasic]);
   const tags = useRecoilValue(tagsState);
   const counts = useRecoilValue(countState);
   const router = useRouter();

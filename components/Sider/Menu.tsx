@@ -1,8 +1,8 @@
 import {
-  activeImageState,
   activeMenuState,
   countState,
   foldersState,
+  rightBasicState,
 } from "@/store";
 import {
   DeleteOutlined,
@@ -52,7 +52,7 @@ function handleLabel(name: string, desc: number) {
 const SiderMenu = () => {
   const router = useRouter();
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
-  const [_activeImage, setActiveImage] = useRecoilState(activeImageState);
+  const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const counts = useRecoilValue(countState);
   const folders = useRecoilValue(foldersState);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
@@ -136,7 +136,10 @@ const SiderMenu = () => {
       openKeys={openKeys}
       inlineIndent={10}
       onSelect={(e) => {
-        setActiveImage(undefined);
+        setRightBasic({
+          ...rightBasic,
+          image: undefined,
+        });
         router.push(e.key === "/tags" ? e.key + "/manage" : e.key);
       }}
     />
