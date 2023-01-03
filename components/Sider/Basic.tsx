@@ -41,10 +41,10 @@ const SiderBasic = () => {
             <Col span={8}>文件数</Col>
             <Col>{rightBasic.fileCount}</Col>
           </Row>
-          <Row align={"middle"} style={{ marginTop: 10 }}>
+          {/* <Row align={"middle"} style={{ marginTop: 10 }}>
             <Col span={8}>文件大小</Col>
             <Col>{rightBasic.fileSize}</Col>
-          </Row>
+          </Row> */}
         </div>
       </div>
     );

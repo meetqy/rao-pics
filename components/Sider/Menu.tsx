@@ -1,3 +1,4 @@
+import { transformFolderToTree } from "@/hooks";
 import {
   activeMenuState,
   countState,
@@ -65,7 +66,7 @@ interface ItemData {
 const treeRecursion = (data: ItemData[]) => {
   return data.map((item) => {
     return getItem(
-      handleLabel(item.title, item.count),
+      handleLabel(item.title, item.count || null),
       item.route,
       item.icon,
       item.children && item.children.length > 0
@@ -83,10 +84,15 @@ const SiderMenu = () => {
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
   const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const counts = useRecoilValue(countState);
+
+  // 文件夹
   const folders = useRecoilValue(foldersState);
+  const foldersTree = useMemo(() => transformFolderToTree(folders), [folders]);
+
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const { token } = theme.useToken();
 
+  // 当前route
   const route = useMemo(() => {
     const asPath = router.asPath;
     if (asPath === "/") return asPath;
@@ -95,9 +101,32 @@ const SiderMenu = () => {
     return _constantMenu.find((item) => asPath.includes(item));
   }, [router]);
 
+  // 当前的folder
+  const folder = useMemo(
+    () => folders.find((item) => `/folder/${item.id}` === route),
+    [route, folders]
+  );
+
   useEffect(() => {
+    if (folder) {
+      if (folder.pid) setOpenKeys(["/folder/" + folder.pid]);
+
+      setRightBasic({
+        ...rightBasic,
+        name: folder.name,
+        fileCount: folder._count.images,
+      });
+    } else {
+      const menu = itemsData.find((item) => item.route === route);
+      setRightBasic({
+        ...rightBasic,
+        name: menu.title,
+        fileCount: menu.count,
+      });
+    }
+
     setActiveMenu(route as EagleUse.Menu);
-  }, [route]);
+  }, [folder, route, counts]);
 
   const onFolderIconClick = (e: React.MouseEvent, folder: EagleUse.Folder) => {
     e.stopPropagation();
@@ -138,12 +167,12 @@ const SiderMenu = () => {
         icon: <DeleteOutlined />,
       },
       {
-        title: "文件夹",
+        title: `文件夹(${folders.length})`,
         count: 0,
         route: "/folders",
         icon: null,
         group: true,
-        children: folders.map((folder) => {
+        children: foldersTree.map((folder) => {
           const { children = [] } = folder;
 
           return {
@@ -172,20 +201,13 @@ const SiderMenu = () => {
                 }))
               : null,
             onTitleClick: (info) => {
-              setActiveMenu(info["key"]);
-              console.log(info);
-              setRightBasic({
-                ...rightBasic,
-                name: (info.domEvent.target as HTMLElement).innerText,
-                image: undefined,
-              });
               router.push(info["key"]);
             },
           };
         }),
       },
     ];
-  }, [counts, folders, openKeys]);
+  }, [counts, foldersTree, openKeys]);
 
   const items: MenuProps["items"] = useMemo(() => {
     return treeRecursion(itemsData);
@@ -208,13 +230,17 @@ const SiderMenu = () => {
         openKeys={openKeys}
         inlineIndent={10}
         onSelect={(e) => {
+          const key = e.key === "/tags" ? e.key + "/manage" : e.key;
+
           // 点击最外部文件夹，并且子文件夹存在，不会触发改方法
-          setRightBasic({
-            ...rightBasic,
-            name: (e.domEvent.target as HTMLElement).innerText,
-            image: undefined,
-          });
-          router.push(e.key === "/tags" ? e.key + "/manage" : e.key);
+          // setRightBasic({
+          //   ...rightBasic,
+          //   name: (e.domEvent.target as HTMLElement).innerText,
+          //   fileCount: counts[key === "/" ? "all" : key.replace("/", "")],
+          //   image: undefined,
+          // });
+
+          router.push(key);
         }}
       />
     </>

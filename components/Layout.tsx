@@ -7,12 +7,11 @@ import { useEffect, useMemo } from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import Head from "next/head";
-import { transformFolderToTree } from "@/hooks";
 
 export const MyLayout = ({ children }) => {
   const activeMenu = useRecoilValue(activeMenuState) || "/";
   const [_tags, setTags] = useRecoilState(tagsState);
-  const [counts, setCount] = useRecoilState(countState);
+  const [_counts, setCount] = useRecoilState(countState);
   const [_folders, setFolders] = useRecoilState(foldersState);
   const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
   const isInit = {
@@ -26,7 +25,7 @@ export const MyLayout = ({ children }) => {
     fetch("/api/folder")
       .then((res) => res.json())
       .then(({ data, count }) => {
-        setFolders(transformFolderToTree(data));
+        setFolders(data);
       });
   };
 
