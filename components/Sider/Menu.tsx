@@ -99,7 +99,7 @@ const SiderMenu = () => {
     setActiveMenu(route as EagleUse.Menu);
   }, [route]);
 
-  const onFolderIconClick = (e: MouseEvent, folder: EagleUse.Folder) => {
+  const onFolderIconClick = (e: React.MouseEvent, folder: EagleUse.Folder) => {
     e.stopPropagation();
     e.preventDefault();
     if (!folder.children || !folder.children.length) return;
