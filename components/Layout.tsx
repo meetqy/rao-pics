@@ -85,7 +85,16 @@ export const MyLayout = ({ children }) => {
         >
           <SiderMenu />
         </Layout.Sider>
-        <Layout.Content>{children}</Layout.Content>
+        <Layout.Content
+          className="scroll-bar"
+          style={{
+            overflowY: "scroll",
+            overflowX: "hidden",
+            height: "100%",
+          }}
+        >
+          {children}
+        </Layout.Content>
         <Layout.Sider
           width={240}
           theme="light"

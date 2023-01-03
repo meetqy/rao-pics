@@ -66,14 +66,7 @@ const JustifyLayout = ({
   if (!layoutPos) return null;
 
   return (
-    <Layout
-      className="scroll-bar"
-      style={{
-        overflowY: "scroll",
-        overflowX: "hidden",
-        height: "100%",
-      }}
-    >
+    <Layout>
       {header}
       <Layout.Content style={{ position: "relative", paddingLeft: 5 }}>
         <div

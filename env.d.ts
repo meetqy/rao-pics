@@ -51,6 +51,7 @@ namespace EagleUse {
     _count: {
       images: number;
     };
+    images?: Image[];
   }
 
   // 标签
