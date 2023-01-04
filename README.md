@@ -23,15 +23,6 @@
 
 # 👀 介绍
 
-### 起点
-
-下面两个项目是该项目的起点，提供了很好的思路，有着特殊的意义，尽管用起来很麻烦！！！
-
-- json-server 实现 eagle 查询 api 👉🏻 [eagle-api](https://github.com/meetqy/eagle-api)
-- eagle-web 版本 👉🏻 [eagle-web](https://github.com/meetqy/eagle-web)
-
-> 想要完整跑起来，你需要同时启动两个项目。
-
 ### 本地安装
 
 ```sh
@@ -51,6 +42,16 @@ pnpm run create:symlink
 # 启动项目
 pnpm run dev
 ```
+
+### Package Script 说明
+
+| 名称             | 说明                                                     |
+| ---------------- | -------------------------------------------------------- |
+| `db:preview`     | 数据库可视化预览                                         |
+| `db:init`        | 初始化 prisma 数据库                                     |
+| `db:watch`       | 监听 eagle 变换，自动关联 sqlite，更新数据               |
+| `db:generate`    | eagleuse.db 发生改变，可执行，会更新 prisma type         |
+| `create:symlink` | 为 `eagle library images 文件夹` 创建软连接 到 public 中 |
 
 # 📷 截图
 
@@ -84,6 +85,15 @@ pnpm run dev
 
 - 按标签搜索
 - 按尺寸搜索
+
+# 🔦 其他
+
+下面两个项目是该项目的起点，提供了很好的思路，有着特殊的意义，尽管用起来很麻烦！！！
+
+- json-server 实现 eagle 查询 api 👉🏻 [eagle-api](https://github.com/meetqy/eagle-api)
+- eagle-web 版本 👉🏻 [eagle-web](https://github.com/meetqy/eagle-web)
+
+> 想要完整跑起来，你需要同时启动两个项目。
 
 # 📄 开源协议
 
