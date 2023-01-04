@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
-import { handleImageUrl } from "@/hooks";
+import { handleImageUrl, transformFolderToTree } from "@/hooks";
 import JustifyLayout from "@/components/JustifyLayout";
 
 interface Params {
@@ -24,17 +24,22 @@ const Page = () => {
   const { token } = theme.useToken();
   const router = useRouter();
   const { id } = router.query;
+
   const folders = useRecoilValue(foldersState);
+  const foldersTree = useMemo(() => transformFolderToTree(folders), [folders]);
+
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 50,
   });
   const isLoad = useRef(false);
 
-  const folder = useMemo(
-    () => folders.find((item) => item.id === id),
-    [folders, id]
-  );
+  const folder = useMemo(() => {
+    return (
+      foldersTree.find((item) => item.id === id) ||
+      folders.find((item) => item.id === id)
+    );
+  }, [folders, id, foldersTree]);
 
   const imageJSX = (images: EagleUse.Image[]) => {
     if (!images.length)
@@ -85,6 +90,7 @@ const Page = () => {
                   backgroundColor: token.colorBgContainer,
                 }}
                 bordered
+                onClick={() => router.push(`/folder/${item.id}`)}
                 style={{ backgroundColor: "transparent", overflow: "hidden" }}
               >
                 <Typography.Text>{item.name}</Typography.Text>
@@ -148,8 +154,6 @@ const Page = () => {
       ...params,
       page: 1,
     });
-
-    console.log(id, params);
   }, [id]);
 
   useEffect(() => {

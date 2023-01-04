@@ -47,7 +47,7 @@ namespace EagleUse {
     icon: any;
     password: string;
     passwordTips: string;
-    children: Folder[];
+    children?: Folder[];
     _count: {
       images: number;
     };
