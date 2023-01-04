@@ -1,7 +1,13 @@
 import prisma from "@/lib/prisma";
 
 export default async function handler(req, res) {
-  const { orderBy } = req.query;
+  const {
+    orderBy = {
+      images: {
+        _count: "desc",
+      },
+    },
+  } = req.query;
 
   const [count, data] = await Promise.all([
     prisma.folder.count(),
@@ -16,11 +22,7 @@ export default async function handler(req, res) {
           take: 1,
         },
       },
-      orderBy: orderBy || {
-        images: {
-          _count: "desc",
-        },
-      },
+      orderBy,
     }),
   ]);
 
