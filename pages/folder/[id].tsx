@@ -90,6 +90,7 @@ const Page = () => {
                   backgroundColor: token.colorBgContainer,
                 }}
                 bordered
+                onClick={() => router.push(`/folder/${item.id}`)}
                 style={{ backgroundColor: "transparent", overflow: "hidden" }}
               >
                 <Typography.Text>{item.name}</Typography.Text>
