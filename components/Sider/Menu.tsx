@@ -115,6 +115,7 @@ const SiderMenu = () => {
         ...rightBasic,
         name: folder.name,
         fileCount: folder._count.images,
+        image: null,
       });
     } else {
       const menu = itemsData.find((item) => item.route === route);
@@ -124,6 +125,7 @@ const SiderMenu = () => {
         ...rightBasic,
         name: menu.title,
         fileCount: menu.count,
+        image: null,
       });
     }
 
@@ -211,9 +213,10 @@ const SiderMenu = () => {
     ];
   }, [counts, foldersTree, openKeys]);
 
-  const items: MenuProps["items"] = useMemo(() => {
-    return treeRecursion(itemsData);
-  }, [itemsData]);
+  const items: MenuProps["items"] = useMemo(
+    () => treeRecursion(itemsData),
+    [itemsData]
+  );
 
   return (
     <>
@@ -233,15 +236,6 @@ const SiderMenu = () => {
         inlineIndent={10}
         onSelect={(e) => {
           const key = e.key === "/tags" ? e.key + "/manage" : e.key;
-
-          // 点击最外部文件夹，并且子文件夹存在，不会触发改方法
-          // setRightBasic({
-          //   ...rightBasic,
-          //   name: (e.domEvent.target as HTMLElement).innerText,
-          //   fileCount: counts[key === "/" ? "all" : key.replace("/", "")],
-          //   image: undefined,
-          // });
-
           router.push(key);
         }}
       />
