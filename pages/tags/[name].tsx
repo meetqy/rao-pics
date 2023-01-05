@@ -16,10 +16,11 @@ import {
   Typography,
 } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { pinyin } from "@/hooks";
 import Link from "next/link";
+import _ from "lodash";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -81,117 +82,147 @@ export default function Page() {
   const name = router.query.name as routeName;
   const tags = useRecoilValue(tagsState);
   const [tagsCollection, setTagsCollection] = useState<{
-    [key in routeName]: { [key: string]: EagleUse.Tag[] } | undefined;
+    [key in routeName]: {
+      data: {
+        [key: string]: EagleUse.Tag[];
+      };
+      count: number;
+    };
   }>({
-    manage: undefined,
-    no: undefined,
-    starred: undefined,
+    manage: {
+      data: undefined,
+      count: 0,
+    },
+    no: {
+      data: undefined,
+      count: 0,
+    },
+    starred: {
+      data: undefined,
+      count: 0,
+    },
   });
 
-  const [items, setItems] = useState<MenuProps["items"]>([
-    getItem(
-      handleLabel("标签管理", undefined),
-      "/tags/manage",
-      <AppstoreFilled />
-    ),
-    getItem("未分类", "/tags/no", <QuestionCircleFilled />),
-    getItem("常用标签", "/tags/starred", <StarFilled />),
-  ]);
+  const nowTagData = useMemo(
+    () => tagsCollection[name]?.data || {},
+    [name, tagsCollection]
+  );
+
+  const [tagsGroupsItems, setTagsGroupsItems] = useState<MenuItem[]>([]);
+
+  const items = useMemo(() => {
+    const { manage, no, starred } = tagsCollection;
+
+    return [
+      getItem(
+        handleLabel("标签管理", manage.count),
+        "/tags/manage",
+        <AppstoreFilled />
+      ),
+      getItem(
+        handleLabel("未分类", no.count),
+        "/tags/no",
+        <QuestionCircleFilled />
+      ),
+      getItem(
+        handleLabel("常用标签", starred.count),
+        "/tags/starred",
+        <StarFilled />
+      ),
+      getItem(
+        `标签群组(${tagsGroupsItems.length})`,
+        "",
+        null,
+        tagsGroupsItems,
+        "group"
+      ),
+    ];
+  }, [tagsCollection, tagsGroupsItems]);
 
   // 标签管理
   useEffect(() => {
-    if (name === "manage" && !tagsCollection.manage) {
-      setTagsCollection({
-        ...tagsCollection,
-        manage: tagsArrayToJson(tags),
-      });
+    if (name != "manage") return;
+    if (tagsCollection["manage"].count > 0) return;
 
-      items[0] = getItem(
-        handleLabel("标签管理", tags.length),
-        "/tags/manage",
-        <AppstoreFilled />
-      );
-
-      setItems([...items]);
-    }
-  }, [name, tags, tagsCollection]);
+    setTagsCollection({
+      ...tagsCollection,
+      manage: {
+        data: tagsArrayToJson(tags),
+        count: tags.length,
+      },
+    });
+  }, [name, tags]);
 
   useEffect(() => {
-    if (name === "no" && !tagsCollection.no) {
-      fetch("/api/tag/no")
-        .then((res) => res.json())
-        .then(({ data, count: _count }) => {
-          setTagsCollection({
-            ...tagsCollection,
-            no: tagsArrayToJson(data),
-          });
+    if (name != "no") return;
+    if (tagsCollection["no"].count) return;
 
-          items[1] = getItem(
-            handleLabel("未分类", _count),
-            "/tags/no",
-            <QuestionCircleFilled />
-          );
-
-          setItems([...items]);
+    fetch("/api/tag/no")
+      .then((res) => res.json())
+      .then(({ data, count: _count }) => {
+        setTagsCollection({
+          ...tagsCollection,
+          no: {
+            data: tagsArrayToJson(data),
+            count: _count,
+          },
         });
-    }
+      });
   }, [name, tagsCollection]);
 
   useEffect(() => {
-    if (name === "starred" && !tagsCollection.starred) {
-      fetch("/api/tag/starred")
-        .then((res) => res.json())
-        .then(({ data, count: _count }) => {
-          setTagsCollection({
-            ...tagsCollection,
-            starred: tagsArrayToJson(data),
-          });
+    if (name != "starred") return;
+    if (tagsCollection["starred"].count > 0) return;
 
-          items[2] = getItem(
-            handleLabel("常用标签", _count),
-            "/tags/starred",
-            <StarFilled />
-          );
-
-          setItems([...items]);
+    fetch("/api/tag/starred")
+      .then((res) => res.json())
+      .then(({ data, count: _count }) => {
+        setTagsCollection({
+          ...tagsCollection,
+          starred: {
+            data: tagsArrayToJson(data),
+            count: _count,
+          },
         });
-    }
+      });
   }, [name, tagsCollection]);
 
   useEffect(() => {
     if (!tags || !tags.length) return;
     if (!name) return;
+    if (Object.keys(tagsCollection).length > 3) return;
 
     fetch("/api/tag/group")
       .then((res) => res.json())
-      .then(({ data, count }) => {
-        data.map((item) => {
-          // 找到有count的标签
-          const newTags = item.tags.map((tag) =>
-            tags.find((item) => tag.id === item.id)
-          );
-          tagsCollection[item.id] = tagsArrayToJson(newTags);
+      .then(({ data }) => {
+        const filterData = (data as EagleUse.TagsGroupsItem[]).map((item) => {
+          // 找到有count的标签 并 过滤掉标签中图片为0的标签
+          item.tags = item.tags
+            .map((tag) => tags.find((item) => tag.id === item.id))
+            .filter((item) => item);
+
+          const json = {};
+          json[item.name] = item.tags;
+
+          tagsCollection[item.id] = {
+            data: json,
+            count: item.tags.length,
+          };
+
+          return item;
         });
 
-        setTagsCollection({ ...tagsCollection });
-
-        items[3] = getItem(
-          `标签群组(${count})`,
-          "",
-          null,
-          data.map((item) =>
-            getItem(
+        setTagsGroupsItems(
+          filterData.map((item) => {
+            return getItem(
               handleLabel(item.name, item.tags.length, item.color),
               `/tags/${item.id}`,
               <TagsFilled style={{ color: item.color }} />
-            )
-          ),
-          "group"
+            );
+          })
         );
-
-        setItems([...items]);
       });
-  }, [name, tags]);
+  }, [name, tags, tagsCollection]);
 
   // 渲染tags列表
   const tagsContentElement = (tagJson: { [key: string]: EagleUse.Tag[] }) => {
@@ -272,7 +303,7 @@ export default function Page() {
           className="scroll-bar"
           style={{ padding: 20, overflowY: "scroll" }}
         >
-          {tagsContentElement(tagsCollection[name] || {})}
+          {tagsContentElement(nowTagData)}
         </Layout.Content>
       </Layout>
     </Layout>

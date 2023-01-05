@@ -97,4 +97,4 @@ pnpm run dev
 
 # 📄 开源协议
 
-[MIT license](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [eagleuse](https://github.com/eagleuse)
+[MIT license](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EagleUse](https://github.com/eagleuse)

@@ -75,6 +75,7 @@ namespace EagleUse {
     id: string;
     name: string;
     color?: string;
+    tags: Tag[];
   }
 
   export interface SearchParams {
