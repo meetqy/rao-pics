@@ -190,7 +190,7 @@ export default function Page() {
   useEffect(() => {
     if (!tags || !tags.length) return;
     if (!name) return;
-    if (items.length > 3) return;
+    if (Object.keys(tagsCollection).length > 3) return;
 
     fetch("/api/tag/group")
       .then((res) => res.json())
