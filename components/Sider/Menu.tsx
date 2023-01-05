@@ -94,8 +94,8 @@ const SiderMenu = () => {
 
   // 当前route
   const route = useMemo(() => {
-    const asPath = router.asPath;
-    if (asPath === "/") return asPath;
+    const { asPath, pathname } = router;
+    if (pathname === "/") return pathname;
     if (asPath.includes("/folder")) return asPath;
 
     return _constantMenu.find((item) => asPath.includes(item));
