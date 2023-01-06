@@ -152,7 +152,6 @@ const Page = () => {
   }, [id, params]);
 
   useEffect(() => {
-    console.log("id");
     setParams((params) => ({
       ...params,
       page: 1,
@@ -161,7 +160,6 @@ const Page = () => {
 
   useEffect(() => {
     if (!id) return;
-    console.log("get");
     getImageList();
   }, [params.page, id, getImageList]);
 
