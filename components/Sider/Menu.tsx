@@ -106,12 +106,6 @@ const SiderMenu = () => {
     setActiveMenu(route as EagleUse.Menu);
   }, [route, setActiveMenu]);
 
-  // 当前的folder
-  const folder = useMemo(
-    () => folders.find((item) => `/folder/${item.id}` === route),
-    [route, folders]
-  );
-
   const onFolderIconClick = useCallback(
     (e: React.MouseEvent, folder: EagleUse.Folder) => {
       e.stopPropagation();
@@ -203,12 +197,19 @@ const SiderMenu = () => {
     router,
   ]);
 
+  // 当前的folder
+  const folder = useMemo(
+    () => folders.find((item) => `/folder/${item.id}` === route),
+    [route, folders]
+  );
+
   // 当前的菜单信息
   const nowItemData = useMemo(
     () => itemsData.find((item) => item.route === route),
     [itemsData, route]
   );
 
+  // 设置右侧菜单信息
   useEffect(() => {
     if (folder) {
       if (!route.includes(folder.id)) return;
@@ -230,11 +231,6 @@ const SiderMenu = () => {
     }
   }, [folder, route, setRightBasic, nowItemData]);
 
-  const items: MenuProps["items"] = useMemo(
-    () => treeRecursion(itemsData),
-    [itemsData]
-  );
-
   return (
     <>
       <style jsx global>{`
@@ -245,7 +241,7 @@ const SiderMenu = () => {
       `}</style>
       <Menu
         mode="inline"
-        items={items}
+        items={treeRecursion(itemsData)}
         expandIcon={<span></span>}
         selectedKeys={[activeMenu]}
         style={{ borderRight: 0 }}
