@@ -14,9 +14,10 @@ const Tag = (props: Props) => {
   const tag = router.query.tag as string;
   const [value, setValue] = useState<string[]>(tag ? [tag] : []);
 
-  useEffect(() => {
-    props?.onChange(value);
-  }, [value]);
+  const onChange = (value: string[]) => {
+    setValue(value);
+    props.onChange(value);
+  };
 
   return (
     <Select
@@ -31,8 +32,8 @@ const Tag = (props: Props) => {
         value: item.id,
       }))}
       maxTagCount={1}
-      onClear={() => setValue([])}
-      onChange={(e) => setValue(e)}
+      onClear={() => onChange([])}
+      onChange={(e) => onChange(e)}
     />
   );
 };
