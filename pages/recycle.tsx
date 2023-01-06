@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
@@ -14,46 +14,48 @@ const Page = () => {
     page: 1,
     pageSize: 50,
   });
-  const [isLoad, setIsLoad] = useState<boolean>(false);
+
+  const isLoad = useRef(false);
   const [counts, setCounts] = useRecoilState(countState);
 
-  const getImageList = useCallback(
-    (controller: AbortController) => {
-      const { page, pageSize } = params;
-      if (isLoad) return;
+  const getImageList = useCallback(() => {
+    const { page, pageSize } = params;
+    if (isLoad.current) return;
 
-      setIsLoad(true);
-      fetch(`/api/image/recycle?page=${page}&pageSize=${pageSize}`, {
-        method: "post",
-        signal: controller.signal,
-      })
-        .then((res) => res.json())
-        .then(({ data, count }) => {
-          setImages(page === 1 ? data : images.concat(data));
-          setCounts({
-            ...counts,
-            recycle: count,
-          });
+    isLoad.current = true;
+    fetch(`/api/image/recycle?page=${page}&pageSize=${pageSize}`, {
+      method: "post",
+    })
+      .then((res) => res.json())
+      .then(({ data, count }) => {
+        setImages((images) => (page === 1 ? data : images.concat(data)));
+        setCounts((counts) => ({
+          ...counts,
+          recycle: count,
+        }));
 
-          setIsLoad(false);
-        });
-    },
-    [params]
-  );
+        isLoad.current = false;
+      });
+  }, [params, setCounts]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    getImageList(controller);
+    let setup = true;
 
-    return () => controller.abort();
-  }, [params, getImageList]);
+    if (setup) {
+      getImageList();
+    }
+
+    return () => {
+      setup = false;
+    };
+  }, [getImageList]);
 
   if (!images) return null;
 
   return (
     <JustifyLayout
       images={images}
-      isLoad={isLoad}
+      isLoad={isLoad.current}
       isEnd={images.length === counts.recycle}
       onLoadmore={() => {
         setParams({

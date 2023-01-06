@@ -2,7 +2,7 @@ import { foldersState } from "@/store";
 import { Row, Layout, Col, Typography, theme, Card, Empty } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import { handleImageUrl, transformFolderToTree } from "@/hooks";
@@ -134,32 +134,34 @@ const Page = () => {
     );
   };
 
-  const getImageList = () => {
+  const getImageList = useCallback(() => {
+    if (isLoad.current) return;
+
     isLoad.current = true;
     fetch(
       `/api/image/folder/${id}?page=${params.page}&pageSize=${params.pageSize}`
     )
       .then((res) => res.json())
       .then(({ data, count }) => {
-        setDataSource({
+        setDataSource((dataSource) => ({
           count,
           data: params.page === 1 ? data : dataSource.data.concat(data),
-        });
+        }));
         isLoad.current = false;
       });
-  };
+  }, [id, params]);
 
   useEffect(() => {
-    setParams({
+    setParams((params) => ({
       ...params,
       page: 1,
-    });
+    }));
   }, [id]);
 
   useEffect(() => {
     if (!id) return;
     getImageList();
-  }, [params.page, id]);
+  }, [params.page, id, getImageList]);
 
   return (
     <Layout>

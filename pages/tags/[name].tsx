@@ -16,7 +16,7 @@ import {
   Typography,
 } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { pinyin } from "@/hooks";
 import Link from "next/link";
@@ -81,6 +81,7 @@ export default function Page() {
   const router = useRouter();
   const name = router.query.name as routeName;
   const tags = useRecoilValue(tagsState);
+  const tagsGroupsIsLoad = useRef(false);
   const [tagsCollection, setTagsCollection] = useState<{
     [key in routeName]: {
       data: {
@@ -144,14 +145,14 @@ export default function Page() {
     if (name != "manage") return;
     if (tagsCollection["manage"].count > 0) return;
 
-    setTagsCollection({
+    setTagsCollection((tagsCollection) => ({
       ...tagsCollection,
       manage: {
         data: tagsArrayToJson(tags),
         count: tags.length,
       },
-    });
-  }, [name, tags]);
+    }));
+  }, [name, tags, tagsCollection]);
 
   useEffect(() => {
     if (name != "no") return;
@@ -170,6 +171,7 @@ export default function Page() {
       });
   }, [name, tagsCollection]);
 
+  // starred
   useEffect(() => {
     if (name != "starred") return;
     if (tagsCollection["starred"].count > 0) return;
@@ -187,10 +189,14 @@ export default function Page() {
       });
   }, [name, tagsCollection]);
 
+  // tagsgroups
   useEffect(() => {
     if (!tags || !tags.length) return;
     if (!name) return;
     if (Object.keys(tagsCollection).length > 3) return;
+    if (tagsGroupsIsLoad.current) return;
+
+    tagsGroupsIsLoad.current = true;
 
     fetch("/api/tag/group")
       .then((res) => res.json())
@@ -221,6 +227,7 @@ export default function Page() {
             );
           })
         );
+        tagsGroupsIsLoad.current = false;
       });
   }, [name, tags, tagsCollection]);
 

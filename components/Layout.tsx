@@ -3,7 +3,7 @@ import zhCN from "antd/locale/zh_CN";
 import "antd/dist/reset.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeMenuState, countState, foldersState, tagsState } from "@/store";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import Head from "next/head";
@@ -14,22 +14,22 @@ export const MyLayout = ({ children }) => {
   const [_counts, setCount] = useRecoilState(countState);
   const [_folders, setFolders] = useRecoilState(foldersState);
   const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
-  const isInit = {
+  const [isInit, setIsInit] = useState({
     tags: false,
     folders: false,
-  };
+  });
 
   // 初始化 folderState
-  const initFolder = () => {
+  const initFolder = useCallback(() => {
     isInit.folders = true;
     fetch("/api/folder")
       .then((res) => res.json())
       .then(({ data, count }) => {
         setFolders(data);
       });
-  };
+  }, [isInit, setFolders]);
 
-  const initTag = () => {
+  const initTag = useCallback(() => {
     isInit.tags = true;
     fetch("/api/tag")
       .then((res) => res.json())
@@ -42,7 +42,7 @@ export const MyLayout = ({ children }) => {
         });
         setTags(data);
       });
-  };
+  }, [isInit, setCount, setTags]);
 
   useEffect(() => {
     if (!isInit.tags) {
@@ -52,7 +52,7 @@ export const MyLayout = ({ children }) => {
     if (!isInit.folders) {
       initFolder();
     }
-  }, []);
+  }, [isInit, initTag, initFolder]);
 
   return (
     <ConfigProvider

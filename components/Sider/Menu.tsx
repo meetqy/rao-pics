@@ -16,7 +16,7 @@ import {
 import { Col, Menu, MenuProps, Row, theme, Typography } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -82,7 +82,7 @@ const SiderMenu = () => {
   const router = useRouter();
 
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
-  const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
+  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const counts = useRecoilValue(countState);
 
   // 文件夹
@@ -101,48 +101,31 @@ const SiderMenu = () => {
     return _constantMenu.find((item) => asPath.includes(item));
   }, [router]);
 
+  // 设置菜单选中
+  useEffect(() => {
+    setActiveMenu(route as EagleUse.Menu);
+  }, [route, setActiveMenu]);
+
   // 当前的folder
   const folder = useMemo(
     () => folders.find((item) => `/folder/${item.id}` === route),
     [route, folders]
   );
 
-  useEffect(() => {
-    if (folder) {
-      if (folder.pid) setOpenKeys(["/folder/" + folder.pid]);
+  const onFolderIconClick = useCallback(
+    (e: React.MouseEvent, folder: EagleUse.Folder) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (!folder.children || !folder.children.length) return;
+      const key = `/folder/${folder.id}`;
+      const index = openKeys.indexOf(key);
 
-      setRightBasic({
-        ...rightBasic,
-        name: folder.name,
-        fileCount: folder._count.images,
-        image: null,
-      });
-    } else {
-      const menu = itemsData.find((item) => item.route === route);
-      if (!menu) return;
+      index > -1 ? openKeys.splice(index, 1) : openKeys.push(key);
 
-      setRightBasic({
-        ...rightBasic,
-        name: menu.title,
-        fileCount: menu.count,
-        image: null,
-      });
-    }
-
-    setActiveMenu(route as EagleUse.Menu);
-  }, [folder, route, counts]);
-
-  const onFolderIconClick = (e: React.MouseEvent, folder: EagleUse.Folder) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (!folder.children || !folder.children.length) return;
-    const key = `/folder/${folder.id}`;
-    const index = openKeys.indexOf(key);
-
-    index > -1 ? openKeys.splice(index, 1) : openKeys.push(key);
-
-    setOpenKeys([...openKeys]);
-  };
+      setOpenKeys([...openKeys]);
+    },
+    [openKeys]
+  );
 
   const itemsData = useMemo(() => {
     return [
@@ -211,7 +194,41 @@ const SiderMenu = () => {
         }),
       },
     ];
-  }, [counts, foldersTree, openKeys]);
+  }, [
+    counts,
+    foldersTree,
+    openKeys,
+    onFolderIconClick,
+    folders.length,
+    router,
+  ]);
+
+  // 当前的菜单信息
+  const nowItemData = useMemo(
+    () => itemsData.find((item) => item.route === route),
+    [itemsData, route]
+  );
+
+  useEffect(() => {
+    if (folder) {
+      if (!route.includes(folder.id)) return;
+      if (folder.pid) setOpenKeys(["/folder/" + folder.pid]);
+      setRightBasic((rightBasic) => ({
+        ...rightBasic,
+        name: folder.name,
+        fileCount: folder._count.images,
+        image: null,
+      }));
+    } else {
+      if (!nowItemData) return;
+      setRightBasic((rightBasic) => ({
+        ...rightBasic,
+        name: nowItemData.title,
+        fileCount: nowItemData.count,
+        image: null,
+      }));
+    }
+  }, [folder, route, setRightBasic, nowItemData]);
 
   const items: MenuProps["items"] = useMemo(
     () => treeRecursion(itemsData),
