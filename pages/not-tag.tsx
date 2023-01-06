@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
@@ -14,38 +14,40 @@ const Page = () => {
     pageSize: 50,
     page: 1,
   });
-  const [isLoad, setIsLoad] = useState<boolean>(false);
+
+  const isLoad = useRef(false);
   const [counts, setCounts] = useRecoilState(countState);
 
-  const getImageList = useCallback(
-    (controller: AbortController) => {
-      const { page, pageSize } = params;
-      if (isLoad) return;
+  const getImageList = useCallback(() => {
+    const { page, pageSize } = params;
+    if (isLoad.current) return;
 
-      setIsLoad(true);
-      fetch(`/api/image/not-tag?page=${page}&pageSize=${pageSize}`, {
-        method: "post",
-        signal: controller.signal,
-      })
-        .then((res) => res.json())
-        .then(({ data, count }) => {
-          setImages(page === 1 ? data : images.concat(data));
-          setCounts({
-            ...counts,
-            "not-tag": count,
-          });
+    isLoad.current = true;
 
-          setIsLoad(false);
-        });
-    },
-    [params]
-  );
+    fetch(`/api/image/not-tag?page=${page}&pageSize=${pageSize}`, {
+      method: "post",
+    })
+      .then((res) => res.json())
+      .then(({ data, count }) => {
+        setImages((images) => (page === 1 ? data : images.concat(data)));
+        setCounts((counts) => ({
+          ...counts,
+          "not-tag": count,
+        }));
+        isLoad.current = false;
+      });
+  }, [params, setCounts]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    getImageList(controller);
+    let setup = true;
 
-    return () => controller.abort();
+    if (setup) {
+      getImageList();
+    }
+
+    return () => {
+      setup = false;
+    };
   }, [params, getImageList]);
 
   if (!images) return null;
@@ -53,7 +55,7 @@ const Page = () => {
   return (
     <JustifyLayout
       images={images}
-      isLoad={isLoad}
+      isLoad={isLoad.current}
       isEnd={images.length === counts["not-tag"]}
       onLoadmore={() => {
         setParams({
