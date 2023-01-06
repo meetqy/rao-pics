@@ -23,6 +23,12 @@
 
 # 👀 介绍
 
+### 定位
+
+eagle 管理图片，本项目通过监听`eagle library`生成网站，同时只会具备 `展示/搜索` 2 个功能。
+
+![](./readme/flow.webp)
+
 ### 本地安装
 
 ```sh
@@ -52,6 +58,15 @@ pnpm run dev
 | `db:watch`       | 监听 eagle 变换，自动关联 sqlite，更新数据               |
 | `db:generate`    | eagleuse.db 发生改变，可执行，会更新 prisma type         |
 | `create:symlink` | 为 `eagle library images 文件夹` 创建软连接 到 public 中 |
+
+### 部署到服务器
+
+- 将`eagle library`上传到服务器
+- 在服务器上拉取本项目
+- 执行 `pnpm run db:init`
+- (可选) `eagle library`中未包含 sqlite db 文件，需要执行 `pnpm run db:watch`生成 db 文件。
+- `pnpm run build`
+- `pnpm run start`
 
 # 📷 截图
 
