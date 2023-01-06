@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
@@ -16,35 +16,37 @@ const Page = () => {
   });
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [counts, setCounts] = useRecoilState(countState);
-  let isInit = false;
 
-  const getImageList = (params: Params) => {
-    const { page, pageSize } = params;
-    if (isLoad) return;
+  const getImageList = useCallback(
+    (controller: AbortController) => {
+      const { page, pageSize } = params;
+      if (isLoad) return;
 
-    setIsLoad(true);
-    fetch(`/api/image/recycle?page=${page}&pageSize=${pageSize}`, {
-      method: "post",
-    })
-      .then((res) => res.json())
-      .then(({ data, count }) => {
-        setImages(page === 1 ? data : images.concat(data));
-        setCounts({
-          ...counts,
-          recycle: count,
+      setIsLoad(true);
+      fetch(`/api/image/recycle?page=${page}&pageSize=${pageSize}`, {
+        method: "post",
+        signal: controller.signal,
+      })
+        .then((res) => res.json())
+        .then(({ data, count }) => {
+          setImages(page === 1 ? data : images.concat(data));
+          setCounts({
+            ...counts,
+            recycle: count,
+          });
+
+          setIsLoad(false);
         });
-
-        setParams(params);
-        setIsLoad(false);
-      });
-  };
+    },
+    [params]
+  );
 
   useEffect(() => {
-    if (isInit) return;
-    isInit = true;
+    const controller = new AbortController();
+    getImageList(controller);
 
-    getImageList(params);
-  }, []);
+    return () => controller.abort();
+  }, [params, getImageList]);
 
   if (!images) return null;
 
@@ -54,7 +56,7 @@ const Page = () => {
       isLoad={isLoad}
       isEnd={images.length === counts.recycle}
       onLoadmore={() => {
-        getImageList({
+        setParams({
           ...params,
           page: params.page + 1,
         });
