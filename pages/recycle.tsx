@@ -3,14 +3,26 @@ import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 
+interface Params {
+  page: number;
+  pageSize: number;
+}
+
 const Page = () => {
   const [images, setImages] = useState<EagleUse.Image[]>([]);
-  const pageSize = 50;
-  const [page, setPage] = useState(1);
+  const [params, setParams] = useState<Params>({
+    page: 1,
+    pageSize: 50,
+  });
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [counts, setCounts] = useRecoilState(countState);
+  let isInit = false;
 
-  const getImageList = () => {
+  const getImageList = (params: Params) => {
+    const { page, pageSize } = params;
+    if (isLoad) return;
+
+    setIsLoad(true);
     fetch(`/api/image/recycle?page=${page}&pageSize=${pageSize}`, {
       method: "post",
     })
@@ -22,13 +34,17 @@ const Page = () => {
           recycle: count,
         });
 
+        setParams(params);
         setIsLoad(false);
       });
   };
 
   useEffect(() => {
-    getImageList();
-  }, [page]);
+    if (isInit) return;
+    isInit = true;
+
+    getImageList(params);
+  }, []);
 
   if (!images) return null;
 
@@ -38,8 +54,10 @@ const Page = () => {
       isLoad={isLoad}
       isEnd={images.length === counts.recycle}
       onLoadmore={() => {
-        setPage(page + 1);
-        setIsLoad(true);
+        getImageList({
+          ...params,
+          page: params.page + 1,
+        });
       }}
     />
   );
