@@ -68,7 +68,7 @@ const Page = () => {
     );
   };
 
-  const childrenJSX = (folder: EagleUse.Folder) => {
+  const childrenJSX = useCallback(() => {
     if (!folder) return null;
 
     const { children } = folder;
@@ -104,9 +104,9 @@ const Page = () => {
         </Row>
       </Layout.Content>
     );
-  };
+  }, [folder, router, token]);
 
-  const contentJSX = (folder: EagleUse.Folder) => {
+  const contentJSX = useCallback(() => {
     if (!folder) return null;
 
     const { children } = folder;
@@ -123,16 +123,15 @@ const Page = () => {
           isLoad={isLoad.current}
           isEnd={dataSource.data.length === dataSource.count}
           onLoadmore={() => {
-            setParams({
+            setParams((params) => ({
               ...params,
               page: params.page + 1,
-            });
-            isLoad.current = true;
+            }));
           }}
         />
       </>
     );
-  };
+  }, [dataSource.count, dataSource.data, folder]);
 
   const getImageList = useCallback(() => {
     if (isLoad.current) return;
@@ -165,8 +164,8 @@ const Page = () => {
 
   return (
     <Layout>
-      {childrenJSX(folder)}
-      {contentJSX(folder)}
+      {childrenJSX()}
+      {contentJSX()}
     </Layout>
   );
 };
