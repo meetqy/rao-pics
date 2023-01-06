@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
@@ -11,7 +11,7 @@ interface Params {
 }
 
 const Page = () => {
-  const [isLoad, setIsLoad] = useState(false);
+  const isLoad = useRef(false);
   const [images, setImages] = useState<EagleUse.Image[]>([]);
   const [counts, setCounts] = useRecoilState(countState);
   const [params, setParams] = useState<Params>({
@@ -21,33 +21,37 @@ const Page = () => {
   });
   let init = false;
 
-  const getImageList = (_params: Params) => {
-    if (isLoad) return;
+  const getImageList = useCallback(() => {
+    const { page, pageSize, body } = params;
 
-    setIsLoad(true);
-    fetch(`/api/image/list?page=${_params.page}&pageSize=${_params.pageSize}`, {
+    if (isLoad.current) return;
+    isLoad.current = true;
+
+    fetch(`/api/image/list?page=${page}&pageSize=${pageSize}`, {
       method: "post",
-      body: JSON.stringify(_params.body),
+      body: JSON.stringify(body),
     })
       .then((res) => res.json())
       .then(({ data, count }) => {
-        setImages(_params.page === 1 ? data : images.concat(data));
-        setCounts((cur) => {
-          return {
-            ...cur,
-            all: count,
-          };
-        });
-        setParams(_params);
-        setIsLoad(false);
+        setImages((images) => (page === 1 ? data : images.concat(data)));
+        setCounts((counts) => ({
+          ...counts,
+          all: count,
+        }));
+
+        isLoad.current = false;
       });
-  };
+  }, [params, setCounts]);
 
   useEffect(() => {
-    if (init) return;
-    init = true;
-    getImageList(params);
-  }, []);
+    let setup = true;
+    if (setup) {
+      getImageList();
+    }
+    return () => {
+      setup = false;
+    };
+  }, [getImageList]);
 
   if (!images) return null;
 
@@ -55,9 +59,9 @@ const Page = () => {
     <JustifyLayout
       images={images}
       isEnd={images.length === counts.all}
-      isLoad={isLoad}
+      isLoad={isLoad.current}
       onLoadmore={() => {
-        getImageList({
+        setParams({
           ...params,
           page: params.page + 1,
         });
@@ -67,7 +71,7 @@ const Page = () => {
           params={params.body}
           count={counts.all}
           onChange={(body) => {
-            getImageList({
+            setParams({
               ...params,
               body,
               page: 1,

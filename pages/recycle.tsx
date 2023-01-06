@@ -48,7 +48,7 @@ const Page = () => {
     return () => {
       setup = false;
     };
-  }, [params, getImageList]);
+  }, [getImageList]);
 
   if (!images) return null;
 
