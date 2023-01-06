@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
+import { useRouter } from "next/router";
 
 interface Params {
   body: EagleUse.SearchParams;
@@ -19,11 +20,24 @@ const Page = () => {
     page: 1,
     pageSize: 50,
   });
-  let init = false;
 
-  const getImageList = useCallback(() => {
+  const router = useRouter();
+  const tag = useMemo(() => router.query.tag as string, [router]);
+
+  useEffect(() => {
+    if (tag) {
+      setParams((params) => ({
+        ...params,
+        body: {
+          tags: [tag],
+        },
+      }));
+    }
+  }, [tag]);
+
+  useEffect(() => {
     const { page, pageSize, body } = params;
-
+    if (!params.body.tags && tag) return;
     if (isLoad.current) return;
     isLoad.current = true;
 
@@ -41,17 +55,7 @@ const Page = () => {
 
         isLoad.current = false;
       });
-  }, [params, setCounts]);
-
-  useEffect(() => {
-    let setup = true;
-    if (setup) {
-      getImageList();
-    }
-    return () => {
-      setup = false;
-    };
-  }, [getImageList]);
+  }, [params, setCounts, tag]);
 
   if (!images) return null;
 
@@ -71,11 +75,11 @@ const Page = () => {
           params={params.body}
           count={counts.all}
           onChange={(body) => {
-            setParams({
+            setParams((parmas) => ({
               ...params,
               body,
               page: 1,
-            });
+            }));
           }}
         />
       }

@@ -44,6 +44,7 @@ const JustifyLayoutSearch = (props: Props) => {
       <Row style={{ height: 36 }} gutter={[10, 10]}>
         <Col>
           <SearchModule.Tag
+            value={params.tags}
             onChange={(e) => {
               onChange({
                 ...params,
