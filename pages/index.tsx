@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { countState } from "@/store";
+import { countState, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useRouter } from "next/router";
@@ -20,6 +20,7 @@ const Page = () => {
     page: 1,
     pageSize: 50,
   });
+  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
 
   const router = useRouter();
   const tag = useMemo(() => router.query.tag as string, [router]);
@@ -46,16 +47,20 @@ const Page = () => {
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
-      .then(({ data, count }) => {
+      .then(({ data, count, size }) => {
         setImages((images) => (page === 1 ? data : images.concat(data)));
         setCounts((counts) => ({
           ...counts,
           all: count,
         }));
+        setRightBasic((rightBasic) => ({
+          ...rightBasic,
+          fileSize: size,
+        }));
 
         isLoad.current = false;
       });
-  }, [params, setCounts, tag]);
+  }, [params, setCounts, tag, setRightBasic]);
 
   if (!images) return null;
 

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     },
   };
 
-  const [count, data] = await prisma.$transaction([
+  const [count, data, sum] = await prisma.$transaction([
     prisma.image.count({
       where,
     }),
@@ -32,9 +32,16 @@ export default async function handler(req, res) {
       skip: (page - 1) * pageSize,
       take: pageSize,
     }),
+    prisma.image.aggregate({
+      where: where,
+      _sum: {
+        size: true,
+      },
+    }),
   ]);
 
   return res.json({
+    size: sum._sum.size,
     count,
     data,
   });

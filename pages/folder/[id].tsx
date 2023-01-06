@@ -1,9 +1,9 @@
-import { foldersState } from "@/store";
+import { foldersState, rightBasicState } from "@/store";
 import { Row, Layout, Col, Typography, theme, Card, Empty } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
 import { handleImageUrl, transformFolderToTree } from "@/hooks";
 import JustifyLayout from "@/components/JustifyLayout";
@@ -27,6 +27,7 @@ const Page = () => {
 
   const folders = useRecoilValue(foldersState);
   const foldersTree = useMemo(() => transformFolderToTree(folders), [folders]);
+  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
 
   const [params, setParams] = useState<Params>({
     page: 1,
@@ -141,14 +142,16 @@ const Page = () => {
       `/api/image/folder/${id}?page=${params.page}&pageSize=${params.pageSize}`
     )
       .then((res) => res.json())
-      .then(({ data, count }) => {
+      .then(({ data, count, size }) => {
         setDataSource((dataSource) => ({
           count,
           data: params.page === 1 ? data : dataSource.data.concat(data),
         }));
+
+        setRightBasic((rightBasic) => ({ ...rightBasic, fileSize: size }));
         isLoad.current = false;
       });
-  }, [id, params]);
+  }, [id, params, setRightBasic]);
 
   useEffect(() => {
     setParams((params) => ({

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { countState } from "@/store";
+import { countState, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 
 interface Params {
@@ -15,6 +15,7 @@ const Page = () => {
     pageSize: 50,
   });
 
+  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const isLoad = useRef(false);
   const [counts, setCounts] = useRecoilState(countState);
 
@@ -27,16 +28,16 @@ const Page = () => {
       method: "post",
     })
       .then((res) => res.json())
-      .then(({ data, count }) => {
+      .then(({ data, count, size }) => {
         setImages((images) => (page === 1 ? data : images.concat(data)));
         setCounts((counts) => ({
           ...counts,
           recycle: count,
         }));
-
+        setRightBasic((rightBasic) => ({ ...rightBasic, fileSize: size }));
         isLoad.current = false;
       });
-  }, [params, setCounts]);
+  }, [params, setCounts, setRightBasic]);
 
   useEffect(() => {
     let setup = true;

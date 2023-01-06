@@ -3,7 +3,7 @@ import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
-import { handleImageUrl } from "@/hooks";
+import { handleImageUrl, transformByteToUnit } from "@/hooks";
 import { useMemo } from "react";
 
 const handleTime = (time: number) => {
@@ -41,10 +41,10 @@ const SiderBasic = () => {
             <Col span={8}>文件数</Col>
             <Col>{rightBasic.fileCount}</Col>
           </Row>
-          {/* <Row align={"middle"} style={{ marginTop: 10 }}>
+          <Row align={"middle"} style={{ marginTop: 10 }}>
             <Col span={8}>文件大小</Col>
-            <Col>{rightBasic.fileSize}</Col>
-          </Row> */}
+            <Col>{transformByteToUnit(rightBasic.fileSize)}</Col>
+          </Row>
         </div>
       </div>
     );
@@ -140,7 +140,7 @@ const SiderBasic = () => {
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
           <Col span={8}>文件大小</Col>
-          <Col>{(image.size / 1024).toFixed(2)} KB</Col>
+          <Col>{transformByteToUnit(image.size)}</Col>
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
           <Col span={8}>格式</Col>
