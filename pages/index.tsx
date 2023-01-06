@@ -1,9 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
-import { useRequest } from "ahooks";
 
 interface Params {
   body: EagleUse.SearchParams;
@@ -12,55 +11,43 @@ interface Params {
 }
 
 const Page = () => {
+  const [isLoad, setIsLoad] = useState(false);
   const [images, setImages] = useState<EagleUse.Image[]>([]);
   const [counts, setCounts] = useRecoilState(countState);
-  const isLoad = useRef(false);
   const [params, setParams] = useState<Params>({
     body: {},
     page: 1,
     pageSize: 50,
   });
+  let init = false;
 
-  const getImageList = (
-    _params: Params
-  ): Promise<{
-    data: EagleUse.Image[];
-    count: number;
-  } | null> => {
-    return new Promise((resolve) => {
-      if (isLoad.current) return resolve(null);
+  const getImageList = (_params: Params) => {
+    if (isLoad) return;
 
-      isLoad.current = true;
-      fetch(
-        `/api/image/list?page=${_params.page}&pageSize=${_params.pageSize}`,
-        {
-          method: "post",
-          body: JSON.stringify(_params.body),
-        }
-      )
-        .then((res) => res.json())
-        .then(({ data, count }) => {
-          setImages(_params.page === 1 ? data : images.concat(data));
-          setCounts((cur) => {
-            return {
-              ...cur,
-              all: count,
-            };
-          });
-          setParams(_params);
-          isLoad.current = false;
-          resolve({
-            data,
-            count,
-          });
+    setIsLoad(true);
+    fetch(`/api/image/list?page=${_params.page}&pageSize=${_params.pageSize}`, {
+      method: "post",
+      body: JSON.stringify(_params.body),
+    })
+      .then((res) => res.json())
+      .then(({ data, count }) => {
+        setImages(_params.page === 1 ? data : images.concat(data));
+        setCounts((cur) => {
+          return {
+            ...cur,
+            all: count,
+          };
         });
-    });
+        setParams(_params);
+        setIsLoad(false);
+      });
   };
 
-  const { run } = useRequest(getImageList, {
-    debounceWait: 300,
-    manual: true,
-  });
+  useEffect(() => {
+    if (init) return;
+    init = true;
+    getImageList(params);
+  }, []);
 
   if (!images) return null;
 
@@ -68,7 +55,7 @@ const Page = () => {
     <JustifyLayout
       images={images}
       isEnd={images.length === counts.all}
-      isLoad={isLoad.current}
+      isLoad={isLoad}
       onLoadmore={() => {
         getImageList({
           ...params,
@@ -80,7 +67,7 @@ const Page = () => {
           params={params.body}
           count={counts.all}
           onChange={(body) => {
-            run({
+            getImageList({
               ...params,
               body,
               page: 1,
