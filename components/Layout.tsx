@@ -66,6 +66,7 @@ export const MyLayout = ({ children }) => {
     >
       <Head>
         <title>rao.pics - eagleuse搭建的图片站</title>
+        <link rel="shortcut icon" href="/static/favicon.ico" />
         <meta
           name="description"
           content="把 eagle 变成我的图片（后台）管理系统。"
