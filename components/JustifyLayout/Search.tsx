@@ -43,28 +43,32 @@ const JustifyLayoutSearch = (props: Props) => {
           </Breadcrumb>
         </Col>
       </Row>
-      <Row style={{ height: 36 }} gutter={[10, 10]}>
-        <Col>
-          <SearchModule.Tag
-            value={params.tags}
-            onChange={(e) => {
-              onChange({
-                ...params,
-                tags: e,
-              });
-            }}
-          />
-        </Col>
+      <Row style={{ height: 36 }}>
+        <Col flex={1}>
+          <Row gutter={[10, 10]}>
+            <Col>
+              <SearchModule.Tag
+                value={params.tags}
+                onChange={(e) => {
+                  onChange({
+                    ...params,
+                    tags: e,
+                  });
+                }}
+              />
+            </Col>
 
-        <Col>
-          <SearchModule.Size
-            onChange={(e) =>
-              onChange({
-                ...params,
-                size: e,
-              })
-            }
-          />
+            <Col>
+              <SearchModule.Size
+                onChange={(e) =>
+                  onChange({
+                    ...params,
+                    size: e,
+                  })
+                }
+              />
+            </Col>
+          </Row>
         </Col>
 
         <Col>
