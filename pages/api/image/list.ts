@@ -66,6 +66,14 @@ const handleIncludes = ({ includes }: EagleUse.SearchParams) => {
   return json;
 };
 
+const handleOrderBy = ({ orderBy }: EagleUse.SearchParams) => {
+  if (!orderBy) return { modificationTime: "desc" };
+  const json = {};
+
+  json[orderBy.field] = orderBy.by;
+  return json;
+};
+
 export default async function handler(req, res) {
   // findMany参考：https://www.prisma.io/docs/reference/api-reference/prisma-client-reference?query=t&page=1#findmany
   const body = JSON.parse(req.body || "{}") as EagleUse.SearchParams;
@@ -84,9 +92,7 @@ export default async function handler(req, res) {
     prisma.image.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
-      orderBy: {
-        modificationTime: "desc",
-      },
+      orderBy: handleOrderBy(body),
       include,
       where,
     }),

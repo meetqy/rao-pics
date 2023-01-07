@@ -93,6 +93,11 @@ namespace EagleUse {
         max: number;
       };
     };
+    // 排序
+    orderBy?: {
+      field: string;
+      by: "desc" | "asc";
+    };
     includes?: ("tags" | "folders")[];
   }
 }

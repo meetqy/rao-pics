@@ -13,11 +13,13 @@ const JustifyLayoutSearch = (props: Props) => {
 
   const params = useMemo(() => props?.params, [props.params]);
 
-  const onChange = ({ tags, size }: EagleUse.SearchParams) => {
+  const onChange = ({ orderBy, tags, size }: EagleUse.SearchParams) => {
+    console.log(orderBy);
     props?.onChange({
       ...params,
       tags,
       size,
+      orderBy,
     });
   };
 
@@ -66,7 +68,14 @@ const JustifyLayoutSearch = (props: Props) => {
         </Col>
 
         <Col>
-          <SearchModule.Sort />
+          <SearchModule.Sort
+            onChange={(e) => {
+              onChange({
+                ...params,
+                orderBy: e,
+              });
+            }}
+          />
         </Col>
       </Row>
     </Layout.Header>
