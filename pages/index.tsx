@@ -81,7 +81,7 @@ const Page = () => {
           count={counts.all}
           onChange={(body) => {
             setParams((parmas) => ({
-              ...params,
+              ...parmas,
               body,
               page: 1,
             }));

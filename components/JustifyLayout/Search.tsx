@@ -1,4 +1,4 @@
-import { Col, Layout, Row, theme, Breadcrumb, Select } from "antd";
+import { Col, Layout, Row, theme, Breadcrumb } from "antd";
 import { useMemo } from "react";
 import SearchModule from "./SearchModule";
 
@@ -63,6 +63,10 @@ const JustifyLayoutSearch = (props: Props) => {
               })
             }
           />
+        </Col>
+
+        <Col>
+          <SearchModule.Sort />
         </Col>
       </Row>
     </Layout.Header>

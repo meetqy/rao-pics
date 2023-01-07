@@ -15,6 +15,7 @@ namespace EagleUse {
     id: string;
     name: string;
     size: number;
+    // 创建日期
     btime: number;
     mtime: number;
     ext: string;
