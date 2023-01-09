@@ -2,8 +2,22 @@ import { ConfigProvider, Layout, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import "antd/dist/reset.css";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeMenuState, countState, foldersState, tagsState } from "@/store";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  activeMenuState,
+  countState,
+  foldersState,
+  LayoutContentRefContext,
+  tagsState,
+} from "@/store";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import Head from "next/head";
@@ -18,6 +32,11 @@ export const MyLayout = ({ children }) => {
     tags: false,
     folders: false,
   });
+
+  const LayoutContentRefC = useContext(LayoutContentRefContext);
+  const layoutContentRef = useRef(null);
+
+  useImperativeHandle(LayoutContentRefC, () => layoutContentRef);
 
   // 初始化 folderState
   const initFolder = useCallback(() => {
@@ -89,9 +108,10 @@ export const MyLayout = ({ children }) => {
           <SiderMenu />
         </Layout.Sider>
         <Layout.Content
+          ref={layoutContentRef}
           className="scroll-bar"
           style={{
-            overflowY: "scroll",
+            overflowY: "auto",
             overflowX: "hidden",
             height: "100%",
           }}

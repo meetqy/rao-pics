@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { useRecoilState } from "recoil";
-import { countState, rightBasicState } from "@/store";
+import { countState, LayoutContentRefContext } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
-import { useRouter } from "next/router";
+import { useInfiniteScroll } from "ahooks";
 
 interface Params {
   body: EagleUse.SearchParams;
@@ -11,81 +11,78 @@ interface Params {
   pageSize: number;
 }
 
-const Page = () => {
-  const isLoad = useRef(false);
-  const [images, setImages] = useState<EagleUse.Image[]>([]);
-  const [counts, setCounts] = useRecoilState(countState);
-  const [params, setParams] = useState<Params>({
-    body: {},
-    page: 1,
-    pageSize: 50,
-  });
-  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
+interface Result {
+  list: EagleUse.Image[];
+  params: Params;
+  count: number;
+  size: number;
+}
 
-  const router = useRouter();
-  const tag = useMemo(() => router.query.tag as string, [router]);
+function getLoadMoreList(params: Params): Promise<Result> {
+  const { page, pageSize, body } = params;
 
-  useEffect(() => {
-    if (tag) {
-      setParams((params) => ({
-        ...params,
-        body: {
-          tags: [tag],
-        },
-      }));
-    }
-  }, [tag]);
-
-  useEffect(() => {
-    const { page, pageSize, body } = params;
-    if (!params.body.tags && tag) return;
-    if (isLoad.current) return;
-    isLoad.current = true;
-
+  return new Promise((resolve) => {
     fetch(`/api/image/list?page=${page}&pageSize=${pageSize}`, {
       method: "post",
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
       .then(({ data, count, size }) => {
-        setImages((images) => (page === 1 ? data : images.concat(data)));
-        setCounts((counts) => ({
-          ...counts,
-          all: count,
-        }));
-        setRightBasic((rightBasic) => ({
-          ...rightBasic,
-          fileSize: size,
-        }));
-
-        isLoad.current = false;
+        resolve({
+          list: data,
+          params: {
+            ...params,
+            page: page + 1,
+          },
+          count,
+          size,
+        });
       });
-  }, [params, setCounts, tag, setRightBasic]);
+  });
+}
 
-  if (!images) return null;
+const Page = () => {
+  const [counts, setCounts] = useRecoilState(countState);
+  const [params, setParams] = useState<Params>({
+    body: {},
+    page: 1,
+    pageSize: 50,
+  });
+
+  const LayoutContentRef = useContext(LayoutContentRefContext);
+
+  const infiniteScroll = useInfiniteScroll(
+    (d) => getLoadMoreList(d?.params || params),
+    {
+      target: LayoutContentRef.current,
+      isNoMore: (data) => data?.params?.page > 30,
+      onFinally: (data) => {
+        if (data.count != counts.all) {
+          setCounts({
+            ...counts,
+            all: data.count,
+          });
+        }
+      },
+    }
+  );
+
+  if (!infiniteScroll.data) return null;
 
   return (
     <JustifyLayout
-      images={images}
-      isEnd={images.length === counts.all}
-      isLoad={isLoad.current}
-      onLoadmore={() => {
-        setParams({
-          ...params,
-          page: params.page + 1,
-        });
-      }}
+      infiniteScroll={infiniteScroll}
       header={
         <JustifyLayoutSearch
           params={params.body}
           count={counts.all}
-          onChange={(body) => {
-            setParams((parmas) => ({
-              ...parmas,
-              body,
-              page: 1,
-            }));
-          }}
+          // onChange={(body) => {
+          //   setParams((parmas) => ({
+          //     ...parmas,
+          //     body,
+          //     page: 1,
+          //   }));
+          // }}
         />
       }
     />

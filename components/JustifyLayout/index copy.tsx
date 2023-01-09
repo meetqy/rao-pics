@@ -1,7 +1,7 @@
 import Image from "next/image";
 import justifyLayout from "justified-layout";
 import { Button, Card, Layout, Row, Col, theme } from "antd";
-import { MutableRefObject, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
@@ -21,37 +21,25 @@ interface JustifiedLayoutResult {
   boxes: LayoutBox[];
 }
 
-interface TData {
-  list: any[];
-  [key: string]: any;
-}
-
 interface Props {
+  images: EagleUse.Image[];
+  onLoadmore: () => void;
+  isLoad?: boolean;
+  isEnd?: boolean;
   header?: JSX.Element;
-  // https://ahooks.js.org/zh-CN/hooks/use-infinite-scroll/#options
-  infiniteScroll: {
-    data: TData | undefined;
-    loading: boolean;
-    loadingMore: boolean;
-    noMore: boolean;
-    loadMore: () => void;
-    loadMoreAsync: () => Promise<TData>;
-    reload: () => void;
-    reloadAsync: () => Promise<TData>;
-    mutate: import("react").Dispatch<
-      import("react").SetStateAction<TData | undefined>
-    >;
-    cancel: () => void;
-  };
 }
 
-const JustifyLayout = ({ infiniteScroll, header }: Props) => {
+const JustifyLayout = ({
+  images,
+  onLoadmore,
+  isLoad,
+  isEnd,
+  header,
+}: Props) => {
   const [layoutPos, setLayoutPos] = useState<JustifiedLayoutResult>();
   const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const { token } = theme.useToken();
   const activeImage = useMemo(() => rightBasic.image, [rightBasic]);
-  const { data, loading, loadMore, loadingMore, noMore } = infiniteScroll;
-  const images = useMemo(() => data.list, [data.list]);
 
   useEffect(() => {
     setLayoutPos(
@@ -67,11 +55,11 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   }, [images]);
 
   const loadmore = () => {
-    if (noMore) return <span>No more data</span>;
+    if (isEnd) return null;
 
     return (
-      <Button type="link" disabled={loadingMore} onClick={loadMore}>
-        {loadingMore ? "Loading more..." : "Click to load more"}
+      <Button type="link" disabled={isLoad} onClick={onLoadmore}>
+        加载更多
       </Button>
     );
   };

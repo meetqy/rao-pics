@@ -1,5 +1,6 @@
 export * from "./constant";
 
+import { createContext } from "react";
 import { atom } from "recoil";
 
 export const activeMenuState = atom({
@@ -37,3 +38,6 @@ export const rightBasicState = atom({
   key: "rightBasicState",
   default: {} as RightBasic,
 });
+
+// layout content ref
+export const LayoutContentRefContext = createContext({ current: null });
