@@ -1,6 +1,6 @@
 import Image from "next/image";
 import justifyLayout from "justified-layout";
-import { Button, Card, Layout, Row, Col, theme } from "antd";
+import { Button, Card, Layout, Row, Col, theme, Empty } from "antd";
 import { MutableRefObject, useEffect, useMemo, useState } from "react";
 import { handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
@@ -50,7 +50,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const { token } = theme.useToken();
   const activeImage = useMemo(() => rightBasic.image, [rightBasic]);
-  const { data, loading, loadMore, loadingMore, noMore } = infiniteScroll;
+  const { data, loadMore, loadingMore, noMore } = infiniteScroll;
   const images = useMemo(() => data.list, [data.list]);
 
   useEffect(() => {
@@ -67,7 +67,9 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   }, [images]);
 
   const loadmore = () => {
-    if (noMore) return <span>没有更多数据</span>;
+    if (images.length < 1) return <Empty />;
+
+    if (noMore) return <Button type="text">没有更多数据</Button>;
 
     return (
       <Button type="link" disabled={loadingMore} onClick={loadMore}>

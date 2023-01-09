@@ -1,39 +1,95 @@
-import { foldersState, rightBasicState } from "@/store";
+import {
+  foldersState,
+  LayoutContentRefContext,
+  rightBasicState,
+} from "@/store";
 import { Row, Layout, Col, Typography, theme, Card, Empty } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
 import { handleImageUrl, transformFolderToTree } from "@/hooks";
 import JustifyLayout from "@/components/JustifyLayout";
+import { useInfiniteScroll } from "ahooks";
 
 interface Params {
   page: number;
   pageSize: number;
 }
 
-const Page = () => {
-  const [dataSource, setDataSource] = useState<{
-    count: number;
-    data: EagleUse.Image[];
-  }>({
-    count: 0,
-    data: [],
+interface Result {
+  list: EagleUse.Image[];
+  params: Params;
+  count: number;
+  size: number;
+}
+
+function getLoadMoreList(id: string, params: Params): Promise<Result> {
+  const { page, pageSize } = params;
+
+  return new Promise((resolve) => {
+    fetch(`/api/image/folder/${id}?page=${page}&pageSize=${pageSize}`, {
+      method: "post",
+    })
+      .then((res) => res.json())
+      .then(({ data, count, size }) => {
+        resolve({
+          list: data,
+          count,
+          size,
+          params: {
+            ...params,
+            page: page + 1,
+          },
+        });
+      });
   });
+}
+
+const Page = () => {
   const { token } = theme.useToken();
   const router = useRouter();
   const { id } = router.query;
 
   const folders = useRecoilValue(foldersState);
   const foldersTree = useMemo(() => transformFolderToTree(folders), [folders]);
-  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
+  const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
 
-  const [params, setParams] = useState<Params>({
+  const [params] = useState<Params>({
     page: 1,
     pageSize: 50,
   });
-  const isLoad = useRef(false);
+
+  const LayoutContentRef = useContext(LayoutContentRefContext);
+  const infiniteScroll = useInfiniteScroll(
+    (d) => id && getLoadMoreList(id as string, d?.params || params),
+    {
+      target: LayoutContentRef.current,
+      threshold: 300,
+      reloadDeps: [id],
+      isNoMore: (data) => {
+        if (!data) return false;
+        const { params, count } = data;
+        return params.page >= Math.ceil(count / params.pageSize);
+      },
+      onFinally: (data) => {
+        if (rightBasic.fileSize != data.size) {
+          setRightBasic((rightBasic) => ({
+            ...rightBasic,
+            fileSize: data.size,
+          }));
+        }
+      },
+    }
+  );
 
   const folder = useMemo(() => {
     return (
@@ -109,6 +165,7 @@ const Page = () => {
 
   const contentJSX = useCallback(() => {
     if (!folder) return null;
+    if (!infiniteScroll.data) return;
 
     const { children } = folder;
 
@@ -116,54 +173,15 @@ const Page = () => {
       <>
         {children && children.length > 0 && (
           <Layout.Content style={{ padding: 10, marginTop: 10 }}>
-            <Typography.Text>内容({dataSource.count})</Typography.Text>
+            <Typography.Text>
+              内容({infiniteScroll.data.count || 0})
+            </Typography.Text>
           </Layout.Content>
         )}
-        <JustifyLayout
-          images={dataSource.data}
-          isLoad={isLoad.current}
-          isEnd={dataSource.data.length === dataSource.count}
-          onLoadmore={() => {
-            setParams((params) => ({
-              ...params,
-              page: params.page + 1,
-            }));
-          }}
-        />
+        <JustifyLayout infiniteScroll={infiniteScroll} />
       </>
     );
-  }, [dataSource.count, dataSource.data, folder]);
-
-  const getImageList = useCallback(() => {
-    if (isLoad.current) return;
-
-    isLoad.current = true;
-    fetch(
-      `/api/image/folder/${id}?page=${params.page}&pageSize=${params.pageSize}`
-    )
-      .then((res) => res.json())
-      .then(({ data, count, size }) => {
-        setDataSource((dataSource) => ({
-          count,
-          data: params.page === 1 ? data : dataSource.data.concat(data),
-        }));
-
-        setRightBasic((rightBasic) => ({ ...rightBasic, fileSize: size }));
-        isLoad.current = false;
-      });
-  }, [id, params, setRightBasic]);
-
-  useEffect(() => {
-    setParams((params) => ({
-      ...params,
-      page: 1,
-    }));
-  }, [id]);
-
-  useEffect(() => {
-    if (!id) return;
-    getImageList();
-  }, [params.page, id, getImageList]);
+  }, [folder, infiniteScroll]);
 
   return (
     <Layout>
