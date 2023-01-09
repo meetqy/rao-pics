@@ -5,22 +5,21 @@ export default async function handler(req, res) {
   const page = +(req.query.page || 1);
   const pageSize = +(req.query.pageSize || 50);
 
+  const where = {
+    tags: {
+      none: {},
+    },
+    isDeleted: false,
+  };
+
   const [count, data, sum] = await Promise.all([
     prisma.image.count({
-      where: {
-        tags: {
-          none: {},
-        },
-      },
+      where,
     }),
     prisma.image.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
-      where: {
-        tags: {
-          none: {},
-        },
-      },
+      where,
       orderBy: {
         modificationTime: "desc",
       },
@@ -29,11 +28,7 @@ export default async function handler(req, res) {
       _sum: {
         size: true,
       },
-      where: {
-        tags: {
-          none: {},
-        },
-      },
+      where,
     }),
   ]);
 

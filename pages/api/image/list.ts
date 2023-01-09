@@ -82,7 +82,13 @@ export default async function handler(req, res) {
   const pageSize = +(req.query.pageSize || 50);
   const include = handleIncludes(body);
   const where = {
-    AND: [...handleTags(body), ...handleSize(body)],
+    AND: [
+      ...handleTags(body),
+      ...handleSize(body),
+      {
+        isDeleted: false,
+      },
+    ],
   };
 
   const [count, data, sum] = await Promise.all([

@@ -13,6 +13,7 @@ export default async function handler(req, res) {
         },
       },
     },
+    isDeleted: false,
   };
 
   const [count, data, sum] = await prisma.$transaction([
