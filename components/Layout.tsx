@@ -14,7 +14,7 @@ export const MyLayout = ({ children }) => {
   const [_counts, setCount] = useRecoilState(countState);
   const [_folders, setFolders] = useRecoilState(foldersState);
   const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
-  const [isInit, setIsInit] = useState({
+  const [isInit] = useState({
     tags: false,
     folders: false,
   });
@@ -24,7 +24,7 @@ export const MyLayout = ({ children }) => {
     isInit.folders = true;
     fetch("/api/folder")
       .then((res) => res.json())
-      .then(({ data, count }) => {
+      .then(({ data }) => {
         setFolders(data);
       });
   }, [isInit, setFolders]);
@@ -53,6 +53,9 @@ export const MyLayout = ({ children }) => {
       initFolder();
     }
   }, [isInit, initTag, initFolder]);
+
+  // 解决菜单闪烁问题
+  if (!isInit.folders) return null;
 
   return (
     <ConfigProvider
