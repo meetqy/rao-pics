@@ -32,7 +32,7 @@ eagle 管理图片，本项目通过监听`eagle library`生成网站，同时�
 ### 本地安装
 
 ```sh
-git clone https://github.com/meetqy/eagleuse
+git clone https://github.com/meetqy/eagleuse/tree/main
 pnpm install
 ```
 
