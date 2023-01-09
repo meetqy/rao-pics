@@ -67,11 +67,11 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   }, [images]);
 
   const loadmore = () => {
-    if (noMore) return <span>No more data</span>;
+    if (noMore) return <span>没有更多数据</span>;
 
     return (
       <Button type="link" disabled={loadingMore} onClick={loadMore}>
-        {loadingMore ? "Loading more..." : "Click to load more"}
+        {loadingMore ? "加载中..." : "加载更多"}
       </Button>
     );
   };

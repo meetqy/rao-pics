@@ -43,7 +43,7 @@ function getLoadMoreList(params: Params): Promise<Result> {
 
 const Page = () => {
   const [counts, setCounts] = useRecoilState(countState);
-  const [params, setParams] = useState<Params>({
+  const [params] = useState<Params>({
     body: {},
     page: 1,
     pageSize: 50,
@@ -55,7 +55,11 @@ const Page = () => {
     (d) => getLoadMoreList(d?.params || params),
     {
       target: LayoutContentRef.current,
-      isNoMore: (data) => data?.params?.page > 30,
+      threshold: 300,
+      isNoMore: (data) => {
+        const { params, count } = data;
+        return params.page >= Math.ceil(count / params.pageSize);
+      },
       onFinally: (data) => {
         if (data.count != counts.all) {
           setCounts({
@@ -76,13 +80,10 @@ const Page = () => {
         <JustifyLayoutSearch
           params={params.body}
           count={counts.all}
-          // onChange={(body) => {
-          //   setParams((parmas) => ({
-          //     ...parmas,
-          //     body,
-          //     page: 1,
-          //   }));
-          // }}
+          onChange={(body) => {
+            params.body = body;
+            infiniteScroll.reload();
+          }}
         />
       }
     />
