@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useRecoilState } from "recoil";
-import { countState, LayoutContentRefContext } from "@/store";
+import { countState, LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useInfiniteScroll } from "ahooks";
@@ -43,6 +43,7 @@ function getLoadMoreList(params: Params): Promise<Result> {
 
 const Page = () => {
   const [counts, setCounts] = useRecoilState(countState);
+  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const [params] = useState<Params>({
     body: {},
     page: 1,
@@ -57,6 +58,7 @@ const Page = () => {
       target: LayoutContentRef.current,
       threshold: 300,
       isNoMore: (data) => {
+        if (!data) return false;
         const { params, count } = data;
         return params.page >= Math.ceil(count / params.pageSize);
       },
@@ -67,6 +69,8 @@ const Page = () => {
             all: data.count,
           });
         }
+
+        setRightBasic((rightBasic) => ({ ...rightBasic, fileSize: data.size }));
       },
     }
   );
