@@ -22,7 +22,7 @@ model Image {
   star              Int?
   palettes          String?
   lastModified      BigInt
-  isDeleted         Boolean?
+  isDeleted         Boolean? @default(false)
   deletedTime       BigInt?
   processingPalette Boolean?
   noThumbnail       Boolean?
