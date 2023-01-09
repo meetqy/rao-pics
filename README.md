@@ -1,5 +1,5 @@
 <p align='center'>
-<img src='./public/favicon.png' width='192' height='192' />
+<img src='./static/favicon.png' width='192' height='192' />
 </p>
 
 <p align='center'>
