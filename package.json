@@ -25,7 +25,8 @@
     "create:symlink": "ts-node scripts/symlink.ts",
     "lint": "next lint",
     "fix": "npx prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commit": "git-cz"
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
@@ -37,6 +38,7 @@
     "antd": "^5.0.7",
     "chokidar": "^3.5.3",
     "encoding": "^0.1.13",
+    "git-cz": "^4.9.0",
     "justified-layout": "^4.1.0",
     "lodash": "^4.17.21",
     "next": "13.1.1",
@@ -44,7 +46,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-markdown": "8.0.4",
-    "recoil": "^0.7.6"
+    "recoil": "^0.7.6",
+    "standard-version": "^9.5.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
@@ -66,5 +69,10 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/git-cz"
+    }
   }
 }
