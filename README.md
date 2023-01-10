@@ -1,6 +1,4 @@
-<p align='center'>
-<img src='./static/favicon.png' width='192' height='192' />
-</p>
+![](./readme/preview.webp)
 
 <p align='center'>
     <a href="https://github.com/meetqy/eagleuse/blob/master/LICENSE" target="_blank">
@@ -15,7 +13,7 @@
     <a href='https://rao.pics'>Online</a>
 </p>
 
-# 🦑 EagleUse
+# <img src='./static/favicon.ico' height="24px" width="24px" /> EagleUse
 
 把 eagle 变成我的图片（后台）管理系统。
 
