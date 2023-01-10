@@ -7,7 +7,10 @@
     "next.js",
     "prisma",
     "sqlite",
-    "swagger"
+    "next.js",
+    "typescript",
+    "antd",
+    "react"
   ],
   "license": "MIT",
   "author": "meetqy",
@@ -19,13 +22,15 @@
     "db:watch": "prisma db seed",
     "db:preview": "prisma studio",
     "db:generate": "prisma generate",
+    "create:symlink": "ts-node scripts/symlink.ts",
     "lint": "next lint",
     "fix": "npx prettier --write .",
-    "create:symlink": "ts-node scripts/symlink.ts",
     "prepare": "husky install"
   },
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
+    "@commitlint/cli": "^17.4.1",
+    "@commitlint/config-conventional": "^17.4.0",
     "@prisma/client": "4.7.1",
     "@types/justified-layout": "^4.1.0",
     "ahooks": "^3.7.4",
