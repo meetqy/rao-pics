@@ -4,3 +4,4 @@ public
 static
 prisma/migrations
 .vscode
+.husky
