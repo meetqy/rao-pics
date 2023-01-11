@@ -55,7 +55,7 @@ const handleTags = ({ tags }: EagleUse.SearchParams) => {
   return and;
 };
 
-// prisma include
+// prisma include 返回那些字段
 // https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#include
 const handleIncludes = ({ includes }: EagleUse.SearchParams) => {
   const json = {};
@@ -66,6 +66,7 @@ const handleIncludes = ({ includes }: EagleUse.SearchParams) => {
   return json;
 };
 
+// 排序
 const handleOrderBy = ({ orderBy }: EagleUse.SearchParams) => {
   if (!orderBy) return { modificationTime: "desc" };
   const json = {};
