@@ -38,11 +38,11 @@ const SiderBasic = () => {
         </Row>
         <div className={styles.baseInfo} style={{ marginTop: 20 }}>
           <Row align="middle">
-            <Col span={8}>文件数</Col>
+            <Col span={12}>文件数</Col>
             <Col>{rightBasic.fileCount}</Col>
           </Row>
           <Row align={"middle"} style={{ marginTop: 10 }}>
-            <Col span={8}>文件大小</Col>
+            <Col span={12}>文件大小</Col>
             <Col>{transformByteToUnit(rightBasic.fileSize)}</Col>
           </Row>
         </div>
