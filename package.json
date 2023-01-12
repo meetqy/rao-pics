@@ -1,7 +1,7 @@
 {
   "name": "eagleuse",
   "version": "0.0.5",
-  "description": "把 eagle 变成我的图片（后台）管理系统。",
+  "description": "把 Eagle App 打造成本地后台管理系统，快速构建 WEB 图片站。",
   "keywords": [
     "eagle",
     "next.js",
