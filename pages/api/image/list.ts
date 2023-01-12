@@ -94,6 +94,8 @@ export default async function handler(req, res) {
       },
       // 扩展名
       { ext: body.ext },
+      // 评级
+      { star: body.star || null },
       // 删除 回收站
       {
         isDeleted: false,

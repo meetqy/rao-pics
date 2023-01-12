@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import { Col, Layout, Row, theme, Breadcrumb, Input } from "antd";
+import { Col, Layout, Row, theme, Breadcrumb, Input, Rate } from "antd";
 import { useMemo, useState } from "react";
 import SearchModule from "./SearchModule";
 
@@ -25,6 +25,7 @@ const JustifyLayoutSearch = (props: Props) => {
     size,
     annotation,
     ext,
+    star,
   }: EagleUse.SearchParams) => {
     props?.onChange({
       ...params,
@@ -33,6 +34,7 @@ const JustifyLayoutSearch = (props: Props) => {
       orderBy,
       annotation,
       ext,
+      star,
     });
   };
 
@@ -74,6 +76,16 @@ const JustifyLayoutSearch = (props: Props) => {
         <Col flex={1}>
           <Row gutter={[10, 10]}>
             <Col>
+              <SearchModule.Size
+                onChange={(e) =>
+                  onChange({
+                    ...params,
+                    size: e,
+                  })
+                }
+              />
+            </Col>
+            <Col>
               <Input
                 size="small"
                 style={{ width: 120 }}
@@ -114,13 +126,15 @@ const JustifyLayoutSearch = (props: Props) => {
             </Col>
 
             <Col>
-              <SearchModule.Size
-                onChange={(e) =>
+              <Rate
+                style={{ fontSize: 16 }}
+                value={params.star}
+                onChange={(e) => {
                   onChange({
                     ...params,
-                    size: e,
-                  })
-                }
+                    star: e,
+                  });
+                }}
               />
             </Col>
           </Row>

@@ -103,7 +103,10 @@ namespace EagleUse {
       field: string;
       by: "desc" | "asc";
     };
+    // 扩展名
     ext: string | Ext;
+    // 评级
+    star: number;
     // 需要包含返回的字段
     includes?: ("tags" | "folders")[];
   }
