@@ -93,6 +93,7 @@ namespace EagleUse {
         max: number;
       };
     };
+    annotation?: string;
     // 排序
     orderBy?: {
       field: string;

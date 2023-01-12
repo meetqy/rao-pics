@@ -86,6 +86,13 @@ export default async function handler(req, res) {
     AND: [
       ...handleTags(body),
       ...handleSize(body),
+      // 注释
+      {
+        annotation: {
+          contains: body.annotation,
+        },
+      },
+      // 删除 回收站
       {
         isDeleted: false,
       },

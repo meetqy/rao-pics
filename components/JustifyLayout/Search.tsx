@@ -1,5 +1,6 @@
-import { Col, Layout, Row, theme, Breadcrumb } from "antd";
-import { useMemo } from "react";
+import { useRequest } from "ahooks";
+import { Col, Layout, Row, theme, Breadcrumb, Input } from "antd";
+import { useMemo, useState } from "react";
 import SearchModule from "./SearchModule";
 
 interface Props {
@@ -12,16 +13,40 @@ const JustifyLayoutSearch = (props: Props) => {
   const { token } = theme.useToken();
 
   const params = useMemo(() => props?.params, [props.params]);
+  const [tempParams, setTempParams] = useState<{
+    annotation: string;
+  }>({
+    annotation: undefined,
+  });
 
-  const onChange = ({ orderBy, tags, size }: EagleUse.SearchParams) => {
-    console.log(orderBy);
+  const onChange = ({
+    orderBy,
+    tags,
+    size,
+    annotation,
+  }: EagleUse.SearchParams) => {
     props?.onChange({
       ...params,
       tags,
       size,
       orderBy,
+      annotation,
     });
   };
+
+  const tempChange = (key: string) => {
+    return new Promise((resolve) => {
+      props.onChange({
+        ...params,
+        [key]: tempParams[key],
+      });
+      resolve(true);
+    });
+  };
+
+  const { run } = useRequest(tempChange, {
+    debounceWait: 1000,
+  });
 
   return (
     <Layout.Header
@@ -46,6 +71,23 @@ const JustifyLayoutSearch = (props: Props) => {
       <Row style={{ height: 36 }}>
         <Col flex={1}>
           <Row gutter={[10, 10]}>
+            <Col>
+              <Input
+                size="small"
+                style={{ width: 120 }}
+                placeholder="按注释筛选"
+                allowClear
+                value={tempParams.annotation}
+                onChange={(e) => {
+                  setTempParams({ ...tempParams, annotation: e.target.value });
+
+                  tempParams.annotation = e.target.value;
+                  tempParams.annotation
+                    ? run("annotation")
+                    : tempChange("annotation");
+                }}
+              />
+            </Col>
             <Col>
               <SearchModule.Tag
                 value={params.tags}
