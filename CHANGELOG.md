@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/meetqy/eagleuse/compare/v0.0.5...v0.1.0) (2023-01-12)
+
+### ⚠ BREAKING CHANGES
+
+- 🧨 list.ts env.d.ts
+
+### Documentation | 文档
+
+- ✏️ 调整注释 ([7db39bb](https://github.com/meetqy/eagleuse/commit/7db39bb3c8fb29bf99659afe4e65d083647bb89c))
+
+### Code Refactoring | 代码重构
+
+- 💡 搜索文字展示 ([b7fe0d2](https://github.com/meetqy/eagleuse/commit/b7fe0d2608112df69bf279ef39c7c434b4be8f1b))
+
+### Features | 新功能
+
+- 🎸 按格式搜索 ([413d3fd](https://github.com/meetqy/eagleuse/commit/413d3fdb959140b8ebedb4a01c538e20b0aa88c5)), closes [#12](https://github.com/meetqy/eagleuse/issues/12)
+- 🎸 增加排序 升序/降序 ([352491c](https://github.com/meetqy/eagleuse/commit/352491cd4cb0ebabf4c903f01f4956cc2d939f24)), closes [#42](https://github.com/meetqy/eagleuse/issues/42)
+
+### Styles | 风格
+
+- 💄 basic 间距 ([234aa1d](https://github.com/meetqy/eagleuse/commit/234aa1d95fffef3ca661fd8050958719bd5f30af))
+
+### Bug Fixes | Bug 修复
+
+- 🐛 按评分搜索 ([30df89b](https://github.com/meetqy/eagleuse/commit/30df89be8b09790b69b6155d728193dfb5617ace)), closes [#8](https://github.com/meetqy/eagleuse/issues/8)
+- 🐛 按注释搜索 ([93a42d0](https://github.com/meetqy/eagleuse/commit/93a42d02f7ef8705704f40151b43c89599dd28e1)), closes [#9](https://github.com/meetqy/eagleuse/issues/9)
+- 🐛 打包报错 ([cfd1f5b](https://github.com/meetqy/eagleuse/commit/cfd1f5b53ca7cfa656e72a8ebfb8e486ef396f06))
+
 ### [0.0.5](https://github.com/meetqy/eagleuse/compare/v0.0.4...v0.0.5) (2023-01-10)
 
 ### Bug Fixes | Bug 修复
