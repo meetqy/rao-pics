@@ -104,9 +104,9 @@ namespace EagleUse {
       by: "desc" | "asc";
     };
     // 扩展名
-    ext: string | Ext;
+    ext?: string | Ext;
     // 评级
-    star: number;
+    star?: number;
     // 需要包含返回的字段
     includes?: ("tags" | "folders")[];
   }
