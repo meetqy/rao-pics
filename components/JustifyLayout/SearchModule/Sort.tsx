@@ -1,4 +1,4 @@
-import { Select } from "antd";
+import { Select, Switch } from "antd";
 import { useState } from "react";
 
 const options = [
@@ -16,7 +16,7 @@ interface Props {
   onChange?: (e: EagleUse.SearchParams["orderBy"]) => void;
 }
 
-const Sort = (props: Props) => {
+export const SortRule = (props: Props) => {
   const [orderBy, setOrderBy] = useState<EagleUse.SearchParams["orderBy"]>({
     field: "modificationTime",
     by: "desc",
@@ -38,4 +38,23 @@ const Sort = (props: Props) => {
   );
 };
 
-export default Sort;
+export const Sort = (props: Props) => {
+  const [orderBy, setOrderBy] = useState<EagleUse.SearchParams["orderBy"]>({
+    field: "modificationTime",
+    by: "desc",
+  });
+
+  return (
+    <Switch
+      checkedChildren="升序"
+      unCheckedChildren="降序"
+      defaultChecked
+      checked={orderBy.by === "asc"}
+      onChange={(e) => {
+        orderBy.by = e ? "asc" : "desc";
+        setOrderBy(orderBy);
+        props.onChange({ ...orderBy });
+      }}
+    />
+  );
+};

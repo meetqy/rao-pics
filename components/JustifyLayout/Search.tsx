@@ -72,14 +72,28 @@ const JustifyLayoutSearch = (props: Props) => {
         </Col>
 
         <Col>
-          <SearchModule.Sort
-            onChange={(e) => {
-              onChange({
-                ...params,
-                orderBy: e,
-              });
-            }}
-          />
+          <Row gutter={[10, 10]}>
+            <Col>
+              <SearchModule.SortRule
+                onChange={(e) => {
+                  onChange({
+                    ...params,
+                    orderBy: e,
+                  });
+                }}
+              />
+            </Col>
+            <Col>
+              <SearchModule.Sort
+                onChange={(e) => {
+                  onChange({
+                    ...params,
+                    orderBy: e,
+                  });
+                }}
+              />
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Layout.Header>
