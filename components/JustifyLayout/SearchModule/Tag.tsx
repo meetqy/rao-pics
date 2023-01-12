@@ -27,7 +27,7 @@ const Tag = (props: Props) => {
       size="small"
       mode="tags"
       allowClear
-      placeholder="按标签筛选"
+      placeholder="标签"
       value={value}
       style={{ minWidth: 120 }}
       options={tags.map((item) => ({
