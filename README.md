@@ -16,15 +16,15 @@
 
 # <img src='./static/favicon.ico' height="24px" width="24px" /> EagleUse
 
-把 Eagle App 打造成本地后台管理系统，快速管理 WEB 网站。
+把 Eagle App 打造成本地后台管理系统，快速构建 WEB 图片站。
 
-> 如果你也有这样的想法：eagle 修改/管理图片 => 网站上能实时查看。那这个项目非常合适，欢迎体验！
+> 如果你也有这样的想法：eagle app 本地修改/管理图片 => 实时构建网站并查看。那这个项目非常合适，欢迎体验！🚀🚀🚀
 
 # 👀 介绍
 
 ### 定位
 
-通过监听`eagle app library`创建网站，同时只会具备 `展示/搜索` 2 个功能。
+通过监听`eagle app library`构建图片站，同时只会具备 `展示/搜索` 2 个功能。
 
 ![](./readme/flow.webp)
 
