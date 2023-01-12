@@ -24,6 +24,7 @@ const JustifyLayoutSearch = (props: Props) => {
     tags,
     size,
     annotation,
+    ext,
   }: EagleUse.SearchParams) => {
     props?.onChange({
       ...params,
@@ -31,6 +32,7 @@ const JustifyLayoutSearch = (props: Props) => {
       size,
       orderBy,
       annotation,
+      ext,
     });
   };
 
@@ -75,7 +77,7 @@ const JustifyLayoutSearch = (props: Props) => {
               <Input
                 size="small"
                 style={{ width: 120 }}
-                placeholder="按注释筛选"
+                placeholder="注释"
                 allowClear
                 value={tempParams.annotation}
                 onChange={(e) => {
@@ -95,6 +97,17 @@ const JustifyLayoutSearch = (props: Props) => {
                   onChange({
                     ...params,
                     tags: e,
+                  });
+                }}
+              />
+            </Col>
+            <Col>
+              <SearchModule.Ext
+                value={params.ext}
+                onChange={(e) => {
+                  onChange({
+                    ...params,
+                    ext: e,
                   });
                 }}
               />

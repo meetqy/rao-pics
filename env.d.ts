@@ -18,8 +18,10 @@ namespace EagleUse {
     // 创建日期
     btime: number;
     mtime: number;
+    // 扩展名
     ext: string;
     url: string;
+    // 注释
     annotation: string;
     // 添加日期
     modificationTime: number;
@@ -79,6 +81,8 @@ namespace EagleUse {
     tags: Tag[];
   }
 
+  type Ext = "jpg" | "png" | "jpeg" | "gif" | "webp";
+
   export interface SearchParams {
     // 标签
     tags?: string[];
@@ -99,6 +103,7 @@ namespace EagleUse {
       field: string;
       by: "desc" | "asc";
     };
+    ext: string | Ext;
     // 需要包含返回的字段
     includes?: ("tags" | "folders")[];
   }

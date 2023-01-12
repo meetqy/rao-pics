@@ -92,6 +92,8 @@ export default async function handler(req, res) {
           contains: body.annotation,
         },
       },
+      // 扩展名
+      { ext: body.ext },
       // 删除 回收站
       {
         isDeleted: false,
