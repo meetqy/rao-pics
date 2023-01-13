@@ -6,14 +6,7 @@ import {
 import { Row, Layout, Col, Typography, theme, Card, Empty } from "antd";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
 import { handleImageUrl, transformFolderToTree } from "@/hooks";

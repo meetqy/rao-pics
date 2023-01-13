@@ -43,7 +43,7 @@ function getLoadMoreList(params: Params): Promise<Result> {
 
 const Page = () => {
   const [counts, setCounts] = useRecoilState(countState);
-  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
+  const [, setRightBasic] = useRecoilState(rightBasicState);
   const [params] = useState<Params>({
     body: {},
     page: 1,

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { useRecoilState } from "recoil";
 import { countState, LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
@@ -39,7 +39,7 @@ function getLoadMoreList(params: Params): Promise<Result> {
 }
 
 const Page = () => {
-  const [params, setParams] = useState<Params>({
+  const [params] = useState<Params>({
     page: 1,
     pageSize: 50,
   });
