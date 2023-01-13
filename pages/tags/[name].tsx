@@ -20,7 +20,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { pinyin } from "@/hooks";
 import Link from "next/link";
-import _ from "lodash";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
