@@ -23,7 +23,7 @@
     "db:preview": "prisma studio",
     "db:generate": "prisma generate",
     "create:symlink": "ts-node scripts/symlink.ts",
-    "lint": "next lint",
+    "lint": "next lint --max-warnings 0",
     "fix": "npx prettier --write .",
     "prepare": "husky install",
     "commit": "git-cz"
@@ -71,7 +71,8 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "npm run fix",
+    "**/*.(ts|tsx)": "npm run lint"
   },
   "config": {
     "commitizen": {
