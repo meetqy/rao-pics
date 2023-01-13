@@ -38,6 +38,10 @@
   - page - 当前页
   - pageSize - 每页多少条
 
+## `GET` /api/image/random
+
+随机获取一张图片 redirect 重定向到图片
+
 ---
 
 ### Interface 类型
