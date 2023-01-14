@@ -1,6 +1,6 @@
 import { themeState } from "@/store";
 import { useRequest } from "ahooks";
-import { Col, Layout, Row, theme, Breadcrumb, Input, Rate, Switch } from "antd";
+import { Col, Layout, Row, theme, Input, Rate, Switch } from "antd";
 import { useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import SearchModule from "./SearchModule";
@@ -69,16 +69,7 @@ const JustifyLayoutSearch = (props: Props) => {
       }}
     >
       <Row style={{ height: 48 }}>
-        <Col
-          span={4}
-          style={{ height: 48, display: "flex", alignItems: "center" }}
-        >
-          <Breadcrumb separator=">">
-            <Breadcrumb.Item>全部</Breadcrumb.Item>
-            <Breadcrumb.Item>搜索结果({props.count})</Breadcrumb.Item>
-          </Breadcrumb>
-        </Col>
-        <Col flex={1} style={{ display: "flex", justifyContent: "center" }}>
+        <Col flex={1}>
           <Row gutter={[10, 10]}>
             <Col>
               <SearchModule.Size
