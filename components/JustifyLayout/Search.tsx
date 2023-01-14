@@ -60,20 +60,21 @@ const JustifyLayoutSearch = (props: Props) => {
         backgroundColor: token.colorBgLayout,
         zIndex: token.zIndexPopupBase,
         padding: "0 20px",
-        height: 72,
-        lineHeight: "36px",
+        height: 48,
+        lineHeight: "48px",
       }}
     >
-      <Row style={{ height: 36 }}>
-        <Col style={{ display: "flex", alignItems: "center" }}>
+      <Row style={{ height: 48 }}>
+        <Col
+          span={4}
+          style={{ height: 48, display: "flex", alignItems: "center" }}
+        >
           <Breadcrumb separator=">">
             <Breadcrumb.Item>全部</Breadcrumb.Item>
             <Breadcrumb.Item>搜索结果({props.count})</Breadcrumb.Item>
           </Breadcrumb>
         </Col>
-      </Row>
-      <Row style={{ height: 36 }}>
-        <Col flex={1}>
+        <Col flex={1} style={{ display: "flex", justifyContent: "center" }}>
           <Row gutter={[10, 10]}>
             <Col>
               <SearchModule.Size
@@ -124,7 +125,6 @@ const JustifyLayoutSearch = (props: Props) => {
                 }}
               />
             </Col>
-
             <Col>
               <Rate
                 style={{ fontSize: 16 }}
@@ -140,7 +140,7 @@ const JustifyLayoutSearch = (props: Props) => {
           </Row>
         </Col>
 
-        <Col>
+        <Col span={4} style={{ display: "flex", justifyContent: "flex-end" }}>
           <Row gutter={[10, 10]}>
             <Col>
               <SearchModule.SortRule
