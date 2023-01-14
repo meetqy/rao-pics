@@ -21,17 +21,12 @@ export default async function handler(req, res) {
       where,
     }),
     prisma.image.findMany({
-      where: {
-        folders: {
-          some: {
-            id: {
-              in: id,
-            },
-          },
-        },
-      },
+      where,
       skip: (page - 1) * pageSize,
       take: pageSize,
+      include: {
+        tags: true,
+      },
     }),
     prisma.image.aggregate({
       where: where,
@@ -42,8 +37,11 @@ export default async function handler(req, res) {
   ]);
 
   return res.json({
-    size: sum._sum.size,
     count,
+    size: sum._sum.size,
+    page,
+    pageSize,
     data,
+    where,
   });
 }
