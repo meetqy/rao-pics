@@ -99,9 +99,9 @@ export default async function handler(req, res) {
         },
       },
       // 扩展名
-      { ext: body.ext },
+      { ext: body.ext || undefined },
       // 评级
-      { star: body.star },
+      { star: body.star || undefined },
       // 删除 回收站
       { isDeleted: body.isDeleted || false },
     ],
