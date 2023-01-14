@@ -20,8 +20,11 @@ function getLoadMoreList(params: Params): Promise<Result> {
   const { page, pageSize } = params;
 
   return new Promise((resolve) => {
-    fetch(`/api/image/recycle?page=${page}&pageSize=${pageSize}`, {
+    fetch(`/api/image?page=${page}&pageSize=${pageSize}`, {
       method: "post",
+      body: JSON.stringify({
+        isDeleted: true,
+      }),
     })
       .then((res) => res.json())
       .then(({ data, count, size }) => {

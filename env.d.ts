@@ -100,6 +100,7 @@ namespace EagleUse {
         max: number;
       };
     };
+    // 注释
     annotation?: string;
     // 排序
     orderBy?: {
@@ -110,7 +111,8 @@ namespace EagleUse {
     ext?: string | Ext;
     // 评级
     star?: number;
-
+    // 回收站 删除
+    isDeleted?: boolean;
     // 需要包含返回的字段
     includes?: ("tags" | "folders")[];
   }

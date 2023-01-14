@@ -1,6 +1,6 @@
 # Image 参考
 
-## `POST` /api/image/list
+## `POST` /api/image
 
 获取图片列表
 
@@ -8,26 +8,15 @@
   - page - 当前页
   - pageSize - 每页多少条
 - body
-  - tags - `string[]`(可选) 包含标签
+  - tags - `string[]` (可选) 包含标签
+  - noTags - `boolean` (可选) 未添加标签
   - size - [Size](#size) (可选) 宽高
+  - annotation - `string` (可选) 注释
   - orderBy - [Order](#orderby) (可选) 根据 filed 字段 排序
+  - ext - `string` (可选) 扩展名
+  - star - `number` (可选) 评级
+  - isDeleted - `boolean` (可选) 删除，回收站
   - includes - `string[]` (可选) 包含返回的字段
-
-## `GET` /api/image/not-tag
-
-获取未标签图片
-
-- query
-  - page - 当前页
-  - pageSize - 每页多少条
-
-## `GET` /api/image/recycle
-
-已删除/回收站
-
-- query
-  - page - 当前页
-  - pageSize - 每页多少条
 
 ## `GET` /api/image/folder/[id]
 

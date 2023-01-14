@@ -103,9 +103,7 @@ export default async function handler(req, res) {
       // 评级
       { star: body.star },
       // 删除 回收站
-      {
-        isDeleted: false,
-      },
+      { isDeleted: body.isDeleted || false },
     ],
   };
 

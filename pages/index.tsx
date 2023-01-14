@@ -22,7 +22,7 @@ function getLoadMoreList(params: Params): Promise<Result> {
   const { page, pageSize, body } = params;
 
   return new Promise((resolve) => {
-    fetch(`/api/image/list?page=${page}&pageSize=${pageSize}`, {
+    fetch(`/api/image?page=${page}&pageSize=${pageSize}`, {
       method: "post",
       body: JSON.stringify(body),
     })
