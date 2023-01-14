@@ -82,6 +82,17 @@ const JustifyLayoutSearch = (props: Props) => {
               />
             </Col>
             <Col>
+              <SearchModule.Tag
+                value={params.tags}
+                onChange={(e) => {
+                  onChange({
+                    ...params,
+                    tags: e,
+                  });
+                }}
+              />
+            </Col>
+            <Col>
               <Input
                 size="small"
                 style={{ width: 120 }}
@@ -95,17 +106,6 @@ const JustifyLayoutSearch = (props: Props) => {
                   tempParams.annotation
                     ? run("annotation")
                     : tempChange("annotation");
-                }}
-              />
-            </Col>
-            <Col>
-              <SearchModule.Tag
-                value={params.tags}
-                onChange={(e) => {
-                  onChange({
-                    ...params,
-                    tags: e,
-                  });
                 }}
               />
             </Col>

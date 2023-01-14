@@ -9,15 +9,3 @@ body,
   height: 100%;
   overflow: hidden;
 }
-
-.scroll-bar::-webkit-scrollbar {
-  width: 4px;
-  height: 12px;
-}
-.scroll-bar::-webkit-scrollbar-thumb {
-  background: #ddd;
-  border-radius: 12px;
-}
-.scroll-bar::-webkit-scrollbar-track {
-  background-color: #fff;
-}
