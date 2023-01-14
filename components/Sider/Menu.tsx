@@ -243,7 +243,10 @@ const SiderMenu = () => {
         items={treeRecursion(itemsData)}
         expandIcon={<span></span>}
         selectedKeys={[activeMenu]}
-        style={{ borderRight: 0 }}
+        style={{
+          borderRight: 0,
+          backgroundColor: "transparent",
+        }}
         openKeys={openKeys}
         inlineIndent={10}
         onSelect={(e) => {

@@ -41,3 +41,10 @@ export const rightBasicState = atom({
 
 // layout content ref
 export const LayoutContentRefContext = createContext({ current: null });
+
+type Theme = "light" | "dark";
+// 主题
+export const themeState = atom({
+  key: "themeState",
+  default: "light" as Theme,
+});

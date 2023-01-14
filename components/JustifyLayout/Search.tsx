@@ -1,6 +1,8 @@
+import { themeState } from "@/store";
 import { useRequest } from "ahooks";
-import { Col, Layout, Row, theme, Breadcrumb, Input, Rate } from "antd";
+import { Col, Layout, Row, theme, Breadcrumb, Input, Rate, Switch } from "antd";
 import { useMemo, useState } from "react";
+import { useRecoilState } from "recoil";
 import SearchModule from "./SearchModule";
 
 interface Props {
@@ -11,6 +13,8 @@ interface Props {
 
 const JustifyLayoutSearch = (props: Props) => {
   const { token } = theme.useToken();
+
+  const [, setTheme] = useRecoilState(themeState);
 
   const params = useMemo(() => props?.params, [props.params]);
   const [tempParams, setTempParams] = useState<{
@@ -140,7 +144,7 @@ const JustifyLayoutSearch = (props: Props) => {
           </Row>
         </Col>
 
-        <Col span={4} style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Col span={6} style={{ display: "flex", justifyContent: "flex-end" }}>
           <Row gutter={[10, 10]}>
             <Col>
               <SearchModule.SortRule
@@ -159,6 +163,15 @@ const JustifyLayoutSearch = (props: Props) => {
                     ...params,
                     orderBy: e,
                   });
+                }}
+              />
+            </Col>
+            <Col>
+              <Switch
+                checkedChildren={"☀️"}
+                unCheckedChildren={"🌛"}
+                onChange={(e) => {
+                  setTheme(e ? "dark" : "light");
                 }}
               />
             </Col>

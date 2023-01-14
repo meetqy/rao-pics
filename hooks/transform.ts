@@ -15,7 +15,7 @@ export const transformFolderToTree = (folders: EagleUse.Folder[]) => {
 };
 
 // 字节转其他单位 MB GB
-export const transformByteToUnit = (bytes: number, decimals: number = 2) => {
+export const transformByteToUnit = (bytes: number, decimals = 2) => {
   if (!+bytes) return "0 Bytes";
 
   const k = 1024;

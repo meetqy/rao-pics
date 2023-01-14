@@ -8,6 +8,7 @@ import {
   foldersState,
   LayoutContentRefContext,
   tagsState,
+  themeState,
 } from "@/store";
 import {
   useCallback,
@@ -32,6 +33,7 @@ export const MyLayout = ({ children }) => {
     tags: false,
     folders: false,
   });
+  const themeMode = useRecoilValue(themeState);
 
   const LayoutContentRefC = useContext(LayoutContentRefContext);
   const layoutContentRef = useRef(null);
@@ -80,9 +82,10 @@ export const MyLayout = ({ children }) => {
     <ConfigProvider
       theme={{
         token: {
-          // colorPrimary: "#d0d0d0",
+          // colorPrimary: "#e0e1e2",
         },
-        algorithm: theme.defaultAlgorithm,
+        algorithm:
+          themeMode === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,
       }}
       locale={zhCN}
     >
@@ -102,7 +105,7 @@ export const MyLayout = ({ children }) => {
           style={{
             borderRight: "1px solid #eee",
             height: "100%",
-            overflowY: "scroll",
+            overflowY: "auto",
           }}
         >
           <SiderMenu />
