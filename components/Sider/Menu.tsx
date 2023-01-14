@@ -14,7 +14,6 @@ import {
   TagsOutlined,
 } from "@ant-design/icons";
 import { Col, Menu, MenuProps, Row, theme, Typography } from "antd";
-import _ from "lodash";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -27,7 +26,7 @@ function getItem(
   icon?: React.ReactNode,
   children?: MenuItem[],
   type?: "group",
-  onTitleClick?: (info: any) => void
+  onTitleClick?: (info: { key: string; domEvent }) => void
 ): MenuItem {
   return {
     key,
@@ -82,7 +81,7 @@ const SiderMenu = () => {
   const router = useRouter();
 
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
-  const [_rightBasic, setRightBasic] = useRecoilState(rightBasicState);
+  const [, setRightBasic] = useRecoilState(rightBasicState);
   const counts = useRecoilValue(countState);
 
   // 文件夹
@@ -182,7 +181,7 @@ const SiderMenu = () => {
                 }))
               : null,
             onTitleClick: (info) => {
-              router.push(info["key"]);
+              router.push(info.key);
             },
           };
         }),

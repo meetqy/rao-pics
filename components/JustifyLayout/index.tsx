@@ -1,7 +1,7 @@
 import Image from "next/image";
 import justifyLayout from "justified-layout";
 import { Button, Card, Layout, Row, Col, theme, Empty } from "antd";
-import { MutableRefObject, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
@@ -22,7 +22,9 @@ interface JustifiedLayoutResult {
 }
 
 interface TData {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   list: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 

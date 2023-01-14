@@ -24,9 +24,9 @@ import Head from "next/head";
 
 export const MyLayout = ({ children }) => {
   const activeMenu = useRecoilValue(activeMenuState) || "/";
-  const [_tags, setTags] = useRecoilState(tagsState);
-  const [_counts, setCount] = useRecoilState(countState);
-  const [_folders, setFolders] = useRecoilState(foldersState);
+  const [, setTags] = useRecoilState(tagsState);
+  const [, setCount] = useRecoilState(countState);
+  const [, setFolders] = useRecoilState(foldersState);
   const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
   const [isInit] = useState({
     tags: false,
