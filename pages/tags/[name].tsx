@@ -289,7 +289,7 @@ export default function Page() {
       <Layout.Header
         style={{
           height: 44,
-          backgroundColor: token.colorBgContainer,
+          backgroundColor: token.colorBgElevated,
           lineHeight: "44px",
           borderBottom: `1px solid ${token.colorBorderBg}`,
           paddingLeft: "24px",
@@ -298,7 +298,7 @@ export default function Page() {
         标签管理({tags.length})
       </Layout.Header>
       <Layout>
-        <Layout.Sider width={240} theme="light">
+        <Layout.Sider width={240}>
           <Menu
             style={{ height: "100%" }}
             mode="inline"
@@ -311,7 +311,7 @@ export default function Page() {
         </Layout.Sider>
         <Layout.Content
           className="scroll-bar"
-          style={{ padding: 20, overflowY: "scroll" }}
+          style={{ padding: 20, overflowY: "auto" }}
         >
           {tagsContentElement(nowTagData)}
         </Layout.Content>

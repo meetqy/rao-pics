@@ -109,7 +109,7 @@ export const MyLayout = ({ children }) => {
           theme="light"
           className="scroll-bar"
           style={{
-            borderRight: `1px solid ${token.colorBorderBg}`,
+            borderRight: `1px solid ${token.colorBorderSecondary}`,
             height: "100%",
             overflowY: "auto",
           }}

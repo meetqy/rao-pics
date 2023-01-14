@@ -61,7 +61,7 @@ const JustifyLayoutSearch = (props: Props) => {
       style={{
         position: "sticky",
         top: 0,
-        backgroundColor: token.colorBgLayout,
+        backgroundColor: token.colorBgElevated,
         zIndex: token.zIndexPopupBase,
         padding: "0 20px",
         height: 48,
