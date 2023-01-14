@@ -13,6 +13,7 @@ import {
   MenuProps,
   Row,
   Tag,
+  theme,
   Typography,
 } from "antd";
 import { useRouter } from "next/router";
@@ -281,14 +282,16 @@ export default function Page() {
     });
   };
 
+  const { token } = theme.useToken();
+
   return (
     <Layout style={{ height: "100%" }}>
       <Layout.Header
         style={{
           height: 44,
-          backgroundColor: "white",
+          backgroundColor: token.colorBgContainer,
           lineHeight: "44px",
-          borderBottom: "1px solid #eee",
+          borderBottom: `1px solid ${token.colorBorderBg}`,
           paddingLeft: "24px",
         }}
       >
@@ -297,6 +300,7 @@ export default function Page() {
       <Layout>
         <Layout.Sider width={240} theme="light">
           <Menu
+            style={{ height: "100%" }}
             mode="inline"
             items={items}
             selectedKeys={["/tags/" + name]}

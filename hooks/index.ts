@@ -4,7 +4,7 @@ export * from "./transform";
 export const handleImageUrl = (
   image: EagleUse.Image,
   // 是否返回原图
-  original: false
+  original?: boolean
 ) => {
   const prefix = `/library/${image.id}.info/${image.name}`;
 

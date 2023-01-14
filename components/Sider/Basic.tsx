@@ -1,5 +1,14 @@
 import { rightBasicState, tagsState } from "@/store";
-import { Button, Col, Input, Rate, Row, Select, Tooltip } from "antd";
+import {
+  Button,
+  Col,
+  Input,
+  Rate,
+  Row,
+  Select,
+  Tooltip,
+  Typography,
+} from "antd";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
@@ -34,16 +43,36 @@ const SiderBasic = () => {
           {rightBasic.name}
         </Button>
         <Row style={{ marginTop: 20 }}>
-          <Col>基本信息</Col>
+          <Col>
+            <Typography.Text strong>基本信息</Typography.Text>
+          </Col>
         </Row>
         <div className={styles.baseInfo} style={{ marginTop: 20 }}>
           <Row align="middle">
-            <Col span={12}>文件数</Col>
-            <Col>{rightBasic.fileCount}</Col>
+            <Col span={12}>
+              <Typography.Text>文件数</Typography.Text>
+            </Col>
+            <Col
+              style={{ display: "flex", justifyContent: "flex-end" }}
+              flex={1}
+            >
+              <Typography.Text type="secondary">
+                {rightBasic.fileCount}
+              </Typography.Text>
+            </Col>
           </Row>
           <Row align={"middle"} style={{ marginTop: 10 }}>
-            <Col span={12}>文件大小</Col>
-            <Col>{transformByteToUnit(rightBasic.fileSize)}</Col>
+            <Col span={12}>
+              <Typography.Text>文件大小</Typography.Text>
+            </Col>
+            <Col
+              style={{ display: "flex", justifyContent: "flex-end" }}
+              flex={1}
+            >
+              <Typography.Text type="secondary">
+                {transformByteToUnit(rightBasic.fileSize)}
+              </Typography.Text>
+            </Col>
           </Row>
         </div>
       </div>
@@ -123,40 +152,76 @@ const SiderBasic = () => {
 
       <div style={{ marginTop: 20 }}>
         <Row>
-          <Col>基本信息</Col>
+          <Typography.Text strong>基本信息</Typography.Text>
         </Row>
 
         <Row align="middle" style={{ marginTop: 10 }}>
-          <Col span={8}>评分</Col>
+          <Col span={8}>
+            <Typography.Text>评分</Typography.Text>
+          </Col>
           <Col>
-            <Rate value={image.star || 0} disabled />
+            <Rate style={{ fontSize: 16 }} value={image.star || 0} disabled />
           </Col>
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
-          <Col span={8}>尺寸</Col>
+          <Col span={8}>
+            <Typography.Text>尺寸</Typography.Text>
+          </Col>
           <Col>
-            {image.width} x {image.height}
+            <Typography.Text type="secondary">
+              {image.width} x {image.height}
+            </Typography.Text>
           </Col>
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
-          <Col span={8}>文件大小</Col>
-          <Col>{transformByteToUnit(image.size)}</Col>
+          <Col span={8}>
+            <Typography.Text>文件大小</Typography.Text>
+          </Col>
+          <Col>
+            <Typography.Text type="secondary">
+              {transformByteToUnit(image.size)}
+            </Typography.Text>
+          </Col>
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
-          <Col span={8}>格式</Col>
-          <Col>{image.ext.toLocaleUpperCase()}</Col>
+          <Col span={8}>
+            <Typography.Text>格式</Typography.Text>
+          </Col>
+          <Col>
+            <Typography.Text type="secondary">
+              {image.ext.toLocaleUpperCase()}
+            </Typography.Text>
+          </Col>
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
-          <Col span={8}>添加日期</Col>
-          <Col>{handleTime(image.mtime)}</Col>
+          <Col span={8}>
+            <Typography.Text>添加日期</Typography.Text>
+          </Col>
+          <Col>
+            <Typography.Text type="secondary">
+              {handleTime(image.mtime)}
+            </Typography.Text>
+          </Col>
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
-          <Col span={8}>创建日期</Col>
-          <Col>{handleTime(image.btime)}</Col>
+          <Col span={8}>
+            <Typography.Text>创建日期</Typography.Text>
+          </Col>
+          <Col>
+            <Typography.Text type="secondary">
+              {handleTime(image.btime)}
+            </Typography.Text>
+          </Col>
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
-          <Col span={8}>修改日期</Col>
-          <Col>{handleTime(image.lastModified)}</Col>
+          <Col span={8}>
+            <Typography.Text>修改日期</Typography.Text>
+          </Col>
+          <Col>
+            <Typography.Text type="secondary">
+              {handleTime(image.lastModified)}
+            </Typography.Text>
+          </Col>
         </Row>
 
         <Row style={{ marginTop: 20 }}>

@@ -1,5 +1,4 @@
-import { ConfigProvider, Layout, theme } from "antd";
-import zhCN from "antd/locale/zh_CN";
+import { Layout, theme } from "antd";
 import "antd/dist/reset.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -8,7 +7,6 @@ import {
   foldersState,
   LayoutContentRefContext,
   tagsState,
-  themeState,
 } from "@/store";
 import {
   useCallback,
@@ -33,7 +31,8 @@ export const MyLayout = ({ children }) => {
     tags: false,
     folders: false,
   });
-  const themeMode = useRecoilValue(themeState);
+
+  const { token } = theme.useToken();
 
   const LayoutContentRefC = useContext(LayoutContentRefContext);
   const layoutContentRef = useRef(null);
@@ -79,16 +78,23 @@ export const MyLayout = ({ children }) => {
   if (!isInit.folders) return null;
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          // colorPrimary: "#e0e1e2",
-        },
-        algorithm:
-          themeMode === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,
-      }}
-      locale={zhCN}
-    >
+    <>
+      <style jsx global>
+        {`
+          .scroll-bar::-webkit-scrollbar {
+            width: 4px;
+            height: 12px;
+          }
+          .scroll-bar::-webkit-scrollbar-thumb {
+            background: ${token.colorBorder};
+            border-radius: 12px;
+          }
+          .scroll-bar::-webkit-scrollbar-track {
+            background-color: ${token.colorBgContainer};
+          }
+        `}
+      </style>
+
       <Head>
         <title>rao.pics - eagleuse搭建的图片站</title>
         <link rel="shortcut icon" href="/static/favicon.ico" />
@@ -103,7 +109,7 @@ export const MyLayout = ({ children }) => {
           theme="light"
           className="scroll-bar"
           style={{
-            borderRight: "1px solid #eee",
+            borderRight: `1px solid ${token.colorBorderBg}`,
             height: "100%",
             overflowY: "auto",
           }}
@@ -126,10 +132,16 @@ export const MyLayout = ({ children }) => {
           theme="light"
           collapsed={collapsed}
           collapsedWidth={0}
+          className="scroll-bar"
+          style={{
+            borderRight: `1px solid ${token.colorBorderBg}`,
+            height: "100%",
+            overflowY: "auto",
+          }}
         >
           <SiderBasic />
         </Layout.Sider>
       </Layout>
-    </ConfigProvider>
+    </>
   );
 };
