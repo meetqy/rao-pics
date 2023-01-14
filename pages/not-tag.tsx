@@ -19,8 +19,11 @@ function getLoadMoreList(params: Params): Promise<Result> {
   const { page, pageSize } = params;
 
   return new Promise((resolve) => {
-    fetch(`/api/image/not-tag?page=${page}&pageSize=${pageSize}`, {
+    fetch(`/api/image/list?page=${page}&pageSize=${pageSize}`, {
       method: "post",
+      body: JSON.stringify({
+        noTags: true,
+      }),
     })
       .then((res) => res.json())
       .then(({ data, count, size }) => {

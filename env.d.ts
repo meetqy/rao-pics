@@ -7,6 +7,7 @@ declare global {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace EagleUse {
   export type Menu = "/" | "/tags" | "/not-tag" | "recycle" | "/folder/";
 
@@ -44,10 +45,10 @@ namespace EagleUse {
     id: string;
     name: string;
     description: string;
-    pid: any;
+    pid: string;
     modificationTime: number;
-    iconColor: any;
-    icon: any;
+    iconColor: string;
+    icon: string;
     password: string;
     passwordTips: string;
     children?: Folder[];
@@ -86,6 +87,8 @@ namespace EagleUse {
   export interface SearchParams {
     // 标签
     tags?: string[];
+    // 未标签
+    noTags?: boolean;
     //   尺寸
     size?: {
       width: {
@@ -107,6 +110,7 @@ namespace EagleUse {
     ext?: string | Ext;
     // 评级
     star?: number;
+
     // 需要包含返回的字段
     includes?: ("tags" | "folders")[];
   }

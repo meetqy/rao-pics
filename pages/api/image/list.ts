@@ -36,12 +36,18 @@ const handleSize = ({ size }: EagleUse.SearchParams) => {
   return and;
 };
 
-// 标签
-const handleTags = ({ tags }: EagleUse.SearchParams) => {
-  const and = [];
+// 标签 || 未标签
+const handleTags = ({ tags, noTags = false }: EagleUse.SearchParams) => {
+  if (noTags) {
+    return {
+      tags: {
+        none: {},
+      },
+    };
+  }
 
   if (tags && tags.length > 0) {
-    and.push({
+    return {
       tags: {
         some: {
           id: {
@@ -49,10 +55,10 @@ const handleTags = ({ tags }: EagleUse.SearchParams) => {
           },
         },
       },
-    });
+    };
   }
 
-  return and;
+  return {};
 };
 
 // prisma include 返回那些字段
@@ -84,7 +90,7 @@ export default async function handler(req, res) {
   const include = handleIncludes(body);
   const where = {
     AND: [
-      ...handleTags(body),
+      handleTags(body),
       ...handleSize(body),
       // 注释
       {
