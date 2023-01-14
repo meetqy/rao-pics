@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/meetqy/eagleuse/compare/v0.1.0...v0.1.1) (2023-01-14)
+
+### Features | 新功能
+
+- 🎸 add /api/image/random 随机返回一张图片 ([a719607](https://github.com/meetqy/eagleuse/commit/a7196070e940a96a8f082e071ce91803868dfc9e))
+- 🎸 add dark mode ([c8a0506](https://github.com/meetqy/eagleuse/commit/c8a0506c1f840a94af38ac6eeafa08e85f45226d))
+
+### Styles | 风格
+
+- 💄 删除搜索左侧文本 ([8d69260](https://github.com/meetqy/eagleuse/commit/8d69260d5463ba3e373f892128aded075a5f5548))
+- 💄 搜索栏样式调整 ([e7aab48](https://github.com/meetqy/eagleuse/commit/e7aab48af332a67410b4651288616bfdf1c3e22f))
+- 💄 样式调整 ([2514bc3](https://github.com/meetqy/eagleuse/commit/2514bc3fd5d0d0886434846296a8769983556894))
+- 💄 样式调整 ([6fca107](https://github.com/meetqy/eagleuse/commit/6fca10716482f2eb2078d203886d9f933e5876c2))
+
+### Bug Fixes | Bug 修复
+
+- 🐛 文件夹选中图片基础信息中无法显示标签信息 ([2874859](https://github.com/meetqy/eagleuse/commit/28748599f0e2f6119d8f27ab39f544ca99e959d6)), closes [#46](https://github.com/meetqy/eagleuse/issues/46)
+- 🐛 image/list 查询 star bug ([4f40565](https://github.com/meetqy/eagleuse/commit/4f405653e44e655a93fa30ea0eaa700446b1018d))
+
 ## [0.1.0](https://github.com/meetqy/eagleuse/compare/v0.0.5...v0.1.0) (2023-01-12)
 
 ### ⚠ BREAKING CHANGES
