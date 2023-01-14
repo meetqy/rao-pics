@@ -14,7 +14,7 @@ interface Props {
 const JustifyLayoutSearch = (props: Props) => {
   const { token } = theme.useToken();
 
-  const [, setTheme] = useRecoilState(themeState);
+  const [themeMode, setTheme] = useRecoilState(themeState);
 
   const params = useMemo(() => props?.params, [props.params]);
   const [tempParams, setTempParams] = useState<{
@@ -159,6 +159,7 @@ const JustifyLayoutSearch = (props: Props) => {
             </Col>
             <Col>
               <Switch
+                checked={themeMode === "dark"}
                 checkedChildren={"☀️"}
                 unCheckedChildren={"🌛"}
                 onChange={(e) => {
