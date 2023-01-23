@@ -44,10 +44,10 @@ const JustifyLayoutSearch = (props: Props) => {
 
   const tempChange = (key: string) => {
     return new Promise((resolve) => {
-      props.onChange({
-        ...params,
-        [key]: tempParams[key],
-      });
+      const json = params;
+      if (key) json[key] = tempParams[key];
+
+      props.onChange(json);
       resolve(true);
     });
   };

@@ -4,6 +4,7 @@ import { countState, LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useInfiniteScroll } from "ahooks";
+import { useRouter } from "next/router";
 
 interface Params {
   body: EagleUse.SearchParams;
@@ -42,10 +43,14 @@ function getLoadMoreList(params: Params): Promise<Result> {
 }
 
 const Page = () => {
+  const router = useRouter();
   const [counts, setCounts] = useRecoilState(countState);
   const [, setRightBasic] = useRecoilState(rightBasicState);
+  const { tag } = router.query;
   const [params] = useState<Params>({
-    body: {},
+    body: {
+      tags: tag ? [tag as string] : [],
+    },
     page: 1,
     pageSize: 50,
   });
