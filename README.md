@@ -14,7 +14,7 @@
     <a href="./readme/api/image.md">查询API</a>
 </p>
 
-# <img src='./static/favicon.ico' height="24px" width="24px" /> EagleUse
+# <img src='./public/static/favicon.ico' height="24px" width="24px" /> EagleUse
 
 把 Eagle App 打造成本地后台管理系统，快速构建 WEB 图片站。
 
