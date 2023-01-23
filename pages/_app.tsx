@@ -1,12 +1,13 @@
 import { MyLayout } from "@/components/Layout";
-import { RecoilRoot, useRecoilValue } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
 import zhCN from "antd/locale/zh_CN";
 import "antd/dist/reset.css";
 import "@/styles/global.css";
 import { ConfigProvider, theme } from "antd";
-import { themeState } from "@/store";
+import { ThemeMode, themeState } from "@/store";
 import Head from "next/head";
 import Pkg from "@/package.json";
+import { useEffect } from "react";
 
 export default function MyApp(props) {
   return (
@@ -17,7 +18,13 @@ export default function MyApp(props) {
 }
 
 const Container = ({ Component, pageProps }) => {
-  const themeMode = useRecoilValue(themeState);
+  const [themeMode, setThemeMode] = useRecoilState(themeState);
+
+  // 初始化 store
+  useEffect(() => {
+    const localMode = localStorage.getItem("use-local-mode") as ThemeMode;
+    setThemeMode(localMode || "light");
+  }, [setThemeMode]);
 
   return (
     <>
