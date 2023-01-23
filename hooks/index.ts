@@ -18,3 +18,17 @@ export const handleImageUrl = (
     return `${prefix}_thumbnail.png`;
   }
 };
+
+export const handleImageAlt = (image: EagleUse.Image) => {
+  let str = "";
+
+  if (image.tags) {
+    str += image.tags.map((item) => item.name).join(",");
+  }
+
+  if (image.annotation) {
+    str += "-" + image.annotation;
+  }
+
+  return str;
+};

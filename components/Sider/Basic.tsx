@@ -12,7 +12,7 @@ import {
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
-import { handleImageUrl, transformByteToUnit } from "@/hooks";
+import { handleImageAlt, handleImageUrl, transformByteToUnit } from "@/hooks";
 import { useMemo } from "react";
 
 const handleTime = (time: number) => {
@@ -93,7 +93,7 @@ const SiderBasic = () => {
               height: image.height / (image.width / 200),
             }}
             src={handleImageUrl(image)}
-            alt={handleImageUrl(image)}
+            alt={handleImageAlt(image)}
           />
         </Col>
       </Row>

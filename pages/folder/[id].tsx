@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
-import { handleImageUrl, transformFolderToTree } from "@/hooks";
+import { handleImageAlt, handleImageUrl, transformFolderToTree } from "@/hooks";
 import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
 
@@ -106,13 +106,14 @@ const Page = () => {
         </div>
       );
 
-    const src = handleImageUrl(images[0]);
+    const thumbnail = images[0];
+
     return (
       <Image
-        src={src}
+        src={handleImageUrl(thumbnail)}
         width={0}
         height={150}
-        alt={src}
+        alt={handleImageAlt(thumbnail)}
         style={{ objectFit: "cover", objectPosition: "top" }}
       />
     );

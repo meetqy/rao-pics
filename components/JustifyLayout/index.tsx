@@ -2,7 +2,7 @@ import Image from "next/image";
 import justifyLayout from "justified-layout";
 import { Button, Card, Layout, Row, Col, theme, Empty } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { handleImageUrl } from "@/hooks";
+import { handleImageAlt, handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
 
@@ -123,7 +123,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
                   width={item.width}
                   height={item.height}
                   src={handleImageUrl(image)}
-                  alt={handleImageUrl(image)}
+                  alt={handleImageAlt(image)}
                 />
               </Card>
             );
