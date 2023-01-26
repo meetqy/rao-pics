@@ -29,9 +29,7 @@ const Container = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>
-          {Pkg.description} - {Pkg.name.toLocaleUpperCase()}
-        </title>
+        <title>{`${Pkg.description} - ${Pkg.name.toLocaleUpperCase()}`}</title>
         <link rel="shortcut icon" href="/static/favicon.ico" />
         <meta
           name="description"
