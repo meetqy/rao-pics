@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/meetqy/eagleuse/compare/v0.1.1...v0.1.2) (2023-01-27)
+
+### Performance Improvements | 性能优化
+
+- ⚡️ 图片添加 alt 显示格式 ([0443956](https://github.com/meetqy/eagleuse/commit/0443956f978abb75353efaad83c20dfa8953884b)), closes [#48](https://github.com/meetqy/eagleuse/issues/48)
+- ⚡️ 主题模式切换显示 ([793bdbb](https://github.com/meetqy/eagleuse/commit/793bdbb440782e4b6eeac314cb02d302c7d6eba3))
+- ⚡️ localstorage 记录主题 ([498c0a8](https://github.com/meetqy/eagleuse/commit/498c0a8e41ee47cc103b5a9944edc8d59bd529c1))
+
+### Bug Fixes | Bug 修复
+
+- 🐛 <Head> 报错 ([b300d9c](https://github.com/meetqy/eagleuse/commit/b300d9cc82c6c9752f182f1d5d55b0f1df43a47b)), closes [#52](https://github.com/meetqy/eagleuse/issues/52)
+- 🐛 首页带参数跳转问题 ([593e6dc](https://github.com/meetqy/eagleuse/commit/593e6dca8c2afbf1f68612222356dfb248eba718))
+- 🐛 star 查询条件错误 ([308edae](https://github.com/meetqy/eagleuse/commit/308edaea1e13d76dd5ca5fbcc7586520a2f11188))
+
+### Features | 新功能
+
+- 🎸 页面增加名称&版本号 ([bd040ba](https://github.com/meetqy/eagleuse/commit/bd040ba0ea62ef6df846f3166f7b6797a9be1c0d))
+
 ### [0.1.1](https://github.com/meetqy/eagleuse/compare/v0.1.0...v0.1.1) (2023-01-14)
 
 ### Features | 新功能
