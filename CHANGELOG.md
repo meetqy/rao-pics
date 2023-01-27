@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/meetqy/eagleuse/compare/v0.1.2...v0.1.3) (2023-01-27)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 centos ensureSymlinkSync 报错 ([029f0af](https://github.com/meetqy/eagleuse/commit/029f0affec875ee56c6be50da6bec5e9a820ea6e))
+
 ### [0.1.2](https://github.com/meetqy/eagleuse/compare/v0.1.1...v0.1.2) (2023-01-27)
 
 ### Performance Improvements | 性能优化
