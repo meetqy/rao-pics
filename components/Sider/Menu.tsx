@@ -17,6 +17,8 @@ import { Col, Menu, MenuProps, Row, theme, Typography } from "antd";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import Pkg from "@/package.json";
+import Link from "next/link";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -238,6 +240,34 @@ const SiderMenu = () => {
           color: ${token.colorPrimaryTextActive}!important;
         }
       `}</style>
+
+      <Row style={{ padding: 12 }} gutter={[8, 0]}>
+        <Col>
+          <Link
+            href="https://github.com/meetqy/eagleuse"
+            target={"_blank"}
+            style={{ color: token.colorTextBase }}
+          >
+            <Typography.Text strong style={{ fontSize: 18 }}>
+              Eagle
+            </Typography.Text>
+            <Typography.Text
+              strong
+              style={{ fontSize: 18, color: token.colorSuccess }}
+            >
+              Use
+            </Typography.Text>
+          </Link>
+        </Col>
+        <Col>
+          <Link
+            href={"https://github.com/meetqy/eagleuse/releases"}
+            target="_blank"
+          >
+            <Typography.Text type="secondary">v{Pkg.version}</Typography.Text>
+          </Link>
+        </Col>
+      </Row>
       <Menu
         mode="inline"
         items={treeRecursion(itemsData)}

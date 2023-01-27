@@ -16,7 +16,7 @@
 
 # <img src='./public/static/favicon.ico' height="24px" width="24px" /> EagleUse
 
-把 Eagle App 打造成本地后台管理系统，快速构建 WEB 图片站。
+把 Eagle App 打造成本地后台管理系统，快速构建 WEB 图片站、自建图床。
 
 > 如果你也有这样的想法：eagle app 本地修改/管理图片 => 实时构建网站并查看。那这个项目非常合适，欢迎体验！🚀🚀🚀
 
