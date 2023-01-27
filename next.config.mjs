@@ -2,12 +2,22 @@
  * @type {import('next').NextConfig}
  */
 
-import { ensureSymlinkSync } from "fs-extra";
+import extra from "fs-extra";
 import { logger } from "./logger.mjs";
+const { ensureSymlinkSync, existsSync } = extra;
 
-// 创建 library 软连接
-ensureSymlinkSync(process.env.LIBRARY + "/images", "./public/library");
-logger.info("library 软链接创建成功！");
+const library = "./public/library";
+/**
+ * ensureSymlinkSync centos7 报错
+ * Error: EEXIST: file already exists, symlink
+ * */
+if (!existsSync(library)) {
+  // 创建 library 软连接
+  ensureSymlinkSync(process.env.LIBRARY + "/images");
+  logger.info("library 软链接创建成功！");
+} else {
+  logger.info("library 软链接已创建，跳过。");
+}
 
 const nextConfig = {
   reactStrictMode: true,
