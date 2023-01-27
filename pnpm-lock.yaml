@@ -4,7 +4,7 @@ specifiers:
   "@ant-design/icons": ^4.8.0
   "@commitlint/cli": ^17.4.1
   "@commitlint/config-conventional": ^17.4.0
-  "@prisma/client": ^4.9.0
+  "@prisma/client": 4.8.1
   "@types/fs-extra": ^9.0.13
   "@types/justified-layout": ^4.1.0
   "@types/lodash": ^4.14.191
@@ -30,7 +30,7 @@ specifiers:
   pino: ^8.8.0
   pino-pretty: ^9.1.1
   prettier: ^2.8.2
-  prisma: ^4.9.0
+  prisma: 4.8.1
   react: 18.2.0
   react-dom: 18.2.0
   react-markdown: 8.0.4
@@ -43,7 +43,7 @@ dependencies:
   "@ant-design/icons": 4.8.0_biqbaboplfbrettd7655fr4n2y
   "@commitlint/cli": 17.4.1
   "@commitlint/config-conventional": 17.4.0
-  "@prisma/client": 4.9.0_prisma@4.9.0
+  "@prisma/client": 4.8.1_prisma@4.8.1
   "@types/justified-layout": 4.1.0
   ahooks: 3.7.4_react@18.2.0
   antd: 5.1.4_biqbaboplfbrettd7655fr4n2y
@@ -76,7 +76,7 @@ devDependencies:
   fs-extra: 11.1.0
   husky: 8.0.3
   lint-staged: 13.1.0
-  prisma: 4.9.0
+  prisma: 4.8.1
   ts-node: 10.9.1_r65g46xrm45gbuklnvp6xevc2y
   typescript: 4.9.4
 
@@ -748,10 +748,10 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /@prisma/client/4.9.0_prisma@4.9.0:
+  /@prisma/client/4.8.1_prisma@4.8.1:
     resolution:
       {
-        integrity: sha512-bz6QARw54sWcbyR1lLnF2QHvRW5R/Jxnbbmwh3u+969vUKXtBkXgSgjDA85nji31ZBlf7+FrHDy5x+5ydGyQDg==,
+        integrity: sha512-d4xhZhETmeXK/yZ7K0KcVOzEfI5YKGGEr4F5SBV04/MU4ncN/HcE28sy3e4Yt8UFW0ZuImKFQJE+9rWt9WbGSQ==,
       }
     engines: { node: ">=14.17" }
     requiresBuild: true
@@ -761,21 +761,21 @@ packages:
       prisma:
         optional: true
     dependencies:
-      "@prisma/engines-version": 4.9.0-42.ceb5c99003b99c9ee2c1d2e618e359c14aef2ea5
-      prisma: 4.9.0
+      "@prisma/engines-version": 4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe
+      prisma: 4.8.1
     dev: false
 
-  /@prisma/engines-version/4.9.0-42.ceb5c99003b99c9ee2c1d2e618e359c14aef2ea5:
+  /@prisma/engines-version/4.8.0-61.d6e67a83f971b175a593ccc12e15c4a757f93ffe:
     resolution:
       {
-        integrity: sha512-M16aibbxi/FhW7z1sJCX8u+0DriyQYY5AyeTH7plQm9MLnURoiyn3CZBqAyIoQ+Z1pS77usCIibYJWSgleBMBA==,
+        integrity: sha512-MHSOSexomRMom8QN4t7bu87wPPD+pa+hW9+71JnVcF3DqyyO/ycCLhRL1we3EojRpZxKvuyGho2REQsMCvxcJw==,
       }
     dev: false
 
-  /@prisma/engines/4.9.0:
+  /@prisma/engines/4.8.1:
     resolution:
       {
-        integrity: sha512-t1pt0Gsp+HcgPJrHFc+d/ZSAaKKWar2G/iakrE07yeKPNavDP3iVKPpfXP22OTCHZUWf7OelwKJxQgKAm5hkgw==,
+        integrity: sha512-93tctjNXcIS+i/e552IO6tqw17sX8liivv8WX9lDMCpEEe3ci+nT9F+1oHtAafqruXLepKF80i/D20Mm+ESlOw==,
       }
     requiresBuild: true
 
@@ -5510,16 +5510,16 @@ packages:
     hasBin: true
     dev: false
 
-  /prisma/4.9.0:
+  /prisma/4.8.1:
     resolution:
       {
-        integrity: sha512-bS96oZ5oDFXYgoF2l7PJ3Mp1wWWfLOo8B/jAfbA2Pn0Wm5Z/owBHzaMQKS3i1CzVBDWWPVnOohmbJmjvkcHS5w==,
+        integrity: sha512-ZMLnSjwulIeYfaU1O6/LF6PEJzxN5par5weykxMykS9Z6ara/j76JH3Yo2AH3bgJbPN4Z6NeCK9s5fDkzf33cg==,
       }
     engines: { node: ">=14.17" }
     hasBin: true
     requiresBuild: true
     dependencies:
-      "@prisma/engines": 4.9.0
+      "@prisma/engines": 4.8.1
 
   /process-nextick-args/2.0.1:
     resolution:
