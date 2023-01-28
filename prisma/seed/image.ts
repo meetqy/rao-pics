@@ -38,12 +38,11 @@ export const initImage = (prisma: PrismaClient) => {
           create: result,
         })
         .then((image) => {
-          // console.log("init image with id: ", image.id);
+          console.log("init image with id: ", image.id);
         });
     })
     .on("change", (file) => {
       const json = readJSONSync(file);
-
       prisma.image
         .findFirst({
           where: {
@@ -64,7 +63,11 @@ export const initImage = (prisma: PrismaClient) => {
                 ...json,
                 palettes: JSON.stringify(json.palettes),
                 tags: {
-                  set: json.tags.map((tag) => ({ id: tag })),
+                  // https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#connectorcreate
+                  connectOrCreate: json.tags.map((tag) => ({
+                    where: { id: tag },
+                    create: { id: tag, name: tag },
+                  })),
                 },
                 folders: {
                   set: json.folders.map((folder) => ({ id: folder })),
