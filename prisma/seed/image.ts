@@ -2,6 +2,10 @@ import { join } from "path";
 import { PrismaClient } from "@prisma/client";
 import chokidar from "chokidar";
 import { readJSONSync } from "fs-extra";
+import pino from "pino";
+import pretty from "pino-pretty";
+
+const logger = pino(pretty());
 
 const handleImage = (json) => {
   return {
@@ -23,23 +27,13 @@ const handleImage = (json) => {
 const _path = join(process.env.LIBRARY, "./images/**/metadata.json");
 
 export const initImage = (prisma: PrismaClient) => {
+  const initImageResults = [];
   chokidar
     .watch(_path)
     .on("add", (file) => {
       const json = readJSONSync(file);
       const result = handleImage(json);
-
-      prisma.image
-        .upsert({
-          where: {
-            id: json.id,
-          },
-          update: result,
-          create: result,
-        })
-        .then((image) => {
-          console.log("init image with id: ", image.id);
-        });
+      initImageResults.push(result);
     })
     .on("change", (file) => {
       const json = readJSONSync(file);
@@ -75,7 +69,10 @@ export const initImage = (prisma: PrismaClient) => {
               },
             })
             .then((image) => {
-              console.log("update image with id: ", image.id);
+              logger.info(`update image with id: ${image.id}`);
+            })
+            .catch((e) => {
+              logger.error(e, "update image error: ");
             });
         });
     })
@@ -92,7 +89,30 @@ export const initImage = (prisma: PrismaClient) => {
           },
         })
         .then((image) => {
-          console.log("delete image with id: ", image.id);
+          logger.info(`delete image with id: ${image.id}`);
+        })
+        .catch((e) => {
+          logger.error(e, "delete image error: ");
+        });
+    })
+    .on("ready", () => {
+      prisma
+        .$transaction(
+          initImageResults.map((result) =>
+            prisma.image.upsert({
+              where: { id: result.id },
+              update: result,
+              create: result,
+            })
+          )
+        )
+        .then((res) => {
+          logger.info(
+            `init image all count(s): ${initImageResults.length}, success: ${res.length}`
+          );
+        })
+        .catch((e) => {
+          logger.error(e, "init image error: ");
         });
     });
 };

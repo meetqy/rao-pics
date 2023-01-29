@@ -3,10 +3,12 @@
  */
 
 import fs from "fs-extra";
-
-import { logger } from "./logger.mjs";
+import pino from "pino";
+import pretty from "pino-pretty";
 import { join } from "path";
 const { ensureSymlinkSync, existsSync } = fs;
+
+const logger = pino(pretty());
 
 const library = "./public/library";
 if (existsSync(library)) {
