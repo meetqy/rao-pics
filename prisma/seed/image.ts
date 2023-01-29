@@ -27,13 +27,25 @@ const handleImage = (json) => {
 const _path = join(process.env.LIBRARY, "./images/**/metadata.json");
 
 export const initImage = (prisma: PrismaClient) => {
-  const initImageResults = [];
+  logger.info("watching image ...");
   chokidar
     .watch(_path)
     .on("add", (file) => {
       const json = readJSONSync(file);
       const result = handleImage(json);
-      initImageResults.push(result);
+
+      prisma.image
+        .upsert({
+          where: { id: result.id },
+          update: result,
+          create: result,
+        })
+        .then(() => {
+          // logger.debug(image.id, `upsert image with id:`);
+        })
+        .catch((e) => {
+          logger.error(e, "upsert image error: ");
+        });
     })
     .on("change", (file) => {
       const json = readJSONSync(file);
@@ -93,26 +105,6 @@ export const initImage = (prisma: PrismaClient) => {
         })
         .catch((e) => {
           logger.error(e, "delete image error: ");
-        });
-    })
-    .on("ready", () => {
-      prisma
-        .$transaction(
-          initImageResults.map((result) =>
-            prisma.image.upsert({
-              where: { id: result.id },
-              update: result,
-              create: result,
-            })
-          )
-        )
-        .then((res) => {
-          logger.info(
-            `init image all count(s): ${initImageResults.length}, success: ${res.length}`
-          );
-        })
-        .catch((e) => {
-          logger.error(e, "init image error: ");
         });
     });
 };
