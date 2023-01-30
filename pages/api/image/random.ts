@@ -1,6 +1,8 @@
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 export default async function handler(req, res) {
+  const prisma = getPrisma();
+
   const count = await prisma.image.count();
 
   const skip = Math.floor(Math.random() * count);

@@ -1,6 +1,8 @@
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 export default async function handler(req, res) {
+  const prisma = getPrisma();
+
   const [all, notTag, tags, recycle] = await Promise.all([
     prisma.image.count(),
     prisma.image.count({

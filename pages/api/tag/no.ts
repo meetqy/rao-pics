@@ -1,7 +1,8 @@
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // 未分类
 export default async function handler(_req, res) {
+  const prisma = getPrisma();
   const where = {
     // 排除图片数量为0的标签
     NOT: {

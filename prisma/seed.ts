@@ -9,6 +9,7 @@ dotenv.config({ path: join(__dirname, "../.env") });
 const prisma = new PrismaClient();
 
 function main() {
+  process.env.WATCH_REPLACE_DATABASE_FILE = "false";
   initMetadata(prisma);
   initTag(prisma);
   initImage(prisma);

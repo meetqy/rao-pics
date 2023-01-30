@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // 尺寸
 const handleSize = ({ size }: EagleUse.SearchParams) => {
@@ -82,6 +82,8 @@ const handleOrderBy = ({ orderBy }: EagleUse.SearchParams) => {
 };
 
 export default async function handler(req, res) {
+  const prisma = getPrisma();
+
   // findMany参考：https://www.prisma.io/docs/reference/api-reference/prisma-client-reference?query=t&page=1#findmany
   const body = JSON.parse(req.body || "{}") as EagleUse.SearchParams;
 

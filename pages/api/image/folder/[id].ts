@@ -1,6 +1,8 @@
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 export default async function handler(req, res) {
+  const prisma = getPrisma();
+
   const { id } = req.query;
   const page = +(req.query.page || 1);
   const pageSize = +(req.query.pageSize || 50);

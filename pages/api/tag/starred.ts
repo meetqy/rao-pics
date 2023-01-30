@@ -1,7 +1,9 @@
-import prisma from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
 
 // 常用标签
 export default async function handler(_req, res) {
+  const prisma = getPrisma();
+
   const [count, data] = await Promise.all([
     prisma.tag.count({
       where: {
