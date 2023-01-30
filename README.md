@@ -101,6 +101,19 @@ pnpm run dev
 
 > 想要完整跑起来，你需要同时启动两个项目。
 
+# 📌 目前我所使用的同步/备份方案
+
+坚果云+cadaver+davfs2
+
+参考资料：
+
+- [自动备份 Linux 上的博客数据到坚果云](https://chenyongjun.vip/articles/100)
+- [Linux 通过安装 davfs2 来挂载 webdav 网盘](https://www.moerats.com/archives/317/)
+
+可实现： 本地修改文件 -> 自动同步到坚果云 -> 自动拉取资源到 vps
+
+总花费：30 元/月
+
 # 📄 开源协议
 
 [MIT license](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EagleUse](https://github.com/eagleuse)
