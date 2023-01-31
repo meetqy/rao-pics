@@ -37,6 +37,7 @@
     "antd": "^5.1.4",
     "chokidar": "^3.5.3",
     "encoding": "^0.1.13",
+    "express": "^4.18.2",
     "git-cz": "^4.9.0",
     "justified-layout": "^4.1.0",
     "lodash": "^4.17.21",

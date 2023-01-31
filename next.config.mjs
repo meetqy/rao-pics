@@ -10,10 +10,14 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
-  images: {
-    unoptimized: true,
-    minimumCacheTTL: 31536000,
+  serverRuntimeConfig: {
+    minimumCacheTTL: 3600 * 24 * 365,
   },
+};
+
+nextConfig.images = {
+  unoptimized: true,
+  minimumCacheTTL: nextConfig.serverRuntimeConfig.minimumCacheTTL,
 };
 
 export default nextConfig;
