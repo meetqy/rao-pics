@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/meetqy/eagleuse/compare/v0.1.3...v0.1.4) (2023-01-31)
+
+### Performance Improvements | 性能优化
+
+- ⚡️ 简化.env 配置 ([4824fca](https://github.com/meetqy/eagleuse/commit/4824fca520342c4ac24fc2b76aa4e0d47cd293e6))
+
+### Features | 新功能
+
+- 🎸 服务器中替换 eagleuse.db 无需重启服务 ([33c2a5f](https://github.com/meetqy/eagleuse/commit/33c2a5fbf6061bf11de309d0cb34bed694390555))
+
+### Bug Fixes | Bug 修复
+
+- 🐛 静态资源生成模式无法更新问题 ([f99a11f](https://github.com/meetqy/eagleuse/commit/f99a11fa4896b0cfdc2a8514c8ed96f0c31d7a3c))
+- 🐛 切换 library 之后，软链接无法重新生成 ([0724f72](https://github.com/meetqy/eagleuse/commit/0724f72c00caa8de38dde2b9caeae6bbc4294ae6)), closes [#56](https://github.com/meetqy/eagleuse/issues/56)
+- 🐛 修改出来的 监听 image bug ([6d5232f](https://github.com/meetqy/eagleuse/commit/6d5232fd6cc54df5c02ae892634173972afc4564))
+- 🐛 prisma 监听 library，短时间内连续多次给图片添加标签报错 ([0c071a1](https://github.com/meetqy/eagleuse/commit/0c071a190bc802c08c9cb1e9d53631830d29bc62)), closes [#44](https://github.com/meetqy/eagleuse/issues/44)
+
 ### [0.1.3](https://github.com/meetqy/eagleuse/compare/v0.1.2...v0.1.3) (2023-01-27)
 
 ### Bug Fixes | Bug 修复
