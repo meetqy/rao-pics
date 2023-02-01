@@ -2,7 +2,6 @@ import chokidar from "chokidar";
 import { PrismaClient } from "@prisma/client";
 import pretty from "pino-pretty";
 import pino from "pino";
-import symlink from "@/scripts/symlink.mjs";
 
 const logger = pino(pretty());
 
@@ -30,8 +29,6 @@ function watcherDB() {
   chokidar.watch(process.env.LIBRARY + "/eagleuse.db").on("change", () => {
     prisma = new PrismaClient();
     logger.info(`reload "new PrismaClient()"`);
-    symlink();
-    logger.info("reload library symlink");
   });
 
   watcher = true;
