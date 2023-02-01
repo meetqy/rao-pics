@@ -28,12 +28,12 @@ namespace EagleUse {
     modificationTime: number;
     width: number;
     height: number;
+    // json字符串
     palettes: string;
     lastModified: number;
     isDeleted: boolean;
     deletedTime: number;
-    // json字符串
-    processingPalette: string;
+    processingPalette: boolean;
     noThumbnail: boolean;
     star: number;
     tags?: Tag[];

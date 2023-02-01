@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { handleImageAlt, handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
+import _ from "lodash";
 
 interface LayoutBox {
   aspectRatio: number;
@@ -94,7 +95,9 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
           {layoutPos.boxes.map((item, i: number) => {
             const image = images[i];
             if (!image) return null;
-            const palettes: EagleUse.ImagePalette = JSON.parse(image.palettes);
+            const palettes: EagleUse.ImagePalette = image.processingPalette
+              ? null
+              : JSON.parse(image.palettes);
 
             return (
               <Card
@@ -103,7 +106,9 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
                 style={{
                   ...item,
                   position: "absolute",
-                  background: `rgb(${palettes[0].color}, .25)`,
+                  background: !_.isEmpty(palettes)
+                    ? `rgb(${palettes[0].color}, .25)`
+                    : token.colorBgBase,
                   overflow: "hidden",
                   outline:
                     activeImage?.id === image.id
