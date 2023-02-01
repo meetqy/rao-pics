@@ -22,7 +22,7 @@
     "db:watch": "prisma db seed",
     "db:preview": "prisma studio",
     "db:generate": "prisma generate",
-    "create:symlink": "ts-node ./scripts/symlink.ts",
+    "create:symlink": "ts-node scripts/symlink.ts",
     "lint": "next lint",
     "fix": "npx prettier --write .",
     "prepare": "husky install",

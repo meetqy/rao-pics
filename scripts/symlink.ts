@@ -10,10 +10,6 @@ const { ensureSymlinkSync, removeSync } = fs;
 const logger = pino(pretty());
 const library = "./public/library";
 
-const symlink = () => {
-  removeSync(library);
-  ensureSymlinkSync(join(process.env.LIBRARY, "./images"), library);
-  logger.info("create library symlink success");
-};
-
-export default symlink;
+removeSync(library);
+ensureSymlinkSync(join(process.env.LIBRARY, "./images"), library);
+logger.info("create library symlink success");
