@@ -68,10 +68,11 @@
     "lint-staged": "^13.1.0",
     "prisma": "4.8.1",
     "ts-node": "10.9.1",
+    "tsconfig-paths": "^4.1.2",
     "typescript": "4.9.4"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts --files"
   },
   "lint-staged": {
     "**/*.(ts|tsx)": "eslint --fix --max-warnings 0",

@@ -38,6 +38,7 @@ specifiers:
   recoil: ^0.7.6
   standard-version: ^9.5.0
   ts-node: 10.9.1
+  tsconfig-paths: ^4.1.2
   typescript: 4.9.4
 
 dependencies:
@@ -80,6 +81,7 @@ devDependencies:
   lint-staged: 13.1.0
   prisma: 4.8.1
   ts-node: 10.9.1_r65g46xrm45gbuklnvp6xevc2y
+  tsconfig-paths: 4.1.2
   typescript: 4.9.4
 
 packages:
@@ -4397,6 +4399,15 @@ packages:
       minimist: 1.2.7
     dev: true
 
+  /json5/2.2.3:
+    resolution:
+      {
+        integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==,
+      }
+    engines: { node: ">=6" }
+    hasBin: true
+    dev: true
+
   /jsonfile/6.1.0:
     resolution:
       {
@@ -7787,6 +7798,18 @@ packages:
     dependencies:
       "@types/json5": 0.0.29
       json5: 1.0.2
+      minimist: 1.2.7
+      strip-bom: 3.0.0
+    dev: true
+
+  /tsconfig-paths/4.1.2:
+    resolution:
+      {
+        integrity: sha512-uhxiMgnXQp1IR622dUXI+9Ehnws7i/y6xvpZB9IbUVOPy0muvdvgXeZOn88UcGPiT98Vp3rJPTa8bFoalZ3Qhw==,
+      }
+    engines: { node: ">=6" }
+    dependencies:
+      json5: 2.2.3
       minimist: 1.2.7
       strip-bom: 3.0.0
     dev: true

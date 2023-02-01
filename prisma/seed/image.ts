@@ -2,10 +2,7 @@ import { join } from "path";
 import { PrismaClient } from "@prisma/client";
 import chokidar from "chokidar";
 import { readJSONSync } from "fs-extra";
-import pino from "pino";
-import pretty from "pino-pretty";
-
-const logger = pino(pretty());
+import logger from "@/utils/logger";
 
 const handleImage = (json) => {
   return {
