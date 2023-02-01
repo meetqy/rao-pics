@@ -10,7 +10,7 @@ const library = "./public/library";
 const symlink = () => {
   removeSync(library);
   ensureSymlinkSync(join(process.env.LIBRARY, "./images"), library);
-  logger.info("library 软链接创建成功！");
+  logger.info("create library symlink success");
 };
 
 export default symlink;

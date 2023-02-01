@@ -27,12 +27,14 @@ const handleImage = (json) => {
 const _path = join(process.env.LIBRARY, "./images/**/metadata.json");
 
 export const initImage = (prisma: PrismaClient) => {
-  logger.info("watching image ...");
+  let imageCount = 0;
+
   chokidar
     .watch(_path)
     .on("add", (file) => {
       const json = readJSONSync(file);
       const result = handleImage(json);
+      imageCount++;
 
       prisma.image
         .upsert({
@@ -106,5 +108,8 @@ export const initImage = (prisma: PrismaClient) => {
         .catch((e) => {
           logger.error(e, "delete image error: ");
         });
+    })
+    .on("ready", () => {
+      logger.info(`init image counts: ${imageCount}`);
     });
 };
