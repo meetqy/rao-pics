@@ -11,7 +11,8 @@
 
 <p align='center'>
     <a href='https://rao.pics'>在线体验</a> ·
-    <a href="./readme/api/image.md">查询API</a>
+    <a href="./readme/api/image.md">查询API</a> ·
+    <a href='https://github.com/meetqy/eagleuse/issues/61'>问题合集</a> 
 </p>
 
 # <img src='./public/static/favicon.ico' height="24px" width="24px" /> EagleUse
