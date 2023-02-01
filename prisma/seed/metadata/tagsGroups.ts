@@ -1,3 +1,4 @@
+import logger from "@/utils/logger";
 import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 
@@ -28,7 +29,7 @@ const handleTagGroupItem = (tagsGroup) => {
 };
 
 const TagGroup = {
-  add: (prisma: PrismaClient, json: { [key in string]: any }) => {
+  add: (prisma: PrismaClient, json: EagleUse.MetaData) => {
     lastTagsGroupsCache = json["tagsGroups"];
     if (!lastTagsGroupsCache) return;
 
@@ -44,12 +45,12 @@ const TagGroup = {
           update: result,
         })
         .then((res) => {
-          console.log("connect or init tagsGroups with id: " + res.id);
+          logger.info("connectOrCreate tagsGroups with id: " + res.id);
         });
     });
   },
 
-  change: (prisma: PrismaClient, json: { [key in string]: any }) => {
+  change: (prisma: PrismaClient, json: EagleUse.MetaData) => {
     // 判断tagsGroup 是否改变
     // 判断tagsGroup => tags 是否改变
 
@@ -95,7 +96,7 @@ const TagGroup = {
             update: result,
           })
           .then((folder) => {
-            console.log("upsert folder with id: ", folder.id);
+            logger.info("upsert folder with id: ", folder.id);
           });
       } else if (optStatus < 0) {
         prisma.tagsGroups
@@ -105,7 +106,7 @@ const TagGroup = {
             },
           })
           .then((folder) => {
-            console.log("delete folder with id: ", folder.id);
+            logger.info("delete folder with id: ", folder.id);
           });
       } else {
         const oldTagsGroup = _lastTagsGroupsCache.find(
@@ -123,7 +124,7 @@ const TagGroup = {
               data: result,
             })
             .then((folder) => {
-              console.log("update folder with id: ", folder.id);
+              logger.info("update folder with id: ", folder.id);
             });
         } else {
           // 取消关联 tags
@@ -149,7 +150,7 @@ const TagGroup = {
               },
             })
             .then((folder) => {
-              console.log(
+              logger.info(
                 "disconnect folder/tags with id: ",
                 folder.id,
                 deleteTags

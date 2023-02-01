@@ -1,3 +1,4 @@
+import logger from "@/utils/logger";
 import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 
@@ -9,8 +10,8 @@ import _ from "lodash";
 let lastFoldersCache = [];
 
 // 多级嵌套转为一级
-const demotionFolder = (folders: { [key: string]: string }[]) => {
-  let newFolders = [];
+const demotionFolder = (folders: EagleUse.Folder[]) => {
+  const newFolders = [];
 
   const callback = (item) => {
     (item.children || (item.children = [])).map((v) => {
@@ -44,8 +45,8 @@ const handleFolderItem = (json) => {
 };
 
 const Folder = {
-  add: (prisma: PrismaClient, json: { [key in string]: any }) => {
-    lastFoldersCache = demotionFolder(json["folders"]);
+  add: (prisma: PrismaClient, json: EagleUse.MetaData) => {
+    lastFoldersCache = demotionFolder(json.folders);
 
     lastFoldersCache.map((item) => {
       const data = handleFolderItem(item);
@@ -57,14 +58,14 @@ const Folder = {
           create: data,
           update: data,
         })
-        .then((folder) => {
-          // console.log("init folder with id: ", folder.id);
+        .then(() => {
+          // logger.info("init folder with id: ", folder.id);
         });
     });
   },
 
-  change: (prisma: PrismaClient, json: { [key in string]: any }) => {
-    const newFolders = demotionFolder(json["folders"]);
+  change: (prisma: PrismaClient, json: EagleUse.MetaData) => {
+    const newFolders = demotionFolder(json.folders);
 
     // 当次操作的状态 >0 新增, <0 删除, =0 修改
     const optStatus = newFolders.length - lastFoldersCache.length;
@@ -92,7 +93,7 @@ const Folder = {
             update: item,
           })
           .then((folder) => {
-            console.log("upsert folder with id: ", folder.id);
+            logger.info("upsert folder with id: ", folder.id);
           });
       } else if (optStatus < 0) {
         prisma.folder
@@ -102,7 +103,7 @@ const Folder = {
             },
           })
           .then((folder) => {
-            console.log("delete folder with id: ", folder.id);
+            logger.info("delete folder with id: ", folder.id);
           });
       } else {
         prisma.folder
@@ -113,7 +114,7 @@ const Folder = {
             data: item,
           })
           .then((folder) => {
-            console.log("update folder with id: ", folder.id);
+            logger.info("update folder with id: ", folder.id);
           });
       }
     });

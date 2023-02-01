@@ -2,6 +2,7 @@ import { readJSONSync } from "fs-extra";
 import chokidar from "chokidar";
 import { PrismaClient } from "@prisma/client";
 import { join } from "path";
+import logger from "@/utils/logger";
 
 const _path = join(process.env.LIBRARY, "./tags.json");
 
@@ -26,7 +27,7 @@ const handleTags = (file, prisma, type) => {
       })
       .then((tag) => {
         if (type != "init") {
-          console.log(type + " tag with id: ", tag.id);
+          logger.info(tag.id, `${type} tag with id: `);
         }
       });
   });

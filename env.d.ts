@@ -116,4 +116,11 @@ namespace EagleUse {
     // 需要包含返回的字段
     includes?: ("tags" | "folders")[];
   }
+
+  export interface MetaData {
+    folders: Folder[];
+    tagsGroups: TagsGroupsItem[];
+    modificationTime: string;
+    applicationVersion: string;
+  }
 }
