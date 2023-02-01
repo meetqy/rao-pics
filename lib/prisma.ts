@@ -22,7 +22,7 @@ watcherDB();
 // db watch 监听中，不需要重新 new PrismaClient
 function watcherDB() {
   if (watcher) return;
-  if (process.env.WATCH_REPLACE_DATABASE_FILE !== "true") return;
+  if (process.env.WATCH_REPLACE_DATABASE_FILE != "true") return;
 
   chokidar.watch(process.env.LIBRARY + "/eagleuse.db").on("add", () => {
     prisma = new PrismaClient();
@@ -39,7 +39,6 @@ function watcherDB() {
   return int ?? this.toString();
 };
 
-//
 export const getPrisma = () => prisma;
 
 export default prisma;

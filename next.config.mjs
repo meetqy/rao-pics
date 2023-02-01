@@ -2,10 +2,6 @@
  * @type {import('next').NextConfig}
  */
 
-import symlink from "./scripts/symlink.mjs";
-
-symlink();
-
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
