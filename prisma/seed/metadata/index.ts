@@ -2,7 +2,6 @@ import { join } from "path";
 import { PrismaClient } from "@prisma/client";
 import Folder from "./folder";
 import chokidar from "chokidar";
-import _ from "lodash";
 import TagGroup from "./tagsGroups";
 import { readJSONSync } from "fs-extra";
 
