@@ -3,19 +3,20 @@ import { PrismaClient } from "@prisma/client";
 import chokidar from "chokidar";
 import { readJSONSync } from "fs-extra";
 import logger from "@/utils/logger";
+import { readdirSync } from "fs";
+import _ from "lodash";
 
 const handleImage = (json) => {
   return {
     ...json,
     palettes: JSON.stringify(json.palettes),
     folders: {
-      connect: json.folders.map((folder) => ({
-        id: folder,
-      })),
+      connect: json.folders.map((folder) => ({ id: folder })),
     },
     tags: {
-      connect: json.tags.map((tag) => ({
-        id: tag,
+      connectOrCreate: json.tags.map((tag) => ({
+        where: { id: tag },
+        create: { id: tag, name: tag },
       })),
     },
   };
@@ -24,68 +25,85 @@ const handleImage = (json) => {
 const _path = join(process.env.LIBRARY, "./images/**/metadata.json");
 
 export const initImage = (prisma: PrismaClient) => {
-  let imageCount = 0;
+  const initImagesCount = readdirSync(
+    join(process.env.LIBRARY, "./images")
+  ).filter((file) => file.endsWith(".info")).length;
+
+  // index > 0 表示初始化
+  let index = initImagesCount;
+
+  const addImages: string[] = [];
 
   chokidar
     .watch(_path)
     .on("add", (file) => {
       const json = readJSONSync(file);
       const result = handleImage(json);
-      imageCount++;
 
       prisma.image
-        .upsert({
+        .findUnique({
           where: { id: result.id },
-          update: result,
-          create: result,
         })
-        .then(() => {
-          // logger.debug(image.id, `upsert image with id:`);
-        })
-        .catch((e) => {
-          logger.error(e, "upsert image error: ");
+        .then((image) => {
+          index--;
+
+          if (!image) {
+            // 初始化
+            if (index > -1) {
+              prisma.image
+                .create({
+                  data: result,
+                })
+                .catch((e) => {
+                  logger.error(e, `add image(${result.id}) error: `);
+                });
+
+              return;
+            }
+
+            return addImages.push(result.id);
+          }
+
+          prisma.image
+            .update({
+              where: { id: result.id },
+              data: result,
+            })
+            .catch((e) => {
+              logger.error(e, "add => update image error: ");
+            });
         });
     })
     .on("change", (file) => {
       const json = readJSONSync(file);
-      prisma.image
-        .findFirst({
-          where: {
-            id: json.id,
-          },
-          include: {
-            tags: true,
-            folders: true,
-          },
-        })
-        .then((old) => {
-          prisma.image
-            .update({
-              where: {
-                id: old.id,
-              },
-              data: {
-                ...json,
-                palettes: JSON.stringify(json.palettes),
-                tags: {
-                  // https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#connectorcreate
-                  connectOrCreate: json.tags.map((tag) => ({
-                    where: { id: tag },
-                    create: { id: tag, name: tag },
-                  })),
-                },
-                folders: {
-                  set: json.folders.map((folder) => ({ id: folder })),
-                },
-              },
-            })
-            .then((image) => {
-              logger.info(`update image with id: ${image.id}`);
-            })
-            .catch((e) => {
-              logger.error(e, "update image error: ");
-            });
-        });
+      const result = handleImage(json);
+
+      // 创建
+      if (addImages.includes(result.id)) {
+        prisma.image
+          .create({
+            data: result,
+          })
+          .then((image) => {
+            logger.info("change => create image with id: " + image.id);
+            _.remove(addImages, (n) => n === image.id);
+          })
+          .catch((e) => {
+            logger.error(e, `change => create image(${result.id}) error: `);
+          });
+      } else {
+        prisma.image
+          .update({
+            where: { id: result.id },
+            data: result,
+          })
+          .then((image) => {
+            logger.info("change => update image with id: " + image.id);
+          })
+          .catch((e) => {
+            logger.error(e, `change => update image(${result.id}) error: `);
+          });
+      }
     })
     .on("unlink", (file) => {
       const id = file
@@ -103,10 +121,10 @@ export const initImage = (prisma: PrismaClient) => {
           logger.info(`delete image with id: ${image.id}`);
         })
         .catch((e) => {
-          logger.error(e, "delete image error: ");
+          logger.error(e, `delete image error(${id}): `);
         });
     })
     .on("ready", () => {
-      logger.info(`init image counts: ${imageCount}`);
+      logger.info(`init image counts: ${initImagesCount}`);
     });
 };
