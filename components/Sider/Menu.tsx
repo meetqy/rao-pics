@@ -11,9 +11,20 @@ import {
   FileUnknownOutlined,
   FolderFilled,
   FolderOpenFilled,
+  GithubOutlined,
   TagsOutlined,
 } from "@ant-design/icons";
-import { Col, Menu, MenuProps, Row, theme, Typography } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Layout,
+  Menu,
+  MenuProps,
+  Row,
+  theme,
+  Typography,
+} from "antd";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -233,7 +244,7 @@ const SiderMenu = () => {
   }, [folder, route, setRightBasic, nowItemData]);
 
   return (
-    <>
+    <Layout style={{ minHeight: "100vh" }}>
       <style jsx global>{`
         .ant-menu-submenu-selected > div:first-child {
           background-color: ${token.colorPrimaryBg}!important;
@@ -241,50 +252,87 @@ const SiderMenu = () => {
         }
       `}</style>
 
-      <Row style={{ padding: 12 }} gutter={[8, 0]}>
-        <Col>
-          <Link
-            href="https://github.com/meetqy/eagleuse"
-            target={"_blank"}
-            style={{ color: token.colorTextBase }}
-          >
-            <Typography.Text strong style={{ fontSize: 18 }}>
-              Eagle
-            </Typography.Text>
-            <Typography.Text
-              strong
-              style={{ fontSize: 18, color: token.colorSuccess }}
-            >
-              Use
-            </Typography.Text>
-          </Link>
-        </Col>
-        <Col>
-          <Link
-            href={"https://github.com/meetqy/eagleuse/releases"}
-            target="_blank"
-          >
-            <Typography.Text type="secondary">v{Pkg.version}</Typography.Text>
-          </Link>
-        </Col>
-      </Row>
-      <Menu
-        mode="inline"
-        items={treeRecursion(itemsData)}
-        expandIcon={<span></span>}
-        selectedKeys={[activeMenu]}
+      <Layout.Header
         style={{
-          borderRight: 0,
-          backgroundColor: "transparent",
+          position: "sticky",
+          top: 0,
+          backgroundColor: token.colorBgElevated,
+          zIndex: token.zIndexPopupBase,
+          padding: "0 20px",
+          height: 48,
+          lineHeight: "48px",
+          marginBottom: 6,
         }}
-        openKeys={openKeys}
-        inlineIndent={10}
-        onSelect={(e) => {
-          const key = e.key === "/tags" ? e.key + "/manage" : e.key;
-          router.push(key);
+      >
+        <Row>
+          <Col>
+            <Link href="/" style={{ color: token.colorTextBase }}>
+              <Typography.Text strong style={{ fontSize: 18 }}>
+                Eagle
+              </Typography.Text>
+              <Typography.Text
+                strong
+                style={{ fontSize: 18, color: token.colorSuccess }}
+              >
+                Use
+              </Typography.Text>
+            </Link>
+          </Col>
+          <Col span={2}></Col>
+          <Col>
+            <Link
+              href={"https://github.com/meetqy/eagleuse/releases"}
+              target="_blank"
+            >
+              <Typography.Text type="secondary">v{Pkg.version}</Typography.Text>
+            </Link>
+          </Col>
+        </Row>
+      </Layout.Header>
+
+      <Layout.Content>
+        <Menu
+          mode="inline"
+          items={treeRecursion(itemsData)}
+          expandIcon={<span></span>}
+          selectedKeys={[activeMenu]}
+          style={{
+            borderRight: 0,
+            backgroundColor: "transparent",
+          }}
+          openKeys={openKeys}
+          inlineIndent={10}
+          onSelect={(e) => {
+            const key = e.key === "/tags" ? e.key + "/manage" : e.key;
+            router.push(key);
+          }}
+        />
+      </Layout.Content>
+
+      <Layout.Footer
+        style={{
+          textAlign: "center",
+          padding: 12,
+          paddingTop: 0,
         }}
-      />
-    </>
+      >
+        <Divider />
+        <Row justify={"center"}>
+          <Col>
+            <Button
+              type="link"
+              target="_blank"
+              href="https://github.com/meetqy/eagleuse"
+              icon={<GithubOutlined style={{ fontSize: 18 }} />}
+            />
+          </Col>
+        </Row>
+
+        <Typography.Text type="secondary">
+          Copyright © {new Date().getFullYear()} - rao.pics
+        </Typography.Text>
+      </Layout.Footer>
+    </Layout>
   );
 };
 
