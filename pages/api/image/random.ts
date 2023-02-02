@@ -11,13 +11,7 @@ export default async function handler(req, res) {
     skip,
   });
 
-  const proto =
-    req.headers["x-forwarded-proto"] || req.connection.encrypted
-      ? "https"
-      : "http";
-  const host = proto + "://" + req.headers.host;
-
-  const prefix = `${host}/library/${image.id}.info/${image.name}`;
+  const prefix = `/library/${image.id}.info/${image.name}`;
 
   if (image.noThumbnail) {
     return res.redirect(`${prefix}.${image.ext}`);
