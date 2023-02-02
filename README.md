@@ -7,6 +7,9 @@
     <a href="https://www.typescriptlang.org" target="_black">
         <img src="https://img.shields.io/badge/language-TypeScript-blue.svg" alt="language">
     </a>
+    <a href="https://github.com/prettier/prettier" target="_black"> 
+        <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg"/> 
+    </a>
 </p>
 
 <p align='center'>
