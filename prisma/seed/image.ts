@@ -24,21 +24,46 @@ const handleImage = (json) => {
 
 const _path = join(process.env.LIBRARY, "./images/**/metadata.json");
 
+const getMetadata = (file): { metadata: EagleUse.Image; support: boolean } => {
+  let json;
+  // 使用 try catch 替代 setTimeout 延时
+  try {
+    json = readJSONSync(file);
+  } catch (e) {
+    json = readJSONSync(file);
+  }
+
+  return {
+    metadata: json,
+    support: ["jpg", "png", "jpeg", "webp"].includes(
+      json.ext.toLocaleLowerCase()
+    ),
+  };
+};
+
 export const initImage = (prisma: PrismaClient) => {
-  const initImagesCount = readdirSync(
-    join(process.env.LIBRARY, "./images")
-  ).filter((file) => file.endsWith(".info")).length;
+  const allCount = readdirSync(join(process.env.LIBRARY, "./images")).filter(
+    (file) => file.endsWith(".info")
+  ).length;
+
+  let excludeCount = 0;
 
   // index > 0 表示初始化
-  let index = initImagesCount;
+  let index = allCount;
 
   const addImages: string[] = [];
 
   chokidar
     .watch(_path)
     .on("add", (file) => {
-      const json = readJSONSync(file);
-      const result = handleImage(json);
+      const { metadata, support } = getMetadata(file);
+      if (!support) {
+        logger.warn(`not support ext(${metadata.ext}): ${file}`);
+        excludeCount++;
+        return;
+      }
+
+      const result = handleImage(metadata);
 
       prisma.image
         .findUnique({
@@ -75,14 +100,14 @@ export const initImage = (prisma: PrismaClient) => {
         });
     })
     .on("change", (file) => {
-      let json;
-      // 使用 try catch 替代 setTimeout 延时
-      try {
-        json = readJSONSync(file);
-      } catch (e) {
-        json = readJSONSync(file);
+      const { metadata, support } = getMetadata(file);
+      if (!support) {
+        return logger.warn(
+          `not support ext: ${metadata.ext}, id: ${metadata.id}, name: ${metadata.name}`
+        );
       }
-      const result = handleImage(json);
+
+      const result = handleImage(metadata);
 
       // 创建
       if (addImages.includes(result.id)) {
@@ -131,6 +156,8 @@ export const initImage = (prisma: PrismaClient) => {
         });
     })
     .on("ready", () => {
-      logger.info(`init image counts: ${initImagesCount}`);
+      logger.info(
+        `init image counts: ${allCount}, exculde counts: ${excludeCount}`
+      );
     });
 };
