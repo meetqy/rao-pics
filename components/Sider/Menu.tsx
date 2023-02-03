@@ -30,6 +30,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Pkg from "@/package.json";
 import Link from "next/link";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig } = getConfig();
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -134,7 +137,7 @@ const SiderMenu = () => {
   );
 
   const itemsData = useMemo(() => {
-    return [
+    const original = [
       {
         title: "全部",
         count: counts.all,
@@ -152,12 +155,6 @@ const SiderMenu = () => {
         count: counts.tags,
         route: "/tags",
         icon: <TagsOutlined />,
-      },
-      {
-        title: "回收站",
-        count: counts.recycle,
-        route: "/recycle",
-        icon: <DeleteOutlined />,
       },
       {
         title: `文件夹(${folders.length})`,
@@ -200,6 +197,17 @@ const SiderMenu = () => {
         }),
       },
     ];
+
+    if (publicRuntimeConfig.showTrash) {
+      original.splice(3, 0, {
+        title: "回收站",
+        count: counts.recycle,
+        route: "/recycle",
+        icon: <DeleteOutlined />,
+      });
+    }
+
+    return original;
   }, [
     counts,
     foldersTree,
