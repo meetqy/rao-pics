@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/meetqy/eagleuse/compare/v0.1.4...v0.1.5) (2023-02-03)
+
+### Performance Improvements | 性能优化
+
+- ⚡️ 静态资源改变,取消生成软连接 ([5eaeee9](https://github.com/meetqy/eagleuse/commit/5eaeee9895de300de3b404098c0f8456564f0af6))
+- ⚡️ LOGO 跳转体验问题 ([a335900](https://github.com/meetqy/eagleuse/commit/a335900264779101463f8d82ccbe6e17de7fc08c)), closes [#63](https://github.com/meetqy/eagleuse/issues/63)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 /api/image/random 跳转 BUG ([bf76c05](https://github.com/meetqy/eagleuse/commit/bf76c058d33aeeecfb3a16e726cf4dfd3d7645ef)), closes [#65](https://github.com/meetqy/eagleuse/issues/65)
+- 🐛 大量操作 image 监听报错 ([7e1ecc2](https://github.com/meetqy/eagleuse/commit/7e1ecc200a89faf932859ae56752f18766ef0903)), closes [#62](https://github.com/meetqy/eagleuse/issues/62)
+- 🐛 坚果云同步 eagleuse.db 未触发 new PrismaClient ([276a19d](https://github.com/meetqy/eagleuse/commit/276a19d2b332707d9e1a29029ca95839b4ad13bd))
+- 🐛 图片颜色处理中,页面显示错误 ([430e17c](https://github.com/meetqy/eagleuse/commit/430e17c10b9e54a8a9b1f3c75f01dae1054fc160))
+
 ### [0.1.4](https://github.com/meetqy/eagleuse/compare/v0.1.3...v0.1.4) (2023-01-31)
 
 ### Performance Improvements | 性能优化
