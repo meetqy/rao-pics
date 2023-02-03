@@ -75,7 +75,13 @@ export const initImage = (prisma: PrismaClient) => {
         });
     })
     .on("change", (file) => {
-      const json = readJSONSync(file);
+      let json;
+      // 使用 try catch 替代 setTimeout 延时
+      try {
+        json = readJSONSync(file);
+      } catch (e) {
+        json = readJSONSync(file);
+      }
       const result = handleImage(json);
 
       // 创建
