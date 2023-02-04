@@ -20,13 +20,11 @@
 
 # <img src='./public/static/favicon.ico' height="24px" width="24px" /> EagleUse
 
-把 Eagle App 打造成本地后台管理系统，快速构建 WEB 图片站、自建图床。
-
-> 如果你也有这样的想法：eagle app 本地修改/管理图片 => 实时构建网站并查看。那这个项目非常合适，欢迎体验！🚀🚀🚀
-
-# 👀 介绍
+《Eagle App》做后台管理系统，快速构建 WEB 图片站、自建图床。
 
 ![eagleuse](./readme/preview.gif)
+
+# 👀 介绍
 
 ### 定位
 
@@ -53,43 +51,13 @@ pnpm run dev
 
 ### Package Script 说明
 
-| 名称          | 说明                                       |
-| ------------- | ------------------------------------------ |
-| `db:preview`  | 数据库可视化预览                           |
-| `db:init`     | 初始化 prisma 数据库                       |
-| `db:watch`    | 监听 eagle 变换，自动关联 sqlite，更新数据 |
-| `db:generate` | `schema.prisma` 改变需要执行               |
-
-# 📚 功能列表
-
-### 基础功能
-
-- 监听 library 生成对应的 sqlite 数据
-- sqlite 数据文件可视化展示
-- 基于 prisma，更加简单的使用
-- library 静态资源托管
-- 启动项目，随时更新 db 数据
-- 支持类型：jpg/jpeg/png/webp
-
-### 页面
-
-- 左侧菜单
-- 等高展示图片
-- 标签展示并显示图片数量
-- 图片基础信息
-- 查看原图
-- 标签按颜色分类
-- 文件夹展示
-- dark 模式
-
-### 搜索
-
-- 按标签搜索
-- 按尺寸搜索
-- 排序方式
-- 按格式搜索
-- 按注释搜索
-- 按评分搜索
+| 名称             | 说明                             |
+| ---------------- | -------------------------------- |
+| `db:preview`     | 数据库可视化预览                 |
+| `db:init`        | 初始化 prisma 数据库             |
+| `db:watch`       | 监听 `eagle library` 更新 sqlite |
+| `db:generate`    | `schema.prisma` 改变需要执行     |
+| `create:symlink` | 创建软链接                       |
 
 # 🔦 其他
 
