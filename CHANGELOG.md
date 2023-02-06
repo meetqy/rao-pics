@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/meetqy/eagleuse/compare/v0.1.5...v0.1.6) (2023-02-06)
+
+### Features | 新功能
+
+- 🎸 菜单/回收站可通过参数控制 ([8aff673](https://github.com/meetqy/eagleuse/commit/8aff673e0e3af35720be3bd02b3e5924ab1c0f6e))
+
+### Bug Fixes | Bug 修复
+
+- 🐛 eagle 导入了非图片格式数据报错 ([e6c6c05](https://github.com/meetqy/eagleuse/commit/e6c6c055c88f73acec78262b881adba54ff19ce8)), closes [#71](https://github.com/meetqy/eagleuse/issues/71)
+- 🐛 监听导入多张读取 metadata.json 失败 ([8f038a4](https://github.com/meetqy/eagleuse/commit/8f038a4279db79e086eff1247195ec953f266b45)), closes [#70](https://github.com/meetqy/eagleuse/issues/70)
+- 🐛 翻页选中的图片会丢失 ([ecb6037](https://github.com/meetqy/eagleuse/commit/ecb6037e6cd17b336decde70cd7d0da00182ffe4)), closes [#72](https://github.com/meetqy/eagleuse/issues/72)
+
 ### [0.1.5](https://github.com/meetqy/eagleuse/compare/v0.1.4...v0.1.5) (2023-02-03)
 
 ### Performance Improvements | 性能优化
