@@ -97,7 +97,7 @@ const SiderMenu = () => {
   const router = useRouter();
 
   const [activeMenu, setActiveMenu] = useRecoilState(activeMenuState);
-  const [, setRightBasic] = useRecoilState(rightBasicState);
+  const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
   const counts = useRecoilValue(countState);
 
   // 文件夹
@@ -136,6 +136,7 @@ const SiderMenu = () => {
     [openKeys]
   );
 
+  // 菜单信息列表
   const itemsData = useMemo(() => {
     const original = [
       {
@@ -233,7 +234,14 @@ const SiderMenu = () => {
   useEffect(() => {
     if (folder) {
       if (!route.includes(folder.id)) return;
+      if (
+        folder.name === rightBasic.name &&
+        folder._count.images === rightBasic.fileCount
+      )
+        return;
+
       if (folder.pid) setOpenKeys(["/folder/" + folder.pid]);
+
       setRightBasic((rightBasic) => ({
         ...rightBasic,
         name: folder.name,
@@ -242,6 +250,12 @@ const SiderMenu = () => {
       }));
     } else {
       if (!nowItemData) return;
+      if (
+        nowItemData.title === rightBasic.name &&
+        nowItemData.count === rightBasic.fileCount
+      )
+        return;
+
       setRightBasic((rightBasic) => ({
         ...rightBasic,
         name: nowItemData.title,
@@ -249,7 +263,7 @@ const SiderMenu = () => {
         image: null,
       }));
     }
-  }, [folder, route, setRightBasic, nowItemData]);
+  }, [folder, route, setRightBasic, nowItemData, rightBasic]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
