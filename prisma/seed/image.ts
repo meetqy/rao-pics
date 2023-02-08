@@ -24,6 +24,13 @@ const handleImage = (json) => {
 
 const _path = join(process.env.LIBRARY, "./images/**/metadata.json");
 
+/**
+ * @param file
+ * @returns
+ * {
+ *  support: 支持的文件格式
+ * }
+ */
 const getMetadata = (file): { metadata: EagleUse.Image; support: boolean } => {
   let json;
   // 使用 try catch 替代 setTimeout 延时
@@ -108,6 +115,32 @@ export const initImage = (prisma: PrismaClient) => {
       }
 
       const result = handleImage(metadata);
+
+      // 处理 tags
+      prisma.image
+        .findUnique({
+          where: { id: result.id },
+          include: { tags: true },
+        })
+        .then((oldImage) => {
+          const oldTags = oldImage.tags.map((item) => item.id);
+          const newTags = metadata.tags;
+
+          const diffTags = _.differenceWith(oldTags, newTags, _.isEqual);
+          prisma.image
+            .update({
+              where: { id: result.id },
+              data: {
+                tags: {
+                  disconnect: diffTags.map((item) => ({ id: item })),
+                },
+              },
+            })
+            .then(() => {
+              logger.info(`change => disconnect tags: ` + diffTags.join(","));
+            })
+            .catch((e) => logger.error(e, `change => disconnect tag error: `));
+        });
 
       // 创建
       if (addImages.includes(result.id)) {

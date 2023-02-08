@@ -3,7 +3,6 @@ import * as dotenv from "dotenv";
 import { join } from "path";
 import { initImage } from "./seed/image";
 import { initMetadata } from "./seed/metadata";
-import { initTag } from "./seed/tag";
 
 const prisma = getPrisma();
 
@@ -13,7 +12,6 @@ dotenv.config({
 
 function main() {
   initMetadata(prisma);
-  initTag(prisma);
   initImage(prisma);
 }
 
