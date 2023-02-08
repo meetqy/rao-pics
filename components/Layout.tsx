@@ -107,7 +107,9 @@ export const MyLayout = ({ children }) => {
             justifyContent: "center",
           }}
         >
-          <Typography.Text style={{ fontSize: 96 }}>☕️</Typography.Text>
+          <Typography.Text style={{ fontSize: 96, marginTop: -48 }}>
+            ☕️
+          </Typography.Text>
           <Typography.Title style={{ marginTop: 0 }}>
             开发在划水
           </Typography.Title>
