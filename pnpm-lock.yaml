@@ -40,6 +40,7 @@ specifiers:
   ts-node: 10.9.1
   tsconfig-paths: ^4.1.2
   typescript: 4.9.4
+  use-media-antd-query: ^1.1.0
 
 dependencies:
   "@ant-design/icons": 4.8.0_biqbaboplfbrettd7655fr4n2y
@@ -64,6 +65,7 @@ dependencies:
   react-markdown: 8.0.4_kzbn2opkn2327fwg5yzwzya5o4
   recoil: 0.7.6_biqbaboplfbrettd7655fr4n2y
   standard-version: 9.5.0
+  use-media-antd-query: 1.1.0_react@18.2.0
 
 devDependencies:
   "@types/fs-extra": 9.0.13
@@ -8049,6 +8051,17 @@ packages:
       }
     dependencies:
       punycode: 2.1.1
+
+  /use-media-antd-query/1.1.0_react@18.2.0:
+    resolution:
+      {
+        integrity: sha512-B6kKZwNV4R+l4Rl11sWO7HqOay9alzs1Vp1b4YJqjz33YxbltBCZtt/yxXxkXN9rc1S7OeEL/GbwC30Wmqhw6Q==,
+      }
+    peerDependencies:
+      react: ">=16.9.0"
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /util-deprecate/1.0.2:
     resolution:

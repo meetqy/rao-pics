@@ -1,5 +1,6 @@
-import { Layout, theme } from "antd";
+import { Layout, theme, Typography } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
+import useAntdMediaQuery from "use-media-antd-query";
 import {
   activeMenuState,
   countState,
@@ -29,8 +30,10 @@ export const MyLayout = ({ children }) => {
     tags: false,
     folders: false,
   });
-
   const { token } = theme.useToken();
+  const colSize = useAntdMediaQuery();
+
+  const isMobile = colSize === "xs" || colSize === "sm";
 
   const LayoutContentRefC = useContext(LayoutContentRefContext);
   const layoutContentRef = useRef(null);
@@ -93,47 +96,66 @@ export const MyLayout = ({ children }) => {
         `}
       </style>
 
-      <Layout style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
-        <Layout.Sider
-          width={240}
-          theme="light"
-          className="scroll-bar"
+      {isMobile ? (
+        <Layout
           style={{
-            borderRight: `1px solid ${token.colorBorderSecondary}`,
-            height: "100%",
-            overflowY: "auto",
+            width: "100%",
+            height: "100vh",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <SiderMenu />
-        </Layout.Sider>
-        <Layout.Content
-          ref={layoutContentRef}
-          className="scroll-bar"
-          style={{
-            overflowY: "auto",
-            overflowX: "hidden",
-            height: "100%",
-          }}
-        >
-          {children}
-        </Layout.Content>
-        {!collapsed && (
+          <Typography.Text style={{ fontSize: 96 }}>☕️</Typography.Text>
+          <Typography.Title style={{ marginTop: 0 }}>
+            开发在划水
+          </Typography.Title>
+          <Typography.Text>一切尽在不言中</Typography.Text>
+        </Layout>
+      ) : (
+        <Layout style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
           <Layout.Sider
             width={240}
             theme="light"
-            breakpoint="xxl"
-            collapsedWidth={0}
             className="scroll-bar"
             style={{
-              borderRight: `1px solid ${token.colorBorderBg}`,
+              borderRight: `1px solid ${token.colorBorderSecondary}`,
               height: "100%",
               overflowY: "auto",
             }}
           >
-            <SiderBasic />
+            <SiderMenu />
           </Layout.Sider>
-        )}
-      </Layout>
+          <Layout.Content
+            ref={layoutContentRef}
+            className="scroll-bar"
+            style={{
+              overflowY: "auto",
+              overflowX: "hidden",
+              height: "100%",
+            }}
+          >
+            {children}
+          </Layout.Content>
+          {!collapsed && (
+            <Layout.Sider
+              width={240}
+              theme="light"
+              breakpoint="xxl"
+              collapsedWidth={0}
+              className="scroll-bar"
+              style={{
+                borderRight: `1px solid ${token.colorBorderBg}`,
+                height: "100%",
+                overflowY: "auto",
+              }}
+            >
+              <SiderBasic />
+            </Layout.Sider>
+          )}
+        </Layout>
+      )}
     </>
   );
 };
