@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/meetqy/eagleuse/compare/v0.1.6...v0.1.7) (2023-02-08)
+
+### Performance Improvements | 性能优化
+
+- ⚡️ ipad 兼容性 ([eb1f608](https://github.com/meetqy/eagleuse/commit/eb1f60824df9170bf046abda808c7b7b7db2952e)), closes [#69](https://github.com/meetqy/eagleuse/issues/69)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 移动端先给出提示不支持移动端展示 ([c1831f3](https://github.com/meetqy/eagleuse/commit/c1831f34aafd5c4ff3bc4eeb1016794425d7b06b)), closes [#55](https://github.com/meetqy/eagleuse/issues/55)
+- 🐛 重命名 tag 会新增一个 tag ([0ac76b1](https://github.com/meetqy/eagleuse/commit/0ac76b1f8318b75e8b220b052cab549e3d99d403)), closes [#73](https://github.com/meetqy/eagleuse/issues/73)
+
+### Styles | 风格
+
+- 💄 移动端提示样式微调 ([17c9f85](https://github.com/meetqy/eagleuse/commit/17c9f8542bed3398e991fad980964000ff924a1b))
+
 ### [0.1.6](https://github.com/meetqy/eagleuse/compare/v0.1.5...v0.1.6) (2023-02-06)
 
 ### Features | 新功能
