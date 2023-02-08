@@ -1,5 +1,5 @@
 import { themeState } from "@/store";
-import { useRequest } from "ahooks";
+import { useRequest, useSize } from "ahooks";
 import { Col, Layout, Row, theme, Input, Rate, Switch } from "antd";
 import { useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -13,6 +13,7 @@ interface Props {
 
 const JustifyLayoutSearch = (props: Props) => {
   const { token } = theme.useToken();
+  const size = useSize(document.querySelector("body"));
 
   const [themeMode, setTheme] = useRecoilState(themeState);
 
@@ -56,6 +57,8 @@ const JustifyLayoutSearch = (props: Props) => {
     debounceWait: 1000,
   });
 
+  const hidden = useMemo(() => size?.width < token.screenXL, [size, token]);
+
   return (
     <Layout.Header
       style={{
@@ -68,19 +71,21 @@ const JustifyLayoutSearch = (props: Props) => {
         lineHeight: "48px",
       }}
     >
-      <Row style={{ height: 48 }}>
-        <Col flex={1}>
+      <Row justify={"space-between"} style={{ height: 48 }}>
+        <Col>
           <Row gutter={[10, 10]}>
-            <Col>
-              <SearchModule.Size
-                onChange={(e) =>
-                  onChange({
-                    ...params,
-                    size: e,
-                  })
-                }
-              />
-            </Col>
+            {!hidden && (
+              <Col>
+                <SearchModule.Size
+                  onChange={(e) =>
+                    onChange({
+                      ...params,
+                      size: e,
+                    })
+                  }
+                />
+              </Col>
+            )}
             <Col>
               <SearchModule.Tag
                 value={params.tags}
@@ -92,23 +97,28 @@ const JustifyLayoutSearch = (props: Props) => {
                 }}
               />
             </Col>
-            <Col>
-              <Input
-                size="small"
-                style={{ width: 120 }}
-                placeholder="注释"
-                allowClear
-                value={tempParams.annotation}
-                onChange={(e) => {
-                  setTempParams({ ...tempParams, annotation: e.target.value });
+            {!hidden && (
+              <Col>
+                <Input
+                  size="small"
+                  style={{ width: 120 }}
+                  placeholder="注释"
+                  allowClear
+                  value={tempParams.annotation}
+                  onChange={(e) => {
+                    setTempParams({
+                      ...tempParams,
+                      annotation: e.target.value,
+                    });
 
-                  tempParams.annotation = e.target.value;
-                  tempParams.annotation
-                    ? run("annotation")
-                    : tempChange("annotation");
-                }}
-              />
-            </Col>
+                    tempParams.annotation = e.target.value;
+                    tempParams.annotation
+                      ? run("annotation")
+                      : tempChange("annotation");
+                  }}
+                />
+              </Col>
+            )}
             <Col>
               <SearchModule.Ext
                 value={params.ext}
@@ -120,22 +130,24 @@ const JustifyLayoutSearch = (props: Props) => {
                 }}
               />
             </Col>
-            <Col>
-              <Rate
-                style={{ fontSize: 16 }}
-                value={params.star}
-                onChange={(e) => {
-                  onChange({
-                    ...params,
-                    star: e,
-                  });
-                }}
-              />
-            </Col>
+            {!hidden && (
+              <Col>
+                <Rate
+                  style={{ fontSize: 16 }}
+                  value={params.star}
+                  onChange={(e) => {
+                    onChange({
+                      ...params,
+                      star: e,
+                    });
+                  }}
+                />
+              </Col>
+            )}
           </Row>
         </Col>
 
-        <Col span={6} style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Col style={{ display: "flex", justifyContent: "flex-end" }}>
           <Row gutter={[10, 10]}>
             <Col>
               <SearchModule.SortRule

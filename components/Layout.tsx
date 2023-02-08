@@ -117,20 +117,22 @@ export const MyLayout = ({ children }) => {
         >
           {children}
         </Layout.Content>
-        <Layout.Sider
-          width={240}
-          theme="light"
-          collapsed={collapsed}
-          collapsedWidth={0}
-          className="scroll-bar"
-          style={{
-            borderRight: `1px solid ${token.colorBorderBg}`,
-            height: "100%",
-            overflowY: "auto",
-          }}
-        >
-          <SiderBasic />
-        </Layout.Sider>
+        {!collapsed && (
+          <Layout.Sider
+            width={240}
+            theme="light"
+            breakpoint="xxl"
+            collapsedWidth={0}
+            className="scroll-bar"
+            style={{
+              borderRight: `1px solid ${token.colorBorderBg}`,
+              height: "100%",
+              overflowY: "auto",
+            }}
+          >
+            <SiderBasic />
+          </Layout.Sider>
+        )}
       </Layout>
     </>
   );

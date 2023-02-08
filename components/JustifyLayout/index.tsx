@@ -6,6 +6,7 @@ import { handleImageAlt, handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
 import _ from "lodash";
+import { useSize } from "ahooks";
 
 interface LayoutBox {
   aspectRatio: number;
@@ -55,11 +56,15 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   const activeImage = useMemo(() => rightBasic.image, [rightBasic]);
   const { data, loadMore, loadingMore, noMore } = infiniteScroll;
   const images = useMemo(() => data.list, [data.list]);
+  const size = useSize(document.querySelector("body"));
 
   useEffect(() => {
+    if (!size || !size.width) return;
+    const clientWidth = size.width;
     setLayoutPos(
       justifyLayout([...images], {
-        containerWidth: document.body.clientWidth - 490,
+        containerWidth:
+          clientWidth - (clientWidth > token.screenXXL ? 490 : 245),
         targetRowHeight: 200,
         boxSpacing: {
           horizontal: 15,
@@ -67,7 +72,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
         },
       })
     );
-  }, [images]);
+  }, [images, token, size]);
 
   const loadmore = () => {
     if (images.length < 1) return <Empty />;
