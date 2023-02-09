@@ -2,6 +2,7 @@
   "name": "eagleuse",
   "version": "0.1.7",
   "description": "使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床。",
+  "packageManager": "pnpm@7.1.0",
   "keywords": [
     "eagle",
     "next.js",
@@ -12,6 +13,14 @@
     "react"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meetqy/eagleuse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/meetqy/eagleuse/issues"
+  },
+  "homepage": "https://github.com/meetqy/eagleuse#readme",
   "author": "meetqy",
   "scripts": {
     "dev": "cross-env NODE_ENV=development npm run create:symlink && npm run db:watch & next",
