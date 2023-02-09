@@ -1,7 +1,7 @@
 {
   "name": "eagleuse",
   "version": "0.1.7",
-  "description": "《Eagle App》做后台管理系统，快速构建 WEB 图片站、自建图床。",
+  "description": "使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床。",
   "keywords": [
     "eagle",
     "next.js",

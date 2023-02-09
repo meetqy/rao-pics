@@ -13,14 +13,15 @@
 </p>
 
 <p align='center'>
-    <a href='https://rao.pics'>在线体验</a> ·
+    <a href='https://rao.pics'>稳定版</a> ·
+    <a href="https://dev.rao.pics">开发版</a> · 
     <a href="./readme/api/image.md">查询API</a> ·
     <a href='https://github.com/meetqy/eagleuse/issues/61'>问题合集</a> 
 </p>
 
 # <img src='./public/static/favicon.ico' height="24px" width="24px" /> EagleUse
 
-《Eagle App》做后台管理系统，快速构建 WEB 图片站、自建图床。
+使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床。
 
 ![eagleuse](./readme/preview.gif)
 
@@ -35,7 +36,7 @@
 ### 本地安装
 
 ```sh
-git clone https://github.com/meetqy/eagleuse/tree/main
+git clone https://github.com/meetqy/eagleuse.git
 pnpm install
 ```
 
