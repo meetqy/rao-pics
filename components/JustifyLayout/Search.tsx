@@ -1,6 +1,7 @@
 import { themeState } from "@/store";
 import { useRequest, useSize } from "ahooks";
 import { Col, Layout, Row, theme, Input, Rate, Switch } from "antd";
+import _ from "lodash";
 import { useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import SearchModule from "./SearchModule";
@@ -21,7 +22,7 @@ const JustifyLayoutSearch = (props: Props) => {
   const [tempParams, setTempParams] = useState<{
     annotation: string;
   }>({
-    annotation: undefined,
+    annotation: params.annotation || undefined,
   });
 
   const onChange = ({
@@ -45,7 +46,7 @@ const JustifyLayoutSearch = (props: Props) => {
 
   const tempChange = (key: string) => {
     return new Promise((resolve) => {
-      const json = params;
+      const json = _.cloneDeep(params);
       if (key) json[key] = tempParams[key];
 
       props.onChange(json);

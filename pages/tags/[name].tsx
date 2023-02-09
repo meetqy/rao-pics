@@ -1,4 +1,4 @@
-import { tagsState } from "@/store";
+import { searchParamState, tagsState } from "@/store";
 import {
   AppstoreFilled,
   QuestionCircleFilled,
@@ -18,7 +18,7 @@ import {
 } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { pinyin } from "@/hooks";
 import Link from "next/link";
 
@@ -103,6 +103,8 @@ export default function Page() {
       count: 0,
     },
   });
+
+  const [, setSearchParams] = useRecoilState(searchParamState);
 
   const nowTagData = useMemo(
     () => tagsCollection[name]?.data || {},
@@ -261,8 +263,14 @@ export default function Page() {
                   color={
                     tag.tagsGroups.length ? tag.tagsGroups[0].color : "default"
                   }
+                  onClick={() => {
+                    setSearchParams((params) => ({
+                      ...params,
+                      tags: [tag.id],
+                    }));
+                  }}
                 >
-                  <Link href={`/?tag=${tag.id}`}>
+                  <Link href="/">
                     {tag.id}
                     <Typography.Text
                       type="secondary"

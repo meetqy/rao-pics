@@ -1,19 +1,21 @@
-import { rightBasicState, tagsState } from "@/store";
+import { rightBasicState, searchParamState } from "@/store";
 import {
   Button,
   Col,
   Input,
   Rate,
   Row,
-  Select,
+  Space,
+  Tag,
   Tooltip,
   Typography,
 } from "antd";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
 import { handleImageAlt, handleImageUrl, transformByteToUnit } from "@/hooks";
 import { useMemo } from "react";
+import Link from "next/link";
 
 const handleTime = (time: number) => {
   const [date, t] = new Date(time)
@@ -34,7 +36,7 @@ const handleTime = (time: number) => {
 const SiderBasic = () => {
   const rightBasic = useRecoilValue(rightBasicState);
   const image = useMemo(() => rightBasic.image, [rightBasic]);
-  const tags = useRecoilValue(tagsState);
+  const [, setSearchParams] = useRecoilState(searchParamState);
 
   if (!image) {
     return (
@@ -125,18 +127,25 @@ const SiderBasic = () => {
         </Col>
       </Row>
 
-      <Row style={{ marginTop: 10 }}>
-        <Col flex={1}>
-          <Select
-            mode="multiple"
-            placeholder="暂无标签"
-            style={{ width: "100%" }}
-            disabled
-            value={image?.tags ? image.tags.map((item) => item.id) : []}
-            options={tags.map((item) => ({ label: item.id, value: item.id }))}
-          />
-        </Col>
-      </Row>
+      {image?.tags.length > 0 && (
+        <Space size={[0, 8]} wrap style={{ marginTop: 10 }}>
+          {image.tags.map((item) => (
+            <Tag
+              key={item.id}
+              onClick={() => {
+                setSearchParams((params) => ({
+                  ...params,
+                  tags: [item.id],
+                }));
+              }}
+            >
+              <Link href="/" title={item.id}>
+                {item.id}
+              </Link>
+            </Tag>
+          ))}
+        </Space>
+      )}
 
       <Row style={{ marginTop: 10 }}>
         <Col flex={1}>

@@ -55,3 +55,9 @@ export const themeState = atom({
     },
   ],
 });
+
+// 搜索条件
+export const searchParamState = atom({
+  key: "searchParamState",
+  default: {} as EagleUse.SearchParams,
+});

@@ -1,10 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { countState, LayoutContentRefContext, rightBasicState } from "@/store";
+import {
+  countState,
+  LayoutContentRefContext,
+  rightBasicState,
+  searchParamState,
+} from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useInfiniteScroll } from "ahooks";
-import { useRouter } from "next/router";
+import _ from "lodash";
 
 interface Params {
   body: EagleUse.SearchParams;
@@ -43,14 +48,11 @@ function getLoadMoreList(params: Params): Promise<Result> {
 }
 
 const Page = () => {
-  const router = useRouter();
   const [counts, setCounts] = useRecoilState(countState);
   const [, setRightBasic] = useRecoilState(rightBasicState);
-  const { tag } = router.query;
+  const [searchParams, setSearchParams] = useRecoilState(searchParamState);
   const [params] = useState<Params>({
-    body: {
-      tags: tag ? [tag as string] : [],
-    },
+    body: {},
     page: 1,
     pageSize: 50,
   });
@@ -80,6 +82,13 @@ const Page = () => {
     }
   );
 
+  useEffect(() => {
+    if (_.isEqual(params.body, searchParams)) return;
+
+    params.body = searchParams;
+    infiniteScroll.reload();
+  }, [searchParams, params, infiniteScroll]);
+
   if (!infiniteScroll.data) return null;
 
   return (
@@ -90,8 +99,9 @@ const Page = () => {
           params={params.body}
           count={counts.all}
           onChange={(body) => {
-            params.body = body;
-            infiniteScroll.reload();
+            setSearchParams({
+              ...body,
+            });
           }}
         />
       }
