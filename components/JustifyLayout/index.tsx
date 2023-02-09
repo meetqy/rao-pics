@@ -56,7 +56,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   const activeImage = useMemo(() => rightBasic.image, [rightBasic]);
   const { data, loadMore, loadingMore, noMore } = infiniteScroll;
   const images = useMemo(() => data.list, [data.list]);
-  const size = useSize(document.querySelector("body"));
+  const size = useSize(() => document.body);
 
   useEffect(() => {
     if (!size || !size.width) return;

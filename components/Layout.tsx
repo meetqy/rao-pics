@@ -1,6 +1,5 @@
 import { Layout, theme, Typography } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
-import useAntdMediaQuery from "use-media-antd-query";
 import {
   activeMenuState,
   countState,
@@ -19,6 +18,7 @@ import {
 } from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
+import { useSize } from "ahooks";
 
 export const MyLayout = ({ children }) => {
   const activeMenu = useRecoilValue(activeMenuState) || "/";
@@ -31,9 +31,9 @@ export const MyLayout = ({ children }) => {
     folders: false,
   });
   const { token } = theme.useToken();
-  const colSize = useAntdMediaQuery();
+  const size = useSize(() => document.body);
 
-  const isMobile = colSize === "xs" || colSize === "sm";
+  const isMobile = useMemo(() => size?.width < token.screenSM, [size, token]);
 
   const LayoutContentRefC = useContext(LayoutContentRefContext);
   const layoutContentRef = useRef(null);

@@ -49,8 +49,7 @@
     "react-dom": "18.2.0",
     "react-markdown": "8.0.4",
     "recoil": "^0.7.6",
-    "standard-version": "^9.5.0",
-    "use-media-antd-query": "^1.1.0"
+    "standard-version": "^9.5.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",

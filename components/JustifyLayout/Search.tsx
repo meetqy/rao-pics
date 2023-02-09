@@ -13,7 +13,7 @@ interface Props {
 
 const JustifyLayoutSearch = (props: Props) => {
   const { token } = theme.useToken();
-  const size = useSize(document.querySelector("body"));
+  const size = useSize(() => document.body);
 
   const [themeMode, setTheme] = useRecoilState(themeState);
 
