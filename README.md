@@ -1,4 +1,4 @@
-![](./readme/preview.webp)
+![](https://github.com/meetqy/eagleuse/blob/dev/readme/preview.webp?raw=true)
 
 <p align='center'>
     <a href="https://github.com/meetqy/eagleuse/blob/master/LICENSE" target="_blank">
@@ -15,7 +15,7 @@
 <p align='center'>
     <a href='https://rao.pics'>稳定版</a> ·
     <a href="https://dev.rao.pics">开发版</a> · 
-    <a href="./readme/api/image.md">查询API</a> ·
+    <a href="https://github.com/meetqy/eagleuse/blob/dev/api/image.md">查询API</a> ·
     <a href='https://github.com/meetqy/eagleuse/issues/61'>问题合集</a> 
 </p>
 
@@ -23,7 +23,7 @@
 
 使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床。
 
-![eagleuse](./readme/preview.gif)
+![eagleuse](https://github.com/meetqy/eagleuse/blob/dev/readme/preview.gif?raw=true)
 
 # 👀 介绍
 
@@ -31,7 +31,7 @@
 
 通过监听`eagle app library`构建图片站，同时只会具备 `展示/搜索` 2 个功能。
 
-![](./readme/flow.webp)
+![](https://github.com/meetqy/eagleuse/blob/dev/readme/flow.webp?raw=true)
 
 ### 本地安装
 
