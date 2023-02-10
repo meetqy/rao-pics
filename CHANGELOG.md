@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/meetqy/eagleuse/compare/v0.1.7...v0.1.8) (2023-02-10)
+
+### Styles | 风格
+
+- 💄 右侧图片基础信息展示，标签可点击 ([4baf8ee](https://github.com/meetqy/eagleuse/commit/4baf8ee56b74afa7572c39005f953989dfc1685c)), closes [#50](https://github.com/meetqy/eagleuse/issues/50)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 mac windows 兼容 ([6f058f4](https://github.com/meetqy/eagleuse/commit/6f058f41d8e71c41983365ddb5a0c9b65c96c61b))
+- 🐛 prisma 更新数据,10 秒之后操作,触发 db 文件更新 ([063cd83](https://github.com/meetqy/eagleuse/commit/063cd8385032eb322fbe001f74a412abafc0e0f9)), closes [#67](https://github.com/meetqy/eagleuse/issues/67)
+
 ### [0.1.7](https://github.com/meetqy/eagleuse/compare/v0.1.6...v0.1.7) (2023-02-08)
 
 ### Performance Improvements | 性能优化
