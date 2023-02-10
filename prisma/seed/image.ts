@@ -48,7 +48,7 @@ const getMetadata = (file): { metadata: EagleUse.Image; support: boolean } => {
   };
 };
 
-export const initImage = (prisma: PrismaClient) => {
+export const initImage = (prisma: PrismaClient, trigger: () => void) => {
   const allCount = readdirSync(join(process.env.LIBRARY, "./images")).filter(
     (file) => file.endsWith(".info")
   ).length;
@@ -105,6 +105,7 @@ export const initImage = (prisma: PrismaClient) => {
               logger.error(e, "add => update image error: ");
             });
         });
+      trigger();
     })
     .on("change", (file) => {
       const { metadata, support } = getMetadata(file);
@@ -168,6 +169,8 @@ export const initImage = (prisma: PrismaClient) => {
             logger.error(e, `change => update image(${result.id}) error: `);
           });
       }
+
+      trigger();
     })
     .on("unlink", (file) => {
       const id = file
@@ -187,10 +190,14 @@ export const initImage = (prisma: PrismaClient) => {
         .catch((e) => {
           logger.error(e, `delete image error(${id}): `);
         });
+
+      trigger();
     })
     .on("ready", () => {
       logger.info(
         `init image counts: ${allCount}, exculde counts: ${excludeCount}`
       );
+
+      trigger();
     });
 };

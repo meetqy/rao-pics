@@ -25,6 +25,7 @@ function watcherDB() {
   if (process.env.WATCH_REPLACE_DATABASE_FILE != "true") return;
 
   chokidar.watch(process.env.LIBRARY + "/eagleuse.db").on("add", () => {
+    if (prisma) prisma.$disconnect();
     prisma = new PrismaClient();
     logger.info(`reload "new PrismaClient()"`);
   });
