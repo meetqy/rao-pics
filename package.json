@@ -1,0 +1,7 @@
+{
+  "name": "eagleuse-monorepo",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^6.4.1"
+  }
+}
