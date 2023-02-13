@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
 import _ from "lodash";
 import { useSize } from "ahooks";
+import ImageModal from "./ImageModal";
 
 interface LayoutBox {
   aspectRatio: number;
@@ -57,6 +58,9 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   const { data, loadMore, loadingMore, noMore } = infiniteScroll;
   const images = useMemo(() => data.list, [data.list]);
   const size = useSize(() => document.body);
+  const [open, setOpen] = useState(false);
+
+  const isPC = useMemo(() => size?.width > token.screenXL, [size, token]);
 
   useEffect(() => {
     if (!size || !size.width) return;
@@ -123,6 +127,10 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
                 bordered={false}
                 bodyStyle={{ padding: 0, ...item }}
                 onClick={() => {
+                  if (!isPC) {
+                    setOpen(true);
+                  }
+
                   setRightBasic({
                     ...rightBasic,
                     image,
@@ -143,6 +151,12 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
         <Row style={{ paddingBottom: 20 }} justify="center">
           <Col>{loadmore()}</Col>
         </Row>
+
+        <ImageModal
+          image={activeImage}
+          open={open}
+          onCancel={() => setOpen(false)}
+        />
       </Layout.Content>
     </Layout>
   );
