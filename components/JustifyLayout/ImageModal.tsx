@@ -1,4 +1,9 @@
-import { handleImageUrl, handleTime, transformByteToUnit } from "@/hooks";
+import {
+  handleImageAlt,
+  handleImageUrl,
+  handleTime,
+  transformByteToUnit,
+} from "@/hooks";
 import {
   Card,
   Col,
@@ -84,15 +89,20 @@ const ImageModal = ({ image, open, onCancel }: Props) => {
             }}
           >
             <div
-              style={{ position: "relative", width: "100%", height: "75vh" }}
+              style={{
+                position: "relative",
+                width: "100%",
+                height: "65vh",
+              }}
             >
               <Image
                 fill
                 style={{ objectFit: "scale-down" }}
                 src={handleImageUrl(image, true)}
-                alt=""
+                alt={handleImageAlt(image)}
               />
             </div>
+
             {image.tags.length > 0 && (
               <div style={{ width: "100%" }}>
                 <Divider orientation="left">标签</Divider>
