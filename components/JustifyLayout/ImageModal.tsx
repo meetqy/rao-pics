@@ -1,24 +1,39 @@
-import { handleImageUrl } from "@/hooks";
-import { Card, Divider, Modal, Space, Tag, theme } from "antd";
+import { handleImageUrl, handleTime, transformByteToUnit } from "@/hooks";
+import {
+  Card,
+  Col,
+  Divider,
+  Modal,
+  Row,
+  Space,
+  Tag,
+  Typography,
+  theme,
+} from "antd";
 import Image from "next/image";
 
 interface Props {
   image?: EagleUse.Image;
   open?: boolean;
   onCancel?: () => void;
-  size?: {
-    width: number;
-    height: number;
-  };
 }
 
-const ImageModal = ({ image, open, onCancel, size }: Props) => {
+const ImageModal = ({ image, open, onCancel }: Props) => {
   const { token } = theme.useToken();
   if (!image) return;
 
   return (
     <>
+      <style jsx global>
+        {`
+          .image-modal .ant-modal-content {
+            padding: 0;
+            overflow: hidden;
+          }
+        `}
+      </style>
       <Modal
+        className="image-modal"
         open={open}
         title={null}
         footer={null}
@@ -36,33 +51,65 @@ const ImageModal = ({ image, open, onCancel, size }: Props) => {
             overflowY: "scroll",
             overflowX: "hidden",
           }}
-          title={image.name}
+          title={
+            <Row>
+              <Col>
+                <Typography.Text strong>{image.name}</Typography.Text>
+              </Col>
+              <Col offset={1}>
+                <Tag color="red-inverse">{image.ext.toLocaleUpperCase()}</Tag>
+                <Tag color="volcano-inverse">
+                  {transformByteToUnit(image.size)}
+                </Tag>
+                <Tag color="orange-inverse">
+                  {image.width} x {image.height}
+                </Tag>
+              </Col>
+            </Row>
+          }
           className="scroll-bar"
           headStyle={{
             position: "sticky",
             top: 0,
             backgroundColor: token.colorBgContainer,
+            zIndex: 99,
           }}
         >
           <div
             style={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "flex-start",
               flexDirection: "column",
             }}
           >
-            <Image
-              width={image.width / (image.height / (size.height / 1.5))}
-              height={size.height / 1.5}
-              src={handleImageUrl(image, true)}
-              alt=""
-            />
-            <Space size={[0, 8]} wrap style={{ marginTop: 20 }}>
-              {image.tags.map((item) => (
-                <Tag key={item.id}>{item.name}</Tag>
-              ))}
+            <div
+              style={{ position: "relative", width: "100%", height: "75vh" }}
+            >
+              <Image
+                fill
+                style={{ objectFit: "scale-down" }}
+                src={handleImageUrl(image, true)}
+                alt=""
+              />
+            </div>
+            {image.tags.length > 0 && (
+              <div style={{ width: "100%" }}>
+                <Divider orientation="left">标签</Divider>
+                <Space size={[0, 8]} style={{ width: "100%" }}>
+                  {image.tags.map((item) => (
+                    <Tag key={item.id}>{item.name}</Tag>
+                  ))}
+                </Space>
+              </div>
+            )}
+
+            <Divider orientation="left">日期</Divider>
+            <Space size={[0, 8]} style={{ width: "100%" }}>
+              <Tag color="blue">添加日期：{handleTime(image.mtime)}</Tag>
+              <Tag color="blue">创建日期：{handleTime(image.btime)}</Tag>
+              <Tag color="blue">修改日期：{handleTime(image.lastModified)}</Tag>
             </Space>
-            <Divider>基本信息</Divider>
           </div>
         </Card>
       </Modal>

@@ -13,25 +13,14 @@ import {
 import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
-import { handleImageAlt, handleImageUrl, transformByteToUnit } from "@/hooks";
+import {
+  handleImageAlt,
+  handleImageUrl,
+  handleTime,
+  transformByteToUnit,
+} from "@/hooks";
 import { useMemo } from "react";
 import Link from "next/link";
-
-const handleTime = (time: number) => {
-  const [date, t] = new Date(time)
-    .toLocaleString()
-    .replace(/:\d+$/, "")
-    .split(" ");
-
-  return (
-    date
-      .split("/")
-      .map((item) => (item.length === 1 ? "0" + item : item))
-      .join("/") +
-    " " +
-    t
-  );
-};
 
 const SiderBasic = () => {
   const rightBasic = useRecoilValue(rightBasicState);

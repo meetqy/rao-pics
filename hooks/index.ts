@@ -32,3 +32,19 @@ export const handleImageAlt = (image: EagleUse.Image) => {
 
   return str;
 };
+
+export const handleTime = (time: number) => {
+  const [date, t] = new Date(time)
+    .toLocaleString()
+    .replace(/:\d+$/, "")
+    .split(" ");
+
+  return (
+    date
+      .split("/")
+      .map((item) => (item.length === 1 ? "0" + item : item))
+      .join("/") +
+    " " +
+    t
+  );
+};

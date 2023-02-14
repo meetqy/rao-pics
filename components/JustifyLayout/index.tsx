@@ -153,7 +153,6 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
         </Row>
 
         <ImageModal
-          size={size}
           image={activeImage}
           open={open}
           onCancel={() => setOpen(false)}
