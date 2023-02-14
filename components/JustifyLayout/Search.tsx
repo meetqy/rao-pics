@@ -1,6 +1,6 @@
 import { themeState } from "@/store";
 import { useRequest, useSize } from "ahooks";
-import { Col, Layout, Row, theme, Input, Rate, Switch } from "antd";
+import { Col, Row, theme, Input, Rate, Switch } from "antd";
 import _ from "lodash";
 import { useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -61,18 +61,16 @@ const JustifyLayoutSearch = (props: Props) => {
   const hidden = useMemo(() => size?.width < token.screenXL, [size, token]);
 
   return (
-    <Layout.Header
+    <div
       style={{
         position: "sticky",
         top: 0,
-        backgroundColor: token.colorBgElevated,
+        backgroundColor: token.colorBgLayout,
         zIndex: token.zIndexPopupBase,
-        padding: "0 20px",
-        height: 48,
-        lineHeight: "48px",
+        padding: "12px 20px",
       }}
     >
-      <Row justify={"space-between"} style={{ height: 48 }}>
+      <Row justify={"space-between"}>
         <Col>
           <Row gutter={[10, 10]}>
             {!hidden && (
@@ -183,7 +181,7 @@ const JustifyLayoutSearch = (props: Props) => {
           </Row>
         </Col>
       </Row>
-    </Layout.Header>
+    </div>
   );
 };
 

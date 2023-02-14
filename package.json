@@ -43,7 +43,7 @@
     "@prisma/client": "4.8.1",
     "@types/justified-layout": "^4.1.0",
     "ahooks": "^3.7.4",
-    "antd": "^5.1.4",
+    "antd": "^5.2.1",
     "chokidar": "^3.5.3",
     "encoding": "^0.1.13",
     "express": "^4.18.2",
