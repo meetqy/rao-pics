@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/meetqy/eagleuse/compare/v0.1.8...v0.1.9) (2023-02-14)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 not found cross-env ([6adafd5](https://github.com/meetqy/eagleuse/commit/6adafd59264e0f8827e086316d449198b2a0d1c1))
+
+### Features | 新功能
+
+- 🎸 ipad 图片详细信息展示 ([a6175cb](https://github.com/meetqy/eagleuse/commit/a6175cb2eb578217efa320ef4a051a97a232a48b)), closes [#74](https://github.com/meetqy/eagleuse/issues/74)
+
 ### [0.1.8](https://github.com/meetqy/eagleuse/compare/v0.1.7...v0.1.8) (2023-02-10)
 
 ### Styles | 风格
