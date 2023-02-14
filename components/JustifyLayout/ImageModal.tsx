@@ -1,14 +1,19 @@
 import { handleImageUrl } from "@/hooks";
-import { Card, Divider, Modal, Space, Tag } from "antd";
+import { Card, Divider, Modal, Space, Tag, theme } from "antd";
 import Image from "next/image";
 
 interface Props {
   image?: EagleUse.Image;
   open?: boolean;
   onCancel?: () => void;
+  size?: {
+    width: number;
+    height: number;
+  };
 }
 
-const ImageModal = ({ image, open, onCancel }: Props) => {
+const ImageModal = ({ image, open, onCancel, size }: Props) => {
+  const { token } = theme.useToken();
   if (!image) return;
 
   return (
@@ -20,23 +25,38 @@ const ImageModal = ({ image, open, onCancel }: Props) => {
         width={"85%"}
         onCancel={onCancel}
         centered
-        bodyStyle={{ height: "80vh", overflow: "hidden" }}
+        bodyStyle={{ height: "90vh", overflow: "hidden" }}
       >
         <Card
-          type="inner"
           style={{
             textAlign: "center",
             height: "100%",
             display: "flex",
             flexDirection: "column",
+            overflowY: "scroll",
+            overflowX: "hidden",
           }}
           title={image.name}
-          bodyStyle={{ height: "100%", overflowY: "scroll" }}
+          className="scroll-bar"
+          headStyle={{
+            position: "sticky",
+            top: 0,
+            backgroundColor: token.colorBgContainer,
+          }}
         >
-          <div>
-            <div style={{ position: "relative", width: "100%", height: 400 }}>
-              <Image src={handleImageUrl(image, true)} fill alt="" />
-            </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Image
+              width={image.width / (image.height / (size.height / 1.5))}
+              height={size.height / 1.5}
+              src={handleImageUrl(image, true)}
+              alt=""
+            />
             <Space size={[0, 8]} wrap style={{ marginTop: 20 }}>
               {image.tags.map((item) => (
                 <Tag key={item.id}>{item.name}</Tag>

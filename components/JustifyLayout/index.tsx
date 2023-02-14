@@ -60,7 +60,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   const size = useSize(() => document.body);
   const [open, setOpen] = useState(false);
 
-  const isPC = useMemo(() => size?.width > token.screenXL, [size, token]);
+  const isPC = useMemo(() => size?.width > token.screenXXL, [size, token]);
 
   useEffect(() => {
     if (!size || !size.width) return;
@@ -153,6 +153,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
         </Row>
 
         <ImageModal
+          size={size}
           image={activeImage}
           open={open}
           onCancel={() => setOpen(false)}
