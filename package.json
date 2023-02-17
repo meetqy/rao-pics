@@ -61,6 +61,7 @@
     "standard-version": "^9.5.0"
   },
   "devDependencies": {
+    "@tensorflow/tfjs-node": "^4.2.0",
     "@types/fs-extra": "^9.0.13",
     "@types/lodash": "^4.14.191",
     "@types/node": "18.11.12",
@@ -75,6 +76,7 @@
     "fs-extra": "^11.1.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
+    "nsfwjs": "^2.4.2",
     "prisma": "4.8.1",
     "ts-node": "10.9.1",
     "tsconfig-paths": "^4.1.2",

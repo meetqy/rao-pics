@@ -5,6 +5,7 @@ import { readJSONSync } from "fs-extra";
 import logger from "@/utils/logger";
 import { readdirSync } from "fs";
 import _ from "lodash";
+import getNSFWTag from "@/scripts/nsfw";
 
 const handleImage = (json) => {
   return {
@@ -76,15 +77,29 @@ export const initImage = (prisma: PrismaClient, trigger: () => void) => {
         .findUnique({
           where: { id: result.id },
         })
-        .then((image) => {
+        .then(async (image) => {
           index--;
 
           if (!image) {
             // 初始化
             if (index > -1) {
+              const imageFile = join(
+                process.env.LIBRARY,
+                `./images/${metadata.id}.info/${metadata.name}.${metadata.ext}`
+              );
+              const nsfwTags = await getNSFWTag(imageFile);
+              metadata.tags = (metadata.tags as string[]).concat(nsfwTags);
+              const result = handleImage(metadata);
               prisma.image
                 .create({
                   data: result,
+                })
+                .then(() => {
+                  logger.info(
+                    `init image with id: ${
+                      result.id
+                    }, nsfw tag: ${nsfwTags.join(",")}`
+                  );
                 })
                 .catch((e) => {
                   logger.error(e, `add image(${result.id}) error: `);
@@ -100,6 +115,9 @@ export const initImage = (prisma: PrismaClient, trigger: () => void) => {
             .update({
               where: { id: result.id },
               data: result,
+            })
+            .then((res) => {
+              logger.info("add => update image with id: " + res.id);
             })
             .catch((e) => {
               logger.error(e, "add => update image error: ");
@@ -194,9 +212,7 @@ export const initImage = (prisma: PrismaClient, trigger: () => void) => {
       trigger();
     })
     .on("ready", () => {
-      logger.info(
-        `init image counts: ${allCount}, exculde counts: ${excludeCount}`
-      );
+      logger.info(`exclude ${excludeCount}, staring image...`);
 
       trigger();
     });

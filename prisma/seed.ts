@@ -5,6 +5,7 @@ import { readFileSync, writeFileSync } from "fs-extra";
 import { join } from "path";
 import { initImage } from "./seed/image";
 import { initMetadata } from "./seed/metadata";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = getPrisma();
 
@@ -30,8 +31,42 @@ const triggerChangeDb = debounce(() => {
 }, 10000);
 
 function main() {
+  initNSFW(prisma);
   initMetadata(prisma, triggerChangeDb);
   initImage(prisma, triggerChangeDb);
+}
+
+function initNSFW(prisma: PrismaClient) {
+  const nsfwData = {
+    id: "NSFW",
+    name: "NSFW",
+    color: "red",
+    tags: {
+      connectOrCreate: ["Hentai", "Drawing", "Porn", "Neutral", "Sexy"].map(
+        (tag) => ({
+          where: {
+            id: tag,
+          },
+          create: {
+            name: tag,
+            id: tag,
+          },
+        })
+      ),
+    },
+  };
+
+  prisma.tagsGroups
+    .upsert({
+      where: {
+        id: "NSFW",
+      },
+      create: nsfwData,
+      update: nsfwData,
+    })
+    .then(() => {
+      logger.info("init NSFW TagsGroup");
+    });
 }
 
 main();
