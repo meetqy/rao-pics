@@ -36,7 +36,7 @@ namespace EagleUse {
     processingPalette: boolean;
     noThumbnail: boolean;
     star: number;
-    tags?: Tag[];
+    tags?: Tag[] | string[];
     folders?: Folder[];
   }
 
