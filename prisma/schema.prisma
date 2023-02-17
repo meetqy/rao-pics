@@ -23,6 +23,7 @@ model Image {
   palettes          String?
   lastModified      BigInt
   isDeleted         Boolean? @default(false)
+  nsfw              Boolean? @default(false)
   deletedTime       BigInt?
   processingPalette Boolean?
   noThumbnail       Boolean?

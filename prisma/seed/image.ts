@@ -49,7 +49,7 @@ const getMetadata = (file): { metadata: EagleUse.Image; support: boolean } => {
   };
 };
 
-export const initImage = (prisma: PrismaClient, trigger: () => void) => {
+export const initImage = async (prisma: PrismaClient, trigger: () => void) => {
   const allCount = readdirSync(join(process.env.LIBRARY, "./images")).filter(
     (file) => file.endsWith(".info")
   ).length;
@@ -60,6 +60,15 @@ export const initImage = (prisma: PrismaClient, trigger: () => void) => {
   let index = allCount;
 
   const addImages: string[] = [];
+  const nsfwImages: string[] = [];
+  const notNSFW = await prisma.image.findMany({
+    where: {
+      NOT: {
+        nsfw: true,
+      },
+    },
+  });
+  const notNSFWIds = notNSFW.map((item) => item.id);
 
   chokidar
     .watch(_path)
@@ -71,7 +80,7 @@ export const initImage = (prisma: PrismaClient, trigger: () => void) => {
         return;
       }
 
-      const result = handleImage(metadata);
+      let result = handleImage(metadata);
 
       prisma.image
         .findUnique({
@@ -79,17 +88,18 @@ export const initImage = (prisma: PrismaClient, trigger: () => void) => {
         })
         .then(async (image) => {
           index--;
+          const imageFile = join(
+            process.env.LIBRARY,
+            `./images/${metadata.id}.info/${metadata.name}.${metadata.ext}`
+          );
 
           if (!image) {
             // 初始化
             if (index > -1) {
-              const imageFile = join(
-                process.env.LIBRARY,
-                `./images/${metadata.id}.info/${metadata.name}.${metadata.ext}`
-              );
               const nsfwTags = await getNSFWTag(imageFile);
               metadata.tags = (metadata.tags as string[]).concat(nsfwTags);
-              const result = handleImage(metadata);
+              metadata.nsfw = true;
+              result = handleImage(metadata);
               prisma.image
                 .create({
                   data: result,
@@ -109,6 +119,16 @@ export const initImage = (prisma: PrismaClient, trigger: () => void) => {
             }
 
             return addImages.push(result.id);
+          }
+
+          if (!image.nsfw) nsfwImages.push(metadata.id);
+
+          // 兼容以前没有生成 nsfw 的数据
+          if (notNSFWIds.includes(image.id)) {
+            const nsfwTags = await getNSFWTag(imageFile);
+            metadata.tags = (metadata.tags as string[]).concat(nsfwTags);
+            metadata.nsfw = true;
+            result = handleImage(metadata);
           }
 
           prisma.image
