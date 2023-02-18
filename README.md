@@ -33,6 +33,7 @@
 - sqlite 标签群组中会新增 `NSFW`，颜色为`red`
 - 子标签 5 个：`Neutral`、`Drawing`、`Hentai`、`Porn`、`Sexy`
 - 新增添加的图片会自动执行 NSFW 检测
+- 图片过多断点继续检测
 
 > 功能实现参考：[infinitered/nsfwjs](https://github.com/infinitered/nsfwjs)
 
