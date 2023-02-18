@@ -2,7 +2,13 @@
   "name": "eagleuse-monorepo",
   "private": true,
   "devDependencies": {
-    "lerna": "^6.4.1"
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "lerna": "^6.4.1",
+    "prettier": "^2.8.4",
+    "ts-node": "^10.9.1"
   },
   "repository": {
     "type": "git",
