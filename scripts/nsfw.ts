@@ -18,6 +18,8 @@ getModel();
 
 // 获取 nsfw tag
 const getNSFWTag = async (file: string): Promise<string[]> => {
+  if (process.env.NSFW === "false") return [];
+
   const pic = new Uint8Array(fs.readFileSync(file).buffer);
   const model = await getModel();
   const image = await tf.node.decodeImage(pic, 3);

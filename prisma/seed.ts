@@ -31,10 +31,12 @@ const triggerChangeDb = debounce(() => {
 }, 10000);
 
 function main() {
+  initMetadata(prisma, triggerChangeDb);
   initImage(prisma, triggerChangeDb, {
     success: () => {
-      initMetadata(prisma, triggerChangeDb);
-      initNSFW(prisma, triggerChangeDb);
+      if (process.env.NSFW === "true") {
+        initNSFW(prisma, triggerChangeDb);
+      }
     },
   });
 }

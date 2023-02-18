@@ -33,6 +33,19 @@
 
 ![](https://github.com/meetqy/eagleuse/blob/dev/readme/flow.webp?raw=true)
 
+### 特色功能
+
+**NSFW 图片检测，并自动标签**
+
+- 不会修改 eagle app 原始数据
+- sqlite 标签群组中会新增 `NSFW`，颜色为`red`
+- 子标签 5 个：`Neutral`、`Drawing`、`Hentai`、`Porn`、`Sexy`
+- 新增添加的图片会自动执行 NSFW 检测
+
+> 功能实现参考：[infinitered/nsfwjs](https://github.com/infinitered/nsfwjs)
+
+![nsfw-preview](https://github.com/meetqy/eagleuse/blob/dev/readme/nsfw-preview.webp?raw=true)
+
 ### 本地安装
 
 ```sh
@@ -49,6 +62,10 @@ pnpm run db:init
 # 启动项目
 pnpm run dev
 ```
+
+### 配置说明
+
+[.env.example](https://github.com/meetqy/eagleuse/blob/main/.env.example)
 
 ### Package Script 说明
 
