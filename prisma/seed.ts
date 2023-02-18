@@ -34,7 +34,7 @@ function main() {
   initImage(prisma, triggerChangeDb, {
     success: () => {
       initMetadata(prisma, triggerChangeDb);
-      initNSFW(prisma);
+      initNSFW(prisma, triggerChangeDb);
     },
   });
 }

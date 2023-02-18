@@ -3,6 +3,7 @@ import { join } from "path";
 import getNSFWTag from "@/scripts/nsfw";
 import logger from "@/utils/logger";
 import ProgressBar from "progress";
+import _ from "lodash";
 
 function handleTagGroup(prisma: PrismaClient) {
   return new Promise((reslove, reject) => {
@@ -53,7 +54,7 @@ function handleTagGroup(prisma: PrismaClient) {
   });
 }
 
-const handleImage = async (prisma: PrismaClient) => {
+const handleImage = async (prisma: PrismaClient, trigger: () => void) => {
   const notNSFW = await prisma.image.findMany({
     where: {
       NOT: {
@@ -67,49 +68,66 @@ const handleImage = async (prisma: PrismaClient) => {
 
   if (notNSFW.length < 1) return logger.info("no image to check nsfw.");
 
-  const bar = new ProgressBar("loading [:bar] :current/:total", {
+  const _chunk = 10;
+
+  const chunkNotNSFW = _.chunk(notNSFW, _chunk);
+
+  const bar = new ProgressBar(`loading [:bar] :current/:total :percent`, {
     total: notNSFW.length,
     width: 50,
     complete: "#",
   });
 
-  for (const image of notNSFW) {
-    const file = join(
-      process.env.LIBRARY,
-      `./images/${image.id}.info/${image.name}.${image.ext}`
-    );
+  for (const arr of chunkNotNSFW) {
+    await Promise.all(arr.map((image) => nsfwPromise(prisma, image)));
 
-    const nsfwTags = await getNSFWTag(file);
+    bar.tick(arr.length);
+    trigger();
 
-    await prisma.image.update({
-      where: {
-        id: image.id,
-      },
-      data: {
-        nsfw: true,
-        tags: {
-          connectOrCreate: image.tags
-            .map((item) => item.id)
-            .concat(nsfwTags)
-            .map((tag) => ({
-              where: { id: tag },
-              create: { id: tag, name: tag },
-            })),
-        },
-      },
-    });
-
-    bar.tick();
     if (bar.complete) {
       logger.info(`complete! NSFW count: ${notNSFW.length}`);
     }
   }
 };
 
-async function initNSFW(prisma: PrismaClient) {
+const nsfwPromise = async (prisma: PrismaClient, image) => {
+  return new Promise(async (resolve, reject) => {
+    const file = join(
+      process.env.LIBRARY,
+      `./images/${image.id}.info/${image.name}.${image.ext}`
+    );
+    try {
+      const nsfwTags = await getNSFWTag(file);
+
+      prisma.image
+        .update({
+          where: {
+            id: image.id,
+          },
+          data: {
+            nsfw: true,
+            tags: {
+              connectOrCreate: image.tags
+                .map((item) => item.id)
+                .concat(nsfwTags)
+                .map((tag) => ({
+                  where: { id: tag },
+                  create: { id: tag, name: tag },
+                })),
+            },
+          },
+        })
+        .then(resolve);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+async function initNSFW(prisma: PrismaClient, trigger: () => void) {
   await handleTagGroup(prisma);
   logger.info("success! init nsfw Tags and TagsGroups.");
-  handleImage(prisma);
+  handleImage(prisma, trigger);
 }
 
 export default initNSFW;
