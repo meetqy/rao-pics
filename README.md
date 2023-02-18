@@ -25,17 +25,9 @@
 
 ![eagleuse](https://github.com/meetqy/eagleuse/blob/dev/readme/preview.gif?raw=true)
 
-# 👀 介绍
+## 🎁 特色功能
 
-### 定位
-
-通过监听`eagle app library`构建图片站，同时只会具备 `展示/搜索` 2 个功能。
-
-![](https://github.com/meetqy/eagleuse/blob/dev/readme/flow.webp?raw=true)
-
-### 特色功能
-
-**NSFW 图片检测，并自动标签**
+### NSFW 图片检测，并自动标签
 
 - 不会修改 eagle app 原始数据
 - sqlite 标签群组中会新增 `NSFW`，颜色为`red`
@@ -45,6 +37,14 @@
 > 功能实现参考：[infinitered/nsfwjs](https://github.com/infinitered/nsfwjs)
 
 ![nsfw-preview](https://github.com/meetqy/eagleuse/blob/dev/readme/nsfw-preview.webp?raw=true)
+
+# 👀 介绍
+
+### 定位
+
+通过监听`eagle app library`构建图片站，同时只会具备 `展示/搜索` 2 个功能。
+
+![](https://github.com/meetqy/eagleuse/blob/dev/readme/flow.webp?raw=true)
 
 ### 本地安装
 
