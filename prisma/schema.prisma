@@ -33,7 +33,7 @@ model Image {
 
 model Tag {
   id         String       @id
-  name       String
+  name       String       @unique
   starred    Boolean      @default(false)
   tagsGroups TagsGroups[]
   images     Image[]
@@ -56,7 +56,7 @@ model Folder {
 
 model TagsGroups {
   id    String  @id
-  name  String
+  name  String  @unique
   color String?
   tags  Tag[]
 }

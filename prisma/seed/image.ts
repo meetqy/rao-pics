@@ -49,7 +49,11 @@ const getMetadata = (file): { metadata: EagleUse.Image; support: boolean } => {
   };
 };
 
-export const initImage = async (prisma: PrismaClient, trigger: () => void) => {
+export const initImage = async (
+  prisma: PrismaClient,
+  trigger: () => void,
+  { success }: { success: () => void }
+) => {
   const allCount = readdirSync(join(process.env.LIBRARY, "./images")).filter(
     (file) => file.endsWith(".info")
   ).length;
@@ -71,6 +75,7 @@ export const initImage = async (prisma: PrismaClient, trigger: () => void) => {
       logger.info(
         `complete! all counts: ${allCount}, exclude counts: ${excludeCount}`
       );
+      success();
     }
   };
 
