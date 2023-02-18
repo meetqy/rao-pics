@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/meetqy/eagleuse/compare/v0.1.9...v0.1.10) (2023-02-18)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 safari 展示问题 ([b6bb729](https://github.com/meetqy/eagleuse/commit/b6bb72944186c41fe0805e3998af41f53a8c8fdf)), closes [#53](https://github.com/meetqy/eagleuse/issues/53)
+
+### Features | 新功能
+
+- 🎸 初始化使用终端进度条 ([b19cfdc](https://github.com/meetqy/eagleuse/commit/b19cfdca11d64fb54d72d11b1ed675bf073c6ac8)), closes [#85](https://github.com/meetqy/eagleuse/issues/85)
+- 🎸 初始化时，增加 NSFW 标签 ([ee2ed8c](https://github.com/meetqy/eagleuse/commit/ee2ed8ca54eb7bdfd492de12ed12dea1a48c1f42)), closes [#83](https://github.com/meetqy/eagleuse/issues/83)
+
 ### [0.1.9](https://github.com/meetqy/eagleuse/compare/v0.1.8...v0.1.9) (2023-02-14)
 
 ### Bug Fixes | Bug 修复
