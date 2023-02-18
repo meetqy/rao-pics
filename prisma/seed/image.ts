@@ -6,6 +6,7 @@ import logger from "@/utils/logger";
 import { readdirSync } from "fs";
 import _ from "lodash";
 import ProgressBar from "progress";
+import getNSFWTag from "@/scripts/nsfw";
 
 const handleImage = (json) => {
   return {
@@ -52,7 +53,7 @@ const getMetadata = (file): { metadata: EagleUse.Image; support: boolean } => {
 export const initImage = async (
   prisma: PrismaClient,
   trigger: () => void,
-  { success }: { success: () => void }
+  { success }: { success?: () => void }
 ) => {
   const allCount = readdirSync(join(process.env.LIBRARY, "./images")).filter(
     (file) => file.endsWith(".info")
@@ -62,7 +63,7 @@ export const initImage = async (
 
   let excludeCount = 0;
 
-  const bar = new ProgressBar("loading [:bar] :current/:total", {
+  let bar = new ProgressBar("loading [:bar] :current/:total", {
     total: allCount,
     width: 50,
     complete: "#",
@@ -70,12 +71,14 @@ export const initImage = async (
 
   // 进度条更新
   const barTick = () => {
+    if (!bar) return;
     bar.tick();
     if (bar.complete) {
       logger.info(
         `complete! all counts: ${allCount}, exclude counts: ${excludeCount}`
       );
-      success();
+      bar = null;
+      success && success();
     }
   };
 
@@ -154,6 +157,7 @@ export const initImage = async (
           include: { tags: true },
         })
         .then((oldImage) => {
+          if (!oldImage) return;
           const oldTags = oldImage.tags.map((item) => item.id);
           const newTags = metadata.tags;
 
@@ -173,19 +177,30 @@ export const initImage = async (
             .catch((e) => logger.error(e, `change => disconnect tag error: `));
         });
 
-      // 创建
-      if (addImages.includes(result.id)) {
-        prisma.image
-          .create({
-            data: result,
-          })
-          .then((image) => {
-            barTick();
-            _.remove(addImages, (n) => n === image.id);
-          })
-          .catch((e) => {
-            logger.error(e, `change => create image(${result.id}) error: `);
-          });
+      // db:watch 执行之后监听新增图片
+      // 触发顺序 add => change
+      if (addImages.includes(metadata.id)) {
+        const file = join(
+          process.env.LIBRARY,
+          `./images/${metadata.id}.info/${metadata.name}.${metadata.ext}`
+        );
+
+        getNSFWTag(file).then((nsfwTags) => {
+          metadata.tags = (metadata.tags as string[]).concat(nsfwTags);
+          const result = handleImage(metadata);
+
+          prisma.image
+            .create({
+              data: result,
+            })
+            .then((image) => {
+              barTick();
+              _.remove(addImages, (n) => n === image.id);
+            })
+            .catch((e) => {
+              logger.error(e, `change => create image(${result.id}) error: `);
+            });
+        });
       } else {
         prisma.image
           .update({
