@@ -3,5 +3,11 @@
   "private": true,
   "devDependencies": {
     "lerna": "^6.4.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meetqy/eagleuse.git"
+  },
+  "license": "MIT",
+  "homepage": "https://rao.pics"
 }
