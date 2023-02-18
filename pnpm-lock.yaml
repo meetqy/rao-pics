@@ -16,6 +16,7 @@ specifiers:
   ahooks: ^3.7.4
   antd: ^5.2.1
   chokidar: ^3.5.3
+  cli-progress: ^3.11.2
   cross-env: ^7.0.3
   dotenv: ^16.0.3
   encoding: ^0.1.13
@@ -35,6 +36,7 @@ specifiers:
   pino-pretty: ^9.1.1
   prettier: ^2.8.2
   prisma: 4.8.1
+  progress: ^2.0.3
   react: 18.2.0
   react-dom: 18.2.0
   react-markdown: 8.0.4
@@ -76,6 +78,7 @@ devDependencies:
   "@types/react": 18.0.26
   "@typescript-eslint/eslint-plugin": 5.48.1_3jon24igvnqaqexgwtxk6nkpse
   "@typescript-eslint/parser": 5.48.1_iukboom6ndih5an6iafl45j2fe
+  cli-progress: 3.11.2
   cross-env: 7.0.3
   dotenv: 16.0.3
   eslint: 8.31.0
@@ -86,6 +89,7 @@ devDependencies:
   lint-staged: 13.1.0
   nsfwjs: 2.4.2
   prisma: 4.8.1
+  progress: 2.0.3
   ts-node: 10.9.1_r65g46xrm45gbuklnvp6xevc2y
   tsconfig-paths: 4.1.2
   typescript: 4.9.4
@@ -2222,6 +2226,16 @@ packages:
     engines: { node: ">=8" }
     dependencies:
       restore-cursor: 3.1.0
+    dev: true
+
+  /cli-progress/3.11.2:
+    resolution:
+      {
+        integrity: sha512-lCPoS6ncgX4+rJu5bS3F/iCz17kZ9MPZ6dpuTtI0KXKABkhyXIdYB3Inby1OpaGti3YlI3EeEkM9AuWpelJrVA==,
+      }
+    engines: { node: ">=4" }
+    dependencies:
+      string-width: 4.2.3
     dev: true
 
   /cli-truncate/2.1.0:

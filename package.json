@@ -68,6 +68,7 @@
     "@types/react": "18.0.26",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
+    "cli-progress": "^3.11.2",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "eslint": "8.31.0",
@@ -78,6 +79,7 @@
     "lint-staged": "^13.1.0",
     "nsfwjs": "^2.4.2",
     "prisma": "4.8.1",
+    "progress": "^2.0.3",
     "ts-node": "10.9.1",
     "tsconfig-paths": "^4.1.2",
     "typescript": "4.9.4"
