@@ -40,7 +40,7 @@ function getItem(
   } as MenuItem;
 }
 
-type routeName = "manage" | "no" | "starred" | string;
+type RouteName = "manage" | "no" | "starred" | string;
 
 /**
  * 数组转json 首字母开头作为分组
@@ -77,19 +77,21 @@ function handleLabel(name: string, desc: number, color?: string) {
   );
 }
 
+type TagsCollection = {
+  [key in RouteName]: {
+    data: {
+      [key: string]: EagleUse.Tag[];
+    };
+    count: number;
+  };
+};
+
 export default function Page() {
   const router = useRouter();
-  const name = router.query.name as routeName;
+  const name = router.query.name as RouteName;
   const tags = useRecoilValue(tagsState);
   const tagsGroupsIsLoad = useRef(false);
-  const [tagsCollection, setTagsCollection] = useState<{
-    [key in routeName]: {
-      data: {
-        [key: string]: EagleUse.Tag[];
-      };
-      count: number;
-    };
-  }>({
+  const [tagsCollection, setTagsCollection] = useState<TagsCollection>({
     manage: {
       data: undefined,
       count: 0,
@@ -203,6 +205,7 @@ export default function Page() {
     fetch("/api/tag/group")
       .then((res) => res.json())
       .then(({ data }) => {
+        const tagsGroups: TagsCollection = {};
         const filterData = (data as EagleUse.TagsGroupsItem[]).map((item) => {
           // 找到有count的标签 并 过滤掉标签中图片为0的标签
           item.tags = item.tags
@@ -212,13 +215,18 @@ export default function Page() {
           const json = {};
           json[item.name] = item.tags;
 
-          tagsCollection[item.id] = {
+          tagsGroups[item.id] = {
             data: json,
             count: item.tags.length,
           };
 
           return item;
         });
+
+        setTagsCollection((value) => ({
+          ...value,
+          ...tagsGroups,
+        }));
 
         setTagsGroupsItems(
           filterData.map((item) => {
