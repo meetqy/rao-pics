@@ -140,7 +140,7 @@ export const initImage = async (
         });
       trigger();
     })
-    .on("change", (file) => {
+    .on("change", async (file) => {
       const { metadata, support } = getMetadata(file);
       if (!support) {
         return logger.warn(
@@ -162,19 +162,23 @@ export const initImage = async (
           const newTags = metadata.tags;
 
           const diffTags = _.differenceWith(oldTags, newTags, _.isEqual);
-          prisma.image
-            .update({
-              where: { id: result.id },
-              data: {
-                tags: {
-                  disconnect: diffTags.map((item) => ({ id: item })),
+          if (diffTags.length > 0) {
+            prisma.image
+              .update({
+                where: { id: result.id },
+                data: {
+                  tags: {
+                    disconnect: diffTags.map((item) => ({ id: item })),
+                  },
                 },
-              },
-            })
-            .then(() => {
-              logger.info(`change => disconnect tags: ` + diffTags.join(","));
-            })
-            .catch((e) => logger.error(e, `change => disconnect tag error: `));
+              })
+              .then(() => {
+                logger.info(`change => disconnect tags: ` + diffTags.join(","));
+              })
+              .catch((e) =>
+                logger.error(e, `change => disconnect tags error: `)
+              );
+          }
         });
 
       // db:watch 执行之后监听新增图片
@@ -185,22 +189,24 @@ export const initImage = async (
           `./images/${metadata.id}.info/${metadata.name}.${metadata.ext}`
         );
 
-        getNSFWTag(file).then((nsfwTags) => {
-          metadata.tags = (metadata.tags as string[]).concat(nsfwTags);
-          const result = handleImage(metadata);
+        const nsfwTags = await getNSFWTag(file);
+        logger.info("nsfw tags: " + nsfwTags.join(","));
 
-          prisma.image
-            .create({
-              data: result,
-            })
-            .then((image) => {
-              barTick();
-              _.remove(addImages, (n) => n === image.id);
-            })
-            .catch((e) => {
-              logger.error(e, `change => create image(${result.id}) error: `);
-            });
-        });
+        metadata.tags = (metadata.tags as string[]).concat(nsfwTags);
+        const result = handleImage(metadata);
+        result.nsfw = true;
+
+        prisma.image
+          .create({
+            data: result,
+          })
+          .then((image) => {
+            barTick();
+            _.remove(addImages, (n) => n === image.id);
+          })
+          .catch((e) => {
+            logger.error(e, `change => create image(${result.id}) error: `);
+          });
       } else {
         prisma.image
           .update({

@@ -27,7 +27,7 @@ const getNSFWTag = async (file: string): Promise<string[]> => {
   image.dispose();
 
   return predictions
-    .filter((item) => item.probability > 0.1)
+    .filter((item) => item.probability > 0.35)
     .map((item) => item.className);
 };
 
