@@ -2,11 +2,16 @@
   "name": "eagleuse-monorepo",
   "private": true,
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
+    "git-cz": "^4.9.0",
+    "husky": "^8.0.3",
     "lerna": "^6.4.1",
+    "lint-staged": "^13.1.2",
     "prettier": "^2.8.4",
     "ts-node": "^10.9.1"
   },
@@ -15,5 +20,23 @@
     "url": "git+https://github.com/meetqy/eagleuse.git"
   },
   "license": "MIT",
-  "homepage": "https://rao.pics"
+  "homepage": "https://rao.pics",
+  "scripts": {
+    "prepare": "husky install",
+    "commit": "git-cz"
+  },
+  "lint-staged": {
+    "**/*.(ts|tsx)": "eslint --fix --max-warnings 0",
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/git-cz"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx git-cz --hook || true"
+    }
+  }
 }

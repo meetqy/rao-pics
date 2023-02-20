@@ -7,10 +7,16 @@
     "eagleuse",
     "sqlite"
   ],
+  "scripts": {
+    "start": "ts-node lib/index.ts --watch 'lib/**'"
+  },
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://github.com/meetqy/eagleuse",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/meetqy/eagleuse/issues"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@eagleuse/plugins-nsfw",
+  "name": "@eagleuse/plugin-nsfw",
   "version": "0.0.0",
   "description": "Auto tag on NSFW.",
   "keywords": [
