@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/meetqy/eagleuse/compare/v0.1.10...v0.1.11) (2023-02-20)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 nsfw 添加标签未标记问题 ([cefafba](https://github.com/meetqy/eagleuse/commit/cefafba44ad8c856485cff684f95923dd8d282ec))
+
 ### [0.1.10](https://github.com/meetqy/eagleuse/compare/v0.1.9...v0.1.10) (2023-02-18)
 
 ### Bug Fixes | Bug 修复
