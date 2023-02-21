@@ -4,6 +4,9 @@ import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
 import { getPrisma } from "./prisma";
 
+// 防抖 需要延迟的毫秒数
+const _wait = 5000;
+
 // 待处理的图片
 const pendingFiles: Set<{
   file: string;
@@ -42,12 +45,25 @@ const handleImage = () => {
   if (pendingFiles.size < 1) return;
 
   for (const { file, type } of pendingFiles) {
-    const { mtimeMs } = statSync(file);
-    const mtime = Math.floor(mtimeMs);
     const id = file
       .split("/")
       .filter((item) => item.includes(".info"))[0]
       .replace(/\.info/, "");
+
+    let mtimeMs: number;
+    try {
+      mtimeMs = statSync(file).mtimeMs;
+    } catch (e) {
+      prisma.image.delete({
+        where: {
+          id,
+        },
+      });
+
+      continue;
+    }
+
+    const mtime = Math.floor(mtimeMs);
 
     const complete = () => {
       pendingFiles.delete({ file, type });
@@ -72,15 +88,23 @@ const handleImage = () => {
       })
       .then((image) => {
         const metadata: EagleUse.Image = readJsonSync(file);
+
         const data = getPrismaParams(metadata);
 
         // 新增
         if (!image) {
+          // 使用upsert
+          // 针对添加的图片，已经存在当前library中
           prisma.image
-            .create({
-              data,
+            .upsert({
+              where: { id },
+              create: data,
+              update: data,
             })
-            .then(complete);
+            .then(complete)
+            .catch((e) => {
+              console.log(data.id, e);
+            });
           return;
         }
 
@@ -99,7 +123,7 @@ const handleImage = () => {
   }
 };
 
-const _throttle = _.throttle(handleImage, 5000);
+const _throttle = _.debounce(handleImage, _wait);
 
 const watchImage = (library: string) => {
   const _path = join(library, "./images/**/metadata.json");

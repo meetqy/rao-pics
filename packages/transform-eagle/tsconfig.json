@@ -1,7 +1,7 @@
 {
-  // "include": ["lib/**/*.ts", "types.d.ts"],
+  "include": ["lib/**/*.ts"],
   // "exclude": ["node_modules"],
-  // "files": ["lib/index.ts"],
+  "files": ["types.d.ts"],
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
