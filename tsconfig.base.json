@@ -5,9 +5,10 @@
     "module": "ESNext",
     "baseUrl": ".",
     "paths": {
-      "@eagleuse/utils": ["packages/utils/lib/index.ts"]
+      "@eagleuse/utils": ["packages/utils/dist"]
     }
   },
+  "include": ["packages/**/*.ts"],
   "exclude": ["node_modules"],
   "ts-node": {
     "compilerOptions": {

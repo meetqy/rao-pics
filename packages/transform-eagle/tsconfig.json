@@ -1,6 +1,5 @@
 {
   "extends": "../../tsconfig.base.json",
   "include": ["lib/**/*.ts"],
-  "files": ["types.d.ts"],
-  "compilerOptions": {}
+  "files": ["types.d.ts"]
 }

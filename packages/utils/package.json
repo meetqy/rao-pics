@@ -31,6 +31,7 @@
   ],
   "main": "./dist/index.umd.js",
   "module": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
