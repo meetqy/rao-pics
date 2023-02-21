@@ -1,15 +1,6 @@
 {
+  "extends": "../../tsconfig.base.json",
   "include": ["lib/**/*.ts"],
-  // "exclude": ["node_modules"],
   "files": ["types.d.ts"],
-  "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "moduleResolution": "nodenext"
-  },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+  "compilerOptions": {}
 }

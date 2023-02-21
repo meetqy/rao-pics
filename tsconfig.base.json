@@ -1,22 +1,14 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "ES2021",
+    "moduleResolution": "nodenext",
+    "target": "ESNext",
     "module": "ESNext",
-    "lib": ["ES2021"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "paths": {}
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }
