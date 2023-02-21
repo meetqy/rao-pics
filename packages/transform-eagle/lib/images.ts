@@ -1,6 +1,6 @@
-import chokidar from "chokidar";
+import * as chokidar from "chokidar";
 import { join } from "path";
-import _ from "lodash-es";
+import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
 import { getPrisma } from "./prisma";
 

@@ -18,7 +18,5 @@
     "allowSyntheticDefaultImports": true,
     "paths": {}
   },
-  "exclude": ["node_modules"],
-  "include": ["env.d.ts"],
-  "files": ["env.d.ts"]
+  "exclude": ["node_modules"]
 }

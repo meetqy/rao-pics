@@ -44,14 +44,14 @@ importers:
     specifiers:
       "@prisma/client": ^4.10.1
       "@types/fs-extra": ^11.0.1
-      "@types/lodash-es": ^4.17.6
+      "@types/lodash": ^4.14.191
       "@types/node": ^18.14.0
       chokidar: ^3.5.3
       cross-env: ^7.0.3
       dotenv: ^16.0.3
       fs-extra: ^11.1.0
       loadsh: ^0.0.4
-      lodash-es: ^4.17.21
+      lodash: ^4.17.21
       prisma: ^4.10.1
       ts-node: ^10.9.1
     dependencies:
@@ -59,11 +59,11 @@ importers:
       chokidar: 3.5.3
       fs-extra: 11.1.0
       loadsh: 0.0.4
-      lodash-es: 4.17.21
+      lodash: 4.17.21
       prisma: 4.10.1
     devDependencies:
       "@types/fs-extra": 11.0.1
-      "@types/lodash-es": 4.17.6
+      "@types/lodash": 4.14.191
       "@types/node": 18.14.0
       cross-env: 7.0.3
       dotenv: 16.0.3
@@ -1863,15 +1863,6 @@ packages:
       }
     dependencies:
       "@types/node": 18.14.0
-    dev: true
-
-  /@types/lodash-es/4.17.6:
-    resolution:
-      {
-        integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==,
-      }
-    dependencies:
-      "@types/lodash": 4.14.191
     dev: true
 
   /@types/lodash/4.14.191:
@@ -5210,13 +5201,6 @@ packages:
       p-locate: 5.0.0
     dev: true
 
-  /lodash-es/4.17.21:
-    resolution:
-      {
-        integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==,
-      }
-    dev: false
-
   /lodash.camelcase/4.3.0:
     resolution:
       {
@@ -5299,7 +5283,6 @@ packages:
       {
         integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==,
       }
-    dev: true
 
   /log-symbols/4.1.0:
     resolution:
