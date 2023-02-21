@@ -5,8 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.0.1](https://github.com/meetqy/eagleuse/compare/v0.0.1...v1.0.1) (2023-02-21)
 
-**Note:** Version bump only for package eagleuse-monorepo
-
-## 0.0.1 (2023-02-20)
-
-**Note:** Version bump only for package eagleuse-monorepo
+**Note:** Version bump only for package @eagleuse/utils
