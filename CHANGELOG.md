@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/meetqy/eagleuse/compare/v0.1.11...v0.1.12) (2023-02-21)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 标签管理/性别直接点击，子标签不显示 ([7fc0a30](https://github.com/meetqy/eagleuse/commit/7fc0a308a9cbd1ce1d62df82c4411978302d1465)), closes [#51](https://github.com/meetqy/eagleuse/issues/51)
+
 ### [0.1.11](https://github.com/meetqy/eagleuse/compare/v0.1.10...v0.1.11) (2023-02-20)
 
 ### Bug Fixes | Bug 修复
