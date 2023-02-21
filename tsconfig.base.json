@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2021",
-    "module": "esnext",
+    "module": "ESNext",
     "lib": ["ES2021"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
@@ -18,5 +18,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {}
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["env.d.ts"],
+  "files": ["env.d.ts"]
 }

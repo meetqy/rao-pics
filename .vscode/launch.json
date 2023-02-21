@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node-terminal",
+      "name": "Debug Current TS File (ts-node)",
+      "request": "launch",
+      "command": "ts-node -- ${fileBasenameNoExtension}",
+      "cwd": "${fileDirname}"
+    }
+  ]
+}

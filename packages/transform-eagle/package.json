@@ -8,7 +8,8 @@
     "sqlite"
   ],
   "scripts": {
-    "start": "ts-node lib/index.ts --watch 'lib/**'"
+    "start": "ts-node lib/index.ts --watch 'lib/**'",
+    "db:init": "prisma migrate dev --name init --skip-seed"
   },
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://github.com/meetqy/eagleuse",
@@ -17,6 +18,19 @@
     "url": "https://github.com/meetqy/eagleuse/issues"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/lodash-es": "^4.17.6",
+    "@types/node": "^18.14.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
     "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.10.1",
+    "chokidar": "^3.5.3",
+    "fs-extra": "^11.1.0",
+    "loadsh": "^0.0.4",
+    "lodash-es": "^4.17.21",
+    "prisma": "^4.10.1"
   }
 }

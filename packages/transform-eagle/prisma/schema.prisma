@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Image {
+  id                String   @id
+  name              String
+  size              Int
+  btime             BigInt
+  mtime             BigInt
+  ext               String
+  url               String
+  annotation        String
+  modificationTime  BigInt
+  width             Int
+  height            Int
+  star              Int?
+  palettes          String?
+  lastModified      BigInt
+  isDeleted         Boolean? @default(false)
+  nsfw              Boolean? @default(false)
+  deletedTime       BigInt?
+  processingPalette Boolean?
+  noThumbnail       Boolean?
+  folders           Folder[]
+  tags              Tag[]
+}
+
+model Tag {
+  id         String       @id
+  name       String       @unique
+  starred    Boolean      @default(false)
+  tagsGroups TagsGroups[]
+  images     Image[]
+  floders    Folder[]
+}
+
+model Folder {
+  id               String  @id
+  name             String
+  description      String
+  pid              String?
+  modificationTime BigInt
+  iconColor        String?
+  icon             String?
+  password         String
+  passwordTips     String
+  tags             Tag[]
+  images           Image[]
+}
+
+model TagsGroups {
+  id    String  @id
+  name  String  @unique
+  color String?
+  tags  Tag[]
+}
