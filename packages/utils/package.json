@@ -1,0 +1,40 @@
+{
+  "name": "@eagleuse/utils",
+  "version": "1.0.0",
+  "description": "eagleuse common utils library.",
+  "keywords": [
+    "logger",
+    "progressBar"
+  ],
+  "author": "meetqy <meetqy@qq.com>",
+  "homepage": "https://rao.pics",
+  "scripts": {
+    "build": "vite build"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meetqy/eagleuse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/meetqy/eagleuse/issues"
+  },
+  "devDependencies": {
+    "pino": "^8.10.0",
+    "pino-pretty": "^9.3.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.umd.js"
+    }
+  }
+}

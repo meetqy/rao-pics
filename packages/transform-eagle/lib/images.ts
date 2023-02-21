@@ -3,6 +3,7 @@ import { join } from "path";
 import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
 import { getPrisma } from "./prisma";
+import { logger } from "@eagleuse/utils";
 
 // 防抖 需要延迟的毫秒数
 const _wait = 5000;
@@ -12,6 +13,11 @@ const pendingFiles: Set<{
   file: string;
   type: "update" | "delete";
 }> = new Set();
+
+const addPendingFiles = (file, type: "update" | "delete") => {
+  pendingFiles.add({ file, type });
+  _throttle();
+};
 
 const getPrismaParams = (data: EagleUse.Image) => {
   let tags = {},
@@ -126,22 +132,14 @@ const handleImage = () => {
 const _throttle = _.debounce(handleImage, _wait);
 
 const watchImage = (library: string) => {
+  logger.info("watching images");
   const _path = join(library, "./images/**/metadata.json");
 
-  chokidar.watch(_path).on("all", (type, file) => {
-    if (["add", "change", "unlink"].includes(type)) {
-      type === "unlink"
-        ? pendingFiles.delete({
-            file,
-            type: "delete",
-          })
-        : pendingFiles.add({
-            file,
-            type: "update",
-          });
-      _throttle();
-    }
-  });
+  chokidar
+    .watch(_path)
+    .on("add", (file) => addPendingFiles(file, "update"))
+    .on("change", (file) => addPendingFiles(file, "update"))
+    .on("unlink", (file) => addPendingFiles(file, "delete"));
 };
 
 export default watchImage;

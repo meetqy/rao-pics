@@ -3,7 +3,10 @@
     "moduleResolution": "nodenext",
     "target": "ESNext",
     "module": "ESNext",
-    "paths": {}
+    "baseUrl": ".",
+    "paths": {
+      "@eagleuse/utils": ["packages/utils/lib/index.ts"]
+    }
   },
   "exclude": ["node_modules"],
   "ts-node": {
