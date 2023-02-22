@@ -28,7 +28,7 @@
     "prepare": "husky install",
     "commit": "git-cz",
     "build": "lerna run build",
-    "release:next": "npm run build && lerna publish",
+    "release:next": "npm run build && lerna publish --conventional-commits",
     "prerelease": "npm run build"
   },
   "lint-staged": {
