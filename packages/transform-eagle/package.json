@@ -24,9 +24,7 @@
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
-    "@types/node": "^18.14.0",
-    "dotenv": "^16.0.3",
-    "progress": "^2.0.3"
+    "@types/node": "^18.14.0"
   },
   "dependencies": {
     "@eagleuse/utils": "link:../utils",
@@ -34,7 +32,9 @@
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
-    "prisma": "^4.10.1"
+    "prisma": "^4.10.1",
+    "dotenv": "^16.0.3",
+    "progress": "^2.0.3"
   },
   "files": [
     "dist"
