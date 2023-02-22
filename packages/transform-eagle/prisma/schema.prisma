@@ -40,7 +40,6 @@ model Tag {
   starred    Boolean      @default(false)
   tagsGroups TagsGroups[]
   images     Image[]
-  floders    Folder[]
 }
 
 model Folder {
@@ -53,7 +52,6 @@ model Folder {
   icon             String?
   password         String
   passwordTips     String
-  tags             Tag[]
   images           Image[]
 }
 
