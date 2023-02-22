@@ -43,7 +43,6 @@ importers:
       "@types/lodash": ^4.14.191
       "@types/node": ^18.14.0
       chokidar: ^3.5.3
-      cross-env: ^7.0.3
       dotenv: ^16.0.3
       fs-extra: ^11.1.0
       lodash: ^4.17.21
@@ -60,7 +59,6 @@ importers:
       "@types/fs-extra": 11.0.1
       "@types/lodash": 4.14.191
       "@types/node": 18.14.0
-      cross-env: 7.0.3
       dotenv: 16.0.3
       progress: 2.0.3
 
@@ -3675,17 +3673,6 @@ packages:
       {
         integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==,
       }
-    dev: true
-
-  /cross-env/7.0.3:
-    resolution:
-      {
-        integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==,
-      }
-    engines: { node: ">=10.14", npm: ">=6", yarn: ">=1" }
-    hasBin: true
-    dependencies:
-      cross-spawn: 7.0.3
     dev: true
 
   /cross-spawn/7.0.3:
