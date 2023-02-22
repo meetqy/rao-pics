@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/meetqy/eagleuse/issues"
   },
-  "devDependencies": {
+  "dependencies": {
     "pino": "^8.10.0",
     "pino-pretty": "^9.3.0"
   },
