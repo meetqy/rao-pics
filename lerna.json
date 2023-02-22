@@ -2,12 +2,5 @@
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "npmClient": "pnpm",
   "useWorkspaces": true,
-  "command": {
-    "version": {
-      "message": "chore(release): publish",
-      "conventionalCommits": true,
-      "yes": true
-    }
-  },
-  "version": "1.0.4"
+  "version": "independent"
 }

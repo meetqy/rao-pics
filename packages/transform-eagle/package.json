@@ -37,7 +37,8 @@
     "progress": "^2.0.3"
   },
   "files": [
-    "dist"
+    "dist",
+    "prisma"
   ],
   "main": "./dist/index.umd.js",
   "module": "./dist/index.mjs",
