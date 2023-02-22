@@ -23,7 +23,7 @@ const TagPrisma = {
         },
       })
       .then((e) => {
-        logger.info(e, "[clearImageZero] deleteMany: ");
+        logger.debug(e, "Clear tag with image count less than 1: ");
       });
   },
 };

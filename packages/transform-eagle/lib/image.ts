@@ -4,11 +4,14 @@ import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
 import { getPrisma } from "./prisma";
 import { logger } from "@eagleuse/utils";
+import * as ProgressBar from "progress";
 import { Image, Prisma, Tag } from "@prisma/client";
 import TagPrisma from "./tag";
 
 // 防抖 需要延迟的毫秒数
 const _wait = 5000;
+
+let bar;
 
 interface FileItem {
   file: string;
@@ -35,14 +38,19 @@ const PendingFiles: {
 
   delete: (fileItem) => {
     PendingFiles.value.delete(fileItem);
-    // logger.info(`PendingFiles size: ${PendingFiles.value.size}`);
+
+    bar.tick();
 
     // 本轮 value 清空
-    if (PendingFiles.value.size === 0) {
+    if (bar.complete) {
+      bar = null;
+
       if (isDisconnect.tag) {
         isDisconnect.tag = false;
         TagPrisma.clearImageZero();
       }
+
+      logger.info("Complete 🚀");
     }
   },
 };
@@ -70,15 +78,19 @@ const getPrismaParams = (
       })),
     };
 
-    // 移除之前已经
+    // 标签 从 a => b
+    // 1.需要 disconnect a
+    // 2.如果 a 标签所关联的图片数量小于1 需要删除
     if (oldData && oldData.tags) {
       const disconnectTags = _.difference(
         oldData.tags.map((tag) => tag.id),
         data.tags as string[]
       );
 
-      tags["disconnect"] = disconnectTags.map((tag) => ({ id: tag }));
-      isDisconnect.tag = true;
+      if (disconnectTags.length > 0) {
+        tags["disconnect"] = disconnectTags.map((tag) => ({ id: tag }));
+        isDisconnect.tag = true;
+      }
     }
   }
 
@@ -93,6 +105,14 @@ const getPrismaParams = (
 const handleImage = () => {
   const prisma = getPrisma();
   if (PendingFiles.value.size < 1) return;
+
+  if (!bar) {
+    bar = new ProgressBar("Image: [:bar] :current/:total", {
+      total: PendingFiles.value.size,
+      width: 50,
+      complete: "#",
+    });
+  }
 
   for (const fileItem of PendingFiles.value) {
     const { file, type } = fileItem;
@@ -160,7 +180,6 @@ const handleImage = () => {
 
         // 更新
         if (Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2) {
-          console.log(data.name, mtime, Number(image.metadataMTime));
           prisma.image
             .update({
               where: {
@@ -179,7 +198,7 @@ const handleImage = () => {
 const _throttle = _.debounce(handleImage, _wait);
 
 const watchImage = (library: string) => {
-  logger.info("watching images");
+  logger.info("Init image 🗝");
   const _path = join(library, "./images/**/metadata.json");
 
   chokidar

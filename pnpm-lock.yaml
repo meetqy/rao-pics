@@ -48,6 +48,7 @@ importers:
       fs-extra: ^11.1.0
       lodash: ^4.17.21
       prisma: ^4.10.1
+      progress: ^2.0.3
     dependencies:
       "@eagleuse/utils": link:../utils
       "@prisma/client": 4.10.1_prisma@4.10.1
@@ -61,6 +62,7 @@ importers:
       "@types/node": 18.14.0
       cross-env: 7.0.3
       dotenv: 16.0.3
+      progress: 2.0.3
 
   packages/utils:
     specifiers:
@@ -7312,6 +7314,14 @@ packages:
         integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==,
       }
     engines: { node: ">= 0.6.0" }
+    dev: true
+
+  /progress/2.0.3:
+    resolution:
+      {
+        integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==,
+      }
+    engines: { node: ">=0.4.0" }
     dev: true
 
   /promise-all-reject-late/1.0.1:

@@ -25,7 +25,8 @@
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.0",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "progress": "^2.0.3"
   },
   "dependencies": {
     "@eagleuse/utils": "link:../utils",
