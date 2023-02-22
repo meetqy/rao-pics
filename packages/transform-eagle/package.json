@@ -10,9 +10,7 @@
   "scripts": {
     "start": "ts-node lib/index.ts --watch 'lib/**'",
     "db:init": "prisma migrate dev --name init --skip-seed",
-    "build": "vite build",
-    "release:next": "npm run build && lerna publish",
-    "prerelease": "npm run build"
+    "build": "vite build"
   },
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://github.com/meetqy/eagleuse",

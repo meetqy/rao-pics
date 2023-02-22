@@ -27,7 +27,9 @@
   "scripts": {
     "prepare": "husky install",
     "commit": "git-cz",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "release:next": "npm run build && lerna publish",
+    "prerelease": "npm run build"
   },
   "lint-staged": {
     "**/*.(ts|tsx)": "eslint --fix --max-warnings 0",
