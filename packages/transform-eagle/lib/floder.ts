@@ -43,12 +43,12 @@ const handleFloder = (file: string) => {
   });
 };
 
-const _throttle = _.throttle(handleFloder, _wait);
+const _debounce = _.debounce(handleFloder, _wait);
 
 const watchFloder = (LIBRARY: string) => {
   const file = join(LIBRARY, "./metadata.json");
 
-  chokidar.watch(file).on("add", _throttle).on("change", _throttle);
+  chokidar.watch(file).on("add", _debounce).on("change", _debounce);
 };
 
 export default watchFloder;

@@ -3,9 +3,8 @@ import watchImage from "./image";
 import watchFloder from "./floder";
 import { logger } from "@eagleuse/utils";
 
-dotenv.config();
-
-function transfromEagle() {
+export const transfromEagle = () => {
+  dotenv.config();
   const { LIBRARY } = process.env;
   if (!LIBRARY) throw Error("LIBRARY is null!");
 
@@ -13,6 +12,4 @@ function transfromEagle() {
 
   watchFloder(LIBRARY);
   watchImage(LIBRARY);
-}
-
-export default transfromEagle;
+};

@@ -4,7 +4,7 @@ import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
 import { getPrisma } from "./prisma";
 import { logger } from "@eagleuse/utils";
-import * as ProgressBar from "progress";
+import ProgressBar from "progress";
 import { Image, Prisma, Tag } from "@prisma/client";
 import TagPrisma from "./tag";
 
@@ -33,7 +33,7 @@ const PendingFiles: {
 
   add: (fileItem) => {
     PendingFiles.value.add(fileItem);
-    _throttle();
+    _debounce();
   },
 
   delete: (fileItem) => {
@@ -55,12 +55,12 @@ const PendingFiles: {
   },
 };
 
-const getPrismaParams = (
+function getPrismaParams(
   data: EagleUse.Image,
   oldData: Image & {
     tags: Tag[];
   }
-): Prisma.ImageCreateInput => {
+): Prisma.ImageCreateInput {
   let tags = {},
     folders = {};
 
@@ -100,7 +100,7 @@ const getPrismaParams = (
     folders,
     palettes: JSON.stringify(data.palettes),
   };
-};
+}
 
 const handleImage = () => {
   const prisma = getPrisma();
@@ -195,7 +195,7 @@ const handleImage = () => {
   }
 };
 
-const _throttle = _.debounce(handleImage, _wait);
+const _debounce = _.debounce(handleImage, _wait);
 
 const watchImage = (library: string) => {
   const _path = join(library, "./images/**/metadata.json");
