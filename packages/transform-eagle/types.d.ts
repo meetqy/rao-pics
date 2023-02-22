@@ -35,17 +35,17 @@ declare namespace EagleUse {
     id: string;
     name: string;
     description: string;
-    pid: string;
     modificationTime: number;
     iconColor: string;
     icon: string;
     password: string;
     passwordTips: string;
     children?: Folder[];
-    _count: {
+    pid?: string;
+    images?: Image[];
+    _count?: {
       images: number;
     };
-    images?: Image[];
   }
 
   // 标签

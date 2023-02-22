@@ -9,7 +9,7 @@ import { Image, Prisma, Tag } from "@prisma/client";
 import TagPrisma from "./tag";
 
 // 防抖 需要延迟的毫秒数
-const _wait = 5000;
+const _wait = 3000;
 
 let bar;
 
@@ -50,7 +50,7 @@ const PendingFiles: {
         TagPrisma.clearImageZero();
       }
 
-      logger.info("Complete 🚀");
+      logger.info("Image Complete 🚀");
     }
   },
 };
@@ -107,7 +107,7 @@ const handleImage = () => {
   if (PendingFiles.value.size < 1) return;
 
   if (!bar) {
-    bar = new ProgressBar("Image: [:bar] :current/:total", {
+    bar = new ProgressBar("🐰 Image: [:bar] :current/:total", {
       total: PendingFiles.value.size,
       width: 50,
       complete: "#",
@@ -198,7 +198,6 @@ const handleImage = () => {
 const _throttle = _.debounce(handleImage, _wait);
 
 const watchImage = (library: string) => {
-  logger.info("Init image 🗝");
   const _path = join(library, "./images/**/metadata.json");
 
   chokidar
