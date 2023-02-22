@@ -5,7 +5,7 @@ import { logger } from "@eagleuse/utils";
 
 dotenv.config();
 
-function main() {
+function transfromEagle() {
   const { LIBRARY } = process.env;
   if (!LIBRARY) throw Error("LIBRARY is null!");
 
@@ -15,4 +15,4 @@ function main() {
   watchImage(LIBRARY);
 }
 
-main();
+export default transfromEagle;

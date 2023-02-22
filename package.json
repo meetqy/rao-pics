@@ -26,7 +26,8 @@
   "homepage": "https://rao.pics",
   "scripts": {
     "prepare": "husky install",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "build": "lerna run build"
   },
   "lint-staged": {
     "**/*.(ts|tsx)": "eslint --fix --max-warnings 0",

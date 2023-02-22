@@ -9,7 +9,10 @@
   ],
   "scripts": {
     "start": "ts-node lib/index.ts --watch 'lib/**'",
-    "db:init": "prisma migrate dev --name init --skip-seed"
+    "db:init": "prisma migrate dev --name init --skip-seed",
+    "build": "vite build",
+    "release:next": "npm run build && lerna publish",
+    "prerelease": "npm run build"
   },
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://github.com/meetqy/eagleuse",
@@ -35,5 +38,17 @@
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
     "prisma": "^4.10.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.umd.js"
+    }
   }
 }
