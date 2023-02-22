@@ -1,13 +1,33 @@
 # `@eagleuse/transform-eagle`
 
-> TODO: description
+Watch eagle library to sqlite.
 
-## Usage
+### Install
 
+```shell
+pnpm i prisma @prisma/client @eagleuse/transform-eagle
+
+# mac || linux
+ln -s node_modules/@eagleuse/transform-eagle/prisma
+
+# windows
+mklink /j ./prisma ./node_modules/@eagleuse/transform-eagle/prisma
 ```
-const transformEagle = require('@eagleuse/transform-eagle');
 
-// TODO: DEMONSTRATE API
+### Usage
+
+**js**
+
+```js
+const { transfromEagle } = require("@eagleuse/transform-eagle");
+
+transfromEagle();
 ```
 
-test
+**esm**
+
+```ts
+import { transfromEagle } from "@eagleuse/transform-eagle";
+
+transfromEagle();
+```
