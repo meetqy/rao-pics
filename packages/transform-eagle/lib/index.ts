@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv";
-import watchImage from "./images";
+import watchImage from "./image";
 
 dotenv.config();
 

@@ -27,6 +27,7 @@ declare namespace EagleUse {
     nsfw: boolean;
     tags?: Tag[] | string[];
     folders?: Folder[];
+    metadataMTime: number;
   }
 
   // 文件夹

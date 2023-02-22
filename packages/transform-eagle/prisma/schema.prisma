@@ -13,18 +13,21 @@ model Image {
   size              Int
   btime             BigInt
   mtime             BigInt
+  modificationTime  BigInt
   ext               String
   url               String
   annotation        String
-  modificationTime  BigInt
   width             Int
   height            Int
+  // 自定义属性  metadata最后一次修改时间
+  metadataMTime     BigInt   @default(0)
   star              Int?
   palettes          String?
-  lastModified      BigInt
-  isDeleted         Boolean? @default(false)
-  nsfw              Boolean? @default(false)
+  lastModified      BigInt?
   deletedTime       BigInt?
+  isDeleted         Boolean? @default(false)
+  // 自定义属性  NSFW是否检测
+  nsfw              Boolean? @default(false)
   processingPalette Boolean?
   noThumbnail       Boolean?
   folders           Folder[]

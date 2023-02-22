@@ -4,22 +4,55 @@ import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
 import { getPrisma } from "./prisma";
 import { logger } from "@eagleuse/utils";
+import { Image, Prisma, Tag } from "@prisma/client";
+import TagPrisma from "./tag";
 
 // 防抖 需要延迟的毫秒数
 const _wait = 5000;
 
-// 待处理的图片
-const pendingFiles: Set<{
+interface FileItem {
   file: string;
   type: "update" | "delete";
-}> = new Set();
+}
 
-const addPendingFiles = (file, type: "update" | "delete") => {
-  pendingFiles.add({ file, type });
-  _throttle();
+// 本次 handleImage 是否有disconnect的标签、文件夹
+const isDisconnect = {
+  tag: false,
 };
 
-const getPrismaParams = (data: EagleUse.Image) => {
+// 待处理图片
+const PendingFiles: {
+  readonly value: Set<FileItem>;
+  add: (fileItem: FileItem) => void;
+  delete: (fileItem: FileItem) => void;
+} = {
+  value: new Set(),
+
+  add: (fileItem) => {
+    PendingFiles.value.add(fileItem);
+    _throttle();
+  },
+
+  delete: (fileItem) => {
+    PendingFiles.value.delete(fileItem);
+    // logger.info(`PendingFiles size: ${PendingFiles.value.size}`);
+
+    // 本轮 value 清空
+    if (PendingFiles.value.size === 0) {
+      if (isDisconnect.tag) {
+        isDisconnect.tag = false;
+        TagPrisma.clearImageZero();
+      }
+    }
+  },
+};
+
+const getPrismaParams = (
+  data: EagleUse.Image,
+  oldData: Image & {
+    tags: Tag[];
+  }
+): Prisma.ImageCreateInput => {
   let tags = {},
     folders = {};
 
@@ -36,6 +69,17 @@ const getPrismaParams = (data: EagleUse.Image) => {
         create: { id: tag, name: tag },
       })),
     };
+
+    // 移除之前已经
+    if (oldData && oldData.tags) {
+      const disconnectTags = _.difference(
+        oldData.tags.map((tag) => tag.id),
+        data.tags as string[]
+      );
+
+      tags["disconnect"] = disconnectTags.map((tag) => ({ id: tag }));
+      isDisconnect.tag = true;
+    }
   }
 
   return {
@@ -48,9 +92,10 @@ const getPrismaParams = (data: EagleUse.Image) => {
 
 const handleImage = () => {
   const prisma = getPrisma();
-  if (pendingFiles.size < 1) return;
+  if (PendingFiles.value.size < 1) return;
 
-  for (const { file, type } of pendingFiles) {
+  for (const fileItem of PendingFiles.value) {
+    const { file, type } = fileItem;
     const id = file
       .split("/")
       .filter((item) => item.includes(".info"))[0]
@@ -71,17 +116,13 @@ const handleImage = () => {
 
     const mtime = Math.floor(mtimeMs);
 
-    const complete = () => {
-      pendingFiles.delete({ file, type });
-    };
-
     // 删除
     if (type === "delete") {
       prisma.image
         .delete({
           where: { id },
         })
-        .then(complete);
+        .then(() => PendingFiles.delete(fileItem));
 
       return;
     }
@@ -91,11 +132,14 @@ const handleImage = () => {
         where: {
           id,
         },
+        include: {
+          tags: true,
+        },
       })
       .then((image) => {
         const metadata: EagleUse.Image = readJsonSync(file);
 
-        const data = getPrismaParams(metadata);
+        const data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
 
         // 新增
         if (!image) {
@@ -107,7 +151,7 @@ const handleImage = () => {
               create: data,
               update: data,
             })
-            .then(complete)
+            .then(() => PendingFiles.delete(fileItem))
             .catch((e) => {
               console.log(data.id, e);
             });
@@ -115,7 +159,8 @@ const handleImage = () => {
         }
 
         // 更新
-        if (mtime > image.modificationTime) {
+        if (Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2) {
+          console.log(data.name, mtime, Number(image.metadataMTime));
           prisma.image
             .update({
               where: {
@@ -123,7 +168,9 @@ const handleImage = () => {
               },
               data,
             })
-            .then(complete);
+            .then(() => PendingFiles.delete(fileItem));
+        } else {
+          PendingFiles.delete(fileItem);
         }
       });
   }
@@ -137,9 +184,9 @@ const watchImage = (library: string) => {
 
   chokidar
     .watch(_path)
-    .on("add", (file) => addPendingFiles(file, "update"))
-    .on("change", (file) => addPendingFiles(file, "update"))
-    .on("unlink", (file) => addPendingFiles(file, "delete"));
+    .on("add", (file) => PendingFiles.add({ file, type: "update" }))
+    .on("change", (file) => PendingFiles.add({ file, type: "update" }))
+    .on("unlink", (file) => PendingFiles.add({ file, type: "delete" }));
 };
 
 export default watchImage;
