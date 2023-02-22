@@ -1,0 +1,8 @@
+30 error TypeError: Invalid Version: independence
+30 error     at new SemVer (/Users/qymeet/Desktop/Github/eagleuse/node_modules/.pnpm/semver@7.3.8/node_modules/semver/classes/semver.js:38:13)
+30 error     at compare (/Users/qymeet/Desktop/Github/eagleuse/node_modules/.pnpm/semver@7.3.8/node_modules/semver/functions/compare.js:3:32)
+30 error     at Object.lt (/Users/qymeet/Desktop/Github/eagleuse/node_modules/.pnpm/semver@7.3.8/node_modules/semver/functions/lt.js:2:29)
+30 error     at VersionCommand.setGlobalVersionFloor (/Users/qymeet/Desktop/Github/eagleuse/node_modules/.pnpm/@lerna+version@6.4.1_nx@15.6.3+typescript@4.9.5/node_modules/@lerna/version/index.js:419:18)
+30 error     at /Users/qymeet/Desktop/Github/eagleuse/node_modules/.pnpm/@lerna+version@6.4.1_nx@15.6.3+typescript@4.9.5/node_modules/@lerna/version/index.js:389:37
+30 error     at processTicksAndRejections (node:internal/process/task_queues:96:5)
+30 error     at async Promise.all (index 0)
