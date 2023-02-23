@@ -50,7 +50,7 @@
 ### 本地安装
 
 ```sh
-git clone https://github.com/meetqy/eagleuse.git
+git clone -b main https://github.com/meetqy/eagleuse.git
 pnpm install
 ```
 
@@ -58,7 +58,10 @@ pnpm install
 
 ```sh
 # 初始化 数据库
-pnpm run db:init
+pnpm run db:init # 不存在eagleuse.db
+# or
+pnpm run db:generate # 已存在eagleuse.db
+
 
 # 启动项目
 pnpm run dev
@@ -82,11 +85,9 @@ pnpm run dev
 
 下面两个项目是该项目的起点，提供了很好的思路，有着特殊的意义，尽管用起来很麻烦！！！
 
-- json-server 实现 eagle 查询 api 👉🏻 [eagle-api](https://github.com/meetqy/eagle-api)
-- eagle-web 版本 👉🏻 [eagle-web](https://github.com/meetqy/eagle-web)
-
-> 想要完整跑起来，你需要同时启动两个项目。
+- [eagle-api](https://github.com/meetqy/eagle-api) - json-server 实现 Eagle App 查询 api
+- [eagle-web](https://github.com/meetqy/eagle-web) - Eagle App 的网页版
 
 # 📄 开源协议
 
-[MIT license](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EagleUse](https://github.com/eagleuse)
+[MIT LICENSE](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EAGLEUSE](https://github.com/eagleuse)
