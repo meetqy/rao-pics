@@ -38,7 +38,7 @@
   },
   "files": [
     "dist",
-    "prisma"
+    "prisma/schema.prisma"
   ],
   "main": "./dist/index.umd.js",
   "module": "./dist/index.mjs",

@@ -2,7 +2,7 @@
 
 Watch eagle library to sqlite.
 
-### Install
+## Install
 
 ```shell
 pnpm i prisma @prisma/client @eagleuse/transform-eagle
@@ -14,7 +14,7 @@ ln -s node_modules/@eagleuse/transform-eagle/prisma
 mklink /j ./prisma ./node_modules/@eagleuse/transform-eagle/prisma
 ```
 
-### Usage
+## Usage
 
 **js**
 
