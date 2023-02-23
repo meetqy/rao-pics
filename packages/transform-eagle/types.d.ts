@@ -25,7 +25,7 @@ declare namespace EagleUse {
     noThumbnail: boolean;
     star: number;
     nsfw: boolean;
-    tags?: Tag[] | string[];
+    tags?: (Tag | string)[];
     folders?: Folder[];
     metadataMTime: number;
   }

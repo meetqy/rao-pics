@@ -5,14 +5,6 @@
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
   "license": "MIT",
-  "main": "lib/plugin-nsfw.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
   "publishConfig": {
     "access": "public"
   },
@@ -25,5 +17,23 @@
   },
   "bugs": {
     "url": "https://github.com/meetqy/eagleuse/issues"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.2.0",
+    "fs-extra": "^11.1.0",
+    "nsfwjs": "^2.4.2"
+  },
+  "files": [
+    "dist",
+    "prisma/schema.prisma"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
   }
 }

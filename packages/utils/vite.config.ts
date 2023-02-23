@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "lib/index.ts",
-      name: "@eagleuse-utils",
+      name: "@eagleuse/utils",
       fileName: "index",
       formats: ["cjs"],
     },

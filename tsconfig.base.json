@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "paths": {
-      "@eagleuse/utils": ["packages/utils/dist"]
+      "@eagleuse/utils": ["packages/utils/dist"],
+      "@eagleuse/plugin-nsfw": ["packages/utils/plugin-nsfw"]
     }
   },
   "include": ["packages/**/*.ts"],

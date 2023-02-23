@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "lib/index.ts",
-      name: "@eagleuse-transform-eagle",
+      name: "@eagleuse/transform-eagle",
       fileName: "index",
       formats: ["cjs"],
     },
@@ -23,6 +23,7 @@ export default defineConfig({
         "dotenv",
         "progress",
         "@eagleuse/utils",
+        "@eagleuse/plugin-nsfw",
       ],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
@@ -36,6 +37,7 @@ export default defineConfig({
           dotenv: "dotenv",
           progress: "ProgressBar",
           "@eagleuse/utils": "Utils",
+          "@eagleuse/plugin-nsfw": "NSFW",
         },
       },
     },

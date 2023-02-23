@@ -10,7 +10,7 @@
   "scripts": {
     "db:init": "prisma migrate dev --name init --skip-seed",
     "build": "vite build",
-    "test": "npx jest --config ../../jest.config.ts"
+    "test": "npx jest --config ../../jest.config.ts --watch"
   },
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://github.com/meetqy/eagleuse",
@@ -24,7 +24,8 @@
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
-    "@types/node": "^18.14.0"
+    "@types/node": "^18.14.0",
+    "@eagleuse/plugin-nsfw": "link:../plugin-nsfw"
   },
   "dependencies": {
     "@eagleuse/utils": "link:../utils",
