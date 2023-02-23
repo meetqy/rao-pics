@@ -6,3 +6,5 @@ yarn-*.log
 
 public/swagger.json
 public/library
+
+prisma
