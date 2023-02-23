@@ -19,9 +19,15 @@
     <a href='https://github.com/meetqy/eagleuse/issues/61'>问题合集</a> 
 </p>
 
-# <img src='./public/static/favicon.ico' height="24px" width="24px" /> EagleUse
+额！目前的项目结构开发维护开始有点困难了，sqlite 转换、nsfw、webui、api 等分类有点多。
 
-使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床。
+nextjs 结构有点严格，无法相对合理的进行拆分、管理。
+
+近期大部分的精力会放在"转移到 lerna"上，具体的进度可以切换到 lerna 分支上，main 分支不受任何影响。
+
+# <img src='https://github.com/meetqy/eagleuse/raw/dev/public/static/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
+
+使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
 
 ![eagleuse](https://github.com/meetqy/eagleuse/blob/dev/readme/preview.gif?raw=true)
 
