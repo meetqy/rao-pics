@@ -3,7 +3,7 @@ import watchImage from "./image";
 import watchFloder from "./floder";
 import { logger } from "@eagleuse/utils";
 
-export const transfromEagle = () => {
+export const transformEagle = () => {
   dotenv.config();
   const { LIBRARY } = process.env;
   if (!LIBRARY) throw Error("LIBRARY is null!");

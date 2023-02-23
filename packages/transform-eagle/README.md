@@ -4,7 +4,7 @@ Watch eagle library to sqlite.
 
 ## Install
 
-```shell
+```zsh
 pnpm i prisma @prisma/client @eagleuse/transform-eagle
 
 # mac || linux
@@ -14,20 +14,19 @@ ln -s node_modules/@eagleuse/transform-eagle/prisma
 mklink /j ./prisma ./node_modules/@eagleuse/transform-eagle/prisma
 ```
 
+### Init prisma
+
+```zsh
+# 构建 PrismaClient
+npx prisma generate
+```
+
 ## Usage
 
 **js**
 
 ```js
-const { transfromEagle } = require("@eagleuse/transform-eagle");
-
-transfromEagle();
-```
-
-**esm**
-
-```ts
-import { transfromEagle } from "@eagleuse/transform-eagle";
+const { transformEagle } = require("@eagleuse/transform-eagle");
 
 transfromEagle();
 ```

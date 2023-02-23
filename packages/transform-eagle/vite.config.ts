@@ -8,6 +8,7 @@ export default defineConfig({
       entry: "lib/index.ts",
       name: "@eagleuse-transform-eagle",
       fileName: "index",
+      formats: ["cjs"],
     },
     sourcemap: true,
     rollupOptions: {
