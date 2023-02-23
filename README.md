@@ -19,10 +19,15 @@
     <a href='https://github.com/meetqy/eagleuse/issues/61'>问题合集</a> 
 </p>
 
+# <img src='https://github.com/meetqy/eagleuse/raw/dev/public/static/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
+
+使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
+
+![eagleuse](https://github.com/meetqy/eagleuse/blob/dev/readme/preview.gif?raw=true)
 
 ## 结构
 
-``` shell
+```shell
 - @eagleuse/transform-eagle   # EagleApp => sqlite
 - @eagleuse/api               # 查询API
 - @eagleuse/themes-default    # 默认主题

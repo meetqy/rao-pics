@@ -4,6 +4,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "baseUrl": ".",
+    "esModuleInterop": true,
     "paths": {
       "@eagleuse/utils": ["packages/utils/dist"]
     }

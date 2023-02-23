@@ -8,6 +8,7 @@ export default defineConfig({
       entry: "lib/index.ts",
       name: "@eagleuse-utils",
       fileName: "index",
+      formats: ["cjs"],
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
