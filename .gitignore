@@ -3,3 +3,4 @@ public/library
 .next
 .env
 dist
+*.log
