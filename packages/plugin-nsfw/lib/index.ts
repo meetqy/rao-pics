@@ -6,7 +6,7 @@ import { join } from "path";
 let model: nsfw.NSFWJS;
 
 const getModel = async () => {
-  const file = join(__dirname, "./nsfw_model/model/");
+  const file = join(__dirname, "../nsfw_model/model/");
   if (!model) {
     model = await nsfw.load(`file://${file}`, { size: 299 });
   }

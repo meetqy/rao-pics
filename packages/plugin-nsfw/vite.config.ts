@@ -1,6 +1,13 @@
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 export default defineConfig({
+  plugins: [
+    dts({
+      // 是否跳过类型诊断
+      skipDiagnostics: true,
+    }),
+  ],
   build: {
     lib: {
       entry: "lib/index.ts",

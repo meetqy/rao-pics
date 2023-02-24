@@ -25,11 +25,11 @@
   },
   "files": [
     "dist",
-    "prisma/schema.prisma"
+    "nsfw_model"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/lib/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
