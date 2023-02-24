@@ -13,7 +13,7 @@
     "url": "git+https://github.com/meetqy/eagleuse.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@eagleuse/plugin-nsfw.test.js"
+    "build": "vite build"
   },
   "bugs": {
     "url": "https://github.com/meetqy/eagleuse/issues"
