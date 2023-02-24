@@ -1,6 +1,6 @@
 {
   "name": "@eagleuse/utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "eagleuse common utils library.",
   "keywords": [
     "logger",

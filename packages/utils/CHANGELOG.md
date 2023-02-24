@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/meetqy/eagleuse/compare/@eagleuse/utils@1.0.3...@eagleuse/utils@1.0.4) (2023-02-24)
+
+**Note:** Version bump only for package @eagleuse/utils
+
 ## 1.0.3 (2023-02-22)
 
 ## 1.0.2 (2023-02-22)
