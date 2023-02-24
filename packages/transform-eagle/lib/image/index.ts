@@ -7,6 +7,7 @@ import { logger } from "@eagleuse/utils";
 import ProgressBar from "progress";
 import { Image, Prisma, Tag } from "@prisma/client";
 import TagPrisma from "../tag";
+import { getNSFWMetadata } from "./nsfw";
 
 // 防抖 需要延迟的毫秒数
 const _wait = 3000;
@@ -102,7 +103,7 @@ function getPrismaParams(
   };
 }
 
-const handleImage = () => {
+const handleImage = async () => {
   const prisma = getPrisma();
   if (PendingFiles.value.size < 1) return;
 
@@ -147,61 +148,53 @@ const handleImage = () => {
       return;
     }
 
-    prisma.image
-      .findUnique({
-        where: {
-          id,
-        },
-        include: {
-          tags: true,
-        },
-      })
-      .then(async (image) => {
-        const metadata: EagleUse.Image = readJsonSync(file);
+    const image = await prisma.image.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        tags: true,
+      },
+    });
 
-        if (process.env.PLUGIN_NSFW === "true") {
-          const { default: nsfw } = await import("@eagleuse/plugin-nsfw");
-          const predictions = await nsfw.default(file);
-          predictions
-            .filter((item) => item.probability > 0.35)
-            .forEach((item) => metadata.tags.push(item.className as string));
-          metadata.nsfw = true;
-        }
+    let metadata: EagleUse.Image = readJsonSync(file);
 
-        const data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
+    // nsfw检测
+    if (!image.nsfw) metadata = await getNSFWMetadata(metadata, file);
 
-        // 新增
-        if (!image) {
-          // 使用upsert
-          // 针对: 添加的图片，已经存在当前library中，
-          // Eagle 会弹窗提示是否使用已存在的场景
-          prisma.image
-            .upsert({
-              where: { id },
-              create: data,
-              update: data,
-            })
-            .then(() => PendingFiles.delete(fileItem))
-            .catch((e) => {
-              console.log(data.id, e);
-            });
-          return;
-        }
+    const data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
 
-        // 更新
-        if (Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2) {
-          prisma.image
-            .update({
-              where: {
-                id: data.id,
-              },
-              data,
-            })
-            .then(() => PendingFiles.delete(fileItem));
-        } else {
-          PendingFiles.delete(fileItem);
-        }
-      });
+    // 新增
+    if (!image) {
+      // 使用upsert
+      // 针对: 添加的图片，已经存在当前library中，
+      // Eagle 会弹窗提示是否使用已存在的场景
+      prisma.image
+        .upsert({
+          where: { id },
+          create: data,
+          update: data,
+        })
+        .then(() => PendingFiles.delete(fileItem))
+        .catch((e) => {
+          console.log(data.id, e);
+        });
+      return;
+    }
+
+    // 更新
+    if (Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2) {
+      prisma.image
+        .update({
+          where: {
+            id: data.id,
+          },
+          data,
+        })
+        .then(() => PendingFiles.delete(fileItem));
+    } else {
+      PendingFiles.delete(fileItem);
+    }
   }
 };
 

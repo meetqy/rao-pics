@@ -2,8 +2,16 @@ import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
-  plugins: [dts()],
+  plugins: [
+    dts({
+      // 是否将源码里的 .d.ts 文件复制到 outputDir
+      copyDtsFiles: true,
+      // 是否跳过类型诊断
+      skipDiagnostics: true,
+    }),
+  ],
   build: {
+    target: "es2020",
     lib: {
       entry: "lib/index.ts",
       name: "@eagleuse/transform-eagle",

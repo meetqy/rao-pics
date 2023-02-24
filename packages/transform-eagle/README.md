@@ -14,19 +14,36 @@ ln -s node_modules/@eagleuse/transform-eagle/prisma
 mklink /j ./prisma ./node_modules/@eagleuse/transform-eagle/prisma
 ```
 
-### Init prisma
+## Init prisma
 
 ```zsh
-# 构建 PrismaClient
+# Exist Sqlite Database DB
 npx prisma generate
+
+# Nonexistent Sqlite Database DB
+npx prisma init
 ```
 
 ## Usage
-
-**js**
 
 ```js
 const { transformEagle } = require("@eagleuse/transform-eagle");
 
 transfromEagle();
+```
+
+## Options
+
+.env
+
+```sh
+# "Eagle App" library directory.
+LIBRARY=/Users/qymeet/Pictures/test.library
+
+# Sqlite data directory.
+DATABASE_URL=file:/Users/qymeet/Pictures/test.library/eagleuse.db?connection_limit=1
+
+# Open checked "NSFW", You need install '@eagleuse/plugin-nsfw' package.
+# @default false
+PLUGIN_NSFW=true
 ```
