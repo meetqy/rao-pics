@@ -1,6 +1,6 @@
 let _nsfw;
 
-const getNSFW = () => {
+export const getNSFW = () => {
   if (!_nsfw) {
     _nsfw = require("@eagleuse/plugin-nsfw");
   }

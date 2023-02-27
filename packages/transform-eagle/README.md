@@ -47,3 +47,7 @@ DATABASE_URL=file:/Users/qymeet/Pictures/test.library/eagleuse.db?connection_lim
 # @default false
 PLUGIN_NSFW=true
 ```
+
+## Notice
+
+If sqlite database exist in you local, please use `npx prisma db push`.

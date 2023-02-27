@@ -145,7 +145,14 @@ const handleImage = async () => {
         })
         .then(() => PendingFiles.delete(fileItem));
 
-      return;
+      continue;
+    }
+
+    let metadata: EagleUse.Image = readJsonSync(file);
+
+    if (!["jpg", "png", "webp", "jpeg", "bmp"].includes(metadata.ext.toLocaleLowerCase())) {
+      PendingFiles.delete(fileItem);
+      continue;
     }
 
     const image = await prisma.image.findUnique({
@@ -157,10 +164,8 @@ const handleImage = async () => {
       },
     });
 
-    let metadata: EagleUse.Image = readJsonSync(file);
-
     // nsfw检测
-    if (!image.nsfw) metadata = await getNSFWMetadata(metadata, file);
+    if (!image || !image.nsfw) metadata = await getNSFWMetadata(metadata, file);
 
     const data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
 
@@ -179,11 +184,14 @@ const handleImage = async () => {
         .catch((e) => {
           console.log(data.id, e);
         });
-      return;
+      continue;
     }
 
     // 更新
-    if (Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2) {
+    if (
+      !image.metadataMTime ||
+      Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2
+    ) {
       prisma.image
         .update({
           where: {

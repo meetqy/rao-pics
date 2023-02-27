@@ -20,7 +20,7 @@ model Image {
   width             Int
   height            Int
   // 自定义属性  metadata最后一次修改时间
-  metadataMTime     BigInt   @default(0)
+  metadataMTime     BigInt?  @default(0)
   star              Int?
   palettes          String?
   lastModified      BigInt?
