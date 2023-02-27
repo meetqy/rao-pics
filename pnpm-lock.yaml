@@ -5,7 +5,7 @@ specifiers:
   "@commitlint/cli": ^17.4.1
   "@commitlint/config-conventional": ^17.4.0
   "@eagleuse/plugin-nsfw": ^1.1.0
-  "@eagleuse/transform-eagle": ^1.1.1
+  "@eagleuse/transform-eagle": ^1.1.3
   "@prisma/client": ^4.10.1
   "@tensorflow/tfjs-node": ^4.2.0
   "@types/fs-extra": ^9.0.13
@@ -52,7 +52,7 @@ dependencies:
   "@commitlint/cli": 17.4.1
   "@commitlint/config-conventional": 17.4.0
   "@eagleuse/plugin-nsfw": 1.1.0_encoding@0.1.13
-  "@eagleuse/transform-eagle": 1.1.1
+  "@eagleuse/transform-eagle": 1.1.3
   "@prisma/client": 4.10.1_prisma@4.10.1
   "@types/justified-layout": 4.1.0
   ahooks: 3.7.4_react@18.2.0
@@ -498,10 +498,10 @@ packages:
       - supports-color
     dev: false
 
-  /@eagleuse/transform-eagle/1.1.1:
+  /@eagleuse/transform-eagle/1.1.3:
     resolution:
       {
-        integrity: sha512-Lr0NRR+qNwl5ilpGeGLtaarn/mCnNqgxU/LC4pqd6LQXnp1pH3pl7t+g0r5bJ6M9DrVnjfAjTnJz5FagN2/ujQ==,
+        integrity: sha512-pmbHuqDcmb3RIYLJt5XEjlIPv+96nPFRfWI+8k6zRnWDVjDbKXmY3OBO1zo8u6C94HF1duIR7LxdaUrx3Z9Gww==,
       }
     dependencies:
       "@eagleuse/utils": 1.0.5
