@@ -7,6 +7,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @eagleuse/transform-eagle
 
+## [1.1.1](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.1.0...@eagleuse/transform-eagle@1.1.1) (2023-02-27)
+
+**Note:** Version bump only for package @eagleuse/transform-eagle
+
 # [1.1.0](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.0.10...@eagleuse/transform-eagle@1.1.0) (2023-02-24)
 
 ### Features

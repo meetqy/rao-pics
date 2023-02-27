@@ -7,6 +7,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @eagleuse/utils
 
+## [1.0.5](https://github.com/meetqy/eagleuse/compare/@eagleuse/utils@1.0.4...@eagleuse/utils@1.0.5) (2023-02-27)
+
+**Note:** Version bump only for package @eagleuse/utils
+
 ## [1.0.4](https://github.com/meetqy/eagleuse/compare/@eagleuse/utils@1.0.3...@eagleuse/utils@1.0.4) (2023-02-24)
 
 **Note:** Version bump only for package @eagleuse/utils
