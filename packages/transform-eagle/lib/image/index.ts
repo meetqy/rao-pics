@@ -26,32 +26,42 @@ const isDisconnect = {
 
 // 待处理图片
 const PendingFiles: {
+  readonly temp: Set<string>;
   readonly value: Set<FileItem>;
   add: (fileItem: FileItem) => void;
   delete: (fileItem: FileItem) => void;
 } = {
+  temp: new Set(),
   value: new Set(),
 
   add: (fileItem) => {
-    PendingFiles.value.add(fileItem);
-    _debounce();
+    PendingFiles.temp.add(fileItem.file);
+
+    if (PendingFiles.temp.size > PendingFiles.value.size) {
+      PendingFiles.value.add(fileItem);
+      _debounce();
+    }
   },
 
   delete: (fileItem) => {
     PendingFiles.value.delete(fileItem);
 
-    bar.tick();
+    if (bar) {
+      bar.tick();
 
-    // 本轮 value 清空
-    if (bar.complete) {
-      bar = null;
+      // 本轮 value 清空
+      if (bar.complete) {
+        bar = null;
+        PendingFiles.temp.clear();
+        PendingFiles.value.clear();
 
-      if (isDisconnect.tag) {
-        isDisconnect.tag = false;
-        TagPrisma.clearImageZero();
+        if (isDisconnect.tag) {
+          isDisconnect.tag = false;
+          TagPrisma.clearImageZero();
+        }
+
+        logger.info("Image Complete 🚀");
       }
-
-      logger.info("Image Complete 🚀");
     }
   },
 };
@@ -126,12 +136,16 @@ const handleImage = async () => {
     try {
       mtimeMs = statSync(file).mtimeMs;
     } catch (e) {
-      prisma.image.delete({
-        where: {
-          id,
-        },
-      });
-
+      prisma.image
+        .delete({
+          where: { id },
+        })
+        .catch(() => {
+          // 捕获替换操作异常
+          // 兼容：使用已存在的图片
+          // meta: { cause: 'Record to delete does not exist.' }
+        })
+        .finally(() => PendingFiles.delete(fileItem));
       continue;
     }
 
@@ -144,7 +158,6 @@ const handleImage = async () => {
           where: { id },
         })
         .then(() => PendingFiles.delete(fileItem));
-
       continue;
     }
 
@@ -156,9 +169,7 @@ const handleImage = async () => {
     }
 
     const image = await prisma.image.findUnique({
-      where: {
-        id,
-      },
+      where: { id },
       include: {
         tags: true,
       },
@@ -180,10 +191,7 @@ const handleImage = async () => {
           create: data,
           update: data,
         })
-        .then(() => PendingFiles.delete(fileItem))
-        .catch((e) => {
-          console.log(data.id, e);
-        });
+        .finally(() => PendingFiles.delete(fileItem));
       continue;
     }
 
@@ -194,12 +202,10 @@ const handleImage = async () => {
     ) {
       prisma.image
         .update({
-          where: {
-            id: data.id,
-          },
+          where: { id: data.id },
           data,
         })
-        .then(() => PendingFiles.delete(fileItem));
+        .finally(() => PendingFiles.delete(fileItem));
     } else {
       PendingFiles.delete(fileItem);
     }
