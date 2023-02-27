@@ -1,6 +1,6 @@
 {
   "name": "@eagleuse/transform-eagle",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "transform eagle app library to sqlite.",
   "keywords": [
     "transform",
