@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.1.4...@eagleuse/transform-eagle@1.1.5) (2023-02-27)
+
+**Note:** Version bump only for package @eagleuse/transform-eagle
+
 ## [1.1.4](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.1.3...@eagleuse/transform-eagle@1.1.4) (2023-02-27)
 
 ### Bug Fixes
