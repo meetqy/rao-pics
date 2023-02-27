@@ -5,6 +5,7 @@ import { readJsonSync } from "fs-extra";
 import { Folder } from "@prisma/client";
 import { logger } from "@eagleuse/utils";
 import * as _ from "lodash";
+import { trigger } from "./trigger";
 
 const prisma = getPrisma();
 const _wait = 3000;
@@ -40,6 +41,8 @@ const handleFloder = (file: string) => {
         create: folder,
       })
       .catch((e) => logger.info(e, "Folder error: "));
+
+    trigger();
   });
 };
 

@@ -8,6 +8,7 @@ import ProgressBar from "progress";
 import { Image, Prisma, Tag } from "@prisma/client";
 import TagPrisma from "../tag";
 import { getNSFWMetadata } from "./nsfw";
+import { trigger } from "../trigger";
 
 // 防抖 需要延迟的毫秒数
 const _wait = 3000;
@@ -36,6 +37,7 @@ const PendingFiles: {
 
   add: (fileItem) => {
     PendingFiles.temp.add(fileItem.file);
+    trigger();
 
     if (PendingFiles.temp.size > PendingFiles.value.size) {
       PendingFiles.value.add(fileItem);
@@ -45,6 +47,7 @@ const PendingFiles: {
 
   delete: (fileItem) => {
     PendingFiles.value.delete(fileItem);
+    trigger();
 
     if (bar) {
       bar.tick();
