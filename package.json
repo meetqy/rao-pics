@@ -5,7 +5,7 @@
     "prepare": "husky install",
     "commit": "git-cz",
     "build": "lerna run build",
-    "release:next": "pnpm build && HUSKY_SKIP_HOOKS=1 lerna publish --conventional-commits",
+    "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits",
     "prerelease": "pnpm build",
     "test": "lerna run test"
   },
