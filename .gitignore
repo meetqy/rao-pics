@@ -1,6 +1,6 @@
 node_modules
 public/library
 .next
-.env
+**/.env
 dist
 *.log
