@@ -19,4 +19,3 @@ export const transformEagle = async () => {
   watchFloder(LIBRARY);
   watchImage(LIBRARY);
 };
-transformEagle();
