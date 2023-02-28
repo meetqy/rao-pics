@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.1.5...@eagleuse/transform-eagle@1.1.6) (2023-02-28)
+
+### Bug Fixes
+
+- 🐛 folder 删除无效 ([95133d3](https://github.com/meetqy/eagleuse/commit/95133d3d2d5a283d4966c926abcc5e32a170ff1d))
+- 🐛 starredTags ([ad9dc83](https://github.com/meetqy/eagleuse/commit/ad9dc83a1ab0d7608606bdcc8bc3cbb117e0d855))
+- 🐛 tagsGroups ([6e74e09](https://github.com/meetqy/eagleuse/commit/6e74e0974d324155007bfa851c05a40957802763))
+
 ## [1.1.5](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.1.4...@eagleuse/transform-eagle@1.1.5) (2023-02-27)
 
 **Note:** Version bump only for package @eagleuse/transform-eagle
