@@ -38,13 +38,13 @@ const deleteUnnecessary = (localTagsGroup: EagleUse.TagsGroupsItem[]) => {
         },
       },
     })
-    .then((folders) => {
-      if (folders && folders.length > 0) {
+    .then((tagsGroups) => {
+      if (tagsGroups && tagsGroups.length > 0) {
         prisma.tagsGroups
           .deleteMany({
             where: {
               id: {
-                in: folders.map((item) => item.id),
+                in: tagsGroups.map((item) => item.id),
               },
             },
           })

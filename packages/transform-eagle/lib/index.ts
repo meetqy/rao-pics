@@ -3,6 +3,7 @@ import watchImage from "./image";
 import watchMetadata from "./metadata";
 import { logger } from "@eagleuse/utils";
 import { getNSFW } from "./image/nsfw";
+import watchStarredTags from "./starred-tags";
 
 export const transformEagle = async () => {
   dotenv.config();
@@ -17,5 +18,6 @@ export const transformEagle = async () => {
   }
 
   watchMetadata(LIBRARY);
+  watchStarredTags(LIBRARY);
   watchImage(LIBRARY);
 };
