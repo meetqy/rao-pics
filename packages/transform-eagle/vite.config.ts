@@ -8,6 +8,8 @@ export default defineConfig({
       copyDtsFiles: true,
       // 是否跳过类型诊断
       skipDiagnostics: true,
+      // 是否生成类型声明入口
+      insertTypesEntry: true,
     }),
   ],
   build: {

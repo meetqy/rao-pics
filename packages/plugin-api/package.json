@@ -1,0 +1,40 @@
+{
+  "name": "@eagleuse/plugin-api",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "meetqy <meetqy@qq.com>",
+  "homepage": "https://rao.pics",
+  "license": "MIT",
+  "main": "lib/plugin-api.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmmirror.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meetqy/eagleuse.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/@eagleuse/plugin-api.test.js",
+    "dev": "nodemon"
+  },
+  "bugs": {
+    "url": "https://github.com/meetqy/eagleuse/issues"
+  },
+  "dependencies": {
+    "@eagleuse/transform-eagle": "link:../transform-eagle",
+    "@eagleuse/utils": "link:../utils",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.14.0",
+    "nodemon": "^2.0.20"
+  }
+}

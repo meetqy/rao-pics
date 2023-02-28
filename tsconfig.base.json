@@ -6,8 +6,9 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "paths": {
+      "@eagleuse/transform-eagle": ["packages/transform-eagle/dist"],
       "@eagleuse/utils": ["packages/utils/dist"],
-      "@eagleuse/plugin-nsfw": ["packages/utils/plugin-nsfw"]
+      "@eagleuse/plugin-nsfw": ["packages/utils/plugin-nsfw/dist"]
     }
   },
   "include": ["packages/**/*.ts"],
