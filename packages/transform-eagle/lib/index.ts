@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import watchImage from "./image";
-import watchFloder from "./floder";
+import watchFloder from "./folder";
 import { logger } from "@eagleuse/utils";
 import { getNSFW } from "./image/nsfw";
 

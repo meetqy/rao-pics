@@ -29,7 +29,7 @@ const demotionFolder = (folders: EagleUse.Folder[]): Folder[] => {
   return newFolders;
 };
 
-const handleFloder = (file: string) => {
+const handleFloder = async (file: string) => {
   const json = readJsonSync(file);
   const folders = demotionFolder(json["folders"]);
 
@@ -44,6 +44,38 @@ const handleFloder = (file: string) => {
 
     trigger();
   });
+
+  deleteUnnecessary(folders);
+};
+
+const deleteUnnecessary = (localFolder: Folder[]) => {
+  prisma.folder
+    .findMany({
+      where: {
+        id: {
+          notIn: localFolder.map((item) => item.id),
+        },
+      },
+    })
+    .then((folders) => {
+      if (folders && folders.length > 0) {
+        prisma.folder
+          .deleteMany({
+            where: {
+              id: {
+                in: folders.map((item) => item.id),
+              },
+            },
+          })
+          .then((res) => {
+            logger.debug(res, "Delete unnecessary folder: ");
+          })
+          .catch((e) => {
+            logger.error(e, "Delete unnecessary folder");
+          });
+      }
+    });
+  trigger();
 };
 
 const _debounce = _.debounce(handleFloder, _wait);
