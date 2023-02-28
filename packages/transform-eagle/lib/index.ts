@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import watchImage from "./image";
-import watchFloder from "./folder";
+import watchMetadata from "./metadata";
 import { logger } from "@eagleuse/utils";
 import { getNSFW } from "./image/nsfw";
 
@@ -16,6 +16,6 @@ export const transformEagle = async () => {
     logger.info("Complete init nsfw.");
   }
 
-  watchFloder(LIBRARY);
+  watchMetadata(LIBRARY);
   watchImage(LIBRARY);
 };

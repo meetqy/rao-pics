@@ -1,14 +1,9 @@
-import { join } from "path";
-import * as chokidar from "chokidar";
-import { getPrisma } from "./prisma";
-import { readJsonSync } from "fs-extra";
+import { getPrisma } from "../prisma";
 import { Folder } from "@prisma/client";
 import { logger } from "@eagleuse/utils";
-import * as _ from "lodash";
-import { trigger } from "./trigger";
+import { trigger } from "../trigger";
 
 const prisma = getPrisma();
-const _wait = 3000;
 
 // 多级嵌套转为一级
 const demotionFolder = (folders: EagleUse.Folder[]): Folder[] => {
@@ -29,9 +24,8 @@ const demotionFolder = (folders: EagleUse.Folder[]): Folder[] => {
   return newFolders;
 };
 
-const handleFloder = async (file: string) => {
-  const json = readJsonSync(file);
-  const folders = demotionFolder(json["folders"]);
+export const handleFloder = async (metadataFolders: EagleUse.Folder[]) => {
+  const folders = demotionFolder(metadataFolders);
 
   folders.forEach((folder) => {
     prisma.folder
@@ -67,23 +61,10 @@ const deleteUnnecessary = (localFolder: Folder[]) => {
               },
             },
           })
-          .then((res) => {
-            logger.debug(res, "Delete unnecessary folder: ");
-          })
           .catch((e) => {
-            logger.error(e, "Delete unnecessary folder");
+            logger.error(e, "Delete folder error: ");
           });
       }
     });
   trigger();
 };
-
-const _debounce = _.debounce(handleFloder, _wait);
-
-const watchFloder = (LIBRARY: string) => {
-  const file = join(LIBRARY, "./metadata.json");
-
-  chokidar.watch(file).on("add", _debounce).on("change", _debounce);
-};
-
-export default watchFloder;

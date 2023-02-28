@@ -69,7 +69,7 @@ declare namespace EagleUse {
     id: string;
     name: string;
     color?: string;
-    tags: Tag[];
+    tags: (Tag | string)[];
   }
 
   export interface SearchParams {
