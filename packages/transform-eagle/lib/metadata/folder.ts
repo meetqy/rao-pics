@@ -1,7 +1,6 @@
-import { getPrisma } from "../prisma";
-import { Folder } from "@prisma/client";
 import { logger } from "@eagleuse/utils";
 import { trigger } from "../trigger";
+import { getPrisma, Folder } from "@eagleuse/prisma-client";
 
 const prisma = getPrisma();
 

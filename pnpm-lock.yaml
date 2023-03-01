@@ -47,14 +47,14 @@ importers:
 
   packages/plugin-api:
     specifiers:
-      "@eagleuse/transform-eagle": link:../transform-eagle
+      "@eagleuse/prisma-client": link:../prisma-client
       "@eagleuse/utils": link:../utils
       "@types/express": ^4.17.17
       "@types/node": ^18.14.0
       express: ^4.18.2
       nodemon: ^2.0.20
     dependencies:
-      "@eagleuse/transform-eagle": link:../transform-eagle
+      "@eagleuse/prisma-client": link:../prisma-client
       "@eagleuse/utils": link:../utils
       express: 4.18.2
     devDependencies:
@@ -72,11 +72,19 @@ importers:
       fs-extra: 11.1.0
       nsfwjs: 2.4.2
 
+  packages/prisma-client:
+    specifiers:
+      "@prisma/client": ^4.10.1
+      prisma: ^4.10.1
+    dependencies:
+      "@prisma/client": 4.10.1_prisma@4.10.1
+      prisma: 4.10.1
+
   packages/transform-eagle:
     specifiers:
       "@eagleuse/plugin-nsfw": link:../plugin-nsfw
+      "@eagleuse/prisma-client": link:../prisma-client
       "@eagleuse/utils": link:../utils
-      "@prisma/client": ^4.10.1
       "@types/fs-extra": ^11.0.1
       "@types/lodash": ^4.14.191
       "@types/node": ^18.14.0
@@ -84,16 +92,14 @@ importers:
       dotenv: ^16.0.3
       fs-extra: ^11.1.0
       lodash: ^4.17.21
-      prisma: ^4.10.1
       progress: ^2.0.3
     dependencies:
+      "@eagleuse/prisma-client": link:../prisma-client
       "@eagleuse/utils": link:../utils
-      "@prisma/client": 4.10.1_prisma@4.10.1
       chokidar: 3.5.3
       dotenv: 16.0.3
       fs-extra: 11.1.0
       lodash: 4.17.21
-      prisma: 4.10.1
       progress: 2.0.3
     devDependencies:
       "@eagleuse/plugin-nsfw": link:../plugin-nsfw

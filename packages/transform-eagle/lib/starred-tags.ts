@@ -3,7 +3,7 @@ import * as chokidar from "chokidar";
 import _ from "lodash";
 import { readJsonSync } from "fs-extra";
 import { logger } from "@eagleuse/utils";
-import { getPrisma } from "./prisma";
+import { getPrisma } from "@eagleuse/prisma-client";
 import { trigger } from "./trigger";
 
 const prisma = getPrisma();

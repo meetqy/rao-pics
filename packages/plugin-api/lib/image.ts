@@ -1,4 +1,4 @@
-import { getPrisma } from "@eagleuse/transform-eagle";
+import { getPrisma } from "@eagleuse/prisma-client";
 import express from "express";
 import { handleInclude, handleOrderBy } from "./utils";
 

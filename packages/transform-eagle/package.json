@@ -29,12 +29,11 @@
   },
   "dependencies": {
     "@eagleuse/utils": "link:../utils",
-    "@prisma/client": "^4.10.1",
+    "@eagleuse/prisma-client": "link:../prisma-client",
     "chokidar": "^3.5.3",
     "dotenv": "^16.0.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
-    "prisma": "^4.10.1",
     "progress": "^2.0.3"
   },
   "files": [
