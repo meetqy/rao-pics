@@ -18,7 +18,7 @@
     "prisma"
   ],
   "publishConfig": {
-    "registry": "http://registry.npmmirror.com/"
+    "access": "public"
   },
   "repository": {
     "type": "git",
@@ -43,5 +43,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
-  }
+  },
+  "gitHead": "90d70b524804295a65079e065f1edc16cc70833b"
 }

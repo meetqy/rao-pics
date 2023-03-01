@@ -22,15 +22,15 @@
     "access": "public"
   },
   "devDependencies": {
-    "@eagleuse/plugin-api": "link:../plugin-api",
-    "@eagleuse/plugin-nsfw": "link:../plugin-nsfw",
+    "@eagleuse/plugin-api": "^1.0.1",
+    "@eagleuse/plugin-nsfw": "^1.1.0",
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.0"
   },
   "dependencies": {
-    "@eagleuse/prisma-client": "link:../prisma-client",
-    "@eagleuse/utils": "link:../utils",
+    "@eagleuse/prisma-client": "^1.0.1",
+    "@eagleuse/utils": "^1.0.5",
     "chokidar": "^3.5.3",
     "dotenv": "^16.0.3",
     "fs-extra": "^11.1.0",
@@ -48,5 +48,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
-  }
+  },
+  "gitHead": "90d70b524804295a65079e065f1edc16cc70833b"
 }
