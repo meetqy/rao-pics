@@ -1,6 +1,7 @@
 {
   "name": "eagleuse-monorepo",
   "private": true,
+  "version": "1.0.0",
   "scripts": {
     "prepare": "husky install",
     "commit": "git-cz",
