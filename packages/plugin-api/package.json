@@ -22,7 +22,8 @@
   },
   "scripts": {
     "test": "node ./__tests__/@eagleuse/plugin-api.test.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "build": "vite build"
   },
   "bugs": {
     "url": "https://github.com/meetqy/eagleuse/issues"
