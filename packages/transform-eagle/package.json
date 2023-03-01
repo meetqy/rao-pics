@@ -37,8 +37,7 @@
     "progress": "^2.0.3"
   },
   "files": [
-    "dist",
-    "prisma/schema.prisma"
+    "dist"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",

@@ -14,7 +14,8 @@
     "test": "__tests__"
   },
   "files": [
-    "dist"
+    "dist",
+    "prisma"
   ],
   "publishConfig": {
     "registry": "http://registry.npmmirror.com/"
