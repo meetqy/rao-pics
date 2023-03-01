@@ -43,7 +43,6 @@
     "fastify": "^4.13.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.17",
     "@types/node": "^18.14.0",
     "nodemon": "^2.0.20"
   },

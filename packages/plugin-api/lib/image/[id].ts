@@ -19,6 +19,8 @@ export const id = async (fastify: FastifyInstance, prisma: PrismaClient) => {
         const { include } = req.query;
         let result = undefined;
 
+        if (!include) return done();
+
         if (!/^((_count|tags|folders)(,?))+$/g.test(include) || include.endsWith(",")) {
           result = new Error(`Include is '_count,tags,folders'.`);
         }
