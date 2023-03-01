@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@eagleuse/plugin-nsfw": "link:../plugin-nsfw",
+    "@eagleuse/plugin-api": "link:../plugin-api",
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.0"

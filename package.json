@@ -6,6 +6,7 @@
     "commit": "git-cz",
     "build": "lerna run build",
     "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits",
+    "release:next-beta": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --canary",
     "prerelease": "pnpm build",
     "test": "lerna run test"
   },
