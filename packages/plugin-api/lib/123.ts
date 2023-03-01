@@ -1,4 +1,4 @@
-import { getPrisma } from "@eagleuse/prisma-client";
+import { Prisma, getPrisma } from "@eagleuse/prisma-client";
 import express from "express";
 import { handleInclude, handleOrderBy } from "./utils";
 
@@ -8,6 +8,12 @@ const prisma = getPrisma();
 BigInt.prototype["toJSON"] = function () {
   return Number(this);
 };
+
+interface Query {
+  where?: Prisma.ImageWhereInput;
+  include?: Prisma.ImageInclude;
+  orderBy?: object;
+}
 
 /**
  * @include _count,tags,folders  eg: include=tags,folders
@@ -19,17 +25,29 @@ router.get("/image", async (req, res) => {
   const { include, orderBy } = req.query;
   const page = Number(req.query.page || 1);
   const pageSize = Number(req.query.pageSize || 50);
+  const { where } = req.query as Query;
 
   try {
-    const result = await prisma.image.findMany({
-      where: {},
-      include: handleInclude(include as string),
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-      orderBy: handleOrderBy(orderBy as string),
-    });
+    const [result, count] = await prisma.$transaction([
+      prisma.image.findMany({
+        where: where,
+        include: handleInclude(include as string),
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: handleOrderBy(orderBy as string),
+      }),
+      prisma.image.count({
+        where: where,
+      }),
+    ]);
 
-    res.json(result);
+    res.json({
+      result,
+      count,
+      page,
+      pageSize,
+      where: where || null,
+    });
   } catch (e) {
     res.json({
       code: 400,

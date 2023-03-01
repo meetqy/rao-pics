@@ -1,4 +1,6 @@
-export const handleInclude = (include: string) => {
+import { Prisma } from "@eagleuse/prisma-client";
+
+export const handleInclude = (include: string): Prisma.ImageInclude => {
   if (!include) return null;
 
   const json = {};
@@ -11,6 +13,7 @@ export const handleInclude = (include: string) => {
 };
 
 export const handleOrderBy = (orderBy: string) => {
+  if (!orderBy) return { btime: "asc" };
   const json = {};
 
   const [k, v] = orderBy.split(",");

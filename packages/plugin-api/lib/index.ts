@@ -1,15 +1,24 @@
-import { logger } from "@eagleuse/utils";
-import express from "express";
-import imageRouter from "./image";
+import Fastify from "fastify";
+import image from "./image";
 
 const PLUGIN_API = () => {
-  const app = express();
+  BigInt.prototype["toJSON"] = function () {
+    return Number(this);
+  };
 
-  app.use(imageRouter);
+  const fastify = Fastify({
+    logger: true,
+  });
 
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    logger.info(`Visit: http://localhost:${PORT}`);
+  fastify.register(image);
+
+  fastify.listen({ port: +process.env.PORT || 3000 }, function (err, address) {
+    if (err) {
+      fastify.log.error(err);
+      process.exit(1);
+    }
+
+    fastify.log.info(`Server is now listening on ${address}`);
   });
 };
 
