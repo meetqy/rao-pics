@@ -14,6 +14,15 @@ const nextConfig = {
     // 菜单是否显示回收站
     showTrash: process.env.SHOW_TRASH === "true",
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api/image/:path*",
+        destination: "http://localhost:3002/:path*",
+      },
+    ];
+  },
 };
 
 nextConfig.images = {

@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { countState, LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
+import { HOST } from "@/hooks";
 
 interface Params {
   page: number;
@@ -20,10 +21,12 @@ function getLoadMoreList(params: Params): Promise<Result> {
   const { page, pageSize } = params;
 
   return new Promise((resolve) => {
-    fetch(`/api/image?page=${page}&pageSize=${pageSize}`, {
+    fetch(`${HOST}/api/image?page=${page}&pageSize=${pageSize}`, {
       method: "post",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        isDeleted: true,
+        where: { isDeleted: true },
+        orderBy: { modificationTime: "desc" },
       }),
     })
       .then((res) => res.json())

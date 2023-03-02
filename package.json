@@ -23,9 +23,9 @@
   "homepage": "https://github.com/meetqy/eagleuse#readme",
   "author": "meetqy",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development npm run create:symlink && npm run db:watch & next",
     "build": "npm run create:symlink && npm run db:generate && next build",
     "start": "next start --port 9623",
+    "setup": "cross-env PORT=3002 ts-node setup.ts",
     "db:init": "prisma migrate dev --name init --skip-seed",
     "db:watch": "prisma db seed",
     "db:preview": "prisma studio",
@@ -41,7 +41,8 @@
     "@commitlint/cli": "^17.4.1",
     "@commitlint/config-conventional": "^17.4.0",
     "@eagleuse/plugin-nsfw": "^1.1.0",
-    "@eagleuse/transform-eagle": "^1.1.5",
+    "@eagleuse/transform-eagle": "link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/transform-eagle",
+    "@eagleuse/plugin-api": "link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/plugin-api",
     "@prisma/client": "^4.10.1",
     "@types/justified-layout": "^4.1.0",
     "ahooks": "^3.7.4",
@@ -64,6 +65,7 @@
     "standard-version": "^9.5.0"
   },
   "devDependencies": {
+    "@eagleuse/prisma-client": "link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/prisma-client",
     "@tensorflow/tfjs-node": "^4.2.0",
     "@types/fs-extra": "^9.0.13",
     "@types/lodash": "^4.14.191",

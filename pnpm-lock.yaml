@@ -4,8 +4,10 @@ specifiers:
   "@ant-design/icons": ^4.8.0
   "@commitlint/cli": ^17.4.1
   "@commitlint/config-conventional": ^17.4.0
+  "@eagleuse/plugin-api": link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/plugin-api
   "@eagleuse/plugin-nsfw": ^1.1.0
-  "@eagleuse/transform-eagle": ^1.1.5
+  "@eagleuse/prisma-client": link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/prisma-client
+  "@eagleuse/transform-eagle": link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/transform-eagle
   "@prisma/client": ^4.10.1
   "@tensorflow/tfjs-node": ^4.2.0
   "@types/fs-extra": ^9.0.13
@@ -51,8 +53,9 @@ dependencies:
   "@ant-design/icons": 4.8.0_biqbaboplfbrettd7655fr4n2y
   "@commitlint/cli": 17.4.1
   "@commitlint/config-conventional": 17.4.0
+  "@eagleuse/plugin-api": link:../eagleuse-lerna/packages/plugin-api
   "@eagleuse/plugin-nsfw": 1.1.0_encoding@0.1.13
-  "@eagleuse/transform-eagle": 1.1.5
+  "@eagleuse/transform-eagle": link:../eagleuse-lerna/packages/transform-eagle
   "@prisma/client": 4.10.1_prisma@4.10.1
   "@types/justified-layout": 4.1.0
   ahooks: 3.7.4_react@18.2.0
@@ -75,6 +78,7 @@ dependencies:
   standard-version: 9.5.0
 
 devDependencies:
+  "@eagleuse/prisma-client": link:../eagleuse-lerna/packages/prisma-client
   "@tensorflow/tfjs-node": 4.2.0_encoding@0.1.13
   "@types/fs-extra": 9.0.13
   "@types/lodash": 4.14.191
@@ -496,32 +500,6 @@ packages:
       - encoding
       - seedrandom
       - supports-color
-    dev: false
-
-  /@eagleuse/transform-eagle/1.1.5:
-    resolution:
-      {
-        integrity: sha512-0FXYPOr81ApaSB2r+s2gwSV6VBVwUSq4MQVaaLbkZjohtTHkgBoQFOABmcMzuTPxICtCp8uXnk+fdM3nKp4oUw==,
-      }
-    dependencies:
-      "@eagleuse/utils": 1.0.5
-      "@prisma/client": 4.10.1_prisma@4.10.1
-      chokidar: 3.5.3
-      dotenv: 16.0.3
-      fs-extra: 11.1.0
-      lodash: 4.17.21
-      prisma: 4.10.1
-      progress: 2.0.3
-    dev: false
-
-  /@eagleuse/utils/1.0.5:
-    resolution:
-      {
-        integrity: sha512-gUg+XhtZ9frJJAdku5AxuhHgjorMv1ynZ+N/3nlML4/Q0AVdcIV5DyC2C+q3dSZHXi74LbOzAvofE2iOughExA==,
-      }
-    dependencies:
-      pino: 8.11.0
-      pino-pretty: 9.4.0
     dev: false
 
   /@emotion/hash/0.8.0:
@@ -3042,6 +3020,7 @@ packages:
         integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==,
       }
     engines: { node: ">=12" }
+    dev: true
 
   /dotgitignore/2.1.0:
     resolution:
@@ -3736,13 +3715,6 @@ packages:
     resolution:
       {
         integrity: sha512-4HzS+9pQ5Yxtv13Lhs1Z1unMXamBdn5nA4bEi1abYpDNSpSp7ODYQ1KPMF6nTatfEzgH6/zPvXKU1zvHiUjWlA==,
-      }
-    dev: false
-
-  /fast-copy/3.0.1:
-    resolution:
-      {
-        integrity: sha512-Knr7NOtK3HWRYGtHoJrjkaWepqT8thIVGAwt0p0aUs1zqkAzXZV4vo9fFNwyb5fcqK1GKYFYxldQdIDVKhUAfA==,
       }
     dev: false
 
@@ -5951,13 +5923,6 @@ packages:
         integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==,
       }
 
-  /minimist/1.2.8:
-    resolution:
-      {
-        integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==,
-      }
-    dev: false
-
   /minipass/2.9.0:
     resolution:
       {
@@ -6734,54 +6699,11 @@ packages:
       strip-json-comments: 3.1.1
     dev: false
 
-  /pino-pretty/9.4.0:
-    resolution:
-      {
-        integrity: sha512-NIudkNLxnl7MGj1XkvsqVyRgo6meFP82ECXF2PlOI+9ghmbGuBUUqKJ7IZPIxpJw4vhhSva0IuiDSAuGh6TV9g==,
-      }
-    hasBin: true
-    dependencies:
-      colorette: 2.0.19
-      dateformat: 4.6.3
-      fast-copy: 3.0.1
-      fast-safe-stringify: 2.1.1
-      help-me: 4.2.0
-      joycon: 3.1.1
-      minimist: 1.2.8
-      on-exit-leak-free: 2.1.0
-      pino-abstract-transport: 1.0.0
-      pump: 3.0.0
-      readable-stream: 4.3.0
-      secure-json-parse: 2.7.0
-      sonic-boom: 3.2.1
-      strip-json-comments: 3.1.1
-    dev: false
-
   /pino-std-serializers/6.1.0:
     resolution:
       {
         integrity: sha512-KO0m2f1HkrPe9S0ldjx7za9BJjeHqBku5Ch8JyxETxT8dEFGz1PwgrHaOQupVYitpzbFSYm7nnljxD8dik2c+g==,
       }
-    dev: false
-
-  /pino/8.11.0:
-    resolution:
-      {
-        integrity: sha512-Z2eKSvlrl2rH8p5eveNUnTdd4AjJk8tAsLkHYZQKGHP4WTh2Gi1cOSOs3eWPqaj+niS3gj4UkoreoaWgF3ZWYg==,
-      }
-    hasBin: true
-    dependencies:
-      atomic-sleep: 1.0.0
-      fast-redact: 3.1.2
-      on-exit-leak-free: 2.1.0
-      pino-abstract-transport: 1.0.0
-      pino-std-serializers: 6.1.0
-      process-warning: 2.1.0
-      quick-format-unescaped: 4.0.4
-      real-require: 0.2.0
-      safe-stable-stringify: 2.4.2
-      sonic-boom: 3.2.1
-      thread-stream: 2.3.0
     dev: false
 
   /pino/8.8.0:
