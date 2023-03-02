@@ -11,7 +11,10 @@ export const handleTagsGroups = (localTagsGroups: EagleUse.TagsGroupsItem[]) => 
     const data = {
       ...item,
       tags: {
-        connect: tags.map((tag) => ({ id: tag })),
+        connectOrCreate: tags.map((tag) => ({
+          where: { id: tag },
+          create: { id: tag, name: tag },
+        })),
       },
     };
 

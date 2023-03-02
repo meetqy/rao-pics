@@ -62,7 +62,9 @@ const _debounce = _.debounce(handleStarredTags, _wait);
 const watchStarredTags = (LIBRARY: string) => {
   const file = join(LIBRARY, "./tags.json");
 
-  chokidar.watch(file).on("add", _debounce).on("change", _debounce);
+  return new Promise((resolve) => {
+    return chokidar.watch(file).on("add", _debounce).on("change", _debounce).on("ready", resolve);
+  });
 };
 
 export default watchStarredTags;

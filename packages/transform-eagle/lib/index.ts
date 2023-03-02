@@ -17,7 +17,11 @@ export const transformEagle = async () => {
 
   logger.info("Start transform 🛫");
 
-  watchMetadata(LIBRARY);
-  watchStarredTags(LIBRARY);
-  watchImage(LIBRARY);
+  await watchMetadata(LIBRARY);
+  await watchStarredTags(LIBRARY);
+
+  // 延迟一个 wait 时间
+  setTimeout(() => {
+    watchImage(LIBRARY);
+  }, 5000);
 };
