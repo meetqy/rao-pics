@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
+  publicDir: false,
   plugins: [
     dts({
       // 是否将源码里的 .d.ts 文件复制到 outputDir
