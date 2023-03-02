@@ -86,7 +86,7 @@ importers:
 
   packages/transform-eagle:
     specifiers:
-      "@eagleuse/plugin-api": ^1.0.2
+      "@eagleuse/plugin-api": ^1.0.3
       "@eagleuse/plugin-nsfw": ^1.1.0
       "@eagleuse/prisma-client": ^1.0.2
       "@eagleuse/utils": ^1.0.5
