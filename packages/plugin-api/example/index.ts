@@ -1,3 +1,5 @@
 import PLUGIN_API from "../lib";
 
-PLUGIN_API();
+(async () => {
+  PLUGIN_API("/Users/qymeet/Pictures/test.library/images");
+})();

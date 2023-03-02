@@ -1,13 +1,24 @@
 import Fastify from "fastify";
+import fastifyStatic from "@fastify/static";
 import image from "./image";
+import { createSymlink } from "./script";
+import { join } from "path";
 
-const PLUGIN_API = () => {
+const PLUGIN_API = async (library: string) => {
   BigInt.prototype["toJSON"] = function () {
     return Number(this);
   };
 
+  await createSymlink(library);
+
   const fastify = Fastify({
     logger: true,
+  });
+
+  // 静态资源管理
+  fastify.register(fastifyStatic, {
+    root: join(__dirname, "../public/library"),
+    prefix: "/public/",
   });
 
   fastify.register(image);

@@ -7,6 +7,7 @@
   "license": "MIT",
   "directories": {
     "lib": "lib",
+    "script": "script",
     "test": "__tests__"
   },
   "files": [
@@ -29,7 +30,6 @@
     "url": "git+https://github.com/meetqy/eagleuse.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@eagleuse/plugin-api.test.js",
     "dev": "PORT=3002 nodemon",
     "build": "vite build"
   },
@@ -39,11 +39,12 @@
   "dependencies": {
     "@eagleuse/prisma-client": "^1.0.1",
     "@eagleuse/utils": "^1.0.5",
-    "express": "^4.18.2",
-    "fastify": "^4.13.0"
+    "@fastify/static": "^6.9.0",
+    "fastify": "^4.13.0",
+    "fs-extra": "^11.1.0"
   },
   "devDependencies": {
-    "@types/node": "^18.14.0",
+    "@types/node": "^18.14.2",
     "nodemon": "^2.0.20"
   },
   "gitHead": "90d70b524804295a65079e065f1edc16cc70833b"
