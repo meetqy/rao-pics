@@ -3,6 +3,7 @@ import fastifyStatic from "@fastify/static";
 import image from "./image";
 import { createSymlink } from "./script";
 import { join } from "path";
+import cors from "@fastify/cors";
 
 const PLUGIN_API = async (library: string) => {
   BigInt.prototype["toJSON"] = function () {
@@ -16,12 +17,15 @@ const PLUGIN_API = async (library: string) => {
   });
 
   // 静态资源管理
-  fastify.register(fastifyStatic, {
+  await fastify.register(fastifyStatic, {
     root: join(__dirname, "../public/library"),
     prefix: "/public/",
   });
 
-  fastify.register(image);
+  await fastify.register(cors, {});
+
+  // api
+  fastify.register(image, { prefix: "/api" });
 
   fastify.listen({ port: +process.env.PORT || 3000 }, function (err, address) {
     if (err) {

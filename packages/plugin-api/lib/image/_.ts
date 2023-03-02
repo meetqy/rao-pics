@@ -13,28 +13,31 @@ export const _ = async (fastify: FastifyInstance, prisma: PrismaClient) => {
       where?: Prisma.ImageWhereInput;
     };
   }>("/image", async (req) => {
-    const { orderBy, include, where } = req.body;
-    const { page = 1, pageSize = 20 } = req.query;
+    const { orderBy, include, where } = req.body || {};
+    const page = +req.query.page || 1;
+    const pageSize = +req.query.pageSize || 20;
 
-    const [result, count, sum] = await prisma.$transaction([
-      prisma.image.findMany({
-        where,
-        include,
-        orderBy,
-        skip: (page - 1) * pageSize,
-        take: pageSize,
-      }),
+    const json: Prisma.ImageFindManyArgs = {
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    };
+    if (orderBy) json.orderBy = orderBy;
+    if (include) json.include = include;
+    if (where) json.where = where;
+
+    const [data, count, sum] = await prisma.$transaction([
+      prisma.image.findMany(json),
       prisma.image.count({
-        where,
+        where: json.where,
       }),
       prisma.image.aggregate({
-        where,
+        where: json.where,
         _sum: {
           size: true,
         },
       }),
     ]);
 
-    return { result, count, ...sum._sum, include, where };
+    return { data, count, ...sum._sum, rule: json, page, pageSize };
   });
 };

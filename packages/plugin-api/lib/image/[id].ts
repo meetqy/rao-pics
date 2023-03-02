@@ -13,7 +13,7 @@ export const id = async (fastify: FastifyInstance, prisma: PrismaClient) => {
       include?: string;
     };
   }>(
-    "/image/:id",
+    "image/:id",
     {
       preValidation: (req, reply, done) => {
         const { include } = req.query;
