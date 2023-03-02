@@ -159,6 +159,7 @@ const handleImage = async () => {
         .delete({
           where: { id },
         })
+        .catch()
         .then(() => PendingFiles.delete(fileItem));
       continue;
     }
@@ -193,6 +194,7 @@ const handleImage = async () => {
           create: data,
           update: data,
         })
+        .catch((e) => logger.error(e, `Image upsert error(${id}): `))
         .finally(() => PendingFiles.delete(fileItem));
       continue;
     }

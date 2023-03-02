@@ -13,9 +13,7 @@ const PLUGIN_API = async (library: string) => {
 
   await createSymlink(library);
 
-  const fastify = Fastify({
-    logger: true,
-  });
+  const fastify = Fastify();
 
   // 静态资源管理
   await fastify.register(fastifyStatic, {

@@ -1,11 +1,9 @@
 # `@eagleuse/prisma-client`
 
-> TODO: description
+## Useage
 
-## Usage
-
+```shell
+npx prisma migrate dev --name init
 ```
-const prismaClient = require('@eagleuse/prisma-client');
 
-// TODO: DEMONSTRATE API
-```
+If sqlite database exist in you local, please use `npx prisma db push`.
