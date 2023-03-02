@@ -4,6 +4,7 @@ import image from "./image";
 import { createSymlink } from "./script";
 import { join } from "path";
 import cors from "@fastify/cors";
+import { random } from "./random";
 
 const PLUGIN_API = async (library: string) => {
   BigInt.prototype["toJSON"] = function () {
@@ -26,6 +27,9 @@ const PLUGIN_API = async (library: string) => {
 
   // api
   fastify.register(image, { prefix: "/api" });
+
+  // random image
+  fastify.register(random);
 
   fastify.listen({ port: +process.env.PORT || 3000 }, function (err, address) {
     if (err) {

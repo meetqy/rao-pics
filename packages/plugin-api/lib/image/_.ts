@@ -38,6 +38,6 @@ export const _ = async (fastify: FastifyInstance, prisma: PrismaClient) => {
       }),
     ]);
 
-    return { data, count, ...sum._sum, rule: json, page, pageSize };
+    return { data, count, ...sum._sum, args: json, page, pageSize };
   });
 };
