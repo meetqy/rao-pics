@@ -1,6 +1,6 @@
 {
   "name": "@eagleuse/transform-eagle",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "transform eagle app library to sqlite.",
   "keywords": [
     "transform",
@@ -22,14 +22,14 @@
     "access": "public"
   },
   "devDependencies": {
-    "@eagleuse/plugin-api": "^1.0.1",
+    "@eagleuse/plugin-api": "^1.0.2",
     "@eagleuse/plugin-nsfw": "^1.1.0",
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.0"
   },
   "dependencies": {
-    "@eagleuse/prisma-client": "^1.0.1",
+    "@eagleuse/prisma-client": "^1.0.2",
     "@eagleuse/utils": "^1.0.5",
     "chokidar": "^3.5.3",
     "dotenv": "^16.0.3",

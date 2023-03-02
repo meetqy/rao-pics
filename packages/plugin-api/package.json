@@ -1,6 +1,6 @@
 {
   "name": "@eagleuse/plugin-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "> TODO: description",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
@@ -37,7 +37,7 @@
     "url": "https://github.com/meetqy/eagleuse/issues"
   },
   "dependencies": {
-    "@eagleuse/prisma-client": "^1.0.1",
+    "@eagleuse/prisma-client": "^1.0.2",
     "@eagleuse/utils": "^1.0.5",
     "@fastify/cors": "^8.2.0",
     "@fastify/static": "^6.9.0",
