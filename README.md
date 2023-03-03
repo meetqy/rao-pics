@@ -74,13 +74,6 @@ pnpm run dev
 | `db:init`    | 初始化 prisma 数据库                       |
 | `setup`      | 开启对 eagle app 监听，生成对应的 sqlite。 |
 
-# 🔦 其他
-
-下面两个项目是该项目的起点，提供了很好的思路，有着特殊的意义，尽管用起来很麻烦！！！
-
-- [eagle-api](https://github.com/meetqy/eagle-api) - json-server 实现 Eagle App 查询 api
-- [eagle-web](https://github.com/meetqy/eagle-web) - Eagle App 的网页版
-
 # 📄 开源协议
 
 [MIT LICENSE](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EAGLEUSE](https://github.com/eagleuse)
