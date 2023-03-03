@@ -23,11 +23,12 @@ export default defineConfig({
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
       external: [
-        "fastify",
-        "fs-extra",
-        "@fastify/static",
         "@eagleuse/prisma-client",
         "@eagleuse/utils",
+        "@fastify/cors",
+        "@fastify/static",
+        "fastify",
+        "fs-extra",
         "path",
       ],
       output: {
@@ -36,6 +37,7 @@ export default defineConfig({
           fastify: "Fastify",
           fs: "fs-extra",
           "@fastify/static": "FastifyStatic",
+          "@fastify/cors": "FastifyCors",
           "@eagleuse/prisma-client": "PrismaClient",
           "@eagleuse/utils": "Utils",
         },

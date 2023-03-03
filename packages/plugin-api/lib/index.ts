@@ -5,6 +5,9 @@ import { createSymlink } from "./script";
 import { join } from "path";
 import cors from "@fastify/cors";
 import { random } from "./random";
+import folder from "./folder";
+import tag from "./tag";
+import tagsGroups from "./tags-groups";
 
 const PLUGIN_API = async (library: string) => {
   BigInt.prototype["toJSON"] = function () {
@@ -25,6 +28,9 @@ const PLUGIN_API = async (library: string) => {
 
   // api
   fastify.register(image, { prefix: "/api" });
+  fastify.register(folder, { prefix: "/api" });
+  fastify.register(tag, { prefix: "/api" });
+  fastify.register(tagsGroups, { prefix: "/api" });
 
   // random image
   fastify.register(random);
