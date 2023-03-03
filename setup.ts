@@ -4,5 +4,8 @@ import { join } from "path";
 
 (async () => {
   PLUGIN_API(join(process.env.LIBRARY, "./images"));
-  transformEagle();
+
+  if (process.env.TRANSFORM != "false") {
+    transformEagle();
+  }
 })();

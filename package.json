@@ -27,6 +27,7 @@
     "build": "next build",
     "start": "next start --port 9623",
     "setup": "ts-node setup.ts",
+    "setup:prod": "cross-env TRANSFORM=false ts-node setup.ts",
     "db:init": "prisma migrate dev --name init --skip-seed --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
     "db:preview": "prisma studio --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
     "db:push": "prisma db push --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
