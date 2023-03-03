@@ -21,15 +21,24 @@
 
 # <img src='https://github.com/meetqy/eagleuse/raw/dev/public/static/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
 
-使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
+把《素材管理类 APP》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
 
 ![eagleuse](https://github.com/meetqy/eagleuse/blob/dev/readme/preview.gif?raw=true)
 
-## 结构
+## 👀 使用
 
-```shell
-- @eagleuse/transform-eagle   # EagleApp => sqlite
-- @eagleuse/api               # 查询API
-- @eagleuse/themes-default    # 默认主题
-- @eagleuse/plugins-nsfw      # NSFW插件
-```
+选择你喜欢的主题，点击链接，详细的部署方案！！！
+
+## 🎨 主题
+
+[默认主题](https://github.com/meetqy/eagleuse/tree/theme-default)
+
+![](./readme/default-theme.jpg)
+
+## 📏 支持 APP
+
+- [Eagle App](https://eagle.cool/)
+
+## 📄 开源协议
+
+[MIT LICENSE](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EAGLEUSE](https://github.com/eagleuse)
