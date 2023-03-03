@@ -13,21 +13,21 @@ const nextConfig = {
   publicRuntimeConfig: {
     // 菜单是否显示回收站
     showTrash: process.env.SHOW_TRASH === "true",
+    PLUGIN_API_HOST: process.env.PLUGIN_API_HOST,
   },
 
   async rewrites() {
     return [
       {
         source: "/api/image/:path*",
-        destination: "http://localhost:3002/:path*",
+        destination: `${process.env.PLUGIN_API_HOST}/:path*`,
       },
     ];
   },
-};
 
-nextConfig.images = {
-  unoptimized: true,
-  minimumCacheTTL: nextConfig.serverRuntimeConfig.minimumCacheTTL,
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;

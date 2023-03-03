@@ -1,7 +1,11 @@
+import getConfig from "next/config";
+
 export * from "./pinyin";
 export * from "./transform";
 
-export const HOST = "http://localhost:3002";
+const { publicRuntimeConfig } = getConfig();
+
+export const HOST = publicRuntimeConfig.PLUGIN_API_HOST;
 
 export const handleImageUrl = (
   image: EagleUse.Image,

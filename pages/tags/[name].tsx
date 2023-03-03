@@ -19,7 +19,7 @@ import {
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { pinyin } from "@/hooks";
+import { HOST, pinyin } from "@/hooks";
 import Link from "next/link";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -63,6 +63,8 @@ const tagsArrayToJson = (tags: EagleUse.Tag[]) => {
     }
   });
 
+  console.log(json);
+
   return json;
 };
 
@@ -94,15 +96,15 @@ export default function Page() {
   const [tagsCollection, setTagsCollection] = useState<TagsCollection>({
     manage: {
       data: undefined,
-      count: 0,
+      count: undefined,
     },
     no: {
       data: undefined,
-      count: 0,
+      count: undefined,
     },
     starred: {
       data: undefined,
-      count: 0,
+      count: undefined,
     },
   });
 
@@ -147,7 +149,7 @@ export default function Page() {
   // 标签管理
   useEffect(() => {
     if (name != "manage") return;
-    if (tagsCollection["manage"].count > 0) return;
+    if (tagsCollection["manage"].count != undefined) return;
 
     setTagsCollection((tagsCollection) => ({
       ...tagsCollection,
@@ -158,11 +160,33 @@ export default function Page() {
     }));
   }, [name, tags, tagsCollection]);
 
+  const getTag = async (where) => {
+    return await fetch(`${HOST}/api/tag`, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        where,
+        include: {
+          tagsGroups: true,
+          _count: {
+            select: {
+              images: true,
+            },
+          },
+        },
+      }),
+    });
+  };
+
   useEffect(() => {
     if (name != "no") return;
-    if (tagsCollection["no"].count) return;
+    if (tagsCollection["no"].count != undefined) return;
 
-    fetch("/api/tag/no")
+    getTag({
+      tagsGroups: {
+        none: {},
+      },
+    })
       .then((res) => res.json())
       .then(({ data, count: _count }) => {
         setTagsCollection({
@@ -178,9 +202,11 @@ export default function Page() {
   // starred
   useEffect(() => {
     if (name != "starred") return;
-    if (tagsCollection["starred"].count > 0) return;
+    if (tagsCollection["starred"].count != undefined) return;
 
-    fetch("/api/tag/starred")
+    getTag({
+      starred: true,
+    })
       .then((res) => res.json())
       .then(({ data, count: _count }) => {
         setTagsCollection({
@@ -202,7 +228,15 @@ export default function Page() {
 
     tagsGroupsIsLoad.current = true;
 
-    fetch("/api/tag/group")
+    fetch(`${HOST}/api/tags-groups`, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        include: {
+          tags: true,
+        },
+      }),
+    })
       .then((res) => res.json())
       .then(({ data }) => {
         const tagsGroups: TagsCollection = {};
@@ -243,7 +277,7 @@ export default function Page() {
 
   // 渲染tags列表
   const tagsContentElement = (tagJson: { [key: string]: EagleUse.Tag[] }) => {
-    const result = Object.keys(tagJson);
+    const result = Object.keys(tagJson).sort();
     if (!result.length) return;
 
     return result.map((k, index) => {
