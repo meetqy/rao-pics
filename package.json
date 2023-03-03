@@ -24,11 +24,12 @@
   "author": "meetqy",
   "scripts": {
     "dev": "pnpm run setup & next",
-    "build": "npm run db:generate && next build",
+    "build": "next build",
     "start": "next start --port 9623",
     "setup": "ts-node setup.ts",
     "db:init": "prisma migrate dev --name init --skip-seed --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
     "db:preview": "prisma studio --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
+    "db:push": "prisma db push --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
     "lint": "next lint",
     "fix": "npx prettier --write .",
     "prepare": "husky install",
