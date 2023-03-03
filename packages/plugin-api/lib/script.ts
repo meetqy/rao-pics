@@ -9,5 +9,5 @@ export const createSymlink = (library: string) => {
 
   fs.removeSync(target);
   fs.ensureSymlinkSync(library, target);
-  logger.info("Create library symlink");
+  logger.info("Create library symlink, target: " + target);
 };

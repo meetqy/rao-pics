@@ -8,6 +8,7 @@ import { random } from "./random";
 import folder from "./folder";
 import tag from "./tag";
 import tagsGroups from "./tags-groups";
+import { logger } from "@eagleuse/utils";
 
 const PLUGIN_API = async (library: string) => {
   BigInt.prototype["toJSON"] = function () {
@@ -41,7 +42,7 @@ const PLUGIN_API = async (library: string) => {
       process.exit(1);
     }
 
-    fastify.log.info(`Server is now listening on ${address}`);
+    logger.info(`Server is now listening on ${address}`);
   });
 };
 
