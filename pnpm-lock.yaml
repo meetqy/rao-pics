@@ -4,10 +4,10 @@ specifiers:
   "@ant-design/icons": ^4.8.0
   "@commitlint/cli": ^17.4.1
   "@commitlint/config-conventional": ^17.4.0
-  "@eagleuse/plugin-api": ^1.1.0
+  "@eagleuse/plugin-api": ^1.1.2
   "@eagleuse/plugin-nsfw": ^1.1.0
   "@eagleuse/prisma-client": ^1.0.2
-  "@eagleuse/transform-eagle": ^1.1.10
+  "@eagleuse/transform-eagle": ^1.1.12
   "@prisma/client": ^4.10.1
   "@tensorflow/tfjs-node": ^4.2.0
   "@types/fs-extra": ^9.0.13
@@ -53,9 +53,9 @@ dependencies:
   "@ant-design/icons": 4.8.0_biqbaboplfbrettd7655fr4n2y
   "@commitlint/cli": 17.4.1
   "@commitlint/config-conventional": 17.4.0
-  "@eagleuse/plugin-api": 1.1.0
+  "@eagleuse/plugin-api": 1.1.2
   "@eagleuse/plugin-nsfw": 1.1.0_encoding@0.1.13
-  "@eagleuse/transform-eagle": 1.1.10
+  "@eagleuse/transform-eagle": 1.1.12
   "@prisma/client": 4.10.1_prisma@4.10.1
   "@types/justified-layout": 4.1.0
   ahooks: 3.7.4_react@18.2.0
@@ -486,10 +486,10 @@ packages:
     engines: { node: ">=10" }
     dev: false
 
-  /@eagleuse/plugin-api/1.1.0:
+  /@eagleuse/plugin-api/1.1.2:
     resolution:
       {
-        integrity: sha512-/LztktYXSfnGa54iyXPJv70iLzXS3qEDEiTrmbtPeGaNBj4WUj5//WE72rqruSV2MmQ68ShKfmE7pdQmthr3uA==,
+        integrity: sha512-xT/uhi3MmJMYglPoj3XlE2Beazmvsym1FDp/D1U6+uD4+xX6IxX+0R/wGxUsa34V01RMwbFSzfcclW2J9ebM1A==,
       }
     dependencies:
       "@eagleuse/prisma-client": 1.0.2
@@ -527,10 +527,10 @@ packages:
       "@prisma/client": 4.10.1_prisma@4.10.1
       prisma: 4.10.1
 
-  /@eagleuse/transform-eagle/1.1.10:
+  /@eagleuse/transform-eagle/1.1.12:
     resolution:
       {
-        integrity: sha512-lo0w6Wot0mz5ReQexrMduJHdOzAHM/DtZM6QxbtjqrOjUsE7tDK6TXVWN5A5qhXTRTVMxH204RNu7vzde5z0bA==,
+        integrity: sha512-+HIr/ddfHIH/y+gWVb7wXkoE7Wtzfd7gC10ORCFTEn94r+44FkhMs8aSbLqhjt+AucYqO767T7RZCGzQHbnwNw==,
       }
     dependencies:
       "@eagleuse/prisma-client": 1.0.2

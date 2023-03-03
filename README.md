@@ -15,15 +15,8 @@
 <p align='center'>
     <a href='https://rao.pics'>稳定版</a> ·
     <a href="https://dev.rao.pics">开发版</a> · 
-    <a href="https://github.com/meetqy/eagleuse/blob/dev/api/image.md">查询API</a> ·
     <a href='https://github.com/meetqy/eagleuse/issues/61'>问题合集</a> 
 </p>
-
-额！目前的项目结构开发维护开始有点困难了，sqlite 转换、nsfw、webui、api 等分类有点多。
-
-nextjs 结构有点严格，无法相对合理的进行拆分、管理。
-
-近期大部分的精力会放在"转移到 lerna"上，具体的进度可以切换到 lerna 分支上，main 分支不受任何影响。
 
 # <img src='https://github.com/meetqy/eagleuse/raw/dev/public/static/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
 
@@ -65,10 +58,6 @@ pnpm install
 ```sh
 # 初始化 数据库
 pnpm run db:init # 不存在eagleuse.db
-# or
-pnpm run db:generate # 已存在eagleuse.db
-
-
 # 启动项目
 pnpm run dev
 ```

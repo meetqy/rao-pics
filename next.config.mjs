@@ -13,14 +13,14 @@ const nextConfig = {
   publicRuntimeConfig: {
     // 菜单是否显示回收站
     showTrash: process.env.SHOW_TRASH === "true",
-    PLUGIN_API_HOST: process.env.PLUGIN_API_HOST,
+    PLUGIN_API_HOST: "http://localhost:" + process.env.PLUGIN_API_PORT,
   },
 
   async rewrites() {
     return [
       {
         source: "/api/image/:path*",
-        destination: `${process.env.PLUGIN_API_HOST}/:path*`,
+        destination: `${this.publicRuntimeConfig.PLUGIN_API_HOST}/:path*`,
       },
     ];
   },
