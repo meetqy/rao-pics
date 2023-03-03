@@ -1,6 +1,6 @@
 {
   "name": "@eagleuse/transform-eagle",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "transform eagle app library to sqlite.",
   "keywords": [
     "transform",
@@ -22,7 +22,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@eagleuse/plugin-api": "^1.1.1",
+    "@eagleuse/plugin-api": "^1.1.2",
     "@eagleuse/plugin-nsfw": "^1.1.0",
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
