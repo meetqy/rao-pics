@@ -30,7 +30,7 @@
     "url": "git+https://github.com/meetqy/eagleuse.git"
   },
   "scripts": {
-    "dev": "PORT=3002 nodemon",
+    "dev": "PLUGIN_API_PORT=3002 nodemon",
     "build": "vite build"
   },
   "bugs": {

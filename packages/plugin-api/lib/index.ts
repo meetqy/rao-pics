@@ -35,7 +35,7 @@ const PLUGIN_API = async (library: string) => {
   // random image
   fastify.register(random);
 
-  fastify.listen({ port: +process.env.PORT || 3000 }, function (err, address) {
+  fastify.listen({ port: +process.env.PLUGIN_API_PORT || 3000 }, function (err, address) {
     if (err) {
       fastify.log.error(err);
       process.exit(1);
