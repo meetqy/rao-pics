@@ -3,6 +3,9 @@ node_modules/
 yarn-*.log
 
 .env
+.env.production
+.env.development
+.env*.local
 
 public/swagger.json
 public/library

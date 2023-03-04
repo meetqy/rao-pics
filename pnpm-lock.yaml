@@ -4,10 +4,11 @@ specifiers:
   "@ant-design/icons": ^4.8.0
   "@commitlint/cli": ^17.4.1
   "@commitlint/config-conventional": ^17.4.0
-  "@eagleuse/plugin-api": ^1.1.2
+  "@eagleuse/plugin-api": link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/plugin-api
   "@eagleuse/plugin-nsfw": ^1.1.0
   "@eagleuse/prisma-client": ^1.0.2
-  "@eagleuse/transform-eagle": ^1.1.12
+  "@eagleuse/transform-eagle": ^1.1.14
+  "@fastify/nextjs": ^9.2.0
   "@prisma/client": ^4.10.1
   "@tensorflow/tfjs-node": ^4.2.0
   "@types/fs-extra": ^9.0.13
@@ -27,6 +28,7 @@ specifiers:
   eslint-config-next: 13.1.1
   eslint-config-prettier: ^8.6.0
   express: ^4.18.2
+  fastify: ^4.14.0
   fs-extra: ^11.1.0
   git-cz: ^4.9.0
   husky: ^8.0.3
@@ -53,9 +55,10 @@ dependencies:
   "@ant-design/icons": 4.8.0_biqbaboplfbrettd7655fr4n2y
   "@commitlint/cli": 17.4.1
   "@commitlint/config-conventional": 17.4.0
-  "@eagleuse/plugin-api": 1.1.2
+  "@eagleuse/plugin-api": link:../eagleuse-lerna/packages/plugin-api
   "@eagleuse/plugin-nsfw": 1.1.0_encoding@0.1.13
-  "@eagleuse/transform-eagle": 1.1.12
+  "@eagleuse/transform-eagle": 1.1.14
+  "@fastify/nextjs": 9.2.0_next@13.1.1
   "@prisma/client": 4.10.1_prisma@4.10.1
   "@types/justified-layout": 4.1.0
   ahooks: 3.7.4_react@18.2.0
@@ -63,6 +66,7 @@ dependencies:
   chokidar: 3.5.3
   encoding: 0.1.13
   express: 4.18.2
+  fastify: 4.14.0
   git-cz: 4.9.0
   justified-layout: 4.1.0
   lodash: 4.17.21
@@ -486,22 +490,6 @@ packages:
     engines: { node: ">=10" }
     dev: false
 
-  /@eagleuse/plugin-api/1.1.2:
-    resolution:
-      {
-        integrity: sha512-xT/uhi3MmJMYglPoj3XlE2Beazmvsym1FDp/D1U6+uD4+xX6IxX+0R/wGxUsa34V01RMwbFSzfcclW2J9ebM1A==,
-      }
-    dependencies:
-      "@eagleuse/prisma-client": 1.0.2
-      "@eagleuse/utils": 1.0.5
-      "@fastify/cors": 8.2.0
-      "@fastify/static": 6.9.0
-      fastify: 4.13.0
-      fs-extra: 11.1.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@eagleuse/plugin-nsfw/1.1.0_encoding@0.1.13:
     resolution:
       {
@@ -527,10 +515,10 @@ packages:
       "@prisma/client": 4.10.1_prisma@4.10.1
       prisma: 4.10.1
 
-  /@eagleuse/transform-eagle/1.1.12:
+  /@eagleuse/transform-eagle/1.1.14:
     resolution:
       {
-        integrity: sha512-+HIr/ddfHIH/y+gWVb7wXkoE7Wtzfd7gC10ORCFTEn94r+44FkhMs8aSbLqhjt+AucYqO767T7RZCGzQHbnwNw==,
+        integrity: sha512-vvF9Hvja/i0bKqFhhjjK3zgWQFjgZLiohbOGhRu0njzW0qDcaH3oJE30UvGsGkGTZtJ00XRJV4L4E/pKKR3vAQ==,
       }
     dependencies:
       "@eagleuse/prisma-client": 1.0.2
@@ -586,14 +574,6 @@ packages:
       - supports-color
     dev: true
 
-  /@fastify/accept-negotiator/1.1.0:
-    resolution:
-      {
-        integrity: sha512-OIHZrb2ImZ7XG85HXOONLcJWGosv7sIvM2ifAPQVhg9Lv7qdmMBNVaai4QTdyuaqbKM5eO6sLSQOYI7wEQeCJQ==,
-      }
-    engines: { node: ">=14" }
-    dev: false
-
   /@fastify/ajv-compiler/3.5.0:
     resolution:
       {
@@ -603,16 +583,6 @@ packages:
       ajv: 8.12.0
       ajv-formats: 2.1.1
       fast-uri: 2.2.0
-    dev: false
-
-  /@fastify/cors/8.2.0:
-    resolution:
-      {
-        integrity: sha512-qDgwpmg6C4D0D3nh8MTMuRXWyEwPnDZDBODaJv90FP2o9ukbahJByW4FtrM5Bpod5KbTf1oIExBmpItbUTQmHg==,
-      }
-    dependencies:
-      fastify-plugin: 4.5.0
-      mnemonist: 0.39.5
     dev: false
 
   /@fastify/deepmerge/1.3.0:
@@ -638,32 +608,27 @@ packages:
       fast-json-stringify: 5.6.2
     dev: false
 
-  /@fastify/send/2.0.1:
+  /@fastify/nextjs/9.2.0_next@13.1.1:
     resolution:
       {
-        integrity: sha512-8jdouu0o5d0FMq1+zCKeKXc1tmOQ5tTGYdQP3MpyF9+WWrZT1KCBdh6hvoEYxOm3oJG/akdE9BpehLiJgYRvGw==,
+        integrity: sha512-javnZvkO0+HLfuHYUqNF/14mE0T01gy2gkBCiJ2IFDIvpVhFzp65ElF3c7meGAF7Osqz//6useY04+vTIxGU3A==,
       }
+    peerDependencies:
+      next: 12.x.x || 13.x.x
     dependencies:
-      "@lukeed/ms": 2.0.1
-      escape-html: 1.0.3
-      fast-decode-uri-component: 1.0.1
-      http-errors: 2.0.0
-      mime: 3.0.0
+      "@fastify/under-pressure": 8.2.0
+      fastify-plugin: 4.5.0
+      next: 13.1.1_biqbaboplfbrettd7655fr4n2y
     dev: false
 
-  /@fastify/static/6.9.0:
+  /@fastify/under-pressure/8.2.0:
     resolution:
       {
-        integrity: sha512-9SBVNJi2+KTnfiW1WjiVXDsmUxliNI54OF1eOiaop264dh8FwXSuLmO62JXvx7+VD0vQXEqsyRbFCYUJ9aJxng==,
+        integrity: sha512-tqhWBhE6blM3jDn9dmxl5yhyoRWGFGwdihLmyek5pRN3KIOEcRQVtAoX5WKSbeEZ51clnDfCNqm96YC4cEUI7g==,
       }
     dependencies:
-      "@fastify/accept-negotiator": 1.1.0
-      "@fastify/send": 2.0.1
-      content-disposition: 0.5.4
+      "@fastify/error": 3.2.0
       fastify-plugin: 4.5.0
-      glob: 8.1.0
-      p-limit: 3.1.0
-      readable-stream: 4.3.0
     dev: false
 
   /@humanwhocodes/config-array/0.11.8:
@@ -724,14 +689,6 @@ packages:
     dependencies:
       "@jridgewell/resolve-uri": 3.1.0
       "@jridgewell/sourcemap-codec": 1.4.14
-
-  /@lukeed/ms/2.0.1:
-    resolution:
-      {
-        integrity: sha512-Xs/4RZltsAL7pkvaNStUQt7netTkyxrS0K+RILcVr3TRMS/ToOg4I6uNfhB9SlGsnWBym4U+EaXq0f0cEMNkHA==,
-      }
-    engines: { node: ">=8" }
-    dev: false
 
   /@mapbox/node-pre-gyp/1.0.9_encoding@0.1.13:
     resolution:
@@ -3990,10 +3947,10 @@ packages:
       }
     dev: false
 
-  /fastify/4.13.0:
+  /fastify/4.14.0:
     resolution:
       {
-        integrity: sha512-p9ibdFWH3pZ7KPgmfHPKGUy2W4EWU2TEpwlcu58w4CwGyU3ARFfh2kwq6zpZ5W2ZGVbufi4tZbqHIHAlX/9Z/A==,
+        integrity: sha512-oJSHlM/XbGdJpe2MKMJBsrvrkPDrHDZlAB9qzuUJIpnBtpDE394bzdFsH4KnsUI1e8zxzFl+GNBEXC64N/IPuw==,
       }
     dependencies:
       "@fastify/ajv-compiler": 3.5.0
@@ -4004,7 +3961,7 @@ packages:
       fast-content-type-parse: 1.0.0
       find-my-way: 7.5.0
       light-my-request: 5.9.1
-      pino: 8.8.0
+      pino: 8.11.0
       process-warning: 2.1.0
       proxy-addr: 2.0.7
       rfdc: 1.3.0
@@ -6135,15 +6092,6 @@ packages:
     hasBin: true
     dev: false
 
-  /mime/3.0.0:
-    resolution:
-      {
-        integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==,
-      }
-    engines: { node: ">=10.0.0" }
-    hasBin: true
-    dev: false
-
   /mimic-fn/2.1.0:
     resolution:
       {
@@ -6262,15 +6210,6 @@ packages:
       }
     engines: { node: ">=10" }
     hasBin: true
-
-  /mnemonist/0.39.5:
-    resolution:
-      {
-        integrity: sha512-FPUtkhtJ0efmEFGpU14x7jGbTB+s18LrzRL2KgoWz9YvcY3cPomz8tih01GbHwnGk/OmkOKfqd/RAQoc8Lm7DQ==,
-      }
-    dependencies:
-      obliterator: 2.0.4
-    dev: false
 
   /modify-values/1.0.1:
     resolution:
@@ -6623,13 +6562,6 @@ packages:
       define-properties: 1.1.4
       es-abstract: 1.21.0
     dev: true
-
-  /obliterator/2.0.4:
-    resolution:
-      {
-        integrity: sha512-lgHwxlxV1qIg1Eap7LgIeoBWIMFibOjbrYPIPJZcI1mmGAI2m3lNYpK12Y+GBdPQ0U1hRwSord7GIaawz962qQ==,
-      }
-    dev: false
 
   /omggif/1.0.10:
     resolution:
