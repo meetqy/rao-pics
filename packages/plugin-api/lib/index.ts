@@ -14,7 +14,7 @@ import dotenv from "dotenv";
 interface Args {
   library: string;
   fastify?;
-  isListen?: boolean;
+  port?: number;
 }
 
 const PLUGIN_API = async (args: Args) => {
@@ -49,8 +49,8 @@ const PLUGIN_API = async (args: Args) => {
   // random image
   _fatify.register(random);
 
-  if (args.isListen) {
-    _fatify.listen({ port: +process.env.PLUGIN_API_PORT || 3000, host: "0.0.0.0" }, function (err, address) {
+  if (args.port) {
+    _fatify.listen({ port: args.port, host: "0.0.0.0" }, function (err, address) {
       if (err) {
         _fatify.log.error(err);
         process.exit(1);

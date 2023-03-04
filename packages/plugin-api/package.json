@@ -1,14 +1,12 @@
 {
   "name": "@eagleuse/plugin-api",
   "version": "1.1.3",
-  "description": "> TODO: description",
+  "description": "Transform sqlite database to web api.",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
   "license": "MIT",
   "directories": {
-    "lib": "lib",
-    "script": "script",
-    "test": "__tests__"
+    "lib": "lib"
   },
   "files": [
     "dist"
@@ -30,7 +28,7 @@
     "url": "git+https://github.com/meetqy/eagleuse.git"
   },
   "scripts": {
-    "dev": "PLUGIN_API_PORT=3002 nodemon",
+    "dev": "nodemon",
     "build": "vite build"
   },
   "bugs": {

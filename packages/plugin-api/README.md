@@ -8,15 +8,15 @@ import PLUGIN_API from "@eagleuse/plugin-api";
 PLUGIN_API({
   library,
   fastify,
-  isListen,
+  port,
 });
 ```
 
-| Args       | Desc                               | Type            |
-| ---------- | ---------------------------------- | --------------- |
-| `library`  | Images dir from Eagle App library. | string          |
-| `fastify`  | Fastify object.                    | FastifyInstance |
-| `isListen` | Open listen port.                  | boolean         |
+| Args      | Desc                                                       | Type             |
+| --------- | ---------------------------------------------------------- | ---------------- |
+| `library` | Images dir from Eagle App library.                         | string           |
+| `fastify` | Fastify instance.                                          | FastifyInstance? |
+| `port`    | Undefined: Don't start server. Use other fastify instance. | number?          |
 
 ## Image
 
