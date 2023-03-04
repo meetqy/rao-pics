@@ -30,14 +30,14 @@ export default defineConfig({
         "fastify",
         "fs-extra",
         "path",
-        "dotenv",
+        "ip",
       ],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
           fastify: "Fastify",
-          dotenv: "dotenv",
           fs: "fs-extra",
+          ip: "ip",
           "@fastify/static": "FastifyStatic",
           "@fastify/cors": "FastifyCors",
           "@eagleuse/prisma-client": "PrismaClient",

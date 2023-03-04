@@ -52,20 +52,20 @@ importers:
       "@fastify/cors": ^8.2.0
       "@fastify/static": ^6.9.0
       "@types/node": ^18.14.2
-      dotenv: ^16.0.3
-      fastify: ^4.13.0
+      fastify: ^4.14.0
       fs-extra: ^11.1.0
+      ip: ^1.1.8
       nodemon: ^2.0.20
     dependencies:
       "@eagleuse/prisma-client": link:../prisma-client
       "@eagleuse/utils": link:../utils
       "@fastify/cors": 8.2.0
       "@fastify/static": 6.9.0
-      dotenv: 16.0.3
-      fastify: 4.13.0
+      fastify: 4.14.0
       fs-extra: 11.1.0
     devDependencies:
       "@types/node": 18.14.2
+      ip: 1.1.8
       nodemon: 2.0.20
 
   packages/plugin-nsfw:
@@ -6183,10 +6183,10 @@ packages:
       }
     dev: false
 
-  /fastify/4.13.0:
+  /fastify/4.14.0:
     resolution:
       {
-        integrity: sha512-p9ibdFWH3pZ7KPgmfHPKGUy2W4EWU2TEpwlcu58w4CwGyU3ARFfh2kwq6zpZ5W2ZGVbufi4tZbqHIHAlX/9Z/A==,
+        integrity: sha512-oJSHlM/XbGdJpe2MKMJBsrvrkPDrHDZlAB9qzuUJIpnBtpDE394bzdFsH4KnsUI1e8zxzFl+GNBEXC64N/IPuw==,
       }
     dependencies:
       "@fastify/ajv-compiler": 3.5.0
@@ -7224,6 +7224,13 @@ packages:
         integrity: sha512-pZ2xT+LOHckCatGQ3DcG/a+QuEqvoxqkiL7tvE8nn3uuu+f6i1TtpB5/FtWFbxUuVr5PZCx8KskuGatbJDXOWA==,
       }
     dev: false
+
+  /ip/1.1.8:
+    resolution:
+      {
+        integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==,
+      }
+    dev: true
 
   /ip/2.0.0:
     resolution:

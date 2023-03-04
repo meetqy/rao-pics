@@ -12,11 +12,12 @@ PLUGIN_API({
 });
 ```
 
-| Args      | Desc                                                       | Type             |
-| --------- | ---------------------------------------------------------- | ---------------- |
-| `library` | Images dir from Eagle App library.                         | string           |
-| `fastify` | Fastify instance.                                          | FastifyInstance? |
-| `port`    | Undefined: Don't start server. Use other fastify instance. | number?          |
+| Args               | Desc                               | Type                                  |
+| ------------------ | ---------------------------------- | ------------------------------------- |
+| `library`          | Images dir from Eagle App library. | string                                |
+| `registerCallback` | Register Callback.                 | ((fastify: FastifyInstance) => void)? |
+| `port`             | Port                               | number?                               |
+| `host`             | Host                               | string?                               |
 
 ## Image
 
