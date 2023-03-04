@@ -43,7 +43,7 @@
     "@commitlint/config-conventional": "^17.4.0",
     "@eagleuse/plugin-api": "link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/plugin-api",
     "@eagleuse/plugin-nsfw": "^1.1.0",
-    "@eagleuse/transform-eagle": "^1.1.14",
+    "@eagleuse/transform-eagle": "^1.1.15",
     "@fastify/nextjs": "^9.2.0",
     "@prisma/client": "^4.10.1",
     "@types/justified-layout": "^4.1.0",

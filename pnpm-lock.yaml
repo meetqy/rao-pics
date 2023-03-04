@@ -7,7 +7,7 @@ specifiers:
   "@eagleuse/plugin-api": link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/plugin-api
   "@eagleuse/plugin-nsfw": ^1.1.0
   "@eagleuse/prisma-client": ^1.0.2
-  "@eagleuse/transform-eagle": ^1.1.14
+  "@eagleuse/transform-eagle": ^1.1.15
   "@fastify/nextjs": ^9.2.0
   "@prisma/client": ^4.10.1
   "@tensorflow/tfjs-node": ^4.2.0
@@ -57,7 +57,7 @@ dependencies:
   "@commitlint/config-conventional": 17.4.0
   "@eagleuse/plugin-api": link:../eagleuse-lerna/packages/plugin-api
   "@eagleuse/plugin-nsfw": 1.1.0_encoding@0.1.13
-  "@eagleuse/transform-eagle": 1.1.14
+  "@eagleuse/transform-eagle": 1.1.15
   "@fastify/nextjs": 9.2.0_next@13.1.1
   "@prisma/client": 4.10.1_prisma@4.10.1
   "@types/justified-layout": 4.1.0
@@ -515,10 +515,10 @@ packages:
       "@prisma/client": 4.10.1_prisma@4.10.1
       prisma: 4.10.1
 
-  /@eagleuse/transform-eagle/1.1.14:
+  /@eagleuse/transform-eagle/1.1.15:
     resolution:
       {
-        integrity: sha512-vvF9Hvja/i0bKqFhhjjK3zgWQFjgZLiohbOGhRu0njzW0qDcaH3oJE30UvGsGkGTZtJ00XRJV4L4E/pKKR3vAQ==,
+        integrity: sha512-XzlRfZoNKg/P/q5Or+P2rg+tAfcedxo14qjf7SFh3opqkt+kAi+vrg11hzkkVClObdZ62OuuCyHX2EuV3SqeTQ==,
       }
     dependencies:
       "@eagleuse/prisma-client": 1.0.2
