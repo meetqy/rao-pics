@@ -1,18 +1,12 @@
-import getConfig from "next/config";
-
 export * from "./pinyin";
 export * from "./transform";
-
-const { publicRuntimeConfig } = getConfig();
-
-export const HOST = publicRuntimeConfig.PLUGIN_API_HOST;
 
 export const handleImageUrl = (
   image: EagleUse.Image,
   // 是否返回原图
   original?: boolean
 ) => {
-  const prefix = `${HOST}/public/${image.id}.info/${image.name}`;
+  const prefix = `/public/${image.id}.info/${image.name}`;
 
   if (original) {
     return `${prefix}.${image.ext}`;

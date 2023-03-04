@@ -19,7 +19,7 @@ import {
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { HOST, pinyin } from "@/hooks";
+import { pinyin } from "@/hooks";
 import Link from "next/link";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -62,8 +62,6 @@ const tagsArrayToJson = (tags: EagleUse.Tag[]) => {
       json[first] ? json[first].push(item) : (json[first] = [item]);
     }
   });
-
-  console.log(json);
 
   return json;
 };
@@ -161,7 +159,7 @@ export default function Page() {
   }, [name, tags, tagsCollection]);
 
   const getTag = async (where) => {
-    return await fetch(`${HOST}/api/tag`, {
+    return await fetch(`/api/tag`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -228,7 +226,7 @@ export default function Page() {
 
     tagsGroupsIsLoad.current = true;
 
-    fetch(`${HOST}/api/tags-groups`, {
+    fetch(`/api/tags-groups`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

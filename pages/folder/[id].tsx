@@ -9,12 +9,7 @@ import { useRouter } from "next/router";
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
-import {
-  handleImageAlt,
-  handleImageUrl,
-  HOST,
-  transformFolderToTree,
-} from "@/hooks";
+import { handleImageAlt, handleImageUrl, transformFolderToTree } from "@/hooks";
 import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
 
@@ -34,7 +29,7 @@ function getLoadMoreList(id: string, params: Params): Promise<Result> {
   const { page, pageSize } = params;
 
   return new Promise((resolve) => {
-    fetch(`${HOST}/api/image?page=${page}&pageSize=${pageSize}`, {
+    fetch(`/api/image?page=${page}&pageSize=${pageSize}`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

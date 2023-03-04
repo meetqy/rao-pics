@@ -10,7 +10,6 @@ import JustifyLayout from "@/components/JustifyLayout";
 import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useInfiniteScroll } from "ahooks";
 import _ from "lodash";
-import { HOST } from "@/hooks";
 import { handleOrderBy, handleSize } from "@/hooks/prismaInput";
 
 interface Params {
@@ -30,7 +29,7 @@ function getLoadMoreList(params: Params): Promise<Result> {
   const { page, pageSize, body } = params;
 
   return new Promise((resolve) => {
-    fetch(`${HOST}/api/image?page=${page}&pageSize=${pageSize}`, {
+    fetch(`/api/image?page=${page}&pageSize=${pageSize}`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

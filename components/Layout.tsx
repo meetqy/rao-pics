@@ -19,7 +19,6 @@ import {
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import { useSize } from "ahooks";
-import { HOST } from "@/hooks";
 
 export const MyLayout = ({ children }) => {
   const activeMenu = useRecoilValue(activeMenuState) || "/";
@@ -44,7 +43,7 @@ export const MyLayout = ({ children }) => {
   // 初始化 folderState
   const initFolder = useCallback(() => {
     isInit.folders = true;
-    fetch(`${HOST}/api/folder`)
+    fetch(`/api/folder`)
       .then((res) => res.json())
       .then(({ data }) => {
         setFolders(data);
@@ -53,7 +52,7 @@ export const MyLayout = ({ children }) => {
 
   const initTag = useCallback(() => {
     isInit.tags = true;
-    fetch(`${HOST}/api/tag`, {
+    fetch(`/api/tag`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
