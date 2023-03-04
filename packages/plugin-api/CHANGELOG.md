@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.2...@eagleuse/plugin-api@1.1.3) (2023-03-04)
+
+### Bug Fixes
+
+- 🐛 Support embed other fastify ([ad41662](https://github.com/meetqy/eagleuse/commit/ad416620669d9039eda309b103dc0eb8ff1b9bff))
+
 ## [1.1.2](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.0...@eagleuse/plugin-api@1.1.2) (2023-03-03)
 
 **Note:** Version bump only for package @eagleuse/plugin-api
