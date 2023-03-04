@@ -1,5 +1,8 @@
 import PLUGIN_API from "../lib";
 
 (async () => {
-  PLUGIN_API("/Users/qymeet/Pictures/rao.library/images");
+  PLUGIN_API({
+    library: "/Users/qymeet/Pictures/rao.library/images",
+    fastify: undefined,
+  });
 })();
