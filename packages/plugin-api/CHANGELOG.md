@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.4...@eagleuse/plugin-api@1.1.5) (2023-03-04)
+
+**Note:** Version bump only for package @eagleuse/plugin-api
+
 ## [1.1.4](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.3...@eagleuse/plugin-api@1.1.4) (2023-03-04)
 
 **Note:** Version bump only for package @eagleuse/plugin-api
