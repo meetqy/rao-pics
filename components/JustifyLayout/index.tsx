@@ -65,7 +65,6 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   useEffect(() => {
     if (!size || !size.width) return;
     const clientWidth = size.width;
-    console.log(images);
     setLayoutPos(
       justifyLayout([...images], {
         containerWidth:

@@ -35,7 +35,7 @@ function getLoadMoreList(params: Params): Promise<Result> {
       body: JSON.stringify({
         where: {
           AND: [
-            handleSize({ size: body.size }),
+            ...handleSize({ size: body.size }),
             !_.isEmpty(body.tags)
               ? { tags: { some: { id: { in: body.tags } } } }
               : undefined,

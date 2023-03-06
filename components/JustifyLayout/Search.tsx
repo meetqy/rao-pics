@@ -76,6 +76,7 @@ const JustifyLayoutSearch = (props: Props) => {
             {!hidden && (
               <Col>
                 <SearchModule.Size
+                  value={params.size}
                   onChange={(e) =>
                     onChange({
                       ...params,

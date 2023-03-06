@@ -1,9 +1,11 @@
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Col, InputNumber, Popover, Row, Typography } from "antd";
-import { useMemo, useState } from "react";
+import _ from "lodash";
+import { useEffect, useMemo, useState } from "react";
 
 interface Props {
-  onChange?: (value: EagleUse.SearchParams["size"]) => void;
+  value: EagleUse.SearchParams["size"];
+  onChange: (value: EagleUse.SearchParams["size"]) => void;
 }
 
 const Size = (props: Props) => {
@@ -18,17 +20,24 @@ const Size = (props: Props) => {
     },
   });
 
+  useEffect(() => {
+    if (_.isEqual(props.value, value)) return;
+    if (!props.value) return;
+
+    setValue(props.value);
+  }, [props.value, value]);
+
   const changeValue = (
     e: number,
     size: "width" | "height",
     type: "min" | "max"
   ) => {
-    value[size][type] = e;
+    const newValue = JSON.parse(JSON.stringify(value));
+    newValue[size][type] = e;
     setValue({
       ...value,
+      [size]: newValue[size],
     });
-
-    props?.onChange(value);
   };
 
   const text = useMemo(() => {
@@ -69,6 +78,7 @@ const Size = (props: Props) => {
               <InputNumber
                 value={value.width.min}
                 onChange={(e) => changeValue(e, "width", "min")}
+                onBlur={() => props?.onChange(value)}
                 placeholder="最小"
                 size="small"
                 min={0}
@@ -77,6 +87,7 @@ const Size = (props: Props) => {
               <InputNumber
                 value={value.width.max}
                 onChange={(e) => changeValue(e, "width", "max")}
+                onBlur={() => props?.onChange(value)}
                 placeholder="最大"
                 size="small"
                 min={0}
@@ -89,6 +100,7 @@ const Size = (props: Props) => {
               <InputNumber
                 value={value.height.min}
                 onChange={(e) => changeValue(e, "height", "min")}
+                onBlur={() => props?.onChange(value)}
                 placeholder="最小"
                 size="small"
                 min={0}
@@ -97,6 +109,7 @@ const Size = (props: Props) => {
               <InputNumber
                 value={value.height.max}
                 onChange={(e) => changeValue(e, "height", "max")}
+                onBlur={() => props?.onChange(value)}
                 placeholder="最大"
                 size="small"
                 min={0}

@@ -8,7 +8,7 @@ export const handleOrderBy = ({ orderBy }: EagleUse.SearchParams) => {
 
 // 尺寸
 export const handleSize = ({ size }: EagleUse.SearchParams) => {
-  if (!size) return undefined;
+  if (!size) return [];
 
   const { width, height } = size;
 
