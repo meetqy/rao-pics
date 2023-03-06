@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.5...@eagleuse/plugin-api@1.1.6) (2023-03-06)
+
+### Performance Improvements
+
+- ⚡️ 取消 host 参数,直接支持 localhost,ip 访问 ([fac7fcb](https://github.com/meetqy/eagleuse/commit/fac7fcbc0c304538552f7edc97fab605b56964a0))
+
 ## [1.1.5](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.4...@eagleuse/plugin-api@1.1.5) (2023-03-04)
 
 **Note:** Version bump only for package @eagleuse/plugin-api
