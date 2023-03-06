@@ -1,7 +1,6 @@
 import { CaretDownOutlined } from "@ant-design/icons";
 import { Col, InputNumber, Popover, Row, Typography } from "antd";
-import _ from "lodash";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 interface Props {
   value: EagleUse.SearchParams["size"];
@@ -9,23 +8,18 @@ interface Props {
 }
 
 const Size = (props: Props) => {
-  const [value, setValue] = useState<EagleUse.SearchParams["size"]>({
-    width: {
-      min: 0,
-      max: 0,
-    },
-    height: {
-      min: 0,
-      max: 0,
-    },
-  });
-
-  useEffect(() => {
-    if (_.isEqual(props.value, value)) return;
-    if (!props.value) return;
-
-    setValue(props.value);
-  }, [props.value, value]);
+  const [value, setValue] = useState<EagleUse.SearchParams["size"]>(
+    props.value || {
+      width: {
+        min: 0,
+        max: 0,
+      },
+      height: {
+        min: 0,
+        max: 0,
+      },
+    }
+  );
 
   const changeValue = (
     e: number,
