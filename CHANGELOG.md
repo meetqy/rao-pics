@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/meetqy/eagleuse/compare/v0.2.1...v0.2.2) (2023-03-06)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 tag/size 搜索条件相关问题 ([2e601e5](https://github.com/meetqy/eagleuse/commit/2e601e55acee6b5bf3e6925f28a1788f4aefbfd4))
+
 ### [0.2.1](https://github.com/meetqy/eagleuse/compare/v0.2.0...v0.2.1) (2023-03-06)
 
 ### Bug Fixes | Bug 修复
