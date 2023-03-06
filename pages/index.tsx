@@ -36,7 +36,7 @@ function getLoadMoreList(params: Params): Promise<Result> {
         where: {
           AND: [
             handleSize({ size: body.size }),
-            body.tags
+            !_.isEmpty(body.tags)
               ? { tags: { some: { id: { in: body.tags } } } }
               : undefined,
             // 注释
@@ -85,6 +85,7 @@ const Page = () => {
     {
       target: LayoutContentRef.current,
       threshold: 300,
+      manual: false,
       isNoMore: (data) => {
         if (!data) return false;
         const { params, count } = data;
@@ -107,7 +108,7 @@ const Page = () => {
     if (_.isEqual(params.body, searchParams)) return;
 
     params.body = searchParams;
-    infiniteScroll.reload();
+    setTimeout(() => infiniteScroll.reload());
   }, [searchParams, params, infiniteScroll]);
 
   if (!infiniteScroll.data) return null;

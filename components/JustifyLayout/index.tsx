@@ -56,7 +56,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   const { token } = theme.useToken();
   const activeImage = useMemo(() => rightBasic.image, [rightBasic]);
   const { data, loadMore, loadingMore, noMore } = infiniteScroll;
-  const images = useMemo(() => data.list, [data.list]);
+  const images = useMemo(() => data.list, [data]);
   const size = useSize(() => document.body);
   const [open, setOpen] = useState(false);
 
@@ -65,6 +65,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   useEffect(() => {
     if (!size || !size.width) return;
     const clientWidth = size.width;
+    console.log(images);
     setLayoutPos(
       justifyLayout([...images], {
         containerWidth:
