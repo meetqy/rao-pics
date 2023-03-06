@@ -1,7 +1,7 @@
 {
   "name": "eagleuse",
   "version": "0.1.13",
-  "description": "使用《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床。",
+  "description": "把《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床。",
   "packageManager": "pnpm@7.1.0",
   "keywords": [
     "eagle",
@@ -28,10 +28,9 @@
     "build": "cross-env NODE_ENV=production next build",
     "start": "cross-env NODE_ENV=production pnpm run server",
     "transform": "ts-node transform.ts",
-    "transform:prod": "cross-env TRANSFORM=false ts-node transform.ts",
-    "db:init": "prisma migrate dev --name init --skip-seed --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
-    "db:preview": "prisma studio --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
-    "db:push": "prisma db push --schema ./node_modules/@eagleuse/prisma-client/prisma/schema.prisma",
+    "db:init": "prisma migrate dev --name init --skip-seed",
+    "db:preview": "prisma studio",
+    "db:push": "prisma db push",
     "lint": "next lint",
     "fix": "npx prettier --write .",
     "prepare": "husky install",
@@ -41,15 +40,16 @@
     "@ant-design/icons": "^4.8.0",
     "@commitlint/cli": "^17.4.1",
     "@commitlint/config-conventional": "^17.4.0",
-    "@eagleuse/plugin-api": "link:/Users/qymeet/Desktop/Github/eagleuse-lerna/packages/plugin-api",
+    "@eagleuse/plugin-api": "^1.1.7",
     "@eagleuse/plugin-nsfw": "^1.1.0",
-    "@eagleuse/transform-eagle": "^1.1.15",
+    "@eagleuse/transform-eagle": "^1.1.17",
     "@fastify/nextjs": "^9.2.0",
     "@prisma/client": "^4.10.1",
     "@types/justified-layout": "^4.1.0",
     "ahooks": "^3.7.4",
     "antd": "^5.2.1",
     "chokidar": "^3.5.3",
+    "dotenv-flow": "^3.2.0",
     "encoding": "^0.1.13",
     "express": "^4.18.2",
     "fastify": "^4.14.0",
@@ -76,7 +76,6 @@
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.1",
     "eslint-config-prettier": "^8.6.0",
@@ -91,7 +90,8 @@
     "typescript": "4.9.4"
   },
   "prisma": {
-    "seed": "ts-node transform.ts"
+    "seed": "ts-node transform.ts",
+    "schema": "./node_modules/@eagleuse/prisma-client/prisma/schema.prisma"
   },
   "lint-staged": {
     "**/*.(ts|tsx)": "eslint --fix --max-warnings 0",
