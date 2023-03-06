@@ -63,9 +63,9 @@ importers:
       "@fastify/static": 6.9.0
       fastify: 4.14.0
       fs-extra: 11.1.0
+      ip: 1.1.8
     devDependencies:
       "@types/node": 18.14.2
-      ip: 1.1.8
       nodemon: 2.0.20
 
   packages/plugin-nsfw:
@@ -88,7 +88,7 @@ importers:
 
   packages/transform-eagle:
     specifiers:
-      "@eagleuse/plugin-api": ^1.1.6
+      "@eagleuse/plugin-api": ^1.1.7
       "@eagleuse/plugin-nsfw": ^1.1.0
       "@eagleuse/prisma-client": ^1.0.2
       "@eagleuse/utils": ^1.0.5
@@ -7230,7 +7230,7 @@ packages:
       {
         integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==,
       }
-    dev: true
+    dev: false
 
   /ip/2.0.0:
     resolution:

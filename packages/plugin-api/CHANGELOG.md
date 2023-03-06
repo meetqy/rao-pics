@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.7](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.6...@eagleuse/plugin-api@1.1.7) (2023-03-06)
+
+### Bug Fixes
+
+- 🐛 ip move to dependencies ([9f5efbf](https://github.com/meetqy/eagleuse/commit/9f5efbf47c74e15449cf4614413ca82f37cac5b4))
+
 ## [1.1.6](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.5...@eagleuse/plugin-api@1.1.6) (2023-03-06)
 
 ### Performance Improvements
