@@ -14,7 +14,6 @@ import ip from "ip";
 interface Args {
   library: string;
   port?: number;
-  host?: string;
   registerCallback?: (fastify: FastifyInstance) => void;
 }
 
@@ -48,17 +47,15 @@ const PLUGIN_API = async (args: Args) => {
 
   args.registerCallback && args.registerCallback(fastify);
 
-  fastify.listen({ port: args.port, host: args.host }, function (err, address) {
+  fastify.listen({ port: args.port, host: undefined }, function (err) {
     if (err) {
       logger.error(err);
       process.exit(1);
     }
 
-    if (args.host === "0.0.0.0") {
-      return logger.info(`Server is now listening on ${address.replace("0.0.0.0", ip.address())}`);
-    }
-
-    logger.info(`Server is now listening on ${address}`);
+    logger.info(
+      `Server is now listening on \n - http://${ip.address()}:${args.port}\n - http://localhost:${args.port}`
+    );
   });
 };
 
