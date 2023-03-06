@@ -40,11 +40,11 @@
     "@fastify/cors": "^8.2.0",
     "@fastify/static": "^6.9.0",
     "fastify": "^4.14.0",
-    "fs-extra": "^11.1.0"
+    "fs-extra": "^11.1.0",
+    "ip": "^1.1.8"
   },
   "devDependencies": {
     "@types/node": "^18.14.2",
-    "ip": "^1.1.8",
     "nodemon": "^2.0.20"
   },
   "gitHead": "90d70b524804295a65079e065f1edc16cc70833b"
