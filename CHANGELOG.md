@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/meetqy/eagleuse/compare/v0.2.0...v0.2.1) (2023-03-06)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 【Default Theme】已经没有数据了，不应该继续请求接口 ([dbdd523](https://github.com/meetqy/eagleuse/commit/dbdd52315d5ca0ad7799437021c6b6b074b40514)), closes [#94](https://github.com/meetqy/eagleuse/issues/94)
+- 🐛 图片大小的筛选问题 ([dc01e32](https://github.com/meetqy/eagleuse/commit/dc01e32cc393a6985901885708b44a3339667429)), closes [#88](https://github.com/meetqy/eagleuse/issues/88)
+
 ## [0.2.0](https://github.com/meetqy/eagleuse/compare/v0.1.13...v0.2.0) (2023-03-06)
 
 ### Performance Improvements | 性能优化
