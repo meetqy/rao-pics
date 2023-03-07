@@ -95,12 +95,20 @@ const ImageModal = ({ image, open, onCancel }: Props) => {
                 height: "65vh",
               }}
             >
-              <Image
-                fill
-                style={{ objectFit: "scale-down" }}
-                src={handleImageUrl(image, true)}
-                alt={handleImageAlt(image)}
-              />
+              {["mp4"].includes(image.ext.toLocaleLowerCase()) ? (
+                <video
+                  src={handleImageUrl(image, true)}
+                  style={{ width: "100%", height: "100%" }}
+                  controls
+                />
+              ) : (
+                <Image
+                  fill
+                  style={{ objectFit: "scale-down" }}
+                  src={handleImageUrl(image, true)}
+                  alt={handleImageAlt(image)}
+                />
+              )}
             </div>
 
             {image.tags.length > 0 && (
