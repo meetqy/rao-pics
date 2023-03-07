@@ -44,6 +44,7 @@ const PLUGIN_API = async (args: Args) => {
 
   // random image
   fastify.register(random);
+  fastify.register(random, { prefix: "/api" });
 
   args.registerCallback && args.registerCallback(fastify);
 

@@ -13,6 +13,8 @@ import { trigger } from "../trigger";
 const _wait = 3000;
 
 let bar;
+const supportExt = ["jpg", "png", "webp", "jpeg", "bmp", "gif", "mp4"];
+const supportNSFWExt = ["jpg", "png", "webp", "jpeg", "bmp"];
 
 interface FileItem {
   file: string;
@@ -107,6 +109,11 @@ function getPrismaParams(
     }
   }
 
+  // 浮点数只能用string来存储
+  if (data.ext.toLocaleLowerCase() === "mp4") {
+    data.duration = data.duration.toString();
+  }
+
   return {
     ...data,
     tags,
@@ -166,7 +173,8 @@ const handleImage = async () => {
 
     let metadata: EagleUse.Image = readJsonSync(file);
 
-    if (!["jpg", "png", "webp", "jpeg", "bmp"].includes(metadata.ext.toLocaleLowerCase())) {
+    // 不支持的扩展名 直接删除并跳过后续执行
+    if (!supportExt.includes(metadata.ext.toLocaleLowerCase())) {
       PendingFiles.delete(fileItem);
       continue;
     }
@@ -179,7 +187,12 @@ const handleImage = async () => {
     });
 
     // nsfw检测
-    if (!image || !image.nsfw) metadata = await getNSFWMetadata(metadata, file);
+    if (!image || !image.nsfw) {
+      // 不支持的扩展名 直接删除并跳过后续执行
+      if (!supportNSFWExt.includes(metadata.ext.toLocaleLowerCase())) {
+        metadata = await getNSFWMetadata(metadata, file);
+      }
+    }
 
     const data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
 

@@ -26,6 +26,11 @@ model Image {
   lastModified      BigInt?
   deletedTime       BigInt?
   isDeleted         Boolean? @default(false)
+  // <--- 视频 --->
+  resolutionWidth   Int?
+  resolutionHeight  Int?
+  duration          String?
+  // <--- 视频 --->
   // 自定义属性  NSFW是否检测
   nsfw              Boolean? @default(false)
   processingPalette Boolean?

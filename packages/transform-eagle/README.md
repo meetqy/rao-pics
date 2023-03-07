@@ -50,4 +50,4 @@ PLUGIN_NSFW=true
 
 ## Notice
 
-If sqlite database exist in you local, please use `npx prisma db push`.
+If sqlite database exist in you local, please use `pnpm run db:push`.

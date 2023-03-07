@@ -99,6 +99,7 @@ importers:
       dotenv: ^16.0.3
       fs-extra: ^11.1.0
       lodash: ^4.17.21
+      prisma: ^4.10.1
       progress: ^2.0.3
     dependencies:
       "@eagleuse/prisma-client": link:../prisma-client
@@ -114,6 +115,7 @@ importers:
       "@types/fs-extra": 11.0.1
       "@types/lodash": 4.14.191
       "@types/node": 18.14.0
+      prisma: 4.10.1
 
   packages/utils:
     specifiers:
@@ -3050,7 +3052,6 @@ packages:
         integrity: sha512-B3tcTxjx196nuAu1GOTKO9cGPUgTFHYRdkPkTS4m5ptb2cejyBlH9X7GOfSt3xlI7p4zAJDshJP4JJivCg9ouA==,
       }
     requiresBuild: true
-    dev: false
 
   /@rollup/pluginutils/5.0.2:
     resolution:
@@ -10277,7 +10278,6 @@ packages:
     requiresBuild: true
     dependencies:
       "@prisma/engines": 4.10.1
-    dev: false
 
   /proc-log/2.0.1:
     resolution:
