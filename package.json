@@ -1,6 +1,6 @@
 {
   "name": "eagleuse",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "把《Eagle App》作为后台管理系统，快速构建 WEB 图片站、自建图床。",
   "packageManager": "pnpm@7.1.0",
   "keywords": [

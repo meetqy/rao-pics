@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.4](https://github.com/meetqy/eagleuse/compare/v0.2.3...v0.2.4) (2023-03-07)
+
+### Bug Fixes | Bug 修复
+
+- 🐛 ipad 弹窗 mp4 播放器 ([8b5fa92](https://github.com/meetqy/eagleuse/commit/8b5fa928e04f7135810a18780d84dadd3a07651c))
+
 ### [0.2.3](https://github.com/meetqy/eagleuse/compare/v0.2.2...v0.2.3) (2023-03-07)
 
 ### Features | 新功能
