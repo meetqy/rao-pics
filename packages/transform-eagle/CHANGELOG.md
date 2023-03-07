@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.1.17...@eagleuse/transform-eagle@1.2.0) (2023-03-07)
+
+### Features
+
+- 🎸 support mp4 gif ([aa65076](https://github.com/meetqy/eagleuse/commit/aa65076d66eb46c605b5d95a0ab729b790793f32))
+
 ## [1.1.17](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.1.16...@eagleuse/transform-eagle@1.1.17) (2023-03-06)
 
 **Note:** Version bump only for package @eagleuse/transform-eagle
