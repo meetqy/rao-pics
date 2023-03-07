@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.2.0...@eagleuse/transform-eagle@1.2.1) (2023-03-07)
+
+### Bug Fixes
+
+- 🐛 nsfw 支持格式 ([47eeeba](https://github.com/meetqy/eagleuse/commit/47eeeba5f6fc16474cb055d8139787d249863a30))
+
 # [1.2.0](https://github.com/meetqy/eagleuse/compare/@eagleuse/transform-eagle@1.1.17...@eagleuse/transform-eagle@1.2.0) (2023-03-07)
 
 ### Features
