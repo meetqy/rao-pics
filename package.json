@@ -40,9 +40,9 @@
     "@ant-design/icons": "^4.8.0",
     "@commitlint/cli": "^17.4.1",
     "@commitlint/config-conventional": "^17.4.0",
-    "@eagleuse/plugin-api": "^1.1.7",
+    "@eagleuse/plugin-api": "^1.2.0",
     "@eagleuse/plugin-nsfw": "^1.1.0",
-    "@eagleuse/transform-eagle": "^1.1.17",
+    "@eagleuse/transform-eagle": "^1.2.1",
     "@fastify/nextjs": "^9.2.0",
     "@prisma/client": "^4.10.1",
     "@types/justified-layout": "^4.1.0",
@@ -67,7 +67,7 @@
     "standard-version": "^9.5.0"
   },
   "devDependencies": {
-    "@eagleuse/prisma-client": "^1.0.2",
+    "@eagleuse/prisma-client": "^1.1.0",
     "@tensorflow/tfjs-node": "^4.2.0",
     "@types/fs-extra": "^9.0.13",
     "@types/lodash": "^4.14.191",

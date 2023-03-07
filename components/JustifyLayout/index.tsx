@@ -1,6 +1,6 @@
 import Image from "next/image";
 import justifyLayout from "justified-layout";
-import { Button, Card, Layout, Row, Col, theme, Empty } from "antd";
+import { Button, Card, Layout, Row, Col, theme, Empty, Badge } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { handleImageAlt, handleImageUrl } from "@/hooks";
 import { useRecoilState } from "recoil";
@@ -56,7 +56,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   const { token } = theme.useToken();
   const activeImage = useMemo(() => rightBasic.image, [rightBasic]);
   const { data, loadMore, loadingMore, noMore } = infiniteScroll;
-  const images = useMemo(() => data.list, [data]);
+  const images = useMemo(() => data.list as EagleUse.Image[], [data]);
   const size = useSize(() => document.body);
   const [open, setOpen] = useState(false);
 
@@ -104,17 +104,15 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
           {layoutPos.boxes.map((item, i: number) => {
             const image = images[i];
             if (!image) return null;
+
             const palettes: EagleUse.ImagePalette = image.processingPalette
               ? null
               : JSON.parse(image.palettes);
 
-            return (
+            const card = (
               <Card
                 hoverable
-                key={image.id}
                 style={{
-                  ...item,
-                  position: "absolute",
                   background: !_.isEmpty(palettes)
                     ? `rgb(${palettes[0].color}, .25)`
                     : token.colorBgBase,
@@ -144,6 +142,21 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
                   alt={handleImageAlt(image)}
                 />
               </Card>
+            );
+
+            return (
+              <div style={{ ...item, position: "absolute" }} key={image.id}>
+                {["gif", "mp4"].includes(image.ext.toLocaleLowerCase()) ? (
+                  <Badge.Ribbon
+                    placement="start"
+                    text={image.ext.toLocaleUpperCase()}
+                  >
+                    {card}
+                  </Badge.Ribbon>
+                ) : (
+                  card
+                )}
+              </div>
             );
           })}
         </div>

@@ -7,11 +7,12 @@ interface Props {
 }
 
 const options: DefaultOptionType[] = [
-  { value: "jpg", label: "jpg" },
-  { value: "jpeg", label: "jpeg" },
-  { value: "gif", label: "gif" },
-  { value: "webp", label: "webp" },
-  { value: "png", label: "png" },
+  { value: "jpg", label: "JPG" },
+  { value: "jpeg", label: "JPEG" },
+  { value: "gif", label: "GIF" },
+  { value: "webp", label: "WEBP" },
+  { value: "png", label: "PNG" },
+  { value: "mp4", label: "MP4" },
 ];
 
 const Ext = (props: Props) => {
