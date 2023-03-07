@@ -97,6 +97,7 @@ importers:
       "@types/node": ^18.14.0
       chokidar: ^3.5.3
       dotenv: ^16.0.3
+      dotenv-cli: ^7.0.0
       fs-extra: ^11.1.0
       lodash: ^4.17.21
       prisma: ^4.10.1
@@ -115,6 +116,7 @@ importers:
       "@types/fs-extra": 11.0.1
       "@types/lodash": 4.14.191
       "@types/node": 18.14.0
+      dotenv-cli: 7.0.0
       prisma: 4.10.1
 
   packages/utils:
@@ -5542,6 +5544,27 @@ packages:
       is-obj: 2.0.0
     dev: true
 
+  /dotenv-cli/7.0.0:
+    resolution:
+      {
+        integrity: sha512-XfMzVdpdDTRnlcgvFLg3lSyiLXqFxS4tH7RbK5IxkC4XIUuxPyrGoDufkfLjy/dA28EILzEu+mros6h8aQmyGg==,
+      }
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
+      minimist: 1.2.8
+    dev: true
+
+  /dotenv-expand/10.0.0:
+    resolution:
+      {
+        integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==,
+      }
+    engines: { node: ">=12" }
+    dev: true
+
   /dotenv/10.0.0:
     resolution:
       {
@@ -5556,7 +5579,6 @@ packages:
         integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==,
       }
     engines: { node: ">=12" }
-    dev: false
 
   /duplexer/0.1.2:
     resolution:
