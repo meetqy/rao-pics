@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/meetqy/eagleuse/compare/v0.2.2...v0.2.3) (2023-03-07)
+
+### Features | 新功能
+
+- 🎸 支持 gif 格式、mp4 ([4d62062](https://github.com/meetqy/eagleuse/commit/4d6206203b32c3056211bb78a4cdecf21cfbb41f)), closes [#74](https://github.com/meetqy/eagleuse/issues/74)
+
 ### [0.2.2](https://github.com/meetqy/eagleuse/compare/v0.2.1...v0.2.2) (2023-03-06)
 
 ### Bug Fixes | Bug 修复
