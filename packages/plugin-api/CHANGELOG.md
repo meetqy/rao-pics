@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.2.0...@eagleuse/plugin-api@1.2.1) (2023-03-08)
+
+### Performance Improvements
+
+- ⚡️ 取消本地创建软连接,直接使用原始地址 ([97aa920](https://github.com/meetqy/eagleuse/commit/97aa92059b486be72900fc2660beffd915d5572a))
+
 # [1.2.0](https://github.com/meetqy/eagleuse/compare/@eagleuse/plugin-api@1.1.7...@eagleuse/plugin-api@1.2.0) (2023-03-07)
 
 ### Features

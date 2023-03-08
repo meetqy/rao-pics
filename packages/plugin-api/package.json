@@ -1,6 +1,6 @@
 {
   "name": "@eagleuse/plugin-api",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Transform sqlite database to web api.",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",

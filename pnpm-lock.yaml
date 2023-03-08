@@ -53,7 +53,6 @@ importers:
       "@fastify/static": ^6.9.0
       "@types/node": ^18.14.2
       fastify: ^4.14.0
-      fs-extra: ^11.1.0
       ip: ^1.1.8
       nodemon: ^2.0.20
     dependencies:
@@ -62,7 +61,6 @@ importers:
       "@fastify/cors": 8.2.0
       "@fastify/static": 6.9.0
       fastify: 4.14.0
-      fs-extra: 11.1.0
       ip: 1.1.8
     devDependencies:
       "@types/node": 18.14.2
@@ -88,7 +86,7 @@ importers:
 
   packages/transform-eagle:
     specifiers:
-      "@eagleuse/plugin-api": ^1.2.0
+      "@eagleuse/plugin-api": ^1.2.1
       "@eagleuse/plugin-nsfw": ^1.1.0
       "@eagleuse/prisma-client": ^1.1.0
       "@eagleuse/utils": ^1.0.5
