@@ -1,8 +1,6 @@
 import Fastify, { FastifyInstance } from "fastify";
 import fastifyStatic from "@fastify/static";
 import image from "./image";
-import { createSymlink } from "./script";
-import { join } from "path";
 import cors from "@fastify/cors";
 import { random } from "./random";
 import folder from "./folder";
@@ -22,15 +20,13 @@ const PLUGIN_API = async (args: Args) => {
     return Number(this);
   };
 
-  await createSymlink(args.library);
-
   const fastify = Fastify({
     trustProxy: true,
   });
 
   // 静态资源管理
   await fastify.register(fastifyStatic, {
-    root: join(__dirname, "../public/library"),
+    root: args.library,
     prefix: "/public/",
   });
 

@@ -28,7 +28,6 @@ export default defineConfig({
         "@fastify/cors",
         "@fastify/static",
         "fastify",
-        "fs-extra",
         "path",
         "ip",
       ],
@@ -36,7 +35,6 @@ export default defineConfig({
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
           fastify: "Fastify",
-          fs: "fs-extra",
           ip: "ip",
           "@fastify/static": "FastifyStatic",
           "@fastify/cors": "FastifyCors",
