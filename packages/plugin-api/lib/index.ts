@@ -24,6 +24,8 @@ const PLUGIN_API = async (args: Args) => {
     trustProxy: true,
   });
 
+  args.registerCallback && args.registerCallback(fastify);
+
   // 静态资源管理
   await fastify.register(fastifyStatic, {
     root: args.library,
@@ -41,8 +43,6 @@ const PLUGIN_API = async (args: Args) => {
   // random image
   fastify.register(random);
   fastify.register(random, { prefix: "/api" });
-
-  args.registerCallback && args.registerCallback(fastify);
 
   fastify.listen({ port: args.port, host: undefined }, function (err) {
     if (err) {
