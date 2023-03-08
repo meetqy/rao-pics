@@ -26,7 +26,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@eagleuse/plugin-api": "^1.2.1",
     "@eagleuse/plugin-nsfw": "^1.1.0",
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
