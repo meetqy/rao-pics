@@ -86,7 +86,6 @@ importers:
 
   packages/transform-eagle:
     specifiers:
-      "@eagleuse/plugin-api": ^1.2.1
       "@eagleuse/plugin-nsfw": ^1.1.0
       "@eagleuse/prisma-client": ^1.1.0
       "@eagleuse/utils": ^1.0.5
@@ -109,7 +108,6 @@ importers:
       lodash: 4.17.21
       progress: 2.0.3
     devDependencies:
-      "@eagleuse/plugin-api": link:../plugin-api
       "@eagleuse/plugin-nsfw": link:../plugin-nsfw
       "@types/fs-extra": 11.0.1
       "@types/lodash": 4.14.191
