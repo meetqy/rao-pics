@@ -22,12 +22,27 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
+    "ahooks": "^3.7.5",
+    "antd": "^5.3.0",
+    "eslint": "^8.34.0",
+    "eslint-config-next": "^13.2.3",
+    "justified-layout": "^4.1.0",
+    "lodash": "^4.17.21",
     "next": "13.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "recoil": "^0.7.7",
     "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^13.2.3",
+    "@types/justified-layout": "^4.1.0",
+    "@types/lodash": "^4.14.191",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0"
   }
 }
