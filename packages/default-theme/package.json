@@ -1,0 +1,33 @@
+{
+  "name": "@eagleuse/default-theme",
+  "version": "0.2.5",
+  "description": "eagleuse default theme.",
+  "author": "meetqy <meetqy@qq.com>",
+  "homepage": "https://rao.pics",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meetqy/eagleuse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/meetqy/eagleuse/issues"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "18.14.6",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "next": "13.2.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "4.9.5"
+  }
+}
