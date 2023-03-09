@@ -1,0 +1,3 @@
+import EagleUse from ".";
+
+EagleUse();
