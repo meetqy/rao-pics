@@ -2,5 +2,8 @@
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "npmClient": "pnpm",
   "useWorkspaces": true,
-  "version": "independent"
+  "version": "independent",
+  "publish": {
+    "ignoreChanges": ["ignored-file", "*.md"]
+  }
 }
