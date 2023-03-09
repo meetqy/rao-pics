@@ -8,13 +8,8 @@
     "sqlite"
   ],
   "scripts": {
-    "db:init": "prisma migrate dev --name init --skip-seed",
-    "db:push": "prisma db push",
     "build": "vite build",
     "test": "npx jest --config ../../jest.config.ts --watch"
-  },
-  "prisma": {
-    "schema": "./node_modules/@eagleuse/prisma-client/prisma/schema.prisma"
   },
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://github.com/meetqy/eagleuse",
@@ -26,7 +21,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@eagleuse/plugin-nsfw": "^1.1.0",
+    "@eagleuse/plugin-nsfw": "workspace:^1.1.0",
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.0",
@@ -37,7 +32,6 @@
     "@eagleuse/prisma-client": "^1.1.0",
     "@eagleuse/utils": "^1.0.5",
     "chokidar": "^3.5.3",
-    "dotenv": "^16.0.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
     "progress": "^2.0.3"

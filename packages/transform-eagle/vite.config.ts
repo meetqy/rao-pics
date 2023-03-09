@@ -4,8 +4,6 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
     dts({
-      // 是否将源码里的 .d.ts 文件复制到 outputDir
-      copyDtsFiles: true,
       // 是否跳过类型诊断
       skipDiagnostics: true,
       // 是否生成类型声明入口
@@ -16,7 +14,7 @@ export default defineConfig({
     target: "es2020",
     lib: {
       entry: "lib/index.ts",
-      name: "@eagleuse/transform-eagle",
+      name: "TransformEagle",
       fileName: "index",
       formats: ["cjs"],
     },
@@ -28,7 +26,6 @@ export default defineConfig({
         "fs-extra",
         "lodash",
         "path",
-        "dotenv",
         "progress",
         "@eagleuse/utils",
         "@eagleuse/plugin-nsfw",
@@ -41,7 +38,6 @@ export default defineConfig({
           "fs-extra": "fs",
           lodash: "_",
           path: "path",
-          dotenv: "dotenv",
           progress: "ProgressBar",
           "@eagleuse/utils": "Utils",
           "@eagleuse/plugin-nsfw": "NSFW",

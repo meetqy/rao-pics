@@ -1,27 +1,34 @@
-import * as dotenv from "dotenv";
 import watchImage from "./image";
 import watchMetadata from "./metadata";
 import { logger } from "@eagleuse/utils";
 import { getNSFW } from "./image/nsfw";
 import watchStarredTags from "./starred-tags";
 
-export const transformEagle = async () => {
-  dotenv.config();
-  const { LIBRARY, PLUGIN_NSFW } = process.env;
-  if (!LIBRARY) throw Error("LIBRARY is null!");
+interface Args {
+  library: string;
+  plugin_nsfw?: boolean;
+}
 
-  if (PLUGIN_NSFW === "true") {
+const TransformEagle = async (args: Args) => {
+  const { library, plugin_nsfw } = args;
+  if (!library) throw Error("library is null!");
+
+  process.env.LIBRARY = library;
+
+  if (plugin_nsfw) {
     await getNSFW();
     logger.info("Complete init nsfw.");
   }
 
   logger.info("Start transform 🛫");
 
-  await watchMetadata(LIBRARY);
-  await watchStarredTags(LIBRARY);
+  await watchMetadata(library);
+  await watchStarredTags(library);
 
   // 延迟一个 wait 时间
   setTimeout(() => {
-    watchImage(LIBRARY);
+    watchImage(library);
   }, 5000);
 };
+
+export default TransformEagle;

@@ -90,6 +90,25 @@ importers:
       "@typescript-eslint/eslint-plugin": 5.52.0_6cfvjsbua5ptj65675bqcn6oza
       "@typescript-eslint/parser": 5.52.0_7kw3g6rralp5ps6mg3uyzz6azm
 
+  packages/eagleuse:
+    specifiers:
+      "@eagleuse/plugin-api": workspace:^1.2.2
+      "@eagleuse/prisma-client": workspace:^1.1.0
+      "@eagleuse/transform-eagle": workspace:^1.2.3
+      "@types/node": ^18.14.6
+      dotenv-flow: ^3.2.0
+      prisma: ^4.10.1
+      vite: ^4.1.3
+    dependencies:
+      "@eagleuse/plugin-api": link:../plugin-api
+      "@eagleuse/prisma-client": link:../prisma-client
+      "@eagleuse/transform-eagle": link:../transform-eagle
+      dotenv-flow: 3.2.0
+    devDependencies:
+      "@types/node": 18.14.6
+      prisma: 4.10.1
+      vite: 4.1.3_@types+node@18.14.6
+
   packages/plugin-api:
     specifiers:
       "@eagleuse/prisma-client": ^1.1.0
@@ -131,14 +150,13 @@ importers:
 
   packages/transform-eagle:
     specifiers:
-      "@eagleuse/plugin-nsfw": ^1.1.0
+      "@eagleuse/plugin-nsfw": workspace:^1.1.0
       "@eagleuse/prisma-client": ^1.1.0
       "@eagleuse/utils": ^1.0.5
       "@types/fs-extra": ^11.0.1
       "@types/lodash": ^4.14.191
       "@types/node": ^18.14.0
       chokidar: ^3.5.3
-      dotenv: ^16.0.3
       dotenv-cli: ^7.0.0
       fs-extra: ^11.1.0
       lodash: ^4.17.21
@@ -148,7 +166,6 @@ importers:
       "@eagleuse/prisma-client": link:../prisma-client
       "@eagleuse/utils": link:../utils
       chokidar: 3.5.3
-      dotenv: 16.0.3
       fs-extra: 11.1.0
       lodash: 4.17.21
       progress: 2.0.3
@@ -6486,6 +6503,16 @@ packages:
     engines: { node: ">=12" }
     dev: true
 
+  /dotenv-flow/3.2.0:
+    resolution:
+      {
+        integrity: sha512-GEB6RrR4AbqDJvNSFrYHqZ33IKKbzkvLYiD5eo4+9aFXr4Y4G+QaFrB/fNp0y6McWBmvaPn3ZNjIufnj8irCtg==,
+      }
+    engines: { node: ">= 8.0.0" }
+    dependencies:
+      dotenv: 8.6.0
+    dev: false
+
   /dotenv/10.0.0:
     resolution:
       {
@@ -6500,6 +6527,15 @@ packages:
         integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==,
       }
     engines: { node: ">=12" }
+    dev: true
+
+  /dotenv/8.6.0:
+    resolution:
+      {
+        integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==,
+      }
+    engines: { node: ">=10" }
+    dev: false
 
   /duplexer/0.1.2:
     resolution:
@@ -14957,6 +14993,43 @@ packages:
       terser:
         optional: true
     dependencies:
+      esbuild: 0.16.17
+      postcss: 8.4.21
+      resolve: 1.22.1
+      rollup: 3.17.2
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/4.1.3_@types+node@18.14.6:
+    resolution:
+      {
+        integrity: sha512-0Zqo4/Fr/swSOBmbl+HAAhOjrqNwju+yTtoe4hQX9UsARdcuc9njyOdr6xU0DDnV7YP0RT6mgTTOiRtZgxfCxA==,
+      }
+    engines: { node: ^14.18.0 || >=16.0.0 }
+    hasBin: true
+    peerDependencies:
+      "@types/node": ">= 14"
+      less: "*"
+      sass: "*"
+      stylus: "*"
+      sugarss: "*"
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      "@types/node":
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      "@types/node": 18.14.6
       esbuild: 0.16.17
       postcss: 8.4.21
       resolve: 1.22.1
