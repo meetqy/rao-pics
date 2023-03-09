@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { Prisma, PrismaClient } from "@eagleuse/prisma-client";
+import { Prisma, getPrisma } from "@eagleuse/prisma-client";
 
-export const _ = async (fastify: FastifyInstance, prisma: PrismaClient) => {
+export const _ = async (fastify: FastifyInstance) => {
   fastify.post<{
     Querystring: {
       page?: number;
@@ -13,6 +13,7 @@ export const _ = async (fastify: FastifyInstance, prisma: PrismaClient) => {
       where?: Prisma.ImageWhereInput;
     };
   }>("/image", async (req) => {
+    const prisma = getPrisma();
     const { orderBy, include, where } = req.body || {};
     const page = +req.query.page || 1;
     const pageSize = +req.query.pageSize || 20;

@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
 import { handleInclude } from "../utils";
-import { PrismaClient } from "@eagleuse/prisma-client";
+import { getPrisma } from "@eagleuse/prisma-client";
 
-export const id = async (fastify: FastifyInstance, prisma: PrismaClient) => {
+export const id = async (fastify: FastifyInstance) => {
   fastify.get<{
     Params: {
       id: string;
@@ -29,6 +29,7 @@ export const id = async (fastify: FastifyInstance, prisma: PrismaClient) => {
       },
     },
     async (req) => {
+      const prisma = getPrisma();
       const { id } = req.params;
       const { include } = req.query;
 

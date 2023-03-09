@@ -1,13 +1,14 @@
-import { Prisma, PrismaClient } from "@eagleuse/prisma-client";
+import { Prisma, getPrisma } from "@eagleuse/prisma-client";
 import { FastifyInstance } from "fastify";
 
-export const _ = async (fastify: FastifyInstance, prisma: PrismaClient) => {
+export const _ = async (fastify: FastifyInstance) => {
   fastify.post<{
     Body: {
       where?: Prisma.TagWhereInput;
       include?: Prisma.TagInclude;
     };
   }>("/tag", async (req) => {
+    const prisma = getPrisma();
     const { where, include } = req.body;
     const json: Prisma.TagFindManyArgs = {};
 
