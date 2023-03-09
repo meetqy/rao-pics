@@ -3,7 +3,7 @@ import dotenv from "dotenv-flow";
 import TransformEagle from "@eagleuse/transform-eagle";
 
 const EagleUse = () => {
-  const { LIBRARY, DATABASE_URL, NSFW = "false" } = process.env;
+  const { LIBRARY, DATABASE_URL, NSFW = "false", PORT = 3002 } = process.env;
 
   if (!LIBRARY) throw Error("LIBRARY is null!");
   if (!DATABASE_URL) throw Error("DATABASE_URL is null!");
@@ -17,6 +17,7 @@ const EagleUse = () => {
 
   PLUGIN_API({
     library: LIBRARY,
+    port: +PORT,
   });
 };
 
