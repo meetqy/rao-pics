@@ -4,6 +4,6 @@
   "useWorkspaces": true,
   "version": "independent",
   "publish": {
-    "ignoreChanges": ["ignored-file", "*.md"]
+    "ignoreChanges": ["ignored-file", "*.md", "example/*.ts"]
   }
 }
