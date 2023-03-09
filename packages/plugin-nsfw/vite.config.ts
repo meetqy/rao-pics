@@ -11,7 +11,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "lib/index.ts",
-      name: "@eagleuse/transform-eagle",
+      name: "@eagleuse/plugin-nsfw",
       fileName: "index",
       formats: ["cjs"],
     },

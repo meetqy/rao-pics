@@ -1,11 +1,3 @@
 # `@eagleuse/plugin-nsfw`
 
-> TODO: description
-
-## Usage
-
-```
-const pluginNsfw = require('@eagleuse/plugin-nsfw');
-
-// TODO: DEMONSTRATE API
-```
+Please read [@eagleuse/transfrom-eagle](https://www.npmjs.com/package/@eagleuse/transform-eagle).

@@ -18,7 +18,7 @@ const getModel = async () => {
  * 检测图片 NSFW
  * @param file  图片路径
  */
-const plugin_NSFW = async (file: string) => {
+const PLUGIN_NSFW = async (file: string) => {
   if (process.env.NSFW === "false") return [];
 
   const pic = new Uint8Array(fs.readFileSync(file).buffer);
@@ -30,4 +30,4 @@ const plugin_NSFW = async (file: string) => {
   return predictions;
 };
 
-export default plugin_NSFW;
+export default PLUGIN_NSFW;
