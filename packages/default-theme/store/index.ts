@@ -1,6 +1,6 @@
 export * from "./constant";
 
-import { createContext } from "react";
+import { RefObject, createContext } from "react";
 import { atom } from "recoil";
 
 export const activeMenuState = atom({
@@ -40,7 +40,7 @@ export const rightBasicState = atom({
 });
 
 // layout content ref
-export const LayoutContentRefContext = createContext({ current: null });
+export const LayoutContentRefContext = createContext<RefObject<HTMLElement | null>>({ current: null });
 
 // 主题
 export type ThemeMode = "light" | "dark";

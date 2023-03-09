@@ -1,12 +1,21 @@
 import { Layout, theme, Typography } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeMenuState, countState, foldersState, LayoutContentRefContext, tagsState } from "@/store";
-import { useCallback, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
+import {
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import { useSize } from "ahooks";
 
-export const MyLayout = ({ children }) => {
+export const MyLayout = ({ children }: { children: ReactNode }) => {
   const activeMenu = useRecoilValue(activeMenuState) || "/";
   const [, setTags] = useRecoilState(tagsState);
   const [, setCount] = useRecoilState(countState);
@@ -19,12 +28,12 @@ export const MyLayout = ({ children }) => {
   const { token } = theme.useToken();
   const size = useSize(() => document.body);
 
-  const isMobile = useMemo(() => size?.width < token.screenSM, [size, token]);
+  const isMobile = useMemo(() => size && size?.width < token.screenSM, [size, token]);
 
   const LayoutContentRefC = useContext(LayoutContentRefContext);
-  const layoutContentRef = useRef(null);
+  const layoutContentRef = useRef<HTMLElement>(null);
 
-  useImperativeHandle(LayoutContentRefC, () => layoutContentRef);
+  useImperativeHandle(LayoutContentRefC, () => layoutContentRef.current);
 
   // 初始化 folderState
   const initFolder = useCallback(() => {

@@ -1,6 +1,6 @@
 export const handleOrderBy = ({ orderBy }: EagleUse.SearchParams) => {
   if (!orderBy) return { modificationTime: "desc" };
-  const json = {};
+  const json: { [key in string]: "desc" | "asc" } = {};
 
   json[orderBy.field] = orderBy.by;
   return json;

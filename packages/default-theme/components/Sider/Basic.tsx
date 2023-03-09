@@ -65,20 +65,18 @@ const SiderBasic = () => {
       </Row>
 
       <Row gutter={[2, 0]} style={{ marginTop: 20, height: 12 }} className={styles.palettes}>
-        {JSON.parse(image.palettes)
-          .slice(0, 8)
-          .map((item, i) => (
-            <Col key={i} flex={1}>
-              <Tooltip title={`rgb(${item.color})`}>
-                <div
-                  style={{
-                    backgroundColor: `rgb(${item.color})`,
-                    height: 12,
-                  }}
-                />
-              </Tooltip>
-            </Col>
-          ))}
+        {(JSON.parse(image.palettes) as EagleUse.ImagePalette[]).slice(0, 8).map((item, i) => (
+          <Col key={i} flex={1}>
+            <Tooltip title={`rgb(${item.color})`}>
+              <div
+                style={{
+                  backgroundColor: `rgb(${item.color})`,
+                  height: 12,
+                }}
+              />
+            </Tooltip>
+          </Col>
+        ))}
       </Row>
 
       <Row style={{ marginTop: 20 }}>
@@ -87,7 +85,7 @@ const SiderBasic = () => {
         </Col>
       </Row>
 
-      {image?.tags.length > 0 && (
+      {image.tags && (
         <Space size={[0, 8]} wrap style={{ marginTop: 10 }}>
           {image.tags.map((item) => (
             <Tag

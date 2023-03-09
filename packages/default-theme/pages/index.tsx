@@ -83,6 +83,7 @@ const Page = () => {
       return params.page >= Math.ceil(count / params.pageSize);
     },
     onFinally: (data) => {
+      if (!data) return;
       if (data.count != counts.all) {
         setCounts({
           ...counts,

@@ -49,7 +49,7 @@ const tagsArrayToJson = (tags: EagleUse.Tag[]) => {
   return json;
 };
 
-function handleLabel(name: string, desc: number, color?: string) {
+function handleLabel(name: string, desc: number | undefined, color?: string) {
   return (
     <Row justify="space-between" style={{ color: color }}>
       <Col flex={1}>{name}</Col>
@@ -62,10 +62,8 @@ function handleLabel(name: string, desc: number, color?: string) {
 
 type TagsCollection = {
   [key in RouteName]: {
-    data: {
-      [key: string]: EagleUse.Tag[];
-    };
-    count: number;
+    data: { [key: string]: EagleUse.Tag[] } | undefined;
+    count: number | undefined;
   };
 };
 
@@ -75,18 +73,9 @@ export default function Page() {
   const tags = useRecoilValue(tagsState);
   const tagsGroupsIsLoad = useRef(false);
   const [tagsCollection, setTagsCollection] = useState<TagsCollection>({
-    manage: {
-      data: undefined,
-      count: undefined,
-    },
-    no: {
-      data: undefined,
-      count: undefined,
-    },
-    starred: {
-      data: undefined,
-      count: undefined,
-    },
+    manage: { data: undefined, count: undefined },
+    no: { data: undefined, count: undefined },
+    starred: { data: undefined, count: undefined },
   });
 
   const [, setSearchParams] = useRecoilState(searchParamState);
@@ -202,9 +191,11 @@ export default function Page() {
         const tagsGroups: TagsCollection = {};
         const filterData = (data as EagleUse.TagsGroupsItem[]).map((item) => {
           // 找到有count的标签 并 过滤掉标签中图片为0的标签
-          item.tags = item.tags.map((tag) => tags.find((item) => tag.id === item.id)).filter((item) => item);
+          item.tags = item.tags
+            .map((tag) => tags.find((item) => tag.id === item.id))
+            .filter((item) => item) as EagleUse.Tag[];
 
-          const json = {};
+          const json: { [key: string]: EagleUse.Tag[] } = {};
           json[item.name] = item.tags;
 
           tagsGroups[item.id] = {

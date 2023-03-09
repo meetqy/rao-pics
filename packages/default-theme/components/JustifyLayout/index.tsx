@@ -25,8 +25,7 @@ interface JustifiedLayoutResult {
 }
 
 interface TData {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  list: any[];
+  list: EagleUse.Image[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
@@ -43,7 +42,8 @@ interface Props {
     loadMoreAsync: () => Promise<TData>;
     reload: () => void;
     reloadAsync: () => Promise<TData>;
-    mutate: import("react").Dispatch<import("react").SetStateAction<TData | undefined>>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mutate: any;
     cancel: () => void;
   };
 }
