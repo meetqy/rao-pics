@@ -40,9 +40,9 @@
     "schema": "./node_modules/@eagleuse/prisma-client/prisma/schema.prisma"
   },
   "dependencies": {
-    "@eagleuse/plugin-api": "workspace:^1.2.2",
-    "@eagleuse/prisma-client": "workspace:^1.1.0",
-    "@eagleuse/transform-eagle": "workspace:^1.2.3",
+    "@eagleuse/plugin-api": "workspace:*",
+    "@eagleuse/prisma-client": "workspace:*",
+    "@eagleuse/transform-eagle": "workspace:*",
     "dotenv-flow": "^3.2.0"
   },
   "devDependencies": {
