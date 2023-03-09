@@ -6,18 +6,28 @@
 import PLUGIN_API from "@eagleuse/plugin-api";
 
 PLUGIN_API({
-  library,
-  fastify,
-  port,
+  library: "/Users/qymeet/Pictures/rao.library",
 });
 ```
 
-| Args               | Desc                               | Type                                  |
-| ------------------ | ---------------------------------- | ------------------------------------- |
-| `library`          | Images dir from Eagle App library. | string                                |
-| `registerCallback` | Register Callback.                 | ((fastify: FastifyInstance) => void)? |
-| `port`             | Port                               | number?                               |
-| `host`             | Host                               | string?                               |
+## Args
+
+```ts
+interface Args {
+  library: string;
+  port?: number;
+  registerCallback?: (fastify: FastifyInstance) => void;
+}
+```
+
+## Random
+
+Get a random image.
+
+- /api/r `GET`
+- /api/random `GET`
+- /random `GET`
+- /r `GET`
 
 ## Image
 

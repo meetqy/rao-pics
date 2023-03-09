@@ -28,7 +28,7 @@ const PLUGIN_API = async (args: Args) => {
 
   // 静态资源管理
   await fastify.register(fastifyStatic, {
-    root: args.library,
+    root: args.library + "/images",
     prefix: "/public/",
   });
 
@@ -44,14 +44,16 @@ const PLUGIN_API = async (args: Args) => {
   fastify.register(random);
   fastify.register(random, { prefix: "/api" });
 
-  fastify.listen({ port: args.port, host: undefined }, function (err) {
+  const port = args.port || 3002;
+
+  fastify.listen({ port, host: "" }, function (err) {
     if (err) {
       logger.error(err);
       process.exit(1);
     }
 
     logger.info(
-      `Server is now listening on \n - http://${ip.address()}:${args.port}\n - http://localhost:${args.port}`
+      `Server is now listening on \n - http://${ip.address()}:${port}\n - http://localhost:${port}`
     );
   });
 };
