@@ -8,16 +8,27 @@ import { ThemeMode, themeState } from "@/store";
 import Head from "next/head";
 import Pkg from "@/package.json";
 import { useEffect } from "react";
+import { QueryParamProvider } from "use-query-params";
+import { NextAdapter } from "next-query-params";
+import { AppProps } from "next/app";
 
-export default function MyApp(props) {
+export default function MyApp(props: AppProps) {
   return (
     <RecoilRoot>
-      <Container {...props} />
+      <QueryParamProvider
+        // options={{
+        //   searchStringToObject: parse,
+        //   objectToSearchString: stringify,
+        // }}
+        adapter={NextAdapter}
+      >
+        <Container {...props} />
+      </QueryParamProvider>
     </RecoilRoot>
   );
 }
 
-const Container = ({ Component, pageProps }) => {
+const Container = ({ Component, pageProps }: AppProps) => {
   const [themeMode, setThemeMode] = useRecoilState(themeState);
 
   // 初始化 store

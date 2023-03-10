@@ -1,112 +1,63 @@
 import { CaretDownOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { useMount } from "ahooks";
 import { Badge, Button, Col, InputNumber, Popover, Row, Typography } from "antd";
-import _ from "lodash";
-import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
-
-type Size = number | undefined | null;
-
-interface Value {
-  width: { min: Size; max: Size };
-  height: { min: Size; max: Size };
-}
+import { ArrayParam, useQueryParams } from "use-query-params";
 
 const Size = () => {
-  const [value, setValue] = useState<Value>({
-    width: { min: undefined, max: undefined },
-    height: { min: undefined, max: undefined },
+  const [size, setSize] = useQueryParams({
+    w: ArrayParam,
+    h: ArrayParam,
   });
 
-  const router = useRouter();
-  const { query, pathname } = router;
+  function getText(size: {
+    w: (string | null)[] | null | undefined;
+    h: (string | null)[] | null | undefined;
+  }) {
+    if (!size) return "尺寸";
 
-  // 解析URL赋值给value
-  useMount(() => {
-    // h=min,max
-    // w=min,max
-    const { w, h } = query;
+    const [wMin, wMax] = (size.w || [0, 0]).map((item) => (item ? +item : 0));
+    const [hMin, hMax] = (size.h || [0, 0]).map((item) => (item ? +item : 0));
 
-    const [wMin, wMax] = w ? (w as string).split("-").map((item) => Number(item)) : [0, 0];
-    const [hMin, hMax] = h ? (h as string).split("-q").map((item) => Number(item)) : [0, 0];
-
-    if (isNaN(wMax) || isNaN(wMin) || isNaN(hMin) || isNaN(hMax)) {
-      return;
-    }
-
-    const queryValue: Value = {
-      width: { min: wMin, max: wMax },
-      height: { min: hMin, max: hMax },
-    };
-
-    if (_.isEqual(queryValue, value)) {
-      return;
-    }
-
-    setValue({
-      ...queryValue,
-    });
-  });
-
-  const text = useMemo(() => {
-    const { width, height } = value;
     let w = "";
     let h = "";
-    if (width.min && width.max) {
-      w = `${width.min}≤宽≤${width.max}`;
-    } else if (width.min && !width.max) {
-      w = `宽≥${width.min}`;
-    } else if (width.max && !width.min) {
-      w = `宽≤${width.max}`;
+    if (wMax && wMin) {
+      w = `${wMin}≤宽≤${wMax}`;
+    } else if (wMin && !wMax) {
+      w = `宽≥${wMin}`;
+    } else if (wMax && !wMin) {
+      w = `宽≤${wMax}`;
     }
 
-    if (height.min && height.max) {
-      h = `${height.min}≤高≤${height.max}`;
-    } else if (height.min && !height.max) {
-      h = `高≥${height.min}`;
-    } else if (height.max && !height.min) {
-      h = `高≤${height.max}`;
+    if (hMin && hMax) {
+      h = `${hMin}≤高≤${hMax}`;
+    } else if (hMin && !hMax) {
+      h = `高≥${hMin}`;
+    } else if (hMax && !hMin) {
+      h = `高≤${hMax}`;
     }
 
     let t = w + ", " + h;
     t = t.replace(/(,\s)$/, "").replace(/^(,\s)/, "");
 
     return t || "尺寸";
-  }, [value]);
+  }
 
-  // value 转换为 URL query
-  useEffect(() => {
-    const _query: { w?: string; h?: string } = {};
-    _query.w = [value.width.min || 0, value.width.max || 0].join("-");
-    _query.h = [value.height.min || 0, value.height.max || 0].join("-");
+  function getValue(type: "w" | "h", s: 0 | 1) {
+    const t = size[type];
+    if (!t) return undefined;
+    const v = t[s];
+    return v ? Number(v) : undefined;
+  }
 
-    if (_query.w === "0-0" && _query.h === "0-0") {
-      delete query.w;
-      delete query.h;
-      router.push(pathname, { query });
-      return;
-    }
+  function setValue(e: number | null, type: "w" | "h", s: 0 | 1) {
+    const _size = { ...size };
 
-    router.push(pathname, {
-      query: {
-        ...query,
-        ..._query,
-      },
-    });
-  }, [value, router, pathname, query]);
+    const t = _size[type] || [];
+    t[s] = e ? e.toString() : null;
 
-  const changeValue = (v: Size, type: keyof Value, size: "min" | "max") => {
-    value[type][size] = v;
+    _size[type] = t;
 
-    setValue({
-      ...value,
-    });
-  };
-
-  const showClose = useMemo(() => {
-    const { width, height } = value;
-    return (width.min || 0) + (width.max || 0) + (height.min || 0) + (height.max || 0) > 0;
-  }, [value]);
+    setSize({ ..._size });
+  }
 
   return (
     <Popover
@@ -118,16 +69,16 @@ const Size = () => {
             <Col>宽</Col>
             <Col>
               <InputNumber
-                value={value.width.min}
-                onChange={(e) => changeValue(e, "width", "min")}
+                value={getValue("w", 0)}
+                onChange={(e) => setValue(e, "w", 0)}
                 placeholder="最小"
                 size="small"
                 min={0}
               />
               <span> - </span>
               <InputNumber
-                value={value.width.max}
-                onChange={(e) => changeValue(e, "width", "max")}
+                value={getValue("w", 1)}
+                onChange={(e) => setValue(e, "w", 1)}
                 placeholder="最大"
                 size="small"
                 min={0}
@@ -138,16 +89,16 @@ const Size = () => {
             <Col>高</Col>
             <Col>
               <InputNumber
-                value={value.height.min}
-                onChange={(e) => changeValue(e, "height", "min")}
+                value={getValue("h", 0)}
+                onChange={(e) => setValue(e, "h", 0)}
                 placeholder="最小"
                 size="small"
                 min={0}
               />
               <span> - </span>
               <InputNumber
-                value={value.height.max}
-                onChange={(e) => changeValue(e, "height", "max")}
+                value={getValue("h", 1)}
+                onChange={(e) => setValue(e, "h", 1)}
                 placeholder="最大"
                 size="small"
                 min={0}
@@ -166,13 +117,13 @@ const Size = () => {
             type="link"
             danger
             icon={
-              showClose && (
+              (size.w || size.h) && (
                 <CloseCircleOutlined
                   onClick={(e) => {
                     e.stopPropagation();
-                    setValue({
-                      width: { max: undefined, min: undefined },
-                      height: { max: undefined, min: undefined },
+                    setSize({
+                      w: null,
+                      h: null,
                     });
                   }}
                 />
@@ -183,7 +134,7 @@ const Size = () => {
       >
         <Button size="small" type="link">
           <Typography.Link>
-            {text} <CaretDownOutlined style={{ fontSize: 12 }} />
+            {getText(size)} <CaretDownOutlined style={{ fontSize: 12 }} />
           </Typography.Link>
         </Button>
       </Badge>

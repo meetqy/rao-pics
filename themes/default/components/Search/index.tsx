@@ -18,6 +18,9 @@ const Search = () => {
         <Col>
           <Row gutter={[10, 10]}>
             <Col>
+              <SearchCondition.Keyword />
+            </Col>
+            <Col>
               <SearchCondition.Size />
             </Col>
           </Row>
