@@ -137,6 +137,7 @@ const Size = () => {
                     setSize({
                       w: null,
                       h: null,
+                      r: true,
                     });
                   }}
                 />
