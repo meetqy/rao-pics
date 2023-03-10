@@ -8,6 +8,7 @@ import { rightBasicState } from "@/store";
 import _ from "lodash";
 import { useSize } from "ahooks";
 import ImageModal from "./ImageModal";
+import { MoreListResult } from "@/utils/getLoadmoreList";
 
 interface LayoutBox {
   aspectRatio: number;
@@ -34,7 +35,7 @@ interface Props {
   header?: JSX.Element;
   // https://ahooks.js.org/zh-CN/hooks/use-infinite-scroll/#options
   infiniteScroll: {
-    data: TData | undefined;
+    data: MoreListResult | undefined;
     loading: boolean;
     loadingMore: boolean;
     noMore: boolean;

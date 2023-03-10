@@ -2,5 +2,8 @@
   "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "next"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "root": true
+  "root": true,
+  "rules": {
+    "@typescript-eslint/ban-types": 0
+  }
 }

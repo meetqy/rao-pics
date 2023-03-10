@@ -1,18 +1,27 @@
 import { Select } from "antd";
-import { StringParam, useQueryParam } from "use-query-params";
+import { BooleanParam, StringParam, useQueryParams } from "use-query-params";
 
 const supportExt = ["jpg", "jpeg", "png", "bmp", "mp4", "gif"];
 
 const Ext = () => {
-  const [ext, setExt] = useQueryParam("ext", StringParam);
+  const [exts, setExt] = useQueryParams({
+    ext: StringParam,
+    r: BooleanParam,
+  });
 
   return (
     <Select
-      value={ext}
-      onChange={(e) => setExt(e || undefined)}
+      value={exts.ext || undefined}
+      onChange={(e) => {
+        setExt({
+          ext: e,
+          r: true,
+        });
+      }}
       size="small"
       style={{ width: 80 }}
       placeholder="扩展名"
+      allowClear
     >
       {supportExt.map((item) => (
         <Select.Option key={item}>{item.toLocaleUpperCase()}</Select.Option>

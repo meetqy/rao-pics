@@ -152,6 +152,7 @@ importers:
   themes/default:
     specifiers:
       "@ant-design/icons": ^5.0.1
+      "@eagleuse/prisma-client": workspace:^1.1.0
       "@next/eslint-plugin-next": ^13.2.3
       "@types/justified-layout": ^4.1.0
       "@types/lodash": ^4.14.191
@@ -192,6 +193,7 @@ importers:
       typescript: 4.9.5
       use-query-params: 2.2.0_biqbaboplfbrettd7655fr4n2y
     devDependencies:
+      "@eagleuse/prisma-client": link:../../packages/prisma-client
       "@next/eslint-plugin-next": 13.2.4
       "@types/justified-layout": 4.1.0
       "@types/lodash": 4.14.191
@@ -4695,7 +4697,7 @@ packages:
       rc-mentions: 2.0.0_biqbaboplfbrettd7655fr4n2y
       rc-menu: 9.8.2_biqbaboplfbrettd7655fr4n2y
       rc-motion: 2.6.3_biqbaboplfbrettd7655fr4n2y
-      rc-notification: 5.0.2_biqbaboplfbrettd7655fr4n2y
+      rc-notification: 5.0.3_biqbaboplfbrettd7655fr4n2y
       rc-pagination: 3.2.0_biqbaboplfbrettd7655fr4n2y
       rc-picker: 3.2.4_mlnkrlbros4rghcauwy625gk7y
       rc-progress: 3.4.1_biqbaboplfbrettd7655fr4n2y
@@ -12574,10 +12576,10 @@ packages:
       react-dom: 18.2.0_react@18.2.0
     dev: false
 
-  /rc-notification/5.0.2_biqbaboplfbrettd7655fr4n2y:
+  /rc-notification/5.0.3_biqbaboplfbrettd7655fr4n2y:
     resolution:
       {
-        integrity: sha512-74wUFiLlyr6lRGEY1m1BaTiDp+0lIT4FRAblMnh9FApyK2JGdsSLbrQ/1rgM7d2N/IX5UIr8kLLW3TdXxFt/jQ==,
+        integrity: sha512-+wHbHu6RiTNtsZYx42WxWA+tC5m0qyKvJAauO4/6LIEyJspK8fRlFQz+OCFgFwGuNs3cOdo9tLs+cPfztSZwbQ==,
       }
     engines: { node: ">=8.x" }
     peerDependencies:

@@ -1,12 +1,15 @@
 import { CaretDownOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Badge, Button, Col, InputNumber, Popover, Row, Typography } from "antd";
-import { ArrayParam, useQueryParams } from "use-query-params";
+import { ArrayParam, BooleanParam, useQueryParams } from "use-query-params";
 
 const Size = () => {
   const [size, setSize] = useQueryParams({
     w: ArrayParam,
     h: ArrayParam,
+    r: BooleanParam,
   });
+
+  let isChange = false;
 
   function getText(size: {
     w: (string | null)[] | null | undefined;
@@ -56,6 +59,7 @@ const Size = () => {
 
     _size[type] = t;
 
+    isChange = true;
     setSize({ ..._size });
   }
 
@@ -63,6 +67,14 @@ const Size = () => {
     <Popover
       placement="bottom"
       trigger={"click"}
+      onOpenChange={(e) => {
+        if (!e && isChange) {
+          setSize({
+            ...size,
+            r: true,
+          });
+        }
+      }}
       content={
         <>
           <Row gutter={[40, 0]} align="middle">

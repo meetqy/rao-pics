@@ -41,6 +41,7 @@
     "use-query-params": "^2.2.0"
   },
   "devDependencies": {
+    "@eagleuse/prisma-client": "workspace:^1.1.0",
     "@next/eslint-plugin-next": "^13.2.3",
     "@types/justified-layout": "^4.1.0",
     "@types/lodash": "^4.14.191",

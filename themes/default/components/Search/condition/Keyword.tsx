@@ -1,13 +1,21 @@
 import { Input } from "antd";
-import { StringParam, useQueryParam } from "use-query-params";
+import { BooleanParam, StringParam, useQueryParams } from "use-query-params";
 
 const Keyword = () => {
-  const [keyword, setKeyword] = useQueryParam("k", StringParam);
+  const [keyword, setKeyword] = useQueryParams({
+    k: StringParam,
+    r: BooleanParam,
+  });
 
   return (
     <Input
-      value={keyword || undefined}
-      onChange={(e) => setKeyword(e.target.value || undefined)}
+      value={keyword.k || undefined}
+      onChange={(e) => {
+        setKeyword({
+          k: e.target.value || undefined,
+          r: true,
+        });
+      }}
       size="small"
       placeholder="按名称、注释"
       style={{ width: 120 }}
