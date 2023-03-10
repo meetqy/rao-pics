@@ -1,5 +1,6 @@
 import { CaretDownOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { Badge, Button, Col, InputNumber, Popover, Row, Typography } from "antd";
+import { useRef } from "react";
 import { ArrayParam, BooleanParam, useQueryParams } from "use-query-params";
 
 const Size = () => {
@@ -9,7 +10,7 @@ const Size = () => {
     r: BooleanParam,
   });
 
-  let isChange = false;
+  const isChange = useRef(false);
 
   function getText(size: {
     w: (string | null)[] | null | undefined;
@@ -59,7 +60,7 @@ const Size = () => {
 
     _size[type] = t;
 
-    isChange = true;
+    isChange.current = true;
     setSize({ ..._size });
   }
 
@@ -68,7 +69,7 @@ const Size = () => {
       placement="bottom"
       trigger={"click"}
       onOpenChange={(e) => {
-        if (!e && isChange) {
+        if (!e && isChange.current) {
           setSize({
             ...size,
             r: true,

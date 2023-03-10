@@ -17,11 +17,15 @@ const Search = () => {
       <Row justify={"space-between"}>
         <Col>
           <Row gutter={[10, 10]}>
-            <Col>{/* <SearchCondition.Keyword /> */}</Col>
+            <Col>
+              <SearchCondition.Keyword />
+            </Col>
             <Col>
               <SearchCondition.Ext />
             </Col>
-            <Col>{/* <SearchCondition.Size /> */}</Col>
+            <Col>
+              <SearchCondition.Size />
+            </Col>
           </Row>
         </Col>
         <Col></Col>

@@ -1,4 +1,5 @@
 import { Input } from "antd";
+import { useRef } from "react";
 import { BooleanParam, StringParam, useQueryParams } from "use-query-params";
 
 const Keyword = () => {
@@ -7,14 +8,25 @@ const Keyword = () => {
     r: BooleanParam,
   });
 
+  const isChange = useRef(false);
+
   return (
     <Input
       value={keyword.k || undefined}
       onChange={(e) => {
+        isChange.current = true;
         setKeyword({
+          ...keyword,
           k: e.target.value || undefined,
-          r: true,
         });
+      }}
+      onBlur={() => {
+        if (isChange.current) {
+          setKeyword({
+            ...keyword,
+            r: true,
+          });
+        }
       }}
       size="small"
       placeholder="按名称、注释"
