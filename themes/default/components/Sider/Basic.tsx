@@ -3,7 +3,7 @@ import { Button, Col, Input, Rate, Row, Space, Tag, Tooltip, Typography } from "
 import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
-import { handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/hooks";
+import { handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
 import { useMemo } from "react";
 import Link from "next/link";
 

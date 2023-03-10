@@ -1,4 +1,4 @@
-import { handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/hooks";
+import { handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
 import { Card, Col, Divider, Modal, Row, Space, Tag, Typography, theme } from "antd";
 import Image from "next/image";
 

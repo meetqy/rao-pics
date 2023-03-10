@@ -1,4 +1,4 @@
-import { transformFolderToTree } from "@/hooks";
+import { transformFolderToTree } from "@/utils";
 import { activeMenuState, countState, foldersState, rightBasicState } from "@/store";
 import {
   DeleteOutlined,

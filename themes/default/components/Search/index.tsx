@@ -21,6 +21,9 @@ const Search = () => {
               <SearchCondition.Keyword />
             </Col>
             <Col>
+              <SearchCondition.Ext />
+            </Col>
+            <Col>
               <SearchCondition.Size />
             </Col>
           </Row>

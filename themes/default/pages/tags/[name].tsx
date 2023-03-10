@@ -4,7 +4,7 @@ import { Col, Divider, Layout, Menu, MenuProps, Row, Tag, theme, Typography } fr
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { pinyin } from "@/hooks";
+import { pinyin } from "@/utils";
 import Link from "next/link";
 
 type MenuItem = Required<MenuProps>["items"][number];

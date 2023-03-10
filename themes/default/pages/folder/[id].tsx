@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useCallback, useContext, useMemo, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Image from "next/image";
-import { handleImageAlt, handleImageUrl, transformFolderToTree } from "@/hooks";
+import { handleImageAlt, handleImageUrl, transformFolderToTree } from "@/utils";
 import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
 

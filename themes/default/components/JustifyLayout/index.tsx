@@ -2,7 +2,7 @@ import Image from "next/image";
 import justifyLayout from "justified-layout";
 import { Button, Card, Layout, Row, Col, theme, Empty, Badge } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { handleImageAlt, handleImageUrl } from "@/hooks";
+import { handleImageAlt, handleImageUrl } from "@/utils";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
 import _ from "lodash";
