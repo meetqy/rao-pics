@@ -1,4 +1,4 @@
-import { Col, Row, theme } from "antd";
+import { Col, Row, Space, theme } from "antd";
 import SearchCondition from "./condition";
 
 const Search = () => {
@@ -16,19 +16,15 @@ const Search = () => {
     >
       <Row justify={"space-between"}>
         <Col>
-          <Row gutter={[10, 10]}>
-            <Col>
-              <SearchCondition.Keyword />
-            </Col>
-            <Col>
-              <SearchCondition.Ext />
-            </Col>
-            <Col>
-              <SearchCondition.Size />
-            </Col>
-          </Row>
+          <Space>
+            <SearchCondition.Keyword />
+            <SearchCondition.Ext />
+            <SearchCondition.Size />
+          </Space>
         </Col>
-        <Col></Col>
+        <Col>
+          <SearchCondition.Sort />
+        </Col>
       </Row>
     </div>
   );
