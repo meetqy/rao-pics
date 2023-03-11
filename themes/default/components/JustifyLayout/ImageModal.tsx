@@ -107,7 +107,9 @@ const ImageModal = ({ image, open, onCancel }: Props) => {
             <Space size={[0, 8]} style={{ width: "100%" }}>
               <Tag color="blue">添加日期：{handleTime(image.mtime)}</Tag>
               <Tag color="blue">创建日期：{handleTime(image.btime)}</Tag>
-              <Tag color="blue">修改日期：{handleTime(image.lastModified)}</Tag>
+              <Tag color="blue">
+                修改日期：{image.lastModified ? handleTime(image.lastModified) : "0000-00-00"}
+              </Tag>
             </Space>
           </div>
         </Card>

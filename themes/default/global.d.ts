@@ -1,63 +1,14 @@
 declare namespace EagleUse {
+  export type PrismaImage = import("@eagleuse/prisma-client").Image;
+  export type Tag = import("@eagleuse/prisma-client").Tag;
+  export type Folder = import("@eagleuse/prisma-client").Folder;
+
   export type Menu = "/" | "/tags" | "/not-tag" | "recycle" | "/folder/";
 
   // 图片
-  export interface Image {
-    id: string;
-    name: string;
-    size: number;
-    // 创建日期
-    btime: number;
-    mtime: number;
-    // 扩展名
-    ext: string;
-    url: string;
-    // 注释
-    annotation: string;
-    // 添加日期
-    modificationTime: number;
-    width: number;
-    height: number;
-    // json字符串
-    palettes: string;
-    lastModified: number;
-    isDeleted: boolean;
-    deletedTime: number;
-    processingPalette: boolean;
-    noThumbnail: boolean;
-    star: number;
-    nsfw: boolean;
-    tags?: Tag[];
-    folders?: Folder[];
-  }
-
-  // 文件夹
-  export interface Folder {
-    id: string;
-    name: string;
-    description: string;
-    pid: string;
-    modificationTime: number;
-    iconColor: string;
-    icon: string;
-    password: string;
-    passwordTips: string;
-    children?: Folder[];
-    _count: {
-      images: number;
-    };
-    images?: Image[];
-  }
-
-  // 标签
-  export interface Tag {
-    id: string;
-    name: string;
-    starred: boolean;
-    _count: {
-      images: number;
-    };
-    tagsGroups: TagsGroupsItem[];
+  export interface Image extends PrismaImage {
+    tags: Tag[];
+    folders: Folder[];
   }
 
   export interface ImagePalette {
@@ -106,12 +57,5 @@ declare namespace EagleUse {
     isDeleted?: boolean;
     // 需要包含返回的字段
     includes?: ("tags" | "folders")[];
-  }
-
-  export interface MetaData {
-    folders: Folder[];
-    tagsGroups: TagsGroupsItem[];
-    modificationTime: string;
-    applicationVersion: string;
   }
 }

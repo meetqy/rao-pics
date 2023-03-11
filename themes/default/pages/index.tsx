@@ -1,125 +1,87 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { countState, LayoutContentRefContext, rightBasicState, searchParamState } from "@/store";
+import { countState, LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
-import JustifyLayoutSearch from "@/components/JustifyLayout/Search";
 import { useInfiniteScroll } from "ahooks";
-import _ from "lodash";
-import { handleOrderBy, handleSize } from "@/hooks/prismaInput";
-
-interface Params {
-  body: EagleUse.SearchParams;
-  page: number;
-  pageSize: number;
-}
-
-interface Result {
-  list: EagleUse.Image[];
-  params: Params;
-  count: number;
-  size: number;
-}
-
-function getLoadMoreList(params: Params): Promise<Result> {
-  const { page, pageSize, body } = params;
-
-  return new Promise((resolve) => {
-    fetch(`/api/image?page=${page}&pageSize=${pageSize}`, {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        where: {
-          AND: [
-            ...handleSize({ size: body.size }),
-            !_.isEmpty(body.tags) ? { tags: { some: { id: { in: body.tags } } } } : undefined,
-            // 注释
-            { annotation: { contains: body.annotation } },
-            // 扩展名
-            { ext: body.ext || undefined },
-            // 评级
-            { star: body.star || undefined },
-            // 删除 回收站
-            { isDeleted: false },
-          ],
-        },
-        include: { tags: true },
-        orderBy: handleOrderBy({ orderBy: body.orderBy }),
-      }),
-    })
-      .then((res) => res.json())
-      .then(({ data, count, size }) => {
-        resolve({
-          list: data,
-          params: {
-            ...params,
-            page: page + 1,
-          },
-          count,
-          size,
-        });
-      });
-  });
-}
+import Search from "@/components/Search";
+import { ArrayParam, BooleanParam, NumberParam, StringParam, useQueryParams } from "use-query-params";
+import { MoreListResult, getLoadMoreList } from "@/utils/getLoadmoreList";
 
 const Page = () => {
   const [counts, setCounts] = useRecoilState(countState);
   const [, setRightBasic] = useRecoilState(rightBasicState);
-  const [searchParams, setSearchParams] = useRecoilState(searchParamState);
-  const [params] = useState<Params>({
-    body: {},
-    page: 1,
-    pageSize: 50,
+
+  const [queryParams, setQueryParams] = useQueryParams({
+    ext: StringParam,
+    w: ArrayParam,
+    h: ArrayParam,
+    k: StringParam,
+    page: NumberParam,
+    // 是否需要reload
+    r: BooleanParam,
+    s: ArrayParam,
   });
 
   const LayoutContentRef = useContext(LayoutContentRefContext);
 
-  const infiniteScroll = useInfiniteScroll((d) => getLoadMoreList(d?.params || params), {
-    target: LayoutContentRef.current,
-    threshold: 300,
-    manual: false,
-    isNoMore: (data) => {
-      if (!data) return false;
-      const { params, count } = data;
-      return params.page >= Math.ceil(count / params.pageSize);
+  const infiniteScroll = useInfiniteScroll<MoreListResult>(
+    (d) => {
+      queryParams.page = d ? (queryParams.page || 1) + 1 : 1;
+      return getLoadMoreList(queryParams);
     },
-    onFinally: (data) => {
-      if (!data) return;
-      if (data.count != counts.all) {
-        setCounts({
-          ...counts,
-          all: data.count,
-        });
-      }
+    {
+      target: LayoutContentRef.current,
+      threshold: 300,
+      isNoMore: (data) => {
+        if (!data) return false;
+        const { queryParams: query, pageSize, count } = data;
+        const page = query.page || 1;
 
-      setRightBasic((rightBasic) => ({ ...rightBasic, fileSize: data.size }));
-    },
-  });
+        setQueryParams({
+          ...queryParams,
+          page,
+        });
+
+        return page >= Math.ceil(count / pageSize);
+      },
+      onFinally: (data) => {
+        if (!data) return;
+        if (data.count != counts.all) {
+          setCounts({
+            ...counts,
+            all: data.count,
+          });
+        }
+
+        setRightBasic((rightBasic) => ({ ...rightBasic, fileSize: data.size }));
+      },
+    }
+  );
 
   useEffect(() => {
-    if (_.isEqual(params.body, searchParams)) return;
+    if (queryParams.r) {
+      setQueryParams({
+        ...queryParams,
+        page: 1,
+      });
+    }
+  }, [queryParams, setQueryParams]);
 
-    params.body = searchParams;
-    setTimeout(() => infiniteScroll.reload());
-  }, [searchParams, params, infiniteScroll]);
+  useEffect(() => {
+    if (queryParams.page === 1 && queryParams.r) {
+      setQueryParams({
+        ...queryParams,
+        r: undefined,
+      });
+
+      LayoutContentRef.current?.scrollTo({ top: 0 });
+      infiniteScroll.reload();
+    }
+  }, [queryParams, infiniteScroll, setQueryParams, LayoutContentRef]);
 
   if (!infiniteScroll.data) return null;
 
-  return (
-    <JustifyLayout
-      infiniteScroll={infiniteScroll}
-      header={
-        <JustifyLayoutSearch
-          params={params.body}
-          count={counts.all}
-          onChange={(body) => {
-            setSearchParams({
-              ...body,
-            });
-          }}
-        />
-      }
-    />
-  );
+  return <JustifyLayout infiniteScroll={infiniteScroll} header={<Search />} />;
 };
 
 export default Page;

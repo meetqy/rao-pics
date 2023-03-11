@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import { handleImageAlt, handleImageUrl } from "@/utils";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
-import _ from "lodash";
 import { useSize } from "ahooks";
 import ImageModal from "./ImageModal";
 import { MoreListResult } from "@/utils/getLoadmoreList";
@@ -25,12 +24,6 @@ interface JustifiedLayoutResult {
   boxes: LayoutBox[];
 }
 
-interface TData {
-  list: EagleUse.Image[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
-
 interface Props {
   header?: JSX.Element;
   // https://ahooks.js.org/zh-CN/hooks/use-infinite-scroll/#options
@@ -40,11 +33,7 @@ interface Props {
     loadingMore: boolean;
     noMore: boolean;
     loadMore: () => void;
-    loadMoreAsync: () => Promise<TData>;
     reload: () => void;
-    reloadAsync: () => Promise<TData>;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    mutate: any;
     cancel: () => void;
   };
 }
@@ -55,7 +44,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   const { token } = theme.useToken();
   const activeImage = useMemo(() => rightBasic.image, [rightBasic]);
   const { data, loadMore, loadingMore, noMore } = infiniteScroll;
-  const images = useMemo(() => data?.list as EagleUse.Image[], [data]);
+  const images = useMemo(() => data?.list || [], [data]);
   const size = useSize(() => document.body);
   const [open, setOpen] = useState(false);
 
@@ -90,6 +79,13 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
 
   if (!layoutPos) return null;
 
+  function getPalettes(image: EagleUse.Image) {
+    if (image.processingPalette) return null;
+    if (!image.palettes) return null;
+
+    return JSON.parse(image.palettes) as EagleUse.ImagePalette[];
+  }
+
   return (
     <Layout>
       {header}
@@ -103,15 +99,13 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
             const image = images[i];
             if (!image) return null;
 
-            const palettes: EagleUse.ImagePalette[] = image.processingPalette
-              ? null
-              : JSON.parse(image.palettes);
+            const palettes = getPalettes(image);
 
             const card = (
               <Card
                 hoverable
                 style={{
-                  background: !_.isEmpty(palettes) ? `rgb(${palettes[0].color}, .25)` : token.colorBgBase,
+                  background: palettes ? `rgb(${palettes[0].color}, .25)` : token.colorBgBase,
                   overflow: "hidden",
                   outline: activeImage?.id === image.id ? `4px solid ${token.colorPrimary}` : "",
                 }}

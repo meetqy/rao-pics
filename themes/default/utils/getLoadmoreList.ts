@@ -1,4 +1,4 @@
-import { Image, Prisma } from "@eagleuse/prisma-client";
+import { Prisma } from "@eagleuse/prisma-client";
 
 interface QueryParams {
   // [min width, max width]
@@ -16,7 +16,7 @@ interface QueryParams {
 }
 
 export interface MoreListResult {
-  list: Image[];
+  list: EagleUse.Image[];
   queryParams: QueryParams;
   count: number;
   size: number;
