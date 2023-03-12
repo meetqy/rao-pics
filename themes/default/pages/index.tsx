@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { countState, LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
@@ -6,6 +6,7 @@ import { useInfiniteScroll } from "ahooks";
 import Search from "@/components/Search";
 import { ArrayParam, BooleanParam, NumberParam, StringParam, useQueryParams } from "use-query-params";
 import { MoreListResult, getLoadMoreList } from "@/utils/getLoadmoreList";
+import { useRouter } from "next/router";
 
 const Page = () => {
   const [counts, setCounts] = useRecoilState(countState);
@@ -22,16 +23,23 @@ const Page = () => {
     s: ArrayParam,
   });
 
+  const router = useRouter();
+
+  const isFirstReload = useRef(true);
+
   const LayoutContentRef = useContext(LayoutContentRefContext);
 
   const infiniteScroll = useInfiniteScroll<MoreListResult>(
     (d) => {
-      queryParams.page = d ? (queryParams.page || 1) + 1 : 1;
+      const page = queryParams.page || 1;
+      queryParams.page = d ? page + 1 : page;
+
       return getLoadMoreList(queryParams);
     },
     {
       target: LayoutContentRef.current,
       threshold: 300,
+      manual: true,
       isNoMore: (data) => {
         if (!data) return false;
         const { queryParams: query, pageSize, count } = data;
@@ -57,6 +65,13 @@ const Page = () => {
       },
     }
   );
+
+  useEffect(() => {
+    if (router.isReady && isFirstReload.current) {
+      isFirstReload.current = false;
+      infiniteScroll.reload();
+    }
+  }, [router.isReady, queryParams, infiniteScroll]);
 
   useEffect(() => {
     if (queryParams.r) {
