@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const tagsState = atom({
   key: "tagsState",
-  default: [] as EagleUse.Tag[],
+  default: [] as EagleUse.TagWithCountImage[],
 });
 
 export const foldersState = atom({

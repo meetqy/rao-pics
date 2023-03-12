@@ -23,7 +23,16 @@ export interface MoreListResult {
   pageSize: number;
 }
 
-export const getLoadMoreList = (queryParams: QueryParams): Promise<MoreListResult> => {
+export interface MoreQuery {
+  // 按标签查找
+  tag?: string;
+  // 未标签
+  noTag?: boolean;
+  // 是否删除 回收站
+  isDeleted?: boolean;
+}
+
+export const getLoadMoreList = (queryParams: QueryParams, more?: MoreQuery): Promise<MoreListResult> => {
   const { w, h, k, ext, s } = queryParams;
   const page = queryParams.page || 1;
   const pageSize = 50;
@@ -36,12 +45,16 @@ export const getLoadMoreList = (queryParams: QueryParams): Promise<MoreListResul
         where: {
           AND: [
             ...handleSize({ w, h }),
+            // 未标签
+            more?.noTag && { tags: { none: {} } },
+            // 标签
+            more?.tag && { tags: { some: { id: more.tag } } },
             // 扩展名
             ext && { ext: { contains: ext } },
             // 关键词
             k && { OR: [{ annotation: { contains: k } }, { name: { contains: k } }] },
             // 回收站
-            { isDeleted: false },
+            { isDeleted: more?.isDeleted || false },
           ],
         } as Prisma.ImageWhereInput,
         include: { tags: true },

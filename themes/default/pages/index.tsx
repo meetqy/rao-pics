@@ -5,12 +5,19 @@ import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
 import Search from "@/components/Search";
 import { ArrayParam, BooleanParam, NumberParam, StringParam, useQueryParams } from "use-query-params";
-import { MoreListResult, getLoadMoreList } from "@/utils/getLoadmoreList";
+import { MoreListResult, MoreQuery, getLoadMoreList } from "@/utils/getLoadmoreList";
 import { useRouter } from "next/router";
 
-const Page = () => {
+interface Props {
+  more?: MoreQuery;
+}
+
+const Page = (props: Props) => {
   const [counts, setCounts] = useRecoilState(countState);
   const [, setRightBasic] = useRecoilState(rightBasicState);
+  const router = useRouter();
+  const isFirstReload = useRef(true);
+  const LayoutContentRef = useContext(LayoutContentRefContext);
 
   const [queryParams, setQueryParams] = useQueryParams({
     ext: StringParam,
@@ -18,23 +25,18 @@ const Page = () => {
     h: ArrayParam,
     k: StringParam,
     page: NumberParam,
-    // 是否需要reload
+    // 是否需要reload url参数中出现 r=true
+    // 会刷新当前页面，重新调用infiniteScroll.reload()
     r: BooleanParam,
     s: ArrayParam,
   });
-
-  const router = useRouter();
-
-  const isFirstReload = useRef(true);
-
-  const LayoutContentRef = useContext(LayoutContentRefContext);
 
   const infiniteScroll = useInfiniteScroll<MoreListResult>(
     (d) => {
       const page = queryParams.page || 1;
       queryParams.page = d ? page + 1 : page;
 
-      return getLoadMoreList(queryParams);
+      return getLoadMoreList(queryParams, props.more);
     },
     {
       target: LayoutContentRef.current,
@@ -66,6 +68,7 @@ const Page = () => {
     }
   );
 
+  // router 加载完成 首次加载
   useEffect(() => {
     if (router.isReady && isFirstReload.current) {
       isFirstReload.current = false;
@@ -73,6 +76,8 @@ const Page = () => {
     }
   }, [router.isReady, queryParams, infiniteScroll]);
 
+  // url ?r=true
+  // 把page赋值为1
   useEffect(() => {
     if (queryParams.r) {
       setQueryParams({
@@ -82,6 +87,8 @@ const Page = () => {
     }
   }, [queryParams, setQueryParams]);
 
+  // queryParams.page === 1 && url ?r=true
+  // 重新刷新并将滚动条回到顶部
   useEffect(() => {
     if (queryParams.page === 1 && queryParams.r) {
       setQueryParams({

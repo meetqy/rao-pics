@@ -1,11 +1,12 @@
-import { searchParamState, tagsState } from "@/store";
+import { tagsState } from "@/store";
 import { AppstoreFilled, QuestionCircleFilled, StarFilled, TagsFilled } from "@ant-design/icons";
 import { Col, Divider, Layout, Menu, MenuProps, Row, Tag, theme, Typography } from "antd";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { pinyin } from "@/utils";
 import Link from "next/link";
+import { Prisma } from "@eagleuse/prisma-client";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -33,8 +34,8 @@ type RouteName = "manage" | "no" | "starred" | string;
  * @param exclude 需要排除的tags
  * @returns { [key: string]: string[] }
  */
-const tagsArrayToJson = (tags: EagleUse.Tag[]) => {
-  const json: { [key: string]: EagleUse.Tag[] } = {};
+const tagsArrayToJson = (tags: EagleUse.TagWithCountImage[]) => {
+  const json: { [key: string]: EagleUse.TagWithCountImage[] } = {};
   tags.forEach((item) => {
     const first = (pinyin.getCamelChars(item.id) as string)[0].toLocaleUpperCase();
 
@@ -62,7 +63,9 @@ function handleLabel(name: string, desc: number | undefined, color?: string) {
 
 type TagsCollection = {
   [key in RouteName]: {
-    data: { [key: string]: EagleUse.Tag[] } | undefined;
+    data:
+      | { [key: string]: (EagleUse.TagWithCountImage & { tagsGroups?: EagleUse.TagsGroup[] })[] }
+      | undefined;
     count: number | undefined;
   };
 };
@@ -77,8 +80,6 @@ export default function Page() {
     no: { data: undefined, count: undefined },
     starred: { data: undefined, count: undefined },
   });
-
-  const [, setSearchParams] = useRecoilState(searchParamState);
 
   const nowTagData = useMemo(() => tagsCollection[name]?.data || {}, [name, tagsCollection]);
 
@@ -109,7 +110,7 @@ export default function Page() {
     }));
   }, [name, tags, tagsCollection]);
 
-  const getTag = async (where) => {
+  const getTag = async (where: Prisma.TagWhereInput) => {
     return await fetch(`/api/tag`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
@@ -132,9 +133,7 @@ export default function Page() {
     if (tagsCollection["no"].count != undefined) return;
 
     getTag({
-      tagsGroups: {
-        none: {},
-      },
+      tagsGroups: { none: {} },
     })
       .then((res) => res.json())
       .then(({ data, count: _count }) => {
@@ -189,22 +188,24 @@ export default function Page() {
       .then((res) => res.json())
       .then(({ data }) => {
         const tagsGroups: TagsCollection = {};
-        const filterData = (data as EagleUse.TagsGroupsItem[]).map((item) => {
-          // 找到有count的标签 并 过滤掉标签中图片为0的标签
-          item.tags = item.tags
-            .map((tag) => tags.find((item) => tag.id === item.id))
-            .filter((item) => item) as EagleUse.Tag[];
+        const filterData = (data as (EagleUse.TagsGroup & { tags: EagleUse.TagWithCountImage[] })[]).map(
+          (item) => {
+            // 找到有count的标签 并 过滤掉标签中图片为0的标签
+            item.tags = item.tags
+              .map((tag) => tags.find((item) => tag.id === item.id))
+              .filter((item) => item) as EagleUse.TagWithCountImage[];
 
-          const json: { [key: string]: EagleUse.Tag[] } = {};
-          json[item.name] = item.tags;
+            const json: { [key: string]: EagleUse.TagWithCountImage[] } = {};
+            json[item.name] = item.tags;
 
-          tagsGroups[item.id] = {
-            data: json,
-            count: item.tags.length,
-          };
+            tagsGroups[item.id] = {
+              data: json,
+              count: item.tags.length,
+            };
 
-          return item;
-        });
+            return item;
+          }
+        );
 
         setTagsCollection((value) => ({
           ...value,
@@ -214,9 +215,9 @@ export default function Page() {
         setTagsGroupsItems(
           filterData.map((item) => {
             return getItem(
-              handleLabel(item.name, item.tags.length, item.color),
+              handleLabel(item.name, item.tags.length, item.color || "inherit"),
               `/tags/${item.id}`,
-              <TagsFilled style={{ color: item.color }} />
+              <TagsFilled style={{ color: item.color || "inherit" }} />
             );
           })
         );
@@ -225,7 +226,9 @@ export default function Page() {
   }, [name, tags, tagsCollection]);
 
   // 渲染tags列表
-  const tagsContentElement = (tagJson: { [key: string]: EagleUse.Tag[] }) => {
+  const tagsContentElement = (tagJson: {
+    [key: string]: (EagleUse.TagWithCountImage & { tagsGroups?: EagleUse.TagsGroup[] })[];
+  }) => {
     const result = Object.keys(tagJson).sort();
     if (!result.length) return;
 
@@ -245,15 +248,11 @@ export default function Page() {
             {item.map((tag) => (
               <Col key={tag.id}>
                 <Tag
-                  color={tag.tagsGroups.length ? tag.tagsGroups[0].color : "default"}
-                  onClick={() => {
-                    setSearchParams((params) => ({
-                      ...params,
-                      tags: [tag.id],
-                    }));
-                  }}
+                  color={
+                    tag.tagsGroups && tag.tagsGroups.length ? tag.tagsGroups[0].color || "default" : "default"
+                  }
                 >
-                  <Link href="/">
+                  <Link href={`/tag/${tag.id}?page=1&r=true`}>
                     {tag.id}
                     <Typography.Text type="secondary" strong style={{ marginLeft: 5 }}>
                       {tag._count.images}

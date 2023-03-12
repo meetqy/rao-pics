@@ -88,16 +88,8 @@ const SiderBasic = () => {
       {image.tags && (
         <Space size={[0, 8]} wrap style={{ marginTop: 10 }}>
           {image.tags.map((item) => (
-            <Tag
-              key={item.id}
-              onClick={() => {
-                // setSearchParams((params) => ({
-                //   ...params,
-                //   tags: [item.id],
-                // }));
-              }}
-            >
-              <Link href="/" title={item.id}>
+            <Tag key={item.id}>
+              <Link href={`/tag/${item.id}?page=1`} title={item.id}>
                 {item.id}
               </Link>
             </Tag>

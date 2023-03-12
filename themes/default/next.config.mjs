@@ -13,7 +13,7 @@ const nextConfig = {
 
   publicRuntimeConfig: {
     // 菜单是否显示回收站
-    showTrash: process.env.SHOW_TRASH === "true",
+    showTrash: true,
   },
 
   async redirects() {
