@@ -1,5 +1,6 @@
 import { Col, Row, Space, theme } from "antd";
 import SearchCondition from "./condition";
+import DarkMode from "../DarkMode";
 
 const Search = () => {
   const { token } = theme.useToken();
@@ -11,7 +12,7 @@ const Search = () => {
         top: 0,
         backgroundColor: token.colorBgLayout,
         zIndex: token.zIndexPopupBase,
-        padding: "12px 20px",
+        padding: 12,
       }}
     >
       <Row justify={"space-between"}>
@@ -23,7 +24,10 @@ const Search = () => {
           </Space>
         </Col>
         <Col>
-          <SearchCondition.Sort />
+          <Space>
+            <SearchCondition.Sort />
+            <DarkMode />
+          </Space>
         </Col>
       </Row>
     </div>

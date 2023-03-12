@@ -41,23 +41,3 @@ export const rightBasicState = atom({
 
 // layout content ref
 export const LayoutContentRefContext = createContext<RefObject<HTMLElement | null>>({ current: null });
-
-// 主题
-export type ThemeMode = "light" | "dark";
-export const themeState = atom({
-  key: "themeState",
-  default: "light" as ThemeMode,
-  effects_UNSTABLE: [
-    ({ onSet }) => {
-      onSet((val) => {
-        localStorage.setItem("use-local-mode", val);
-      });
-    },
-  ],
-});
-
-// 搜索条件
-export const searchParamState = atom({
-  key: "searchParamState",
-  default: {} as EagleUse.SearchParams,
-});

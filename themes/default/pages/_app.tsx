@@ -3,25 +3,18 @@ import { RecoilRoot, useRecoilState } from "recoil";
 import zhCN from "antd/locale/zh_CN";
 import "antd/dist/reset.css";
 import "@/styles/global.css";
-import { ConfigProvider, theme } from "antd";
-import { ThemeMode, themeState } from "@/store";
+import { ConfigProvider, theme as AntdTheme } from "antd";
 import Head from "next/head";
 import Pkg from "@/package.json";
-import { useEffect } from "react";
 import { QueryParamProvider } from "use-query-params";
 import { NextAdapter } from "next-query-params";
 import { AppProps } from "next/app";
+import { ThemeState } from "@/hooks";
 
 export default function MyApp(props: AppProps) {
   return (
     <RecoilRoot>
-      <QueryParamProvider
-        // options={{
-        //   searchStringToObject: parse,
-        //   objectToSearchString: stringify,
-        // }}
-        adapter={NextAdapter}
-      >
+      <QueryParamProvider adapter={NextAdapter}>
         <Container {...props} />
       </QueryParamProvider>
     </RecoilRoot>
@@ -29,13 +22,7 @@ export default function MyApp(props: AppProps) {
 }
 
 const Container = ({ Component, pageProps }: AppProps) => {
-  const [themeMode, setThemeMode] = useRecoilState(themeState);
-
-  // 初始化 store
-  useEffect(() => {
-    const localMode = localStorage.getItem("use-local-mode") as ThemeMode;
-    setThemeMode(localMode || "light");
-  }, [setThemeMode]);
+  const [theme] = useRecoilState(ThemeState);
 
   return (
     <>
@@ -46,7 +33,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
       </Head>
       <ConfigProvider
         theme={{
-          algorithm: themeMode === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,
+          algorithm: theme === "light" ? AntdTheme.defaultAlgorithm : AntdTheme.darkAlgorithm,
         }}
         locale={zhCN}
       >
