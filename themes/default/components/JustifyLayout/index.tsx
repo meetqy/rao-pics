@@ -2,7 +2,7 @@ import Image from "next/image";
 import justifyLayout from "justified-layout";
 import { Button, Card, Layout, Row, Col, theme, Empty, Badge } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { handleImageAlt, handleImageUrl } from "@/utils";
+import { getPalettes, handleImageAlt, handleImageUrl } from "@/utils";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
 import { useSize } from "ahooks";
@@ -78,13 +78,6 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
   };
 
   if (!layoutPos) return null;
-
-  function getPalettes(image: EagleUse.Image) {
-    if (image.processingPalette) return null;
-    if (!image.palettes) return null;
-
-    return JSON.parse(image.palettes) as EagleUse.ImagePalette[];
-  }
 
   return (
     <Layout>

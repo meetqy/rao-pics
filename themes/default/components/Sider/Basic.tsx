@@ -1,16 +1,16 @@
-import { rightBasicState, searchParamState } from "@/store";
+import { rightBasicState } from "@/store";
 import { Button, Col, Input, Rate, Row, Space, Tag, Tooltip, Typography } from "antd";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import Image from "next/image";
 import styles from "./basic.module.css";
-import { handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
+import { getPalettes, handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
 import { useMemo } from "react";
 import Link from "next/link";
 
 const SiderBasic = () => {
   const rightBasic = useRecoilValue(rightBasicState);
   const image = useMemo(() => rightBasic.image, [rightBasic]);
-  const [, setSearchParams] = useRecoilState(searchParamState);
+  // const [, setSearchParams] = useRecoilState(searchParamState);
 
   if (!image) {
     return (
@@ -65,7 +65,7 @@ const SiderBasic = () => {
       </Row>
 
       <Row gutter={[2, 0]} style={{ marginTop: 20, height: 12 }} className={styles.palettes}>
-        {(JSON.parse(image.palettes) as EagleUse.ImagePalette[]).slice(0, 8).map((item, i) => (
+        {(getPalettes(image) || []).slice(0, 8).map((item, i) => (
           <Col key={i} flex={1}>
             <Tooltip title={`rgb(${item.color})`}>
               <div
@@ -91,10 +91,10 @@ const SiderBasic = () => {
             <Tag
               key={item.id}
               onClick={() => {
-                setSearchParams((params) => ({
-                  ...params,
-                  tags: [item.id],
-                }));
+                // setSearchParams((params) => ({
+                //   ...params,
+                //   tags: [item.id],
+                // }));
               }}
             >
               <Link href="/" title={item.id}>
@@ -177,7 +177,9 @@ const SiderBasic = () => {
             <Typography.Text>修改日期</Typography.Text>
           </Col>
           <Col>
-            <Typography.Text type="secondary">{handleTime(image.lastModified)}</Typography.Text>
+            <Typography.Text type="secondary">
+              {image.lastModified ? handleTime(image.lastModified) : null}
+            </Typography.Text>
           </Col>
         </Row>
 

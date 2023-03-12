@@ -45,3 +45,10 @@ export const handleTime = (time: bigint) => {
     t
   );
 };
+
+export function getPalettes(image: EagleUse.Image) {
+  if (image.processingPalette) return null;
+  if (!image.palettes) return null;
+
+  return JSON.parse(image.palettes) as EagleUse.ImagePalette[];
+}
