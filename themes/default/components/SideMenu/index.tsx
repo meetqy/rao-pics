@@ -9,7 +9,7 @@ import {
   FolderFilled,
 } from "@ant-design/icons";
 import { Menu, MenuProps, theme } from "antd";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { getFolderItems } from "./getFolderItems";
 import { useRouter } from "next/router";
@@ -36,6 +36,18 @@ const SideMenu = () => {
   const [folderItems, setFolderItems] = useState<MenuProps["items"]>([]);
   const isFolderInit = useRef(false);
 
+  const setRightBasicByName = useCallback(
+    (className: string) => {
+      setTimeout(() => {
+        const selectDom = document.querySelector(`.${className} .ant-menu-title-content`);
+        if (selectDom) {
+          setRightBasic((rightBasic) => ({ ...rightBasic, image: null, name: selectDom?.innerHTML }));
+        }
+      });
+    },
+    [setRightBasic]
+  );
+
   useEffect(() => {
     if (router.isReady) {
       const { id } = router.query;
@@ -44,8 +56,11 @@ const SideMenu = () => {
         const folder = folders.find((item) => item.id === id);
         setOpenKeys(folder && folder.pid ? [folder.pid] : []);
       }
+
+      setRightBasicByName("ant-menu-item-selected");
+      setRightBasicByName("ant-menu-submenu-selected");
     }
-  }, [router, folders]);
+  }, [router, folders, setRightBasicByName]);
 
   useMount(() => {
     const { route } = router;
@@ -111,20 +126,12 @@ const SideMenu = () => {
         onClick={(e) => {
           router.push(e.key === "/tags" ? e.key + "/manage" : e.key);
           setSelectedKeys([e.key]);
-
-          setTimeout(() => {
-            const selectDom = document.querySelector(".ant-menu-item-selected .ant-menu-title-content");
-            setRightBasic((rightBasic) => ({ ...rightBasic, image: null, name: selectDom?.innerHTML }));
-          });
+          setRightBasicByName("ant-menu-item-selected");
         }}
         onOpenChange={(e) => {
           router.push(`/folder/${e[e.length - 1]}`);
           setSelectedKeys(e);
-
-          setTimeout(() => {
-            const selectDom = document.querySelector(".ant-menu-submenu-selected .ant-menu-title-content");
-            setRightBasic((rightBasic) => ({ ...rightBasic, image: null, name: selectDom?.innerHTML }));
-          });
+          setRightBasicByName("ant-menu-submenu-selected");
         }}
       />
     </>

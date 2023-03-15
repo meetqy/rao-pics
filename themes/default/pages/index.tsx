@@ -17,7 +17,7 @@ const Page = (props: Props) => {
   const router = useRouter();
   const isFirstReload = useRef(true);
   const LayoutContentRef = useContext(LayoutContentRefContext);
-  const [, setRightBasic] = useRecoilState(rightBasicState);
+  const [rightBasic, setRightBasic] = useRecoilState(rightBasicState);
 
   const [queryParams, setQueryParams] = useQueryParams({
     ext: StringParam,
@@ -54,12 +54,21 @@ const Page = (props: Props) => {
 
         return page >= Math.ceil(count / pageSize);
       },
-      onFinally: (data) => {
-        if (!data) return;
-        setRightBasic((right) => ({ ...right, fileCount: data?.count, fileSize: data?.size }));
-      },
     }
   );
+
+  useEffect(() => {
+    const { data } = infiniteScroll;
+    if (!data) return;
+
+    if (rightBasic.fileCount != data?.count || rightBasic.fileSize != data.size) {
+      setRightBasic({
+        ...rightBasic,
+        fileCount: data.count,
+        fileSize: data.size,
+      });
+    }
+  }, [infiniteScroll, infiniteScroll.data, rightBasic, setRightBasic]);
 
   // router 加载完成 首次加载
   useEffect(() => {
