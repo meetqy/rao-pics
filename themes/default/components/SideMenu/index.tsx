@@ -39,7 +39,10 @@ const SideMenu = () => {
   const setRightBasicByName = useCallback(
     (className: string) => {
       setTimeout(() => {
-        const selectDom = document.querySelector(`.${className} .ant-menu-title-content`);
+        const doms = document.querySelectorAll(`.${className}`);
+        const wrapper = doms[doms.length - 1];
+        if (!wrapper) return;
+        const selectDom = wrapper.querySelector(".ant-menu-title-content");
         if (selectDom) {
           setRightBasic((rightBasic) => ({ ...rightBasic, image: null, name: selectDom?.innerHTML }));
         }
@@ -54,7 +57,10 @@ const SideMenu = () => {
       if (id) {
         setSelectedKeys([id as string]);
         const folder = folders.find((item) => item.id === id);
-        setOpenKeys(folder && folder.pid ? [folder.pid] : []);
+
+        if (folder && folder.pid) {
+          setOpenKeys([folder.pid]);
+        }
       }
 
       setRightBasicByName("ant-menu-item-selected");
@@ -81,11 +87,19 @@ const SideMenu = () => {
     setOpenKeys([...openKeys]);
   };
 
+  const onTitleClick = useCallback(
+    (key: string) => {
+      router.push(`/folder/${key}`);
+      setRightBasicByName("ant-menu-submenu-selected");
+    },
+    [router, setRightBasicByName]
+  );
+
   useEffect(() => {
     if (!isFolderInit.current && foldersTree.length > 0) {
-      setFolderItems([getFolderItems(foldersTree)]);
+      setFolderItems([getFolderItems(foldersTree, onTitleClick)]);
     }
-  }, [foldersTree, openKeys]);
+  }, [foldersTree, onTitleClick, openKeys]);
 
   const items = useMemo(() => baseItems.concat(folderItems || []), [folderItems]);
 
@@ -119,19 +133,12 @@ const SideMenu = () => {
           );
         }}
         selectedKeys={selectedKeys}
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
         mode="inline"
         items={items}
         onClick={(e) => {
           router.push(e.key === "/tags" ? e.key + "/manage" : e.key);
           setSelectedKeys([e.key]);
           setRightBasicByName("ant-menu-item-selected");
-        }}
-        onOpenChange={(e) => {
-          router.push(`/folder/${e[e.length - 1]}`);
-          setSelectedKeys(e);
-          setRightBasicByName("ant-menu-submenu-selected");
         }}
       />
     </>
