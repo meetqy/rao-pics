@@ -3,21 +3,6 @@ export * from "./constant";
 import { RefObject, createContext } from "react";
 import { atom } from "recoil";
 
-export const activeMenuState = atom({
-  key: "activeMenuState",
-  default: "/" as EagleUse.Menu,
-});
-
-export const countState = atom({
-  key: "countState",
-  default: {
-    all: 0,
-    "not-tag": 0,
-    tags: 0,
-    recycle: 0,
-  },
-});
-
 export interface RightBasic {
   // 名字
   name: string;

@@ -1,6 +1,6 @@
 import { Layout, theme, Typography } from "antd";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { activeMenuState, foldersState, LayoutContentRefContext, tagsState } from "@/store";
+import { useRecoilState } from "recoil";
+import { foldersState, LayoutContentRefContext, tagsState } from "@/store";
 import {
   ReactNode,
   useCallback,
@@ -14,12 +14,13 @@ import {
 import SiderBasic from "./Sider/Basic";
 import { useSize } from "ahooks";
 import SideMenu from "./SideMenu";
+import { useRouter } from "next/router";
 
 export const MyLayout = ({ children }: { children: ReactNode }) => {
-  const activeMenu = useRecoilValue(activeMenuState) || "/";
+  const router = useRouter();
   const [, setTags] = useRecoilState(tagsState);
   const [, setFolders] = useRecoilState(foldersState);
-  const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
+  const collapsed = useMemo(() => router.route.includes("/tags"), [router]);
   const [isInit] = useState({
     tags: false,
     folders: false,
