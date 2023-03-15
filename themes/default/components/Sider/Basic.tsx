@@ -2,7 +2,6 @@ import { rightBasicState } from "@/store";
 import { Button, Col, Input, Rate, Row, Space, Tag, Tooltip, Typography } from "antd";
 import { useRecoilValue } from "recoil";
 import Image from "next/image";
-import styles from "./basic.module.css";
 import { getPalettes, handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
 import { useMemo } from "react";
 import Link from "next/link";
@@ -10,7 +9,6 @@ import Link from "next/link";
 const SiderBasic = () => {
   const rightBasic = useRecoilValue(rightBasicState);
   const image = useMemo(() => rightBasic.image, [rightBasic]);
-  // const [, setSearchParams] = useRecoilState(searchParamState);
 
   if (!image) {
     return (
@@ -23,7 +21,7 @@ const SiderBasic = () => {
             <Typography.Text strong>基本信息</Typography.Text>
           </Col>
         </Row>
-        <div className={styles.baseInfo} style={{ marginTop: 20 }}>
+        <div style={{ marginTop: 20 }}>
           <Row align="middle">
             <Col span={12}>
               <Typography.Text>文件数</Typography.Text>
@@ -64,7 +62,7 @@ const SiderBasic = () => {
         </Col>
       </Row>
 
-      <Row gutter={[2, 0]} style={{ marginTop: 20, height: 12 }} className={styles.palettes}>
+      <Row gutter={[2, 0]} style={{ marginTop: 20, height: 12 }}>
         {(getPalettes(image) || []).slice(0, 8).map((item, i) => (
           <Col key={i} flex={1}>
             <Tooltip title={`rgb(${item.color})`}>

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef } from "react";
-import { useRecoilState } from "recoil";
 import { LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
@@ -7,16 +6,17 @@ import Search from "@/components/Search";
 import { ArrayParam, BooleanParam, NumberParam, StringParam, useQueryParams } from "use-query-params";
 import { MoreListResult, MoreQuery, getLoadMoreList } from "@/utils/getLoadmoreList";
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
 
 interface Props {
   more?: MoreQuery;
 }
 
 const Page = (props: Props) => {
-  const [, setRightBasic] = useRecoilState(rightBasicState);
   const router = useRouter();
   const isFirstReload = useRef(true);
   const LayoutContentRef = useContext(LayoutContentRefContext);
+  const [, setRightBasic] = useRecoilState(rightBasicState);
 
   const [queryParams, setQueryParams] = useQueryParams({
     ext: StringParam,
@@ -55,8 +55,8 @@ const Page = (props: Props) => {
       },
       onFinally: (data) => {
         if (!data) return;
-
-        setRightBasic((rightBasic) => ({ ...rightBasic, fileSize: data.size }));
+        console.log(data);
+        setRightBasic((right) => ({ ...right, fileCount: data?.count, fileSize: data?.size }));
       },
     }
   );

@@ -1,7 +1,0 @@
-.palettes > div:first-child div {
-  border-radius: 4px 0 0 4px;
-}
-
-.palettes > div:last-child div {
-  border-radius: 0 4px 4px 0;
-}

@@ -1,4 +1,4 @@
-import { foldersState } from "@/store";
+import { foldersState, rightBasicState } from "@/store";
 import { transformFolderToTree } from "@/utils";
 import {
   FileImageOutlined,
@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Menu, MenuProps, theme } from "antd";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { getFolderItems } from "./getFolderItems";
 import { useRouter } from "next/router";
 import { useMount } from "ahooks";
@@ -28,6 +28,7 @@ const SideMenu = () => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const router = useRouter();
   const { token } = theme.useToken();
+  const [, setRightBasic] = useRecoilState(rightBasicState);
 
   // 文件夹
   const folders = useRecoilValue(foldersState);
@@ -110,10 +111,20 @@ const SideMenu = () => {
         onClick={(e) => {
           router.push(e.key === "/tags" ? e.key + "/manage" : e.key);
           setSelectedKeys([e.key]);
+
+          setTimeout(() => {
+            const selectDom = document.querySelector(".ant-menu-item-selected .ant-menu-title-content");
+            setRightBasic((rightBasic) => ({ ...rightBasic, image: null, name: selectDom?.innerHTML }));
+          });
         }}
         onOpenChange={(e) => {
           router.push(`/folder/${e[e.length - 1]}`);
           setSelectedKeys(e);
+
+          setTimeout(() => {
+            const selectDom = document.querySelector(".ant-menu-submenu-selected .ant-menu-title-content");
+            setRightBasic((rightBasic) => ({ ...rightBasic, image: null, name: selectDom?.innerHTML }));
+          });
         }}
       />
     </>
