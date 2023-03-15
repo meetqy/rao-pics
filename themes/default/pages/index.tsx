@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { forwardRef, useContext, useEffect, useImperativeHandle, useRef } from "react";
 import { LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
@@ -13,7 +13,11 @@ interface Props {
   more?: Prisma.Enumerable<Prisma.ImageWhereInput>;
 }
 
-const Page = (props: Props) => {
+export interface PageHandle {
+  reload: () => void;
+}
+
+const Page = forwardRef<PageHandle, Props>((props, ref) => {
   const router = useRouter();
   const isFirstReload = useRef(true);
   const LayoutContentRef = useContext(LayoutContentRefContext);
@@ -56,6 +60,12 @@ const Page = (props: Props) => {
       },
     }
   );
+
+  useImperativeHandle(ref, () => ({
+    reload() {
+      infiniteScroll.reload();
+    },
+  }));
 
   useEffect(() => {
     const { data } = infiniteScroll;
@@ -106,6 +116,8 @@ const Page = (props: Props) => {
   if (!infiniteScroll.data) return null;
 
   return <JustifyLayout infiniteScroll={infiniteScroll} header={<Search />} />;
-};
+});
+
+Page.displayName = "Page";
 
 export default Page;
