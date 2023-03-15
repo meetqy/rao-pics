@@ -5,6 +5,10 @@ declare namespace EagleUse {
   export type Folder = import("@eagleuse/prisma-client").Folder;
   export type Menu = "/" | "/tags" | "/not-tag" | "recycle" | "/folder/";
 
+  export interface FolderTree extends Folder {
+    children: FolderTree[];
+  }
+
   export interface TagWithCountImage extends EagleUse.Tag {
     _count: {
       images: number;

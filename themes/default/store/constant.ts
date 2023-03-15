@@ -7,5 +7,5 @@ export const tagsState = atom({
 
 export const foldersState = atom({
   key: "foldersState",
-  default: [] as EagleUse.Folder[],
+  default: [] as EagleUse.FolderTree[],
 });

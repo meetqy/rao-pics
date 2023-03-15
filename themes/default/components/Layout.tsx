@@ -1,6 +1,6 @@
 import { Layout, theme, Typography } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeMenuState, countState, foldersState, LayoutContentRefContext, tagsState } from "@/store";
+import { activeMenuState, foldersState, LayoutContentRefContext, tagsState } from "@/store";
 import {
   ReactNode,
   useCallback,
@@ -11,14 +11,13 @@ import {
   useRef,
   useState,
 } from "react";
-import SiderMenu from "./Sider/Menu";
 import SiderBasic from "./Sider/Basic";
 import { useSize } from "ahooks";
+import SideMenu from "./SideMenu";
 
 export const MyLayout = ({ children }: { children: ReactNode }) => {
   const activeMenu = useRecoilValue(activeMenuState) || "/";
   const [, setTags] = useRecoilState(tagsState);
-  const [, setCount] = useRecoilState(countState);
   const [, setFolders] = useRecoilState(foldersState);
   const collapsed = useMemo(() => activeMenu.includes("/tags"), [activeMenu]);
   const [isInit] = useState({
@@ -62,16 +61,10 @@ export const MyLayout = ({ children }: { children: ReactNode }) => {
       }),
     })
       .then((res) => res.json())
-      .then(({ count, data }) => {
-        setCount((cur) => {
-          return {
-            ...cur,
-            tags: count,
-          };
-        });
+      .then(({ data }) => {
         setTags(data);
       });
-  }, [isInit, setCount, setTags]);
+  }, [isInit, setTags]);
 
   useEffect(() => {
     if (!isInit.tags) {
@@ -131,7 +124,7 @@ export const MyLayout = ({ children }: { children: ReactNode }) => {
               overflowY: "auto",
             }}
           >
-            <SiderMenu />
+            <SideMenu />
           </Layout.Sider>
           <Layout.Content
             ref={layoutContentRef}

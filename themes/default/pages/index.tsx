@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { countState, LayoutContentRefContext, rightBasicState } from "@/store";
+import { LayoutContentRefContext, rightBasicState } from "@/store";
 import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
 import Search from "@/components/Search";
@@ -13,7 +13,6 @@ interface Props {
 }
 
 const Page = (props: Props) => {
-  const [counts, setCounts] = useRecoilState(countState);
   const [, setRightBasic] = useRecoilState(rightBasicState);
   const router = useRouter();
   const isFirstReload = useRef(true);
@@ -56,12 +55,6 @@ const Page = (props: Props) => {
       },
       onFinally: (data) => {
         if (!data) return;
-        if (data.count != counts.all) {
-          setCounts({
-            ...counts,
-            all: data.count,
-          });
-        }
 
         setRightBasic((rightBasic) => ({ ...rightBasic, fileSize: data.size }));
       },
