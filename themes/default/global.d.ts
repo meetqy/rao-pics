@@ -7,6 +7,8 @@ declare namespace EagleUse {
 
   export interface FolderTree extends Folder {
     children: FolderTree[];
+    images?: Image[];
+    _count?: { images: number };
   }
 
   export interface TagWithCountImage extends EagleUse.Tag {
