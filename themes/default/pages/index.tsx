@@ -4,12 +4,13 @@ import JustifyLayout from "@/components/JustifyLayout";
 import { useInfiniteScroll } from "ahooks";
 import Search from "@/components/Search";
 import { ArrayParam, BooleanParam, NumberParam, StringParam, useQueryParams } from "use-query-params";
-import { MoreListResult, MoreQuery, getLoadMoreList } from "@/utils/getLoadmoreList";
+import { MoreListResult, getLoadMoreList } from "@/utils/getLoadmoreList";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
+import { Prisma } from "@eagleuse/prisma-client";
 
 interface Props {
-  more?: MoreQuery;
+  more?: Prisma.Enumerable<Prisma.ImageWhereInput>;
 }
 
 const Page = (props: Props) => {
@@ -55,7 +56,6 @@ const Page = (props: Props) => {
       },
       onFinally: (data) => {
         if (!data) return;
-        console.log(data);
         setRightBasic((right) => ({ ...right, fileCount: data?.count, fileSize: data?.size }));
       },
     }
