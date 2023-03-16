@@ -1,4 +1,3 @@
-
 ![eagleuse](https://github.com/meetqy/eagleuse/blob/main/readme/preview.gif?raw=true)
 
 <p align='center'>
@@ -22,13 +21,11 @@
 
 把《素材管理类 APP》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
 
-
-
 ## 👀 使用
 
 ```sh
 git clone -b main https://github.com/meetqy/eagleuse.git
-pnpm i
+pnpm run setup
 ```
 
 ### 主题配置
