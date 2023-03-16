@@ -24,7 +24,7 @@
 ## 👀 使用
 
 ```sh
-git clone -b develop https://github.com/meetqy/eagleuse.git
+git clone https://github.com/meetqy/eagleuse.git
 pnpm run setup
 ```
 
