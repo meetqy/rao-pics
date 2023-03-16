@@ -9,7 +9,8 @@
       "@eagleuse/transform-eagle": ["packages/transform-eagle/dist"],
       "@eagleuse/utils": ["packages/utils/dist"],
       "@eagleuse/plugin-nsfw": ["packages/plugin-nsfw/dist"],
-      "@eagleuse/prisma-client": ["packages/prisma-client/dist"]
+      "@eagleuse/prisma-client": ["packages/prisma-client/dist"],
+      "@eagleuse/plugin-api": ["packages/plugin-api/dist"]
     }
   },
   "include": ["packages/**/*.ts"],

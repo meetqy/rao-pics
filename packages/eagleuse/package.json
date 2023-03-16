@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@eagleuse/plugin-api": "workspace:*",
+    "@eagleuse/plugin-nsfw": "workspace:*",
     "@eagleuse/prisma-client": "workspace:*",
     "@eagleuse/transform-eagle": "workspace:*",
     "dotenv-flow": "^3.2.0"
