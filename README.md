@@ -21,7 +21,7 @@
 
 把《素材管理类 APP》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
 
-![eagleuse](https://github.com/meetqy/eagleuse/blob/dev/readme/preview.gif?raw=true)
+![eagleuse](https://github.com/meetqy/eagleuse/blob/main/readme/preview.gif?raw=true)
 
 ## 👀 使用
 
