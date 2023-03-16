@@ -29,7 +29,7 @@ const PLUGIN_API = async (args: Args) => {
   // 静态资源管理
   await fastify.register(fastifyStatic, {
     root: args.library + "/images",
-    prefix: "/public/",
+    prefix: "/static/",
   });
 
   await fastify.register(cors, {});

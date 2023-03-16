@@ -12,7 +12,7 @@ export const random = async (fastify: FastifyInstance) => {
       skip,
     });
 
-    const prefix = `/public/${image.id}.info/${image.name}`;
+    const prefix = `/static/${image.id}.info/${image.name}`;
 
     if (image.noThumbnail) {
       return res.redirect(`${prefix}.${image.ext}`);
