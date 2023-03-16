@@ -4,6 +4,12 @@
 
 const { PROTOCOL, HOSTNAME, PORT } = process.env;
 
+let host = `${PROTOCOL}://${HOSTNAME}`;
+
+if (PORT) {
+  host += `:${PORT}`;
+}
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -16,15 +22,17 @@ const nextConfig = {
   async redirects() {
     if (process.env.NODE_ENV === "production") return [];
 
+    console.log(process.env.NODE_ENV);
+
     return [
       {
         source: "/api/:slug",
-        destination: `${PROTOCOL}://${HOSTNAME}:${PORT}/api/:slug`,
+        destination: `${host}/api/:slug`,
         permanent: true,
       },
       {
-        source: "/public/:slug*",
-        destination: `${PROTOCOL}://${HOSTNAME}:${PORT}/public/:slug*`,
+        source: "/static/:slug*",
+        destination: `${host}/static/:slug*`,
         permanent: true,
       },
     ];
@@ -40,7 +48,7 @@ const nextConfig = {
               protocol: PROTOCOL,
               hostname: HOSTNAME,
               port: PORT,
-              pathname: "/public/**",
+              pathname: "/static/**",
             },
           ],
   },

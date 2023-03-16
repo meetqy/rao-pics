@@ -6,7 +6,7 @@ export const handleImageUrl = (
   // 是否返回原图
   original?: boolean
 ) => {
-  const prefix = `/public/${image.id}.info/${image.name}`;
+  const prefix = `/static/${image.id}.info/${image.name}`;
 
   if (original) {
     return `${prefix}.${image.ext}`;
