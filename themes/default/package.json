@@ -1,6 +1,6 @@
 {
   "name": "@eagleuse/default-theme",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "eagleuse default theme.",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
-    "@eagleuse/eagleuse": "workspace:^0.1.0",
+    "@eagleuse/eagleuse": "workspace:^0.2.0",
     "@eagleuse/prisma-client": "workspace:^1.1.1",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",

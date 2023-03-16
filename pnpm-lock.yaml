@@ -153,7 +153,7 @@ importers:
   themes/default:
     specifiers:
       '@ant-design/icons': ^5.0.1
-      '@eagleuse/eagleuse': workspace:^0.1.0
+      '@eagleuse/eagleuse': workspace:^0.2.0
       '@eagleuse/prisma-client': workspace:^1.1.1
       '@next/eslint-plugin-next': ^13.2.3
       '@types/justified-layout': ^4.1.0
