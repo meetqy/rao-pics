@@ -6,8 +6,13 @@
 
 ## .env
 
-```
+```sh
+# Eagle app library dir.
 LIBRARY=
-DATABASE_URL=
-NSFW=
+# Sqlite database dir.
+DATABASE_URL={dir}?connection_limit=1
+# Open NSFW, default false
+NSFW=false
+# PORT
+PORT=3002
 ```

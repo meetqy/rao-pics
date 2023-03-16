@@ -16,13 +16,21 @@
     "url": "https://github.com/meetqy/eagleuse/issues"
   },
   "scripts": {
-    "dev": "next dev -p 3005",
+    "dev": "next dev -p 3006",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "start:server": "node eagleuse.mjs",
+    "lint": "next lint",
+    "db:init": "prisma migrate dev --name init --skip-seed",
+    "db:preview": "prisma studio",
+    "db:push": "prisma db push"
+  },
+  "prisma": {
+    "schema": "./node_modules/@eagleuse/prisma-client/prisma/schema.prisma"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
+    "@eagleuse/eagleuse": "workspace:*",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
@@ -46,6 +54,7 @@
     "@types/justified-layout": "^4.1.0",
     "@types/lodash": "^4.14.191",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.52.0"
+    "@typescript-eslint/parser": "^5.52.0",
+    "prisma": "^4.10.1"
   }
 }
