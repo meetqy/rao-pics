@@ -14,6 +14,8 @@ const nextConfig = {
   },
 
   async redirects() {
+    if (process.env.NODE_ENV === "production") return [];
+
     return [
       {
         source: "/api/:slug",
@@ -30,14 +32,17 @@ const nextConfig = {
 
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: PROTOCOL,
-        hostname: HOSTNAME,
-        port: PORT,
-        pathname: "/public/**",
-      },
-    ],
+    remotePatterns:
+      process.env.NODE_ENV === "production"
+        ? []
+        : [
+            {
+              protocol: PROTOCOL,
+              hostname: HOSTNAME,
+              port: PORT,
+              pathname: "/public/**",
+            },
+          ],
   },
 };
 
