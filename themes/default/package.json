@@ -19,7 +19,7 @@
     "start:server": "node eagleuse.mjs",
     "next:dev": "next dev -p 3006",
     "next:build": "next build",
-    "next:start": "next start",
+    "next:start": "next start -p 9623",
     "next:lint": "next lint",
     "db:init": "prisma migrate dev --name init --skip-seed",
     "db:preview": "prisma studio",

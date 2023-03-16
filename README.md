@@ -1,4 +1,4 @@
-![eagleuse](https://github.com/meetqy/eagleuse/blob/main/readme/preview.gif?raw=true)
+![eagleuse](https://github.com/meetqy/eagleuse/blob/develop/readme/preview.gif?raw=true)
 
 <p align='center'>
     <a href="https://github.com/meetqy/eagleuse/blob/master/LICENSE" target="_blank">
@@ -17,14 +17,14 @@
     <a href='https://github.com/meetqy/eagleuse/issues/61'>问题合集</a> 
 </p>
 
-# <img src='https://github.com/meetqy/eagleuse/raw/main/themes/default/public/static/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
+# <img src='https://github.com/meetqy/eagleuse/raw/develop/themes/default/public/static/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
 
 把《素材管理类 APP》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
 
 ## 👀 使用
 
 ```sh
-git clone -b main https://github.com/meetqy/eagleuse.git
+git clone -b develop https://github.com/meetqy/eagleuse.git
 pnpm run setup
 ```
 
