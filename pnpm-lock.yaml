@@ -152,7 +152,7 @@ importers:
   themes/default:
     specifiers:
       "@ant-design/icons": ^5.0.1
-      "@eagleuse/eagleuse": 0.0.2-alpha.132
+      "@eagleuse/eagleuse": workspace:^0.1.0
       "@eagleuse/prisma-client": workspace:^1.1.1
       "@next/eslint-plugin-next": ^13.2.3
       "@types/justified-layout": ^4.1.0
@@ -178,7 +178,7 @@ importers:
       use-query-params: ^2.2.0
     dependencies:
       "@ant-design/icons": 5.0.1_biqbaboplfbrettd7655fr4n2y
-      "@eagleuse/eagleuse": 0.0.2-alpha.132
+      "@eagleuse/eagleuse": link:../../packages/eagleuse
       "@eagleuse/prisma-client": link:../../packages/prisma-client
       "@types/node": 18.14.6
       "@types/react": 18.0.28
@@ -976,70 +976,6 @@ packages:
         integrity: sha512-/Z3l6pXthq0JvMYdUFyX9j0MaCltlIn6mfh9jLyQwg5aPKxkyNa0PTHtU1AlFXLNk55ZuAeJRcpvq+tmLfKmaQ==,
       }
     engines: { node: ">=10" }
-    dev: false
-
-  /@eagleuse/eagleuse/0.0.2-alpha.132:
-    resolution:
-      {
-        integrity: sha512-uXOq+om+7LiOaMDIzQLQZ2Pe9qRp/h5FN0ku1jj0ID4wzwXos7I+qJzELZ3TsHrOK1PceHB5ha1UPI/Vb41GWQ==,
-      }
-    dependencies:
-      "@eagleuse/plugin-api": 1.2.3-alpha.11
-      "@eagleuse/prisma-client": 1.1.0
-      "@eagleuse/transform-eagle": 1.2.4-alpha.11
-      dotenv-flow: 3.2.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@eagleuse/plugin-api/1.2.3-alpha.11:
-    resolution:
-      {
-        integrity: sha512-JW3K8wjFdqXLv5XaTApOaALMB2vsLA15aodwmiqF5tivwYXbx8qakXImwDDAPYoDcePOoQWMQHm52c1DmucUKw==,
-      }
-    dependencies:
-      "@eagleuse/prisma-client": 1.1.0
-      "@eagleuse/utils": 1.0.5
-      "@fastify/cors": 8.2.0
-      "@fastify/static": 6.9.0
-      fastify: 4.14.0
-      ip: 1.1.8
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@eagleuse/prisma-client/1.1.0:
-    resolution:
-      {
-        integrity: sha512-lzYEcc9ZfjEu+wsb17qyE2ytllkR5BEBSAUXFEgoJwPLmHkYTF7P7fE7E8Wey+CGS4qLkLhmPVvfh/DikZdt0A==,
-      }
-    dependencies:
-      "@prisma/client": 4.10.1_prisma@4.10.1
-      prisma: 4.10.1
-    dev: false
-
-  /@eagleuse/transform-eagle/1.2.4-alpha.11:
-    resolution:
-      {
-        integrity: sha512-cqIab2QeburbizAwo7CUi2iTHuODLcfh7R3CYFB3G2jZKP0LVur36Qj8Afo2JhCxMbyexOCd7eZbJZO9QZOreg==,
-      }
-    dependencies:
-      "@eagleuse/prisma-client": 1.1.0
-      "@eagleuse/utils": 1.0.5
-      chokidar: 3.5.3
-      fs-extra: 11.1.0
-      lodash: 4.17.21
-      progress: 2.0.3
-    dev: false
-
-  /@eagleuse/utils/1.0.5:
-    resolution:
-      {
-        integrity: sha512-gUg+XhtZ9frJJAdku5AxuhHgjorMv1ynZ+N/3nlML4/Q0AVdcIV5DyC2C+q3dSZHXi74LbOzAvofE2iOughExA==,
-      }
-    dependencies:
-      pino: 8.10.0
-      pino-pretty: 9.3.0
     dev: false
 
   /@emotion/hash/0.8.0:

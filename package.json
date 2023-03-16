@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
+    "setup": "pnpm i && pnpm build",
     "prepare": "husky install",
     "commit": "git-cz",
     "build": "lerna run build",
