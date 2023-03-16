@@ -21,7 +21,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@eagleuse/plugin-nsfw": "workspace:*",
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.0",
@@ -29,6 +28,7 @@
     "prisma": "^4.10.1"
   },
   "dependencies": {
+    "@eagleuse/plugin-nsfw": "workspace:*",
     "@eagleuse/prisma-client": "workspace:*",
     "@eagleuse/utils": "workspace:*",
     "chokidar": "^3.5.3",

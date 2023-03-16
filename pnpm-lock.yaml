@@ -127,6 +127,7 @@ importers:
       prisma: ^4.10.1
       progress: ^2.0.3
     dependencies:
+      "@eagleuse/plugin-nsfw": link:../plugin-nsfw
       "@eagleuse/prisma-client": link:../prisma-client
       "@eagleuse/utils": link:../utils
       chokidar: 3.5.3
@@ -134,7 +135,6 @@ importers:
       lodash: 4.17.21
       progress: 2.0.3
     devDependencies:
-      "@eagleuse/plugin-nsfw": link:../plugin-nsfw
       "@types/fs-extra": 11.0.1
       "@types/lodash": 4.14.191
       "@types/node": 18.14.0
@@ -4039,7 +4039,7 @@ packages:
         integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==,
       }
     dependencies:
-      "@types/node": 18.14.2
+      "@types/node": 18.14.6
       form-data: 3.0.1
     dev: false
 
@@ -4055,6 +4055,7 @@ packages:
       {
         integrity: sha512-1uEQxww3DaghA0RxqHx0O0ppVlo43pJhepY51OxuQIKHpjbnYLA7vcdwioNPzIqmC2u3I/dmylcqjlh0e7AyUA==,
       }
+    dev: true
 
   /@types/node/18.14.6:
     resolution:

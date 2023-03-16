@@ -3,7 +3,6 @@
  */
 
 const { PROTOCOL, HOSTNAME, PORT } = process.env;
-console.log(PROTOCOL, HOSTNAME, PORT);
 
 const nextConfig = {
   reactStrictMode: true,
