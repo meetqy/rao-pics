@@ -1,6 +1,7 @@
 import { Col, Row, Space, theme } from "antd";
 import SearchCondition from "./condition";
 import DarkMode from "../DarkMode";
+import NSFW from "../NSFW";
 
 const Search = () => {
   const { token } = theme.useToken();
@@ -25,6 +26,7 @@ const Search = () => {
         </Col>
         <Col>
           <Space>
+            <NSFW />
             <SearchCondition.Sort />
             <DarkMode />
           </Space>

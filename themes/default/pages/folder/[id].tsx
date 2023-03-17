@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import Page, { PageHandle } from "..";
 import { createRef, useEffect, useMemo, useState } from "react";
 import { Card, Col, Empty, Layout, Row, Typography, theme } from "antd";
-import { handleImageAlt, handleImageUrl, transformFolderToTree } from "@/utils";
-import Image from "next/image";
+import { transformFolderToTree } from "@/utils";
 import { useRecoilValue } from "recoil";
 import { foldersState } from "@/store";
+import CustomImage from "@/components/CustomImage";
 
 const FolderPage = () => {
   const router = useRouter();
@@ -84,11 +84,10 @@ const FolderPage = () => {
     const thumbnail = images[0];
 
     return (
-      <Image
-        src={handleImageUrl(thumbnail)}
+      <CustomImage
+        image={thumbnail}
         width={0}
         height={150}
-        alt={handleImageAlt(thumbnail)}
         style={{ objectFit: "cover", objectPosition: "top" }}
       />
     );

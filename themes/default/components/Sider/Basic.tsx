@@ -1,10 +1,10 @@
 import { rightBasicState } from "@/store";
 import { Button, Col, Input, Rate, Row, Space, Tag, Tooltip, Typography } from "antd";
 import { useRecoilValue } from "recoil";
-import Image from "next/image";
-import { getPalettes, handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
+import { getPalettes, handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
 import { useMemo } from "react";
 import Link from "next/link";
+import CustomImage from "../CustomImage";
 
 const SiderBasic = () => {
   const rightBasic = useRecoilValue(rightBasicState);
@@ -47,7 +47,7 @@ const SiderBasic = () => {
     <div style={{ padding: 10 }}>
       <Row justify={"center"}>
         <Col>
-          <Image
+          <CustomImage
             width={200}
             height={0}
             style={{
@@ -56,8 +56,7 @@ const SiderBasic = () => {
               width: 200,
               height: image.height / (image.width / 200),
             }}
-            src={handleImageUrl(image)}
-            alt={handleImageAlt(image)}
+            image={image}
           />
         </Col>
       </Row>

@@ -33,6 +33,7 @@ const Page = forwardRef<PageHandle, Props>((props, ref) => {
     // 会刷新当前页面，重新调用infiniteScroll.reload()
     r: BooleanParam,
     s: ArrayParam,
+    n: BooleanParam,
   });
 
   const infiniteScroll = useInfiniteScroll<MoreListResult>(

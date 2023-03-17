@@ -10,6 +10,8 @@ if (PORT) {
   host += `:${PORT}`;
 }
 
+console.log(host);
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -22,12 +24,10 @@ const nextConfig = {
   async redirects() {
     if (process.env.NODE_ENV === "production") return [];
 
-    console.log(process.env.NODE_ENV);
-
     return [
       {
-        source: "/api/:slug",
-        destination: `${host}/api/:slug`,
+        source: "/api/:slug*",
+        destination: `${host}/api/:slug*`,
         permanent: true,
       },
       {
