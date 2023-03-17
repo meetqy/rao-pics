@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 export * from "@prisma/client";
 import chokidar from "chokidar";
+import { logger } from "@eagleuse/utils";
 
 let prisma: PrismaClient;
 let watchDBFile = false;
@@ -9,6 +10,7 @@ let watchDBFile = false;
 const updatePrismaClient = _.debounce(() => {
   prisma.$disconnect();
   prisma = new PrismaClient();
+  logger.info("[prisma-client] update prisma.");
 }, 5000);
 
 export const getPrisma = () => {

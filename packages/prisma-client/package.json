@@ -35,7 +35,8 @@
     "@prisma/client": "^4.10.1",
     "chokidar": "^3.5.3",
     "lodash": "^4.17.21",
-    "prisma": "^4.10.1"
+    "prisma": "^4.10.1",
+    "@eagleuse/utils": "workspace:*"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
