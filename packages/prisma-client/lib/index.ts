@@ -16,7 +16,14 @@ const updatePrismaClient = _.debounce(() => {
 export const getPrisma = () => {
   const { DATABASE_URL } = process.env;
   if (DATABASE_URL && !watchDBFile) {
-    chokidar.watch(DATABASE_URL.replace("file:", "").split("db")[0] + "db").on("change", updatePrismaClient);
+    const dbFile = DATABASE_URL.replace(/(file:|\?(.*?)+)/g, "");
+
+    chokidar
+      .watch(dbFile)
+      .on("change", updatePrismaClient)
+      .on("ready", () => {
+        logger.info(`[prisma-client] start watching ${dbFile}`);
+      });
 
     watchDBFile = true;
   }
