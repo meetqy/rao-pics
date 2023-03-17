@@ -98,6 +98,7 @@ importers:
 
   packages/prisma-client:
     specifiers:
+      '@eagleuse/utils': workspace:*
       '@prisma/client': ^4.10.1
       '@types/lodash': ^4.14.191
       '@types/node': ^18.14.6
@@ -105,6 +106,7 @@ importers:
       lodash: ^4.17.21
       prisma: ^4.10.1
     dependencies:
+      '@eagleuse/utils': link:../utils
       '@prisma/client': 4.10.1_prisma@4.10.1
       chokidar: 3.5.3
       lodash: 4.17.21
