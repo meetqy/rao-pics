@@ -20,7 +20,7 @@ export const getPrisma = () => {
 
     chokidar
       .watch(dbFile)
-      .on("change", updatePrismaClient)
+      .on("all", updatePrismaClient)
       .on("ready", () => {
         logger.info(`[prisma-client] start watching ${dbFile}`);
       });
