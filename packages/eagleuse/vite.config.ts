@@ -23,7 +23,7 @@ export default defineConfig({
       },
       formats: ["cjs"],
     },
-    sourcemap: true,
+    sourcemap: "inline",
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
       external: [
