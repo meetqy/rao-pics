@@ -9,8 +9,7 @@
     "lib": "lib"
   },
   "files": [
-    "lib",
-    "prisma"
+    "lib"
   ],
   "publishConfig": {
     "access": "public"

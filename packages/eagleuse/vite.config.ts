@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
-import { viteStaticCopy } from "vite-plugin-static-copy";
 
 export default defineConfig({
   plugins: [
@@ -8,14 +7,6 @@ export default defineConfig({
       // 是否跳过类型诊断
       skipDiagnostics: true,
       insertTypesEntry: true,
-    }),
-    viteStaticCopy({
-      targets: [
-        {
-          src: "node_modules/@eagleuse/prisma-client/prisma",
-          dest: "../",
-        },
-      ],
     }),
   ],
   build: {
