@@ -3,6 +3,7 @@ import { handleImageAlt, handleImageUrl } from "@/utils";
 import { CSSProperties, useMemo } from "react";
 import { NSFWState } from "@/hooks/nsfw";
 import { useRecoilState } from "recoil";
+import _ from "lodash";
 
 interface Props {
   image: EagleUse.Image;
@@ -17,12 +18,14 @@ const CustomImage = ({ image, width, height, fill, style }: Props) => {
 
   //   当前图片是否为nsfw
   const nsfw = useMemo(() => {
-    return image.tags.filter((t) => ["Hentai", "Neutral", "Porn", "Sexy"].includes(t.id)).length > 0;
+    return image.tags.filter((t) => ["Hentai", "Porn", "Sexy"].includes(t.id)).map((item) => item.id);
   }, [image]);
+
+  console.log(_.difference(nsfw, n));
 
   const _style = {
     ...style,
-    filter: n ? "inherit" : nsfw ? "blur(16px)" : "inherit",
+    filter: _.difference(nsfw, n).length > 0 ? "blur(16px)" : "inherit",
   };
 
   return (

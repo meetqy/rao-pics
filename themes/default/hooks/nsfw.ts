@@ -2,14 +2,16 @@ import { useLocalStorageState } from "ahooks";
 import { useEffect } from "react";
 import { atom, useRecoilState } from "recoil";
 
+export type NSFWCONSTAN = "Hentai" | "Porn" | "Sexy" | string;
+
 export const NSFWState = atom({
   key: "nsfw",
-  default: false as boolean,
+  default: [] as NSFWCONSTAN[],
 });
 
 export function useNSFW() {
-  const nsfw = useLocalStorageState<boolean>("nsfw", {
-    defaultValue: false,
+  const nsfw = useLocalStorageState<NSFWCONSTAN[]>("nsfw", {
+    defaultValue: [],
   });
 
   const [, setNsfw] = useRecoilState(NSFWState);
