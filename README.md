@@ -1,7 +1,7 @@
-![eagleuse](https://github.com/meetqy/eagleuse/blob/develop/readme/preview.gif?raw=true)
+![rao-pics](https://github.com/rao-pics/core/blob/develop/readme/preview.gif?raw=true)
 
 <p align='center'>
-    <a href="https://github.com/meetqy/eagleuse/blob/master/LICENSE" target="_blank">
+    <a href="https://github.com/rao-pics/core/blob/master/LICENSE" target="_blank">
         <img src="https://img.shields.io/github/license/meetqy/eagleuse"/>
     </a>
     <a href="https://www.typescriptlang.org" target="_black">
@@ -14,10 +14,10 @@
 
 <p align='center'>
     <a href='https://rao.pics'>线上演示</a> ·
-    <a href='https://github.com/meetqy/eagleuse/issues/61'>问题合集</a> 
+    <a href='https://github.com/rao-pics/core/issues/61'>问题合集</a> 
 </p>
 
-# <img src='https://github.com/meetqy/eagleuse/raw/develop/themes/default/public/static/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
+# <img src='https://raw.githubusercontent.com/rao-pics/rua/main/public/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
 
 把《素材管理类 APP》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
 
@@ -36,13 +36,13 @@ node index.mjs
 
 ## 👀 自定义安装
 
-### 安装依赖
+1. 安装依赖
 
 ```
 pnpm i @eagleuse/eagleuse prisma @prisma/client
 ```
 
-### 在 `package.json` 中新增
+2. 在 `package.json` 中新增
 
 ```json
 {
@@ -52,7 +52,7 @@ pnpm i @eagleuse/eagleuse prisma @prisma/client
 }
 ```
 
-### 在 `package.json scripts`中新增
+3. 在 `package.json scripts`中新增
 
 ```json
 {
@@ -70,14 +70,14 @@ pnpm i @eagleuse/eagleuse prisma @prisma/client
 - `db:push` 初始化数据库，**本地存在，并且最新 schema 和数据库的不一致，不会损坏数据库中的数据**
 - `db:generate` 根据 schema 生成类型文件
 
-### 新增`.env`文件，填写 `DATABASE_URL`
+4. 新增`.env`文件，填写 `DATABASE_URL`
 
 ```sh
 # file:/Users/qymeet/Pictures/test.library/eagleuse.db?connection_limit=1
 DATABASE_URL=file:{App library地址}/{}.db?connection_limit=1
 ```
 
-### 新建 `index.mjs`
+5. 新建 `index.mjs`
 
 ```js
 import EagleUse from "@eagleuse/eagleuse";
@@ -94,7 +94,7 @@ EagleUse({
 });
 ```
 
-### 启动
+6. 启动
 
 ```sh
 # 初始化数据库
@@ -106,7 +106,7 @@ node index.mjs
 
 ## 🎨 主题
 
-### [默认主题 Rua](https://github.com/rao-pics/rua)
+[默认主题 Rua](https://github.com/rao-pics/rua)
 
 | Light                                                             | Dark                                                              |
 | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
@@ -118,4 +118,4 @@ node index.mjs
 
 ## 📄 开源协议
 
-[MIT License](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EagleUse](https://github.com/eagleuse)
+[MIT License](https://github.com/rao-pics/core/blob/master/LICENSE) © [EagleUse](https://github.com/eagleuse)
