@@ -1,0 +1,23 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "db:init": "prisma migrate dev --name init --skip-seed",
+    "db:preview": "prisma studio",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@eagleuse/eagleuse": "^0.2.0",
+    "@prisma/client": "^4.10.1",
+    "prisma": "^4.10.1"
+  },
+  "prisma": {
+    "schema": "./node_modules/@eagleuse/prisma-client/prisma/schema.prisma"
+  }
+}

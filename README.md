@@ -23,40 +23,81 @@
 
 ## 👀 使用
 
-```sh
-git clone https://github.com/meetqy/eagleuse.git
-pnpm run setup
+### 安装依赖
+
+```
+pnpm i @eagleuse/eagleuse prisma @prisma/client
 ```
 
-### 主题配置
+### 在 `package.json` 中新增
 
-把 `theme/default` .env.example 改为 .env，正确填写配置信息
-
-```sh
-# sqlite数据库文件地址
-DATABASE_URL=file:/Users/qymeet/Pictures/test.library/eagleuse.db?connection_limit=1
-# 服务器配置
-PROTOCOL=http
-HOSTNAME=localhost
-PORT=3002
+```json
+{
+  "prisma": {
+    "schema": "@eagleuse/prisma-client/prisma/schema.prisma"
+  }
+}
 ```
 
-### 运行
+### 在 `package.json scripts`中新增
+
+```json
+{
+  "scripts": {
+    "db:init": "prisma migrate dev --name init --skip-seed",
+    "db:preview": "prisma studio",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
+  }
+}
+```
+
+- `db:init` 初始化 sqlite 数据库，**本地不存在**
+- `db:preview` 预览数据库
+- `db:push` 初始化数据库，**本地存在，并且最新 schema 和数据库的不一致，不会损坏数据库中的数据**
+- `db:generate` 根据 schema 生成类型文件
+
+### 新增`.env`文件，填写 `DATABASE_URL`
+
+```sh
+# file:/Users/qymeet/Pictures/test.library/eagleuse.db?connection_limit=1
+DATABASE_URL=file:{App library地址}/{}.db?connection_limit=1
+```
+
+### 新建 `index.mjs`
+
+```js
+import EagleUse from "@eagleuse/eagleuse";
+
+EagleUse({
+  // 开启API访问
+  plugin_api: true,
+  // 开启创建Sqlite时，自动NSFW检测图片并打标签
+  plugin_nsfw: true,
+  // 开启转换
+  transform_eagle: true,
+  // api访问端口号
+  port: 3002,
+});
+```
+
+### 启动
 
 ```sh
 # 初始化数据库
 pnpm db:init
-# 启动eagle生成sqlite、api服务等
-pnpm start:server
-# 启动 nextjs
-pnpm dev
+
+# 启动服务
+node index.mjs
 ```
 
 ## 🎨 主题
 
-**默认主题**
+### [默认主题 Rua](https://github.com/rao-pics/rua)
 
-![](./readme/default-theme.jpg)
+| Light                                                             | Dark                                                              |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| ![](https://github.com/rao-pics/rua/raw/main/readme/preview1.jpg) | ![](https://github.com/rao-pics/rua/raw/main/readme/preview2.jpg) |
 
 ## 📏 支持 APP
 
