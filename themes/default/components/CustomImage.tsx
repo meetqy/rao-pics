@@ -18,10 +18,8 @@ const CustomImage = ({ image, width, height, fill, style }: Props) => {
 
   //   当前图片是否为nsfw
   const nsfw = useMemo(() => {
-    return image.tags.filter((t) => ["Hentai", "Porn", "Sexy"].includes(t.id)).map((item) => item.id);
+    return (image.tags || []).filter((t) => ["Hentai", "Porn", "Sexy"].includes(t.id)).map((item) => item.id);
   }, [image]);
-
-  console.log(_.difference(nsfw, n));
 
   const _style = {
     ...style,

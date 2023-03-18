@@ -19,7 +19,7 @@ declare namespace EagleUse {
 
   // 图片
   export interface Image extends PrismaImage {
-    tags: Tag[];
+    tags?: Tag[];
     folders: Folder[];
   }
 
