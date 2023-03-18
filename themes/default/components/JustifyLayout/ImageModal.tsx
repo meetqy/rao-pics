@@ -1,6 +1,6 @@
-import { handleImageAlt, handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
+import { handleImageUrl, handleTime, transformByteToUnit } from "@/utils";
 import { Card, Col, Divider, Modal, Row, Space, Tag, Typography, theme } from "antd";
-import Image from "next/image";
+import CustomImage from "../CustomImage";
 
 interface Props {
   image?: EagleUse.Image;
@@ -81,12 +81,7 @@ const ImageModal = ({ image, open, onCancel }: Props) => {
               {["mp4"].includes(image.ext.toLocaleLowerCase()) ? (
                 <video src={handleImageUrl(image, true)} style={{ width: "100%", height: "100%" }} controls />
               ) : (
-                <Image
-                  fill
-                  style={{ objectFit: "scale-down" }}
-                  src={handleImageUrl(image, true)}
-                  alt={handleImageAlt(image)}
-                />
+                <CustomImage fill style={{ objectFit: "scale-down" }} image={image} />
               )}
             </div>
 

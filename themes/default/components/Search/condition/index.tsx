@@ -1,7 +1,7 @@
 import Size from "./Size";
 import Keyword from "./Keyword";
 import Ext from "./Ext";
-import Sort from "./sort";
+import Sort from "./Sort";
 
 const SearchCondition = {
   Size,

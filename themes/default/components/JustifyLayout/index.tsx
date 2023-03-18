@@ -1,13 +1,13 @@
-import Image from "next/image";
 import justifyLayout from "justified-layout";
 import { Button, Card, Layout, Row, Col, theme, Empty, Badge } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { getPalettes, handleImageAlt, handleImageUrl } from "@/utils";
+import { getPalettes } from "@/utils";
 import { useRecoilState } from "recoil";
 import { rightBasicState } from "@/store";
 import { useSize } from "ahooks";
 import ImageModal from "./ImageModal";
 import { MoreListResult } from "@/utils/getLoadmoreList";
+import CustomImage from "../CustomImage";
 
 interface LayoutBox {
   aspectRatio: number;
@@ -115,12 +115,7 @@ const JustifyLayout = ({ infiniteScroll, header }: Props) => {
                   });
                 }}
               >
-                <Image
-                  width={item.width}
-                  height={item.height}
-                  src={handleImageUrl(image)}
-                  alt={handleImageAlt(image)}
-                />
+                <CustomImage image={image} width={item.width} height={item.height} />
               </Card>
             );
 

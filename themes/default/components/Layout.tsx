@@ -1,18 +1,9 @@
 import { Layout, theme, Typography } from "antd";
 import { useRecoilState } from "recoil";
 import { foldersState, LayoutContentRefContext, tagsState } from "@/store";
-import {
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ReactNode, useCallback, useContext, useImperativeHandle, useMemo, useRef, useState } from "react";
 import SiderBasic from "./Sider/Basic";
-import { useSize } from "ahooks";
+import { useMount, useSize } from "ahooks";
 import SideMenu from "./SideMenu";
 import { useRouter } from "next/router";
 
@@ -67,15 +58,15 @@ export const MyLayout = ({ children }: { children: ReactNode }) => {
       });
   }, [isInit, setTags]);
 
-  useEffect(() => {
-    if (!isInit.tags) {
-      initTag();
-    }
-
+  useMount(() => {
     if (!isInit.folders) {
       initFolder();
     }
-  }, [isInit, initTag, initFolder]);
+
+    if (!isInit.tags) {
+      initTag();
+    }
+  });
 
   // 解决菜单闪烁问题
   if (!isInit.folders) return null;

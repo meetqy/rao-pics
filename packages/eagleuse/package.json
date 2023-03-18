@@ -22,7 +22,8 @@
     "build": "vite build",
     "db:init": "prisma migrate dev --name init --skip-seed",
     "db:preview": "prisma studio",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",

@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     target: "es2020",
     lib: {
-      entry: ["lib/start.ts", "lib/index.ts"],
+      entry: "lib/index.ts",
       name: "EagleUse",
       fileName: (_format, name) => {
         if (name.endsWith("start")) {

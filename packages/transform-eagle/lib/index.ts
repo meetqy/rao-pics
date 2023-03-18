@@ -10,14 +10,14 @@ interface Args {
 }
 
 const TransformEagle = async (args: Args) => {
-  const { library, plugin_nsfw } = args;
-  if (!library) throw Error("library is null!");
+  const { library, plugin_nsfw = false } = args;
 
   process.env.LIBRARY = library;
+  process.env.PLUGIN_NSFW = String(plugin_nsfw);
 
   if (plugin_nsfw) {
     await getNSFW();
-    logger.info("Complete init nsfw.");
+    logger.info("Init nsfw success.");
   }
 
   logger.info("Start transform 🛫");

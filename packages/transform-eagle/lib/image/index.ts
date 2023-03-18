@@ -186,18 +186,20 @@ const handleImage = async () => {
       },
     });
 
-    // nsfw检测
-    if (!image || !image.nsfw) {
-      // 不支持的扩展名 直接删除并跳过后续执行
-      if (supportNSFWExt.includes(metadata.ext.toLocaleLowerCase())) {
-        metadata = await getNSFWMetadata(metadata, file);
-      }
-    }
-
-    const data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
+    let data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
 
     // 新增
     if (!image) {
+      // nsfw检测
+      if (!image || !image.nsfw) {
+        // 不支持的扩展名 直接删除并跳过后续执行
+        if (supportNSFWExt.includes(metadata.ext.toLocaleLowerCase())) {
+          metadata = await getNSFWMetadata(metadata, file);
+        }
+
+        data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
+      }
+
       // 使用upsert
       // 针对: 添加的图片，已经存在当前library中，
       // Eagle 会弹窗提示是否使用已存在的场景

@@ -17,13 +17,14 @@
   },
   "scripts": {
     "start:server": "node eagleuse.mjs",
-    "next:dev": "next dev -p 3006",
+    "next:dev": "next dev -p 3007",
     "next:build": "next build",
     "next:start": "next start -p 9623",
     "next:lint": "next lint",
     "db:init": "prisma migrate dev --name init --skip-seed",
     "db:preview": "prisma studio",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
   },
   "prisma": {
     "schema": "./node_modules/@eagleuse/prisma-client/prisma/schema.prisma"
