@@ -21,7 +21,20 @@
 
 把《素材管理类 APP》作为后台管理系统，快速构建 WEB 图片站、自建图床、私有图库。
 
-## 👀 使用
+## ✈️ 快速开始
+
+```
+git clone -b example https://github.com/rao-pics/core.git
+pnpm i
+```
+
+`.env.example` 改为 `.env` 正确填写 `DATABASE_URL`
+
+```sh
+node index.mjs
+```
+
+## 👀 自定义安装
 
 ### 安装依赖
 
