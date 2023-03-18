@@ -1,7 +1,7 @@
 {
   "name": "eagleuse-monorepo",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.3.0",
   "scripts": {
     "setup": "pnpm i && pnpm build",
     "prepare": "husky install",
