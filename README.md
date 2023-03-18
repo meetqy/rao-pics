@@ -33,12 +33,8 @@ pnpm run setup
 把 `theme/default` .env.example 改为 .env，正确填写配置信息
 
 ```sh
-# Eagle App library 地址
-LIBRARY=/Users/qymeet/Pictures/test.library
 # sqlite数据库文件地址
 DATABASE_URL=file:/Users/qymeet/Pictures/test.library/eagleuse.db?connection_limit=1
-# 是否开启nsfw
-NSFW=false
 # 服务器配置
 PROTOCOL=http
 HOSTNAME=localhost
@@ -68,4 +64,4 @@ pnpm dev
 
 ## 📄 开源协议
 
-[MIT LICENSE](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EAGLEUSE](https://github.com/eagleuse)
+[MIT License](https://github.com/meetqy/eagleuse/blob/master/LICENSE) © [EagleUse](https://github.com/eagleuse)
