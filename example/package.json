@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@eagleuse/eagleuse": "^0.2.0",
+    "@eagleuse/eagleuse": "workspace:^0.2.0",
     "@prisma/client": "^4.10.1",
     "prisma": "^4.10.1"
   },
