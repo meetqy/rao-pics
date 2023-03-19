@@ -37,5 +37,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
-  }
+  },
+  "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f"
 }

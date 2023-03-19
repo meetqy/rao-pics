@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
-    "@raopics/utils": "workspace:*",
+    "@raopics/utils": "1.0.6",
     "chokidar": "^3.5.3",
     "lodash": "^4.17.21",
     "prisma": "^4.10.1"
@@ -47,7 +47,7 @@
       "require": "./dist/index.js"
     }
   },
-  "gitHead": "90d70b524804295a65079e065f1edc16cc70833b",
+  "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f",
   "devDependencies": {
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.6"

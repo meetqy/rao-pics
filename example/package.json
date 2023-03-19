@@ -17,11 +17,15 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^4.10.1",
-    "@raopics/prisma-client": "workspace:^1.2.0",
-    "@raopics/use": "workspace:^0.2.1",
+    "@raopics/prisma-client": "^1.1.1",
+    "@raopics/use": "^0.2.0",
     "prisma": "^4.10.1"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "prisma": {
     "schema": "./node_modules/@raopics/prisma-client/prisma/schema.prisma"
-  }
+  },
+  "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f"
 }

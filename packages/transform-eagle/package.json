@@ -28,9 +28,9 @@
     "prisma": "^4.10.1"
   },
   "dependencies": {
-    "@raopics/plugin-nsfw": "workspace:*",
-    "@raopics/prisma-client": "workspace:*",
-    "@raopics/utils": "workspace:*",
+    "@raopics/plugin-nsfw": "1.2.0",
+    "@raopics/prisma-client": "1.2.0",
+    "@raopics/utils": "1.0.6",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
@@ -48,5 +48,5 @@
       "require": "./dist/index.js"
     }
   },
-  "gitHead": "90d70b524804295a65079e065f1edc16cc70833b"
+  "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f"
 }
