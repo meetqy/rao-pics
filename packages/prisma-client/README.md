@@ -2,4 +2,4 @@
 
 ## Useage
 
-Read [@raopics/eagleuse](https://www.npmjs.com/package/@raopics/eagleuse).
+Read [@raopics/use](https://www.npmjs.com/package/@raopics/use).

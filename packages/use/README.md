@@ -1,4 +1,4 @@
-# `@raopics/eagleuse`
+# `@raopics/use`
 
 > TODO: description
 

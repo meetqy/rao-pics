@@ -49,33 +49,12 @@ importers:
   example:
     specifiers:
       '@prisma/client': ^4.10.1
-      '@raopics/eagleuse': workspace:^0.2.0
+      '@raopics/use': workspace:^0.2.0
       prisma: ^4.10.1
     dependencies:
       '@prisma/client': 4.10.1_prisma@4.10.1
-      '@raopics/eagleuse': link:../packages/eagleuse
+      '@raopics/use': link:../packages/use
       prisma: 4.10.1
-
-  packages/eagleuse:
-    specifiers:
-      '@raopics/plugin-api': workspace:*
-      '@raopics/prisma-client': workspace:*
-      '@raopics/transform-eagle': workspace:*
-      '@types/node': ^18.14.6
-      dotenv-flow: ^3.2.0
-      prisma: ^4.10.1
-      vite: ^4.1.3
-      vite-plugin-static-copy: ^0.13.1
-    dependencies:
-      '@raopics/plugin-api': link:../plugin-api
-      '@raopics/prisma-client': link:../prisma-client
-      '@raopics/transform-eagle': link:../transform-eagle
-      dotenv-flow: 3.2.0
-    devDependencies:
-      '@types/node': 18.14.6
-      prisma: 4.10.1
-      vite: 4.1.3_@types+node@18.14.6
-      vite-plugin-static-copy: 0.13.1_vite@4.1.3
 
   packages/plugin-api:
     specifiers:
@@ -155,6 +134,27 @@ importers:
       '@types/node': 18.14.0
       dotenv-cli: 7.0.0
       prisma: 4.10.1
+
+  packages/use:
+    specifiers:
+      '@raopics/plugin-api': workspace:*
+      '@raopics/prisma-client': workspace:*
+      '@raopics/transform-eagle': workspace:*
+      '@types/node': ^18.14.6
+      dotenv-flow: ^3.2.0
+      prisma: ^4.10.1
+      vite: ^4.1.3
+      vite-plugin-static-copy: ^0.13.1
+    dependencies:
+      '@raopics/plugin-api': link:../plugin-api
+      '@raopics/prisma-client': link:../prisma-client
+      '@raopics/transform-eagle': link:../transform-eagle
+      dotenv-flow: 3.2.0
+    devDependencies:
+      '@types/node': 18.14.6
+      prisma: 4.10.1
+      vite: 4.1.3_@types+node@18.14.6
+      vite-plugin-static-copy: 0.13.1_vite@4.1.3
 
   packages/utils:
     specifiers:
@@ -2716,7 +2716,7 @@ packages:
   /@types/jsonfile/6.1.1:
     resolution: {integrity: sha512-GSgiRCVeapDN+3pqA35IkQwasaCh/0YFH5dEF6S88iDvEn901DjOeH3/QPY+XYP1DFzDZPvIvfeEgk+7br5png==}
     dependencies:
-      '@types/node': 18.14.2
+      '@types/node': 18.14.6
     dev: true
 
   /@types/lodash/4.14.191:

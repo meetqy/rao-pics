@@ -39,7 +39,7 @@ node index.mjs
 1. 安装依赖
 
 ```
-pnpm i @raopics/eagleuse prisma @prisma/client
+pnpm i @raopics/use prisma @prisma/client
 ```
 
 2. 在 `package.json` 中新增
@@ -80,7 +80,7 @@ DATABASE_URL=file:{App library地址}/{}.db?connection_limit=1
 5. 新建 `index.mjs`
 
 ```js
-import EagleUse from "@raopics/eagleuse";
+import EagleUse from "@raopics/use";
 
 EagleUse({
   // 开启API访问

@@ -1,4 +1,4 @@
-import EagleUse from "@raopics/eagleuse";
+import EagleUse from "@raopics/use";
 
 EagleUse({
   // 开启API访问
