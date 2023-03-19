@@ -1,6 +1,6 @@
 {
   "name": "@raopics/example",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,8 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^4.10.1",
-    "@raopics/prisma-client": "workspace:^1.1.1",
-    "@raopics/use": "workspace:^0.2.0",
+    "@raopics/prisma-client": "workspace:^1.2.0",
+    "@raopics/use": "workspace:^0.2.1",
     "prisma": "^4.10.1"
   },
   "prisma": {
