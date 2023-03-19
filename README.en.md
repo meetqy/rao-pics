@@ -30,7 +30,7 @@ To get started with EagleUse, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone -b example https://github.com/rao-pics/core.git
+git clone -b example https://github.com/rao-pics/core.git example
 ```
 
 2. Install the dependencies:

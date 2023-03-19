@@ -26,7 +26,7 @@
 ## ✈️ 快速开始
 
 ```
-git clone -b example https://github.com/rao-pics/core.git
+git clone -b example https://github.com/rao-pics/core.git example
 pnpm i
 ```
 
