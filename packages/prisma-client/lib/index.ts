@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 export * from "@prisma/client";
 import chokidar from "chokidar";
-import { logger } from "@eagleuse/utils";
+import { logger } from "@raopics/utils";
 
 let prisma: PrismaClient;
 let watchDBFile = false;

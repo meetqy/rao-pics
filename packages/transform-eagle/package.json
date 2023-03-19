@@ -1,5 +1,5 @@
 {
-  "name": "@eagleuse/transform-eagle",
+  "name": "@raopics/transform-eagle",
   "version": "1.2.4",
   "description": "transform eagle app library to sqlite.",
   "keywords": [
@@ -28,9 +28,9 @@
     "prisma": "^4.10.1"
   },
   "dependencies": {
-    "@eagleuse/plugin-nsfw": "workspace:*",
-    "@eagleuse/prisma-client": "workspace:*",
-    "@eagleuse/utils": "workspace:*",
+    "@raopics/plugin-nsfw": "workspace:*",
+    "@raopics/prisma-client": "workspace:*",
+    "@raopics/utils": "workspace:*",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",

@@ -1,5 +1,5 @@
-# `@eagleuse/prisma-client`
+# `@raopics/prisma-client`
 
 ## Useage
 
-Read [@eagleuse/eagleuse](https://www.npmjs.com/package/@eagleuse/eagleuse).
+Read [@raopics/eagleuse](https://www.npmjs.com/package/@raopics/eagleuse).

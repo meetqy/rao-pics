@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { handleInclude } from "../utils";
-import { getPrisma } from "@eagleuse/prisma-client";
+import { getPrisma } from "@raopics/prisma-client";
 
 export const id = async (fastify: FastifyInstance) => {
   fastify.get<{

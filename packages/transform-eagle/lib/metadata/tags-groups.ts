@@ -1,5 +1,5 @@
-import { logger } from "@eagleuse/utils";
-import { getPrisma } from "@eagleuse/prisma-client";
+import { logger } from "@raopics/utils";
+import { getPrisma } from "@raopics/prisma-client";
 import { trigger } from "../trigger";
 
 const prisma = getPrisma();

@@ -1,6 +1,6 @@
 import watchImage from "./image";
 import watchMetadata from "./metadata";
-import { logger } from "@eagleuse/utils";
+import { logger } from "@raopics/utils";
 import { getNSFW } from "./image/nsfw";
 import watchStarredTags from "./starred-tags";
 

@@ -16,15 +16,15 @@ export default defineConfig({
   build: {
     lib: {
       entry: "lib/index.ts",
-      name: "@eagleuse/plugin-api",
+      name: "@raopics/plugin-api",
       fileName: "index",
       formats: ["cjs"],
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
       external: [
-        "@eagleuse/prisma-client",
-        "@eagleuse/utils",
+        "@raopics/prisma-client",
+        "@raopics/utils",
         "@fastify/cors",
         "@fastify/static",
         "fastify",
@@ -38,8 +38,8 @@ export default defineConfig({
           ip: "ip",
           "@fastify/static": "FastifyStatic",
           "@fastify/cors": "FastifyCors",
-          "@eagleuse/prisma-client": "PrismaClient",
-          "@eagleuse/utils": "Utils",
+          "@raopics/prisma-client": "PrismaClient",
+          "@raopics/utils": "Utils",
         },
       },
     },

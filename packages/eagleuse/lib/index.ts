@@ -1,6 +1,6 @@
-import PLUGIN_API from "@eagleuse/plugin-api";
+import PLUGIN_API from "@raopics/plugin-api";
 import dotenv from "dotenv-flow";
-import TransformEagle from "@eagleuse/transform-eagle";
+import TransformEagle from "@raopics/transform-eagle";
 
 interface Options {
   // 开启转换 eagle,默认 true

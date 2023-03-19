@@ -1,4 +1,4 @@
-# `@eagleuse/eagleuse`
+# `@raopics/eagleuse`
 
 > TODO: description
 

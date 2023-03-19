@@ -6,7 +6,7 @@ import { random } from "./random";
 import folder from "./folder";
 import tag from "./tag";
 import tagsGroups from "./tags-groups";
-import { logger } from "@eagleuse/utils";
+import { logger } from "@raopics/utils";
 import ip from "ip";
 
 interface Args {

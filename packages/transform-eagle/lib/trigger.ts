@@ -1,4 +1,4 @@
-import { logger } from "@eagleuse/utils";
+import { logger } from "@raopics/utils";
 import { readFileSync, writeFileSync } from "fs-extra";
 import _ from "lodash";
 

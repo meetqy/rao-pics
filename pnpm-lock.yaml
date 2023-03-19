@@ -48,28 +48,28 @@ importers:
 
   example:
     specifiers:
-      '@eagleuse/eagleuse': workspace:^0.2.0
       '@prisma/client': ^4.10.1
+      '@raopics/eagleuse': workspace:^0.2.0
       prisma: ^4.10.1
     dependencies:
-      '@eagleuse/eagleuse': link:../packages/eagleuse
       '@prisma/client': 4.10.1_prisma@4.10.1
+      '@raopics/eagleuse': link:../packages/eagleuse
       prisma: 4.10.1
 
   packages/eagleuse:
     specifiers:
-      '@eagleuse/plugin-api': workspace:*
-      '@eagleuse/prisma-client': workspace:*
-      '@eagleuse/transform-eagle': workspace:*
+      '@raopics/plugin-api': workspace:*
+      '@raopics/prisma-client': workspace:*
+      '@raopics/transform-eagle': workspace:*
       '@types/node': ^18.14.6
       dotenv-flow: ^3.2.0
       prisma: ^4.10.1
       vite: ^4.1.3
       vite-plugin-static-copy: ^0.13.1
     dependencies:
-      '@eagleuse/plugin-api': link:../plugin-api
-      '@eagleuse/prisma-client': link:../prisma-client
-      '@eagleuse/transform-eagle': link:../transform-eagle
+      '@raopics/plugin-api': link:../plugin-api
+      '@raopics/prisma-client': link:../prisma-client
+      '@raopics/transform-eagle': link:../transform-eagle
       dotenv-flow: 3.2.0
     devDependencies:
       '@types/node': 18.14.6
@@ -79,19 +79,19 @@ importers:
 
   packages/plugin-api:
     specifiers:
-      '@eagleuse/prisma-client': workspace:*
-      '@eagleuse/utils': workspace:*
       '@fastify/cors': ^8.2.0
       '@fastify/static': ^6.9.0
+      '@raopics/prisma-client': workspace:*
+      '@raopics/utils': workspace:*
       '@types/node': ^18.14.2
       fastify: ^4.14.0
       ip: ^1.1.8
       nodemon: ^2.0.20
     dependencies:
-      '@eagleuse/prisma-client': link:../prisma-client
-      '@eagleuse/utils': link:../utils
       '@fastify/cors': 8.2.0
       '@fastify/static': 6.9.0
+      '@raopics/prisma-client': link:../prisma-client
+      '@raopics/utils': link:../utils
       fastify: 4.14.0
       ip: 1.1.8
     devDependencies:
@@ -110,16 +110,16 @@ importers:
 
   packages/prisma-client:
     specifiers:
-      '@eagleuse/utils': workspace:*
       '@prisma/client': ^4.10.1
+      '@raopics/utils': workspace:*
       '@types/lodash': ^4.14.191
       '@types/node': ^18.14.6
       chokidar: ^3.5.3
       lodash: ^4.17.21
       prisma: ^4.10.1
     dependencies:
-      '@eagleuse/utils': link:../utils
       '@prisma/client': 4.10.1_prisma@4.10.1
+      '@raopics/utils': link:../utils
       chokidar: 3.5.3
       lodash: 4.17.21
       prisma: 4.10.1
@@ -129,9 +129,9 @@ importers:
 
   packages/transform-eagle:
     specifiers:
-      '@eagleuse/plugin-nsfw': workspace:*
-      '@eagleuse/prisma-client': workspace:*
-      '@eagleuse/utils': workspace:*
+      '@raopics/plugin-nsfw': workspace:*
+      '@raopics/prisma-client': workspace:*
+      '@raopics/utils': workspace:*
       '@types/fs-extra': ^11.0.1
       '@types/lodash': ^4.14.191
       '@types/node': ^18.14.0
@@ -142,9 +142,9 @@ importers:
       prisma: ^4.10.1
       progress: ^2.0.3
     dependencies:
-      '@eagleuse/plugin-nsfw': link:../plugin-nsfw
-      '@eagleuse/prisma-client': link:../prisma-client
-      '@eagleuse/utils': link:../utils
+      '@raopics/plugin-nsfw': link:../plugin-nsfw
+      '@raopics/prisma-client': link:../prisma-client
+      '@raopics/utils': link:../utils
       chokidar: 3.5.3
       fs-extra: 11.1.0
       lodash: 4.17.21

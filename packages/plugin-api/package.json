@@ -1,5 +1,5 @@
 {
-  "name": "@eagleuse/plugin-api",
+  "name": "@raopics/plugin-api",
   "version": "1.2.3",
   "description": "Transform sqlite database to web api.",
   "author": "meetqy <meetqy@qq.com>",
@@ -35,8 +35,8 @@
     "url": "https://github.com/meetqy/eagleuse/issues"
   },
   "dependencies": {
-    "@eagleuse/prisma-client": "workspace:*",
-    "@eagleuse/utils": "workspace:*",
+    "@raopics/prisma-client": "workspace:*",
+    "@raopics/utils": "workspace:*",
     "@fastify/cors": "^8.2.0",
     "@fastify/static": "^6.9.0",
     "fastify": "^4.14.0",

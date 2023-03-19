@@ -1,9 +1,9 @@
-# `@eagleuse/plugin-api`
+# `@raopics/plugin-api`
 
 ## Useage
 
 ```js
-import PLUGIN_API from "@eagleuse/plugin-api";
+import PLUGIN_API from "@raopics/plugin-api";
 
 PLUGIN_API({
   library: "/Users/qymeet/Pictures/rao.library",

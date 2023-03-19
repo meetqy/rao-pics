@@ -1,11 +1,11 @@
-# `@eagleuse/transform-eagle`
+# `@raopics/transform-eagle`
 
 Watch eagle library to sqlite.
 
 ## Usage
 
 ```js
-const TransformEagle = require("@eagleuse/transform-eagle");
+const TransformEagle = require("@raopics/transform-eagle");
 
 TransformEagle({
   library: "xxx",

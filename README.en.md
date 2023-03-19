@@ -33,7 +33,7 @@ To perform a custom installation of EagleUse, follow these steps:
 1. Install the required dependencies:
 
 ```java
-pnpm i @eagleuse/eagleuse prisma @prisma/client
+pnpm i @raopics/eagleuse prisma @prisma/client
 ```
 
 2. Add the following to the package.json file:
@@ -41,7 +41,7 @@ pnpm i @eagleuse/eagleuse prisma @prisma/client
 ```json
 {
   "prisma": {
-    "schema": "@eagleuse/prisma-client/prisma/schema.prisma"
+    "schema": "@raopics/prisma-client/prisma/schema.prisma"
   }
 }
 ```
@@ -64,7 +64,7 @@ pnpm i @eagleuse/eagleuse prisma @prisma/client
 5. Create a new index.mjs file and add the following:
 
 ```js
-import EagleUse from "@eagleuse/eagleuse";
+import EagleUse from "@raopics/eagleuse";
 
 EagleUse({
   plugin_api: true,

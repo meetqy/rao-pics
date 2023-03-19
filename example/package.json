@@ -13,11 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@eagleuse/eagleuse": "workspace:^0.2.0",
+    "@raopics/eagleuse": "workspace:^0.2.0",
     "@prisma/client": "^4.10.1",
     "prisma": "^4.10.1"
   },
   "prisma": {
-    "schema": "./node_modules/@eagleuse/prisma-client/prisma/schema.prisma"
+    "schema": "./node_modules/@raopics/prisma-client/prisma/schema.prisma"
   }
 }

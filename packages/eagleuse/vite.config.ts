@@ -28,18 +28,18 @@ export default defineConfig({
       // 确保外部化处理那些你不想打包进库的依赖
       external: [
         "dotenv-flow",
-        "@eagleuse/plugin-nsfw",
-        "@eagleuse/prisma-client",
-        "@eagleuse/transform-eagle",
-        "@eagleuse/plugin-api",
+        "@raopics/plugin-nsfw",
+        "@raopics/prisma-client",
+        "@raopics/transform-eagle",
+        "@raopics/plugin-api",
       ],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
-          "@eagleuse/plugin-nsfw": "NSFW",
-          "@eagleuse/prisma-client": "PrismaClient",
-          "@eagleuse/transform-eagle": "TransformEagle",
-          "@eagleuse/plugin-api": "API",
+          "@raopics/plugin-nsfw": "NSFW",
+          "@raopics/prisma-client": "PrismaClient",
+          "@raopics/transform-eagle": "TransformEagle",
+          "@raopics/plugin-api": "API",
           "dotenv-flow": "dotenv",
         },
       },

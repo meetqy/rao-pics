@@ -1,3 +1,3 @@
-# `@eagleuse/plugin-nsfw`
+# `@raopics/plugin-nsfw`
 
-Please read [@eagleuse/transfrom-eagle](https://www.npmjs.com/package/@eagleuse/transform-eagle).
+Please read [@raopics/transfrom-eagle](https://www.npmjs.com/package/@raopics/transform-eagle).

@@ -1,5 +1,5 @@
 {
-  "name": "@eagleuse/plugin-nsfw",
+  "name": "@raopics/plugin-nsfw",
   "version": "1.1.1",
   "description": "Auto make NSFW label for photo. ",
   "author": "meetqy <meetqy@qq.com>",
