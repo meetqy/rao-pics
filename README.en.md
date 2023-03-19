@@ -1,3 +1,24 @@
+![rao-pics](https://github.com/rao-pics/core/blob/develop/readme/preview.gif?raw=true)
+
+<p align='center'>
+    <a href="https://github.com/rao-pics/core/blob/master/LICENSE" target="_blank">
+        <img src="https://img.shields.io/github/license/meetqy/eagleuse"/>
+    </a>
+    <a href="https://www.typescriptlang.org" target="_black">
+        <img src="https://img.shields.io/badge/language-TypeScript-blue.svg" alt="language">
+    </a>
+    <a href="https://github.com/prettier/prettier" target="_black"> 
+        <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg"/> 
+    </a>
+</p>
+
+<p align='center'>
+    <a href='https://rao.pics'>线上演示</a> ·
+    <a href='https://github.com/rao-pics/core/issues/61'>问题合集</a> ·
+    <a href='https://github.com/rao-pics/core/RENDME.md'>中文</a>  ·
+    <span>English</span>
+</p>
+
 # EagleUse
 
 EagleUse is a back-end management system for "material management apps," which allows for the rapid creation of web-based image galleries, private image repositories, and self-hosted image hosting services.
