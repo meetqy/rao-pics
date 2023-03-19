@@ -1,5 +1,5 @@
 {
-  "name": "eagleuse-monorepo",
+  "name": "raopics-monorepo",
   "private": true,
   "version": "0.3.1",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meetqy/eagleuse.git"
+    "url": "git+https://github.com/rao-pics/core.git"
   },
   "license": "MIT",
   "homepage": "https://rao.pics",

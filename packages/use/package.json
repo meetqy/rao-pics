@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meetqy/eagleuse.git"
+    "url": "git+https://github.com/rao-pics/core.git"
   },
   "scripts": {
     "build": "vite build",
@@ -35,7 +35,7 @@
     }
   },
   "bugs": {
-    "url": "https://github.com/meetqy/eagleuse/issues"
+    "url": "https://github.com/rao-pics/core/issues"
   },
   "prisma": {
     "schema": "./node_modules/@raopics/prisma-client/prisma/schema.prisma"

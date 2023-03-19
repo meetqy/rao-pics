@@ -22,14 +22,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meetqy/eagleuse.git"
+    "url": "git+https://github.com/rao-pics/core.git"
   },
   "scripts": {
     "test": "node ./__tests__/@raopics/prisma-client.test.js",
     "build": "vite build"
   },
   "bugs": {
-    "url": "https://github.com/meetqy/eagleuse/issues"
+    "url": "https://github.com/rao-pics/core/issues"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",

@@ -12,10 +12,10 @@
     "test": "npx jest --config ../../jest.config.ts --watch"
   },
   "author": "meetqy <meetqy@qq.com>",
-  "homepage": "https://github.com/meetqy/eagleuse",
+  "homepage": "https://github.com/rao-pics/core",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/meetqy/eagleuse/issues"
+    "url": "https://github.com/rao-pics/core/issues"
   },
   "publishConfig": {
     "access": "public"
