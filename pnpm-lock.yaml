@@ -51,8 +51,8 @@ importers:
   example:
     specifiers:
       '@prisma/client': ^4.10.1
-      '@raopics/prisma-client': ^1.2.1
-      '@raopics/use': ^0.2.2
+      '@raopics/prisma-client': workspace:*
+      '@raopics/use': workspace:*
       prisma: ^4.10.1
     dependencies:
       '@prisma/client': 4.10.1_prisma@4.10.1
@@ -64,8 +64,8 @@ importers:
     specifiers:
       '@fastify/cors': ^8.2.0
       '@fastify/static': ^6.9.0
-      '@raopics/prisma-client': ^1.2.1
-      '@raopics/utils': ^1.0.7
+      '@raopics/prisma-client': workspace:^1.2.1
+      '@raopics/utils': workspace:^1.0.7
       '@types/node': ^18.14.2
       fastify: ^4.14.0
       ip: ^1.1.8

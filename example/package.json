@@ -17,8 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^4.10.1",
-    "@raopics/prisma-client": "^1.2.1",
-    "@raopics/use": "^0.2.2",
+    "@raopics/prisma-client": "workspace:*",
+    "@raopics/use": "workspace:*",
     "prisma": "^4.10.1"
   },
   "publishConfig": {
