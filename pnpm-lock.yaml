@@ -64,7 +64,7 @@ importers:
     specifiers:
       '@fastify/cors': ^8.2.0
       '@fastify/static': ^6.9.0
-      '@raopics/prisma-client': workspace:^1.2.1
+      '@raopics/prisma-client': workspace:^1.2.2
       '@raopics/utils': workspace:^1.0.7
       '@types/node': ^18.14.2
       fastify: ^4.14.0
@@ -113,7 +113,7 @@ importers:
   packages/transform-eagle:
     specifiers:
       '@raopics/plugin-nsfw': ^1.2.1
-      '@raopics/prisma-client': ^1.2.1
+      '@raopics/prisma-client': ^1.2.2
       '@raopics/utils': ^1.0.7
       '@types/fs-extra': ^11.0.1
       '@types/lodash': ^4.14.191
@@ -139,9 +139,9 @@ importers:
 
   packages/use:
     specifiers:
-      '@raopics/plugin-api': ^1.3.1
-      '@raopics/prisma-client': ^1.2.1
-      '@raopics/transform-eagle': ^1.3.1
+      '@raopics/plugin-api': ^1.3.2
+      '@raopics/prisma-client': ^1.2.2
+      '@raopics/transform-eagle': ^1.3.2
       '@types/node': ^18.14.6
       dotenv-flow: ^3.2.0
       prisma: ^4.10.1

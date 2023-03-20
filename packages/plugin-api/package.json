@@ -1,6 +1,6 @@
 {
   "name": "@raopics/plugin-api",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Transform sqlite database to web api.",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
@@ -37,7 +37,7 @@
   "dependencies": {
     "@fastify/cors": "^8.2.0",
     "@fastify/static": "^6.9.0",
-    "@raopics/prisma-client": "workspace:^1.2.1",
+    "@raopics/prisma-client": "workspace:^1.2.2",
     "@raopics/utils": "workspace:^1.0.7",
     "fastify": "^4.14.0",
     "ip": "^1.1.8"
