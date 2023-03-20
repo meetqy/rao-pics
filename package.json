@@ -9,8 +9,8 @@
     "build": "lerna run build",
     "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits",
     "release:next-beta": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --canary",
-    "prerelease": "pnpm build",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "release": "standard-version"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
@@ -29,6 +29,7 @@
     "lerna": "^6.4.1",
     "lint-staged": "^13.1.2",
     "prettier": "^2.8.4",
+    "standard-version": "^9.5.0",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "vite": "^4.1.3",
