@@ -1,6 +1,6 @@
 {
   "name": "@raopics/plugin-nsfw",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Auto make NSFW label for photo. ",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
