@@ -1,6 +1,6 @@
-import EagleUse from "@raopics/use";
+import raopics from "@raopics/use";
 
-EagleUse({
+raopics({
   // 开启API访问
   plugin_api: true,
   // 开启创建Sqlite时，自动NSFW检测图片并打标签

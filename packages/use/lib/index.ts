@@ -14,7 +14,7 @@ interface Options {
   port?: number;
 }
 
-const RaoPics = (options?: Options) => {
+const raopics = (options?: Options) => {
   dotenv.config({
     debug: true,
     path: join(__dirname, "../"),
@@ -41,4 +41,4 @@ const RaoPics = (options?: Options) => {
   }
 };
 
-export default RaoPics;
+export default raopics;
