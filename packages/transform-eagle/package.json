@@ -23,14 +23,13 @@
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
     "@types/lodash": "^4.14.191",
-    "@types/node": "^18.14.0",
-    "dotenv-cli": "^7.0.0",
-    "prisma": "^4.10.1"
+    "@types/node": "^18.14.0"
   },
   "dependencies": {
     "@raopics/plugin-nsfw": "1.2.0",
     "@raopics/prisma-client": "1.2.0",
     "@raopics/utils": "1.0.6",
+    "prisma": "^4.10.1",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
