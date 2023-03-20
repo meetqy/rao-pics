@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { Prisma, getPrisma } from "@eagleuse/prisma-client";
+import { Prisma, getPrisma } from "@raopics/prisma-client";
 
 const tagsGroups = async (fastify: FastifyInstance) => {
   fastify.post<{

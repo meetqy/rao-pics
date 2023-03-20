@@ -6,7 +6,7 @@ import { random } from "./random";
 import folder from "./folder";
 import tag from "./tag";
 import tagsGroups from "./tags-groups";
-import { logger } from "@eagleuse/utils";
+import { logger } from "@raopics/utils";
 import ip from "ip";
 
 interface Args {
@@ -44,16 +44,16 @@ const PLUGIN_API = async (args: Args) => {
   fastify.register(random);
   fastify.register(random, { prefix: "/api" });
 
-  const port = args.port || 3002;
+  const port = args.port || 9600;
 
-  fastify.listen({ port, host: "" }, function (err) {
+  fastify.listen({ port, host: "0.0.0.0" }, function (err) {
     if (err) {
       logger.error(err);
       process.exit(1);
     }
 
     logger.info(
-      `Server is now listening on \n - http://${ip.address()}:${port}\n - http://localhost:${port}`
+      `[plugin-api] Server is now listening on \n - http://${ip.address()}:${port}\n - http://localhost:${port}`
     );
   });
 };

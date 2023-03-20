@@ -1,4 +1,4 @@
-import { Prisma } from "@eagleuse/prisma-client";
+import { Prisma } from "@raopics/prisma-client";
 
 export const handleInclude = (include: string): Prisma.ImageInclude => {
   if (!include) return null;

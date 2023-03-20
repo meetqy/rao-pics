@@ -1,0 +1,31 @@
+{
+  "name": "@raopics/example",
+  "version": "1.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.mjs",
+    "db:init": "prisma migrate dev --name init --skip-seed",
+    "db:preview": "prisma studio",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
+  },
+  "keywords": [
+    "example"
+  ],
+  "author": "meetqy",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^4.10.1",
+    "@raopics/prisma-client": "^1.2.1",
+    "@raopics/use": "^0.2.2",
+    "prisma": "^4.10.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "prisma": {
+    "schema": "./node_modules/@raopics/prisma-client/prisma/schema.prisma"
+  },
+  "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f"
+}

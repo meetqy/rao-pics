@@ -1,6 +1,6 @@
 {
-  "name": "@eagleuse/plugin-nsfw",
-  "version": "1.1.1",
+  "name": "@raopics/plugin-nsfw",
+  "version": "1.2.1",
   "description": "Auto make NSFW label for photo. ",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
@@ -10,13 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meetqy/eagleuse.git"
+    "url": "git+https://github.com/rao-pics/core.git"
   },
   "scripts": {
     "build": "vite build"
   },
   "bugs": {
-    "url": "https://github.com/meetqy/eagleuse/issues"
+    "url": "https://github.com/rao-pics/core/issues"
   },
   "dependencies": {
     "@tensorflow/tfjs-node": "^4.2.0",
@@ -35,5 +35,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
-  }
+  },
+  "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f"
 }

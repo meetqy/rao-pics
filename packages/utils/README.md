@@ -1,4 +1,4 @@
-# `@eagleuse/utils`
+# `@raopics/utils`
 
 ### Function
 

@@ -1,4 +1,4 @@
-import { getPrisma } from "@eagleuse/prisma-client";
+import { getPrisma } from "@raopics/prisma-client";
 import { FastifyInstance } from "fastify";
 
 export const random = async (fastify: FastifyInstance) => {

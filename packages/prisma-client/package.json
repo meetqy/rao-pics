@@ -1,6 +1,6 @@
 {
-  "name": "@eagleuse/prisma-client",
-  "version": "1.1.1",
+  "name": "@raopics/prisma-client",
+  "version": "1.2.1",
   "description": "prisma client at eagleuse",
   "keywords": [
     "prisma",
@@ -22,21 +22,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meetqy/eagleuse.git"
+    "url": "git+https://github.com/rao-pics/core.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@eagleuse/prisma-client.test.js",
+    "test": "node ./__tests__/@raopics/prisma-client.test.js",
     "build": "vite build"
   },
   "bugs": {
-    "url": "https://github.com/meetqy/eagleuse/issues"
+    "url": "https://github.com/rao-pics/core/issues"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
+    "@raopics/utils": "^1.0.7",
     "chokidar": "^3.5.3",
     "lodash": "^4.17.21",
-    "prisma": "^4.10.1",
-    "@eagleuse/utils": "workspace:*"
+    "prisma": "^4.10.1"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -47,7 +47,7 @@
       "require": "./dist/index.js"
     }
   },
-  "gitHead": "90d70b524804295a65079e065f1edc16cc70833b",
+  "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f",
   "devDependencies": {
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.14.6"

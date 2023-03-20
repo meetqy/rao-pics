@@ -2,44 +2,47 @@ import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
-  publicDir: false,
   plugins: [
     dts({
-      // 是否将源码里的 .d.ts 文件复制到 outputDir
-      copyDtsFiles: true,
       // 是否跳过类型诊断
       skipDiagnostics: true,
-      // 是否生成类型声明入口
       insertTypesEntry: true,
     }),
   ],
   build: {
+    target: "es2020",
     lib: {
       entry: "lib/index.ts",
-      name: "@raopics/plugin-api",
-      fileName: "index",
+      name: "EagleUse",
+      fileName: (_format, name) => {
+        if (name.endsWith("start")) {
+          return "start.js";
+        }
+
+        return name + ".js";
+      },
       formats: ["cjs"],
     },
+    sourcemap: "inline",
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
       external: [
+        "dotenv-flow",
+        "@raopics/plugin-nsfw",
         "@raopics/prisma-client",
-        "@raopics/utils",
-        "@fastify/cors",
-        "@fastify/static",
-        "fastify",
+        "@raopics/transform-eagle",
+        "@raopics/plugin-api",
         "path",
-        "ip",
       ],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
-          fastify: "Fastify",
-          ip: "ip",
-          "@fastify/static": "FastifyStatic",
-          "@fastify/cors": "FastifyCors",
+          "@raopics/plugin-nsfw": "NSFW",
           "@raopics/prisma-client": "PrismaClient",
-          "@raopics/utils": "Utils",
+          "@raopics/transform-eagle": "TransformEagle",
+          "@raopics/plugin-api": "API",
+          "dotenv-flow": "dotenv",
+          path: "path",
         },
       },
     },

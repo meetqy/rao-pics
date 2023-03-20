@@ -1,6 +1,6 @@
 {
-  "name": "@eagleuse/utils",
-  "version": "1.0.5",
+  "name": "@raopics/utils",
+  "version": "1.0.7",
   "description": "eagleuse common utils library.",
   "keywords": [
     "logger",
@@ -17,10 +17,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meetqy/eagleuse.git"
+    "url": "git+https://github.com/rao-pics/core.git"
   },
   "bugs": {
-    "url": "https://github.com/meetqy/eagleuse/issues"
+    "url": "https://github.com/rao-pics/core/issues"
   },
   "dependencies": {
     "pino": "^8.10.0",
@@ -37,5 +37,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
-  }
+  },
+  "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f"
 }
