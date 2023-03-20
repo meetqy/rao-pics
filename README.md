@@ -14,9 +14,7 @@
 
 <p align='center'>
     <a href='https://rao.pics'>线上演示</a> ·
-    <a href='https://github.com/rao-pics/core/issues/61'>问题合集</a> ·
-    <span>中文</span>  ·
-    <a href='https://github.com/rao-pics/core/RENDME.en.md'>English</a> 
+    <a href='https://github.com/rao-pics/core/issues/61'>问题合集</a> 
 </p>
 
 # <img src='https://raw.githubusercontent.com/rao-pics/rua/main/public/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
