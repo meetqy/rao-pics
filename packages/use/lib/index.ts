@@ -1,6 +1,7 @@
 import PLUGIN_API from "@raopics/plugin-api";
-import dotenv from "dotenv-flow";
 import TransformEagle from "@raopics/transform-eagle";
+import dotenv from "dotenv-flow";
+import { join } from "path";
 
 interface Options {
   // 开启转换 eagle,默认 true
@@ -13,35 +14,31 @@ interface Options {
   port?: number;
 }
 
-const EagleUse = (options?: Options) => {
-  const { DATABASE_URL } = process.env;
-  const { transform_eagle = true, plugin_api = true, plugin_nsfw = true, port = 3002 } = options || {};
+const RaoPics = (options?: Options) => {
+  dotenv.config({
+    debug: true,
+    path: join(__dirname, "../"),
+  });
 
-  if (!DATABASE_URL) throw Error("DATABASE_URL is null!");
+  const { LIBRARY } = process.env;
 
-  const file = DATABASE_URL.match(/:.*?(\/eagleuse\.db)/g);
-  let library;
-  if (file) {
-    library = file[0].replace(/(:|\/eagleuse\.db)/g, "");
-  }
+  const { transform_eagle = true, plugin_api = true, plugin_nsfw = true, port = 0 } = options || {};
 
-  if (!library) throw Error("DATABASE_URL error!");
-
-  dotenv.config();
+  if (!LIBRARY) throw Error("LIBRARY is null!");
 
   if (transform_eagle) {
     TransformEagle({
-      library,
+      library: LIBRARY,
       plugin_nsfw,
     });
   }
 
   if (plugin_api) {
     PLUGIN_API({
-      library,
+      library: LIBRARY,
       port,
     });
   }
 };
 
-export default EagleUse;
+export default RaoPics;

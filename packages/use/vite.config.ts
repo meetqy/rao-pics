@@ -32,6 +32,7 @@ export default defineConfig({
         "@raopics/prisma-client",
         "@raopics/transform-eagle",
         "@raopics/plugin-api",
+        "path",
       ],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
@@ -41,6 +42,7 @@ export default defineConfig({
           "@raopics/transform-eagle": "TransformEagle",
           "@raopics/plugin-api": "API",
           "dotenv-flow": "dotenv",
+          path: "path",
         },
       },
     },

@@ -3,6 +3,7 @@ import _ from "lodash";
 export * from "@prisma/client";
 import chokidar from "chokidar";
 import { logger } from "@raopics/utils";
+import { join } from "path";
 
 let prisma: PrismaClient;
 let watchDBFile = false;
@@ -14,9 +15,9 @@ const updatePrismaClient = _.debounce(() => {
 }, 5000);
 
 export const getPrisma = () => {
-  const { DATABASE_URL } = process.env;
-  if (DATABASE_URL && !watchDBFile) {
-    const dbFile = DATABASE_URL.replace(/(file:|\?(.*?)+)/g, "");
+  const { LIBRARY } = process.env;
+  if (LIBRARY && !watchDBFile) {
+    const dbFile = join(LIBRARY, "./raopics.db?connection_limit=1");
 
     chokidar
       .watch(dbFile)
