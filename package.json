@@ -4,6 +4,7 @@
   "version": "0.3.1",
   "scripts": {
     "setup": "pnpm i && pnpm build",
+    "push:example": "git subtree push --prefix example origin example",
     "prepare": "husky install",
     "build": "lerna run build",
     "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits",
