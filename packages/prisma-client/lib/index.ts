@@ -17,7 +17,7 @@ const updatePrismaClient = _.debounce(() => {
 export const getPrisma = () => {
   const { LIBRARY } = process.env;
   if (LIBRARY && !watchDBFile) {
-    const dbFile = join(LIBRARY, "./raopics.db?connection_limit=1");
+    const dbFile = join(LIBRARY, "./raopics.db");
 
     chokidar
       .watch(dbFile)
