@@ -2,12 +2,13 @@ import * as chokidar from "chokidar";
 import { join } from "path";
 import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
-import { getPrisma, Image, Prisma, Tag } from "@raopics/prisma-client";
+import { getPrisma } from "@raopics/prisma-client";
 import { logger } from "@raopics/utils";
 import ProgressBar from "progress";
 import TagPrisma from "../tag";
 import { getNSFWMetadata } from "./nsfw";
 import { trigger } from "../trigger";
+import getPrismaParams from "./getPrismaParams";
 
 // 防抖 需要延迟的毫秒数
 const _wait = 3000;
@@ -69,58 +70,6 @@ const PendingFiles: {
     }
   },
 };
-
-function getPrismaParams(
-  data: EagleUse.Image,
-  oldData: Image & {
-    tags: Tag[];
-  }
-): Prisma.ImageCreateInput {
-  let tags = {},
-    folders = {};
-
-  if (data.folders) {
-    folders = {
-      connect: data.folders.map((folder) => ({ id: folder })),
-    };
-  }
-
-  if (data.tags) {
-    tags = {
-      connectOrCreate: data.tags.map((tag) => ({
-        where: { id: tag },
-        create: { id: tag, name: tag },
-      })),
-    };
-
-    // 标签 从 a => b
-    // 1.需要 disconnect a
-    // 2.如果 a 标签所关联的图片数量小于1 需要删除
-    if (oldData && oldData.tags) {
-      const disconnectTags = _.difference(
-        oldData.tags.map((tag) => tag.id),
-        data.tags as string[]
-      );
-
-      if (disconnectTags.length > 0) {
-        tags["disconnect"] = disconnectTags.map((tag) => ({ id: tag }));
-        isDisconnect.tag = true;
-      }
-    }
-  }
-
-  // 浮点数只能用string来存储
-  if (data.ext.toLocaleLowerCase() === "mp4") {
-    data.duration = data.duration.toString();
-  }
-
-  return {
-    ...data,
-    tags,
-    folders,
-    palettes: JSON.stringify(data.palettes),
-  };
-}
 
 const handleImage = async () => {
   const prisma = getPrisma();
@@ -186,7 +135,8 @@ const handleImage = async () => {
       },
     });
 
-    let data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
+    let [data, disconnect] = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
+    isDisconnect.tag = disconnect;
 
     // 新增
     if (!image) {
@@ -197,7 +147,8 @@ const handleImage = async () => {
           metadata = await getNSFWMetadata(metadata, file);
         }
 
-        data = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
+        [data, disconnect] = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
+        isDisconnect.tag = disconnect;
       }
 
       // 使用upsert
