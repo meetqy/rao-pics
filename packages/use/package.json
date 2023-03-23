@@ -42,9 +42,9 @@
     "schema": "./node_modules/@raopics/prisma-client/prisma/schema.prisma"
   },
   "dependencies": {
-    "@raopics/plugin-api": "^1.3.2",
-    "@raopics/prisma-client": "^1.2.2",
-    "@raopics/transform-eagle": "^1.3.2",
+    "@raopics/plugin-api": "workspace:*",
+    "@raopics/prisma-client": "workspace:*",
+    "@raopics/transform-eagle": "workspace:*",
     "dotenv-flow": "^3.2.0"
   },
   "devDependencies": {
