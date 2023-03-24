@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+  // https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client#using-a-custom-output-path
+  output   = "./client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./default.db"
+}
+
+model Image {
+  id                String   @id
+  name              String
+  size              Int
+  btime             BigInt
+  mtime             BigInt
+  modificationTime  BigInt
+  ext               String
+  url               String
+  annotation        String
+  width             Int
+  height            Int
+  // 自定义属性  metadata最后一次修改时间
+  metadataMTime     BigInt?  @default(0)
+  star              Int?
+  palettes          String?
+  lastModified      BigInt?
+  deletedTime       BigInt?
+  isDeleted         Boolean? @default(false)
+  // <--- 视频 --->
+  resolutionWidth   Int?
+  resolutionHeight  Int?
+  duration          String?
+  // <--- 视频 --->
+  // 自定义属性  NSFW是否检测
+  nsfw              Boolean? @default(false)
+  processingPalette Boolean?
+  noThumbnail       Boolean?
+  folders           Folder[]
+  tags              Tag[]
+}
+
+model Tag {
+  id         String       @id
+  name       String       @unique
+  starred    Boolean      @default(false)
+  tagsGroups TagsGroups[]
+  images     Image[]
+}
+
+model Folder {
+  id               String  @id
+  name             String
+  description      String
+  pid              String?
+  modificationTime BigInt
+  iconColor        String?
+  icon             String?
+  password         String
+  passwordTips     String
+  images           Image[]
+}
+
+model TagsGroups {
+  id    String  @id
+  name  String  @unique
+  color String?
+  tags  Tag[]
+}

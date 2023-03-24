@@ -6,16 +6,14 @@ import { logger } from "@raopics/utils";
 import { getPrisma } from "@raopics/prisma-client";
 import { trigger } from "./trigger";
 
-const prisma = getPrisma();
-
 const _wait = 5000;
 
 export const handleStarredTags = (file: string) => {
   const json = readJsonSync(file);
   const localTags: string[] = json["starredTags"];
 
-  prisma.tag
-    .updateMany({
+  getPrisma()
+    .tag.updateMany({
       where: {
         id: { in: localTags },
       },
@@ -31,8 +29,8 @@ export const handleStarredTags = (file: string) => {
 };
 
 export const deleteUnnecessary = (localTags: string[]) => {
-  prisma.tag
-    .findMany({
+  getPrisma()
+    .tag.findMany({
       where: {
         id: {
           notIn: localTags.map((item) => item),
@@ -41,8 +39,8 @@ export const deleteUnnecessary = (localTags: string[]) => {
     })
     .then((tags) => {
       if (tags && tags.length > 0) {
-        prisma.tag
-          .updateMany({
+        getPrisma()
+          .tag.updateMany({
             where: {
               id: {
                 in: tags.map((item) => item.id),

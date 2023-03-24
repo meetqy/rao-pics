@@ -8,6 +8,7 @@ import tag from "./tag";
 import tagsGroups from "./tags-groups";
 import { logger } from "@raopics/utils";
 import ip from "ip";
+import { getPrisma } from "@raopics/prisma-client";
 
 interface Args {
   library: string;
@@ -25,6 +26,8 @@ const PLUGIN_API = async (args: Args) => {
   });
 
   args.registerCallback && args.registerCallback(fastify);
+
+  getPrisma(args.library);
 
   // 静态资源管理
   await fastify.register(fastifyStatic, {

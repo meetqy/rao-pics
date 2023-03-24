@@ -26,13 +26,12 @@
     "@types/node": "^18.14.0"
   },
   "dependencies": {
-    "@raopics/plugin-nsfw": "^1.2.1",
-    "@raopics/prisma-client": "^1.2.2",
-    "@raopics/utils": "^1.0.7",
+    "@raopics/plugin-nsfw": "workspace:*",
+    "@raopics/prisma-client": "workspace:*",
+    "@raopics/utils": "workspace:*",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
-    "prisma": "^4.10.1",
     "progress": "^2.0.3"
   },
   "files": [

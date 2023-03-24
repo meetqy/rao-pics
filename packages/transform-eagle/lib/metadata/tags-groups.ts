@@ -2,8 +2,6 @@ import { logger } from "@raopics/utils";
 import { getPrisma } from "@raopics/prisma-client";
 import { trigger } from "../trigger";
 
-const prisma = getPrisma();
-
 export const handleTagsGroups = (localTagsGroups: EagleUse.TagsGroupsItem[]) => {
   localTagsGroups.forEach((item) => {
     const tags = (item.tags as string[]) || [];
@@ -18,8 +16,8 @@ export const handleTagsGroups = (localTagsGroups: EagleUse.TagsGroupsItem[]) => 
       },
     };
 
-    prisma.tagsGroups
-      .upsert({
+    getPrisma()
+      .tagsGroups.upsert({
         where: { id: item.id },
         create: data,
         update: data,
@@ -33,8 +31,8 @@ export const handleTagsGroups = (localTagsGroups: EagleUse.TagsGroupsItem[]) => 
 };
 
 const deleteUnnecessary = (localTagsGroup: EagleUse.TagsGroupsItem[]) => {
-  prisma.tagsGroups
-    .findMany({
+  getPrisma()
+    .tagsGroups.findMany({
       where: {
         id: {
           notIn: localTagsGroup.map((item) => item.id),
@@ -43,8 +41,8 @@ const deleteUnnecessary = (localTagsGroup: EagleUse.TagsGroupsItem[]) => {
     })
     .then((tagsGroups) => {
       if (tagsGroups && tagsGroups.length > 0) {
-        prisma.tagsGroups
-          .deleteMany({
+        getPrisma()
+          .tagsGroups.deleteMany({
             where: {
               id: {
                 in: tagsGroups.map((item) => item.id),

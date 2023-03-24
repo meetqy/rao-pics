@@ -3,6 +3,7 @@ import watchMetadata from "./metadata";
 import { logger } from "@raopics/utils";
 import { getNSFW } from "./image/nsfw";
 import watchStarredTags from "./starred-tags";
+import { getPrisma } from "@raopics/prisma-client";
 
 interface Args {
   library: string;
@@ -21,6 +22,8 @@ const TransformEagle = async (args: Args) => {
   }
 
   logger.info("Start transform 🛫");
+
+  getPrisma(library);
 
   await watchMetadata(library);
   await watchStarredTags(library);
