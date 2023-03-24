@@ -3,7 +3,7 @@ import chokidar from "chokidar";
 import { logger } from "@raopics/utils";
 import { join } from "path";
 import { copySync } from "fs-extra";
-import { PrismaClient } from "@client";
+import { PrismaClient } from "raopics-client";
 
 let prisma: PrismaClient;
 let watchDBFile = false;

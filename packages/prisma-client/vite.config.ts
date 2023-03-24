@@ -23,7 +23,7 @@ export default defineConfig({
 
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: ["lodash", "chokidar", "@raopics/utils", "path", "fs-extra", "@client"],
+      external: ["lodash", "chokidar", "@raopics/utils", "path", "fs-extra", "raopics-client"],
 
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
@@ -33,7 +33,7 @@ export default defineConfig({
           "@raopics/utils": "Utils",
           path: "path",
           fsExtra: "fs-extra",
-          "@client": "client",
+          "raopics-client": "client",
         },
       },
     },

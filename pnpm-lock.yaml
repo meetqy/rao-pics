@@ -81,7 +81,6 @@ importers:
 
   packages/prisma-client:
     specifiers:
-      '@client': file:./client
       '@prisma/client': ^4.11.0
       '@raopics/utils': workspace:*
       '@types/lodash': ^4.14.191
@@ -90,13 +89,14 @@ importers:
       fs-extra: ^11.1.0
       lodash: ^4.17.21
       prisma: ^4.11.0
+      raopics-client: file:./client
     dependencies:
-      '@client': file:packages/prisma-client/client
       '@prisma/client': 4.11.0_prisma@4.11.0
       '@raopics/utils': link:../utils
       chokidar: 3.5.3
       fs-extra: 11.1.0
       lodash: 4.17.21
+      raopics-client: file:packages/prisma-client/client
     devDependencies:
       '@types/lodash': 4.14.191
       '@types/node': 18.14.6
@@ -9220,5 +9220,5 @@ packages:
 
   file:packages/prisma-client/client:
     resolution: {directory: packages/prisma-client/client, type: directory}
-    name: .prisma/client
+    name: raopics-client
     dev: false
