@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
-export * from "@prisma/client";
 import chokidar from "chokidar";
 import { logger } from "@raopics/utils";
 import { join } from "path";
 import { copySync } from "fs-extra";
+import { PrismaClient } from "@client";
 
 let prisma: PrismaClient;
 let watchDBFile = false;
