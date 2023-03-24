@@ -4,6 +4,8 @@ import dotenv from "dotenv-flow";
 import { join } from "path";
 
 interface Options {
+  // library 地址
+  library: string;
   // 开启转换 eagle,默认 true
   transform_eagle?: boolean;
   // 开启sqlite api访问, 默认 true
@@ -20,22 +22,18 @@ const raopics = (options?: Options) => {
     path: join(__dirname, "../"),
   });
 
-  const { LIBRARY } = process.env;
-
   const { transform_eagle = true, plugin_api = true, plugin_nsfw = true, port = 0 } = options || {};
-
-  if (!LIBRARY) throw Error("LIBRARY is null!");
 
   if (transform_eagle) {
     TransformEagle({
-      library: LIBRARY,
+      library: options.library,
       plugin_nsfw,
     });
   }
 
   if (plugin_api) {
     PLUGIN_API({
-      library: LIBRARY,
+      library: options.library,
       port,
     });
   }

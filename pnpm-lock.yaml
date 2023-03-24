@@ -50,15 +50,9 @@ importers:
 
   example:
     specifiers:
-      '@prisma/client': ^4.10.1
-      '@raopics/prisma-client': workspace:*
       '@raopics/use': workspace:*
-      prisma: ^4.10.1
     dependencies:
-      '@prisma/client': 4.10.1_prisma@4.10.1
-      '@raopics/prisma-client': link:../packages/prisma-client
       '@raopics/use': link:../packages/use
-      prisma: 4.10.1
 
   packages/plugin-api:
     specifiers:
@@ -144,7 +138,6 @@ importers:
       '@raopics/transform-eagle': workspace:*
       '@types/node': ^18.14.6
       dotenv-flow: ^3.2.0
-      prisma: ^4.10.1
       vite: ^4.1.3
     dependencies:
       '@raopics/plugin-api': link:../plugin-api
@@ -153,7 +146,6 @@ importers:
       dotenv-flow: 3.2.0
     devDependencies:
       '@types/node': 18.14.6
-      prisma: 4.10.1
       vite: 4.1.3_@types+node@18.14.6
 
   packages/utils:
@@ -2432,6 +2424,7 @@ packages:
   /@prisma/engines/4.10.1:
     resolution: {integrity: sha512-B3tcTxjx196nuAu1GOTKO9cGPUgTFHYRdkPkTS4m5ptb2cejyBlH9X7GOfSt3xlI7p4zAJDshJP4JJivCg9ouA==}
     requiresBuild: true
+    dev: false
 
   /@rollup/pluginutils/5.0.2:
     resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
@@ -7603,6 +7596,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 4.10.1
+    dev: false
 
   /proc-log/2.0.1:
     resolution: {integrity: sha512-Kcmo2FhfDTXdcbfDH76N7uBYHINxc/8GW7UAVuVP9I+Va3uHSerrnKV6dLooga/gh7GlgzuCCr/eoldnL1muGw==}

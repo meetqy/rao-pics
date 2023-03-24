@@ -9,4 +9,5 @@ raopics({
   transform_eagle: true,
   // api访问端口号
   port: 4002,
+  library: "/Users/qymeet/Pictures/test.library",
 });
