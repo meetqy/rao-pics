@@ -1,10 +1,12 @@
 generator client {
   provider = "prisma-client-js"
+  // https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client#using-a-custom-output-path
+  output   = "./client"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./default.db"
 }
 
 model Image {

@@ -4,33 +4,50 @@ export * from "@prisma/client";
 import chokidar from "chokidar";
 import { logger } from "@raopics/utils";
 import { join } from "path";
+import { copySync } from "fs-extra";
 
 let prisma: PrismaClient;
 let watchDBFile = false;
+let dbUrl;
 
 const updatePrismaClient = _.debounce(() => {
   prisma.$disconnect();
-  prisma = new PrismaClient();
+  prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: `file:${dbUrl}?connection_limit=1`,
+      },
+    },
+  });
   logger.info("[prisma-client] update prisma.");
 }, 5000);
 
-export const getPrisma = () => {
-  const { LIBRARY } = process.env;
-  if (LIBRARY && !watchDBFile) {
-    const dbFile = join(LIBRARY, "./raopics.db");
+export const getPrisma = (library: string) => {
+  if (!library) throw Error("[prisma-client] library is null!");
 
+  dbUrl = join(library, "./raopics.db");
+
+  copySync("./prisma/default.db", dbUrl, { overwrite: false });
+
+  if (!watchDBFile) {
     chokidar
-      .watch(dbFile)
+      .watch(dbUrl)
       .on("all", updatePrismaClient)
       .on("ready", () => {
-        logger.info(`[prisma-client] start watching ${dbFile}`);
+        logger.info(`[prisma-client] start watching ${dbUrl}`);
       });
 
     watchDBFile = true;
   }
 
   if (!prisma) {
-    prisma = new PrismaClient();
+    prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url: `file:${dbUrl}?connection_limit=1`,
+        },
+      },
+    });
   }
 
   return prisma;

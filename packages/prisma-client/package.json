@@ -10,8 +10,7 @@
   "homepage": "https://rao.pics",
   "license": "MIT",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "lib": "lib"
   },
   "files": [
     "dist",
@@ -25,8 +24,11 @@
     "url": "git+https://github.com/rao-pics/core.git"
   },
   "scripts": {
-    "test": "node ./__tests__/@raopics/prisma-client.test.js",
-    "build": "vite build"
+    "build": "vite build",
+    "db:init": "prisma migrate dev --name init --skip-seed",
+    "db:preview": "prisma studio",
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
   },
   "bugs": {
     "url": "https://github.com/rao-pics/core/issues"
@@ -35,6 +37,7 @@
     "@prisma/client": "^4.10.1",
     "@raopics/utils": "workspace:*",
     "chokidar": "^3.5.3",
+    "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
     "prisma": "^4.10.1"
   },
