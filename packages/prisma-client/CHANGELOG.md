@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/rao-pics/core/compare/@raopics/prisma-client@1.2.2...@raopics/prisma-client@1.2.3) (2023-03-24)
+
+**Note:** Version bump only for package @raopics/prisma-client
+
 ## [1.2.2](https://github.com/rao-pics/core/compare/@raopics/prisma-client@1.2.1...@raopics/prisma-client@1.2.2) (2023-03-20)
 
 ### Bug Fixes

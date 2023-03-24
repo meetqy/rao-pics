@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/rao-pics/core/compare/@raopics/plugin-api@1.3.2...@raopics/plugin-api@1.4.0) (2023-03-24)
+
+### Features
+
+- 🎸 简化零配置,只需 2 步,启动服务 ([47d7a65](https://github.com/rao-pics/core/commit/47d7a65b0af5f3ce3d27aa372437dbfdb24df101))
+
 ## [1.3.2](https://github.com/rao-pics/core/compare/@raopics/plugin-api@1.3.1...@raopics/plugin-api@1.3.2) (2023-03-20)
 
 **Note:** Version bump only for package @raopics/plugin-api

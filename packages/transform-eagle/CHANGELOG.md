@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://github.com/rao-pics/core/compare/@raopics/transform-eagle@1.3.2...@raopics/transform-eagle@1.3.3) (2023-03-24)
+
+### Bug Fixes
+
+- 🐛 【Core】EagleApp 中导入图片，并勾选使用已存在的图片，NSFW 检测结果会被覆盖 ([d46010f](https://github.com/rao-pics/core/commit/d46010f3ff20101c108166dabf263bd89fe8933c)), closes [#90](https://github.com/rao-pics/core/issues/90)
+
 ## [1.3.2](https://github.com/rao-pics/core/compare/@raopics/transform-eagle@1.3.1...@raopics/transform-eagle@1.3.2) (2023-03-20)
 
 **Note:** Version bump only for package @raopics/transform-eagle
