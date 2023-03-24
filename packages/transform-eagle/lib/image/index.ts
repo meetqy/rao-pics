@@ -72,7 +72,6 @@ const PendingFiles: {
 };
 
 const handleImage = async () => {
-  const prisma = getPrisma();
   if (PendingFiles.value.size < 1) return;
 
   if (!bar) {
@@ -94,8 +93,8 @@ const handleImage = async () => {
     try {
       mtimeMs = statSync(file).mtimeMs;
     } catch (e) {
-      prisma.image
-        .delete({
+      getPrisma()
+        .image.delete({
           where: { id },
         })
         .catch(() => {
@@ -111,8 +110,8 @@ const handleImage = async () => {
 
     // 删除
     if (type === "delete") {
-      prisma.image
-        .delete({
+      getPrisma()
+        .image.delete({
           where: { id },
         })
         .catch()
@@ -128,7 +127,7 @@ const handleImage = async () => {
       continue;
     }
 
-    const image = await prisma.image.findUnique({
+    const image = await getPrisma().image.findUnique({
       where: { id },
       include: {
         tags: true,
@@ -154,8 +153,8 @@ const handleImage = async () => {
       // 使用upsert
       // 针对: 添加的图片，已经存在当前library中，
       // Eagle 会弹窗提示是否使用已存在的场景
-      prisma.image
-        .upsert({
+      getPrisma()
+        .image.upsert({
           where: { id },
           create: data,
           update: data,
@@ -170,8 +169,8 @@ const handleImage = async () => {
       !image.metadataMTime ||
       Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2
     ) {
-      prisma.image
-        .update({
+      getPrisma()
+        .image.update({
           where: { id: data.id },
           data,
         })

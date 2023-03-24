@@ -22,12 +22,14 @@ const updatePrismaClient = _.debounce(() => {
   logger.info("[prisma-client] update prisma.");
 }, 5000);
 
-export const getPrisma = (library: string) => {
-  if (!library) throw Error("[prisma-client] library is null!");
+export const getPrisma = (library?: string) => {
+  if (!library && !dbUrl) throw Error("[prisma-client] library is null!");
 
-  dbUrl = join(library, "./raopics.db");
+  if (!dbUrl) {
+    dbUrl = join(library, "./raopics.db");
+  }
 
-  copySync("./prisma/default.db", dbUrl, { overwrite: false });
+  copySync(join(__dirname, "../prisma/default.db"), dbUrl, { overwrite: false });
 
   if (!watchDBFile) {
     chokidar

@@ -2,8 +2,6 @@ import { logger } from "@raopics/utils";
 import { trigger } from "../trigger";
 import { getPrisma, Folder } from "@raopics/prisma-client";
 
-const prisma = getPrisma();
-
 // 多级嵌套转为一级
 const demotionFolder = (folders: EagleUse.Folder[]): Folder[] => {
   const newFolders = [];
@@ -27,8 +25,8 @@ export const handleFloder = async (metadataFolders: EagleUse.Folder[]) => {
   const folders = demotionFolder(metadataFolders);
 
   folders.forEach((folder) => {
-    prisma.folder
-      .upsert({
+    getPrisma()
+      .folder.upsert({
         where: { id: folder.id },
         update: folder,
         create: folder,
@@ -42,8 +40,8 @@ export const handleFloder = async (metadataFolders: EagleUse.Folder[]) => {
 };
 
 const deleteUnnecessary = (localFolder: Folder[]) => {
-  prisma.folder
-    .findMany({
+  getPrisma()
+    .folder.findMany({
       where: {
         id: {
           notIn: localFolder.map((item) => item.id),
@@ -52,8 +50,8 @@ const deleteUnnecessary = (localFolder: Folder[]) => {
     })
     .then((folders) => {
       if (folders && folders.length > 0) {
-        prisma.folder
-          .deleteMany({
+        getPrisma()
+          .folder.deleteMany({
             where: {
               id: {
                 in: folders.map((item) => item.id),
