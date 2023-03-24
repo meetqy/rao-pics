@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/rao-pics/core/compare/@raopics/use@0.3.0...@raopics/use@0.3.1) (2023-03-24)
+
+### Bug Fixes
+
+- 🐛 @raopics/use build ([121cf4a](https://github.com/rao-pics/core/commit/121cf4a2e63a6f4bb1df6abe82182ba3d669454a))
+
 # [0.3.0](https://github.com/rao-pics/core/compare/@raopics/use@0.2.3...@raopics/use@0.3.0) (2023-03-24)
 
 ### Features
