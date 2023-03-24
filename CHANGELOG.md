@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/rao-pics/core/compare/v0.3.2...v0.4.0) (2023-03-24)
+
+### Features
+
+- 🎸 简化零配置,只需 2 步,启动服务 ([47d7a65](https://github.com/rao-pics/core/commit/47d7a65b0af5f3ce3d27aa372437dbfdb24df101))
+
+### Bug Fixes
+
+- 🐛 【Core】EagleApp 中导入图片，并勾选使用已存在的图片，NSFW 检测结果会被覆盖 ([d46010f](https://github.com/rao-pics/core/commit/d46010f3ff20101c108166dabf263bd89fe8933c)), closes [#90](https://github.com/rao-pics/core/issues/90)
+- 🐛 example env error ([8dcfa5b](https://github.com/rao-pics/core/commit/8dcfa5b3899b3e98120109ad484673157b974442))
+- 🐛 无法监听 BUG ([aad8d1e](https://github.com/rao-pics/core/commit/aad8d1ead4c99ea781c2cccc8f057b994d243cd8))
+
 ### [0.3.2](https://github.com/rao-pics/core/compare/v1.0.4...v0.3.2) (2023-03-20)
 
 ### Features
