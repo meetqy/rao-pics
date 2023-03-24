@@ -52,7 +52,7 @@ importers:
     specifiers:
       '@fastify/cors': ^8.2.0
       '@fastify/static': ^6.9.0
-      '@raopics/prisma-client': workspace:^1.2.4
+      '@raopics/prisma-client': workspace:^1.2.5
       '@raopics/utils': workspace:^1.0.8
       '@types/node': ^18.14.2
       fastify: ^4.14.0
