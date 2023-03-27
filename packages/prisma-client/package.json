@@ -1,10 +1,10 @@
 {
   "name": "@raopics/prisma-client",
-  "version": "1.2.3",
-  "description": "prisma client at eagleuse",
+  "version": "1.2.6",
+  "description": "prisma client at raopics",
   "keywords": [
     "prisma",
-    "eagleuse"
+    "raopics"
   ],
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
@@ -14,7 +14,8 @@
   },
   "files": [
     "dist",
-    "prisma"
+    "prisma",
+    "client"
   ],
   "publishConfig": {
     "access": "public"
@@ -34,12 +35,12 @@
     "url": "https://github.com/rao-pics/core/issues"
   },
   "dependencies": {
-    "@prisma/client": "^4.10.1",
+    "@prisma/client": "^4.11.0",
     "@raopics/utils": "workspace:*",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
-    "prisma": "^4.10.1"
+    "raopics-client": "./client"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -53,6 +54,7 @@
   "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f",
   "devDependencies": {
     "@types/lodash": "^4.14.191",
-    "@types/node": "^18.14.6"
+    "@types/node": "^18.14.6",
+    "prisma": "^4.11.0"
   }
 }

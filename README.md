@@ -17,7 +17,7 @@
     <a href='https://github.com/rao-pics/core/issues/61'>问题合集</a> 
 </p>
 
-# <img src='https://raw.githubusercontent.com/rao-pics/rua/main/public/favicon.ico?raw=true' height="24px" width="24px" /> EagleUse
+# <img src='https://raw.githubusercontent.com/rao-pics/rua/main/public/favicon.ico?raw=true' height="24px" width="24px" /> Rao.Pics
 
 将《素材管理 App》升级为后台管理系统，实现局域网内即时预览、共享。
 

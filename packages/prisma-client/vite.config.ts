@@ -12,26 +12,31 @@ export default defineConfig({
       insertTypesEntry: true,
     }),
   ],
+
+  optimizeDeps: {
+    include: ["raopics-client"],
+  },
+
   build: {
     lib: {
-      entry: "lib/index.ts",
+      entry: ["lib/index.ts"],
       name: "@raopics/prisma-client",
       fileName: "index",
       formats: ["cjs"],
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: ["prisma", "@prisma/client", "lodash", "chokidar", "@raopics/utils", "path", "fs-extra"],
+      external: ["lodash", "chokidar", "@raopics/utils", "path", "fs-extra", "raopics-client"],
+
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
-          prisma: "prisma",
           lodash: "_",
           chokidar: "chokidar",
-          "@prisma/client": "PrismaClient",
           "@raopics/utils": "Utils",
           path: "path",
-          fs: "fs-extra",
+          fsExtra: "fs-extra",
+          "raopics-client": "client",
         },
       },
     },

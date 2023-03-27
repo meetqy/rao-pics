@@ -1,6 +1,6 @@
 {
   "name": "@raopics/use",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "description": "eagleuse core.",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
@@ -9,7 +9,7 @@
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
