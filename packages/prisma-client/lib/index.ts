@@ -5,6 +5,8 @@ import { join } from "path";
 import { copySync } from "fs-extra";
 import { PrismaClient } from "raopics-client";
 
+export * from "raopics-client";
+
 let prisma: PrismaClient;
 let watchDBFile = false;
 let dbUrl;
