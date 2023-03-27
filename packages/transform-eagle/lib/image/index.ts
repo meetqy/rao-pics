@@ -14,7 +14,7 @@ import getPrismaParams from "./getPrismaParams";
 const _wait = 3000;
 
 let bar;
-const supportExt = ["jpg", "png", "webp", "jpeg", "bmp", "gif", "mp4"];
+const supportExt = ["jpg", "png", "webp", "jpeg", "bmp", "gif", "mp4", "pdf"];
 const supportNSFWExt = ["jpg", "png", "webp", "jpeg", "bmp"];
 
 interface FileItem {
