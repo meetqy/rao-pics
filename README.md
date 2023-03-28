@@ -13,6 +13,7 @@
 </p>
 
 <p align='center'>
+    <a href="https://docs.rao.pics">在线文档</a> ·
     <a href='https://rao.pics'>线上演示</a> ·
     <a href='https://github.com/rao-pics/core/issues/61'>问题合集</a> 
 </p>
