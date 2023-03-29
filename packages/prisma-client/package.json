@@ -1,6 +1,6 @@
 {
   "name": "@raopics/prisma-client",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "prisma client at raopics",
   "keywords": [
     "prisma",
@@ -36,8 +36,8 @@
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
-    "@raopics/utils": "workspace:*",
     "@raopics/prisma-client-generate": "workspace:*",
+    "@raopics/utils": "workspace:*",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21"
