@@ -82,6 +82,7 @@ importers:
   packages/prisma-client:
     specifiers:
       '@prisma/client': ^4.11.0
+      '@raopics/prisma-client-generate': workspace:*
       '@raopics/utils': workspace:*
       '@types/lodash': ^4.14.191
       '@types/node': ^18.14.6
@@ -89,18 +90,20 @@ importers:
       fs-extra: ^11.1.0
       lodash: ^4.17.21
       prisma: ^4.11.0
-      raopics-client: ./client
     dependencies:
       '@prisma/client': 4.11.0_prisma@4.11.0
+      '@raopics/prisma-client-generate': link:../prisma-client-generate
       '@raopics/utils': link:../utils
       chokidar: 3.5.3
       fs-extra: 11.1.0
       lodash: 4.17.21
-      raopics-client: link:client
     devDependencies:
       '@types/lodash': 4.14.191
       '@types/node': 18.14.6
       prisma: 4.11.0
+
+  packages/prisma-client-generate:
+    specifiers: {}
 
   packages/transform-eagle:
     specifiers:

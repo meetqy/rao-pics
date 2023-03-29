@@ -37,10 +37,10 @@
   "dependencies": {
     "@prisma/client": "^4.11.0",
     "@raopics/utils": "workspace:*",
+    "@raopics/prisma-client-generate": "workspace:*",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
-    "lodash": "^4.17.21",
-    "raopics-client": "./client"
+    "lodash": "^4.17.21"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
