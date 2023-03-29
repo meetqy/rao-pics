@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.7](https://github.com/rao-pics/core/compare/@raopics/transform-eagle@1.3.6...@raopics/transform-eagle@1.3.7) (2023-03-29)
+
+**Note:** Version bump only for package @raopics/transform-eagle
+
 ## [1.3.6](https://github.com/rao-pics/core/compare/@raopics/transform-eagle@1.3.5...@raopics/transform-eagle@1.3.6) (2023-03-27)
 
 **Note:** Version bump only for package @raopics/transform-eagle
