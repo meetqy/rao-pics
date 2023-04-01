@@ -107,7 +107,6 @@ importers:
 
   packages/transform-eagle:
     specifiers:
-      '@raopics/plugin-nsfw': workspace:*
       '@raopics/prisma-client': workspace:*
       '@raopics/utils': workspace:*
       '@types/fs-extra': ^11.0.1
@@ -118,7 +117,6 @@ importers:
       lodash: ^4.17.21
       progress: ^2.0.3
     dependencies:
-      '@raopics/plugin-nsfw': link:../plugin-nsfw
       '@raopics/prisma-client': link:../prisma-client
       '@raopics/utils': link:../utils
       chokidar: 3.5.3
