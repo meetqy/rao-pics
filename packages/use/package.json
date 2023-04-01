@@ -1,7 +1,7 @@
 {
   "name": "@raopics/use",
   "version": "0.3.5",
-  "description": "eagleuse core.",
+  "description": "eagleuse core use.",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
   "license": "MIT",
@@ -37,8 +37,7 @@
   "dependencies": {
     "@raopics/plugin-api": "workspace:*",
     "@raopics/prisma-client": "workspace:*",
-    "@raopics/transform-eagle": "workspace:*",
-    "dotenv-flow": "^3.2.0"
+    "@raopics/transform-eagle": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^18.14.6",

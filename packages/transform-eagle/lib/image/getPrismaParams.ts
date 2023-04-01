@@ -1,10 +1,11 @@
 import { Prisma, Image, Tag } from "@raopics/prisma-client";
 import _ from "lodash";
+import { Metadata } from "../types";
 
 const _NSFWTags = ["Drawing", "Hentai", "Neutral", "Porn", "Sexy"];
 
 function getPrismaParams(
-  data: EagleUse.Image,
+  data: Metadata,
   oldData: Image & {
     tags: Tag[];
   }

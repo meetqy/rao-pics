@@ -2,25 +2,35 @@ import * as chokidar from "chokidar";
 import { join } from "path";
 import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
-import { getPrisma } from "@raopics/prisma-client";
+import { getPrisma, Image, Tag } from "@raopics/prisma-client";
 import { logger } from "@raopics/utils";
 import ProgressBar from "progress";
 import TagPrisma from "../tag";
-import { getNSFWMetadata } from "./nsfw";
 import { trigger } from "../trigger";
 import getPrismaParams from "./getPrismaParams";
+import { Metadata } from "../types";
+
+interface FileItem {
+  file: string;
+  type: "update" | "delete";
+}
+
+export interface Transform {
+  before?: (
+    metadata: Metadata,
+    database: Image & {
+      tags: Tag[];
+    }
+  ) => Metadata;
+}
 
 // 防抖 需要延迟的毫秒数
 const _wait = 3000;
 
 let bar;
 const supportExt = ["jpg", "png", "webp", "jpeg", "bmp", "gif", "mp4", "pdf"];
-const supportNSFWExt = ["jpg", "png", "webp", "jpeg", "bmp"];
 
-interface FileItem {
-  file: string;
-  type: "update" | "delete";
-}
+let _transform: Transform = {};
 
 // 本次 handleImage 是否有disconnect的标签、文件夹
 const isDisconnect = {
@@ -119,7 +129,7 @@ const handleImage = async () => {
       continue;
     }
 
-    let metadata: EagleUse.Image = readJsonSync(file);
+    const metadata: Metadata = readJsonSync(file);
 
     // 不支持的扩展名 直接删除并跳过后续执行
     if (!supportExt.includes(metadata.ext.toLocaleLowerCase())) {
@@ -134,22 +144,19 @@ const handleImage = async () => {
       },
     });
 
-    let [data, disconnect] = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
+    const [data, disconnect] = getPrismaParams(
+      {
+        ...metadata,
+        // transform.before 处理之后的数据
+        ..._transform?.before(metadata, image),
+        metadataMTime: mtime,
+      },
+      image
+    );
     isDisconnect.tag = disconnect;
 
     // 新增
     if (!image) {
-      // nsfw检测
-      if (!image || !image.nsfw) {
-        // 不支持的扩展名 直接删除并跳过后续执行
-        if (supportNSFWExt.includes(metadata.ext.toLocaleLowerCase())) {
-          metadata = await getNSFWMetadata(metadata, file);
-        }
-
-        [data, disconnect] = getPrismaParams({ ...metadata, metadataMTime: mtime }, image);
-        isDisconnect.tag = disconnect;
-      }
-
       // 使用upsert
       // 针对: 添加的图片，已经存在当前library中，
       // Eagle 会弹窗提示是否使用已存在的场景
@@ -183,8 +190,10 @@ const handleImage = async () => {
 
 const _debounce = _.debounce(handleImage, _wait);
 
-const watchImage = (library: string) => {
+const watchImage = (library: string, transform?: Transform) => {
   const _path = join(library, "./images/**/metadata.json");
+
+  _transform = transform;
 
   chokidar
     .watch(_path)
