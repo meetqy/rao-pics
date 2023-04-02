@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.5](https://github.com/rao-pics/core/compare/@raopics/plugin-api@1.4.4...@raopics/plugin-api@1.4.5) (2023-04-02)
+
+**Note:** Version bump only for package @raopics/plugin-api
+
 ## [1.4.4](https://github.com/rao-pics/core/compare/@raopics/plugin-api@1.4.3...@raopics/plugin-api@1.4.4) (2023-03-29)
 
 **Note:** Version bump only for package @raopics/plugin-api

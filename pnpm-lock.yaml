@@ -52,7 +52,7 @@ importers:
     specifiers:
       '@fastify/cors': ^8.2.0
       '@fastify/static': ^6.9.0
-      '@raopics/prisma-client': workspace:^1.2.7
+      '@raopics/prisma-client': workspace:^1.2.8
       '@raopics/utils': workspace:^1.0.8
       '@types/node': ^18.14.2
       fastify: ^4.14.0
@@ -134,13 +134,11 @@ importers:
       '@raopics/prisma-client': workspace:*
       '@raopics/transform-eagle': workspace:*
       '@types/node': ^18.14.6
-      dotenv-flow: ^3.2.0
       vite: ^4.1.3
     dependencies:
       '@raopics/plugin-api': link:../plugin-api
       '@raopics/prisma-client': link:../prisma-client
       '@raopics/transform-eagle': link:../transform-eagle
-      dotenv-flow: 3.2.0
     devDependencies:
       '@types/node': 18.14.6
       vite: 4.1.3_@types+node@18.14.6
@@ -4169,22 +4167,10 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dotenv-flow/3.2.0:
-    resolution: {integrity: sha512-GEB6RrR4AbqDJvNSFrYHqZ33IKKbzkvLYiD5eo4+9aFXr4Y4G+QaFrB/fNp0y6McWBmvaPn3ZNjIufnj8irCtg==}
-    engines: {node: '>= 8.0.0'}
-    dependencies:
-      dotenv: 8.6.0
-    dev: false
-
   /dotenv/10.0.0:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
     engines: {node: '>=10'}
     dev: true
-
-  /dotenv/8.6.0:
-    resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
-    engines: {node: '>=10'}
-    dev: false
 
   /dotgitignore/2.1.0:
     resolution: {integrity: sha512-sCm11ak2oY6DglEPpCB8TixLjWAxd3kJTs6UIcSasNYxXdFPV+YKlye92c8H4kKFqV5qYMIh7d+cYecEg0dIkA==}
