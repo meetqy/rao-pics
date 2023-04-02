@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/rao-pics/core/compare/v0.4.0...v0.4.1) (2023-04-02)
+
+### Bug Fixes
+
+- 🐛 [prisma-cilent-generate] files ([986a90d](https://github.com/rao-pics/core/commit/986a90df674213cfe574bbb4a56651026f4397d5))
+- 🐛 @raopics/use build ([121cf4a](https://github.com/rao-pics/core/commit/121cf4a2e63a6f4bb1df6abe82182ba3d669454a))
+- 🐛 有其他 package 无法 install ([ac8d7a5](https://github.com/rao-pics/core/commit/ac8d7a584b7e7dde79670fc7bed54f7ac393ecb2))
+
 ## [0.4.0](https://github.com/rao-pics/core/compare/v0.3.2...v0.4.0) (2023-03-24)
 
 ### Features
