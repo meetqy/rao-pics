@@ -1,6 +1,6 @@
 {
   "name": "@raopics/prisma-client-generate",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "index.js",
   "types": "index.d.ts",
   "browser": "index-browser.js",
