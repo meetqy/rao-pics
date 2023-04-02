@@ -20,7 +20,7 @@
 
 # <img src='https://raw.githubusercontent.com/rao-pics/rua/main/public/favicon.ico?raw=true' height="24px" width="24px" /> Rao.Pics
 
-将《素材管理 App》升级为后台管理系统，实现局域网内即时预览、共享。
+基于 Eagle/Pixcall/Billfish 等素材管理工具，用于局域网内**展示**已有的图库。
 
 ## ✈️ 超级简单
 
@@ -36,21 +36,6 @@ import EagleUse from "@raopics/use";
 EagleUse({
   library: "xxx",
 });
-```
-
-```ts
-interface Options {
-  // library 地址
-  library: string;
-  // 开启转换 eagle,默认 true
-  transform_eagle?: boolean;
-  // 开启sqlite api访问, 默认 true
-  plugin_api?: boolean;
-  // nsfw 检测
-  plugin_nsfw?: boolean;
-  // 端口号
-  port?: number;
-}
 ```
 
 ## 🎨 主题
