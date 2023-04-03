@@ -1,7 +1,8 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   // https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/generating-prisma-client#using-a-custom-output-path
-  output   = "../../prisma-client-generate"
+  output        = "../../prisma-client-generate"
+  binaryTargets = ["windows", "debian-openssl-1.1.x", "native"]
 }
 
 datasource db {

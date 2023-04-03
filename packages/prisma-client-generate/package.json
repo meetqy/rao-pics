@@ -1,24 +1,6 @@
 {
-  "name": "@raopics/prisma-client-generate",
-  "version": "0.1.3",
+  "name": ".prisma/client",
   "main": "index.js",
   "types": "index.d.ts",
-  "browser": "index-browser.js",
-  "files": [
-    "runtime",
-    "index-browser.js",
-    "index.d.ts",
-    "index.js",
-    "libquery_engine-darwin.dylib.node",
-    "schema.prisma"
-  ],
-  "exports": {
-    ".": {
-      "import": "./index.js",
-      "require": "./index.js"
-    }
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+  "browser": "index-browser.js"
 }
