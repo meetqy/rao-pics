@@ -3,9 +3,9 @@ import chokidar from "chokidar";
 import { logger } from "@raopics/utils";
 import { join } from "path";
 import { copySync } from "fs-extra";
-import { PrismaClient } from "@raopics/prisma-client-generate";
+import { PrismaClient } from "@prisma/client";
 
-export * from "@raopics/prisma-client-generate";
+export * from "@prisma/client";
 
 let prisma: PrismaClient;
 let watchDBFile = false;

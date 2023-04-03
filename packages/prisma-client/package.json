@@ -26,10 +26,10 @@
   },
   "scripts": {
     "build": "vite build",
+    "postinstall": "prisma generate",
     "db:init": "prisma migrate dev --name init --skip-seed",
     "db:preview": "prisma studio",
-    "db:push": "prisma db push",
-    "db:generate": "prisma generate"
+    "db:push": "prisma db push"
   },
   "bugs": {
     "url": "https://github.com/rao-pics/core/issues"
