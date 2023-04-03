@@ -178,7 +178,20 @@ const config = {
     config: {
       engineType: "library",
     },
-    binaryTargets: [],
+    binaryTargets: [
+      {
+        fromEnvVar: null,
+        value: "windows",
+      },
+      {
+        fromEnvVar: null,
+        value: "debian-openssl-1.1.x",
+      },
+      {
+        fromEnvVar: null,
+        value: "darwin",
+      },
+    ],
     previewFeatures: [],
     isCustomOutput: true,
   },
@@ -207,6 +220,12 @@ warnEnvConflicts({
 const PrismaClient = getPrismaClient(config);
 exports.PrismaClient = PrismaClient;
 Object.assign(exports, Prisma);
+
+path.join(__dirname, "query_engine-windows.dll.node");
+path.join(process.cwd(), "../prisma-client-generate/query_engine-windows.dll.node");
+
+path.join(__dirname, "libquery_engine-debian-openssl-1.1.x.so.node");
+path.join(process.cwd(), "../prisma-client-generate/libquery_engine-debian-openssl-1.1.x.so.node");
 
 path.join(__dirname, "libquery_engine-darwin.dylib.node");
 path.join(process.cwd(), "../prisma-client-generate/libquery_engine-darwin.dylib.node");
