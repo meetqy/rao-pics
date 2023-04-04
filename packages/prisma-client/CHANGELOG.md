@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/rao-pics/core/compare/@raopics/prisma-client@1.2.9...@raopics/prisma-client@1.3.0) (2023-04-04)
+
+### Bug Fixes
+
+- 🐛 有其他 package 无法 install ([fff60ca](https://github.com/rao-pics/core/commit/fff60ca023ff75d82a4b89147f646d43aec580c5))
+
+### Features
+
+- 🎸 prisma-client 新增 windows/debian .node 可执行文件 ([9e929dd](https://github.com/rao-pics/core/commit/9e929dd6666f22b6e8930a6473af267a25a7e8bb))
+
 ## [1.2.9](https://github.com/rao-pics/core/compare/@raopics/prisma-client@1.2.7...@raopics/prisma-client@1.2.9) (2023-04-02)
 
 **Note:** Version bump only for package @raopics/prisma-client
