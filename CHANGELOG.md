@@ -7,12 +7,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 - 🎸 API docker 部署 ([3a7a88a](https://github.com/rao-pics/core/commit/3a7a88a971aa8951fe293758b59bde5d2a2e3164))
-- 🎸 prisma-client 新增 windows/debian .node 可执行文件 ([9e929dd](https://github.com/rao-pics/core/commit/9e929dd6666f22b6e8930a6473af267a25a7e8bb))
-
-### Bug Fixes
-
-- 🐛 [prisma-cilent-generate] files ([2c00a82](https://github.com/rao-pics/core/commit/2c00a82ae9225bd18a3d01c5432b1ec2d28bc175))
-- 🐛 有其他 package 无法 install ([fff60ca](https://github.com/rao-pics/core/commit/fff60ca023ff75d82a4b89147f646d43aec580c5))
 
 ### [0.4.1](https://github.com/rao-pics/core/compare/v0.4.0...v0.4.1) (2023-04-02)
 
