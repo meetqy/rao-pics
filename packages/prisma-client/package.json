@@ -26,7 +26,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "postinstall": "prisma generate --schema ./prisma/schema.prisma",
+    "postinstall": "prisma generate",
     "db:init": "prisma migrate dev --name init --skip-seed",
     "db:preview": "prisma studio",
     "db:push": "prisma db push"
@@ -39,7 +39,8 @@
     "@raopics/utils": "workspace:*",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "prisma": "^4.11.0"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -53,7 +54,6 @@
   "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f",
   "devDependencies": {
     "@types/lodash": "^4.14.191",
-    "@types/node": "^18.14.6",
-    "prisma": "^4.11.0"
+    "@types/node": "^18.14.6"
   }
 }

@@ -125,6 +125,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      prisma:
+        specifier: ^4.11.0
+        version: 4.11.0
     devDependencies:
       '@types/lodash':
         specifier: ^4.14.191
@@ -132,9 +135,6 @@ importers:
       '@types/node':
         specifier: ^18.14.6
         version: 18.14.6
-      prisma:
-        specifier: ^4.11.0
-        version: 4.11.0
 
   packages/transform-eagle:
     dependencies:
@@ -2463,6 +2463,7 @@ packages:
   /@prisma/engines@4.11.0:
     resolution: {integrity: sha512-0AEBi2HXGV02cf6ASsBPhfsVIbVSDC9nbQed4iiY5eHttW9ZtMxHThuKZE1pnESbr8HRdgmFSa/Kn4OSNYuibg==}
     requiresBuild: true
+    dev: false
 
   /@rollup/pluginutils@5.0.2:
     resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
@@ -7680,6 +7681,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 4.11.0
+    dev: false
 
   /proc-log@2.0.1:
     resolution: {integrity: sha512-Kcmo2FhfDTXdcbfDH76N7uBYHINxc/8GW7UAVuVP9I+Va3uHSerrnKV6dLooga/gh7GlgzuCCr/eoldnL1muGw==}
