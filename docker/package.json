@@ -10,6 +10,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@raopics/use": "workspace:^0.3.7"
+    "@raopics/use": "workspace:*"
   }
 }
