@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/rao-pics/core/compare/v0.4.1...v0.4.2) (2023-04-04)
+
+### Features
+
+- 🎸 API docker 部署 ([3a7a88a](https://github.com/rao-pics/core/commit/3a7a88a971aa8951fe293758b59bde5d2a2e3164))
+
 ### [0.4.1](https://github.com/rao-pics/core/compare/v0.4.0...v0.4.1) (2023-04-02)
 
 ### Bug Fixes

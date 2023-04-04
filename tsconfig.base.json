@@ -10,8 +10,7 @@
       "@raopics/utils": ["packages/utils/dist"],
       "@raopics/plugin-nsfw": ["packages/plugin-nsfw/dist"],
       "@raopics/prisma-client": ["packages/prisma-client/dist"],
-      "@raopics/plugin-api": ["packages/plugin-api/dist"],
-      "@raopics/prisma-client-generate": ["packages/prisma-client-generate"]
+      "@raopics/plugin-api": ["packages/plugin-api/dist"]
     }
   },
   "include": ["packages/**/*.ts"],
