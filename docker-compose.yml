@@ -11,16 +11,13 @@ services:
 
   api:
     image: meetqy/raopics-api
-    ports:
-      - 9600
     environment:
       LIBRARY: /library # volumes中的地址
+      PORT: 9600
     volumes:
-      - /Users/qymeet/Pictures/test.library:/library # 本地挂载library地址
+      - /Users/qymeet/MEGAsync/rao.library:/library # 本地挂载library地址
 
   rua:
     image: meetqy/raopics-rua
-    ports:
-      - 9601
     environment:
-      - PORT=9601
+      PORT: 9601
