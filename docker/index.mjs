@@ -1,6 +1,8 @@
 import raopics from "@raopics/use";
 
+// eslint-disable-next-line no-undef
+const { LIBRARY, PORT } = process.env;
 raopics({
-  // eslint-disable-next-line no-undef
-  library: process.env.LIBRARY,
+  library: LIBRARY,
+  port: PORT,
 });
