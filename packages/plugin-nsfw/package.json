@@ -36,5 +36,8 @@
       "require": "./dist/index.js"
     }
   },
+  "devDependencies": {
+    "@raopics/transform-eagle": "workspace:^"
+  },
   "gitHead": "e499e97b48309636d0583ac4080597ddf9f2e47f"
 }

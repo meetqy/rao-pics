@@ -40,6 +40,7 @@
     "@raopics/transform-eagle": "workspace:*"
   },
   "devDependencies": {
+    "@raopics/plugin-nsfw": "workspace:*",
     "@types/node": "^18.14.6",
     "vite": "^4.1.3"
   },

@@ -1,3 +1,4 @@
+import { Image, Tag } from "@raopics/prisma-client";
 export interface Metadata {
   id: string;
   name: string;
@@ -24,4 +25,17 @@ export interface Metadata {
   resolutionWidth?: number;
   resolutionHeight?: number;
   duration?: string;
+}
+
+export type TransformBeforeArgs = {
+  // newData 未处理的 metadata
+  metadata: Metadata;
+  // oldData 数据库中的 metadata
+  database: Image & {
+    tags: Tag[];
+  };
+};
+
+export interface Transform {
+  before?: (args: TransformBeforeArgs) => Metadata | Promise<Metadata>;
 }

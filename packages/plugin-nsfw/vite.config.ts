@@ -11,7 +11,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "lib/index.ts",
-      name: "@raopics/plugin-nsfw",
+      name: "PLUGIN_NSFW",
       fileName: "index",
       formats: ["cjs"],
     },

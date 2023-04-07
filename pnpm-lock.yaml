@@ -107,6 +107,10 @@ importers:
       nsfwjs:
         specifier: ^2.4.2
         version: 2.4.2(@tensorflow/tfjs@3.21.0)
+    devDependencies:
+      '@raopics/transform-eagle':
+        specifier: workspace:^
+        version: link:../transform-eagle
 
   packages/prisma-client:
     dependencies:
@@ -179,6 +183,9 @@ importers:
         specifier: workspace:*
         version: link:../transform-eagle
     devDependencies:
+      '@raopics/plugin-nsfw':
+        specifier: workspace:^
+        version: link:../plugin-nsfw
       '@types/node':
         specifier: ^18.14.6
         version: 18.14.6
