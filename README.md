@@ -40,6 +40,30 @@ EagleUse({
 });
 ```
 
+## Docker 部署
+
+```
+git clone https://github.com/rao-pics/core.git
+```
+
+修改 api volumes
+
+```
+  api:
+    image: meetqy/raopics-api
+    environment:
+      LIBRARY: /library # volumes中的地址
+      PORT: 9600
+    volumes:
+      - /Users/qymeet/MEGAsync/rao.library:/library # 本地挂载library地址
+```
+
+**/Users/qymeet/MEGAsync/rao.library**替换为你的 library
+
+```
+docker compose up -d
+```
+
 ## 🎨 主题
 
 [默认主题 Rua](https://github.com/rao-pics/rua)
