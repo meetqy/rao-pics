@@ -31,9 +31,11 @@ export type TransformBeforeArgs = {
   // newData 未处理的 metadata
   metadata: Metadata;
   // oldData 数据库中的 metadata
-  database: Image & {
-    tags: Tag[];
-  };
+  database:
+    | (Image & {
+        tags: Tag[];
+      })
+    | null;
 };
 
 export interface Transform {

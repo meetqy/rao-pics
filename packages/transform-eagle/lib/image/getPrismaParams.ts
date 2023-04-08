@@ -2,8 +2,6 @@ import { Prisma, Image, Tag } from "@raopics/prisma-client";
 import _ from "lodash";
 import { Metadata } from "../types";
 
-const _NSFWTags = ["Drawing", "Hentai", "Neutral", "Porn", "Sexy"];
-
 function getPrismaParams(
   data: Metadata,
   oldData: Image & {
@@ -31,24 +29,13 @@ function getPrismaParams(
     };
 
     if (oldData && oldData.tags) {
-      // 【Core】EagleApp 中导入图片，已经存在，并勾选使用已存在的图片，NSFW检测结果会被覆盖。 #90
-      // https://github.com/rao-pics/core/issues/90
-      oldData.tags.forEach(({ id }) => {
-        if (_NSFWTags.includes(id)) {
-          tags["connectOrCreate"].push({
-            where: { id },
-            create: { id, name: id },
-          });
-        }
-      });
-
       // 标签 从 a => b
       // 1.需要 disconnect a
       // 2.如果 a 标签所关联的图片数量小于1 需要删除
       const disconnectTags = _.difference(
         oldData.tags.map((tag) => tag.id),
         data.tags as string[]
-      ).filter((item) => !_NSFWTags.includes(item));
+      );
 
       if (disconnectTags.length > 0) {
         tags["disconnect"] = disconnectTags.map((tag) => ({ id: tag }));
