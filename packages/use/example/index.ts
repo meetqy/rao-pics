@@ -5,7 +5,7 @@ raopics({
   library: "/Users/qymeet/Pictures/test.library",
   transform: {
     before: async (args) => {
-      const metadata = await PLUGIN_NSFW(args);
+      const metadata = await PLUGIN_NSFW(args, 0.35);
       return metadata;
     },
   },
