@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4](https://github.com/rao-pics/core/compare/v0.4.3...v0.4.4) (2023-04-08)
+
+### Features
+
+- 🎸 docker compose ([b8f89ae](https://github.com/rao-pics/core/commit/b8f89ae6ea82e10eb77c45c8cf902cafe58697f2))
+- 🎸 docker nginx 一键部署 ([e24f031](https://github.com/rao-pics/core/commit/e24f031aa8e5cfa0ea739d89c748189b810f74b4))
+- 🎸 PLUGIN_NSFW 独立引入 ([e10daaf](https://github.com/rao-pics/core/commit/e10daaf085c7c0443cdc8a1174c94e83e8a5b37a))
+
 ### [0.4.3](https://github.com/rao-pics/core/compare/v0.4.2...v0.4.3) (2023-04-06)
 
 ### Features
