@@ -2,26 +2,17 @@ import * as chokidar from "chokidar";
 import { join } from "path";
 import * as _ from "lodash";
 import { readJsonSync, statSync } from "fs-extra";
-import { getPrisma, Image, Tag } from "@raopics/prisma-client";
+import { getPrisma } from "@raopics/prisma-client";
 import { logger } from "@raopics/utils";
 import ProgressBar from "progress";
 import TagPrisma from "../tag";
 import { trigger } from "../trigger";
 import getPrismaParams from "./getPrismaParams";
-import { Metadata } from "../types";
+import { Metadata, Transform } from "../types";
 
 interface FileItem {
   file: string;
   type: "update" | "delete";
-}
-
-export interface Transform {
-  before?: (
-    metadata: Metadata,
-    database: Image & {
-      tags: Tag[];
-    }
-  ) => Metadata;
 }
 
 // 防抖 需要延迟的毫秒数
@@ -144,11 +135,13 @@ const handleImage = async () => {
       },
     });
 
+    const pluginBackMetadata = await _transform?.before({ metadata, database: image });
+
     const [data, disconnect] = getPrismaParams(
       {
         ...metadata,
         // transform.before 处理之后的数据
-        ..._transform?.before(metadata, image),
+        ...pluginBackMetadata,
         metadataMTime: mtime,
       },
       image

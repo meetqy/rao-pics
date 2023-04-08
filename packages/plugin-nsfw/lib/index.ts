@@ -1,33 +1,44 @@
-import * as tf from "@tensorflow/tfjs-node";
-import * as nsfw from "nsfwjs";
-import fs from "fs-extra";
-import { join } from "path";
+import { TransformBeforeArgs } from "@raopics/transform-eagle";
+import { getPredictions } from "./core";
 
-let model: nsfw.NSFWJS;
-
-const getModel = async () => {
-  const file = join(__dirname, "../nsfw_model/model/");
-  if (!model) {
-    model = await nsfw.load(`file://${file}`, { size: 299 });
-  }
-
-  return model;
-};
+const _NSFWTags = ["Drawing", "Hentai", "Neutral", "Porn", "Sexy"];
 
 /**
- * 检测图片 NSFW
- * @param file  图片路径
+ *
+ * @param param0 TransformBeforeArgs
+ * @param probability predictions[].probability > 阈值, 默认0.35
+ * @returns
  */
-const PLUGIN_NSFW = async (file: string) => {
-  if (process.env.NSFW === "false") return [];
+export const PLUGIN_NSFW = async function ({ metadata, database }: TransformBeforeArgs, probability?: 0.35) {
+  if (["jpg", "jpeg", "bmp", "png"].includes(metadata.ext)) {
+    const { LIBRARY } = process.env;
+    const { tags } = metadata;
 
-  const pic = new Uint8Array(fs.readFileSync(file).buffer);
-  const model = await getModel();
-  const image = await tf.node.decodeImage(pic, 3);
-  const predictions = await model.classify(image as tf.Tensor3D);
-  image.dispose();
+    if (database) {
+      // 【Core】EagleApp 中导入图片，已经存在，并勾选使用已存在的图片，NSFW检测结果会被覆盖。 #90
+      // https://github.com/rao-pics/core/issues/90
+      const oldNSFWTags = database.tags.filter((item) => _NSFWTags.includes(item.name));
 
-  return predictions;
+      if (oldNSFWTags) {
+        metadata.tags = tags.concat(oldNSFWTags.map((item) => item.name));
+      }
+    } else {
+      const predictions = await getPredictions(
+        `${LIBRARY}/images/${metadata.id}.info/${metadata.name}.${metadata.ext}`
+      );
+
+      const className = predictions
+        .filter((item) => item.probability > probability)
+        .map((item) => item.className);
+
+      metadata.nsfw = true;
+      metadata.tags = tags.concat(className);
+    }
+
+    return metadata;
+  }
+
+  return metadata;
 };
 
 export default PLUGIN_NSFW;

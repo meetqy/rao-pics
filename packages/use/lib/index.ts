@@ -15,6 +15,8 @@ interface Options {
 const raopics = (options?: Options) => {
   const { transform_eagle = true, port = 0, transform, library } = options || {};
 
+  process.env.LIBRARY = library;
+
   if (transform_eagle) {
     TransformEagle({
       library,

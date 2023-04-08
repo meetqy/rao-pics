@@ -11,14 +11,14 @@ export default defineConfig({
   build: {
     lib: {
       entry: "lib/index.ts",
-      name: "@raopics/plugin-nsfw",
+      name: "PLUGIN_NSFW",
       fileName: "index",
       formats: ["cjs"],
     },
     sourcemap: true,
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
-      external: ["@tensorflow/tfjs-node", "nsfwjs", "path", "fs-extra"],
+      external: ["@tensorflow/tfjs-node", "nsfwjs", "path", "fs-extra", "@raopics/utils", "node-fetch"],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
@@ -26,6 +26,8 @@ export default defineConfig({
           path: "path",
           nsfwjs: "nsfw",
           "@tensorflow/tfjs-node": "tf",
+          "raopics/utils": "Utils",
+          "node-fetch": "fetch",
         },
       },
     },

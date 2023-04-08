@@ -1,15 +1,15 @@
-import watchImage, { Transform as _Transfrom } from "./image";
+import watchImage from "./image";
 import watchMetadata from "./metadata";
 import { logger } from "@raopics/utils";
 import watchStarredTags from "./starred-tags";
 import { getPrisma } from "@raopics/prisma-client";
+import { Transform } from "./types";
 
 export * from "./types";
-export type Transform = _Transfrom;
 
 export interface Args {
   library: string;
-  transform: _Transfrom;
+  transform: Transform;
 }
 
 const TransformEagle = async (args: Args) => {
