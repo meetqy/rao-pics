@@ -11,6 +11,7 @@ services:
 
   api:
     image: meetqy/raopics-api
+    tty: true
     environment:
       LIBRARY: /library # volumes中的地址
       PORT: 9600
