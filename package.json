@@ -4,13 +4,14 @@
   "version": "0.4.4",
   "scripts": {
     "setup": "pnpm i && pnpm build",
-    "push:example": "git subtree push --prefix example origin example",
     "prepare": "husky install",
     "build": "lerna run build",
     "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --no-push --no-git-tag-version",
     "release:next-beta": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --canary --no-push --no-git-tag-version",
     "test": "lerna run test",
-    "release": "standard-version"
+    "release": "standard-version",
+    "docker": "docker compose up -d",
+    "docker:dev": "docker compose up -d -f docker-compose-dev.yml"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
