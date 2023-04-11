@@ -33,14 +33,13 @@ export const getPrisma = (library?: string) => {
   copySync(join(__dirname, "../prisma/default.db"), dbUrl, { overwrite: false });
 
   if (!watchDBFile) {
+    watchDBFile = true;
     chokidar
       .watch(dbUrl)
       .on("all", updatePrismaClient)
       .on("ready", () => {
         logger.info(`[prisma-client] start watching ${dbUrl}`);
       });
-
-    watchDBFile = true;
   }
 
   if (!prisma) {

@@ -7,8 +7,8 @@
     "push:example": "git subtree push --prefix example origin example",
     "prepare": "husky install",
     "build": "lerna run build",
-    "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --no-git-tag-version",
-    "release:next-beta": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --canary --no-git-tag-version",
+    "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --no-push --no-git-tag-version",
+    "release:next-beta": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --canary --no-push --no-git-tag-version",
     "test": "lerna run test",
     "release": "standard-version"
   },
