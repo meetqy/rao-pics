@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/rao-pics/core/compare/@raopics/prisma-client@1.3.1...@raopics/prisma-client@1.4.0) (2023-04-11)
+
+### Bug Fixes
+
+- 🐛 [#127](https://github.com/rao-pics/core/issues/127) ([2f6f21b](https://github.com/rao-pics/core/commit/2f6f21b88d56d46f401d3d255b203c6f78fcfeaf))
+
+### Performance Improvements
+
+- ⚡️ prisma-client 触发更新 prisma 方式改为 change ([42b29b4](https://github.com/rao-pics/core/commit/42b29b4ffcf3b60e32eb934802742a299a659c06))
+
 ## [1.3.1](https://github.com/rao-pics/core/compare/@raopics/prisma-client@1.3.0...@raopics/prisma-client@1.3.1) (2023-04-04)
 
 **Note:** Version bump only for package @raopics/prisma-client
