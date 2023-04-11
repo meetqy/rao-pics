@@ -36,7 +36,11 @@ export const getPrisma = (library?: string) => {
     watchDBFile = true;
     chokidar
       .watch(dbUrl)
-      .on("all", updatePrismaClient)
+      .on("all", (event) => {
+        if (event === "change") {
+          updatePrismaClient();
+        }
+      })
       .on("ready", () => {
         logger.info(`[prisma-client] start watching ${dbUrl}`);
       });
