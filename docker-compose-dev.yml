@@ -1,0 +1,25 @@
+version: "3.5"
+name: raopics
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+    command: [nginx, "-g", "daemon off;"]
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile-dev
+    environment:
+      LIBRARY: /library # volumes中的地址
+      PORT: 9600
+    volumes:
+      - /Users/qymeet/Pictures/test.library:/library # 本地挂载library地址
+
+  rua:
+    image: meetqy/raopics-rua
+    environment:
+      PORT: 9601
