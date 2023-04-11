@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/rao-pics/core/compare/@raopics/plugin-nsfw@1.2.2...@raopics/plugin-nsfw@1.3.0) (2023-04-11)
+
+### Bug Fixes
+
+- 🐛 [prisma-cilent-generate] files ([986a90d](https://github.com/rao-pics/core/commit/986a90df674213cfe574bbb4a56651026f4397d5))
+
+### Features
+
+- 🎸 PLUGIN_NSFW 独立引入 ([e10daaf](https://github.com/rao-pics/core/commit/e10daaf085c7c0443cdc8a1174c94e83e8a5b37a))
+
 # [1.3.0](https://github.com/rao-pics/core/compare/@raopics/plugin-nsfw@1.2.2...@raopics/plugin-nsfw@1.3.0) (2023-04-08)
 
 ### Bug Fixes

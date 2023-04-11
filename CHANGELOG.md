@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.5](https://github.com/rao-pics/core/compare/v0.4.4...v0.4.5) (2023-04-11)
+
+### Bug Fixes
+
+- 🐛 [#127](https://github.com/rao-pics/core/issues/127) ([2f6f21b](https://github.com/rao-pics/core/commit/2f6f21b88d56d46f401d3d255b203c6f78fcfeaf))
+
 ### [0.4.4](https://github.com/rao-pics/core/compare/v0.4.3...v0.4.4) (2023-04-08)
 
 ### Features

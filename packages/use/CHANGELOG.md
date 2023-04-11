@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/rao-pics/core/compare/@raopics/use@0.3.9...@raopics/use@0.4.0) (2023-04-11)
+
+**Note:** Version bump only for package @raopics/use
+
 ## [0.3.10](https://github.com/rao-pics/core/compare/@raopics/use@0.3.9...@raopics/use@0.3.10) (2023-04-08)
 
 **Note:** Version bump only for package @raopics/use

@@ -1,16 +1,17 @@
 {
   "name": "raopics-monorepo",
   "private": true,
-  "version": "0.4.4",
+  "version": "0.4.5",
   "scripts": {
     "setup": "pnpm i && pnpm build",
-    "push:example": "git subtree push --prefix example origin example",
-    "prepare": "husky install",
     "build": "lerna run build",
-    "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --no-git-tag-version",
-    "release:next-beta": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --canary --no-git-tag-version",
+    "prepare": "husky install",
+    "release:next": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --no-push --no-git-tag-version",
+    "release:next-beta": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --canary --no-push --no-git-tag-version",
     "test": "lerna run test",
-    "release": "standard-version"
+    "release": "standard-version",
+    "docker": "docker compose up -d",
+    "docker:dev": "docker compose -f docker-compose-dev.yml up -d"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",

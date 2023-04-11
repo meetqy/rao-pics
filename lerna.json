@@ -4,6 +4,6 @@
   "useWorkspaces": true,
   "version": "independent",
   "publish": {
-    "ignoreChanges": ["*.md", "example"]
+    "ignoreChanges": ["*.md", "docker"]
   }
 }
