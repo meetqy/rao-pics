@@ -189,7 +189,11 @@ const watchImage = (library: string, transform?: Transform) => {
   _transform = transform;
 
   chokidar
-    .watch(_path)
+    .watch(_path, {
+      followSymlinks: false,
+      awaitWriteFinish: true,
+      ignored: /\*\.info$/,
+    })
     .on("add", (file) => PendingFiles.add({ file, type: "update" }))
     .on("change", (file) => PendingFiles.add({ file, type: "update" }))
     .on("unlink", (file) => PendingFiles.add({ file, type: "delete" }));

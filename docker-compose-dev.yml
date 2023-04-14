@@ -16,7 +16,10 @@ services:
       LIBRARY: /library # volumes中的地址
       PORT: 9600
     volumes:
-      - /Users/qymeet/Pictures/rao.library:/library # 本地挂载library地址
+      - /Users/qymeet/Pictures/rao.library/images:/library/images:ro # 本地挂载library地址
+      - /Users/qymeet/Pictures/rao.library/metadata.json:/library/metadata.json:ro
+      - /Users/qymeet/Pictures/rao.library/tags.json:/library/tags.json:ro
+      - /Users/qymeet/Pictures/rao.library/raopics.db:/library/raopics.db
 
   rua:
     image: meetqy/raopics-rua
