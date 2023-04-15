@@ -184,7 +184,7 @@ const handleImage = async () => {
 const _debounce = _.debounce(handleImage, _wait);
 
 const watchImage = (library: string, transform?: Transform) => {
-  const _path = join(library, "./images/**/metadata.json");
+  const _path = join(library, "./images");
 
   _transform = transform;
 
@@ -194,9 +194,18 @@ const watchImage = (library: string, transform?: Transform) => {
       awaitWriteFinish: true,
       ignored: /\*\.info$/,
     })
-    .on("add", (file) => PendingFiles.add({ file, type: "update" }))
-    .on("change", (file) => PendingFiles.add({ file, type: "update" }))
-    .on("unlink", (file) => PendingFiles.add({ file, type: "delete" }));
+    .on("all", (e, file) => {
+      if (file.endsWith(".json")) {
+        switch (e) {
+          case "add":
+            return PendingFiles.add({ file, type: "update" });
+          case "change":
+            return PendingFiles.add({ file, type: "update" });
+          case "unlink":
+            return PendingFiles.add({ file, type: "delete" });
+        }
+      }
+    });
 };
 
 export default watchImage;
