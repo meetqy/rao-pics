@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.6](https://github.com/rao-pics/core/compare/v0.4.5...v0.4.6) (2023-04-15)
+
+### Perfs
+
+- ⚡️ docker 中永久删除素材 CPU,内存飙升 ([16b0d77](https://github.com/rao-pics/core/commit/16b0d77e4c573eaa74142256a841fcd9c1fc09b0)), closes [#131](https://github.com/rao-pics/core/issues/131)
+- ⚡️ 添加素材速度优化 ([1f1af59](https://github.com/rao-pics/core/commit/1f1af597834e4eb2156827b314feec5066bc9f5e))
+
 ### [0.4.5](https://github.com/rao-pics/core/compare/v0.4.4...v0.4.5) (2023-04-11)
 
 ### Bug Fixes
