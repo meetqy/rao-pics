@@ -148,36 +148,17 @@ const handleImage = async () => {
     );
     isDisconnect.tag = disconnect;
 
-    // 新增
-    if (!image) {
-      // 使用upsert
-      // 针对: 添加的图片，已经存在当前library中，
-      // Eagle 会弹窗提示是否使用已存在的场景
-      getPrisma()
-        .image.upsert({
-          where: { id },
-          create: data,
-          update: data,
-        })
-        .catch((e) => logger.error(e, `Image upsert error(${id}): `))
-        .finally(() => PendingFiles.delete(fileItem));
-      continue;
-    }
-
-    // 更新
-    if (
-      !image.metadataMTime ||
-      Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2
-    ) {
-      getPrisma()
-        .image.update({
-          where: { id: data.id },
-          data,
-        })
-        .finally(() => PendingFiles.delete(fileItem));
-    } else {
-      PendingFiles.delete(fileItem);
-    }
+    // 本地更新 sqlite
+    // 依次更新，用户始终只有一个，所以无需判断是否需要更新
+    // 本机中的metadata改变之后，直接同步到sqlite中
+    getPrisma()
+      .image.upsert({
+        where: { id },
+        create: data,
+        update: data,
+      })
+      .catch((e) => logger.error(e, `Image upsert error(${id}): `))
+      .finally(() => PendingFiles.delete(fileItem));
   }
 };
 
