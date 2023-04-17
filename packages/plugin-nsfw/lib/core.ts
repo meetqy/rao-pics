@@ -2,7 +2,7 @@ import * as tf from "@tensorflow/tfjs-node";
 import fs from "fs-extra";
 import { join, resolve } from "path";
 import { NSFWJS } from "nsfwjs";
-import { logger } from "@raopics/utils";
+// import { logger } from "@raopics/utils";
 
 let isLoad = false;
 
@@ -22,11 +22,11 @@ function overideLoad(context: NSFWJS, modelBaseUrl: string) {
      */
     const pathOrIOHandler = this.pathOrIOHandler;
     const loadOptions = {
-      onProgress: (fraction: number) => {
-        {
-          logger.info(`ModelLoad onProgress:${(fraction * 100).toFixed(1)}%`);
-        }
-      },
+      // onProgress: (fraction: number) => {
+      //   {
+      //     logger.info(`ModelLoad onProgress:${(fraction * 100).toFixed(1)}%`);
+      //   }
+      // },
       fetchFunc(fpath: string) {
         let curPath = fpath;
         //ForWindows
@@ -34,7 +34,6 @@ function overideLoad(context: NSFWJS, modelBaseUrl: string) {
           curPath = resolve(modelBaseUrl, "./" + fpath);
         }
 
-        // console.log("ModelLoad file: " + fpath, curPath);
         return import("node-fetch").then(({ Response: fetchResponse }) => {
           return new Promise((resolve, reject) => {
             fs.readFile(curPath, (err, data) => {
