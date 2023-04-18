@@ -9,14 +9,12 @@ import TagPrisma from "../tag";
 import { trigger } from "../trigger";
 import getPrismaParams from "./getPrismaParams";
 import { Metadata, Transform } from "../types";
+import { WAIT_TIME } from "../constant";
 
 interface FileItem {
   file: string;
   type: "update" | "delete";
 }
-
-// 防抖 需要延迟的毫秒数
-const _wait = 3000;
 
 let bar;
 const supportExt = ["jpg", "png", "webp", "jpeg", "bmp", "gif", "mp4", "pdf"];
@@ -66,7 +64,7 @@ const PendingFiles: {
           TagPrisma.clearImageZero();
         }
 
-        logger.info("Image Complete 🚀");
+        logger.info("[transform-eagle] Image Complete 🚀");
       }
     }
   },
@@ -162,7 +160,7 @@ const handleImage = async () => {
   }
 };
 
-const _debounce = _.debounce(handleImage, _wait);
+const _debounce = _.debounce(handleImage, WAIT_TIME);
 
 const watchImage = (library: string, transform?: Transform) => {
   const _path = join(library, "./images");

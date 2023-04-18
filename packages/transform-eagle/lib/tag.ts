@@ -21,7 +21,7 @@ const TagPrisma = {
         },
       })
       .then((e) => {
-        logger.debug(e, "Clear tag with image count less than 1: ");
+        logger.debug(e, "[transform-eagle] Clear tag with image count less than 1: ");
       });
   },
 };

@@ -7,5 +7,5 @@ export const trigger = _.debounce(() => {
   const file = process.env.LIBRARY + "/raopics.db";
   const content = readFileSync(file);
   writeFileSync(file, content);
-  logger.info("Trigger file update");
+  logger.info("[transform-eagle] Trigger file update");
 }, 10000);
