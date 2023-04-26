@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.7](https://github.com/rao-pics/core/compare/v0.4.6...v0.4.7) (2023-04-26)
+
+### Bug Fixes
+
+- 🐛 plugin-nsfw 已存在的数据无法检测 ([fc1dddf](https://github.com/rao-pics/core/commit/fc1dddfd882e97ddb123f005be23b780388ff84a))
+
+### Perfs
+
+- ⚡️ image 更新直接通过到 sqlite 中,不再通过对比时间校验 ([9e80750](https://github.com/rao-pics/core/commit/9e80750268e7efa10f5d7646931baa8a3fff9175))
+- ⚡️ transform 优化图片加载时机 ([ec26dfe](https://github.com/rao-pics/core/commit/ec26dfe0ee18aea333a6c894c0b742ac3f829cad))
+
 ### [0.4.6](https://github.com/rao-pics/core/compare/v0.4.5...v0.4.6) (2023-04-15)
 
 ### Perfs
