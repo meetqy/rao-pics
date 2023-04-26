@@ -9,14 +9,12 @@ import TagPrisma from "../tag";
 import { trigger } from "../trigger";
 import getPrismaParams from "./getPrismaParams";
 import { Metadata, Transform } from "../types";
+import { WAIT_TIME } from "../constant";
 
 interface FileItem {
   file: string;
   type: "update" | "delete";
 }
-
-// 防抖 需要延迟的毫秒数
-const _wait = 3000;
 
 let bar;
 const supportExt = ["jpg", "png", "webp", "jpeg", "bmp", "gif", "mp4", "pdf"];
@@ -66,7 +64,7 @@ const PendingFiles: {
           TagPrisma.clearImageZero();
         }
 
-        logger.info("Image Complete 🚀");
+        logger.info("[transform-eagle] Image Complete 🚀");
       }
     }
   },
@@ -148,40 +146,21 @@ const handleImage = async () => {
     );
     isDisconnect.tag = disconnect;
 
-    // 新增
-    if (!image) {
-      // 使用upsert
-      // 针对: 添加的图片，已经存在当前library中，
-      // Eagle 会弹窗提示是否使用已存在的场景
-      getPrisma()
-        .image.upsert({
-          where: { id },
-          create: data,
-          update: data,
-        })
-        .catch((e) => logger.error(e, `Image upsert error(${id}): `))
-        .finally(() => PendingFiles.delete(fileItem));
-      continue;
-    }
-
-    // 更新
-    if (
-      !image.metadataMTime ||
-      Math.floor(mtime / 1000) - Math.floor(Number(image.metadataMTime) / 1000) > 2
-    ) {
-      getPrisma()
-        .image.update({
-          where: { id: data.id },
-          data,
-        })
-        .finally(() => PendingFiles.delete(fileItem));
-    } else {
-      PendingFiles.delete(fileItem);
-    }
+    // 本地更新 sqlite
+    // 依次更新，用户始终只有一个，所以无需判断是否需要更新
+    // 本机中的metadata改变之后，直接同步到sqlite中
+    getPrisma()
+      .image.upsert({
+        where: { id },
+        create: data,
+        update: data,
+      })
+      .catch((e) => logger.error(e, `Image upsert error(${id}): `))
+      .finally(() => PendingFiles.delete(fileItem));
   }
 };
 
-const _debounce = _.debounce(handleImage, _wait);
+const _debounce = _.debounce(handleImage, WAIT_TIME);
 
 const watchImage = (library: string, transform?: Transform) => {
   const _path = join(library, "./images");

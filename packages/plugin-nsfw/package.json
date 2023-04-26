@@ -19,7 +19,6 @@
     "url": "https://github.com/rao-pics/core/issues"
   },
   "dependencies": {
-    "@raopics/utils": "workspace:^",
     "@tensorflow/tfjs-node": "4.1.0",
     "fs-extra": "^11.1.0",
     "node-fetch": "^3.3.1",

@@ -9,20 +9,12 @@ const _NSFWTags = ["Drawing", "Hentai", "Neutral", "Porn", "Sexy"];
  * @param probability predictions[].probability > 阈值, 默认0.35
  * @returns
  */
-export const PLUGIN_NSFW = async function ({ metadata, database }: TransformBeforeArgs, probability?: 0.35) {
+const PLUGIN_NSFW = async function ({ metadata, database }: TransformBeforeArgs, probability?: 0.35) {
   if (["jpg", "jpeg", "bmp", "png"].includes(metadata.ext)) {
     const { LIBRARY } = process.env;
     const { tags } = metadata;
 
-    if (database) {
-      // 【Core】EagleApp 中导入图片，已经存在，并勾选使用已存在的图片，NSFW检测结果会被覆盖。 #90
-      // https://github.com/rao-pics/core/issues/90
-      const oldNSFWTags = database.tags.filter((item) => _NSFWTags.includes(item.name));
-
-      if (oldNSFWTags) {
-        metadata.tags = tags.concat(oldNSFWTags.map((item) => item.name));
-      }
-    } else {
+    const createNSFW = async () => {
       const predictions = await getPredictions(
         `${LIBRARY}/images/${metadata.id}.info/${metadata.name}.${metadata.ext}`
       );
@@ -33,6 +25,20 @@ export const PLUGIN_NSFW = async function ({ metadata, database }: TransformBefo
 
       metadata.nsfw = true;
       metadata.tags = tags.concat(className);
+    };
+
+    if (database) {
+      // 【Core】EagleApp 中导入图片，已经存在，并勾选使用已存在的图片，NSFW检测结果会被覆盖。 #90
+      // https://github.com/rao-pics/core/issues/90
+      const oldNSFWTags = database.tags.filter((item) => _NSFWTags.includes(item.name));
+
+      if (oldNSFWTags && oldNSFWTags.length > 0) {
+        metadata.tags = tags.concat(oldNSFWTags.map((item) => item.name));
+      } else {
+        await createNSFW();
+      }
+    } else {
+      await createNSFW();
     }
 
     return metadata;

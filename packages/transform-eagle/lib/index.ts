@@ -17,17 +17,15 @@ const TransformEagle = async (args: Args) => {
 
   process.env.LIBRARY = library;
 
-  logger.info("Start transform 🛫");
+  logger.info("[transform-eagle] Start transform 🛫");
 
   getPrisma(library);
 
-  await watchMetadata(library);
-  await watchStarredTags(library);
-
-  // 延迟一个 wait 时间
-  setTimeout(() => {
+  watchMetadata(library, () => {
+    // 先初始化标签和文件夹
     watchImage(library, transform);
-  }, 3000);
+  });
+  watchStarredTags(library);
 };
 
 export default TransformEagle;

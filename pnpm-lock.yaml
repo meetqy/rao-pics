@@ -104,9 +104,6 @@ importers:
 
   packages/plugin-nsfw:
     dependencies:
-      '@raopics/utils':
-        specifier: workspace:^
-        version: link:../utils
       '@tensorflow/tfjs-node':
         specifier: 4.1.0
         version: 4.1.0(seedrandom@3.0.5)
