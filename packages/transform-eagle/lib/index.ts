@@ -9,7 +9,7 @@ export * from "./types";
 
 export interface Args {
   library: string;
-  transform: Transform;
+  transform?: Transform;
 }
 
 const TransformEagle = async (args: Args) => {
