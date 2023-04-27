@@ -55,10 +55,14 @@ git clone https://github.com/rao-pics/core.git
       LIBRARY: /library # volumes中的地址
       PORT: 9600
     volumes:
-      - /Users/qymeet/MEGAsync/rao.library:/library # 本地挂载library地址
+      # 本地挂载library地址
+      - /Users/qymeet/MEGAsync/rao.library/images:/library/images:ro
+      - /Users/qymeet/MEGAsync/rao.library/metadata.json:/library/metadata.json:ro
+      - /Users/qymeet/MEGAsync/rao.library/tags.json:/library/tags.json:ro
+      - /Users/qymeet/MEGAsync/rao.library/raopics.db:/library/raopics.db
 ```
 
-**/Users/qymeet/MEGAsync/rao.library**替换为你的 library
+volumes 中的**/Users/qymeet/MEGAsync/rao.library**替换为你的 library
 
 ```
 docker compose up -d
