@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.8](https://github.com/rao-pics/core/compare/v0.4.7...v0.4.8) (2023-04-27)
+
+### Bug Fixes
+
+- 🐛 eagle 删除标签，sqlite 未更新 ([e8acaf7](https://github.com/rao-pics/core/commit/e8acaf709c3360aab738298cac715b614c16b679)), closes [#138](https://github.com/rao-pics/core/issues/138)
+
 ### [0.4.7](https://github.com/rao-pics/core/compare/v0.4.6...v0.4.7) (2023-04-26)
 
 ### Bug Fixes
