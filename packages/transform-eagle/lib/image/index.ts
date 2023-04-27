@@ -149,10 +149,12 @@ const handleImage = async () => {
     // 本地更新 sqlite
     // 依次更新，用户始终只有一个，所以无需判断是否需要更新
     // 本机中的metadata改变之后，直接同步到sqlite中
+    const createData = _.cloneDeep(data);
+    delete createData.tags["disconnect"];
     getPrisma()
       .image.upsert({
         where: { id },
-        create: data,
+        create: createData,
         update: data,
       })
       .catch((e) => logger.error(e, `Image upsert error(${id}): `))

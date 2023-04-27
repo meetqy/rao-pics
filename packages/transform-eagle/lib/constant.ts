@@ -1,1 +1,1 @@
-export const WAIT_TIME = 3000;
+export const WAIT_TIME = 2000;
