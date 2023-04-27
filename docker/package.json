@@ -1,6 +1,6 @@
 {
   "name": "@raopics/docker-run",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@raopics/use": "workspace:*"
-  }
+    "@raopics/use": "0.5.0"
+  },
+  "gitHead": "2a759afc83d1d26b18b6dcdb9b7917a47dfdfee8"
 }
