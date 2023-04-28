@@ -1,5 +1,5 @@
 import { TransformBeforeArgs } from "@raopics/transform-eagle";
-import { getPredictions } from "./core";
+import { getPredictions, modelType, options } from "./core";
 
 const _NSFWTags = ["Drawing", "Hentai", "Neutral", "Porn", "Sexy"];
 
@@ -9,14 +9,24 @@ const _NSFWTags = ["Drawing", "Hentai", "Neutral", "Porn", "Sexy"];
  * @param probability predictions[].probability > 阈值, 默认0.35
  * @returns
  */
-const PLUGIN_NSFW = async function ({ metadata, database }: TransformBeforeArgs, probability?: 0.35) {
+const PLUGIN_NSFW = async function (
+  { metadata, database }: TransformBeforeArgs,
+  options?: {
+    probability?: 0.35;
+    model?: modelType;
+    modelOptions?: options;
+  }
+) {
+  const { probability, model, modelOptions } = options;
   if (["jpg", "jpeg", "bmp", "png"].includes(metadata.ext)) {
     const { LIBRARY } = process.env;
     const { tags } = metadata;
 
     const createNSFW = async () => {
       const predictions = await getPredictions(
-        `${LIBRARY}/images/${metadata.id}.info/${metadata.name}.${metadata.ext}`
+        `${LIBRARY}/images/${metadata.id}.info/${metadata.name}.${metadata.ext}`,
+        model || "quant_mid",
+        modelOptions || { size: 224 }
       );
 
       const className = predictions
