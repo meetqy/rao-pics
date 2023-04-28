@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.6.0 (2023-04-28)
+
+### Bug Fixes
+
+- 🐛 [prisma-cilent-generate] files ([986a90d](https://github.com/rao-pics/core/commit/986a90df674213cfe574bbb4a56651026f4397d5))
+- 🐛 @raopics/use build ([121cf4a](https://github.com/rao-pics/core/commit/121cf4a2e63a6f4bb1df6abe82182ba3d669454a))
+
+### Features
+
+- 🎸 nsfw model 支持配置 ([da9974e](https://github.com/rao-pics/core/commit/da9974e8214f26b3a43ef5d575b10afc1302142e))
+- 🎸 简化零配置,只需 2 步,启动服务 ([47d7a65](https://github.com/rao-pics/core/commit/47d7a65b0af5f3ce3d27aa372437dbfdb24df101))
+
+### Performance Improvements
+
+- ⚡️ image 更新直接通过到 sqlite 中,不再通过对比时间校验 ([9e80750](https://github.com/rao-pics/core/commit/9e80750268e7efa10f5d7646931baa8a3fff9175))
+
 # 0.5.0 (2023-04-27)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "@raopics/transform-eagle",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "transform eagle app library to sqlite.",
   "keywords": [
     "transform",
@@ -26,7 +26,7 @@
     "@types/node": "^18.14.0"
   },
   "dependencies": {
-    "@raopics/prisma-client": "1.4.0",
+    "@raopics/prisma-client": "^1.5.0",
     "@raopics/utils": "1.0.8",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
@@ -45,5 +45,5 @@
       "require": "./dist/index.js"
     }
   },
-  "gitHead": "2a759afc83d1d26b18b6dcdb9b7917a47dfdfee8"
+  "gitHead": "bd7d598c85adf9422e686ce637f4132d3e802536"
 }
