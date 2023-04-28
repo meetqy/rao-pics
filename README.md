@@ -56,13 +56,15 @@ git clone https://github.com/rao-pics/core.git
       PORT: 9600
     volumes:
       # 本地挂载library地址
-      - /Users/qymeet/MEGAsync/rao.library/images:/library/images:ro
-      - /Users/qymeet/MEGAsync/rao.library/metadata.json:/library/metadata.json:ro
-      - /Users/qymeet/MEGAsync/rao.library/tags.json:/library/tags.json:ro
-      - /Users/qymeet/MEGAsync/rao.library/raopics.db:/library/raopics.db
+      - /Users/qymeet/Pictures/rao.library/images:/library/images:ro
+      - /Users/qymeet/Pictures/rao.library/metadata.json:/library/metadata.json:ro
+      - /Users/qymeet/Pictures/rao.library/tags.json:/library/tags.json:ro
+      # 运行完成后在容器的 library/raopics.db 中会新增一个db文件。你可以将它导出到本地，
+      # 放在 `/Users/qymeet/Pictures/rao.library/` 的目录中，然后取消注释。下次执行时就不会再从零开始索引数据。
+      # - /Users/qymeet/Pictures/rao.library/raopics.db:/library/raopics.db
 ```
 
-volumes 中的**/Users/qymeet/MEGAsync/rao.library**替换为你的 library
+volumes 中的 **/Users/qymeet/MEGAsync/rao.library** 替换为你的 library
 
 ```
 docker compose up -d
