@@ -12,12 +12,12 @@ const _NSFWTags = ["Drawing", "Hentai", "Neutral", "Porn", "Sexy"];
 const PLUGIN_NSFW = async function (
   { metadata, database }: TransformBeforeArgs,
   options?: {
-    probability?: 0.35;
+    probability?: number;
     model?: modelType;
     modelOptions?: options;
   }
 ) {
-  const { probability, model, modelOptions } = options;
+  const { probability = 0.35, model, modelOptions } = options;
   if (["jpg", "jpeg", "bmp", "png"].includes(metadata.ext)) {
     const { LIBRARY } = process.env;
     const { tags } = metadata;
