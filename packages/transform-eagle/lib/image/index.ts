@@ -6,7 +6,6 @@ import { getPrisma } from "@raopics/prisma-client";
 import { logger } from "@raopics/utils";
 import ProgressBar from "progress";
 import TagPrisma from "../tag";
-import { trigger } from "../trigger";
 import getPrismaParams from "./getPrismaParams";
 import { Metadata, Transform } from "../types";
 import { WAIT_TIME } from "../constant";
@@ -38,7 +37,6 @@ const PendingFiles: {
 
   add: (fileItem) => {
     PendingFiles.temp.add(fileItem.file);
-    trigger();
 
     if (PendingFiles.temp.size > PendingFiles.value.size) {
       PendingFiles.value.add(fileItem);
@@ -48,7 +46,6 @@ const PendingFiles: {
 
   delete: (fileItem) => {
     PendingFiles.value.delete(fileItem);
-    trigger();
 
     if (bar) {
       bar.tick();

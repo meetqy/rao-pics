@@ -1,6 +1,5 @@
 import { logger } from "@raopics/utils";
 import { getPrisma } from "@raopics/prisma-client";
-import { trigger } from "../trigger";
 
 export const handleTagsGroups = (localTagsGroups: EagleUse.TagsGroupsItem[]) => {
   localTagsGroups.forEach((item) => {
@@ -23,8 +22,6 @@ export const handleTagsGroups = (localTagsGroups: EagleUse.TagsGroupsItem[]) => 
         update: data,
       })
       .catch((e) => logger.info(e, "TagsGroups error: "));
-
-    trigger();
   });
 
   deleteUnnecessary(localTagsGroups);
@@ -54,5 +51,4 @@ const deleteUnnecessary = (localTagsGroup: EagleUse.TagsGroupsItem[]) => {
           });
       }
     });
-  trigger();
 };
