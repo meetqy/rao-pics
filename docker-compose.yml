@@ -17,12 +17,14 @@ services:
       PORT: 9600
     volumes:
       # 本地挂载library地址
-      - /Users/qymeet/Pictures/rao.library/images:/library/images:ro
-      - /Users/qymeet/Pictures/rao.library/metadata.json:/library/metadata.json:ro
-      - /Users/qymeet/Pictures/rao.library/tags.json:/library/tags.json:ro
-      # 运行完成后在容器的 library/raopics.db 中会新增一个db文件。你可以将它导出到本地，
-      # 放在 `/Users/qymeet/Pictures/rao.library/` 的目录中，然后取消注释。下次执行时就不会再从零开始索引数据。
-      # - /Users/qymeet/Pictures/rao.library/raopics.db:/library/raopics.db
+      - /Users/qymeet/MEGAsync/rao.library/images:/library/images:ro
+      - /Users/qymeet/MEGAsync/rao.library/metadata.json:/library/metadata.json:ro
+      - /Users/qymeet/MEGAsync/rao.library/tags.json:/library/tags.json:ro
+      # - /Users/qymeet/MEGAsync/rao.library/raopics.db:/library/raopics.db # 首次运行需要注释这行，
+      # 因为本地不存在该文件，docker会以文件夹的形式创建，导致后续步骤报错
+      # 首次执行完成后，在docker的files中会新增这个文件 `library/raopics.db`，
+      # 你可以把它导出到本地，放在`/Users/qymeet/MEGAsync/rao.library`文件夹下。
+      # 下次启动时就会节省很多时间。
 
   rua:
     image: meetqy/raopics-rua

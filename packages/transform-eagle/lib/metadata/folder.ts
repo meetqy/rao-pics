@@ -1,5 +1,4 @@
 import { logger } from "@raopics/utils";
-import { trigger } from "../trigger";
 import { getPrisma, Folder } from "@raopics/prisma-client";
 
 // 多级嵌套转为一级
@@ -32,8 +31,6 @@ export const handleFloder = async (metadataFolders: EagleUse.Folder[]) => {
         create: folder,
       })
       .catch((e) => logger.info(e, "Folder error: "));
-
-    trigger();
   });
 
   deleteUnnecessary(folders);
@@ -63,5 +60,4 @@ const deleteUnnecessary = (localFolder: Folder[]) => {
           });
       }
     });
-  trigger();
 };

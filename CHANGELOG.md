@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.9](https://github.com/rao-pics/core/compare/v0.4.8...v0.4.9) (2023-04-28)
+
+### Features
+
+- 🎸 nsfw model 支持配置 ([da9974e](https://github.com/rao-pics/core/commit/da9974e8214f26b3a43ef5d575b10afc1302142e))
+
+### Bug Fixes
+
+- 🐛 首次启动本地未存在 raopics.db bug ([b130cf6](https://github.com/rao-pics/core/commit/b130cf6897fb97210742943e437c798ba429b0e4))
+
+### Perfs
+
+- ⚡️ 更新一定次数为了触发 db 文件能被监听到的一些逻辑代码 ([bd7d598](https://github.com/rao-pics/core/commit/bd7d598c85adf9422e686ce637f4132d3e802536)), closes [#144](https://github.com/rao-pics/core/issues/144)
+- ⚡️ 移除本地替换了 db 文件，自动更新 prisma 逻辑 ([20e1506](https://github.com/rao-pics/core/commit/20e1506d8c2613023d9761ba265d777fd6a44a9e))
+
 ### [0.4.8](https://github.com/rao-pics/core/compare/v0.4.7...v0.4.8) (2023-04-27)
 
 ### Bug Fixes

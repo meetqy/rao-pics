@@ -1,6 +1,6 @@
 {
   "name": "@raopics/use",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "eagleuse core use.",
   "author": "meetqy <meetqy@qq.com>",
   "homepage": "https://rao.pics",
@@ -35,14 +35,14 @@
     "url": "https://github.com/rao-pics/core/issues"
   },
   "dependencies": {
-    "@raopics/plugin-api": "1.5.0",
-    "@raopics/prisma-client": "1.4.0",
-    "@raopics/transform-eagle": "1.5.0"
+    "@raopics/plugin-api": "^1.6.0",
+    "@raopics/prisma-client": "^1.5.0",
+    "@raopics/transform-eagle": "^1.6.0"
   },
   "devDependencies": {
-    "@raopics/plugin-nsfw": "1.5.0",
+    "@raopics/plugin-nsfw": "^1.6.0",
     "@types/node": "^18.14.6",
     "vite": "^4.1.3"
   },
-  "gitHead": "2a759afc83d1d26b18b6dcdb9b7917a47dfdfee8"
+  "gitHead": "bd7d598c85adf9422e686ce637f4132d3e802536"
 }

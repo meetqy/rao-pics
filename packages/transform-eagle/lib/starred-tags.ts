@@ -4,7 +4,6 @@ import _ from "lodash";
 import { readJsonSync } from "fs-extra";
 import { logger } from "@raopics/utils";
 import { getPrisma } from "@raopics/prisma-client";
-import { trigger } from "./trigger";
 
 const _wait = 5000;
 
@@ -22,8 +21,6 @@ export const handleStarredTags = (file: string) => {
       },
     })
     .catch((e) => logger.error(e, "Starred tag error: "));
-
-  trigger();
 
   deleteUnnecessary(localTags);
 };
