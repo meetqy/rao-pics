@@ -10,7 +10,7 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
   api:
-    image: meetqy/raopics-api
+    build: ./
     tty: true
     environment:
       LIBRARY: /library # volumes中的地址
