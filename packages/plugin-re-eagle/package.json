@@ -24,5 +24,11 @@
   },
   "bugs": {
     "url": "https://github.com/rao-pics/core/issues"
+  },
+  "dependencies": {
+    "@raopics/prisma-client": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.3"
   }
 }
