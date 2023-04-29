@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.6.0 (2023-04-29)
+
+### Bug Fixes
+
+- 🐛 [#127](https://github.com/rao-pics/core/issues/127) ([2f6f21b](https://github.com/rao-pics/core/commit/2f6f21b88d56d46f401d3d255b203c6f78fcfeaf))
+- 🐛 prisma-client prisma-client 监听 DATABASE_URL，改变重新实例化 ([7a4810a](https://github.com/rao-pics/core/commit/7a4810a8356f1f3b8e519e8d189a551e3d816752)), closes [#102](https://github.com/rao-pics/core/issues/102)
+- 🐛 无法监听 BUG ([aad8d1e](https://github.com/rao-pics/core/commit/aad8d1ead4c99ea781c2cccc8f057b994d243cd8))
+- 🐛 有其他 package 无法 install ([fff60ca](https://github.com/rao-pics/core/commit/fff60ca023ff75d82a4b89147f646d43aec580c5))
+- 🐛 艹,支持 docker 之后的每一次更新都没加上 ([d0ac538](https://github.com/rao-pics/core/commit/d0ac538e609a17597e216749ee1fa725c3257ec5))
+
+### Features
+
+- 🎸 prisma-client 新增 windows/debian .node 可执行文件 ([9e929dd](https://github.com/rao-pics/core/commit/9e929dd6666f22b6e8930a6473af267a25a7e8bb))
+- 🎸 support mp4 gif ([aa65076](https://github.com/rao-pics/core/commit/aa65076d66eb46c605b5d95a0ab729b790793f32))
+
+### Performance Improvements
+
+- ⚡️ prisma-client 触发更新 prisma 方式改为 change ([42b29b4](https://github.com/rao-pics/core/commit/42b29b4ffcf3b60e32eb934802742a299a659c06))
+- ⚡️ 移除本地替换了 db 文件，自动更新 prisma 逻辑 ([20e1506](https://github.com/rao-pics/core/commit/20e1506d8c2613023d9761ba265d777fd6a44a9e))
+
 # 1.5.0 (2023-04-28)
 
 ### Bug Fixes
