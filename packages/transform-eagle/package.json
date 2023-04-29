@@ -26,8 +26,8 @@
     "@types/node": "^18.14.0"
   },
   "dependencies": {
-    "@raopics/prisma-client": "^1.5.0",
-    "@raopics/utils": "1.0.8",
+    "@raopics/prisma-client": "workspace:*",
+    "@raopics/utils": "workspace:*",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",

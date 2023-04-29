@@ -71,7 +71,7 @@ importers:
   docker:
     dependencies:
       '@raopics/use':
-        specifier: ^0.6.0
+        specifier: workspace:*
         version: link:../packages/use
 
   packages/plugin-api:
@@ -83,10 +83,10 @@ importers:
         specifier: ^6.9.0
         version: 6.9.0
       '@raopics/prisma-client':
-        specifier: ^1.4.0
+        specifier: workspace:*
         version: link:../prisma-client
       '@raopics/utils':
-        specifier: ^1.0.8
+        specifier: workspace:*
         version: link:../utils
       fastify:
         specifier: ^4.14.0
@@ -121,13 +121,15 @@ importers:
         specifier: ^1.6.0
         version: link:../transform-eagle
 
+  packages/plugin-re-eagle: {}
+
   packages/prisma-client:
     dependencies:
       '@prisma/client':
         specifier: ^4.11.0
         version: 4.11.0(prisma@4.11.0)
       '@raopics/utils':
-        specifier: 1.0.8
+        specifier: workspace:*
         version: link:../utils
       chokidar:
         specifier: ^3.5.3
@@ -152,10 +154,10 @@ importers:
   packages/transform-eagle:
     dependencies:
       '@raopics/prisma-client':
-        specifier: ^1.5.0
+        specifier: workspace:*
         version: link:../prisma-client
       '@raopics/utils':
-        specifier: 1.0.8
+        specifier: workspace:*
         version: link:../utils
       chokidar:
         specifier: ^3.5.3
@@ -183,17 +185,17 @@ importers:
   packages/use:
     dependencies:
       '@raopics/plugin-api':
-        specifier: ^1.6.0
+        specifier: workspace:*
         version: link:../plugin-api
       '@raopics/prisma-client':
-        specifier: ^1.5.0
+        specifier: workspace:*
         version: link:../prisma-client
       '@raopics/transform-eagle':
-        specifier: ^1.6.0
+        specifier: workspace:*
         version: link:../transform-eagle
     devDependencies:
       '@raopics/plugin-nsfw':
-        specifier: ^1.6.0
+        specifier: workspace:*
         version: link:../plugin-nsfw
       '@types/node':
         specifier: ^18.14.6
