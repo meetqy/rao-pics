@@ -49,6 +49,13 @@ function getPrismaParams(
     data.duration = data.duration.toString();
   }
 
+  for (const k in data) {
+    // 转为BigInt
+    if (["btime", "mtime", "modificationTime", "metadataMTime", "lastModified", "deletedTime"].includes(k)) {
+      data[k] = Number(data[k]);
+    }
+  }
+
   return [
     {
       ...data,
