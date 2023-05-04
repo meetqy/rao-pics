@@ -20,7 +20,7 @@ services:
       - /Users/qymeet/MEGAsync/rao.library/images:/library/images:ro
       - /Users/qymeet/MEGAsync/rao.library/metadata.json:/library/metadata.json:ro
       - /Users/qymeet/MEGAsync/rao.library/tags.json:/library/tags.json:ro
-      # - /Users/qymeet/MEGAsync/rao.library/raopics.db:/library/raopics.db # 首次运行需要注释这行，
+      - /Users/qymeet/MEGAsync/rao.library/raopics.db:/library/raopics.db # 首次运行需要注释这行，
       # 因为本地不存在该文件，docker会以文件夹的形式创建，导致后续步骤报错
       # 首次执行完成后，在docker的files中会新增这个文件 `library/raopics.db`，
       # 你可以把它导出到本地，放在`/Users/qymeet/MEGAsync/rao.library`文件夹下。

@@ -118,7 +118,7 @@ importers:
         version: 2.4.2(@tensorflow/tfjs@3.21.0)
     devDependencies:
       '@raopics/transform-eagle':
-        specifier: ^1.7.0
+        specifier: ^1.6.0
         version: link:../transform-eagle
 
   packages/plugin-re-eagle:
@@ -126,6 +126,9 @@ importers:
       '@raopics/prisma-client':
         specifier: workspace:*
         version: link:../prisma-client
+      fs-extra:
+        specifier: ^11.1.0
+        version: 11.1.0
     devDependencies:
       '@types/node':
         specifier: ^18.16.3
