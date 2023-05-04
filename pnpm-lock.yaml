@@ -126,9 +126,6 @@ importers:
       '@raopics/prisma-client':
         specifier: workspace:*
         version: link:../prisma-client
-      fs-extra:
-        specifier: ^11.1.0
-        version: 11.1.0
     devDependencies:
       '@types/node':
         specifier: ^18.16.3

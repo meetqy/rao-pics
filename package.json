@@ -10,7 +10,7 @@
     "release:next-beta": "pnpm build && cross-env HUSKY=0 lerna publish --conventional-commits --canary --no-push --no-git-tag-version",
     "test": "lerna run test",
     "release": "standard-version",
-    "docker": "docker compose up -d",
+    "docker": "pnpm build && docker compose up -d",
     "docker:dev": "docker compose -f docker-compose-dev.yml up -d"
   },
   "devDependencies": {
