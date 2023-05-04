@@ -173,7 +173,7 @@ const watchImage = (library: string, transform?: Transform) => {
       ignored: /\*\.info$/,
     })
     .on("all", (e, file) => {
-      if (file.endsWith(".json")) {
+      if (file.endsWith("metadata.json")) {
         switch (e) {
           case "add":
             return PendingFiles.add({ file, type: "update" });

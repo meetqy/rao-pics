@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.10](https://github.com/rao-pics/core/compare/v0.4.9...v0.4.10) (2023-05-04)
+
+### Features
+
+- 🎸 docker 本地自行 build,不再使用上传到 hub 中 ([f2e8ac4](https://github.com/rao-pics/core/commit/f2e8ac40f4d0878b82b527eeb14428a2f2f53727))
+- 🎸 反向修改 eagle ([aba08de](https://github.com/rao-pics/core/commit/aba08de3186e4741f318132c0938bc3db55feff2))
+
+### Bug Fixes
+
+- 🐛 素材中存在 json 文件,读取报错 ([3986d88](https://github.com/rao-pics/core/commit/3986d88920b3836c9d4e43726f82fb2779952a07))
+- 🐛 艹,支持 docker 之后的每一次更新都没加上 ([d0ac538](https://github.com/rao-pics/core/commit/d0ac538e609a17597e216749ee1fa725c3257ec5))
+
 ### [0.4.9](https://github.com/rao-pics/core/compare/v0.4.8...v0.4.9) (2023-04-28)
 
 ### Features

@@ -10,7 +10,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@raopics/use": "^0.6.0"
+    "@raopics/use": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "gitHead": "bd7d598c85adf9422e686ce637f4132d3e802536"
 }

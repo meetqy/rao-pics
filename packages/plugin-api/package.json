@@ -37,8 +37,8 @@
   "dependencies": {
     "@fastify/cors": "^8.2.0",
     "@fastify/static": "^6.9.0",
-    "@raopics/prisma-client": "^1.4.0",
-    "@raopics/utils": "^1.0.8",
+    "@raopics/prisma-client": "workspace:*",
+    "@raopics/utils": "workspace:*",
     "fastify": "^4.14.0",
     "ip": "^1.1.8"
   },

@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
-    "@raopics/utils": "1.0.8",
+    "@raopics/utils": "workspace:*",
     "chokidar": "^3.5.3",
     "fs-extra": "^11.1.0",
     "lodash": "^4.17.21",
