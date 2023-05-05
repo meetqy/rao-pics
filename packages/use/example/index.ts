@@ -7,6 +7,7 @@ raopics({
   transform: {
     before: async (args) => {
       const metadata = await PLUGIN_NSFW(args, {
+        probability: 0.1,
         model: "model",
         modelOptions: { size: 299 },
       });
