@@ -204,6 +204,9 @@ importers:
       '@raopics/transform-eagle':
         specifier: workspace:*
         version: link:../transform-eagle
+      dotenv:
+        specifier: ^16.0.3
+        version: 16.0.3
     devDependencies:
       '@raopics/plugin-nsfw':
         specifier: workspace:*
