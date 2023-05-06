@@ -10,7 +10,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@raopics/use": "workspace:*"
+    "@raopics/use": "workspace:*",
+    "dotenv": "^16.0.3"
   },
   "publishConfig": {
     "access": "public"

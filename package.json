@@ -12,7 +12,8 @@
     "release": "standard-version",
     "docker": "pnpm build && docker compose up -d",
     "docker:dev": "docker compose -f docker-compose-dev.yml up -d",
-    "db:preview": "lerna run db:preview --scope @raopics/prisma-client"
+    "db:preview": "lerna run db:preview --scope @raopics/prisma-client",
+    "db:push": "lerna run db:push --scope @raopics/prisma-client"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
