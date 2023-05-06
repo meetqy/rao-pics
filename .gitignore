@@ -6,5 +6,8 @@ dist
 
 # dotenv-flow
 .env
+!packages/prisma-client/.env
 .env.local
 .env.*.local
+
+
