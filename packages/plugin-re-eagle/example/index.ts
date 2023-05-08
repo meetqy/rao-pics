@@ -1,3 +1,8 @@
 import PLUGIN_RE_EAGLE from "../lib";
+import * as dotenv from "dotenv";
 
-PLUGIN_RE_EAGLE("/Users/qymeet/MEGAsync/rao.library");
+const { LIBRARY } = process.env;
+
+dotenv.config();
+
+PLUGIN_RE_EAGLE(LIBRARY);
