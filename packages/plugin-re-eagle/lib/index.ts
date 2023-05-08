@@ -18,6 +18,10 @@ const PLUGIN_RE_EAGLE = (library: string) => {
     })
     .then(async (res) => {
       for (const item of res) {
+        if (cache.includes(item.id)) {
+          continue;
+        }
+
         cache.push(item.id);
         const data = {
           ...item,

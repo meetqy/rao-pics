@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./default.db"
+  url      = env("DATABASE_URL")
 }
 
 model Image {

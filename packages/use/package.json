@@ -37,7 +37,8 @@
   "dependencies": {
     "@raopics/plugin-api": "workspace:*",
     "@raopics/prisma-client": "workspace:*",
-    "@raopics/transform-eagle": "workspace:*"
+    "@raopics/transform-eagle": "workspace:*",
+    "dotenv": "^16.0.3"
   },
   "devDependencies": {
     "@raopics/plugin-nsfw": "workspace:*",

@@ -26,7 +26,8 @@
     "url": "https://github.com/rao-pics/core/issues"
   },
   "dependencies": {
-    "@raopics/prisma-client": "workspace:*"
+    "@raopics/prisma-client": "workspace:*",
+    "dotenv": "^16.0.3"
   },
   "devDependencies": {
     "@types/node": "^18.16.3"
