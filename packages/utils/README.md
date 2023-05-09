@@ -1,5 +1,0 @@
-# `@raopics/utils`
-
-### Function
-
-- logger

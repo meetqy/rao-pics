@@ -1,5 +1,0 @@
-node_modules
-build
-coverage
-pnpm-lock.yaml
-packages/prisma-client/client

@@ -1,4 +1,0 @@
-{
-  "**/*.(ts|tsx),!(packages/prisma-client/client)": "eslint --fix --max-warnings 0",
-  "**/*": "prettier --write --ignore-unknown"
-}
