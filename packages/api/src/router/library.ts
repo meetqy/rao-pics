@@ -7,20 +7,22 @@ export const libraryRouter = t.router({
     return ctx.prisma.library.findMany();
   }),
 
-  add: t.procedure.input(z.string()).
-  mutation(({ ctx, input }) => {
-    return ctx.prisma.library.create({
-      data: {
-        name: input
-      },
-    });
-  }),
-
-  remove: t.procedure
-    .input(z.string())
+  add: t.procedure
+    .input(
+      z.object({
+        name: z.string(),
+        dir: z.string(),
+      }),
+    )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.library.delete({
-        where: { id: input },
+      return ctx.prisma.library.create({
+        data: input,
       });
     }),
+
+  remove: t.procedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.prisma.library.delete({
+      where: { id: input },
+    });
+  }),
 });

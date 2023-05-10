@@ -43,6 +43,7 @@ model Image {
 model Library {
     id    String  @id @default(uuid())
     name  String
+    dir   String
     Image Image[]
 }
 

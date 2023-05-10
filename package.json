@@ -16,7 +16,9 @@
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
     "lint": "turbo lint && manypkg check",
     "lint:fix": "turbo lint:fix && manypkg fix",
-    "type-check": "turbo type-check"
+    "type-check": "turbo type-check",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@acme/eslint-config": "^0.1.0",
@@ -29,6 +31,7 @@
     "typescript": "^5.0.4"
   },
   "devDependencies": {
+    "@vitest/coverage-c8": "^0.31.0",
     "vitest": "^0.31.0"
   }
 }

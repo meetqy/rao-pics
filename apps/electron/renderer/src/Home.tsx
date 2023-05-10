@@ -3,18 +3,18 @@ import reactLogo from "./assets/react.svg";
 import { trpc } from "./utils/trpc";
 
 function Home() {
-  const examples = trpc.example.getAll.useQuery();
+  const library = trpc.library.get.useQuery();
   const utils = trpc.useContext();
-  const addExample = trpc.example.add.useMutation({
-    async onSuccess() {
-      await utils.example.getAll.invalidate();
-    },
-  });
-  const removeExample = trpc.example.remove.useMutation({
-    async onSuccess() {
-      await utils.example.getAll.invalidate();
-    },
-  });
+  // const addExample = trpc.example.add.useMutation({
+  //   async onSuccess() {
+  //     await utils.example.getAll.invalidate();
+  //   },
+  // });
+  // const removeExample = trpc.example.remove.useMutation({
+  //   async onSuccess() {
+  //     await utils.example.getAll.invalidate();
+  //   },
+  // });
   const greeting = trpc.greeting.useQuery({ name: "Nicky" });
 
   return (
@@ -28,22 +28,24 @@ function Home() {
         </a>
       </div>
       <p>{greeting.data}</p>
-      <button onClick={() => addExample.mutate()}>ADD example</button>
-      {/* <ul>
-        {examples.data?.map((example, idx) => {
+      {/* <button onClick={() => addExample.mutate()}>ADD example</button> */}
+      <ul>
+        {library.data?.map((item, idx) => {
           return (
             <li
               key={idx}
               className="example"
-              onClick={() => {
-                removeExample.mutate({ id: example.id });
-              }}
+              // onClick={() => {
+              //   library.mutate({ id: example.id });
+              // }}
             >
-              <span>{example.id}</span>
+              <span>
+                {item.id} - {item.name} - {item.dir}
+              </span>
             </li>
           );
         })}
-      </ul> */}
+      </ul>
     </div>
   );
 }
