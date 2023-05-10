@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
@@ -10,6 +7,55 @@ datasource db {
     url      = "file:./db.sqlite"
 }
 
-model Example {
-    id String @id
+model Image {
+    id                String   @id @unique
+    name              String
+    size              Int
+    btime             BigInt
+    mtime             BigInt
+    modificationTime  BigInt
+    ext               String
+    url               String
+    annotation        String
+    width             Int
+    height            Int
+    star              Int?
+    /// JSON.stringify
+    palettes          String?
+    lastModified      BigInt?
+    deletedTime       BigInt?
+    isDeleted         Boolean? @default(false)
+    // <--- 视频 start --->
+    resolutionWidth   Int?
+    resolutionHeight  Int?
+    duration          String?
+    // <--- 视频 end --->
+    processingPalette Boolean?
+    noThumbnail       Boolean?
+    folders           Folder[]
+    /// JSON.stringify
+    tags              String?
+    /// eagle | billfish | pixcall | local
+    library           String
+}
+
+model Folder {
+    id               String  @id @unique
+    name             String
+    description      String
+    pid              String?
+    modificationTime BigInt
+    iconColor        String?
+    icon             String?
+    password         String
+    passwordTips     String
+    images           Image[]
+}
+
+model TagsGroups {
+    id    String  @id @unique
+    name  String  @unique
+    color String?
+    /// JSON.stringify
+    tags  String
 }
