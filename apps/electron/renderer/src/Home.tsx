@@ -29,7 +29,7 @@ function Home() {
       </div>
       <p>{greeting.data}</p>
       <button onClick={() => addExample.mutate()}>ADD example</button>
-      <ul>
+      {/* <ul>
         {examples.data?.map((example, idx) => {
           return (
             <li
@@ -43,7 +43,7 @@ function Home() {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
     </div>
   );
 }

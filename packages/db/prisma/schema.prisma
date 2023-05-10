@@ -41,7 +41,7 @@ model Image {
 }
 
 model Library {
-    id    String  @id @unique
+    id    String  @id @default(uuid())
     name  String
     Image Image[]
 }

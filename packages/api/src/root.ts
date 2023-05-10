@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-import { exampleRouter } from "./router/example";
+import { libraryRouter } from "./router/library";
 import { t } from "./trpc";
 
 export const appRouter = t.router({
-  example: exampleRouter,
+  library: libraryRouter,
   greeting: t.procedure
     .input(z.object({ name: z.string() }).nullish())
     .query(({ input }) => {
