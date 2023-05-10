@@ -36,7 +36,14 @@ model Image {
     /// JSON.stringify
     tags              String?
     /// eagle | billfish | pixcall | local
-    library           String
+    lirarry           Library  @relation(fields: [libraryId], references: [id])
+    libraryId         String
+}
+
+model Library {
+    id    String  @id @unique
+    name  String
+    Image Image[]
 }
 
 model Folder {
