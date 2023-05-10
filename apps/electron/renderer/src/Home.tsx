@@ -18,16 +18,20 @@ function Home() {
   const greeting = trpc.greeting.useQuery({ name: "Nicky" });
 
   return (
-    <div className="App">
-      <div>
+    <div className=" bg-base-100">
+      <div className="flex justify-center">
         <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="vite.svg" className="logo" alt="Vite logo" />
+          <img src="vite.svg" className="logo w-48 h-48" alt="Vite logo" />
         </a>
         <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+          <img
+            src={reactLogo}
+            className="logo react w-48 h-48"
+            alt="React logo"
+          />
         </a>
       </div>
-      <p>{greeting.data}</p>
+      <h1 className="text-5xl uppercase">{greeting.data}</h1>
       {/* <button onClick={() => addExample.mutate()}>ADD example</button> */}
       <ul>
         {library.data?.map((item, idx) => {
@@ -39,7 +43,7 @@ function Home() {
               //   library.mutate({ id: example.id });
               // }}
             >
-              <span>
+              <span className="link link-primary">
                 {item.id} - {item.name} - {item.dir}
               </span>
             </li>
