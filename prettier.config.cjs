@@ -5,7 +5,7 @@
 /** @type { PrettierConfig | SortImportsConfig | TailwindConfig } */
 const config = {
   arrowParens: "always",
-  printWidth: 80,
+  printWidth: 180,
   singleQuote: false,
   jsxSingleQuote: false,
   semi: true,
@@ -17,17 +17,7 @@ const config = {
     // "prettier-plugin-tailwindcss",
   ],
   // tailwindConfig: "./packages/config/tailwind",
-  importOrder: [
-    "<THIRD_PARTY_MODULES>",
-    "",
-    "^@acme/(.*)$",
-    "",
-    "^~/utils/(.*)$",
-    "^~/components/(.*)$",
-    "^~/styles/(.*)$",
-    "^~/(.*)$",
-    "^[./]",
-  ],
+  importOrder: ["<THIRD_PARTY_MODULES>", "", "^@acme/(.*)$", "", "^~/utils/(.*)$", "^~/components/(.*)$", "^~/styles/(.*)$", "^~/(.*)$", "^[./]"],
   importOrderSeparation: false,
   importOrderSortSpecifiers: true,
   importOrderBuiltinModulesToTop: true,

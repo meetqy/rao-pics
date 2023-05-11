@@ -1,17 +1,20 @@
-import { useState } from "react";
-import "./App.css";
-import { trpc } from "./utils/trpc";
-import Home from "./Home";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TRPCClientError, type TRPCClientRuntime } from "@trpc/client";
-import type { TRPCLink } from "@trpc/client";
-import { observable } from "@trpc/server/observable";
+import {
+  TRPCClientError,
+  type TRPCClientRuntime,
+  type TRPCLink,
+} from "@trpc/client";
 import { type AnyRouter, type inferRouterError } from "@trpc/server";
+import { observable } from "@trpc/server/observable";
 import {
   type TRPCResponse,
   type TRPCResponseMessage,
   type TRPCResultMessage,
 } from "@trpc/server/rpc";
+import { useState } from "react";
+
+import Home from "./Home";
+import { trpc } from "./utils/trpc";
 
 // from @trpc/client/src/links/internals/transformResult
 // FIXME:
@@ -22,11 +25,11 @@ function transformResult<TRouter extends AnyRouter, TOutput>(
   response:
     | TRPCResponseMessage<TOutput, inferRouterError<TRouter>>
     | TRPCResponse<TOutput, inferRouterError<TRouter>>,
-  runtime: TRPCClientRuntime
+  runtime: TRPCClientRuntime,
 ) {
   if ("error" in response) {
     const error = runtime.transformer.deserialize(
-      response.error
+      response.error,
     ) as inferRouterError<TRouter>;
     return {
       ok: false,
