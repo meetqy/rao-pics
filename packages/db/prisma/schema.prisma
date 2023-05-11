@@ -44,6 +44,9 @@ model Library {
     id    String  @id @default(uuid())
     name  String
     dir   String  @unique
+    // 本地总数
+    count Int
+    // 已同步的数量
     Image Image[]
 }
 

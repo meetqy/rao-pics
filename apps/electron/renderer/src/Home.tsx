@@ -21,7 +21,7 @@ function Home() {
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
   // active id
-  const [active, setActive] = useState<string>(library?.data ? library.data[0]?.id : "");
+  const [active, setActive] = useState<string | undefined>();
   const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
 
   const chooseFolder = async () => {
@@ -30,16 +30,17 @@ function Home() {
     if (res) {
       const dir = res[0];
       const name = dir.replace(/(.*)\//, "");
-      addLibrary.mutate({
+      const f = await addLibrary.mutateAsync({
         name,
         dir,
       });
+
+      setActive(f.id);
     }
   };
 
   const onRemove = () => {
-    removeLibrary.mutateAsync(active);
-    setActive(library.data?.filter((item) => item.id != active)[0].id || "");
+    active && removeLibrary.mutateAsync(active);
     setDelConfirmVisable(false);
   };
 
@@ -63,97 +64,137 @@ function Home() {
           </ul>
         </div>
       </div>
-      <div className="flex-1 p-4">
-        <div className="rounded overflow-hidden h-full shadow-md px-4 flex flex-col">
-          <div className="py-3 flex justify-between items-center border-b border-dashed">
-            <span className="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                />
-              </svg>
-              <span className="ml-2">文件夹/库 ID</span>
-            </span>
-            <span>{item?.id}</span>
-          </div>
-
-          <div className="py-3 flex justify-between items-center border-b border-dashed">
-            <span className="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
-                />
-              </svg>
-              <span className="ml-2">文件夹/库 路径</span>
-            </span>
-            <span>{item?.dir}</span>
-          </div>
-
-          <div className="py-3 flex justify-between items-center border-b border-dashed">
-            <span className="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="ml-2">最后同步时间</span>
-            </span>
-            <span>2023-05-11 12:59:48</span>
-          </div>
-
-          <div className="py-3 flex justify-between items-center border-b border-dashed">
-            <span className="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-                />
-              </svg>
-              <span className="ml-2">文件数</span>
-            </span>
-            <div className="flex space-x-4 items-center">
-              <span>总数：999</span>
-              <span>已同步：999</span>
-              <span>大小：12G</span>
-            </div>
-          </div>
-
-          <div className="flex-1 flex items-center justify-around px-8 py-4">
-            <div
-              className="radial-progress bg-neutral text-neutral-content border-neutral border-4"
-              style={{ "--value": 70, "--size": "7rem", "--thickness": "0.5rem" } as React.CSSProperties}
-            >
-              70%
-            </div>
-
-            <div className=" divider divider-horizontal">OR</div>
-
-            <div className="flex flex-col space-y-4">
-              <button className="btn btn-primary btn-outline">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+      {active ? (
+        <div className="flex-1 p-4">
+          <div className="rounded overflow-hidden h-full shadow-md px-4 flex flex-col">
+            <div className="py-3 flex justify-between items-center border-b border-dashed">
+              <span className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                    d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
                   />
                 </svg>
-                <span className="ml-2">同步</span>
-              </button>
+                <span className="ml-2">文件夹/库 ID</span>
+              </span>
+              <span>{item?.id}</span>
+            </div>
 
-              <label htmlFor="my-modal" className="btn btn-error  btn-outline" onClick={() => setDelConfirmVisable(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div className="py-3 flex justify-between items-center border-b border-dashed">
+              <span className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
+                  />
+                </svg>
+                <span className="ml-2">文件夹/库 路径</span>
+              </span>
+              <span>{item?.dir}</span>
+            </div>
+
+            <div className="py-3 flex justify-between items-center border-b border-dashed">
+              <span className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="ml-2">最后同步时间</span>
+              </span>
+              <span>2023-05-11 12:59:48</span>
+            </div>
+
+            <div className="py-3 flex justify-between items-center border-b border-dashed">
+              <span className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 13.5H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+                  />
                 </svg>
 
-                <span className="ml-2">移除</span>
-              </label>
+                <span className="ml-2">文件</span>
+              </span>
+              <div className="flex space-x-4 items-center">
+                <span className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                    />
+                  </svg>
+                  <span className="ml-1 text-success">120/803</span>
+                </span>
+                <span className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
+                    />
+                  </svg>
+                  <span className="ml-1 mr-1 text-success">1023/2048</span> M
+                </span>
+              </div>
+            </div>
+
+            <div className="flex-1 flex items-center justify-around px-8 py-4">
+              <div
+                className="radial-progress bg-neutral text-neutral-content border-neutral border-4"
+                style={{ "--value": 70, "--size": "7rem", "--thickness": "0.5rem" } as React.CSSProperties}
+              >
+                70%
+              </div>
+
+              <div className=" divider divider-horizontal">OR</div>
+
+              <div className="flex flex-col space-y-4">
+                <button className="btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                    />
+                  </svg>
+                  <span className="ml-2">同步</span>
+                </button>
+
+                <label htmlFor="my-modal" className="btn btn-error  btn-outline" onClick={() => setDelConfirmVisable(true)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+
+                  <span className="ml-2">移除</span>
+                </label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-3/4 flex justify-center items-center ">
+          <div className="card card-compact w-4/5 bg-base-100">
+            <figure>
+              <img src="/public/icon.png" alt="rao.pics icon" />
+            </figure>
+            <div className="card-body items-center text-center">
+              <h2 className="card-title uppercase">
+                rao.pics
+                <button className="btn btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v0.5.0</button>
+              </h2>
+              <p className=" text-neutral/90">~~暂未添加文件夹，请点击下面按钮~~</p>
+              <div className="card-actions mt-2">
+                <button className="btn btn-wide btn-primary" onClick={chooseFolder}>
+                  添加文件夹/库
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal confirm */}
       <input type="checkbox" defaultChecked={delConfirmVisable} id="my-modal" className="modal-toggle" />
