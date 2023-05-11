@@ -14,8 +14,8 @@ export const libraryRouter = t.router({
         dir: z.string(),
       }),
     )
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.library.create({
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.library.create({
         data: input,
       });
     }),

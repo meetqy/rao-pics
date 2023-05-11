@@ -1,13 +1,7 @@
-import { app, ipcMain, type IpcMain } from "electron";
+import { app, dialog, ipcMain, type IpcMain } from "electron";
 
 import "./security-restrictions";
-import {
-  TRPCError,
-  callProcedure,
-  type AnyRouter,
-  type inferRouterContext,
-  type inferRouterError,
-} from "@trpc/server";
+import { TRPCError, callProcedure, type AnyRouter, type inferRouterContext, type inferRouterError } from "@trpc/server";
 import type { TRPCResponse, TRPCResponseMessage } from "@trpc/server/rpc";
 
 import { appRouter, createContext } from "@acme/api";
@@ -86,16 +80,12 @@ app
 // }
 
 // from @trpc/server/src/internals/transformTRPCResonse
-function transformTRPCResponseItem<
-  TResponseItem extends TRPCResponse | TRPCResponseMessage,
->(router: AnyRouter, item: TResponseItem): TResponseItem {
+function transformTRPCResponseItem<TResponseItem extends TRPCResponse | TRPCResponseMessage>(router: AnyRouter, item: TResponseItem): TResponseItem {
   // explicitly use appRouter instead of router argument: https://github.com/trpc/trpc/issues/2804
   if ("error" in item) {
     return {
       ...item,
-      error: appRouter._def._config.transformer.output.serialize(
-        item.error,
-      ) as unknown,
+      error: appRouter._def._config.transformer.output.serialize(item.error) as unknown,
     };
   }
 
@@ -104,9 +94,7 @@ function transformTRPCResponseItem<
       ...item,
       result: {
         ...item.result,
-        data: appRouter._def._config.transformer.output.serialize(
-          item.result.data,
-        ) as unknown,
+        data: appRouter._def._config.transformer.output.serialize(item.result.data) as unknown,
       },
     };
   }
@@ -160,10 +148,7 @@ function validateSender(frame: Electron.WebFrameMain) {
   const frameUrlObj = new URL(frame.url);
   const pageUrlObj = new URL(pageUrl);
 
-  if (
-    import.meta.env.DEV &&
-    import.meta.env.VITE_DEV_SERVER_URL !== undefined
-  ) {
+  if (import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined) {
     // during dev
     if (frameUrlObj.host === pageUrlObj.host) return true;
   } else {
@@ -176,24 +161,24 @@ function validateSender(frame: Electron.WebFrameMain) {
 
 export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
   // https://www.electronjs.org/docs/latest/tutorial/security#17-validate-the-sender-of-all-ipc-messages
-  ipcMain.handle(
-    "electron-trpc",
-    (event: Electron.IpcMainInvokeEvent, opts: IPCRequestOptions) => {
-      if (!validateSender(event.senderFrame)) return null;
-      return resolveIPCResponse(opts);
-    },
+  ipcMain.handle("electron-trpc", (event: Electron.IpcMainInvokeEvent, opts: IPCRequestOptions) => {
+    if (!validateSender(event.senderFrame)) return null;
+    return resolveIPCResponse(opts);
+  });
+
+  ipcMain.handle("choose-folder", () =>
+    dialog.showOpenDialogSync({
+      title: "选择文件夹/库",
+      properties: ["openDirectory"],
+    }),
   );
 }
 
 // includes error handling, type info gets lost at helper function calls
-async function resolveIPCResponse<TRouter extends AnyRouter>(
-  opts: IPCRequestOptions,
-): Promise<IPCResponse> {
+async function resolveIPCResponse<TRouter extends AnyRouter>(opts: IPCRequestOptions): Promise<IPCResponse> {
   const { type, input: serializedInput } = opts;
   const { transformer } = appRouter._def._config;
-  const deserializedInput = transformer.input.deserialize(
-    serializedInput,
-  ) as unknown;
+  const deserializedInput = transformer.input.deserialize(serializedInput) as unknown;
 
   type TRouterError = inferRouterError<TRouter>;
   type TRouterResponse = TRPCResponse<unknown, TRouterError>;
@@ -207,13 +192,9 @@ async function resolveIPCResponse<TRouter extends AnyRouter>(
     });
   }
 
-  type RawResult =
-    | { input: unknown; path: string; data: unknown }
-    | { input: unknown; path: string; error: TRPCError };
+  type RawResult = { input: unknown; path: string; data: unknown } | { input: unknown; path: string; error: TRPCError };
 
-  async function getRawResult(
-    ctx: inferRouterContext<TRouter>,
-  ): Promise<RawResult> {
+  async function getRawResult(ctx: inferRouterContext<TRouter>): Promise<RawResult> {
     const { path, type } = opts;
     const { procedures } = appRouter._def;
 

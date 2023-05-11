@@ -4,39 +4,64 @@ import "./home.css";
 import { trpc } from "./utils/trpc";
 
 function Home() {
-  const library = trpc.library.get.useQuery();
   const utils = trpc.useContext();
 
-  const [active, setActive] = useState<string>(library.data ? library.data[0].id : "");
+  const library = trpc.library.get.useQuery();
+  const addLibrary = trpc.library.add.useMutation({
+    async onSuccess() {
+      await utils.library.get.invalidate();
+    },
+  });
+  const removeLibrary = trpc.library.remove.useMutation({
+    async onSuccess() {
+      await utils.library.get.invalidate();
+    },
+  });
+
+  const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
+
+  // active id
+  const [active, setActive] = useState<string>(library?.data ? library.data[0]?.id : "");
   const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
 
-  // const addExample = trpc.example.add.useMutation({
-  //   async onSuccess() {
-  //     await utils.example.getAll.invalidate();
-  //   },
-  // });
-  // const removeExample = trpc.example.remove.useMutation({
-  //   async onSuccess() {
-  //     await utils.example.getAll.invalidate();
-  //   },
-  // });
-  const greeting = trpc.greeting.useQuery({ name: "Nicky" });
+  const chooseFolder = async () => {
+    const res = await window.electronAPI.chooseFolder();
+
+    if (res) {
+      const dir = res[0];
+      const name = dir.replace(/(.*)\//, "");
+      addLibrary.mutate({
+        name,
+        dir,
+      });
+    }
+  };
+
+  const onRemove = () => {
+    removeLibrary.mutateAsync(active);
+    setActive(library.data?.filter((item) => item.id != active)[0].id || "");
+    setDelConfirmVisable(false);
+  };
 
   return (
     <div className="container h-screen w-full flex text-sm">
-      <div className="w-1/4 overflow-y-auto scrollbar">
-        <div className="flex justify-center p-2 sticky top-0 bg-base-200 z-10">
-          <button className="btn block w-full">添加文件夹</button>
+      <div className="w-1/4 overflow-y-auto scrollbar bg-base-200">
+        <div className="flex justify-center p-2 sticky top-0  z-10">
+          <button className="btn block w-full" onClick={chooseFolder}>
+            添加文件夹
+          </button>
         </div>
-        <ul className="menu p-2 rounded-box">
-          {library.data?.map((item) => (
-            <li key={item.id}>
-              <a className={item.id === active ? "active" : ""} onClick={() => setActive(item.id)}>
-                {item.name}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="h-full bg-base-100">
+          <ul className="menu p-2 rounded-box ">
+            {library.data?.map((item) => (
+              <li key={item.id}>
+                <a className={item.id === active ? "active" : ""} onClick={() => setActive(item.id)}>
+                  {item.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <div className="flex-1 p-4">
         <div className="rounded overflow-hidden h-full shadow-md px-4 flex flex-col">
@@ -96,7 +121,7 @@ function Home() {
             </div>
           </div>
 
-          <div className="flex-1 flex items-center justify-between px-8">
+          <div className="flex-1 flex items-center justify-around px-8 py-4">
             <div
               className="radial-progress bg-neutral text-neutral-content border-neutral border-4"
               style={{ "--value": 70, "--size": "7rem", "--thickness": "0.5rem" } as React.CSSProperties}
@@ -104,16 +129,56 @@ function Home() {
               70%
             </div>
 
-            <button className="btn btn-primary btn-outline">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <div className=" divider divider-horizontal">OR</div>
+
+            <div className="flex flex-col space-y-4">
+              <button className="btn btn-primary btn-outline">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+                <span className="ml-2">同步</span>
+              </button>
+
+              <label htmlFor="my-modal" className="btn btn-error  btn-outline" onClick={() => setDelConfirmVisable(true)}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+
+                <span className="ml-2">移除</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal confirm */}
+      <input type="checkbox" defaultChecked={delConfirmVisable} id="my-modal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box max-w-xs">
+          <h3 className="font-bold text-lg">
+            <span className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-primary">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
                 />
               </svg>
-              <span className="ml-2">重新加载</span>
-            </button>
+              <span className="ml-1">确认移除 ？</span>
+            </span>
+          </h3>
+          <p className="py-4">确认移除当前文件夹/库</p>
+          <div className="modal-action">
+            <label htmlFor="my-modal" className="btn btn-outline" onClick={() => setDelConfirmVisable(false)}>
+              取消
+            </label>
+            <label htmlFor="my-modal" className="btn" onClick={onRemove}>
+              确认
+            </label>
           </div>
         </div>
       </div>
