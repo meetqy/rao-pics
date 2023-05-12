@@ -1,3 +1,7 @@
+#root {
+  @apply text-base;
+}
+
 img {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
