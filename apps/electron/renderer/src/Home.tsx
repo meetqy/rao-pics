@@ -27,7 +27,7 @@ function Home() {
   const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
 
   useEffect(() => {
-    if (library.data && !isInit.current) {
+    if (library?.data?.length && !isInit.current) {
       setActive(library.data[0].id);
       isInit.current = true;
     }

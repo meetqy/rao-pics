@@ -8,12 +8,12 @@ datasource db {
 }
 
 model Image {
-    id                String   @id @unique
+    id                String    @id @unique
     name              String
     size              Int
-    btime             BigInt
-    mtime             BigInt
-    modificationTime  BigInt
+    btime             DateTime
+    mtime             DateTime
+    modificationTime  DateTime
     ext               String
     url               String
     annotation        String
@@ -22,9 +22,9 @@ model Image {
     star              Int?
     /// JSON.stringify
     palettes          String?
-    lastModified      BigInt?
-    deletedTime       BigInt?
-    isDeleted         Boolean? @default(false)
+    lastModified      DateTime?
+    deletedTime       DateTime?
+    isDeleted         Boolean?  @default(false)
     // <--- 视频 start --->
     resolutionWidth   Int?
     resolutionHeight  Int?
@@ -36,18 +36,20 @@ model Image {
     /// JSON.stringify
     tags              String?
     /// eagle | billfish | pixcall | local
-    lirarry           Library  @relation(fields: [libraryId], references: [id])
+    lirarry           Library   @relation(fields: [libraryId], references: [id])
     libraryId         String
 }
 
 model Library {
-    id    String  @id @default(uuid())
-    name  String
-    dir   String  @unique
+    id           String    @id @default(uuid())
+    name         String
+    dir          String    @unique
     // 本地总数
-    count Int
+    fileCount    Int       @default(0)
+    // 最后一次同步时间
+    lastSyncTime DateTime?
     // 已同步的数量
-    Image Image[]
+    Image        Image[]
 }
 
 model Folder {
