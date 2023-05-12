@@ -15,7 +15,7 @@
     "watch:desktop": "ts-node scripts/watchDesktop.ts",
     "build:main": "cd ./main && tsc && vite build",
     "build:preload": "cd ./preload && tsc && vite build",
-    "build:renderer": "cd ./renderer && tsc && vite build",
+    "build:renderer": "tsc renderer/**/*.ts && vite build renderer",
     "vendors:update": "cross-env ELECTRON_RUN_AS_NODE=1 electron scripts/update-electron-vendors.mjs",
     "postinstall": "pnpm vendors:update"
   },
