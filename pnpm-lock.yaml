@@ -35,9 +35,12 @@ importers:
       '@vitest/coverage-c8':
         specifier: ^0.31.0
         version: 0.31.0(vitest@0.31.0)
+      '@vitest/ui':
+        specifier: ^0.31.0
+        version: 0.31.0(vitest@0.31.0)
       vitest:
         specifier: ^0.31.0
-        version: 0.31.0
+        version: 0.31.0(@vitest/ui@0.31.0)
 
   apps/electron:
     dependencies:
@@ -782,6 +785,10 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
+  /@polka/url@1.0.0-next.21:
+    resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
+    dev: true
+
   /@prisma/client@4.13.0(prisma@4.13.0):
     resolution: {integrity: sha512-YaiiICcRB2hatxsbnfB66uWXjcRw3jsZdlAVxmx0cFcTc/Ad/sKdHCcWSnqyDX47vAewkjRFwiLwrOUjswVvmA==}
     engines: {node: '>=14.17'}
@@ -1184,7 +1191,7 @@ packages:
       magic-string: 0.30.0
       picocolors: 1.0.0
       std-env: 3.3.3
-      vitest: 0.31.0
+      vitest: 0.31.0(@vitest/ui@0.31.0)
     dev: true
 
   /@vitest/expect@0.31.0:
@@ -1216,6 +1223,21 @@ packages:
     resolution: {integrity: sha512-IzCEQ85RN26GqjQNkYahgVLLkULOxOm5H/t364LG0JYb3Apg0PsYCHLBYGA006+SVRMWhQvHlBBCyuByAMFmkg==}
     dependencies:
       tinyspy: 2.1.0
+    dev: true
+
+  /@vitest/ui@0.31.0(vitest@0.31.0):
+    resolution: {integrity: sha512-Dy86l6r3/dbJposgm7w+oqb/15UWJ0lDBbEQaS1ived3+0CTaMbT8OMkUf9vNBkSL47kvBHEBnZLa5fw5i9gUQ==}
+    peerDependencies:
+      vitest: '>=0.30.1 <1'
+    dependencies:
+      '@vitest/utils': 0.31.0
+      fast-glob: 3.2.12
+      fflate: 0.7.4
+      flatted: 3.2.7
+      pathe: 1.1.0
+      picocolors: 1.0.0
+      sirv: 2.0.3
+      vitest: 0.31.0(@vitest/ui@0.31.0)
     dev: true
 
   /@vitest/utils@0.31.0:
@@ -2723,6 +2745,10 @@ packages:
       pend: 1.2.0
     dev: true
 
+  /fflate@0.7.4:
+    resolution: {integrity: sha512-5u2V/CDW15QM1XbbgS+0DfPxVB+jUKhWEKuuFuHncbk3tEEqzmoXL+2KyOFuKGqOnmdIy0/davWF1CkuwtibCw==}
+    dev: true
+
   /file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -3705,6 +3731,11 @@ packages:
       ufo: 1.1.2
     dev: true
 
+  /mrmime@1.0.1:
+    resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}
+    engines: {node: '>=10'}
+    dev: true
+
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: true
@@ -4378,6 +4409,15 @@ packages:
       is-arrayish: 0.3.2
     dev: false
 
+  /sirv@2.0.3:
+    resolution: {integrity: sha512-O9jm9BsID1P+0HOi81VpXPoDxYP374pkOLzACAoyUQ/3OUVndNpsz6wMnY2z+yOxzbllCKZrM+9QrWsv4THnyA==}
+    engines: {node: '>= 10'}
+    dependencies:
+      '@polka/url': 1.0.0-next.21
+      mrmime: 1.0.1
+      totalist: 3.0.1
+    dev: true
+
   /slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -4675,6 +4715,11 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
+
+  /totalist@3.0.1:
+    resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}
+    engines: {node: '>=6'}
+    dev: true
 
   /truncate-utf8-bytes@1.0.2:
     resolution: {integrity: sha512-95Pu1QXQvruGEhv62XCMO3Mm90GscOCClvrIUwCM0PYOXK3kaF3l3sIHxx71ThJfcbM2O5Au6SO3AWCSEfW4mQ==}
@@ -5000,7 +5045,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest@0.31.0:
+  /vitest@0.31.0(@vitest/ui@0.31.0):
     resolution: {integrity: sha512-JwWJS9p3GU9GxkG7eBSmr4Q4x4bvVBSswaCFf1PBNHiPx00obfhHRJfgHcnI0ffn+NMlIh9QGvG75FlaIBdKGA==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -5038,6 +5083,7 @@ packages:
       '@vitest/runner': 0.31.0
       '@vitest/snapshot': 0.31.0
       '@vitest/spy': 0.31.0
+      '@vitest/ui': 0.31.0(vitest@0.31.0)
       '@vitest/utils': 0.31.0
       acorn: 8.8.2
       acorn-walk: 8.2.0
