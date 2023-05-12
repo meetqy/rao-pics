@@ -12,6 +12,7 @@ export const libraryRouter = t.router({
       z.object({
         name: z.string(),
         dir: z.string(),
+        type: z.enum(["eagle", "pixcall", "billfish"]),
         fileCount: z.number().optional(),
       }),
     )

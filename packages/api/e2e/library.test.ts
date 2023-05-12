@@ -20,10 +20,11 @@ test("@acme/api library add", async () => {
   const input: Input = {
     name: "test.library",
     dir: "/User/aaa/bb",
+    type: "eagle",
   };
 
   // 添加
-  expect(await caller.library.add(input)).toMatchObject({ name: "test.library", dir: "/User/aaa/bb" });
+  expect(await caller.library.add(input)).toMatchObject(input);
 
   // 重复添加 dir 唯一
   void expect(() => caller.library.add(input)).rejects.toThrowError("dir");

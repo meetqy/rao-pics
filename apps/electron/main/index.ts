@@ -166,12 +166,13 @@ export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
     return resolveIPCResponse(opts);
   });
 
-  ipcMain.handle("choose-folder", () =>
-    dialog.showOpenDialogSync({
+  ipcMain.handle("choose-folder", () => {
+    const res = dialog.showOpenDialogSync({
       title: "选择文件夹/库",
       properties: ["openDirectory"],
-    }),
-  );
+    });
+    console.log(res);
+  });
 }
 
 // includes error handling, type info gets lost at helper function calls
