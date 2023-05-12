@@ -21,7 +21,7 @@ function Home() {
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
   // active id
-  const [active, setActive] = useState<string | undefined>();
+  const [active, setActive] = useState<string | undefined>(library.data && library.data.length > 0 ? library.data[0].id : "");
   const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
 
   const chooseFolder = async () => {
@@ -41,6 +41,8 @@ function Home() {
 
   const onRemove = () => {
     active && removeLibrary.mutateAsync(active);
+    const newL = library.data?.filter((item) => item.id != active);
+    setActive(newL && newL.length > 0 ? newL[0].id : "");
     setDelConfirmVisable(false);
   };
 
