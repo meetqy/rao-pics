@@ -1,4 +1,4 @@
-import { app, dialog, ipcMain, type IpcMain } from "electron";
+import { app, ipcMain, type IpcMain } from "electron";
 
 import "./security-restrictions";
 import { TRPCError, callProcedure, type AnyRouter, type inferRouterContext, type inferRouterError } from "@trpc/server";
@@ -7,6 +7,7 @@ import type { TRPCResponse, TRPCResponseMessage } from "@trpc/server/rpc";
 import { appRouter, createContext } from "@acme/api";
 
 import type { IPCRequestOptions, IPCResponse } from "../types";
+import { chooseLibraryIpc } from "./chooseFolder";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
 
 /**
@@ -166,13 +167,7 @@ export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
     return resolveIPCResponse(opts);
   });
 
-  ipcMain.handle("choose-folder", () => {
-    const res = dialog.showOpenDialogSync({
-      title: "选择文件夹/库",
-      properties: ["openDirectory"],
-    });
-    console.log(res);
-  });
+  chooseLibraryIpc(ipcMain);
 }
 
 // includes error handling, type info gets lost at helper function calls

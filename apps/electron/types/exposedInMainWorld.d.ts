@@ -6,6 +6,6 @@ interface Window {
   };
 
   readonly electronAPI: {
-    chooseFolder: () => string[] | undefined;
+    chooseFolder: () => import("@acme/api").LibraryAdd;
   };
 }

@@ -2,25 +2,25 @@ import { z } from "zod";
 
 import { t } from "../trpc";
 
+const LibraryAddInput = z.object({
+  name: z.string(),
+  dir: z.string(),
+  type: z.enum(["eagle", "pixcall", "billfish"]),
+  fileCount: z.number().optional(),
+});
+
+export type LibraryAdd = z.infer<typeof LibraryAddInput>;
+
 export const libraryRouter = t.router({
-  get: t.procedure.query(({ ctx }) => {
-    return ctx.prisma.library.findMany();
+  get: t.procedure.query(async ({ ctx }) => {
+    return await ctx.prisma.library.findMany();
   }),
 
-  add: t.procedure
-    .input(
-      z.object({
-        name: z.string(),
-        dir: z.string(),
-        type: z.enum(["eagle", "pixcall", "billfish"]),
-        fileCount: z.number().optional(),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.library.create({
-        data: input,
-      });
-    }),
+  add: t.procedure.input(LibraryAddInput).mutation(async ({ ctx, input }) => {
+    return await ctx.prisma.library.create({
+      data: input,
+    });
+  }),
 
   update: t.procedure
     .input(

@@ -24,7 +24,14 @@ function Home() {
 
   // active id
   const [active, setActive] = useState<string | undefined>();
-  const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
+  const item = useMemo(() => {
+    const d = library.data?.find((item) => item.id === active);
+    if (d && d.lastSyncTime) {
+      d.lastSyncTime = new Date(d.lastSyncTime).toLocaleString("zh", { hour12: false });
+    }
+
+    return d;
+  }, [library, active]);
 
   useEffect(() => {
     if (library?.data?.length && !isInit.current) {
@@ -37,13 +44,7 @@ function Home() {
     const res = await window.electronAPI.chooseFolder();
 
     if (res) {
-      const dir = res[0];
-      const name = dir.replace(/(.*)\//, "");
-      const f = await addLibrary.mutateAsync({
-        name,
-        dir,
-      });
-
+      const f = await addLibrary.mutateAsync(res);
       setActive(f.id);
     }
   };
@@ -77,8 +78,8 @@ function Home() {
       </div>
       {active ? (
         <div className="flex-1 p-4">
-          <div className="rounded overflow-hidden h-full shadow-md px-4 flex flex-col">
-            <div className="py-3 flex justify-between items-center border-b border-dashed">
+          <div className="rounded overflow-hidden h-full shadow-md flex flex-col list">
+            <div>
               <span className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path
@@ -87,12 +88,12 @@ function Home() {
                     d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
                   />
                 </svg>
-                <span className="ml-2">文件夹/库 ID</span>
+                <span className="ml-2">文件夹/库ID</span>
               </span>
               <span>{item?.id}</span>
             </div>
 
-            <div className="py-3 flex justify-between items-center border-b border-dashed">
+            <div>
               <span className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path
@@ -101,22 +102,22 @@ function Home() {
                     d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
                   />
                 </svg>
-                <span className="ml-2">文件夹/库 路径</span>
+                <span className="ml-2">文件夹/库路径</span>
               </span>
               <span>{item?.dir}</span>
             </div>
 
-            <div className="py-3 flex justify-between items-center border-b border-dashed">
+            <div>
               <span className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="ml-2">最后同步时间</span>
+                <span className="ml-2">最后同步</span>
               </span>
-              <span>2023-05-11 12:59:48</span>
+              <span>{item?.lastSyncTime || "未同步"}</span>
             </div>
 
-            <div className="py-3 flex justify-between items-center border-b border-dashed">
+            <div>
               <span className="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path
@@ -137,7 +138,7 @@ function Home() {
                       d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
                     />
                   </svg>
-                  <span className="ml-1 text-success">120/803</span>
+                  <span className="ml-1 text-success">0/{item?.fileCount}</span>
                 </span>
                 <span className="flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -147,7 +148,7 @@ function Home() {
                       d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
                     />
                   </svg>
-                  <span className="ml-1 mr-1 text-success">2048M</span>
+                  <span className="ml-1 mr-1 text-success">0M</span>
                 </span>
               </div>
             </div>
