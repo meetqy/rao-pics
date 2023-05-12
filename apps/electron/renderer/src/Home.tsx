@@ -1,10 +1,12 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import "./home.css";
 import { trpc } from "./utils/trpc";
 
 function Home() {
   const utils = trpc.useContext();
+
+  const isInit = useRef<boolean>(false);
 
   const library = trpc.library.get.useQuery();
   const addLibrary = trpc.library.add.useMutation({
@@ -21,8 +23,15 @@ function Home() {
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
   // active id
-  const [active, setActive] = useState<string | undefined>(library.data && library.data.length > 0 ? library.data[0].id : "");
+  const [active, setActive] = useState<string | undefined>();
   const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
+
+  useEffect(() => {
+    if (library.data && !isInit.current) {
+      setActive(library.data[0].id);
+      isInit.current = true;
+    }
+  }, [active, library]);
 
   const chooseFolder = async () => {
     const res = await window.electronAPI.chooseFolder();
@@ -138,7 +147,7 @@ function Home() {
                       d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
                     />
                   </svg>
-                  <span className="ml-1 mr-1 text-success">1023/2048</span> M
+                  <span className="ml-1 mr-1 text-success">2048M</span>
                 </span>
               </div>
             </div>
@@ -180,14 +189,14 @@ function Home() {
         <div className="w-3/4 flex justify-center items-center ">
           <div className="card card-compact w-4/5 bg-base-100">
             <figure>
-              <img src="/public/icon.png" alt="rao.pics icon" />
+              <img src="icon.png" alt="rao icon" className="w-1/3" />
             </figure>
             <div className="card-body items-center text-center">
-              <h2 className="card-title uppercase">
+              <h2 className="card-title uppercase !mb-0">
                 rao.pics
-                <button className="btn btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v0.5.0</button>
+                <button className="btn btn-sm btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v0.5.0</button>
               </h2>
-              <p className=" text-neutral/90">~~暂未添加文件夹，请点击下面按钮~~</p>
+              <p className="text-neutral/90 ">~~暂未添加文件夹，请点击下面按钮~~</p>
               <div className="card-actions mt-2">
                 <button className="btn btn-wide btn-primary" onClick={chooseFolder}>
                   添加文件夹/库
