@@ -42,18 +42,18 @@ model Image {
 
 // 资源大小从 image 中获取
 model Library {
-    id           String       @id @default(uuid())
+    id           String      @id @default(uuid())
     name         String
-    dir          String       @unique
+    dir          String      @unique
     type         String
     // 本地总数
-    fileCount    Int          @default(0)
+    fileCount    Int         @default(0)
     // 最后一次同步时间
     lastSyncTime DateTime?
     // 已同步的数量
     Image        Image[]
     Folder       Folder[]
-    TagsGroups   TagsGroups[]
+    TagsGroup    TagsGroup[]
 }
 
 model Folder {
@@ -71,7 +71,7 @@ model Folder {
     libraryId        String
 }
 
-model TagsGroups {
+model TagsGroup {
     id        String  @id @unique
     name      String  @unique
     color     String?

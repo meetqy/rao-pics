@@ -2,22 +2,23 @@ import { prisma, type Library, type Prisma } from "@acme/db";
 
 import { type TagsGroup } from "./types";
 
-export const handleTagsGroups = async (tagsGroups: TagsGroup[], library: Library) => {
+export const handleTagsGroup = async (tagsGroups: TagsGroup[], library: Library) => {
+  console.log(tagsGroups);
   for (const group of tagsGroups) {
-    const input: Prisma.TagsGroupsCreateInput = {
+    const input: Prisma.TagsGroupCreateInput = {
       ...group,
       library: { connect: { id: library.id } },
       tags: JSON.stringify(group.tags),
     };
 
-    await prisma.tagsGroups.upsert({
+    await prisma.tagsGroup.upsert({
       where: { id: group.id },
       create: input,
       update: input,
     });
   }
 
-  await prisma.tagsGroups.deleteMany({
+  await prisma.tagsGroup.deleteMany({
     where: {
       id: {
         notIn: tagsGroups.map((group) => group.id),

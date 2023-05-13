@@ -47,6 +47,9 @@ export default defineConfig({
         ...builtinModules.flatMap((p) => [p, `node:${p}`]),
       ],
       output: {
+        globals: {
+          globby: "globby",
+        },
         entryFileNames: "[name].cjs",
       },
     },

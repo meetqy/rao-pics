@@ -58,9 +58,12 @@ function Home() {
   };
 
   const sync = () => {
-    // if (item) {
-    //   window.electronAPI.sync(item);
-    // }
+    if (item) {
+      window.electronAPI.sync({
+        ...item,
+        lastSyncTime: item.lastSyncTime ? new Date(item.lastSyncTime) : null,
+      });
+    }
   };
 
   return (

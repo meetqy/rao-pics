@@ -1,0 +1,45 @@
+{
+  "folders": [
+    { "id": "LEFC187EBTCA6", "name": "folder-d", "description": "", "children": [], "modificationTime": 1677049604042, "tags": [], "password": "", "passwordTips": "" },
+    {
+      "id": "LEF9DIZBFM20R",
+      "name": "folder-a",
+      "description": "",
+      "children": [
+        {
+          "id": "LEF9MEGUUQ286",
+          "name": "a-2",
+          "description": "",
+          "children": [],
+          "modificationTime": 1677045553086,
+          "tags": [],
+          "iconColor": "orange",
+          "password": "",
+          "passwordTips": ""
+        },
+        {
+          "id": "LEF9M9K6KCZLQ",
+          "name": "a-1",
+          "description": "",
+          "children": [],
+          "modificationTime": 1677045546726,
+          "tags": [],
+          "iconColor": "orange",
+          "password": "",
+          "passwordTips": ""
+        }
+      ],
+      "modificationTime": 1677045139031,
+      "tags": [],
+      "iconColor": "orange",
+      "password": "",
+      "passwordTips": ""
+    },
+    { "id": "LEFBTDYTARB8I", "name": "folder-c", "description": "", "children": [], "modificationTime": 1677049238261, "tags": [], "password": "", "passwordTips": "" }
+  ],
+  "smartFolders": [],
+  "quickAccess": [],
+  "tagsGroups": [{ "id": "LGYRI5AC8MD04", "name": "test", "tags": ["a1"] }],
+  "modificationTime": 1682578014108,
+  "applicationVersion": "3.0.0"
+}

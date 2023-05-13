@@ -22,34 +22,26 @@ export const handleFolder = async (folders: Folder[], library: Library) => {
   await prisma.folder.deleteMany({
     where: {
       id: {
-        notIn: folders.map((folder) => folder.id),
+        notIn: f.map((folder) => folder.id),
       },
     },
   });
 };
 
 const treeToArray = (folders: Folder[]) => {
-  const arr: Folder[] = [];
+  const newFolders: Folder[] = [];
 
-  folders.map((item) => {
-    if (item.children) {
-      d(item.children);
-    }
+  const callback = (item: Folder) => {
+    (item.children || (item.children = [])).forEach((v) => {
+      v.pid = item.id;
+      callback(v);
+    });
 
     delete item.children;
-    arr.push(item);
-  });
-
-  const d = (children: Folder[]) => {
-    children.map((item) => {
-      if (item.children) {
-        d(item.children);
-      }
-
-      delete item.children;
-      arr.push(item);
-    });
+    delete item.tags;
+    newFolders.push(item);
   };
 
-  return arr;
+  folders.map((v) => callback(v));
+  return newFolders;
 };
