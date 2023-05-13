@@ -47,3 +47,17 @@ test("@acme/api library update", async () => {
     expect(await caller.library.update(input)).toMatchObject(input);
   }
 });
+
+test("@acme/api library remove", async () => {
+  const ctx = await createContext();
+  const caller = appRouter.createCaller(ctx);
+
+  const res = await prisma.library.findFirst();
+  type Input = inferProcedureInput<AppRouter["library"]["remove"]>;
+
+  if (res) {
+    const input: Input = res.id;
+
+    expect(await caller.library.remove(input)).toMatchObject(res);
+  }
+});

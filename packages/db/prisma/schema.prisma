@@ -28,7 +28,7 @@ model Image {
     // <--- 视频 start --->
     resolutionWidth   Int?
     resolutionHeight  Int?
-    duration          String?
+    duration          Float?
     // <--- 视频 end --->
     processingPalette Boolean?
     noThumbnail       Boolean?
@@ -36,22 +36,24 @@ model Image {
     /// JSON.stringify
     tags              String?
     /// eagle | billfish | pixcall | local
-    lirarry           Library   @relation(fields: [libraryId], references: [id])
+    library           Library   @relation(fields: [libraryId], references: [id])
     libraryId         String
 }
 
 // 资源大小从 image 中获取
 model Library {
-    id           String    @id @default(uuid())
+    id           String       @id @default(uuid())
     name         String
-    dir          String    @unique
+    dir          String       @unique
     type         String
     // 本地总数
-    fileCount    Int       @default(0)
+    fileCount    Int          @default(0)
     // 最后一次同步时间
     lastSyncTime DateTime?
     // 已同步的数量
     Image        Image[]
+    Folder       Folder[]
+    TagsGroups   TagsGroups[]
 }
 
 model Folder {
@@ -65,12 +67,16 @@ model Folder {
     password         String
     passwordTips     String
     images           Image[]
+    library          Library @relation(fields: [libraryId], references: [id])
+    libraryId        String
 }
 
 model TagsGroups {
-    id    String  @id @unique
-    name  String  @unique
-    color String?
+    id        String  @id @unique
+    name      String  @unique
+    color     String?
     /// JSON.stringify
-    tags  String
+    tags      String
+    library   Library @relation(fields: [libraryId], references: [id])
+    libraryId String
 }

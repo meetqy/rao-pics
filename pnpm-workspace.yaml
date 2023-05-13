@@ -2,4 +2,5 @@ packages:
   - apps/electron
   - packages/api
   - packages/db
+  - packages/eagle
   - packages/config/*
