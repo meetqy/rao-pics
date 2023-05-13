@@ -35,7 +35,7 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
     mtime: new Date(metadata.mtime),
     modificationTime: new Date(metadata.modificationTime),
     lastModified: new Date(metadata.lastModified),
-    deletedTime: new Date(metadata.deletedTime),
+    deletedTime: metadata.deletedTime ? new Date(metadata.deletedTime) : undefined,
     folders: { connect: metadata.folders?.map((id) => ({ id })) },
   };
 
