@@ -7,7 +7,8 @@ import type { TRPCResponse, TRPCResponseMessage } from "@trpc/server/rpc";
 import { appRouter, createContext } from "@acme/api";
 
 import type { IPCRequestOptions, IPCResponse } from "../types";
-import { chooseLibraryIpc } from "./chooseFolder";
+import { chooseLibraryIpc } from "./ipc/chooseFolder";
+import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
 
 /**
@@ -168,6 +169,7 @@ export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
   });
 
   chooseLibraryIpc(ipcMain);
+  syncIpc(ipcMain);
 }
 
 // includes error handling, type info gets lost at helper function calls

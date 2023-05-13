@@ -50,6 +50,9 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../packages/db
+      '@acme/eagle':
+        specifier: ^0.1.0
+        version: link:../../packages/eagle
       '@acme/tailwind-config':
         specifier: ^0.1.0
         version: link:../../packages/config/tailwind

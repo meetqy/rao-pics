@@ -9,6 +9,7 @@ function Home() {
   const isInit = useRef<boolean>(false);
 
   const library = trpc.library.get.useQuery();
+  console.log(library);
   const addLibrary = trpc.library.add.useMutation({
     async onSuccess() {
       await utils.library.get.invalidate();
@@ -54,6 +55,12 @@ function Home() {
     const newL = library.data?.filter((item) => item.id != active);
     setActive(newL && newL.length > 0 ? newL[0].id : "");
     setDelConfirmVisable(false);
+  };
+
+  const sync = () => {
+    // if (item) {
+    //   window.electronAPI.sync(item);
+    // }
   };
 
   return (
@@ -165,7 +172,7 @@ function Home() {
               <div className=" divider divider-horizontal">OR</div>
 
               <div className="flex flex-col space-y-4">
-                <button className="btn">
+                <button className="btn" onClick={sync}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
                       strokeLinecap="round"
