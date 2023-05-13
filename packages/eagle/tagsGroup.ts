@@ -3,7 +3,6 @@ import { prisma, type Library, type Prisma } from "@acme/db";
 import { type TagsGroup } from "./types";
 
 export const handleTagsGroup = async (tagsGroups: TagsGroup[], library: Library) => {
-  console.log(tagsGroups);
   for (const group of tagsGroups) {
     const input: Prisma.TagsGroupCreateInput = {
       ...group,

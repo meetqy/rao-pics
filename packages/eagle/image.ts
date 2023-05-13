@@ -23,7 +23,7 @@ export const handleImage = async (images: string[], library: Library) => {
   });
 };
 
-const transformImage = async (metadata: Metadata, library: Library) => {
+export const transformImage = async (metadata: Metadata, library: Library) => {
   if (!SUPPORT_EXT.includes(metadata.ext)) return null;
 
   const imageInput: Prisma.ImageCreateInput = {
@@ -31,6 +31,11 @@ const transformImage = async (metadata: Metadata, library: Library) => {
     tags: JSON.stringify(metadata.tags),
     palettes: JSON.stringify(metadata.palettes),
     library: { connect: { id: library.id } },
+    btime: new Date(metadata.btime),
+    mtime: new Date(metadata.mtime),
+    modificationTime: new Date(metadata.modificationTime),
+    lastModified: new Date(metadata.lastModified),
+    deletedTime: new Date(metadata.deletedTime),
     folders: { connect: metadata.folders?.map((id) => ({ id })) },
   };
 

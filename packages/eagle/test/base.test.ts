@@ -3,12 +3,16 @@ import { describe, expect, test } from "vitest";
 import { prisma } from "@acme/db";
 
 import { handleFolder } from "../folder";
+import { transformImage } from "../image";
 import { handleTagsGroup } from "../tagsGroup";
+import imageMock from "./image.json";
 import mock from "./metadata.json";
 
-describe("@acme/eagle base", async () => {
+describe("@acme/eagle", async () => {
+  await prisma.image.deleteMany();
   await prisma.folder.deleteMany();
-  await prisma.library.deleteMany({});
+  await prisma.tagsGroup.deleteMany();
+  await prisma.library.deleteMany();
 
   const lib = await prisma.library.create({
     data: {
@@ -30,5 +34,10 @@ describe("@acme/eagle base", async () => {
 
     const res = await prisma.tagsGroup.findMany();
     expect(res).toHaveLength(1);
+  });
+
+  test("image", async () => {
+    const res = await transformImage(imageMock, lib);
+    expect(res).toHaveProperty("id");
   });
 });

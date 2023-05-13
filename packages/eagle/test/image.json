@@ -1,0 +1,29 @@
+{
+  "id": "LHLQYXAINNJH0",
+  "name": "0.4.10-0505-36",
+  "size": 112136,
+  "btime": 1683201751118,
+  "mtime": 1683201751118,
+  "ext": "jpg",
+  "tags": ["a1"],
+  "folders": ["LEFC187EBTCA6"],
+  "isDeleted": false,
+  "url": "",
+  "annotation": "",
+  "modificationTime": 1683967834890,
+  "height": 1152,
+  "width": 832,
+  "noThumbnail": true,
+  "palettes": [
+    { "color": [47, 47, 52], "ratio": 42, "$$hashKey": "object:100461" },
+    { "color": [204, 174, 162], "ratio": 21, "$$hashKey": "object:100462" },
+    { "color": [158, 129, 120], "ratio": 17, "$$hashKey": "object:100463" },
+    { "color": [245, 231, 219], "ratio": 4.68, "$$hashKey": "object:100464" },
+    { "color": [171, 173, 174], "ratio": 4.38, "$$hashKey": "object:100465" },
+    { "color": [104, 85, 80], "ratio": 3.66, "$$hashKey": "object:100466" },
+    { "color": [113, 114, 115], "ratio": 2.68, "$$hashKey": "object:100467" },
+    { "color": [89, 98, 113], "ratio": 2.4, "$$hashKey": "object:100468" },
+    { "color": [156, 156, 164], "ratio": 0.83, "$$hashKey": "object:100469" }
+  ],
+  "lastModified": 1683967850360
+}
