@@ -63,6 +63,12 @@ function Home() {
         ...item,
         lastSyncTime: item.lastSyncTime ? new Date(item.lastSyncTime) : null,
       });
+
+      if (item.type === "eagle") {
+        window.electronAPI.onEagleSyncProgress((progress) => {
+          console.log(progress);
+        });
+      }
     }
   };
 

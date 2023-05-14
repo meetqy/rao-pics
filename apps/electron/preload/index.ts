@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer, type ContextBridge, type IpcRenderer } from "electron";
 
 import { type Library } from "@acme/db";
+import { type EagleEmit, type EagleEmitOption } from "@acme/eagle";
 
 import type { IPCRequestOptions } from "../types";
 
@@ -12,14 +13,15 @@ export const exposeElectronTRPC = ({ contextBridge, ipcRenderer }: { contextBrid
 
 process.once("loaded", () => {
   exposeElectronTRPC({ contextBridge, ipcRenderer });
-  ipcRenderer.on("on-sync", (event, ...args) => {
-    console.log(event, args);
-  });
 
   contextBridge.exposeInMainWorld("electronAPI", {
     chooseFolder: () => ipcRenderer.invoke("choose-folder"),
     sync: (library: Library) => ipcRenderer.send("sync", library),
-    // onSync: (listener: (event: Electron.IpcRendererEvent, ...args: any[]) => void) => ipcRenderer.on("on-sync", listener),
+    onEagleSyncProgress: (listener: EagleEmit) =>
+      ipcRenderer.on("on-eagle-sync-progress", (_e, ...args) => {
+        const options = args[0] as EagleEmitOption;
+        listener(options);
+      }),
   });
   // If you expose something here, you get window.something in the React app
   // type it in types/exposedInMainWorld.d.ts to add it to the window type

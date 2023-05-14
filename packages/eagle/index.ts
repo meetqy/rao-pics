@@ -8,7 +8,8 @@ import { handleImage } from "./image";
 import { handleTagsGroup } from "./tagsGroup";
 import { type LibraryMetadata } from "./types";
 
-export type EagleEmit = (options: { type: "folder" | "tagsGroup" | "image"; current: number; count: number }) => void;
+export type EagleEmitOption = { type: "folder" | "tagsGroup" | "image"; current: number; count: number };
+export type EagleEmit = (option: EagleEmitOption) => void;
 
 export const start = async (library: Library, emit?: EagleEmit) => {
   const base = fs.readJsonSync(`${library.dir}/metadata.json`) as LibraryMetadata;

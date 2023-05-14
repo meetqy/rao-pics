@@ -6,7 +6,7 @@ import { start as eagleStart } from "@acme/eagle";
 export const syncIpc = (ipcMain: IpcMain) => {
   ipcMain.on("sync", (event, library: Library) => {
     void eagleStart(library, (e) => {
-      event.sender.send("on-sync", e);
+      event.sender.send("on-eagle-sync-progress", e);
     });
   });
 };
