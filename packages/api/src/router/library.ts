@@ -37,8 +37,20 @@ export const libraryRouter = t.router({
       });
     }),
 
-  remove: t.procedure.input(z.string()).mutation(({ ctx, input }) => {
-    return ctx.prisma.library.delete({
+  remove: t.procedure.input(z.string()).mutation(async ({ ctx, input }) => {
+    await ctx.prisma.image.deleteMany({
+      where: { libraryId: input },
+    });
+
+    await ctx.prisma.folder.deleteMany({
+      where: { libraryId: input },
+    });
+
+    await ctx.prisma.tagsGroup.deleteMany({
+      where: { libraryId: input },
+    });
+
+    return await ctx.prisma.library.delete({
       where: { id: input },
     });
   }),
