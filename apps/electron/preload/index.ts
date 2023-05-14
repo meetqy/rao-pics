@@ -12,10 +12,14 @@ export const exposeElectronTRPC = ({ contextBridge, ipcRenderer }: { contextBrid
 
 process.once("loaded", () => {
   exposeElectronTRPC({ contextBridge, ipcRenderer });
+  ipcRenderer.on("on-sync", (event, ...args) => {
+    console.log(event, args);
+  });
 
   contextBridge.exposeInMainWorld("electronAPI", {
     chooseFolder: () => ipcRenderer.invoke("choose-folder"),
     sync: (library: Library) => ipcRenderer.send("sync", library),
+    // onSync: (listener: (event: Electron.IpcRendererEvent, ...args: any[]) => void) => ipcRenderer.on("on-sync", listener),
   });
   // If you expose something here, you get window.something in the React app
   // type it in types/exposedInMainWorld.d.ts to add it to the window type

@@ -9,7 +9,7 @@ function Home() {
   const isInit = useRef<boolean>(false);
 
   const library = trpc.library.get.useQuery();
-  console.log(library);
+
   const addLibrary = trpc.library.add.useMutation({
     async onSuccess() {
       await utils.library.get.invalidate();

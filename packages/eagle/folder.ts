@@ -17,7 +17,12 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
       update: input,
       create: input,
     });
-    emit && emit("folder", index + 1, f.length);
+    emit &&
+      emit({
+        type: "folder",
+        current: index + 1,
+        count: f.length,
+      });
   }
 
   // 清除已经删除，sqlite中还存在的文件夹。

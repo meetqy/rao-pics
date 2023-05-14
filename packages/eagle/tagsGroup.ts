@@ -17,7 +17,12 @@ export const handleTagsGroup = async (tagsGroups: TagsGroup[], library: Library,
       update: input,
     });
 
-    emit && emit("tagsGroup", index + 1, tagsGroups.length);
+    emit &&
+      emit({
+        type: "tagsGroup",
+        current: index + 1,
+        count: tagsGroups.length,
+      });
   }
 
   // 清除已经删除，sqlite中还存在的TagsGroup。

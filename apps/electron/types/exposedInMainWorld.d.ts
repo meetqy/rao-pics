@@ -9,5 +9,6 @@ interface Window {
   readonly electronAPI: {
     chooseFolder: () => import("@acme/api").LibraryAdd;
     sync: (library: import("@acme/db").Library) => void;
+    onSync: (listener: (event: Electron.IpcRendererEvent, ...args: any[]) => void) => void;
   };
 }

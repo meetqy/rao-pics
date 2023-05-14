@@ -10,7 +10,12 @@ export const handleImage = async (images: string[], library: Library, emit?: Eag
     const metadata = fs.readJsonSync(image) as Metadata;
     await transformImage(metadata, library);
 
-    emit && emit("image", index + 1, images.length);
+    emit &&
+      emit({
+        type: "image",
+        current: index + 1,
+        count: image.length,
+      });
   }
 
   // 清除已经删除，sqlite中还存在的图片。

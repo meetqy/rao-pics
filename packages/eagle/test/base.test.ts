@@ -23,18 +23,14 @@ describe("@acme/eagle", async () => {
   });
 
   test("folder", async () => {
-    await handleFolder(mock.folders, lib, (type, current, count) => {
-      console.log(type, current, count);
-    });
+    await handleFolder(mock.folders, lib, (e) => console.log(e));
 
     const res = await prisma.folder.findMany();
     expect(res).toHaveLength(5);
   });
 
   test("tagsGroup", async () => {
-    await handleTagsGroup(mock.tagsGroups, lib, (type, current, count) => {
-      console.log(type, current, count);
-    });
+    await handleTagsGroup(mock.tagsGroups, lib, (e) => console.log(e));
 
     const res = await prisma.tagsGroup.findMany();
     expect(res).toHaveLength(1);
