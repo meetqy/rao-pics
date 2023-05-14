@@ -2,15 +2,18 @@ import fs from "fs-extra";
 
 import { prisma, type Library, type Prisma } from "@acme/db";
 
+import { type EagleEmit } from ".";
 import { SUPPORT_EXT, type Metadata } from "./types";
 
-export const handleImage = async (images: string[], library: Library) => {
-  for (const image of images) {
+export const handleImage = async (images: string[], library: Library, emit?: EagleEmit) => {
+  for (const [index, image] of images.entries()) {
     const metadata = fs.readJsonSync(image) as Metadata;
     await transformImage(metadata, library);
+
+    emit && emit("image", index + 1, images.length);
   }
 
-  // 清除sqlite中已经删除的图片
+  // 清除已经删除，sqlite中还存在的图片。
   await prisma.image.deleteMany({
     where: {
       id: {
