@@ -16,7 +16,7 @@ export const chooseLibraryIpc = (ipcMain: IpcMain) => {
 
       if (dir.endsWith(".library")) {
         // eagle
-        const len = readdirSync(join(dir, "./images")).length;
+        const len = readdirSync(join(dir, "./images")).filter((item) => item.endsWith(".info")).length;
         return {
           name: dir.replace(/(.*)\//, ""),
           dir,

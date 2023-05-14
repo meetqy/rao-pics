@@ -14,7 +14,7 @@ export const handleImage = async (images: string[], library: Library, emit?: Eag
       emit({
         type: "image",
         current: index + 1,
-        count: image.length,
+        count: images.length,
       });
   }
 
