@@ -116,7 +116,7 @@ function Home() {
       <div className="w-1/4 overflow-y-auto scrollbar">
         <div className="flex justify-center p-2 sticky top-0  z-10">
           <button className="btn w-full btn-outline flex items-center" onClick={chooseFolder}>
-            <img src="/icon.png" className="w-6" />
+            <img src="icon.png" className="w-6" />
             <span className="ml-2">添加文件夹/库</span>
           </button>
         </div>
@@ -126,7 +126,7 @@ function Home() {
               <li key={item.id}>
                 <a className={`${item.id === active ? "active" : ""} flex justify-between`} onClick={() => setActive(item.id)}>
                   {item.name}
-                  <img src="/eagle.jpg" className="w-5 rounded-full shadow-md" />
+                  <img src="eagle.jpg" className="w-5 rounded-full shadow-md" />
                 </a>
               </li>
             ))}

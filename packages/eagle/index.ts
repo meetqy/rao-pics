@@ -1,5 +1,5 @@
-import fg from "fast-glob";
-import fs from "fs-extra";
+import * as fs from "fs";
+import * as fg from "fast-glob";
 
 import { type Library } from "@acme/db";
 
@@ -12,7 +12,7 @@ export type EagleEmitOption = { type: "folder" | "tagsGroup" | "image"; current:
 export type EagleEmit = (option: EagleEmitOption) => void;
 
 export const start = async (library: Library, emit?: EagleEmit) => {
-  const base = fs.readJsonSync(`${library.dir}/metadata.json`) as LibraryMetadata;
+  const base = JSON.parse(fs.readFileSync(`${library.dir}/metadata.json`, "utf-8")) as LibraryMetadata;
   const images = fg.sync(`${library.dir}/images/**/metadata.json`);
 
   await handleFolder(base.folders, library, emit);

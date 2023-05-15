@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import * as fs from "fs";
 
 import { prisma, type Library, type Prisma } from "@acme/db";
 
@@ -7,7 +7,7 @@ import { SUPPORT_EXT, type Metadata } from "./types";
 
 export const handleImage = async (images: string[], library: Library, emit?: EagleEmit) => {
   for (const [index, image] of images.entries()) {
-    const metadata = fs.readJsonSync(image) as Metadata;
+    const metadata = JSON.parse(fs.readFileSync(image, "utf-8")) as Metadata;
     await transformImage(metadata, library);
 
     emit &&
