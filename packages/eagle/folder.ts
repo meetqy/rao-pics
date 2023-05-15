@@ -28,9 +28,14 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
   // 清除已经删除，sqlite中还存在的文件夹。
   await prisma.folder.deleteMany({
     where: {
-      id: {
-        notIn: f.map((folder) => folder.id),
-      },
+      AND: [
+        {
+          id: {
+            notIn: f.map((folder) => folder.id),
+          },
+        },
+        { libraryId: library.id },
+      ],
     },
   });
 };

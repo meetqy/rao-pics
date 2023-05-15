@@ -28,9 +28,14 @@ export const handleTagsGroup = async (tagsGroups: TagsGroup[], library: Library,
   // 清除已经删除，sqlite中还存在的TagsGroup。
   await prisma.tagsGroup.deleteMany({
     where: {
-      id: {
-        notIn: tagsGroups.map((group) => group.id),
-      },
+      AND: [
+        {
+          id: {
+            notIn: tagsGroups.map((group) => group.id),
+          },
+        },
+        { libraryId: library.id },
+      ],
     },
   });
 };

@@ -21,12 +21,17 @@ export const handleImage = async (images: string[], library: Library, emit?: Eag
   // 清除已经删除，sqlite中还存在的图片。
   await prisma.image.deleteMany({
     where: {
-      id: {
-        notIn: images.map((image) => {
-          const info = image.match(/(\d|[a-zA-Z])+\.info/g);
-          return info?.[0].replace(".info", "") || "";
-        }),
-      },
+      AND: [
+        {
+          id: {
+            notIn: images.map((image) => {
+              const info = image.match(/(\d|[a-zA-Z])+\.info/g);
+              return info?.[0].replace(".info", "") || "";
+            }),
+          },
+        },
+        { libraryId: library.id },
+      ],
     },
   });
 };
