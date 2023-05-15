@@ -18,6 +18,12 @@
       "dependsOn": ["^build", "^db:generate"],
       "outputs": [".next/**", ".expo/**"]
     },
+    "db:reset": {
+      "dependsOn": ["^db:push", "^db:generate"],
+      "inputs": ["prisma/schema.prisma"],
+      "cache": false
+    },
+    "compile": {},
     "lint": {},
     "lint:fix": {},
     "clean": {
