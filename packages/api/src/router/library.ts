@@ -13,7 +13,13 @@ export type LibraryAdd = z.infer<typeof LibraryAddInput>;
 
 export const libraryRouter = t.router({
   get: t.procedure.query(async ({ ctx }) => {
-    return await ctx.prisma.library.findMany();
+    return ctx.prisma.library.findMany({
+      include: {
+        _count: {
+          select: { Image: true },
+        },
+      },
+    });
   }),
 
   add: t.procedure.input(LibraryAddInput).mutation(async ({ ctx, input }) => {

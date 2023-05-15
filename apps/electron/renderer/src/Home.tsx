@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import "./home.css";
+import { useMutation } from "@tanstack/react-query";
+
 import { EagleEmitOption } from "@acme/eagle";
 
 import { trpc } from "./utils/trpc";
@@ -19,6 +21,22 @@ function Home() {
   });
   const removeLibrary = trpc.library.remove.useMutation({
     async onSuccess() {
+      await utils.library.get.invalidate();
+    },
+  });
+  const updateLibrary = trpc.library.update.useMutation({
+    async onSuccess() {
+      if (item) {
+        window.electronAPI.sync({
+          ...item,
+          lastSyncTime: null,
+        });
+
+        if (item.type === "eagle") {
+          window.electronAPI.onEagleSyncProgress((progress) => setEagleSyncProgress(progress));
+        }
+      }
+
       await utils.library.get.invalidate();
     },
   });
@@ -59,20 +77,39 @@ function Home() {
     setDelConfirmVisable(false);
   };
 
+  useEffect(() => {
+    setEagleSyncProgress((d) => {
+      return item
+        ? {
+            type: "image",
+            current: item?._count.Image || 0,
+            count: item?.fileCount || 0,
+          }
+        : d;
+    });
+  }, [item]);
+
   const [eagleSyncProgress, setEagleSyncProgress] = useState<EagleEmitOption>();
 
-  const sync = async () => {
-    if (item) {
-      window.electronAPI.sync({
-        ...item,
-        lastSyncTime: new Date(),
-      });
-
-      if (item.type === "eagle") {
-        window.electronAPI.onEagleSyncProgress((progress) => setEagleSyncProgress(progress));
+  const sync = useMutation({
+    mutationFn: async () => {
+      if (item) {
+        const dateNow = new Date();
+        updateLibrary.mutateAsync({
+          id: item.id,
+          lastSyncTime: dateNow,
+        });
       }
+    },
+  });
+
+  const percent = useMemo(() => {
+    if (eagleSyncProgress) {
+      return ~~((eagleSyncProgress.current / eagleSyncProgress.count) * 100);
     }
-  };
+
+    return 0;
+  }, [eagleSyncProgress, item]);
 
   return (
     <div className="container h-screen w-full flex text-sm">
@@ -84,11 +121,12 @@ function Home() {
           </button>
         </div>
         <div className="h-full">
-          <ul className="menu p-2 rounded-box ">
+          <ul className="menu px-2 rounded-box ">
             {library.data?.map((item) => (
               <li key={item.id}>
-                <a className={item.id === active ? "active" : ""} onClick={() => setActive(item.id)}>
+                <a className={`${item.id === active ? "active" : ""} flex justify-between`} onClick={() => setActive(item.id)}>
                   {item.name}
+                  <img src="/eagle.jpg" className="w-5 rounded-full shadow-md" />
                 </a>
               </li>
             ))}
@@ -136,56 +174,30 @@ function Home() {
               <span>{item?.lastSyncTime || "未同步"}</span>
             </div>
 
-            <div>
-              <span className="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 13.5H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-                  />
-                </svg>
-
-                <span className="ml-2">文件</span>
-              </span>
-              <div className="flex space-x-4 items-center">
-                <span className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
-                    />
-                  </svg>
-                  <span className="ml-1 text-success">
-                    {eagleSyncProgress?.current || 0}/{item?.fileCount}
-                  </span>
-                </span>
-                <span className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-                    />
-                  </svg>
-                  <span className="ml-1 mr-1 text-success">0M</span>
-                </span>
-              </div>
-            </div>
-
             <div className="flex-1 flex items-center justify-around px-8 py-4">
-              <div
-                className="radial-progress bg-neutral text-neutral-content border-neutral border-4"
-                style={{ "--value": 70, "--size": "7rem", "--thickness": "0.5rem" } as React.CSSProperties}
-              >
-                70%
+              <div className="flex flex-col justify-center items-center">
+                <div
+                  className="radial-progress text-center text-neutral-content/70 bg-neutral border-neutral border-4"
+                  style={{ "--value": percent, "--size": "7rem", "--thickness": "0.5rem" } as React.CSSProperties}
+                >
+                  <span className="text-lg font-bold text-neutral-content">{percent}%</span>
+                  <span className="text-neutral-content/80 text-xs">已同步</span>
+                </div>
+
+                <span className="flex mt-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                    <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
+                    <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
+                  </svg>
+                  <span className="ml-1">文件：</span>
+                  <span className="font-medium text-primary/80">{item?.fileCount}</span>
+                </span>
               </div>
 
               <div className=" divider divider-horizontal">OR</div>
 
               <div className="flex flex-col space-y-4">
-                <button className="btn" onClick={sync}>
+                <button className="btn" onClick={() => sync.mutate()}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
                       strokeLinecap="round"

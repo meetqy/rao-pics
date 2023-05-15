@@ -1,7 +1,7 @@
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { prisma, type Library } from "@acme/db";
+import { type Library } from "@acme/db";
 
 import { handleFolder } from "./folder";
 import { handleImage } from "./image";
@@ -19,10 +19,4 @@ export const start = async (library: Library, emit?: EagleEmit) => {
   await handleTagsGroup(base.tagsGroups, library, emit);
 
   await handleImage(images, library, emit);
-
-  await updateLibrarySyncTime(library);
-};
-
-const updateLibrarySyncTime = async (library: Library) => {
-  await prisma.library.update({ where: { id: library.id }, data: { lastSyncTime: new Date() } });
 };
