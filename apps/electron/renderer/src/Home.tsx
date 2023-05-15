@@ -13,6 +13,7 @@ function Home() {
   const isInit = useRef<boolean>(false);
 
   const library = trpc.library.get.useQuery();
+  console.log(library.data);
 
   const addLibrary = trpc.library.add.useMutation({
     async onSuccess() {
@@ -82,7 +83,7 @@ function Home() {
       return item
         ? {
             type: "image",
-            current: item?._count.Image || 0,
+            current: item?._count.images || 0,
             count: item?.fileCount || 0,
           }
         : d;

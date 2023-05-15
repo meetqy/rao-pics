@@ -51,9 +51,9 @@ model Library {
     // 最后一次同步时间
     lastSyncTime DateTime?
     // 已同步的数量
-    Image        Image[]
-    Folder       Folder[]
-    TagsGroup    TagsGroup[]
+    images       Image[]
+    folders      Folder[]
+    tagsGroups   TagsGroup[]
 }
 
 model Folder {

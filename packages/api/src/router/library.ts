@@ -15,9 +15,7 @@ export const libraryRouter = t.router({
   get: t.procedure.query(async ({ ctx }) => {
     return ctx.prisma.library.findMany({
       include: {
-        _count: {
-          select: { Image: true },
-        },
+        _count: { select: { images: true } },
       },
     });
   }),
