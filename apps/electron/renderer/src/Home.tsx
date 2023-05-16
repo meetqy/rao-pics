@@ -124,7 +124,7 @@ function Home() {
 
   return (
     <div className="container h-screen w-full flex text-sm">
-      <div className="w-1/4 overflow-y-auto scrollbar">
+      <div className="w-1/4 overflow-y-auto scrollbar bg-base-100">
         <div className="flex justify-center p-2 sticky top-0  z-10">
           <button className="btn w-full btn-outline flex items-center" onClick={chooseFolder}>
             <img src="icon.png" className="w-6" />
