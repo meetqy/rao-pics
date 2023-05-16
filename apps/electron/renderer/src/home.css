@@ -24,7 +24,7 @@ img {
 
 .list {
   > div {
-    @apply px-4;
+    @apply h-10 px-4;
 
     &:not(:last-child) {
       @apply py-2 flex justify-between items-center;
