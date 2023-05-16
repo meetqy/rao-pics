@@ -156,9 +156,10 @@ function Home() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                    d="M7.864 4.243A7.5 7.5 0 0119.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 004.5 10.5a7.464 7.464 0 01-1.15 3.993m1.989 3.559A11.209 11.209 0 008.25 10.5a3.75 3.75 0 117.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 01-3.6 9.75m6.633-4.596a18.666 18.666 0 01-2.485 5.33"
                   />
                 </svg>
+
                 <span className="ml-2">文件夹/库ID</span>
               </span>
               <span>{item?.id}</span>
@@ -200,7 +201,7 @@ function Home() {
 
                 <span className="ml-2">WEB 预览</span>
               </span>
-              <a className="btn btn-link normal-case p-0 btn-sm" target="_blank">
+              <a className="btn btn-link btn-active normal-case p-0 btn-sm text-secondary font-normal" target="_blank">
                 http://localhost:3000/test.library
               </a>
             </div>
@@ -216,7 +217,7 @@ function Home() {
                 </div>
 
                 <span className="mt-4 flex items-end">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-info">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -224,7 +225,7 @@ function Home() {
                     />
                   </svg>
 
-                  <span className="font-medium text-primary/80 relative top-0.5">{item?.fileCount}</span>
+                  <span className="font-medium relative top-0.5">{item?.fileCount}</span>
                 </span>
               </div>
 
@@ -264,7 +265,7 @@ function Home() {
                 rao.pics
                 <button className="btn btn-sm btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v0.5.0</button>
               </h2>
-              <p className="text-neutral/90 ">~~暂未添加文件夹，请点击下面按钮~~</p>
+              <p className="text-base-content/90 ">~~暂未添加文件夹，请点击下面按钮~~</p>
               <div className="card-actions mt-2">
                 <button className="btn btn-wide btn-primary" onClick={chooseFolder}>
                   添加文件夹/库
