@@ -15,7 +15,7 @@ const clear = async () => {
 };
 
 describe("@acme/api library", async () => {
-  const ctx = await createContext();
+  const ctx = createContext();
   const caller = appRouter.createCaller(ctx);
 
   test("add", async () => {
@@ -43,7 +43,6 @@ describe("@acme/api library", async () => {
       const input: Input = {
         id: res.id,
         fileCount: 232,
-        lastSyncTime: new Date(),
       };
 
       expect(await caller.library.update(input)).toMatchObject(input);
