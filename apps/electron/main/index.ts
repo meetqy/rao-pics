@@ -1,10 +1,11 @@
 import { app, ipcMain, type IpcMain } from "electron";
 
 import "./security-restrictions";
+import { start } from "repl";
 import { TRPCError, callProcedure, type AnyRouter, type inferRouterContext, type inferRouterError } from "@trpc/server";
 import type { TRPCResponse, TRPCResponseMessage } from "@trpc/server/rpc";
 
-import { appRouter, createContext } from "@acme/api";
+import { appRouter, createContext, startApiServer } from "@acme/api";
 
 import type { IPCRequestOptions, IPCResponse } from "../types";
 import LibraryIPC from "./ipc/library";
@@ -290,4 +291,5 @@ async function resolveIPCResponse<TRouter extends AnyRouter>(opts: IPCRequestOpt
 
 app.on("ready", () => {
   createIPCHandler({ ipcMain });
+  void startApiServer();
 });

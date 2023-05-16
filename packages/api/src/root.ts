@@ -7,8 +7,10 @@ export { type LibraryAdd } from "./router/library";
 
 export const appRouter = t.router({
   library: libraryRouter,
-  greeting: t.procedure.input(z.object({ name: z.string() }).nullish()).query(({ input }) => {
-    return `hello tRPC v10, ${input?.name ?? "world"}!`;
+  greeting: t.router({
+    get: t.procedure.input(z.object({ name: z.string() }).nullish()).query(({ input }) => {
+      return `hello tRPC v10, ${input?.name ?? "world"}!`;
+    }),
   }),
 });
 
