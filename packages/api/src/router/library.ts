@@ -36,7 +36,10 @@ export const libraryRouter = t.router({
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.library.update({
         where: { id: input.id },
-        data: input,
+        data: {
+          ...input,
+          lastSyncTime: new Date(),
+        },
       });
     }),
 
