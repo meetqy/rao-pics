@@ -9,11 +9,8 @@ import { trpc } from "./utils/trpc";
 
 function Home() {
   const utils = trpc.useContext();
-
   const isInit = useRef<boolean>(false);
-
   const library = trpc.library.get.useQuery();
-
   const addLibrary = trpc.library.add.useMutation({
     async onSuccess() {
       await utils.library.get.invalidate();
@@ -40,7 +37,6 @@ function Home() {
       await utils.library.get.invalidate();
     },
   });
-
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
   // active id
@@ -110,6 +106,7 @@ function Home() {
   const sync = useMutation({
     mutationFn: async () => {
       if (item) {
+        console.log("----");
         updateLibrary.mutateAsync({
           id: item.id,
         });
