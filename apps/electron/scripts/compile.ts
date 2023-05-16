@@ -10,13 +10,12 @@ const config: builder.Configuration = {
     output: "dist",
     buildResources: "buildResources",
   },
-  productName: "RAO.PICS",
+  productName: "Rao绕",
   files: ["main/dist/**", "preload/dist/**", "renderer/dist/**"],
   extraMetadata: {
     version: process.env["VITE_APP_VERSION"],
   },
   extraResources: [
-    // "buildResources/db.sqlite",
     {
       from: "../../packages/db/prisma/db.sqlite",
       to: "packages/db/prisma/db.sqlite",
