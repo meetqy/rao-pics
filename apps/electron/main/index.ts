@@ -7,7 +7,7 @@ import type { TRPCResponse, TRPCResponseMessage } from "@trpc/server/rpc";
 import { appRouter, createContext } from "@acme/api";
 
 import type { IPCRequestOptions, IPCResponse } from "../types";
-import { chooseLibraryIpc } from "./ipc/chooseFolder";
+import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
 
@@ -168,7 +168,8 @@ export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
     return resolveIPCResponse(opts);
   });
 
-  chooseLibraryIpc(ipcMain);
+  LibraryIPC.choose(ipcMain);
+  LibraryIPC.update(ipcMain);
   syncIpc(ipcMain);
 }
 

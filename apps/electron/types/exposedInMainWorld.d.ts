@@ -7,7 +7,10 @@ interface Window {
   };
 
   readonly electronAPI: {
-    chooseFolder: () => import("@acme/api").LibraryAdd;
+    library: {
+      choose: () => Promise<import("@acme/api").LibraryAdd>;
+      update: (dir: string) => Promise<import("@acme/api").LibraryAdd>;
+    };
     sync: (library: import("@acme/db").Library) => void;
     onEagleSyncProgress: (emit: import("@acme/eagle").EagleEmit) => void;
   };

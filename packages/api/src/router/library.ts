@@ -31,7 +31,6 @@ export const libraryRouter = t.router({
       z.object({
         id: z.string(),
         fileCount: z.number().optional(),
-        lastSyncTime: z.date().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

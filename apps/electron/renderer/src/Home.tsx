@@ -54,6 +54,22 @@ function Home() {
     return d;
   }, [library, active]);
 
+  // active 改变重新获取一次本地文件夹信息
+  useEffect(() => {
+    if (item) {
+      window.electronAPI.library.update(item.dir).then((res) => {
+        if (res.fileCount === item.fileCount) {
+          return;
+        }
+
+        updateLibrary.mutateAsync({
+          id: item.id,
+          fileCount: res.fileCount,
+        });
+      });
+    }
+  }, [item]);
+
   useEffect(() => {
     if (library?.data?.length && !isInit.current) {
       setActive(library.data[0].id);
@@ -62,7 +78,7 @@ function Home() {
   }, [active, library]);
 
   const chooseFolder = async () => {
-    const res = await window.electronAPI.chooseFolder();
+    const res = await window.electronAPI.library.choose();
 
     if (res) {
       const f = await addLibrary.mutateAsync(res);
@@ -94,10 +110,8 @@ function Home() {
   const sync = useMutation({
     mutationFn: async () => {
       if (item) {
-        const dateNow = new Date();
         updateLibrary.mutateAsync({
           id: item.id,
-          lastSyncTime: dateNow,
         });
       }
     },

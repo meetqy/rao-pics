@@ -15,7 +15,10 @@ process.once("loaded", () => {
   exposeElectronTRPC({ contextBridge, ipcRenderer });
 
   contextBridge.exposeInMainWorld("electronAPI", {
-    chooseFolder: () => ipcRenderer.invoke("choose-folder"),
+    library: {
+      choose: () => ipcRenderer.invoke("library-choose"),
+      update: (dir: string) => ipcRenderer.invoke("library-update", dir),
+    },
     sync: (library: Library) => ipcRenderer.send("sync", library),
     onEagleSyncProgress: (listener: EagleEmit) =>
       ipcRenderer.on("on-eagle-sync-progress", (_e, ...args) => {
