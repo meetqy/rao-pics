@@ -124,7 +124,7 @@ function Home() {
           <ul className="menu px-2 rounded-box ">
             {library.data?.map((item) => (
               <li key={item.id}>
-                <a className={`${item.id === active ? "active" : ""} flex justify-between`} onClick={() => setActive(item.id)}>
+                <a className={`${item.id === active ? "active" : ""} flex justify-between capitalize`} onClick={() => setActive(item.id)}>
                   {item.name}
                   <img src="eagle.jpg" className="w-5 rounded-full shadow-md" />
                 </a>
