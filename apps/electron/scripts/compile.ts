@@ -2,9 +2,7 @@ import builder from "electron-builder";
 
 if (process.env["VITE_APP_VERSION"] === undefined) {
   const now = new Date();
-  process.env["VITE_APP_VERSION"] = `${now.getUTCFullYear() - 2000}.${
-    now.getUTCMonth() + 1
-  }.${now.getUTCDate()}-${now.getUTCHours() * 60 + now.getUTCMinutes()}`;
+  process.env["VITE_APP_VERSION"] = `${now.getUTCFullYear() - 2000}.${now.getUTCMonth() + 1}.${now.getUTCDate()}-${now.getUTCHours() * 60 + now.getUTCMinutes()}`;
 }
 
 const config: builder.Configuration = {
@@ -12,6 +10,7 @@ const config: builder.Configuration = {
     output: "dist",
     buildResources: "buildResources",
   },
+  productName: "RAO.PICS",
   files: ["main/dist/**", "preload/dist/**", "renderer/dist/**"],
   extraMetadata: {
     version: process.env["VITE_APP_VERSION"],
