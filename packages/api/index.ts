@@ -4,7 +4,6 @@ import { type AppRouter } from "./src/router";
 
 export * from "./src/router";
 export { createContext } from "./src/trpc";
-export { startApiServer } from "./server";
 
 /**
  * Inference helpers for input types

@@ -14,7 +14,7 @@ const clear = async () => {
   await prisma.library.deleteMany({});
 };
 
-describe("@acme/api library", async () => {
+describe("@acme/api library", () => {
   const ctx = createContext();
   const caller = appRouter.createCaller(ctx);
 
