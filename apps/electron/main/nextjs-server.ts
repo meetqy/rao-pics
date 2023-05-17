@@ -1,10 +1,13 @@
 import { createServer } from "http";
+import path from "path";
 import { parse } from "url";
 import next from "next";
 
 const port = parseInt("3000", 10);
 const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev, dir: "/Users/qymeet/Desktop/Github/raopics/core/apps/nextjs" });
+const dir = path.resolve(__dirname, "../../../nextjs");
+
+const app = next({ dev, dir });
 const handle = app.getRequestHandler();
 
 export const startNextServer = () =>
