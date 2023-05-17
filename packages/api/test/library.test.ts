@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 
 import { prisma } from "@acme/db";
 
-import { appRouter, type AppRouter } from "../src/router";
+import { appRouter, type AppRouter } from "../src/root";
 import { createContext } from "../src/trpc";
 
 // 测试之前清除所有数据

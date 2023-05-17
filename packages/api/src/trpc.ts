@@ -6,6 +6,4 @@ export const createContext = () => {
   return { prisma };
 };
 
-export type Context = trpc.inferAsyncReturnType<typeof createContext>;
-
-export const t = trpc.initTRPC.context<Context>().create();
+export const t = trpc.initTRPC.context<typeof createContext>().create();

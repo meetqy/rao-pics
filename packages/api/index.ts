@@ -1,8 +1,8 @@
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 
-import { type AppRouter } from "./src/router";
+import { type AppRouter } from "./src/root";
 
-export * from "./src/router";
+export * from "./src/root";
 export { createContext } from "./src/trpc";
 
 /**
