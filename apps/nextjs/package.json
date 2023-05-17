@@ -2,6 +2,7 @@
   "name": "@acme/nextjs",
   "version": "0.1.0",
   "private": true,
+  "main": "./server.ts",
   "scripts": {
     "build": "pnpm with-env next build",
     "start": "pnpm with-env next start",
@@ -21,7 +22,7 @@
     "@trpc/next": "^10.23.0",
     "@trpc/react-query": "^10.23.0",
     "@trpc/server": "^10.23.0",
-    "next": "^13.4.2",
+    "next": "13.3.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "zod": "^3.21.4"
