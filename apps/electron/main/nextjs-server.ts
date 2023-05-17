@@ -4,10 +4,10 @@ import next from "next";
 
 const port = parseInt("3000", 10);
 const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
+const app = next({ dev, dir: "/Users/qymeet/Desktop/Github/raopics/core/apps/nextjs" });
 const handle = app.getRequestHandler();
 
-export const startNextjsServer = () => {
+export const startNextServer = () =>
   void app.prepare().then(() => {
     createServer((req, res) => {
       const parsedUrl = parse(req.url || "/", true);
@@ -16,4 +16,3 @@ export const startNextjsServer = () => {
 
     console.log(`> Server listening at http://localhost:${port} as ${dev ? "development" : process.env.NODE_ENV}`);
   });
-};

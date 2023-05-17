@@ -2,7 +2,6 @@
   "name": "@acme/nextjs",
   "version": "0.1.0",
   "private": true,
-  "main": "./server.ts",
   "scripts": {
     "build": "pnpm with-env next build",
     "start": "pnpm with-env next start",

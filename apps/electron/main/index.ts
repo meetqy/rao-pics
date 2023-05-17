@@ -11,6 +11,7 @@ import type { IPCRequestOptions, IPCResponse } from "../types";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
+import { startNextServer } from "./nextjs-server";
 
 /**
  * Prevent electron from running multiple instances.
@@ -291,4 +292,5 @@ async function resolveIPCResponse<TRouter extends AnyRouter>(opts: IPCRequestOpt
 
 app.on("ready", () => {
   createIPCHandler({ ipcMain });
+  startNextServer();
 });
