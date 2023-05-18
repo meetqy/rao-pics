@@ -29,6 +29,11 @@ const config: builder.Configuration = {
       to: "node_modules/@prisma/client",
       filter: ["**/*", "!node_modules"],
     },
+    {
+      from: "../nextjs",
+      to: "apps/nextjs",
+      filter: ["**/*"],
+    },
   ],
 };
 

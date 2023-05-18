@@ -4,7 +4,7 @@
   "private": true,
   "main": "./.next/standalone/apps/nextjs/server.js",
   "scripts": {
-    "build": "pnpm with-env next build",
+    "build": "next build",
     "start": "pnpm with-env next start",
     "dev2": "pnpm with-env next dev",
     "clean": "git clean -xdf .next .turbo node_modules",
