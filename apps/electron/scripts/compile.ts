@@ -20,28 +20,23 @@ const config: builder.Configuration = {
       from: "../../packages/db/prisma/db.sqlite",
       to: "packages/db/prisma/db.sqlite",
     },
-    {
-      from: "../../node_modules/.prisma",
-      to: "node_modules/.prisma",
-    },
-    {
-      from: "../../node_modules/@prisma/client",
-      to: "node_modules/@prisma/client",
-      filter: ["**/*", "!node_modules"],
-    },
+    // {
+    //   from: "../../node_modules/.prisma",
+    //   to: "node_modules/.prisma",
+    // },
+    // {
+    //   from: "../../node_modules/@prisma/client",
+    //   to: "node_modules/@prisma/client",
+    //   filter: ["**/*", "!node_modules"],
+    // },
     {
       from: "../nextjs/.next/standalone",
-      to: "apps",
       filter: ["**/*"],
     },
     {
       from: "../nextjs/.next/static",
-      to: "apps/apps/nextjs/.next/static",
+      to: "apps/nextjs/.next/static",
       filter: ["**/*"],
-    },
-    {
-      from: "../../packages/db/prisma/db.sqlite",
-      to: "apps/packages/db/prisma/db.sqlite",
     },
   ],
 };
