@@ -30,9 +30,18 @@ const config: builder.Configuration = {
       filter: ["**/*", "!node_modules"],
     },
     {
-      from: "../nextjs",
-      to: "apps/nextjs",
+      from: "../nextjs/.next/standalone",
+      to: "apps",
       filter: ["**/*"],
+    },
+    {
+      from: "../nextjs/.next/static",
+      to: "apps/apps/nextjs/.next/static",
+      filter: ["**/*"],
+    },
+    {
+      from: "../../packages/db/prisma/db.sqlite",
+      to: "apps/packages/db/prisma/db.sqlite",
     },
   ],
 };

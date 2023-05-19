@@ -1,6 +1,8 @@
 import { app, ipcMain, type IpcMain } from "electron";
 
 import "./security-restrictions";
+import cp from "child_process";
+import { join } from "path";
 // import { start } from "repl";
 import { TRPCError, callProcedure, type AnyRouter, type inferRouterContext, type inferRouterError } from "@trpc/server";
 import type { TRPCResponse, TRPCResponseMessage } from "@trpc/server/rpc";
@@ -11,7 +13,6 @@ import type { IPCRequestOptions, IPCResponse } from "../types";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
-import { startNextServer } from "./nextjs-server";
 
 /**
  * Prevent electron from running multiple instances.
@@ -292,5 +293,6 @@ async function resolveIPCResponse<TRouter extends AnyRouter>(opts: IPCRequestOpt
 
 app.on("ready", () => {
   createIPCHandler({ ipcMain });
-  startNextServer();
+
+  cp.fork(join(process.resourcesPath, "apps/apps/nextjs/server.js"));
 });
