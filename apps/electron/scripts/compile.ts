@@ -10,7 +10,7 @@ const config: builder.Configuration = {
     output: "dist",
     buildResources: "buildResources",
   },
-  productName: "Rao绕",
+  productName: "Rao Pics",
   files: ["main/dist/**", "preload/dist/**", "renderer/dist/**"],
   extraMetadata: {
     version: process.env["VITE_APP_VERSION"],

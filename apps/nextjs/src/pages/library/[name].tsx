@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 
-const Home: NextPage = () => {
+const WorkSpace: NextPage = () => {
   return (
     <div className="drawer drawer-mobile">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -82,4 +82,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default WorkSpace;
