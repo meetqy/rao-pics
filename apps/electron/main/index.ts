@@ -294,5 +294,7 @@ async function resolveIPCResponse<TRouter extends AnyRouter>(opts: IPCRequestOpt
 app.on("ready", () => {
   createIPCHandler({ ipcMain });
 
-  cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"));
+  if (app.isPackaged) {
+    cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"));
+  }
 });

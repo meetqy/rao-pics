@@ -1,6 +1,4 @@
-import { type NextPage } from "next";
-
-const Home: NextPage = () => {
+const Layout = ({ children }: { children: JSX.Element }) => {
   return (
     <div className="drawer drawer-mobile">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -8,17 +6,17 @@ const Home: NextPage = () => {
         <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
           Open drawer
         </label>
-        12321
+        {children}
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         <aside className="w-72 bg-base-200 text-base-content">
           <div className="sticky top-0 p-2">
             <div className=" bg-base-300 rounded-md shadow">
-              <a href="javascript:;" className="flex-0 btn btn-ghost px-4 text-lg">
+              <a href="" className="flex-0 btn btn-ghost px-4 text-lg">
                 <span className=" text-primary">rao</span>.<span>pics</span>
               </a>
-              <a href="javascript:;" className="link link-hover font-mono text-xs text-opacity-50 relative -top-2">
+              <a href="" className="link link-hover font-mono text-xs text-opacity-50 relative -top-2">
                 <div data-tip="Changelog" className="tooltip tooltip-bottom">
                   0.5.0
                 </div>
@@ -41,7 +39,7 @@ const Home: NextPage = () => {
             </button>
           </div>
 
-          <ul className="menu p-2 border-b">
+          <ul className="menu p-2 border-b border-base-300">
             <li>
               <a>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -82,4 +80,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Layout;
