@@ -1,22 +1,17 @@
-import fastifyStatic from "@fastify/static";
-import Fastify from "fastify";
+import express from "express";
 
-const fastify = Fastify({
-  logger: true,
-});
+import { type Library } from "@acme/db";
 
-export const addAssets = (lib: string) => {
-  console.log("-----------", lib);
-  void fastify.register(fastifyStatic, {
-    root: " /Users/qymeet/MEGAsync/r.library/images",
+const app = express();
+
+export const createAssetsServer = (library: Library[], port: number) => {
+  library.forEach((lib) => {
+    if (lib.type === "eagle") {
+      app.use("/" + lib.id.toString(), express.static(lib.dir + "/images"));
+    }
   });
 
-  fastify.listen({ port: 9621 }, (err, address) => {
-    if (err) {
-      console.log(err, "-------- fastify error");
-      throw err;
-    }
-
-    console.log("Assets server listening on port 9621, address: ", address);
+  return app.listen(port, () => {
+    console.log(`Assets server listening on http://localhost:${port}`);
   });
 };

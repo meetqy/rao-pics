@@ -3,7 +3,6 @@ import { app, ipcMain, type IpcMain } from "electron";
 import "./security-restrictions";
 import cp from "child_process";
 import { join } from "path";
-// import { start } from "repl";
 import { callProcedure } from "@trpc/server";
 
 import { appRouter, createContext } from "@acme/api";

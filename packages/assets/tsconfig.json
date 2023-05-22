@@ -1,4 +1,4 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["index.ts", "trpc.ts"]
+  "include": ["index.ts"]
 }

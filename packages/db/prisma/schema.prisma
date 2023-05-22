@@ -37,12 +37,12 @@ model Image {
     tags              String?
     /// eagle | billfish | pixcall | local
     library           Library   @relation(fields: [libraryId], references: [id])
-    libraryId         String
+    libraryId         Int
 }
 
 // 资源大小从 image 中获取
 model Library {
-    id           String      @id @default(uuid())
+    id           Int         @id @default(autoincrement())
     name         String
     dir          String      @unique
     type         String
@@ -68,7 +68,7 @@ model Folder {
     passwordTips     String
     images           Image[]
     library          Library @relation(fields: [libraryId], references: [id])
-    libraryId        String
+    libraryId        Int
 }
 
 model TagsGroup {
@@ -78,5 +78,5 @@ model TagsGroup {
     /// JSON.stringify
     tags      String
     library   Library @relation(fields: [libraryId], references: [id])
-    libraryId String
+    libraryId Int
 }

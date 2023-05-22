@@ -29,7 +29,7 @@ export const libraryRouter = t.router({
   update: t.procedure
     .input(
       z.object({
-        id: z.string(),
+        id: z.number(),
         fileCount: z.number().optional(),
       }),
     )
@@ -43,7 +43,7 @@ export const libraryRouter = t.router({
       });
     }),
 
-  remove: t.procedure.input(z.string()).mutation(async ({ ctx, input }) => {
+  remove: t.procedure.input(z.number()).mutation(async ({ ctx, input }) => {
     await ctx.prisma.image.deleteMany({
       where: { libraryId: input },
     });

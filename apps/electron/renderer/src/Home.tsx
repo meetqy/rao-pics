@@ -44,7 +44,7 @@ function Home() {
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
   // active id
-  const [active, setActive] = useState<string | undefined>();
+  const [active, setActive] = useState<number | undefined>();
   const item = useMemo(() => {
     const d = library.data?.find((item) => item.id === active);
     // if (d && d.lastSyncTime) {
@@ -89,7 +89,7 @@ function Home() {
   const onRemove = () => {
     active && removeLibrary.mutateAsync(active);
     const newL = library.data?.filter((item) => item.id != active);
-    setActive(newL && newL.length > 0 ? newL[0].id : "");
+    setActive(newL && newL.length > 0 ? newL[0].id : undefined);
     setDelConfirmVisable(false);
   };
 
