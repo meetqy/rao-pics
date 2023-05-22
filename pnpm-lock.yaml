@@ -47,18 +47,12 @@ importers:
       '@acme/api':
         specifier: ^0.1.0
         version: link:../../packages/api
-      '@acme/assets':
-        specifier: ^0.1.0
-        version: link:../../packages/assets
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../packages/db
       '@acme/eagle':
         specifier: ^0.1.0
         version: link:../../packages/eagle
-      '@acme/nextjs':
-        specifier: ^0.1.0
-        version: link:../nextjs
       '@acme/tailwind-config':
         specifier: ^0.1.0
         version: link:../../packages/config/tailwind
@@ -90,6 +84,9 @@ importers:
         specifier: ^3.19.1
         version: 3.21.4
     devDependencies:
+      '@acme/nextjs':
+        specifier: ^0.1.0
+        version: link:../nextjs
       '@types/node':
         specifier: ^18.7.18
         version: 18.16.3

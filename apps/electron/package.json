@@ -21,6 +21,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@acme/nextjs": "^0.1.0",
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
@@ -36,10 +37,8 @@
   },
   "dependencies": {
     "@acme/api": "^0.1.0",
-    "@acme/assets": "^0.1.0",
     "@acme/db": "^0.1.0",
     "@acme/eagle": "^0.1.0",
-    "@acme/nextjs": "^0.1.0",
     "@acme/tailwind-config": "^0.1.0",
     "@tanstack/react-query": "^4.13.0",
     "@trpc/client": "^10.23.0",

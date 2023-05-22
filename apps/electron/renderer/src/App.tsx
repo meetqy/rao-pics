@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TRPCClientError, type TRPCClientRuntime, type TRPCLink } from "@trpc/client";
+import { TRPCClientError, type TRPCLink } from "@trpc/client";
 import { type AnyRouter, type inferRouterError } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
 import { type TRPCResultMessage } from "@trpc/server/rpc";
@@ -15,7 +15,7 @@ import { trpc } from "./utils/trpc";
 // - the generics here are probably unnecessary
 // - the RPC-spec could probably be simplified to combine HTTP + WS
 /** @internal */
-function transformResult<TRouter extends AnyRouter, TOutput>(response: IPCResponse, runtime: TRPCClientRuntime) {
+function transformResult<TData>(response: IPCResponse) {
   if (response.status === "error") {
     return {
       ok: false,
@@ -26,18 +26,18 @@ function transformResult<TRouter extends AnyRouter, TOutput>(response: IPCRespon
   const result = {
     type: "data",
     data: response.result,
-  } as TRPCResultMessage<TOutput>["result"];
+  } as TRPCResultMessage<TData>["result"];
   return { ok: true, result } as const;
 }
 
 export function ipcLink<TRouter extends AnyRouter>(): TRPCLink<TRouter> {
-  return (runtime) =>
+  return (_runtime) =>
     ({ op }) => {
       return observable((observer) => {
         const promise = window.electronTRPC.rpc(op);
         promise
           .then((res) => {
-            const transformed = transformResult(res, runtime);
+            const transformed = transformResult(res);
 
             if (!transformed.ok) {
               observer.error(TRPCClientError.from(transformed.error as inferRouterError<TRouter>));

@@ -10,6 +10,10 @@
       "inputs": ["prisma/schema.prisma"],
       "cache": false
     },
+    "db:reset": {
+      "inputs": ["prisma/schema.prisma"],
+      "cache": false
+    },
     "dev": {
       "persistent": true,
       "cache": false
@@ -18,13 +22,12 @@
       "dependsOn": ["^build", "^db:generate"],
       "outputs": [".next/**", ".expo/**"]
     },
-    "db:reset": {
-      "dependsOn": ["^db:push", "^db:generate"],
-      "inputs": ["prisma/schema.prisma"],
-      "cache": false
-    },
     "compile": {
-      "dependsOn": ["^db:reset", "^db:build"],
+      "dependsOn": ["^db:reset", "^build"],
+      "inputs": ["prisma/schema.prisma"]
+    },
+    "only:compile": {
+      "dependsOn": ["^build"],
       "inputs": ["prisma/schema.prisma"]
     },
     "lint": {},

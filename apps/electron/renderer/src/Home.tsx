@@ -47,9 +47,9 @@ function Home() {
   const [active, setActive] = useState<string | undefined>();
   const item = useMemo(() => {
     const d = library.data?.find((item) => item.id === active);
-    if (d && d.lastSyncTime) {
-      d.lastSyncTime = new Date(d.lastSyncTime).toLocaleString("zh", { hour12: false });
-    }
+    // if (d && d.lastSyncTime) {
+    //   d.lastSyncTime = d.lastSyncTime.toLocaleString("zh", { hour12: false });
+    // }
 
     return d;
   }, [library, active]);
@@ -186,7 +186,7 @@ function Home() {
                 </svg>
                 <span className="ml-2">最后同步</span>
               </span>
-              <span>{item?.lastSyncTime || "未同步"}</span>
+              <span>{item?.lastSyncTime?.toString() || "未同步"}</span>
             </div>
 
             <div>
