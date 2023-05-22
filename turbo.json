@@ -23,7 +23,10 @@
       "inputs": ["prisma/schema.prisma"],
       "cache": false
     },
-    "compile": {},
+    "compile": {
+      "dependsOn": ["^db:reset", "^db:build"],
+      "inputs": ["prisma/schema.prisma"]
+    },
     "lint": {},
     "lint:fix": {},
     "clean": {

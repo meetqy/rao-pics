@@ -4,12 +4,11 @@ import "./security-restrictions";
 import cp from "child_process";
 import { join } from "path";
 // import { start } from "repl";
-import { TRPCError, callProcedure, type AnyRouter, type inferRouterContext, type inferRouterError } from "@trpc/server";
-import type { TRPCResponse, TRPCResponseMessage } from "@trpc/server/rpc";
+import { callProcedure } from "@trpc/server";
 
 import { appRouter, createContext } from "@acme/api";
 
-import type { IPCRequestOptions, IPCResponse } from "../types";
+import type { IPCRequestOptions } from "../types";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
@@ -84,71 +83,6 @@ app
 //     .catch((e) => console.error("Failed install extension:", e));
 // }
 
-// from @trpc/server/src/internals/transformTRPCResonse
-function transformTRPCResponseItem<TResponseItem extends TRPCResponse | TRPCResponseMessage>(router: AnyRouter, item: TResponseItem): TResponseItem {
-  // explicitly use appRouter instead of router argument: https://github.com/trpc/trpc/issues/2804
-  if ("error" in item) {
-    return {
-      ...item,
-      error: appRouter._def._config.transformer.output.serialize(item.error) as unknown,
-    };
-  }
-
-  if ("data" in item.result) {
-    return {
-      ...item,
-      result: {
-        ...item.result,
-        data: appRouter._def._config.transformer.output.serialize(item.result.data) as unknown,
-      },
-    };
-  }
-
-  return item;
-}
-
-// from @trpc/server/src/error/utils
-function getMessageFromUnkownError(err: unknown, fallback: string): string {
-  if (typeof err === "string") {
-    return err;
-  }
-
-  if (err instanceof Error && typeof err.message === "string") {
-    return err.message;
-  }
-  return fallback;
-}
-
-// from @trpc/server/src/error/utils
-function getErrorFromUnknown(cause: unknown): Error {
-  if (cause instanceof Error) {
-    return cause;
-  }
-  const message = getMessageFromUnkownError(cause, "Unknown error");
-  return new Error(message);
-}
-
-// from @trpc/server/src/error/utils
-function getTRPCErrorFromUnknown(cause: unknown): TRPCError {
-  const error = getErrorFromUnknown(cause);
-  // this should ideally be an `instanceof TRPCError` but for some reason that isn't working
-  // ref https://github.com/trpc/trpc/issues/331
-  if (error.name === "TRPCError") {
-    return cause as TRPCError;
-  }
-
-  const trpcError = new TRPCError({
-    code: "INTERNAL_SERVER_ERROR",
-    cause: error,
-    message: error.message,
-  });
-
-  // Inherit stack from error
-  trpcError.stack = error.stack;
-
-  return trpcError;
-}
-
 function validateSender(frame: Electron.WebFrameMain) {
   const frameUrlObj = new URL(frame.url);
   const pageUrlObj = new URL(pageUrl);
@@ -176,120 +110,32 @@ export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
   syncIpc(ipcMain);
 }
 
-// includes error handling, type info gets lost at helper function calls
-async function resolveIPCResponse<TRouter extends AnyRouter>(opts: IPCRequestOptions): Promise<IPCResponse> {
-  const { type, input: serializedInput } = opts;
-  const { transformer } = appRouter._def._config;
-  const deserializedInput = transformer.input.deserialize(serializedInput) as unknown;
-
-  type TRouterError = inferRouterError<TRouter>;
-  type TRouterResponse = TRPCResponse<unknown, TRouterError>;
-
+// functional happy path, types get inferred
+async function resolveIPCResponse(opts: IPCRequestOptions) {
+  const { path, type, input } = opts;
+  const { procedures } = appRouter._def;
   const ctx = createContext();
 
-  if (type === "subscription") {
-    throw new TRPCError({
-      message: "Subscriptions should use wsLink",
-      code: "METHOD_NOT_SUPPORTED",
+  try {
+    const output = await callProcedure({
+      ctx,
+      path,
+      procedures,
+      rawInput: input,
+      type,
     });
-  }
-
-  type RawResult = { input: unknown; path: string; data: unknown } | { input: unknown; path: string; error: TRPCError };
-
-  async function getRawResult(ctx: inferRouterContext<TRouter>): Promise<RawResult> {
-    const { path, type } = opts;
-    const { procedures } = appRouter._def;
-
-    try {
-      const output = await callProcedure({
-        ctx,
-        path,
-        procedures,
-        rawInput: deserializedInput,
-        type,
-      });
-      return {
-        input: deserializedInput,
-        path,
-        data: output,
-      };
-    } catch (cause) {
-      const error = getTRPCErrorFromUnknown(cause);
-      return {
-        input: deserializedInput,
-        path,
-        error,
-      };
-    }
-  }
-
-  function getResultEnvelope(rawResult: RawResult): TRouterResponse {
-    const { path, input } = rawResult;
-
-    if ("error" in rawResult) {
-      return {
-        error: appRouter.getErrorShape({
-          error: rawResult.error,
-          type,
-          path,
-          input,
-          ctx,
-        }),
-      };
-    } else {
-      return {
-        result: {
-          data: rawResult.data,
-        },
-      };
-    }
-  }
-
-  function getEndResponse(envelope: TRouterResponse): IPCResponse {
-    const transformed = transformTRPCResponseItem(appRouter, envelope);
 
     return {
-      response: transformed,
+      result: output,
+      status: "success",
+    };
+  } catch (e) {
+    return {
+      result: e,
+      status: "error",
     };
   }
-
-  try {
-    const rawResult = await getRawResult(ctx);
-    const resultEnvelope = getResultEnvelope(rawResult);
-
-    return getEndResponse(resultEnvelope);
-  } catch (cause) {
-    const { input, path } = opts;
-    // we get here if
-    // - `createContext()` throws
-    // - input deserialization fails
-    const error = getTRPCErrorFromUnknown(cause);
-    const resultEnvelope = getResultEnvelope({ input, path, error });
-
-    return getEndResponse(resultEnvelope);
-  }
 }
-
-// functional happy path, types get inferred
-// async function resolveIPCResponse<TRouter extends AnyRouter>(
-//   opts: IPCRequestOptions
-// ): Promise<IPCResponse> {
-//   const { path, type, input } = opts;
-//   const { transformer, procedures } = appRouter._def;
-//   const ctx = await createContext();
-//   const rawInput = transformer.input.deserialize(input);
-//   const output = await callProcedure({
-//     ctx,
-//     path,
-//     procedures,
-//     rawInput,
-//     type,
-//   });
-//   const resultEnvelope = { result: { data: output } };
-//   return {
-//     response: transformTRPCResponseItem(appRouter, resultEnvelope),
-//   };
-// }
 
 app.on("ready", () => {
   createIPCHandler({ ipcMain });

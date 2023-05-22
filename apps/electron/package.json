@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@acme/api": "^0.1.0",
+    "@acme/assets": "^0.1.0",
     "@acme/db": "^0.1.0",
     "@acme/eagle": "^0.1.0",
     "@acme/nextjs": "^0.1.0",
@@ -47,6 +48,7 @@
     "next": "13.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "superjson": "^1.12.3",
     "zod": "^3.19.1"
   }
 }

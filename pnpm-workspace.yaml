@@ -4,4 +4,5 @@ packages:
   - packages/api
   - packages/db
   - packages/eagle
+  - packages/assets
   - packages/config/*
