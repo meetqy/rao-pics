@@ -6,7 +6,7 @@ export const getByLibrary = t.procedure
   .input(
     z.object({
       // id or name
-      library: z.string(),
+      library: z.union([z.string(), z.number()]),
       limit: z.number().min(1).max(100).nullish(),
       // https://trpc.io/docs/reactjs/useinfinitequery
       // https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination
@@ -19,7 +19,7 @@ export const getByLibrary = t.procedure
 
     const items = await ctx.prisma.image.findMany({
       where: {
-        OR: [{ libraryId: input.library }, { library: { name: input.library } }],
+        OR: [{ libraryId: typeof input.library === "number" ? input.library : undefined }, { library: { name: input.library.toString() } }],
       },
       // get an extra item at the end which we'll use as next cursor
       take: limit + 1,

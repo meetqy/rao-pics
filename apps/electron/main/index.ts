@@ -1,4 +1,4 @@
-import { app, ipcMain, type IpcMain } from "electron";
+import { app, ipcMain, shell, type IpcMain } from "electron";
 import { getPort } from "get-port-please";
 import ip from "ip";
 
@@ -106,6 +106,10 @@ export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
     return resolveIPCResponse(opts);
   });
 
+  ipcMain.handle("open-url", (event, url: string) => {
+    void shell.openExternal(url);
+  });
+
   LibraryIPC.assetsServer(ipcMain);
   LibraryIPC.choose(ipcMain);
   LibraryIPC.update(ipcMain);
@@ -142,14 +146,17 @@ async function resolveIPCResponse(opts: IPCRequestOptions) {
 app.on("ready", () => {
   createIPCHandler({ ipcMain });
 
-  // Init env variables
   void (async () => {
+    // Init env variables
     process.env["IP"] = ip.address();
-    process.env["WEB_PORT"] = (await getPort({ portRange: [9620, 9624] })).toString();
-    process.env["ASSETS_PORT"] = (await getPort({ portRange: [9625, 9629] })).toString();
-  })();
+    process.env["WEB_PORT"] = (await getPort({ portRange: [9620, 9624], port: 9620 })).toString();
+    process.env["ASSETS_PORT"] = (await getPort({ portRange: [9625, 9629], port: 9625 })).toString();
 
-  if (app.isPackaged) {
-    cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"));
-  }
+    if (app.isPackaged) {
+      cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"));
+    } else {
+      const nextjs = join(process.cwd(), "../nextjs");
+      cp.spawn("npx", ["next", "dev", "-p", (process.env["WEB_PORT"] || 9620).toString()], { cwd: nextjs, stdio: "inherit" });
+    }
+  })();
 });

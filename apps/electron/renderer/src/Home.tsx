@@ -11,8 +11,12 @@ function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
-  const { ip, web_port } = window.electronEnv;
-  const webUrl = `http://${ip}:${web_port}`;
+  const { ip, web_port } = window.electronENV;
+
+  // active id
+  const [active, setActive] = useState<number | undefined>();
+  const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
+  const webUrl = useMemo(() => `http://${ip}:${web_port}/${item?.name}`, [item]);
 
   const addLibrary = trpc.library.add.useMutation({
     async onSuccess() {
@@ -46,18 +50,8 @@ function Home() {
   });
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
-  // active id
-  const [active, setActive] = useState<number | undefined>();
-  const item = useMemo(() => {
-    const d = library.data?.find((item) => item.id === active);
-    // if (d && d.lastSyncTime) {
-    //   d.lastSyncTime = d.lastSyncTime.toLocaleString("zh", { hour12: false });
-    // }
-
-    return d;
-  }, [library, active]);
-
   // active 改变重新获取一次本地文件夹信息
+  // 只会监听到文件数量改变
   useEffect(() => {
     if (item) {
       window.electronAPI.library.update(item.dir).then((res) => {
@@ -128,6 +122,10 @@ function Home() {
 
     return 0;
   }, [eagleSyncProgress, item]);
+
+  const open = () => {
+    window.electronAPI.openUrl(webUrl);
+  };
 
   return (
     <div className="container h-screen w-full flex text-sm">
@@ -205,7 +203,7 @@ function Home() {
 
                 <span className="ml-2">WEB 预览</span>
               </span>
-              <a className="btn btn-link btn-active normal-case p-0 btn-sm text-secondary font-normal" target="_blank">
+              <a onClick={open} className="btn btn-link btn-active normal-case p-0 btn-sm text-secondary font-normal">
                 {webUrl}
               </a>
             </div>

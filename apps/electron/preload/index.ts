@@ -26,9 +26,10 @@ process.once("loaded", () => {
         const options = args[0] as EagleEmitOption;
         listener(options);
       }),
+    openUrl: (url: string) => ipcRenderer.invoke("open-url", url),
   });
 
-  contextBridge.exposeInMainWorld("electronEnv", {
+  contextBridge.exposeInMainWorld("electronENV", {
     ip: process.env["IP"],
     web_port: process.env["WEB_PORT"],
     assets_port: process.env["ASSETS_PORT"],
