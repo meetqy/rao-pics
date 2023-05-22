@@ -47,9 +47,9 @@ importers:
       '@acme/api':
         specifier: ^0.1.0
         version: link:../../packages/api
-      '@acme/assets':
+      '@acme/assets-server':
         specifier: ^0.1.0
-        version: link:../../packages/assets
+        version: link:../../packages/assets-server
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../packages/db
@@ -231,7 +231,7 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
 
-  packages/assets:
+  packages/assets-server:
     dependencies:
       express:
         specifier: ^4.18.2
@@ -748,7 +748,7 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
     dependencies:
       eslint: 8.40.0
-      eslint-visitor-keys: 3.4.0
+      eslint-visitor-keys: 3.4.1
     dev: true
 
   /@eslint-community/regexpp@4.5.0:

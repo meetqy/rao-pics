@@ -11,6 +11,7 @@ function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
+
   const addLibrary = trpc.library.add.useMutation({
     async onSuccess() {
       await utils.library.get.invalidate();
@@ -72,6 +73,7 @@ function Home() {
 
   useEffect(() => {
     if (library?.data?.length && !isInit.current) {
+      window.electronAPI.library.assetsServer(library.data);
       setActive(library.data[0].id);
       isInit.current = true;
     }

@@ -18,6 +18,7 @@ process.once("loaded", () => {
     library: {
       choose: () => ipcRenderer.invoke("library-choose"),
       update: (dir: string) => ipcRenderer.invoke("library-update", dir),
+      assetsServer: (librarys: Library[]) => ipcRenderer.invoke("library-assets-server", librarys),
     },
     sync: (library: Library) => ipcRenderer.send("sync", library),
     onEagleSyncProgress: (listener: EagleEmit) =>

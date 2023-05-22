@@ -104,6 +104,7 @@ export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
     return resolveIPCResponse(opts);
   });
 
+  LibraryIPC.assetsServer(ipcMain);
   LibraryIPC.choose(ipcMain);
   LibraryIPC.update(ipcMain);
   syncIpc(ipcMain);

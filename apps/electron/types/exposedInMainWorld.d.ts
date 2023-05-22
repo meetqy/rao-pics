@@ -10,6 +10,7 @@ interface Window {
     library: {
       choose: () => Promise<import("@acme/api").LibraryAdd>;
       update: (dir: string) => Promise<import("@acme/api").LibraryAdd>;
+      assetsServer: (librarys: import("@acme/db").Library[]) => void;
     };
     sync: (library: import("@acme/db").Library) => void;
     onEagleSyncProgress: (emit: import("@acme/eagle").EagleEmit) => void;
