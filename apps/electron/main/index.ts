@@ -1,4 +1,6 @@
 import { app, ipcMain, type IpcMain } from "electron";
+import { getPort } from "get-port-please";
+import ip from "ip";
 
 import "./security-restrictions";
 import cp from "child_process";
@@ -139,6 +141,13 @@ async function resolveIPCResponse(opts: IPCRequestOptions) {
 
 app.on("ready", () => {
   createIPCHandler({ ipcMain });
+
+  // Init env variables
+  void (async () => {
+    process.env["IP"] = ip.address();
+    process.env["WEB_PORT"] = (await getPort({ portRange: [9620, 9624] })).toString();
+    process.env["ASSETS_PORT"] = (await getPort({ portRange: [9625, 9629] })).toString();
+  })();
 
   if (app.isPackaged) {
     cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"));

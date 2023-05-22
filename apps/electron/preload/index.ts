@@ -27,6 +27,12 @@ process.once("loaded", () => {
         listener(options);
       }),
   });
+
+  contextBridge.exposeInMainWorld("electronEnv", {
+    ip: process.env["IP"],
+    web_port: process.env["WEB_PORT"],
+    assets_port: process.env["ASSETS_PORT"],
+  });
   // If you expose something here, you get window.something in the React app
   // type it in types/exposedInMainWorld.d.ts to add it to the window type
   // contextBridge.exposeInMainWorld("something", {

@@ -11,6 +11,8 @@ function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
+  const { ip, web_port } = window.electronEnv;
+  const webUrl = `http://${ip}:${web_port}`;
 
   const addLibrary = trpc.library.add.useMutation({
     async onSuccess() {
@@ -188,7 +190,7 @@ function Home() {
                 </svg>
                 <span className="ml-2">最后同步</span>
               </span>
-              <span>{item?.lastSyncTime?.toString() || "未同步"}</span>
+              <span>{item?.lastSyncTime?.toLocaleString("zh", { hour12: false }) || "未同步"}</span>
             </div>
 
             <div>
@@ -204,7 +206,7 @@ function Home() {
                 <span className="ml-2">WEB 预览</span>
               </span>
               <a className="btn btn-link btn-active normal-case p-0 btn-sm text-secondary font-normal" target="_blank">
-                http://localhost:3000/test.library
+                {webUrl}
               </a>
             </div>
 

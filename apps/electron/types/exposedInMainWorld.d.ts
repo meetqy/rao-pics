@@ -15,4 +15,10 @@ interface Window {
     sync: (library: import("@acme/db").Library) => void;
     onEagleSyncProgress: (emit: import("@acme/eagle").EagleEmit) => void;
   };
+
+  readonly electronEnv: {
+    ip: string;
+    web_port: string;
+    assets_port: string;
+  };
 }

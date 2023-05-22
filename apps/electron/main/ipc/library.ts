@@ -1,6 +1,6 @@
 import { readdirSync } from "fs";
 import { join } from "path";
-import { dialog, ipcMain, type IpcMain } from "electron";
+import { dialog, type IpcMain } from "electron";
 
 import { type LibraryAdd } from "@acme/api";
 import { createAssetsServer } from "@acme/assets-server";
@@ -46,7 +46,7 @@ const LibraryIPC = {
       if (server) {
         server.close();
       }
-      server = createAssetsServer(librarys, 9621);
+      server = createAssetsServer(librarys, Number(process.env["ASSETS_PORT"]));
     });
   },
 
