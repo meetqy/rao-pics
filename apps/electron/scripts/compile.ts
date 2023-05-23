@@ -20,15 +20,6 @@ const config: builder.Configuration = {
       from: "../../packages/db/prisma/db.sqlite",
       to: "packages/db/prisma/db.sqlite",
     },
-    // {
-    //   from: "../../node_modules/.prisma",
-    //   to: "node_modules/.prisma",
-    // },
-    // {
-    //   from: "../../node_modules/@prisma/client",
-    //   to: "node_modules/@prisma/client",
-    //   filter: ["**/*", "!node_modules"],
-    // },
     {
       from: "../nextjs/.next/standalone",
       filter: ["**/*"],

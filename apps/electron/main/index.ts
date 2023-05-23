@@ -63,27 +63,6 @@ app
   })
   .catch((e) => console.error("Failed create window:", e));
 
-/**
- * Install React devtools in dev mode
- * works, but throws errors so it's commented out until these issues are resolved:
- * - https://github.com/MarshallOfSound/electron-devtools-installer/issues/220
- * - https://github.com/electron/electron/issues/32133
- * Note: You must install `electron-devtools-installer` manually
- */
-// if (import.meta.env.DEV) {
-//   app
-//     .whenReady()
-//     .then(() => import("electron-devtools-installer"))
-//     .then(async ({ default: installExtension, REACT_DEVELOPER_TOOLS }) => {
-//       await installExtension(REACT_DEVELOPER_TOOLS, {
-//         loadExtensionOptions: {
-//           allowFileAccess: true,
-//         },
-//       });
-//     })
-//     .catch((e) => console.error("Failed install extension:", e));
-// }
-
 function validateSender(frame: Electron.WebFrameMain) {
   const frameUrlObj = new URL(frame.url);
   const pageUrlObj = new URL(pageUrl);
@@ -157,7 +136,14 @@ app.on("ready", () => {
     process.env["ASSETS_PORT"] = _assets_port;
 
     if (app.isPackaged) {
-      cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"));
+      cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"), {
+        env: {
+          PORT: (_web_port || 9620).toString(),
+          NEXT_PUBLIC_IP: _ip,
+          NEXT_PUBLIC_WEB_PORT: _web_port,
+          NEXT_PUBLIC_ASSETS_PORT: _assets_port,
+        },
+      });
     } else {
       const nextjs = join(process.cwd(), "../nextjs");
       cp.spawn("npx", ["next", "dev"], {
