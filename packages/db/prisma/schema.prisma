@@ -40,6 +40,13 @@ model Image {
     libraryId         Int
 }
 
+model Config {
+    id         String @id @unique
+    webPort    Int
+    assetsPort Int
+    ip         String
+}
+
 // 资源大小从 image 中获取
 model Library {
     id           Int         @id @default(autoincrement())

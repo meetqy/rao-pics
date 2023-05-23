@@ -4,6 +4,8 @@ import { type Library } from "@acme/db";
 
 const app = express();
 
+let assetServer: ReturnType<typeof createAssetsServer> | null;
+
 export const createAssetsServer = (library: Library[], port: number) => {
   library.forEach((lib) => {
     if (lib.type === "eagle") {
@@ -11,7 +13,18 @@ export const createAssetsServer = (library: Library[], port: number) => {
     }
   });
 
-  return app.listen(port, () => {
+  const server = app.listen(port, () => {
     console.log(`Assets server listening on http://localhost:${port}`);
   });
+
+  assetServer = server;
+
+  return server;
+};
+
+export const closeAssetsServer = () => {
+  if (assetServer) {
+    assetServer.close();
+    assetServer = null;
+  }
 };

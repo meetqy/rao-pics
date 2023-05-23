@@ -1,8 +1,8 @@
 import { type Image } from "@acme/db";
 
-export const getImgUrl = (img: Image) => {
+export const getImgUrl = (prefix: string, img: Image) => {
   const imgName = img.noThumbnail ? `${img.name}.${img.ext}` : `${img.name}_thumbnail.png`;
-  return `${process.env["NEXT_PUBLIC_API_URL"]}/${img.libraryId}/${img.id}.info/${imgName}`;
+  return `${prefix}/${img.libraryId}/${img.id}.info/${imgName}`;
 };
 
 export const transformByteToUnit = (bytes = 0, decimals = 2) => {

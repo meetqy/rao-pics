@@ -3,7 +3,7 @@ import { join } from "path";
 import { dialog, type IpcMain } from "electron";
 
 import { type LibraryAdd } from "@acme/api";
-import { createAssetsServer } from "@acme/assets-server";
+import { closeAssetsServer, createAssetsServer } from "@acme/assets-server";
 import { type Library } from "@acme/db";
 
 const updateLibrary = (dir: string): LibraryAdd | null => {
@@ -20,8 +20,6 @@ const updateLibrary = (dir: string): LibraryAdd | null => {
 
   return null;
 };
-
-let server: ReturnType<typeof createAssetsServer> | null = null;
 
 const LibraryIPC = {
   choose: (ipcMain: IpcMain) => {
@@ -43,10 +41,8 @@ const LibraryIPC = {
 
   assetsServer: (ipcMain: IpcMain) => {
     ipcMain.handle("library-assets-server", (event, librarys: Library[]) => {
-      if (server) {
-        server.close();
-      }
-      server = createAssetsServer(librarys, Number(process.env["ASSETS_PORT"]));
+      closeAssetsServer();
+      createAssetsServer(librarys, Number(process.env["ASSETS_PORT"]));
     });
   },
 

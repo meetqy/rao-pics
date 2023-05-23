@@ -8,6 +8,7 @@ import { join } from "path";
 import { callProcedure } from "@trpc/server";
 
 import { appRouter, createContext } from "@acme/api";
+import { createAssetsServer } from "@acme/assets-server";
 
 import type { IPCRequestOptions } from "../types";
 import LibraryIPC from "./ipc/library";
@@ -135,13 +136,14 @@ app.on("ready", () => {
     process.env["WEB_PORT"] = _web_port;
     process.env["ASSETS_PORT"] = _assets_port;
 
+    // Start assets server
+    createAssetsServer([], +_assets_port);
+
+    // Start nextjs server
     if (app.isPackaged) {
       cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"), {
         env: {
           PORT: (_web_port || 9620).toString(),
-          NEXT_PUBLIC_IP: _ip,
-          NEXT_PUBLIC_WEB_PORT: _web_port,
-          NEXT_PUBLIC_ASSETS_PORT: _assets_port,
         },
       });
     } else {

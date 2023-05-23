@@ -11,7 +11,16 @@ function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
-  const { ip, web_port } = window.electronENV;
+  const { ip, web_port, assets_port } = window.electronENV;
+  const config = trpc.config.update.useMutation();
+
+  useEffect(() => {
+    config.mutate({
+      ip,
+      webPort: Number(web_port),
+      assetsPort: Number(assets_port),
+    });
+  }, [window.electronENV]);
 
   // active id
   const [active, setActive] = useState<number | undefined>();
