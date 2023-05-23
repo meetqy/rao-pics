@@ -147,16 +147,31 @@ app.on("ready", () => {
   createIPCHandler({ ipcMain });
 
   void (async () => {
+    const _ip = ip.address();
+    const _web_port = (await getPort({ portRange: [9620, 9624], port: 9620 })).toString();
+    const _assets_port = (await getPort({ portRange: [9625, 9629], port: 9625 })).toString();
+
     // Init env variables
-    process.env["IP"] = ip.address();
-    process.env["WEB_PORT"] = (await getPort({ portRange: [9620, 9624], port: 9620 })).toString();
-    process.env["ASSETS_PORT"] = (await getPort({ portRange: [9625, 9629], port: 9625 })).toString();
+    process.env["IP"] = _ip;
+    process.env["WEB_PORT"] = _web_port;
+    process.env["ASSETS_PORT"] = _assets_port;
 
     if (app.isPackaged) {
       cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"));
     } else {
       const nextjs = join(process.cwd(), "../nextjs");
-      cp.spawn("npx", ["next", "dev", "-p", (process.env["WEB_PORT"] || 9620).toString()], { cwd: nextjs, stdio: "inherit" });
+      cp.spawn("npx", ["next", "dev"], {
+        cwd: nextjs,
+        stdio: "inherit",
+        env: {
+          // 不能省略，否则会报错
+          ...process.env,
+          PORT: (_web_port || 9620).toString(),
+          NEXT_PUBLIC_IP: _ip,
+          NEXT_PUBLIC_WEB_PORT: _web_port,
+          NEXT_PUBLIC_ASSETS_PORT: _assets_port,
+        },
+      });
     }
   })();
 });

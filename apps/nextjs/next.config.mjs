@@ -7,6 +7,9 @@ const config = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   output: "standalone",
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default config;
