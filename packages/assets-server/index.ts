@@ -21,6 +21,8 @@ export const createAssetsServer = (librarys: Library[], port: number) => {
     server = null;
   }
 
+  console.log("----------------------------------------------------", librarys);
+
   libraryIds.splice(0, libraryIds.length);
 
   librarys.forEach((lib) => {

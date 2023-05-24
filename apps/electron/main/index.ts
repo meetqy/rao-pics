@@ -41,9 +41,9 @@ app.disableHardwareAcceleration();
  */
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
-    app.quit();
     closeAssetsServer();
     nextjsChild?.kill();
+    app.quit();
   }
 });
 
@@ -141,9 +141,6 @@ app.on("ready", () => {
     process.env["IP"] = _ip;
     process.env["WEB_PORT"] = _web_port;
     process.env["ASSETS_PORT"] = _assets_port;
-
-    // kill nextjs Child;
-    nextjsChild?.kill();
 
     // Start nextjs server
     if (app.isPackaged) {

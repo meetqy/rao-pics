@@ -27,20 +27,15 @@ function Home() {
   const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
   const webUrl = useMemo(() => `http://${ip}:${web_port}/${item?.name}`, [item]);
 
-  // library 新增/删除 时，重新获取读取library
-  // 并重启 Assets Server
-  const invalidate = async () => {
-    await utils.library.get.invalidate();
-    if (library.data) {
-      window.electronAPI.library.assetsServer(library.data);
-    }
-  };
-
   const addLibrary = trpc.library.add.useMutation({
-    onSuccess: invalidate,
+    async onSuccess() {
+      await utils.library.get.invalidate();
+    },
   });
   const removeLibrary = trpc.library.remove.useMutation({
-    onSuccess: invalidate,
+    async onSuccess() {
+      await utils.library.get.invalidate();
+    },
   });
   const updateLibrary = trpc.library.update.useMutation({
     async onSuccess() {
@@ -83,10 +78,11 @@ function Home() {
 
   useEffect(() => {
     if (library?.data?.length && !isInit.current) {
-      window.electronAPI.library.assetsServer(library.data);
       setActive(library.data[0].id);
       isInit.current = true;
     }
+
+    library.data && window.electronAPI.library.assetsServer(library.data);
   }, [active, library]);
 
   const chooseFolder = async () => {
