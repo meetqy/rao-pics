@@ -41,10 +41,13 @@ app.disableHardwareAcceleration();
  */
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
-    closeAssetsServer();
-    nextjsChild?.kill();
     app.quit();
   }
+});
+
+app.on("will-quit", () => {
+  closeAssetsServer();
+  nextjsChild?.kill();
 });
 
 /**
