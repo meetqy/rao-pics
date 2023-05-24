@@ -7,8 +7,8 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "db:generate": "pnpm prisma generate",
-    "db:push": "pnpm prisma db push --skip-generate",
-    "db:reset": "prisma migrate reset --force",
+    "db:push": "pnpm prisma db push --skip-generate --force-reset",
+    "db:init": "pnpm db:push && pnpm db:generate",
     "dev": "pnpm prisma studio"
   },
   "dependencies": {
