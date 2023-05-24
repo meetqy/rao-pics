@@ -8,7 +8,7 @@ import { join } from "path";
 import { callProcedure } from "@trpc/server";
 
 import { appRouter, createContext } from "@acme/api";
-import { closeAssetsServer, createAssetsServer } from "@acme/assets-server";
+import { closeAssetsServer } from "@acme/assets-server";
 
 import type { IPCRequestOptions } from "../types";
 import LibraryIPC from "./ipc/library";
@@ -131,17 +131,16 @@ app.on("ready", () => {
   createIPCHandler({ ipcMain });
 
   void (async () => {
+    const { isPackaged } = app;
+
     const _ip = ip.address();
-    const _web_port = (await getPort({ portRange: [9620, 9624], port: 9620 })).toString();
-    const _assets_port = (await getPort({ portRange: [9625, 9629], port: 9625 })).toString();
+    const _web_port = isPackaged ? (await getPort({ portRange: [9620, 9624], port: 9620 })).toString() : "9620";
+    const _assets_port = isPackaged ? (await getPort({ portRange: [9625, 9629], port: 9625 })).toString() : "9625";
 
     // Init env variables
     process.env["IP"] = _ip;
     process.env["WEB_PORT"] = _web_port;
     process.env["ASSETS_PORT"] = _assets_port;
-
-    // Start assets server
-    createAssetsServer([], +_assets_port);
 
     // kill nextjs Child;
     nextjsChild?.kill();
@@ -154,6 +153,7 @@ app.on("ready", () => {
         },
       });
     } else {
+      if (process.env["NEXTJS_SERVER"] === "true") return;
       const nextjs = join(process.cwd(), "../nextjs");
       nextjsChild = cp.spawn("npx", ["next", "dev"], {
         cwd: nextjs,
@@ -161,12 +161,10 @@ app.on("ready", () => {
         env: {
           // 不能省略，否则会报错
           ...process.env,
-          PORT: (_web_port || 9620).toString(),
-          NEXT_PUBLIC_IP: _ip,
-          NEXT_PUBLIC_WEB_PORT: _web_port,
-          NEXT_PUBLIC_ASSETS_PORT: _assets_port,
+          PORT: _web_port,
         },
       });
+      process.env["NEXTJS_SERVER"] = "true";
     }
   })();
 });

@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import { useRouter } from "next/router";
 import { useMemo } from "react";
 
 import { getImgUrl, transformByteToUnit } from "~/utils/common";
@@ -6,8 +7,10 @@ import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
 
 const WorkSpace: NextPage = () => {
+  const { query } = useRouter();
+
   const { data } = trpc.image.getByLibrary.useInfiniteQuery(
-    { limit: 24, library: "r.library" },
+    { limit: 24, library: query.name as string },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
