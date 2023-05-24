@@ -8,12 +8,14 @@ import { join } from "path";
 import { callProcedure } from "@trpc/server";
 
 import { appRouter, createContext } from "@acme/api";
-import { createAssetsServer } from "@acme/assets-server";
+import { closeAssetsServer, createAssetsServer } from "@acme/assets-server";
 
 import type { IPCRequestOptions } from "../types";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
+
+let nextjsChild: cp.ChildProcess;
 
 /**
  * Prevent electron from running multiple instances.
@@ -40,6 +42,8 @@ app.disableHardwareAcceleration();
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
+    closeAssetsServer();
+    nextjsChild?.kill();
   }
 });
 
@@ -139,16 +143,19 @@ app.on("ready", () => {
     // Start assets server
     createAssetsServer([], +_assets_port);
 
+    // kill nextjs Child;
+    nextjsChild?.kill();
+
     // Start nextjs server
     if (app.isPackaged) {
-      cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"), {
+      nextjsChild = cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"), {
         env: {
           PORT: (_web_port || 9620).toString(),
         },
       });
     } else {
       const nextjs = join(process.cwd(), "../nextjs");
-      cp.spawn("npx", ["next", "dev"], {
+      nextjsChild = cp.spawn("npx", ["next", "dev"], {
         cwd: nextjs,
         stdio: "inherit",
         env: {
