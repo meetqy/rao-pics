@@ -61,6 +61,7 @@ const WorkSpace: NextPage = () => {
                   href={getImgUrl(assetsUrl, item, true)}
                   data-pswp-width={item.width}
                   data-pswp-height={item.height}
+                  draggable={false}
                 >
                   <img draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="w-full h-full object-cover object-top" />
                 </a>
@@ -77,7 +78,7 @@ const WorkSpace: NextPage = () => {
                     </svg>
                     <span className="ml-2">{item.modificationTime.toLocaleString("zh", { hour12: false })}</span>
                   </p>
-                  <p className="text-sm inline-flex items-center">
+                  <p className="text-sm inline-flex items-center flex-wrap">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                       <path
                         fillRule="evenodd"

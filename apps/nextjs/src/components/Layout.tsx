@@ -27,46 +27,109 @@ const Layout = (props: Props) => {
     <div className="drawer drawer-mobile">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content bg-base-100">
-        <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
-          Open drawer
-        </label>
-        {children}
-        <div className="text-center pb-4" ref={loadMoreDom}>
-          {props.loadMoreContent}
+        <header className="w-full sticky top-0 left-0 z-20 px-4  bg-base-100">
+          <nav className="navbar w-full">
+            <div className="flex-1">
+              <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+
+              <input type="text" placeholder="搜索" className="input focus:outline-none input-ghost h-12 normal-case" />
+            </div>
+
+            <div className="flex-none">
+              <button className="btn btn-ghost m-1 capitalize">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"
+                  />
+                </svg>
+                <span className="ml-2">r.library</span>
+              </button>
+
+              <div className="dropdown dropdown-end">
+                <label tabIndex={1} className="btn m-1 btn-ghost btn-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"
+                    />
+                  </svg>
+                </label>
+                <ul tabIndex={1} className="dropdown-content menu p-2 shadow-md bg-base-200/95 rounded-box w-40 uppercase">
+                  <li>
+                    <a>jpg</a>
+                  </li>
+                  <li>
+                    <a>gif</a>
+                  </li>
+                  <li>
+                    <a>png</a>
+                  </li>
+                  <li>
+                    <a>jpeg</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn m-1 btn-ghost btn-circle">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+                    />
+                  </svg>
+                </label>
+                <ul tabIndex={0} className="dropdown-content menu p-2 shadow-md bg-base-200/95 rounded-box w-52">
+                  <li>
+                    <a>按添加时间</a>
+                  </li>
+                  <li>
+                    <a>按修改时间</a>
+                  </li>
+                  <li>
+                    <a>文件大小</a>
+                  </li>
+                  <li>
+                    <a>文件名称</a>
+                  </li>
+                </ul>
+              </div>
+
+              <button className="btn btn-ghost btn-square btn-circle hover:bg-transparent">
+                <input name="test" type="checkbox" className="toggle toggle-primary toggle-sm -rotate-90" />
+              </button>
+            </div>
+          </nav>
+        </header>
+
+        <div>
+          {children}
+          <div className="text-center pb-4" ref={loadMoreDom}>
+            {props.loadMoreContent}
+          </div>
         </div>
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        <aside className="w-72 bg-base-200 text-base-content">
+        <aside className="w-72 bg-base-200/30 text-base-content">
           <div className="sticky top-0 p-2">
-            <div className=" bg-base-300 rounded-md shadow">
-              <a href="" className="flex-0 btn btn-ghost px-4 text-lg">
-                <span className=" text-primary">rao</span>.<span>pics</span>
-              </a>
-              <a href="" className="link link-hover font-mono text-xs text-opacity-50 relative -top-2">
-                <div data-tip="Changelog" className="tooltip tooltip-bottom">
-                  0.5.0
-                </div>
+            <div className="rounded-md flex px-2">
+              <img src="/icon.png" draggable={false} className="h-12" />
+              <a className="flex-0 btn btn-ghost text-4xl hover:bg-transparent capitalize font-mono">
+                <span className="text-primary">rao</span>
+                <span>.</span>
+                <span>pics</span>
               </a>
             </div>
           </div>
 
-          <div className="p-2">
-            <button className="btn btn-block btn-primary btn-outline capitalize justify-start gap-3">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                <path d="M11.584 2.376a.75.75 0 01.832 0l9 6a.75.75 0 11-.832 1.248L12 3.901 3.416 9.624a.75.75 0 01-.832-1.248l9-6z" />
-                <path
-                  fillRule="evenodd"
-                  d="M20.25 10.332v9.918H21a.75.75 0 010 1.5H3a.75.75 0 010-1.5h.75v-9.918a.75.75 0 01.634-.74A49.109 49.109 0 0112 9c2.59 0 5.134.202 7.616.592a.75.75 0 01.634.74zm-7.5 2.418a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75zm3-.75a.75.75 0 01.75.75v6.75a.75.75 0 01-1.5 0v-6.75a.75.75 0 01.75-.75zM9 12.75a.75.75 0 00-1.5 0v6.75a.75.75 0 001.5 0v-6.75z"
-                  clipRule="evenodd"
-                />
-                <path d="M12 7.875a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" />
-              </svg>
-              r.library
-            </button>
-          </div>
-
-          <ul className="menu p-2 border-b border-base-300">
+          <ul className="menu p-2 my-2">
             <li>
               <a>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
