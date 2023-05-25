@@ -1,7 +1,12 @@
 import { type Image } from "@acme/db";
 
-export const getImgUrl = (prefix: string, img: Image) => {
-  const imgName = img.noThumbnail ? `${img.name}.${img.ext}` : `${img.name}_thumbnail.png`;
+export const getImgUrl = (prefix: string, img: Image, original = false) => {
+  let imgName = img.noThumbnail ? `${img.name}.${img.ext}` : `${img.name}_thumbnail.png`;
+
+  if (original) {
+    imgName = `${img.name}.${img.ext}`;
+  }
+
   return `${prefix}/${img.libraryId}/${img.id}.info/${imgName}`;
 };
 

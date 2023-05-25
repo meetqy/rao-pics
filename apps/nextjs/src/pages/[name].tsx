@@ -1,37 +1,69 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import { useEffect, useMemo } from "react";
 
 import { getImgUrl, transformByteToUnit } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
+import "photoswipe/style.css";
 
 const WorkSpace: NextPage = () => {
   const { query } = useRouter();
 
-  const { data } = trpc.image.getByLibrary.useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage } = trpc.image.getByLibrary.useInfiniteQuery(
     { limit: 24, library: query.name as string },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
 
+  useEffect(() => {
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: "#photoswipe",
+      children: "a",
+      showHideAnimationType: "none",
+      pswpModule: () => import("photoswipe"),
+    });
+    lightbox.init();
+
+    return () => {
+      lightbox.destroy();
+    };
+  }, [data]);
+
   const { data: config } = trpc.config.get.useQuery();
 
   const assetsUrl = useMemo(() => (config ? `http://${config?.ip}:${config?.assetsPort}` : null), [config]);
 
-  const items = useMemo(() => data?.pages[0]?.items, [data]);
+  const items = useMemo(() => {
+    return data?.pages.map((item) => item.items).flat();
+  }, [data]);
+
+  const onLoadMore = () => {
+    if (hasNextPage) {
+      void fetchNextPage();
+    }
+  };
 
   return (
-    <Layout>
+    <Layout loadMore={onLoadMore} loadMoreContent={<span className="text-base-300 text-sm">{hasNextPage ? "加载中..." : "已经到底了~~"}</span>}>
       <>
         {assetsUrl && (
-          <div className="grid grid-cols-6 gap-4 p-4">
-            {items?.map((item) => (
-              <div className="card glass" key={item.id}>
-                <figure>
-                  <img src={getImgUrl(assetsUrl, item)} alt={item.name} className="w-full object-cover aspect-square object-top" />
-                </figure>
+          <div className="grid grid-cols-6 gap-4 p-4" id="photoswipe">
+            {items?.map((item, index) => (
+              <div className="card glass cursor-pointer overflow-hidden" key={item.id}>
+                <a
+                  className="w-full aspect-square overflow-hidden"
+                  key={`${item.id}-${index}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  href={getImgUrl(assetsUrl, item, true)}
+                  data-pswp-width={item.width}
+                  data-pswp-height={item.height}
+                >
+                  <img draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="w-full h-full object-cover object-top" />
+                </a>
                 <div className="card-body p-4">
                   <p className="text-lg truncate font-medium">{item.name}</p>
                   <p className="text-sm inline-flex items-center">
