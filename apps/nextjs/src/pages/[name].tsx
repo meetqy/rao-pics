@@ -67,7 +67,7 @@ const WorkSpace: NextPage = () => {
                 </a>
                 <div className="card-body p-4">
                   <p className="text-lg truncate font-medium">{item.name}</p>
-                  <p className="text-sm inline-flex items-center">
+                  <p className="text-xs inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                       <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
                       <path
@@ -76,9 +76,9 @@ const WorkSpace: NextPage = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="ml-2">{item.modificationTime.toLocaleString("zh", { hour12: false })}</span>
+                    <span className="ml-2 font-mono">{item.modificationTime.toLocaleString("zh", { hour12: false })}</span>
                   </p>
-                  <p className="text-sm inline-flex items-center flex-wrap">
+                  <p className="text-xs inline-flex items-center flex-wrap">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                       <path
                         fillRule="evenodd"
@@ -86,13 +86,13 @@ const WorkSpace: NextPage = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="uppercase ml-2">{item.ext}</span>
+                    <span className="uppercase ml-2 font-mono">{item.ext}</span>
                     <span className="mr-1">,</span>
-                    <span>
+                    <span className="font-mono">
                       {item.width}×{item.height}
                     </span>
                     <span className="mr-1">,</span>
-                    <span>{transformByteToUnit(item.size)}</span>
+                    <span className="font-mono">{transformByteToUnit(item.size)}</span>
                   </p>
                 </div>
               </div>

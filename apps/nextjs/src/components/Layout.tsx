@@ -27,7 +27,7 @@ const Layout = (props: Props) => {
     <div className="drawer drawer-mobile">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content bg-base-100">
-        <header className="w-full sticky top-0 left-0 z-20 px-4  bg-base-100">
+        <header className="w-full sticky top-0 left-0 z-20 px-4 bg-base-100/90 backdrop-blur">
           <nav className="navbar w-full">
             <div className="flex-1">
               <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -38,7 +38,7 @@ const Layout = (props: Props) => {
             </div>
 
             <div className="flex-none">
-              <button className="btn btn-ghost m-1 capitalize">
+              <button className="btn btn-ghost m-1 capitalize font-mono">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path
                     strokeLinecap="round"
@@ -59,7 +59,7 @@ const Layout = (props: Props) => {
                     />
                   </svg>
                 </label>
-                <ul tabIndex={1} className="dropdown-content menu p-2 shadow-md bg-base-200/95 rounded-box w-40 uppercase">
+                <ul tabIndex={1} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-40 uppercase">
                   <li>
                     <a>jpg</a>
                   </li>
@@ -85,7 +85,7 @@ const Layout = (props: Props) => {
                     />
                   </svg>
                 </label>
-                <ul tabIndex={0} className="dropdown-content menu p-2 shadow-md bg-base-200/95 rounded-box w-52">
+                <ul tabIndex={0} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-52">
                   <li>
                     <a>按添加时间</a>
                   </li>
@@ -108,6 +108,7 @@ const Layout = (props: Props) => {
           </nav>
         </header>
 
+        {/* children */}
         <div>
           {children}
           <div className="text-center pb-4" ref={loadMoreDom}>
