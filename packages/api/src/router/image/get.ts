@@ -5,7 +5,7 @@ import { t } from "../../trpc";
 const ExtEnum = z.enum(["jpg", "png", "gif", "jpeg", "bmp"]);
 export type ExtEnum = z.infer<typeof ExtEnum>;
 
-export const getByLibrary = t.procedure
+export const get = t.procedure
   .input(
     z.object({
       // id or name

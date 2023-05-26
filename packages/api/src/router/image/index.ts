@@ -1,6 +1,6 @@
 import { t } from "../../trpc";
-import { getByLibrary } from "./getByLibrary";
+import { get } from "./get";
 
 export const imageRouter = t.router({
-  getByLibrary,
+  get,
 });

@@ -1,13 +1,15 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { StringParam, useQueryParams } from "use-query-params";
 
 import { type ExtEnum } from "@acme/api";
 
 const Navbar = () => {
   const { query } = useRouter();
   const libraryName = useMemo(() => query.library as string, [query]);
-
-  const ext = useMemo(() => query.ext?.toString().toLocaleLowerCase() as ExtEnum, [query]);
+  const [params, setParams] = useQueryParams({
+    ext: StringParam,
+  });
 
   const extOptions: ExtEnum[] = ["bmp", "gif", "jpg", "png"];
 
@@ -47,7 +49,17 @@ const Navbar = () => {
             <ul tabIndex={1} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-40 uppercase">
               {extOptions.map((item) => (
                 <li key={item}>
-                  <a className={item === ext ? "active" : ""}>{item}</a>
+                  <a
+                    onClick={() =>
+                      setParams({
+                        ...params,
+                        ext: item,
+                      })
+                    }
+                    className={item === params.ext ? "active" : ""}
+                  >
+                    {item}
+                  </a>
                 </li>
               ))}
             </ul>

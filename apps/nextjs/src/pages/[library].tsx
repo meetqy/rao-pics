@@ -13,7 +13,7 @@ const WorkSpace: NextPage = () => {
 
   const libraryName = useMemo(() => query.library as string, [query]);
 
-  const { data, fetchNextPage, hasNextPage } = trpc.image.getByLibrary.useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage } = trpc.image.get.useInfiniteQuery(
     { limit: 30, library: libraryName },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

@@ -24,10 +24,12 @@
     "@trpc/server": "^10.23.0",
     "ahooks": "^3.7.7",
     "next": "13.3.4",
+    "next-query-params": "^4.2.1",
     "photoswipe": "^5.3.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "superjson": "^1.12.3",
+    "use-query-params": "^2.2.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
