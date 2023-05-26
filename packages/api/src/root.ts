@@ -4,6 +4,7 @@ import { libraryRouter } from "./router/library";
 import { t } from "./trpc";
 
 export { type LibraryAdd } from "./router/library";
+export { type ExtEnum } from "./router/image/getByLibrary";
 
 export const appRouter = t.router({
   library: libraryRouter,

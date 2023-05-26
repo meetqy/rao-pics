@@ -11,8 +11,10 @@ import "photoswipe/style.css";
 const WorkSpace: NextPage = () => {
   const { query } = useRouter();
 
+  const libraryName = useMemo(() => query.library as string, [query]);
+
   const { data, fetchNextPage, hasNextPage } = trpc.image.getByLibrary.useInfiniteQuery(
-    { limit: 24, library: query.name as string },
+    { limit: 30, library: libraryName },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
@@ -50,7 +52,7 @@ const WorkSpace: NextPage = () => {
     <Layout loadMore={onLoadMore} loadMoreContent={<span className="text-base-300 text-sm">{hasNextPage ? "加载中..." : "已经到底了~~"}</span>}>
       <>
         {assetsUrl && (
-          <div className="grid grid-cols-6 gap-4 p-4" id="photoswipe">
+          <div className="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  gap-4 p-4" id="photoswipe">
             {items?.map((item, index) => (
               <div className="card glass cursor-pointer overflow-hidden" key={item.id}>
                 <a
