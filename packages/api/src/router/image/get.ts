@@ -3,7 +3,13 @@ import { z } from "zod";
 import { t } from "../../trpc";
 
 const ExtEnum = z.enum(["jpg", "png", "gif", "jpeg", "bmp"]);
+const OrderByObject = z.object({
+  modificationTime: z.enum(["asc", "desc"]).optional(),
+  size: z.enum(["asc", "desc"]).optional(),
+  name: z.enum(["asc", "desc"]).optional(),
+});
 export type ExtEnum = z.infer<typeof ExtEnum>;
+export type OrderByObject = z.infer<typeof OrderByObject>;
 
 export const get = t.procedure
   .input(
@@ -15,11 +21,12 @@ export const get = t.procedure
       // https://trpc.io/docs/reactjs/useinfinitequery
       // https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination
       cursor: z.string().nullish(),
+      orderBy: OrderByObject.optional(),
     }),
   )
   .query(async ({ ctx, input }) => {
     const limit = input.limit ?? 20;
-    const { cursor } = input;
+    const { cursor, orderBy } = input;
 
     const items = await ctx.prisma.image.findMany({
       where: {
@@ -29,6 +36,7 @@ export const get = t.procedure
       // get an extra item at the end which we'll use as next cursor
       take: limit + 1,
       cursor: cursor ? { id: cursor } : undefined,
+      orderBy,
       include: {
         folders: true,
       },

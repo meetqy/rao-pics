@@ -7,14 +7,28 @@ import { getImgUrl, transformByteToUnit } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
 import "photoswipe/style.css";
+import { type ParsedUrlQuery } from "querystring";
+
+import { type ExtEnum } from "@acme/api";
+
+interface PageUrlQuery extends ParsedUrlQuery {
+  library: string;
+  ext: ExtEnum;
+  orderBy: string;
+}
 
 const WorkSpace: NextPage = () => {
-  const { query } = useRouter();
+  const router = useRouter();
 
-  const libraryName = useMemo(() => query.library as string, [query]);
+  const query = useMemo(() => router.query as PageUrlQuery, [router.query]);
+  const orderBy = useMemo(() => {
+    if (!query.orderBy) return undefined;
+    const [k = "modificationTime", v] = query.orderBy.split(",");
+    return { [k]: v };
+  }, [query.orderBy]);
 
   const { data, fetchNextPage, hasNextPage } = trpc.image.get.useInfiniteQuery(
-    { limit: 30, library: libraryName },
+    { limit: 30, library: query.library, ext: query.ext, orderBy },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },

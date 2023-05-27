@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { StringParam, useQueryParams } from "use-query-params";
+import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
 import { type ExtEnum } from "@acme/api";
 
@@ -9,9 +9,18 @@ const Navbar = () => {
   const libraryName = useMemo(() => query.library as string, [query]);
   const [params, setParams] = useQueryParams({
     ext: StringParam,
+    // [filed, asc/desc]
+    orderBy: withDefault(StringParam, "modificationTime,desc"),
   });
+  const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
 
   const extOptions: ExtEnum[] = ["bmp", "gif", "jpg", "png"];
+
+  const orderByOptions = [
+    { name: "按添加时间", key: "modificationTime" },
+    { name: "按文件大小", key: "size" },
+    { name: "按文件名字", key: "name" },
+  ];
 
   return (
     <header className="w-full sticky top-0 left-0 z-20 px-4 bg-base-100/90 backdrop-blur">
@@ -76,23 +85,37 @@ const Navbar = () => {
               </svg>
             </label>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-52">
-              <li>
-                <a>按添加时间</a>
-              </li>
-              <li>
-                <a>按修改时间</a>
-              </li>
-              <li>
-                <a>文件大小</a>
-              </li>
-              <li>
-                <a>文件名称</a>
-              </li>
+              {orderByOptions.map((item) => (
+                <li key={item.key}>
+                  <a
+                    className={orderBy[0] === item.key ? "active" : ""}
+                    onClick={() => {
+                      setParams({
+                        ...params,
+                        orderBy: [item.key, orderBy[1]].join(","),
+                      });
+                    }}
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           <button className="btn btn-ghost btn-square btn-circle hover:bg-transparent">
-            <input name="test" type="checkbox" className="toggle toggle-primary toggle-sm -rotate-90" />
+            <input
+              name="sort"
+              type="checkbox"
+              checked={orderBy[1] === "desc"}
+              onChange={(e) => {
+                setParams({
+                  ...params,
+                  orderBy: [orderBy[0], e.target.checked ? "desc" : "asc"].join(","),
+                });
+              }}
+              className="toggle toggle-primary toggle-sm -rotate-90"
+            />
           </button>
         </div>
       </nav>
