@@ -29,6 +29,11 @@ const config: builder.Configuration = {
       to: "apps/nextjs/.next/static",
       filter: ["**/*"],
     },
+    {
+      from: "../nextjs/public",
+      to: "apps/nextjs/public",
+      filter: ["**/*"],
+    },
   ],
 };
 
