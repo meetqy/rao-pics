@@ -11,7 +11,8 @@
       "cache": false
     },
     "build": {
-      "outputs": [".next/**", ".expo/**"]
+      "outputs": [".next/**", ".expo/**"],
+      "cache": false
     },
     "compile": {
       "dependsOn": ["db:init", "build"]
