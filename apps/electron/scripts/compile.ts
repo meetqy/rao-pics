@@ -8,7 +8,7 @@ const config: builder.Configuration = {
   productName: "RaoPics",
   files: ["main/dist/**", "preload/dist/**", "renderer/dist/**"],
   extraMetadata: {
-    version: "0.5.0",
+    version: "0.5.0-beta.1",
   },
   extraResources: [
     {
