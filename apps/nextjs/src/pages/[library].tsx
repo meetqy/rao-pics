@@ -22,8 +22,7 @@ const WorkSpace: NextPage = () => {
 
   const query = useMemo(() => router.query as PageUrlQuery, [router.query]);
   const orderBy = useMemo(() => {
-    if (!query.orderBy) return undefined;
-    const [k = "modificationTime", v] = query.orderBy.split(",");
+    const [k = "modificationTime", v] = (query.orderBy || "modificationTime,desc").split(",");
     return { [k]: v };
   }, [query.orderBy]);
 
