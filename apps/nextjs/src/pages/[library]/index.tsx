@@ -15,6 +15,7 @@ interface PageUrlQuery extends ParsedUrlQuery {
   library: string;
   ext: ExtEnum;
   orderBy: string;
+  tag: string;
 }
 
 const WorkSpace: NextPage = () => {
@@ -27,7 +28,7 @@ const WorkSpace: NextPage = () => {
   }, [query.orderBy]);
 
   const { data, fetchNextPage, hasNextPage } = trpc.image.get.useInfiniteQuery(
-    { limit: 30, library: query.library, ext: query.ext, orderBy },
+    { limit: 30, library: query.library, ext: query.ext, orderBy, tag: query.tag },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },

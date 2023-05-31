@@ -18,6 +18,7 @@ export const get = t.procedure
       library: z.union([z.string(), z.number()]),
       limit: z.number().min(1).max(100).nullish(),
       ext: ExtEnum.optional(),
+      tag: z.string().optional(),
       // https://trpc.io/docs/reactjs/useinfinitequery
       // https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination
       cursor: z.string().nullish(),
@@ -26,12 +27,12 @@ export const get = t.procedure
   )
   .query(async ({ ctx, input }) => {
     const limit = input.limit ?? 20;
-    const { cursor, orderBy } = input;
+    const { cursor, orderBy, tag } = input;
 
     const items = await ctx.prisma.image.findMany({
       where: {
         OR: [{ libraryId: typeof input.library === "number" ? input.library : undefined }, { library: { name: input.library.toString() } }],
-        AND: [{ ext: input.ext }],
+        AND: [{ ext: input.ext, tags: tag ? { some: { name: { equals: tag } } } : undefined }],
       },
       // get an extra item at the end which we'll use as next cursor
       take: limit + 1,

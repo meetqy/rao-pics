@@ -11,6 +11,7 @@ const Navbar = () => {
     ext: StringParam,
     // [filed, asc/desc]
     orderBy: withDefault(StringParam, "createTime,desc"),
+    tag: StringParam,
   });
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
 
@@ -21,6 +22,10 @@ const Navbar = () => {
     { name: "按文件大小", key: "size" },
     { name: "按文件名字", key: "name" },
   ];
+
+  const cleanTag = () => {
+    setParams({ tag: undefined });
+  };
 
   return (
     <header className="w-full sticky top-0 left-0 z-20 px-4 bg-base-100/90 backdrop-blur">
@@ -44,6 +49,25 @@ const Navbar = () => {
             </svg>
             <span className="ml-2">{libraryName}</span>
           </button>
+
+          {params.tag && (
+            <button className="btn btn-ghost m-1 capitalize font-mono">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
+                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
+              </svg>
+              <span className="ml-2">{params.tag}</span>
+              <span className="ml-2" onClick={cleanTag}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-error">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </span>
+            </button>
+          )}
 
           <div className="dropdown dropdown-end">
             <label tabIndex={1} className="btn m-1 btn-ghost btn-circle">
@@ -91,7 +115,6 @@ const Navbar = () => {
                     className={orderBy[0] === item.key ? "active" : ""}
                     onClick={() => {
                       setParams({
-                        ...params,
                         orderBy: [item.key, orderBy[1]].join(","),
                       });
                     }}
@@ -110,7 +133,6 @@ const Navbar = () => {
               checked={orderBy[1] === "desc"}
               onChange={(e) => {
                 setParams({
-                  ...params,
                   orderBy: [orderBy[0], e.target.checked ? "desc" : "asc"].join(","),
                 });
               }}
