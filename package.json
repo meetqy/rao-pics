@@ -33,6 +33,7 @@
     "typescript": "^5.0.4"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@vitest/coverage-c8": "^0.31.0",
     "@vitest/ui": "^0.31.0",
     "vitest": "^0.31.0"

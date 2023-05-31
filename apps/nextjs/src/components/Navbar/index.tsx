@@ -17,7 +17,7 @@ const Navbar = () => {
   const extOptions: ExtEnum[] = ["bmp", "gif", "jpg", "png"];
 
   const orderByOptions = [
-    { name: "按添加时间", key: "createTime" },
+    { name: "按创建时间", key: "createTime" },
     { name: "按文件大小", key: "size" },
     { name: "按文件名字", key: "name" },
   ];
