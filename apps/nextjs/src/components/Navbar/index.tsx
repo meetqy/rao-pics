@@ -10,14 +10,14 @@ const Navbar = () => {
   const [params, setParams] = useQueryParams({
     ext: StringParam,
     // [filed, asc/desc]
-    orderBy: withDefault(StringParam, "modificationTime,desc"),
+    orderBy: withDefault(StringParam, "createTime,desc"),
   });
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
 
   const extOptions: ExtEnum[] = ["bmp", "gif", "jpg", "png"];
 
   const orderByOptions = [
-    { name: "按添加时间", key: "modificationTime" },
+    { name: "按添加时间", key: "createTime" },
     { name: "按文件大小", key: "size" },
     { name: "按文件名字", key: "name" },
   ];

@@ -22,7 +22,7 @@ const WorkSpace: NextPage = () => {
 
   const query = useMemo(() => router.query as PageUrlQuery, [router.query]);
   const orderBy = useMemo(() => {
-    const [k = "modificationTime", v] = (query.orderBy || "modificationTime,desc").split(",");
+    const [k = "createTime", v] = (query.orderBy || "createTime,desc").split(",");
     return { [k]: v };
   }, [query.orderBy]);
 
@@ -91,7 +91,7 @@ const WorkSpace: NextPage = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="ml-2 font-mono">{item.modificationTime.toLocaleString("zh", { hour12: false })}</span>
+                    <span className="ml-2 font-mono">{item.lastTime.toLocaleString("zh", { hour12: false })}</span>
                   </p>
                   <p className="text-xs inline-flex items-center flex-wrap">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">

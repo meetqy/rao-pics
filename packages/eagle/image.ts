@@ -38,17 +38,27 @@ export const handleImage = async (images: string[], library: Library, emit?: Eag
 
 export const transformImage = async (metadata: Metadata, library: Library) => {
   if (!SUPPORT_EXT.includes(metadata.ext)) return null;
+  if (metadata.isDeleted) return null;
 
   const imageInput: Prisma.ImageCreateInput = {
-    ...metadata,
+    id: metadata.id,
+    name: metadata.name,
+    size: metadata.size,
+    ext: metadata.ext,
+    width: metadata.width,
+    height: metadata.height,
+    noThumbnail: metadata.noThumbnail,
+    duration: metadata.duration,
     tags: JSON.stringify(metadata.tags),
-    palettes: JSON.stringify(metadata.palettes),
+    colors: {
+      connectOrCreate: handleColors(metadata).map((color) => ({
+        where: { color },
+        create: { color },
+      })),
+    },
     library: { connect: { id: library.id } },
-    btime: new Date(metadata.btime),
-    mtime: new Date(metadata.mtime),
-    modificationTime: new Date(metadata.modificationTime),
-    lastModified: new Date(metadata.lastModified),
-    deletedTime: metadata.deletedTime ? new Date(metadata.deletedTime) : undefined,
+    createTime: new Date(metadata.modificationTime),
+    lastTime: new Date(metadata.mtime),
     folders: { connect: metadata.folders?.map((id) => ({ id })) },
   };
 
@@ -59,4 +69,8 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
   });
 
   return res;
+};
+
+const handleColors = (metadata: Metadata) => {
+  return metadata.palettes.map((palette) => `${palette.color.join(",")},${palette.ratio}`);
 };

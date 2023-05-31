@@ -10,7 +10,6 @@ import { createContext } from "../src/trpc";
 const clear = async () => {
   await prisma.image.deleteMany();
   await prisma.folder.deleteMany();
-  await prisma.tagsGroup.deleteMany();
   await prisma.library.deleteMany({});
 };
 

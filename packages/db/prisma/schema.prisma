@@ -9,82 +9,69 @@ datasource db {
 }
 
 model Image {
-    id                String    @id @unique
-    name              String
-    size              Int
-    btime             DateTime
-    mtime             DateTime
-    modificationTime  DateTime
-    ext               String
-    url               String
-    annotation        String
-    width             Int
-    height            Int
-    star              Int?
-    /// JSON.stringify
-    palettes          String?
-    lastModified      DateTime?
-    deletedTime       DateTime?
-    isDeleted         Boolean?  @default(false)
-    // <--- 视频 start --->
-    resolutionWidth   Int?
-    resolutionHeight  Int?
-    duration          Float?
-    // <--- 视频 end --->
-    processingPalette Boolean?
-    noThumbnail       Boolean?
-    folders           Folder[]
-    /// JSON.stringify
-    tags              String?
-    /// eagle | billfish | pixcall | local
-    library           Library   @relation(fields: [libraryId], references: [id])
-    libraryId         Int
+    id          String   @id @unique
+    // 名字
+    name        String
+    // 文件大小
+    size        Int
+    // 创建时间
+    createTime  DateTime
+    // 修改时间
+    lastTime    DateTime
+    // 扩展名
+    ext         String
+    width       Int
+    height      Int
+    // 颜色 
+    colors      Color[]
+    // 视频时长
+    duration    Float?
+    // 缩略图
+    noThumbnail Boolean?
+    // 文件夹
+    folders     Folder[]
+    // 标签 JSON.stringify
+    tags        String?
+    library     Library  @relation(fields: [libraryId], references: [id])
+    libraryId   Int
 }
 
-model Config {
-    id         String @id @unique
-    webPort    Int
-    assetsPort Int
-    ip         String
+model Color {
+    // rgba 255,255,255,1
+    color   String  @id @unique
+    Image   Image?  @relation(fields: [imageId], references: [id])
+    imageId String?
 }
 
 // 资源大小从 image 中获取
 model Library {
-    id           Int         @id @default(autoincrement())
+    id           Int       @id @default(autoincrement())
     name         String
-    dir          String      @unique
+    dir          String    @unique
+    // eagle | billfish | pixcall | finder | ...
     type         String
     // 本地总数
-    fileCount    Int         @default(0)
+    fileCount    Int       @default(0)
     // 最后一次同步时间
     lastSyncTime DateTime?
     // 已同步的数量
     images       Image[]
     folders      Folder[]
-    tagsGroups   TagsGroup[]
 }
 
 model Folder {
-    id               String  @id @unique
-    name             String
-    description      String
-    pid              String?
-    modificationTime BigInt
-    iconColor        String?
-    icon             String?
-    password         String
-    passwordTips     String
-    images           Image[]
-    library          Library @relation(fields: [libraryId], references: [id])
-    libraryId        Int
-}
-
-model TagsGroup {
     id        String  @id @unique
-    name      String  @unique
-    color     String?
-    /// JSON.stringify
-    tags      String
+    name      String
+    images    Image[]
     library   Library @relation(fields: [libraryId], references: [id])
     libraryId Int
+}
+
+model Config {
+    id         String @id @unique
+    // 页面端口
+    webPort    Int
+    // 资源端口
+    assetsPort Int
+    ip         String
 }

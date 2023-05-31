@@ -8,7 +8,8 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
 
   for (const [index, folder] of f.entries()) {
     const input: Prisma.FolderCreateInput = {
-      ...folder,
+      id: folder.id,
+      name: folder.name,
       library: { connect: { id: library.id } },
     };
 

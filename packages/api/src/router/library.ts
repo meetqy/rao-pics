@@ -52,10 +52,6 @@ export const libraryRouter = t.router({
       where: { libraryId: input },
     });
 
-    await ctx.prisma.tagsGroup.deleteMany({
-      where: { libraryId: input },
-    });
-
     return await ctx.prisma.library.delete({
       where: { id: input },
     });

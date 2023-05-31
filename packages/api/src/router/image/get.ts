@@ -4,7 +4,7 @@ import { t } from "../../trpc";
 
 const ExtEnum = z.enum(["jpg", "png", "gif", "jpeg", "bmp"]);
 const OrderByObject = z.object({
-  modificationTime: z.enum(["asc", "desc"]).optional(),
+  createTime: z.enum(["asc", "desc"]).optional(),
   size: z.enum(["asc", "desc"]).optional(),
   name: z.enum(["asc", "desc"]).optional(),
 });
