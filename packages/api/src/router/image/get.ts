@@ -40,6 +40,7 @@ export const get = t.procedure
       orderBy,
       include: {
         folders: true,
+        tags: true,
       },
     });
 
