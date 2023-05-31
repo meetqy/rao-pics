@@ -1,4 +1,6 @@
 import { useInViewport } from "ahooks";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 
 import Alert from "./Alert";
@@ -8,15 +10,19 @@ interface Props {
   children?: JSX.Element;
   loadMore?: () => void;
   loadMoreContent: JSX.Element | string;
+  href: "/" | "/tags" | string;
 }
 
 const defaultProps: Props = {
   loadMoreContent: "加载中...",
+  href: "/",
 };
 
 const Layout = (props: Props) => {
   const { children } = props;
   const loadMoreDom = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const library = router.query.library as string;
 
   const [isViewPort] = useInViewport(loadMoreDom, {});
 
@@ -50,17 +56,17 @@ const Layout = (props: Props) => {
           <div className="sticky top-0 p-2">
             <div className="rounded-md flex px-2">
               <img src="/icon.png" draggable={false} className="h-12" />
-              <a className="flex-0 btn btn-ghost text-4xl hover:bg-transparent capitalize font-mono">
+              <Link href={`/${library}`} className="flex-0 btn btn-ghost text-4xl hover:bg-transparent capitalize font-mono">
                 <span className="text-primary">rao</span>
                 <span>.</span>
                 <span>pics</span>
-              </a>
+              </Link>
             </div>
           </div>
 
           <ul className="menu p-2 my-2">
             <li>
-              <a onClick={alert}>
+              <Link href={`${library}/tags`} className={props.href === "/tags" ? "active" : ""}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                   <path
                     fillRule="evenodd"
@@ -69,7 +75,7 @@ const Layout = (props: Props) => {
                   />
                 </svg>
                 标签
-              </a>
+              </Link>
             </li>
             <li>
               <a onClick={alert}>

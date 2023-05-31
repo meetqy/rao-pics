@@ -30,8 +30,7 @@ model Image {
     noThumbnail Boolean?
     // 文件夹
     folders     Folder[]
-    // 标签 JSON.stringify
-    tags        String?
+    tags        Tag[]
     library     Library  @relation(fields: [libraryId], references: [id])
     libraryId   Int
 }
@@ -57,6 +56,12 @@ model Library {
     // 已同步的数量
     images       Image[]
     folders      Folder[]
+}
+
+model Tag {
+    name    String  @id @unique
+    Image   Image?  @relation(fields: [imageId], references: [id])
+    imageId String?
 }
 
 model Folder {
