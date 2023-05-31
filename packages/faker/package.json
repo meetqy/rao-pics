@@ -1,0 +1,4 @@
+{
+  "name": "@acme/faker",
+  "main": "./index.ts"
+}

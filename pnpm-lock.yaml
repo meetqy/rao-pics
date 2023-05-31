@@ -365,6 +365,8 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
 
+  packages/faker: {}
+
 packages:
 
   /7zip-bin@5.1.1:

@@ -16,8 +16,8 @@ NodeJs 代码运行，docker 部署。可以转到 [main 分支](https://github.
 
 UI
 
-- [HeroIcons](https://heroicons.com/)
-- [DaysiUI](https://daisyui.com/)
+- [HeroIcons](https://heroicons.com/) - 所有的 Icon
+- [DaysiUI](https://daisyui.com/) - 主题
 
 ❤️ 特别感谢`electron-trpc-prisma`和`create-t3-turbo`，让项目有了非常 Nice 的开发体验，恩~！让我心情愉悦的写代码。该项目也是基于他们改造出来的。
 
