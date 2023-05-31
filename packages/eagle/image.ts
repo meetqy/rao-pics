@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import colorName from "color-name-list";
 
 import { prisma, type Library, type Prisma } from "@acme/db";
 
@@ -49,11 +50,21 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
     height: metadata.height,
     noThumbnail: metadata.noThumbnail,
     duration: metadata.duration,
-    tags: JSON.stringify(metadata.tags),
+    tags: {
+      connectOrCreate: metadata.tags?.map((tag) => ({
+        where: { name: tag },
+        create: { name: tag, library: { connect: { id: library.id } } },
+      })),
+    },
     colors: {
-      connectOrCreate: handleColors(metadata).map((color) => ({
-        where: { color },
-        create: { color },
+      connectOrCreate: handleColors(metadata.palettes).map((color) => ({
+        where: { name: color.name },
+        create: {
+          name: color.name,
+          hex: color.hex,
+          rgb: color.rgb,
+          library: { connect: { id: library.id } },
+        },
       })),
     },
     library: { connect: { id: library.id } },
@@ -71,6 +82,23 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
   return res;
 };
 
-const handleColors = (metadata: Metadata) => {
-  return metadata.palettes.map((palette) => `${palette.color.join(",")},${palette.ratio}`);
+export const handleColors = (palettes: Metadata["palettes"]): { name: string; hex: string; rgb: string }[] => {
+  const res = palettes
+    .map((item) => {
+      const hex = colorToHex(item.color);
+      const name = colorName.find((color) => color.hex === hex)?.name || "";
+      return {
+        name,
+        hex,
+        rgb: item.color.join(","),
+      };
+    })
+    .filter((item) => !!item.name);
+
+  return res;
+};
+
+export const colorToHex = (rgb: number[]) => {
+  const [r = 0, g = 0, b = 0] = rgb;
+  return "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 };

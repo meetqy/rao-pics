@@ -44,13 +44,20 @@ export const libraryRouter = t.router({
     }),
 
   remove: t.procedure.input(z.number()).mutation(async ({ ctx, input }) => {
-    await ctx.prisma.image.deleteMany({
-      where: { libraryId: input },
-    });
-
-    await ctx.prisma.folder.deleteMany({
-      where: { libraryId: input },
-    });
+    await ctx.prisma.$transaction([
+      ctx.prisma.image.deleteMany({
+        where: { libraryId: input },
+      }),
+      ctx.prisma.folder.deleteMany({
+        where: { libraryId: input },
+      }),
+      ctx.prisma.color.deleteMany({
+        where: { libraryId: input },
+      }),
+      ctx.prisma.tag.deleteMany({
+        where: { libraryId: input },
+      }),
+    ]);
 
     return await ctx.prisma.library.delete({
       where: { id: input },

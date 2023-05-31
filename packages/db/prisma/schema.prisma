@@ -36,10 +36,13 @@ model Image {
 }
 
 model Color {
-    // rgba 255,255,255,1
-    color   String  @id @unique
-    Image   Image?  @relation(fields: [imageId], references: [id])
-    imageId String?
+    name      String  @id @unique
+    // rgb 255,255,255
+    rgb       String
+    hex       String
+    images    Image[]
+    library   Library @relation(fields: [libraryId], references: [id])
+    libraryId Int
 }
 
 // 资源大小从 image 中获取
@@ -56,12 +59,15 @@ model Library {
     // 已同步的数量
     images       Image[]
     folders      Folder[]
+    Tag          Tag[]
+    Color        Color[]
 }
 
 model Tag {
-    name    String  @id @unique
-    Image   Image?  @relation(fields: [imageId], references: [id])
-    imageId String?
+    name      String  @id @unique
+    images    Image[]
+    library   Library @relation(fields: [libraryId], references: [id])
+    libraryId Int
 }
 
 model Folder {

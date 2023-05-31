@@ -13,6 +13,7 @@
   "dependencies": {
     "@acme/api": "^0.1.0",
     "@acme/db": "^0.1.0",
+    "color-name-list": "^10.8.0",
     "fast-glob": "^3.2.12"
   },
   "devDependencies": {
