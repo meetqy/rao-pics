@@ -12,6 +12,10 @@
 
 NodeJs 代码运行，docker 部署。可以转到 [main 分支](https://github.com/rao-pics/core/tree/main)
 
+## ToDo 待办事项
+
+开发进度、版本规划可以查看 [RaoPics Todo](https://github.com/orgs/rao-pics/projects/1)。
+
 ## 技术 & 页面资源
 
 UI

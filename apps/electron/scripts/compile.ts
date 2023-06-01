@@ -15,7 +15,7 @@ builder
           arch: ["arm64", "x64"],
         },
       },
-      extraMetadata: { version: "0.5.0-beta.1" },
+      extraMetadata: { version: "0.5.0-beta.2" },
       directories: {
         output: "dist",
         buildResources: "buildResources",
