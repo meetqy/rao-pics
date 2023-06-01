@@ -15,7 +15,8 @@
       "cache": false
     },
     "compile": {
-      "dependsOn": ["db:init", "build"]
+      "dependsOn": ["db:init", "build"],
+      "cache": false
     },
     "lint": {},
     "lint:fix": {},
