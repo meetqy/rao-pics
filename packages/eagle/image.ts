@@ -8,8 +8,14 @@ import { SUPPORT_EXT, type Metadata } from "./types";
 
 export const handleImage = async (images: string[], library: Library, emit?: EagleEmit) => {
   for (const [index, image] of images.entries()) {
-    const metadata = JSON.parse(fs.readFileSync(image, "utf-8")) as Metadata;
-    await transformImage(metadata, library);
+    // 特殊处理, metadata.json 可能是一个错误的json
+    // eagle 本身的问题
+    try {
+      const metadata = JSON.parse(fs.readFileSync(image, "utf-8")) as Metadata;
+      await transformImage(metadata, library);
+    } catch (e) {
+      continue;
+    }
 
     emit &&
       emit({
