@@ -6,9 +6,12 @@ import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
 
 const Page: NextPage = () => {
-  const { data } = trpc.tags.get.useQuery();
   const router = useRouter();
   const librarryName = router.query.library as string;
+
+  const { data } = trpc.tags.get.useQuery({
+    library: librarryName,
+  });
 
   return (
     <Layout href="/tags" loadMoreContent={<span className="text-base-300 text-sm">{"已经到底了~~"}</span>}>
