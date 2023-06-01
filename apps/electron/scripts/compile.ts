@@ -6,6 +6,7 @@ builder
     config: {
       productName: "Rao Pics",
       copyright: `Copyright © 2022-${new Date().getFullYear()} meetqy`,
+      asar: false,
       mac: {
         category: "public.app-category.photography",
         icon: "buildResources/icon.icns",

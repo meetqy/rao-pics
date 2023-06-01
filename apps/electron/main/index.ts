@@ -9,6 +9,7 @@ import { callProcedure } from "@trpc/server";
 
 import { appRouter, createContext } from "@acme/api";
 import { closeAssetsServer } from "@acme/assets-server";
+import { createSqlite } from "@acme/db";
 
 import type { IPCRequestOptions } from "../types";
 import LibraryIPC from "./ipc/library";
@@ -145,8 +146,11 @@ app.on("ready", () => {
     process.env["WEB_PORT"] = _web_port;
     process.env["ASSETS_PORT"] = _assets_port;
 
-    // Start nextjs server
     if (app.isPackaged) {
+      // Create sqlite database file
+      createSqlite(join(process.resourcesPath, "./packages/db/prisma/db.sqlite"));
+
+      // Start nextjs server
       nextjsChild = cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"), {
         env: {
           PORT: (_web_port || 9620).toString(),

@@ -10,7 +10,10 @@
       "persistent": true,
       "cache": false
     },
-    "build": {},
+    "build": {
+      "outputs": ["./.next"],
+      "cache": false
+    },
     "compile": {
       "dependsOn": ["db:init", "build"],
       "cache": false
