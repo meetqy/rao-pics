@@ -52,6 +52,7 @@
     "@trpc/client": "^10.23.0",
     "@trpc/react-query": "^10.25.0",
     "@trpc/server": "^10.23.0",
+    "electron-log": "5.0.0-beta.24",
     "get-port-please": "^3.0.1",
     "ip": "^1.1.8",
     "next": "13.3.4",

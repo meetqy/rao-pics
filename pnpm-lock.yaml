@@ -78,6 +78,9 @@ importers:
       '@trpc/server':
         specifier: ^10.23.0
         version: 10.23.0
+      electron-log:
+        specifier: 5.0.0-beta.24
+        version: 5.0.0-beta.24
       get-port-please:
         specifier: ^3.0.1
         version: 3.0.1
@@ -366,6 +369,12 @@ importers:
         version: 5.0.4
 
   packages/faker: {}
+
+  packages/log:
+    dependencies:
+      electron-log:
+        specifier: 5.0.0-beta.24
+        version: 5.0.0-beta.24
 
 packages:
 
@@ -2796,6 +2805,11 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /electron-log@5.0.0-beta.24:
+    resolution: {integrity: sha512-wDrxfCtRJLWL/xKXkRHtSTGoMaJPGbfIuwoo7ssDlgd8TTEBhRncjejzluswCewXJJqZph5PPNn8Y2McwUP29g==}
+    engines: {electron: '>= 13', node: '>= 14'}
+    dev: false
 
   /electron-osx-sign@0.6.0:
     resolution: {integrity: sha512-+hiIEb2Xxk6eDKJ2FFlpofCnemCbjbT5jz+BKGpVBrRNT3kWTGs4DfNX6IzGwgi33hUcXF+kFs9JW+r6Wc1LRg==}
