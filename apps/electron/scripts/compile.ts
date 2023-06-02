@@ -1,9 +1,12 @@
 import builder from "electron-builder";
 
+import { config } from "./config.js";
+
+const { name, version } = config;
 const extraResources: builder.FileSet[] = [];
 
-export const Config: builder.Configuration = {
-  productName: "Rao Pics",
+export const AppConfig: builder.Configuration = {
+  productName: name,
   copyright: `Copyright © 2022-${new Date().getFullYear()} meetqy`,
   mac: {
     category: "public.app-category.photography",
@@ -11,11 +14,11 @@ export const Config: builder.Configuration = {
     darkModeSupport: true,
     target: {
       target: "dmg",
-      arch: ["x64", "arm64"],
+      // arch: ["x64", "arm64"],
     },
     extraResources: extraResources,
   },
-  extraMetadata: { version: "0.5.0-beta.2" },
+  extraMetadata: { version },
   directories: {
     output: "dist",
     buildResources: "buildResources",
@@ -52,7 +55,7 @@ export const Config: builder.Configuration = {
 
 builder
   .build({
-    config: Config,
+    config: AppConfig,
   })
   .then((result) => {
     console.log(JSON.stringify(result));
