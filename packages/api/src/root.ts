@@ -1,4 +1,5 @@
 import { configRouter } from "./router/config";
+import { foldersRouter } from "./router/folder";
 import { imageRouter } from "./router/image";
 import { libraryRouter } from "./router/library";
 import { tagsRouter } from "./router/tags";
@@ -12,6 +13,7 @@ export const appRouter = t.router({
   image: imageRouter,
   config: configRouter,
   tags: tagsRouter,
+  folders: foldersRouter,
 });
 
 // export type definition of API

@@ -10,13 +10,13 @@ import "photoswipe/style.css";
 import { type ParsedUrlQuery } from "querystring";
 
 import { type ExtEnum } from "@acme/api";
-import { type Tag } from "@acme/db";
 
 interface PageUrlQuery extends ParsedUrlQuery {
   library: string;
   ext: ExtEnum;
   orderBy: string;
   tag: string;
+  folder: string;
 }
 
 const WorkSpace: NextPage = () => {
@@ -29,7 +29,7 @@ const WorkSpace: NextPage = () => {
   }, [query.orderBy]);
 
   const { data, fetchNextPage, hasNextPage } = trpc.image.get.useInfiniteQuery(
-    { limit: 30, library: query.library, ext: query.ext, orderBy, tag: query.tag },
+    { limit: 30, library: query.library, ext: query.ext, orderBy, tag: query.tag, folder: query.folder },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
@@ -84,11 +84,16 @@ const WorkSpace: NextPage = () => {
                 </a>
                 <div className="card-body p-4">
                   <p className="text-lg truncate font-medium">{item.name}</p>
-                  {item.tags && (
-                    <div className="text-xs">
+                  {(item.tags || item.folders) && (
+                    <div className="text-xs space-x-2">
                       {item.tags.map((tag) => (
-                        <div className="badge badge-sm badge-info bg-info/50" key={tag.name}>
+                        <div className="badge badge-sm badge-secondary bg-secondary/50 border-none" key={tag.name}>
                           {tag.name}
+                        </div>
+                      ))}
+                      {item.folders.map((folder) => (
+                        <div className="badge badge-sm badge-primary bg-primary/50 border-none" key={folder.id}>
+                          {folder.name}
                         </div>
                       ))}
                     </div>
