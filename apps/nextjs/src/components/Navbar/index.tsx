@@ -12,6 +12,7 @@ const Navbar = () => {
     // [filed, asc/desc]
     orderBy: withDefault(StringParam, "createTime,desc"),
     tag: StringParam,
+    folder: StringParam,
   });
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
 
@@ -23,9 +24,7 @@ const Navbar = () => {
     { name: "按文件名字", key: "name" },
   ];
 
-  const cleanTag = () => {
-    setParams({ tag: undefined });
-  };
+  const cleanTag = () => {};
 
   return (
     <header className="w-full sticky top-0 left-0 z-20 px-4 bg-base-100/90 backdrop-blur">
@@ -61,7 +60,26 @@ const Navbar = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
               </svg>
               <span className="ml-2">{params.tag}</span>
-              <span className="ml-2" onClick={cleanTag}>
+              <span className="ml-2" onClick={() => setParams({ tag: undefined })}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-error">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </span>
+            </button>
+          )}
+
+          {params.folder && (
+            <button className="btn btn-ghost m-1 capitalize font-mono">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+                />
+              </svg>
+
+              <span className="ml-2">{params.folder}</span>
+              <span className="ml-2" onClick={() => setParams({ folder: undefined })}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-error">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
