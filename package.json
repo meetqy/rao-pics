@@ -19,7 +19,8 @@
     "type-check": "turbo type-check",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui --no-threads"
+    "test:ui": "vitest --ui --no-threads",
+    "release:beta": "standard-version --prerelease beta"
   },
   "dependencies": {
     "@acme/eslint-config": "^0.1.0",
