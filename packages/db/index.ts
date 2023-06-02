@@ -1,3 +1,4 @@
+import { homedir } from "os";
 import { PrismaClient } from "@prisma/client";
 import * as fs from "fs-extra";
 
@@ -5,8 +6,7 @@ export * from "@prisma/client";
 
 const globalForPrisma = globalThis as { prisma?: PrismaClient };
 
-const _userHome = process.env["HOME"] || process.env["USERPROFILE"];
-const cacheDir = `${_userHome}/Library/Caches/Rao Pics`;
+const cacheDir = `${homedir()}/Library/Caches/Rao Pics`;
 
 /**
  * 创建sqlite数据库
