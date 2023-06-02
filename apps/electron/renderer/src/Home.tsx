@@ -11,7 +11,7 @@ function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
-  const { ip, web_port, assets_port } = window.electronENV;
+  const { ip, web_port, assets_port, name, version } = window.electronENV;
   const config = trpc.config.update.useMutation();
 
   useEffect(() => {
@@ -274,8 +274,8 @@ function Home() {
             </figure>
             <div className="card-body items-center text-center">
               <h2 className="card-title uppercase !mb-0">
-                rao.pics
-                <button className="btn btn-sm btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v0.5.0-beta.2</button>
+                {name}
+                <button className="btn btn-sm btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v{version}</button>
               </h2>
               <p className="text-base-content/90 ">~~暂未添加文件夹，请点击下面按钮~~</p>
               <div className="card-actions mt-2">

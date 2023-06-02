@@ -147,6 +147,11 @@ app.on("ready", () => {
     process.env["ASSETS_PORT"] = _assets_port;
 
     if (app.isPackaged) {
+      // app config production
+      // dev 在 watchDesktop.ts 中指定
+      process.env["APP_VERSION"] = app.getVersion();
+      process.env["APP_NAME"] = app.getName();
+
       // Create sqlite database file
       createSqlite(join(process.resourcesPath, "./packages/db/prisma/db.sqlite"));
 

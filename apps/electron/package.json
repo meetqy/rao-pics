@@ -1,5 +1,6 @@
 {
   "name": "@acme/electron",
+  "productName": "Rao Pics",
   "version": "0.1.0",
   "private": true,
   "main": "main/dist/index.cjs",

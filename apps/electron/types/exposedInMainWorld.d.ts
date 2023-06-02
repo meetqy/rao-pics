@@ -21,5 +21,7 @@ interface Window {
     ip: string;
     web_port: string;
     assets_port: string;
+    name: string;
+    version: string;
   };
 }
