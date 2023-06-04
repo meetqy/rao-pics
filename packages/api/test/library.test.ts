@@ -8,8 +8,10 @@ import { createContext } from "../src/trpc";
 
 // 测试之前清除所有数据
 const clear = async () => {
-  await prisma.image.deleteMany();
+  await prisma.tag.deleteMany();
   await prisma.folder.deleteMany();
+  await prisma.color.deleteMany();
+  await prisma.image.deleteMany();
   await prisma.library.deleteMany({});
 };
 
