@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { type inferProcedureInput } from "@trpc/server";
 import { describe, expect, test } from "vitest";
 
@@ -10,19 +11,19 @@ describe("@acme/api config", () => {
 
   type Input = inferProcedureInput<AppRouter["config"]["update"]>;
   const input: Input = {
-    assetsPort: 9620,
-    ip: "192.168.1.1",
-    webPort: 9621,
+    assetsPort: faker.internet.port(),
+    ip: faker.internet.ip(),
+    webPort: faker.internet.port(),
   };
 
-  test("update", async () => {
+  test("Update", async () => {
     expect(await caller.config.update(input)).toMatchObject({
       id: "config",
       ...input,
     });
   });
 
-  test("get", async () => {
+  test("Get", async () => {
     expect(await caller.config.get()).toMatchObject({
       ...input,
       id: "config",
