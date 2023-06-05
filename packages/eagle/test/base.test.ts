@@ -26,20 +26,35 @@ describe("@acme/eagle", async () => {
     expect(folderRes).toHaveLength(count);
   });
 
-  test("Image support ext", async () => {
+  test("Image 'isDeleted' is true", async () => {
+    const image = Mock.eagle.image({
+      tags: Mock.eagle.tags(),
+      folders: folderRes.map((e) => e.id),
+      palettes: Mock.eagle.palettes(),
+    });
+
+    image.isDeleted = true;
+
+    const res = await transformImage(image, lib);
+    expect(res).toBeNull();
+  });
+
+  test("Image ext is supported", async () => {
     const image = Mock.eagle.image({
       tags: Mock.eagle.tags(),
       folders: folderRes.map((e) => e.id),
       palettes: Mock.eagle.palettes(),
     });
     const random = faker.number.int({ min: 0, max: SUPPORT_EXT.length - 1 });
+
     image.ext = SUPPORT_EXT[random] || "jpg";
+    image.isDeleted = false;
 
     const res = await transformImage(image, lib);
     expect(res).toHaveProperty("id");
   });
 
-  test("Image not support ext", async () => {
+  test("Image ext is not supported", async () => {
     const image = Mock.eagle.image({
       tags: Mock.eagle.tags(),
       folders: folderRes.map((e) => e.id),
@@ -47,6 +62,7 @@ describe("@acme/eagle", async () => {
     });
 
     image.ext = SUPPORT_EXT.includes(image.ext) ? "sqlite" : image.ext;
+    image.isDeleted = false;
 
     const res = await transformImage(image, lib);
     expect(res).toBeNull();

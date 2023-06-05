@@ -82,13 +82,11 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
     folders: { connect: metadata.folders?.map((id) => ({ id })) },
   };
 
-  const res = await prisma.image.upsert({
+  return prisma.image.upsert({
     where: { id: metadata.id },
     update: imageInput,
     create: imageInput,
   });
-
-  return res;
 };
 
 export const handleColors = (palettes: Metadata["palettes"]): { name: string; hex: string; rgb: string }[] => {
