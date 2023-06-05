@@ -14,6 +14,14 @@ const Mock = {
       prisma.config.deleteMany(),
     ]));
   },
+
+  library: (type: "eagle" | "pixcall" | "billfish" = "eagle") => {
+    return {
+      name: faker.system.fileName(),
+      dir: faker.system.directoryPath(),
+      type,
+    };
+  },
 };
 
 export default Mock;

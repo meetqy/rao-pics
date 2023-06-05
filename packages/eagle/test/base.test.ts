@@ -12,11 +12,7 @@ describe("@acme/eagle", async () => {
   await Mock.cleanDB();
 
   const lib = await prisma.library.create({
-    data: {
-      name: "test",
-      dir: "/test",
-      type: "eagle",
-    },
+    data: Mock.library(),
   });
 
   let folderRes: Folder[] = [];

@@ -1,10 +1,10 @@
-import { type inferProcedureInput } from "@trpc/server";
-import { describe, expect, test } from "vitest";
+import { faker } from "@faker-js/faker";
+import { describe, expect, it, test } from "vitest";
 
 import { prisma } from "@acme/db";
 import Mock from "@acme/mock";
 
-import { appRouter, type AppRouter } from "../src/root";
+import { appRouter } from "../src/root";
 import { createContext } from "../src/trpc";
 
 describe("@acme/api library", () => {
@@ -14,28 +14,35 @@ describe("@acme/api library", () => {
   test("add", async () => {
     await Mock.cleanDB();
 
-    type Input = inferProcedureInput<AppRouter["library"]["add"]>;
-    const input: Input = {
-      name: "test.library",
-      dir: "/User/aaa/bb",
-      type: "eagle",
-    };
+    const input = Mock.library();
 
-    // 添加
-    expect(await caller.library.add(input)).toMatchObject(input);
+    // 正常添加
+    it("normal", async () => {
+      expect(await caller.library.add(input)).toMatchObject(input);
+    });
 
-    // 重复添加 dir 唯一
-    void expect(() => caller.library.add(input)).rejects.toThrowError("dir");
+    // 重复添加 dir
+    it("repeatedly add", () => {
+      void expect(() => caller.library.add(input)).rejects.toThrowError("dir");
+    });
+
+    // 带 fileCount 字段
+    it("with fileCount", async () => {
+      const json = {
+        ...input,
+        fileCount: faker.number.int({ max: 9999999 }),
+      };
+      expect(await caller.library.add(json)).toMatchObject(json);
+    });
   });
 
   test("update", async () => {
     const res = await prisma.library.findFirst();
-    type Input = inferProcedureInput<AppRouter["library"]["update"]>;
 
     if (res) {
-      const input: Input = {
+      const input = {
         id: res.id,
-        fileCount: 232,
+        fileCount: faker.number.int({ max: 9999999 }),
       };
 
       expect(await caller.library.update(input)).toMatchObject(input);
@@ -44,12 +51,9 @@ describe("@acme/api library", () => {
 
   test("remove", async () => {
     const res = await prisma.library.findFirst();
-    type Input = inferProcedureInput<AppRouter["library"]["remove"]>;
 
     if (res) {
-      const input: Input = res.id;
-
-      expect(await caller.library.remove(input)).toMatchObject(res);
+      expect(await caller.library.remove(res.id)).toMatchObject(res);
     }
   });
 });
