@@ -1,5 +1,6 @@
+import { useRequest } from "ahooks";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
 import { type ExtEnum } from "@acme/api";
@@ -13,6 +14,7 @@ const Navbar = () => {
     orderBy: withDefault(StringParam, "createTime,desc"),
     tag: StringParam,
     folder: StringParam,
+    k: StringParam,
   });
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
 
@@ -24,7 +26,22 @@ const Navbar = () => {
     { name: "按文件名字", key: "name" },
   ];
 
-  const cleanTag = () => {};
+  const [value, setValue] = useState<string | undefined>();
+  const setParamsK = (k: string | undefined) => {
+    return Promise.resolve(setParams({ k }));
+  };
+
+  const { run } = useRequest(setParamsK, {
+    debounceWait: 500,
+  });
+
+  useEffect(() => {
+    setValue(params.k ?? undefined);
+  }, [params.k]);
+
+  useEffect(() => {
+    run(value);
+  }, [value]);
 
   return (
     <header className="w-full sticky top-0 left-0 z-20 px-4 bg-base-100/90 backdrop-blur">
@@ -34,7 +51,13 @@ const Navbar = () => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
           </svg>
 
-          <input type="text" placeholder="搜索" className="input focus:outline-none input-ghost h-12 normal-case" />
+          <input
+            value={value}
+            onInput={(e) => setValue((e.target as EventTarget & HTMLInputElement).value)}
+            type="text"
+            placeholder="搜索"
+            className="input w-1/3 focus:outline-none input-ghost h-12 normal-case"
+          />
         </div>
 
         <div className="flex-none">
