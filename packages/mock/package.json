@@ -1,0 +1,8 @@
+{
+  "name": "@acme/mock",
+  "main": "./index.ts",
+  "version": "0.1.0",
+  "devDependencies": {
+    "@acme/db": "^0.1.0"
+  }
+}

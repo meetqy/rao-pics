@@ -264,6 +264,9 @@ importers:
       '@acme/eslint-config':
         specifier: ^0.1.0
         version: link:../config/eslint
+      '@acme/mock':
+        specifier: ^0.1.0
+        version: link:../mock
       eslint:
         specifier: ^8.39.0
         version: 8.39.0
@@ -367,6 +370,9 @@ importers:
       '@acme/eslint-config':
         specifier: ^0.1.0
         version: link:../config/eslint
+      '@acme/mock':
+        specifier: ^0.1.0
+        version: link:../mock
       eslint:
         specifier: ^8.39.0
         version: 8.39.0
@@ -374,7 +380,17 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
 
-  packages/faker: {}
+  packages/faker:
+    devDependencies:
+      '@acme/db':
+        specifier: ^0.1.0
+        version: link:../db
+
+  packages/mock:
+    devDependencies:
+      '@acme/db':
+        specifier: ^0.1.0
+        version: link:../db
 
 packages:
 

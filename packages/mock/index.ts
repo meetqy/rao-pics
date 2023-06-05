@@ -1,5 +1,23 @@
 import { faker } from "@faker-js/faker";
 
+import { prisma } from "@acme/db";
+
+const Mock = {
+  // 清空数据库
+  cleanDB: async () => {
+    void (await prisma.$transaction([
+      prisma.color.deleteMany(),
+      prisma.tag.deleteMany(),
+      prisma.folder.deleteMany(),
+      prisma.image.deleteMany(),
+      prisma.library.deleteMany(),
+      prisma.config.deleteMany(),
+    ]));
+  },
+};
+
+export default Mock;
+
 export function generateImage(folders: string[]) {
   const max = faker.number.int({ min: 0, max: 10 });
   const f = folders.slice(0, max);
