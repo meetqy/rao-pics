@@ -18,6 +18,7 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
       update: input,
       create: input,
     });
+
     emit &&
       emit({
         type: "folder",
@@ -46,12 +47,10 @@ const treeToArray = (folders: Folder[]) => {
 
   const callback = (item: Folder) => {
     (item.children || (item.children = [])).forEach((v) => {
-      v.pid = item.id;
       callback(v);
     });
 
     delete item.children;
-    delete item.tags;
     newFolders.push(item);
   };
 

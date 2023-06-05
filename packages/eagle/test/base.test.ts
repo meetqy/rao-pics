@@ -6,7 +6,6 @@ import Mock from "@acme/mock";
 import { handleFolder } from "../folder";
 import { transformImage } from "../image";
 import imageMock from "./image.json";
-import mock from "./metadata.json";
 
 describe("@acme/eagle", async () => {
   await Mock.cleanDB();
@@ -18,10 +17,12 @@ describe("@acme/eagle", async () => {
   let folderRes: Folder[] = [];
 
   test("folder", async () => {
-    await handleFolder(mock.folders, lib, (e) => console.log(e));
+    const { folders, count } = Mock.eagle.folders();
 
-    folderRes = await prisma.folder.findMany();
-    expect(folderRes).toHaveLength(5);
+    await handleFolder(folders, lib, (e) => console.log(e));
+
+    folderRes = await prisma.folder.findMany({});
+    expect(folderRes).toHaveLength(count);
   });
 
   test("image", async () => {
