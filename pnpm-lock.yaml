@@ -380,12 +380,6 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
 
-  packages/faker:
-    devDependencies:
-      '@acme/db':
-        specifier: ^0.1.0
-        version: link:../db
-
   packages/mock:
     devDependencies:
       '@acme/db':
