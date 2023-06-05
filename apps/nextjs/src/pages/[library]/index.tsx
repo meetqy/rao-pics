@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { getImgUrl, transformByteToUnit } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
@@ -17,9 +17,10 @@ interface PageUrlQuery extends ParsedUrlQuery {
   orderBy: string;
   tag: string;
   folder: string;
+  k: string;
 }
 
-const WorkSpace: NextPage = () => {
+const IndexPage: NextPage = () => {
   const router = useRouter();
 
   const query = useMemo(() => router.query as PageUrlQuery, [router.query]);
@@ -29,7 +30,7 @@ const WorkSpace: NextPage = () => {
   }, [query.orderBy]);
 
   const { data, fetchNextPage, hasNextPage } = trpc.image.get.useInfiniteQuery(
-    { limit: 30, library: query.library, ext: query.ext, orderBy, tag: query.tag, folder: query.folder },
+    { limit: 30, library: query.library, ext: query.ext, orderBy, tag: query.tag, folder: query.folder, keyword: query.k },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
@@ -135,4 +136,4 @@ const WorkSpace: NextPage = () => {
   );
 };
 
-export default WorkSpace;
+export default IndexPage;
