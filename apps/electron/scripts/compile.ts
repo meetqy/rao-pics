@@ -14,7 +14,7 @@ export const AppConfig: builder.Configuration = {
     darkModeSupport: true,
     target: {
       target: "dmg",
-      // arch: ["x64", "arm64"],
+      arch: ["x64", "arm64"],
     },
     extraResources: extraResources,
   },
