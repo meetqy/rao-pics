@@ -41,14 +41,7 @@ export interface LibraryMetadata {
 export interface Folder {
   id: string;
   name: string;
-  pid?: string;
-  description: string;
   children?: Folder[];
-  modificationTime: number;
-  tags?: string[];
-  iconColor?: string;
-  password: string;
-  passwordTips: string;
 }
 
 export interface TagsGroup {

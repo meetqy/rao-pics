@@ -27,14 +27,11 @@ export const createSqlite = (sqliteSrc: string) => {
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
-    datasources:
-      process.env.NODE_ENV === "development"
-        ? undefined
-        : {
-            db: {
-              url: `file:${cacheDir}/db.sqlite`,
-            },
-          },
+    datasources: {
+      db: {
+        url: process.env.NODE_ENV === "development" ? "file:./db.sqlite?connection_limit=1" : `file:${cacheDir}/db.sqlite?connection_limit=1`,
+      },
+    },
     log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   });
 
