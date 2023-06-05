@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import { prisma, type Folder } from "@acme/db";
+import Mock from "@acme/mock";
 
 import { handleFolder } from "../folder";
 import { transformImage } from "../image";
@@ -8,11 +9,7 @@ import imageMock from "./image.json";
 import mock from "./metadata.json";
 
 describe("@acme/eagle", async () => {
-  await prisma.folder.deleteMany();
-  await prisma.tag.deleteMany();
-  await prisma.color.deleteMany();
-  await prisma.image.deleteMany();
-  await prisma.library.deleteMany();
+  await Mock.cleanDB();
 
   const lib = await prisma.library.create({
     data: {

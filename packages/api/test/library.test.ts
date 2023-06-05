@@ -2,25 +2,17 @@ import { type inferProcedureInput } from "@trpc/server";
 import { describe, expect, test } from "vitest";
 
 import { prisma } from "@acme/db";
+import Mock from "@acme/mock";
 
 import { appRouter, type AppRouter } from "../src/root";
 import { createContext } from "../src/trpc";
-
-// 测试之前清除所有数据
-const clear = async () => {
-  await prisma.tag.deleteMany();
-  await prisma.folder.deleteMany();
-  await prisma.color.deleteMany();
-  await prisma.image.deleteMany();
-  await prisma.library.deleteMany({});
-};
 
 describe("@acme/api library", () => {
   const ctx = createContext();
   const caller = appRouter.createCaller(ctx);
 
   test("add", async () => {
-    await clear();
+    await Mock.cleanDB();
 
     type Input = inferProcedureInput<AppRouter["library"]["add"]>;
     const input: Input = {
