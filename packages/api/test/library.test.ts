@@ -11,32 +11,31 @@ describe("@acme/api library", () => {
   const ctx = createContext();
   const caller = appRouter.createCaller(ctx);
 
-  test("add", async () => {
+  const input = Mock.library();
+
+  // 正常添加
+  test("Add normal", async () => {
     await Mock.cleanDB();
 
-    const input = Mock.library();
-
-    // 正常添加
-    it("normal", async () => {
-      expect(await caller.library.add(input)).toMatchObject(input);
-    });
-
-    // 重复添加 dir
-    it("repeatedly add", () => {
-      void expect(() => caller.library.add(input)).rejects.toThrowError("dir");
-    });
-
-    // 带 fileCount 字段
-    it("with fileCount", async () => {
-      const json = {
-        ...input,
-        fileCount: faker.number.int({ max: 9999999 }),
-      };
-      expect(await caller.library.add(json)).toMatchObject(json);
-    });
+    expect(await caller.library.add(input)).toMatchObject(input);
   });
 
-  test("update", async () => {
+  // 重复添加 dir
+  test("Add dir repeatedly", () => {
+    void expect(() => caller.library.add(input)).rejects.toThrowError("dir");
+  });
+
+  // 带 fileCount 字段
+  test("Add with fileCount", async () => {
+    await Mock.cleanDB();
+    const json = {
+      ...input,
+      fileCount: faker.number.int({ max: 9999999 }),
+    };
+    expect(await caller.library.add(json)).toMatchObject(json);
+  });
+
+  test("Update", async () => {
     const res = await prisma.library.findFirst();
 
     if (res) {
@@ -49,7 +48,7 @@ describe("@acme/api library", () => {
     }
   });
 
-  test("remove", async () => {
+  test("Remove", async () => {
     const res = await prisma.library.findFirst();
 
     if (res) {
