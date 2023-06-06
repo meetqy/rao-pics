@@ -7,7 +7,7 @@
   },
   "packageManager": "pnpm@8.3.1",
   "scripts": {
-    "preinstall": "pnpm db:init",
+    "postinstall": "pnpm db:init",
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
