@@ -8,10 +8,6 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        node-version: [16.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
