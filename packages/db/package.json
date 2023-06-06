@@ -4,10 +4,11 @@
   "main": "./index.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "rm -rf .turbo node_modules prisma/db.*",
     "db:generate": "pnpm prisma generate",
     "db:push": "pnpm prisma db push --skip-generate --force-reset",
-    "db:init": "pnpm db:push && pnpm db:generate",
+    "db:init": "npx prisma migrate dev --name init",
+    "db:reset": "pnpm db:push && pnpm db:generate",
     "dev": "pnpm prisma studio"
   },
   "dependencies": {
