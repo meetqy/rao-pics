@@ -44,8 +44,7 @@ jobs:
           pnpm run test --if-present
 
       # Only run the coverage once
-      - if: ${{ matrix.node-version == '16.x' }}
-        name: Get Coverage for badge
+      - name: Get Coverage for badge
         run: |
           # var SUMMARY = [
           #   '',
@@ -76,8 +75,7 @@ jobs:
           echo $BRANCH_NAME
           # process.env.BRANCH = 'pull_27';
           echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
-      - if: ${{ matrix.node-version == '16.x' }}
-        name: Create the Badge
+      - name: Create the Badge
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
