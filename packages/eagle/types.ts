@@ -33,7 +33,6 @@ export interface Metadata {
 
 export interface LibraryMetadata {
   folders: Folder[];
-  tagsGroups: TagsGroup[];
   modificationTime: number;
   applicationVersion: string;
 }
@@ -42,10 +41,4 @@ export interface Folder {
   id: string;
   name: string;
   children?: Folder[];
-}
-
-export interface TagsGroup {
-  id: string;
-  name: string;
-  tags: string[];
 }
