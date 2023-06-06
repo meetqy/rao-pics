@@ -1,10 +1,9 @@
-name: Node.js CI
-# on: push
+name: Test Coverage
 on:
   push:
-    branches: [171-compile-先执行-test-单元测试并生成-coverage-用于-readme-显示-badge]
+    branches: [turbo-electron-prisma]
   pull_request:
-    branches: [171-compile-先执行-test-单元测试并生成-coverage-用于-readme-显示-badge]
+    branches: [turbo-electron-prisma]
 jobs:
   build:
     runs-on: ubuntu-latest
