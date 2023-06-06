@@ -40,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm i 
+          pnpm install --no-frozen-lockfile
           pnpm run test --if-present
 
       # Only run the coverage once
