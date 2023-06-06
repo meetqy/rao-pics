@@ -59,7 +59,7 @@ jobs:
             # ];
             # SUMMARY = SUMMARY.split('\n')[5]; // 'Lines        : 31.93% ( 38/119 )'
             # SUMMARY = SUMMARY.split(':')[1].split('(')[0].trim(); // '31.93%'
-            SUMMARY="$(npm test -- --coverageReporters='text-summary' | tail -2 | head -1)"
+            SUMMARY="$(pnpm run test)"
             TOKENS=($SUMMARY)
             # process.env.COVERAGE = '31.93%';
             echo "COVERAGE=$(echo ${TOKENS[2]})" >> $GITHUB_ENV
@@ -81,7 +81,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 5c4881f21bab2cf4f09a8658354fb997
-          filename: your-repo-name__${{ env.BRANCH }}.json
+          filename: raopics-coverage.json
           label: Test Coverage
           message: ${{ env.COVERAGE }}
           color: green
