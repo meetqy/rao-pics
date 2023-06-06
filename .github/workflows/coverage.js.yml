@@ -1,10 +1,10 @@
 name: Node.js CI
-on: push
-# on:
-#   push:
-#     branches: [master, develop]
-#   pull_request:
-#     branches: [master, develop]
+# on: push
+on:
+  push:
+    branches: [171-compile-先执行-test-单元测试并生成-coverage-用于-readme-显示-badge]
+  pull_request:
+    branches: [171-compile-先执行-test-单元测试并生成-coverage-用于-readme-显示-badge]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -82,7 +82,7 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
-          gistID: 550f6ee414a26e0c8eae7cb6af3c214e
+          gistID: 5c4881f21bab2cf4f09a8658354fb997
           filename: rollup-plugin-critical__${{ env.BRANCH }}.json
           label: Test Coverage
           message: ${{ env.COVERAGE }}
