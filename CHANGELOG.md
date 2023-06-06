@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0-beta.4](https://github.com/rao-pics/core/compare/v0.5.0-beta.3...v0.5.0-beta.4) (2023-06-06)
+
+
+### Features
+
+* 🎸 搜索功能，按关键词搜索 ([b5b7f68](https://github.com/rao-pics/core/commit/b5b7f685f9297b7b8a3fd23ef30ee8c727b486dc)), closes [#167](https://github.com/rao-pics/core/issues/167)
+
+
+### Tests
+
+* 💍 Add unit test with image isDeleted ([c162601](https://github.com/rao-pics/core/commit/c162601243c9c0bc4149630fe709ca7158936462))
+* 💍 config unit use faker ([52fe06c](https://github.com/rao-pics/core/commit/52fe06c1e217e30194c2339d8f4ca93394f92bbb))
+* 💍 使用 Fakerjs 动态生成 Image Mock 数据，代替 image.json ([c081bb3](https://github.com/rao-pics/core/commit/c081bb3a6c5a903b44b9ad80c5e005f3f38d994e)), closes [#174](https://github.com/rao-pics/core/issues/174)
+* 💍 使用 Fakerjs 动态生成 Library Mock 数据 ([4c3f840](https://github.com/rao-pics/core/commit/4c3f840c03e442c5c3c98167ce09db324293dd7c)), closes [#175](https://github.com/rao-pics/core/issues/175)
+* 💍 单元测试公用方法，清空数据库 ([003bf05](https://github.com/rao-pics/core/commit/003bf05440442471e9602d5a4909315508bd5288)), closes [#169](https://github.com/rao-pics/core/issues/169)
+* 💍 简化 Eagle Folder 类型文件，便于 Mock 数据 ([3212d4f](https://github.com/rao-pics/core/commit/3212d4f1effe93d9967b4b3c2eeff5fb52693c25)), closes [#177](https://github.com/rao-pics/core/issues/177)
+
 ## [0.5.0-beta.3](https://github.com/rao-pics/core/compare/v0.5.0-beta.2...v0.5.0-beta.3) (2023-06-04)
 
 
