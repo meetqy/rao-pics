@@ -17,7 +17,7 @@
     "lint": "turbo lint && manypkg check",
     "lint:fix": "turbo lint:fix && manypkg fix",
     "type-check": "turbo type-check",
-    "test": "vitest --coverage.enabled --coverage.reporter='text-summary'",
+    "test": "vitest run --coverage.enabled --coverage.reporter='text-summary'",
     "test:ui": "vitest --ui --no-threads --coverage",
     "release:beta": "standard-version --prerelease beta"
   },
