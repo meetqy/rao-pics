@@ -43,6 +43,8 @@ jobs:
 
       - name: Run tests
         run: pnpm run test
+        env:
+          NODE_ENV: development
 
       # Only run the coverage once
       - name: Get Coverage for badge
