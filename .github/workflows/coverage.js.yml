@@ -86,7 +86,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 5c4881f21bab2cf4f09a8658354fb997
-          filename: rollup-plugin-critical__${{ env.BRANCH }}.json
+          filename: rao-pics_core__coverage.json
           label: Test Coverage
           message: ${{ env.COVERAGE }}
           color: green
