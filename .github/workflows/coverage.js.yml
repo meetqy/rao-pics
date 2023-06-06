@@ -7,21 +7,19 @@ on:
     branches: [171-compile-先执行-test-单元测试并生成-coverage-用于-readme-显示-badge]
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: true
       matrix:
-        os: [ubuntu-latest]
         node-version: [16.x]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
+      - uses: actions/checkout@v3
+      - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: ${{ matrix.node-version }}
 
       - uses: pnpm/action-setup@v2
         name: Install pnpm
@@ -29,13 +27,11 @@ jobs:
         with:
           version: 7
           run_install: false
-
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
       - uses: actions/cache@v3
         name: Setup pnpm cache
         with:
@@ -43,10 +39,11 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+      - run: pnpm test --if-present
 
+      # Only run the coverage once
       - if: ${{ matrix.node-version == '16.x' }}
         name: Get Coverage for badge
         run: |
@@ -62,7 +59,7 @@ jobs:
           # ];
           # SUMMARY = SUMMARY.split('\n')[5]; // 'Lines        : 31.93% ( 38/119 )'
           # SUMMARY = SUMMARY.split(':')[1].split('(')[0].trim(); // '31.93%'
-          SUMMARY="$(pnpm test | tail -2 | head -1)"
+          SUMMARY="$(npm run test-ci | tail -2 | head -1)"
           TOKENS=($SUMMARY)
           # process.env.COVERAGE = '31.93%';
           echo "COVERAGE=$(echo ${TOKENS[2]})" >> $GITHUB_ENV
@@ -73,7 +70,7 @@ jobs:
           echo "github.ref: $REF"
           # var PATHS = REF.split('/');
           IFS='/' read -ra PATHS <<< "$REF"
-          # var BRANCH_NAME = PATHS[1] + '_' + PATHS[2];
+          # var BRANCH_NAME = PATHS[1] + PATHS[2];
           BRANCH_NAME="${PATHS[1]}_${PATHS[2]}"
           # console.log(BRANCH_NAME); // 'pull_27'
           echo $BRANCH_NAME
@@ -81,13 +78,13 @@ jobs:
           echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
         env:
           NODE_ENV: development
-
-      - name: Create the Badge
+      - if: ${{ matrix.node-version == '16.x' }}
+        name: Create the Badge
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 5c4881f21bab2cf4f09a8658354fb997
-          filename: rao-pics_core__${{ env.BRANCH }}.json
+          filename: rollup-plugin-critical__${{ env.BRANCH }}.json
           label: Test Coverage
           message: ${{ env.COVERAGE }}
           color: green
