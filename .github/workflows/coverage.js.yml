@@ -7,7 +7,13 @@ on:
     branches: [171-compile-先执行-test-单元测试并生成-coverage-用于-readme-显示-badge]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16.x]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,12 +47,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Run tests
-        run: pnpm run test
-        env:
-          NODE_ENV: development
-
-      - name: Get Coverage for badge
+      - if: ${{ matrix.node-version == '16.x' }}
+        name: Get Coverage for badge
         run: |
           # var SUMMARY = [
           #   '',
@@ -77,6 +79,9 @@ jobs:
           echo $BRANCH_NAME
           # process.env.BRANCH = 'pull_27';
           echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
+        env:
+          NODE_ENV: development
+
       - name: Create the Badge
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
