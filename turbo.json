@@ -2,10 +2,8 @@
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": ["**/.env"],
   "pipeline": {
-    "db:init": {
-      "inputs": ["prisma/schema.prisma"],
-      "cache": false
-    },
+    "db:reset": { "inputs": ["prisma/schema.prisma"], "cache": false },
+    "db:init": { "inputs": ["prisma/schema.prisma"], "cache": false },
     "dev": {
       "persistent": true,
       "cache": false

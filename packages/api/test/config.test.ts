@@ -2,10 +2,13 @@ import { faker } from "@faker-js/faker";
 import { type inferProcedureInput } from "@trpc/server";
 import { describe, expect, test } from "vitest";
 
+import Mock from "@acme/mock";
+
 import { appRouter, type AppRouter } from "../src/root";
 import { createContext } from "../src/trpc";
 
-describe("@acme/api config", () => {
+describe("@acme/api config", async () => {
+  await Mock.cleanDB();
   const ctx = createContext();
   const caller = appRouter.createCaller(ctx);
 

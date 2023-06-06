@@ -7,9 +7,9 @@
   },
   "packageManager": "pnpm@8.3.1",
   "scripts": {
+    "postinstall": "turbo db:reset",
     "build": "turbo build",
-    "clean": "git clean -xdf node_modules",
-    "clean:workspaces": "turbo clean",
+    "clean:workspace": "turbo clean",
     "compile": "turbo compile",
     "db:init": "turbo db:init",
     "dev": "turbo dev --parallel",
@@ -17,9 +17,8 @@
     "lint": "turbo lint && manypkg check",
     "lint:fix": "turbo lint:fix && manypkg fix",
     "type-check": "turbo type-check",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui --no-threads",
+    "test": "vitest run --coverage.enabled --coverage.reporter='text-summary'",
+    "test:ui": "vitest --ui --no-threads --coverage",
     "release:beta": "standard-version --prerelease beta"
   },
   "dependencies": {

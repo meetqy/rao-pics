@@ -1,4 +1,9 @@
-# Rao Pics - Electron App
+# Rao Pics
+
+![Build](https://github.com/rao-pics/core/actions/workflows/coverage.js.yml/badge.svg)
+![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/meetqy/5c4881f21bab2cf4f09a8658354fb997/raw/1e45502a948e69132afe85a923f4f54fdc77fbee/rao-pics_core__coverage.json)
+[![License](https://img.shields.io/github/license/rao-pics/core)](https://github.com/rao-pics/core/blob/turbo-electron-prisma/LICENSE)
+[![release](https://img.shields.io/github/v/release/rao-pics/core?label=Release)](https://github.com/rao-pics/core/releases)
 
 任何设备通过网页访问本地素材。
 
