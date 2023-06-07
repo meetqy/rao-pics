@@ -35,15 +35,11 @@ model Image {
 }
 
 model Color {
-    id      Int     @id @default(autoincrement())
-    rgb     Int
-    hex     String
-    ratio   Int
-    Image   Image?  @relation(fields: [imageId], references: [id])
-    imageId String?
+    rgb   Int     @id @unique
+    ratio Int
+    Image Image[]
 }
 
-// 资源大小从 image 中获取
 model Library {
     id           Int       @id @default(autoincrement())
     name         String

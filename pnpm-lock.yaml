@@ -363,6 +363,9 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
+      chroma-js:
+        specifier: ^2.4.2
+        version: 2.4.2
       fast-glob:
         specifier: ^3.2.12
         version: 3.2.12
@@ -373,6 +376,9 @@ importers:
       '@acme/mock':
         specifier: ^0.1.0
         version: link:../mock
+      '@types/chroma-js':
+        specifier: ^2.4.0
+        version: 2.4.0
       eslint:
         specifier: ^8.39.0
         version: 8.39.0
@@ -1325,6 +1331,10 @@ packages:
 
   /@types/chai@4.3.5:
     resolution: {integrity: sha512-mEo1sAde+UCE6b2hxn332f1g1E8WfYRu6p5SvTKr2ZKC1f7gFJXk4h5PyGP9Dt6gCaG8y8XhwnXWC6Iy2cmBng==}
+    dev: true
+
+  /@types/chroma-js@2.4.0:
+    resolution: {integrity: sha512-JklMxityrwjBTjGY2anH8JaTx3yjRU3/sEHSblLH1ba5lqcSh1LnImXJZO5peJfXyqKYWjHTGy4s5Wz++hARrw==}
     dev: true
 
   /@types/connect@3.4.35:
@@ -2364,6 +2374,10 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
     dev: true
+
+  /chroma-js@2.4.2:
+    resolution: {integrity: sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==}
+    dev: false
 
   /chromium-pickle-js@0.2.0:
     resolution: {integrity: sha512-1R5Fho+jBq0DDydt+/vHWj5KJNJCKdARKOCwZUen84I5BreWoLqRLANH1U87eJy1tiASPtMnGqJJq0ZsLoRPOw==}
