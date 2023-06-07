@@ -90,17 +90,15 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
 };
 
 export const handleColors = (palettes: Metadata["palettes"]): { name: string; hex: string; rgb: string }[] => {
-  const res = palettes
-    .map((item) => {
-      const hex = colorToHex(item.color);
-      const name = colorName.find((color) => color.hex === hex)?.name || "";
-      return {
-        name,
-        hex,
-        rgb: item.color.join(","),
-      };
-    })
-    .filter((item) => !!item.name);
+  const res = palettes.map((item) => {
+    const hex = colorToHex(item.color);
+    const name = colorName.find((color) => color.hex === hex)?.name || hex;
+    return {
+      name,
+      hex,
+      rgb: item.color.join(","),
+    };
+  });
 
   return res;
 };
