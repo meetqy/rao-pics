@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0-beta.5](https://github.com/rao-pics/core/compare/v0.5.0-beta.4...v0.5.0-beta.5) (2023-06-07)
+
+
+### Improves
+
+* ⚡️ Test coverage badge ([3bb2f85](https://github.com/rao-pics/core/commit/3bb2f85d7daf8453dd663164c84eb83738775500))
+* ⚡️ turbo update ([e96fbd4](https://github.com/rao-pics/core/commit/e96fbd44cee8e7e5bf0ae3ed7d514d0c555b83ae)), closes [#179](https://github.com/rao-pics/core/issues/179)
+* ⚡️ 移除 TagsGroup 标签分组 ([80290c2](https://github.com/rao-pics/core/commit/80290c26157d2ab2349b57d49786f812b7228d91)), closes [#180](https://github.com/rao-pics/core/issues/180)
+
+
+### Refactors
+
+* 💡 db schema image colors 字段重构 ([96276fd](https://github.com/rao-pics/core/commit/96276fd26903c10e9a7e86bc31366239d2f6c0e2)), closes [#184](https://github.com/rao-pics/core/issues/184) [#185](https://github.com/rao-pics/core/issues/185) [#187](https://github.com/rao-pics/core/issues/187)
+* 💡 prisma schema ([3acbb44](https://github.com/rao-pics/core/commit/3acbb4483a3672121943177ae2bf500b877e602a))
+
 ## [0.5.0-beta.4](https://github.com/rao-pics/core/compare/v0.5.0-beta.3...v0.5.0-beta.4) (2023-06-06)
 
 
