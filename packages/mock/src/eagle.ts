@@ -47,14 +47,18 @@ const palettes = () => {
 
 const folders = () => {
   let count = 0;
+  const ids: string[] = [];
 
   const create = () => {
     const item = [];
     const len = faker.number.int({ min: 1, max: 10 });
-    count += len;
+
     for (let i = 0; i < len; i++) {
+      const id = faker.string.uuid();
+      count += 1;
+      ids.push(id);
       item.push({
-        id: faker.string.uuid(),
+        id,
         name: faker.system.commonFileName(),
       });
     }
@@ -72,6 +76,7 @@ const folders = () => {
   });
 
   return {
+    ids,
     folders: f,
     count,
   };
