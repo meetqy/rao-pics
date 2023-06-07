@@ -36,7 +36,7 @@ model Image {
 
 model Color {
     rgb   Int     @id @unique
-    ratio Int
+    ratio Float
     Image Image[]
 }
 
