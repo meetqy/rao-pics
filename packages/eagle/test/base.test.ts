@@ -1,22 +1,40 @@
 import { faker } from "@faker-js/faker";
-import { describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 
-import { prisma, type Color, type Image, type Tag } from "@acme/db";
-import Mock, { type MockType } from "@acme/mock";
+import { prisma, type Color, type Image, type Library, type Tag } from "@acme/db";
+import Mock from "@acme/mock";
 
 import { handleFolder } from "../folder";
 import { transformImage } from "../image";
 import { SUPPORT_EXT } from "../types";
 
-type LocalTestContext = MockType["Eagle"]["LocalTestContext"];
+interface LocalTestContext {
+  tags: ReturnType<typeof Mock.eagle.tags>;
+  palettes: ReturnType<typeof Mock.eagle.palettes>;
+  folders: ReturnType<typeof Mock.eagle.folders>;
+  image: ReturnType<typeof Mock.eagle.image>;
+  lib: Library;
+}
 
 describe("@acme/eagle", async () => {
-  await Mock.cleanDB();
+  await Mock.dbClean();
 
-  Mock.eagle.vitestBeforeEach(async (ctx) => {
-    ctx.lib = await prisma.library.create({
-      data: Mock.library(),
+  const folders = Mock.eagle.folders();
+  const palettes = Mock.eagle.palettes();
+  const tags = Mock.eagle.tags();
+  const lib = await prisma.library.create({
+    data: Mock.library(),
+  });
+  beforeEach<LocalTestContext>((ctx) => {
+    ctx.tags = tags;
+    ctx.palettes = palettes;
+    ctx.folders = folders;
+    ctx.image = Mock.eagle.image({
+      tags: tags,
+      folders: folders.ids,
+      palettes: palettes,
     });
+    ctx.lib = lib;
   });
 
   let imageRes:

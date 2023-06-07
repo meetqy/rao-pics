@@ -2,17 +2,11 @@ import { faker } from "@faker-js/faker";
 
 import { prisma } from "@acme/db";
 
-import { eagle, type LocalTestContext } from "./src/eagle";
-
-export interface MockType {
-  Eagle: {
-    LocalTestContext: LocalTestContext;
-  };
-}
+import { eagle } from "./src/eagle";
 
 const Mock = {
   // 清空数据库
-  cleanDB: async () => {
+  dbClean: async () => {
     void (await prisma.$transaction([
       prisma.color.deleteMany(),
       prisma.tag.deleteMany(),

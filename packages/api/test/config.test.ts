@@ -8,7 +8,7 @@ import { appRouter, type AppRouter } from "../src/root";
 import { createContext } from "../src/trpc";
 
 describe("@acme/api config", async () => {
-  await Mock.cleanDB();
+  await Mock.dbClean();
   const ctx = createContext();
   const caller = appRouter.createCaller(ctx);
 

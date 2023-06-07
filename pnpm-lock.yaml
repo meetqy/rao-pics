@@ -391,6 +391,9 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
+      '@acme/eagle':
+        specifier: ^0.1.0
+        version: link:../eagle
 
 packages:
 
