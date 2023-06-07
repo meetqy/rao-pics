@@ -4,6 +4,7 @@
     { "type": "fix", "section": "Bug Fixes" },
     { "type": "perf", "section": "Improves" },
     { "type": "test", "section": "Tests" },
+    { "type": "refactor", "section": "Refactors" },
     { "type": "build", "section": "Build System", "hidden": true },
     { "type": "ci", "hidden": true }
   ]
