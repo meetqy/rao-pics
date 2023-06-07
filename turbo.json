@@ -3,7 +3,6 @@
   "globalDependencies": ["**/.env"],
   "pipeline": {
     "db:reset": { "inputs": ["prisma/schema.prisma"], "cache": false },
-    "db:init": { "inputs": ["prisma/schema.prisma"], "cache": false },
     "dev": {
       "persistent": true,
       "cache": false

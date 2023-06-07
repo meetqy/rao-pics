@@ -7,11 +7,10 @@
   },
   "packageManager": "pnpm@8.3.1",
   "scripts": {
-    "postinstall": "turbo db:init",
+    "postinstall": "turbo db:reset",
     "build": "turbo build",
     "clean:workspace": "turbo clean",
     "compile": "turbo compile",
-    "db:init": "turbo db:init",
     "db:reset": "turbo db:reset",
     "dev": "turbo dev --parallel",
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
