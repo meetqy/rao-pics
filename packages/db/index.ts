@@ -29,7 +29,7 @@ export const prisma =
   new PrismaClient({
     datasources: {
       db: {
-        url: process.env.NODE_ENV === "production" ? `file:${cacheDir}/db.sqlite?connection_limit=1` : "file:./db.sqlite?connection_limit=1",
+        url: `file:${cacheDir}/db.sqlite?connection_limit=1`,
       },
     },
     log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
