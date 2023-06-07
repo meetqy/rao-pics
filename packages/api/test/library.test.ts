@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { describe, expect, it, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import { prisma } from "@acme/db";
 import Mock from "@acme/mock";
@@ -15,7 +15,7 @@ describe("@acme/api library", () => {
 
   // 正常添加
   test("Add normal", async () => {
-    await Mock.cleanDB();
+    await Mock.dbClean();
 
     expect(await caller.library.add(input)).toMatchObject(input);
   });
@@ -27,7 +27,7 @@ describe("@acme/api library", () => {
 
   // 带 fileCount 字段
   test("Add with fileCount", async () => {
-    await Mock.cleanDB();
+    await Mock.dbClean();
     const json = {
       ...input,
       fileCount: faker.number.int({ max: 9999999 }),

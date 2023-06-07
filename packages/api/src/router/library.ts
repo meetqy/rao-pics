@@ -51,9 +51,6 @@ export const libraryRouter = t.router({
       ctx.prisma.folder.deleteMany({
         where: { libraryId: input },
       }),
-      ctx.prisma.color.deleteMany({
-        where: { libraryId: input },
-      }),
       ctx.prisma.tag.deleteMany({
         where: { libraryId: input },
       }),

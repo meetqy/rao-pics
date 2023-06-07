@@ -1,9 +1,9 @@
 import * as fs from "fs";
+import chroma from "chroma-js";
 
 import { prisma, type Library, type Prisma } from "@acme/db";
 
 import { type EagleEmit } from ".";
-import colorName from "./colornames";
 import { SUPPORT_EXT, type Metadata } from "./types";
 
 export const handleImage = async (images: string[], library: Library, emit?: EagleEmit) => {
@@ -66,15 +66,14 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
       })),
     },
     colors: {
-      connectOrCreate: handleColors(metadata.palettes).map((color) => ({
-        where: { name: color.name },
-        create: {
-          name: color.name,
-          hex: color.hex,
-          rgb: color.rgb,
-          library: { connect: { id: library.id } },
-        },
-      })),
+      connectOrCreate: metadata.palettes.map(({ color, ratio }) => {
+        const rgb = chroma(`rgb(${color.join(",")})`).num();
+
+        return {
+          where: { rgb },
+          create: { rgb, ratio },
+        };
+      }),
     },
     library: { connect: { id: library.id } },
     createTime: new Date(metadata.modificationTime),
@@ -87,25 +86,4 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
     update: imageInput,
     create: imageInput,
   });
-};
-
-export const handleColors = (palettes: Metadata["palettes"]): { name: string; hex: string; rgb: string }[] => {
-  const res = palettes
-    .map((item) => {
-      const hex = colorToHex(item.color);
-      const name = colorName.find((color) => color.hex === hex)?.name || "";
-      return {
-        name,
-        hex,
-        rgb: item.color.join(","),
-      };
-    })
-    .filter((item) => !!item.name);
-
-  return res;
-};
-
-export const colorToHex = (rgb: number[]) => {
-  const [r = 0, g = 0, b = 0] = rgb;
-  return "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 };

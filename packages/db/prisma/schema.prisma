@@ -22,8 +22,6 @@ model Image {
     ext         String
     width       Int
     height      Int
-    // 颜色 
-    colors      Color[]
     // 视频时长
     duration    Float?
     // 缩略图
@@ -31,21 +29,17 @@ model Image {
     // 文件夹
     folders     Folder[]
     tags        Tag[]
+    colors      Color[]
     library     Library  @relation(fields: [libraryId], references: [id])
     libraryId   Int
 }
 
 model Color {
-    name      String  @id @unique
-    // rgb 255,255,255
-    rgb       String
-    hex       String
-    images    Image[]
-    library   Library @relation(fields: [libraryId], references: [id])
-    libraryId Int
+    rgb   Int     @id @unique
+    ratio Int
+    Image Image[]
 }
 
-// 资源大小从 image 中获取
 model Library {
     id           Int       @id @default(autoincrement())
     name         String
@@ -60,7 +54,6 @@ model Library {
     images       Image[]
     folders      Folder[]
     Tag          Tag[]
-    Color        Color[]
 }
 
 model Tag {
