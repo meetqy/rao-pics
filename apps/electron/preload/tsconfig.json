@@ -11,7 +11,8 @@
     "types": ["node"],
     "baseUrl": ".",
     "resolveJsonModule": true,
-    "noEmit": true
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["./**/*.ts", "./**/*.d.ts"],
   "references": [{ "path": "../tsconfig.node.json" }]
