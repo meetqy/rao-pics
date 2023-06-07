@@ -1,4 +1,7 @@
 import { faker } from "@faker-js/faker";
+import { beforeEach } from "vitest";
+
+import { type Library } from "@acme/db";
 
 const image = (props: { tags: string[]; folders: string[]; palettes: { color: number[]; ratio: number }[] }) => {
   return {
@@ -82,9 +85,34 @@ const folders = () => {
   };
 };
 
+export interface LocalTestContext {
+  tags: ReturnType<typeof eagle.tags>;
+  palettes: ReturnType<typeof eagle.palettes>;
+  folders: ReturnType<typeof eagle.folders>;
+  image: ReturnType<typeof eagle.image>;
+  lib: Library;
+}
+
 export const eagle = {
   image,
   tags,
   palettes,
   folders,
+  vitestBeforeEach: (other?: (ctx: LocalTestContext) => void | Promise<void>) => {
+    const folders = eagle.folders();
+    const palettes = eagle.palettes();
+    const tags = eagle.tags();
+    beforeEach<LocalTestContext>(async (ctx) => {
+      ctx.tags = tags;
+      ctx.palettes = palettes;
+      ctx.folders = folders;
+      ctx.image = image({
+        tags: tags,
+        folders: folders.ids,
+        palettes: palettes,
+      });
+
+      await other?.(ctx);
+    });
+  },
 };

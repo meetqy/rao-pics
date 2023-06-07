@@ -2,7 +2,13 @@ import { faker } from "@faker-js/faker";
 
 import { prisma } from "@acme/db";
 
-import { eagle } from "./src/eagle";
+import { eagle, type LocalTestContext } from "./src/eagle";
+
+export interface MockType {
+  Eagle: {
+    LocalTestContext: LocalTestContext;
+  };
+}
 
 const Mock = {
   // 清空数据库
