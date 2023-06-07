@@ -16,6 +16,9 @@ interface Props {
   onError?: (err: unknown) => void;
 }
 
+// XXX: 为什么不把添加 Eagle 所有的方法写到 @acme/api 中？
+// trpc 无法直接返回同步进度，需要结合 websocked
+// 而不走 trpc 的方式，可以通过回调方法，Eelectron 中可以直接得到当前同步的进度
 export const start = async ({ library, emit, onError }: Props) => {
   try {
     const base = JSON.parse(fs.readFileSync(`${library.dir}/metadata.json`, "utf-8")) as LibraryMetadata;
