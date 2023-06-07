@@ -13,7 +13,7 @@
       "cache": false
     },
     "compile": {
-      "dependsOn": ["db:init", "build"],
+      "dependsOn": ["db:reset", "build"],
       "cache": false
     },
     "lint": {},
