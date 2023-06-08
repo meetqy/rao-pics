@@ -26,7 +26,7 @@ export const start = async ({ library, emit, onError }: Props) => {
 
     await handleFolder(base.folders, library, emit);
 
-    await handleImage(images, library, emit);
+    await handleImage({ images, library, emit, onError });
   } catch (e) {
     onError?.(e);
   }
