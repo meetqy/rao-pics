@@ -12,6 +12,8 @@ import { type ParsedUrlQuery } from "querystring";
 import { type ExtEnum } from "@acme/api";
 import { CONSTANT } from "@acme/constant";
 
+import initLightboxVideoPlugin from "~/utils/photoswipe-video";
+
 interface PageUrlQuery extends ParsedUrlQuery {
   library: string;
   ext: ExtEnum;
@@ -41,22 +43,10 @@ const IndexPage: NextPage = () => {
     const lightbox = new PhotoSwipeLightbox({
       gallery: "#photoswipe",
       children: "a",
-      showHideAnimationType: "none",
       pswpModule: () => import("photoswipe"),
     });
 
-    lightbox.on("itemData", (e) => {
-      const element = e.itemData.element as HTMLAnchorElement;
-      const ext = element.dataset.pswpExt;
-
-      if (CONSTANT.VIDEO_EXT.includes(ext)) {
-        e.itemData = {
-          html: `<video loop autoplay controls preload="auto" class="m-auto relative top-1/2 transform -translate-y-1/2 max-h-full">
-            <source type="video/${ext}" src="${element.href}"></source>
-          </video>`,
-        };
-      }
-    });
+    initLightboxVideoPlugin(lightbox);
 
     lightbox.init();
 
@@ -94,8 +84,7 @@ const IndexPage: NextPage = () => {
                   href={getImgUrl(assetsUrl, item, true)}
                   data-pswp-width={item.width}
                   data-pswp-height={item.height}
-                  data-pswp-ext={item.ext}
-                  draggable={false}
+                  data-pswp-type={CONSTANT.VIDEO_EXT.includes(item.ext) ? "video" : "image"}
                 >
                   <img draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="w-full h-full object-cover object-top" />
                 </a>
