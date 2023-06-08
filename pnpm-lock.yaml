@@ -339,6 +339,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2(ts-node@10.9.1)
 
+  packages/constant: {}
+
   packages/db:
     dependencies:
       '@prisma/client':
@@ -370,6 +372,9 @@ importers:
         specifier: ^3.2.12
         version: 3.2.12
     devDependencies:
+      '@acme/constant':
+        specifier: ^0.1.0
+        version: link:../constant
       '@acme/eslint-config':
         specifier: ^0.1.0
         version: link:../config/eslint

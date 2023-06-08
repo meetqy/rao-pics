@@ -1,9 +1,5 @@
 packages:
   - apps/nextjs
   - apps/electron
-  - packages/api
-  - packages/db
-  - packages/eagle
-  - packages/assets-server
-  - packages/mock
+  - packages/*
   - packages/config/*

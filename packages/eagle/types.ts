@@ -1,6 +1,6 @@
-export const SUPPORT_EXT = ["jpg", "png", "jpeg", "gif", "webp", "mp4"];
+import { CONSTANT, type Constant } from "@acme/constant";
 
-export type SupportExt = (typeof SUPPORT_EXT)[number];
+export const SUPPORT_EXT = CONSTANT.EXT;
 
 export interface Metadata {
   id: string;
@@ -8,7 +8,7 @@ export interface Metadata {
   size: number;
   btime: number;
   mtime: number;
-  ext: SupportExt;
+  ext: Constant["ext"];
   url: string;
   annotation: string;
   modificationTime: number;
