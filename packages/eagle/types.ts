@@ -8,8 +8,8 @@ export interface Metadata {
   size: number;
   btime: number;
   mtime: number;
-  ext: string;
-  url: SupportExt;
+  ext: SupportExt;
+  url: string;
   annotation: string;
   modificationTime: number;
   width: number;
