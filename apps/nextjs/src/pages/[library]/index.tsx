@@ -10,7 +10,7 @@ import "photoswipe/style.css";
 import { type ParsedUrlQuery } from "querystring";
 
 import { type ExtEnum } from "@acme/api";
-import { CONSTANT, type Constant } from "@acme/constant";
+import { CONSTANT } from "@acme/constant";
 
 interface PageUrlQuery extends ParsedUrlQuery {
   library: string;
@@ -50,18 +50,10 @@ const IndexPage: NextPage = () => {
       const ext = element.dataset.pswpExt;
 
       if (CONSTANT.VIDEO_EXT.includes(ext)) {
-        const source = document.createElement("source");
-        source.src = element.href;
-        source.type = `video/mp4`;
-        const video = document.createElement("video");
-        video.controls = true;
-        video.autoplay = true;
-        video.appendChild(source);
-        video.className = "m-auto relative top-1/2 transform -translate-y-1/2 max-h-full";
-        video.preload = "auto";
-        video.loop = true;
         e.itemData = {
-          html: video.outerHTML,
+          html: `<video loop autoplay controls preload="auto" class="m-auto relative top-1/2 transform -translate-y-1/2 max-h-full">
+            <source type="video/${ext}" src="${element.href}"></source>
+          </video>`,
         };
       }
     });
