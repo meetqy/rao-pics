@@ -6,7 +6,14 @@ import { prisma, type Library, type Prisma } from "@acme/db";
 import { type EagleEmit } from ".";
 import { SUPPORT_EXT, type Metadata } from "./types";
 
-export const handleImage = async (images: string[], library: Library, emit?: EagleEmit) => {
+interface Props {
+  images: string[];
+  library: Library;
+  emit?: EagleEmit;
+  onError?: (err: unknown) => void;
+}
+
+export const handleImage = async ({ images, library, emit, onError }: Props) => {
   for (const [index, image] of images.entries()) {
     // 特殊处理, metadata.json 可能是一个错误的json
     // eagle 本身的问题
@@ -24,6 +31,7 @@ export const handleImage = async (images: string[], library: Library, emit?: Eag
         current: index + 1,
         count: images.length,
       });
+      onError?.((e as Error)["message"] + "\n file path: " + image);
       continue;
     }
   }
