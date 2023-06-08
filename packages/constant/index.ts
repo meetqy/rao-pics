@@ -1,4 +1,4 @@
-const VIDEO_EXT = ["mp4"] as const;
+const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
 const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 
 export const CONSTANT = {
