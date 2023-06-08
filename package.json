@@ -12,7 +12,7 @@
     "clean:workspace": "turbo clean",
     "compile": "turbo compile",
     "db:reset": "turbo db:reset",
-    "dev": "turbo dev --parallel",
+    "dev": "turbo dev --parallel --filter=electron --filter=nextjs --filter=db",
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
     "lint": "turbo lint && manypkg check",
     "lint:fix": "turbo lint:fix && manypkg fix",

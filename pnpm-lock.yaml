@@ -160,6 +160,9 @@ importers:
       '@acme/api':
         specifier: ^0.1.0
         version: link:../../packages/api
+      '@acme/constant':
+        specifier: ^0.1.0
+        version: link:../../packages/constant
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../packages/db
@@ -245,6 +248,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@acme/constant':
+        specifier: ^0.1.0
+        version: link:../constant
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
@@ -362,6 +368,9 @@ importers:
       '@acme/api':
         specifier: ^0.1.0
         version: link:../api
+      '@acme/constant':
+        specifier: ^0.1.0
+        version: link:../constant
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
@@ -372,9 +381,6 @@ importers:
         specifier: ^3.2.12
         version: 3.2.12
     devDependencies:
-      '@acme/constant':
-        specifier: ^0.1.0
-        version: link:../constant
       '@acme/eslint-config':
         specifier: ^0.1.0
         version: link:../config/eslint

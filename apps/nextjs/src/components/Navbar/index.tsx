@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
-import { type ExtEnum } from "@acme/api";
+import { CONSTANT } from "@acme/constant";
 
 const Navbar = () => {
   const { query } = useRouter();
@@ -17,8 +17,6 @@ const Navbar = () => {
     k: StringParam,
   });
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
-
-  const extOptions: ExtEnum[] = ["bmp", "gif", "jpg", "png"];
 
   const orderByOptions = [
     { name: "按创建时间", key: "createTime" },
@@ -121,7 +119,7 @@ const Navbar = () => {
               </svg>
             </label>
             <ul tabIndex={1} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-40 uppercase">
-              {extOptions.map((item) => (
+              {CONSTANT.EXT.map((item) => (
                 <li key={item}>
                   <a
                     onClick={() =>
