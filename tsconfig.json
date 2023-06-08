@@ -17,5 +17,6 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": [".eslintrc.js", "prettier.config.cjs", "vitest.workspace.ts"]
+  "include": [".eslintrc.js", "prettier.config.cjs", "vitest.workspace.ts", "./global.d.ts"],
+  "exclude": ["node_modules"]
 }

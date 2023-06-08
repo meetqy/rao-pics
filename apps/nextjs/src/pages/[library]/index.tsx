@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo } from "react";
 
 import { getImgUrl, transformByteToUnit } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
@@ -10,6 +10,7 @@ import "photoswipe/style.css";
 import { type ParsedUrlQuery } from "querystring";
 
 import { type ExtEnum } from "@acme/api";
+import { CONSTANT, type Constant } from "@acme/constant";
 
 interface PageUrlQuery extends ParsedUrlQuery {
   library: string;
@@ -43,6 +44,28 @@ const IndexPage: NextPage = () => {
       showHideAnimationType: "none",
       pswpModule: () => import("photoswipe"),
     });
+
+    lightbox.on("itemData", (e) => {
+      const element = e.itemData.element as HTMLAnchorElement;
+      const ext = element.dataset.pswpExt;
+
+      if (CONSTANT.VIDEO_EXT.includes(ext)) {
+        const source = document.createElement("source");
+        source.src = element.href;
+        source.type = `video/mp4`;
+        const video = document.createElement("video");
+        video.controls = true;
+        video.autoplay = true;
+        video.appendChild(source);
+        video.className = "m-auto relative top-1/2 transform -translate-y-1/2 max-h-full";
+        video.preload = "auto";
+        video.loop = true;
+        e.itemData = {
+          html: video.outerHTML,
+        };
+      }
+    });
+
     lightbox.init();
 
     return () => {
@@ -79,6 +102,7 @@ const IndexPage: NextPage = () => {
                   href={getImgUrl(assetsUrl, item, true)}
                   data-pswp-width={item.width}
                   data-pswp-height={item.height}
+                  data-pswp-ext={item.ext}
                   draggable={false}
                 >
                   <img draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="w-full h-full object-cover object-top" />
