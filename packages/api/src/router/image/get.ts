@@ -1,10 +1,11 @@
 import { z } from "zod";
 
+import { CONSTANT } from "@acme/constant";
 import { type Prisma } from "@acme/db";
 
 import { t } from "../../trpc";
 
-const ExtEnum = z.enum(["jpg", "png", "gif", "jpeg", "bmp"]);
+const ExtEnum = z.enum(CONSTANT.EXT);
 const OrderByObject = z.object({
   createTime: z.enum(["asc", "desc"]).optional(),
   size: z.enum(["asc", "desc"]).optional(),
