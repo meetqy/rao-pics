@@ -24,15 +24,17 @@ export const createSqlite = (sqliteSrc: string) => {
   }
 };
 
+const env = process.env.NODE_ENV;
+
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
     datasources: {
       db: {
-        url: `file:${cacheDir}/db.sqlite?connection_limit=1`,
+        url: env === "development" ? "file:./db.sqlite" : `file:${cacheDir}/db.sqlite?connection_limit=1`,
       },
     },
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    log: env === "development" ? ["query", "error", "warn"] : ["error"],
   });
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (env === "development") globalForPrisma.prisma = prisma;
