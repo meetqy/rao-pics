@@ -30,7 +30,7 @@ const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 
 [![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
 
-## Cache/Log 路径
+## 缓存 && 日志
 
 db.sqlite
 
