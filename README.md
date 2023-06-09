@@ -37,7 +37,11 @@ mac ~/Library/Caches/Rao\ Pics
 mac ~/Library/Logs/Rao\ Pics
 ```
 
-## 技术 & 页面资源
+## 已支持 App
+
+![](https://oss-app.eagle.cool/website/logo@2x.png)
+
+## END
 
 UI
 
@@ -48,3 +52,7 @@ UI
 
 - [electron-trpc-prisma](https://github.com/NickyMeuleman/electron-trpc-prisma)
 - [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo)
+
+❤️ 特别感谢 [Eagle App](https://eagle.cool/)，在我投稿 DEMO 的时候，给我的肯定，一个 3 折券。没有这个正向反馈，可能项目就夭折了！
+
+❤️ 感谢路上给我鼓励、反馈、提出建议的朋友 **RESPECT** 🙏🏻🙏🏻🙏🏻
