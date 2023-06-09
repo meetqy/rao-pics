@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0-beta.8](https://github.com/rao-pics/core/compare/v0.5.0-beta.7...v0.5.0-beta.8) (2023-06-09)
+
+
+### Improves
+
+* ⚡️ dmg 体积减少40M [#205](https://github.com/rao-pics/core/issues/205) ([91e5da6](https://github.com/rao-pics/core/commit/91e5da6ed4bb263ab75dbaeda6a69d7e8ea5df6f))
+
 ## [0.5.0-beta.7](https://github.com/rao-pics/core/compare/v0.5.0-beta.5...v0.5.0-beta.7) (2023-06-09)
 
 
