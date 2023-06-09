@@ -1,6 +1,14 @@
 import builder from "electron-builder";
+import fs from "fs-extra";
 
 import { config } from "./config.js";
+
+const isTest = process.env["CSC_IDENTITY_AUTO_DISCOVERY"] === "false";
+
+// 额外资源 在 files 中排除
+const excludeFileDir = fs.readdirSync("../nextjs/.next/standalone/node_modules").map((item) => {
+  return `!**/node_modules/${item}/**/*`;
+});
 
 const { name, version } = config;
 const extraResources: builder.FileSet[] = [];
@@ -8,22 +16,20 @@ const extraResources: builder.FileSet[] = [];
 export const AppConfig: builder.Configuration = {
   productName: name,
   copyright: `Copyright © 2022-${new Date().getFullYear()} meetqy`,
-  mac: {
-    category: "public.app-category.photography",
-    icon: "buildResources/icon.icns",
-    darkModeSupport: true,
-    target: {
-      target: "dmg",
-      arch: ["x64", "arm64"],
-    },
-    extraResources: extraResources,
-  },
+  asar: isTest ? false : true,
   extraMetadata: { version },
   directories: {
     output: "dist",
     buildResources: "buildResources",
   },
-  files: ["main/dist/**", "preload/dist/**", "renderer/dist/**"],
+  files: [
+    "main/dist/**",
+    "preload/dist/**",
+    "renderer/dist/**",
+    // 排除 @acme 已经打包到 {main|preload|renderer}/dist 中
+    // TODO: 循环嵌套的 @acme/{db|api|eagle} 无法排除
+    "!**/node_modules/@acme/**/*",
+  ].concat(excludeFileDir),
   extraResources: [
     {
       from: "../../packages/db/prisma/db.sqlite",
@@ -40,6 +46,18 @@ export const AppConfig: builder.Configuration = {
       filter: ["**/*"],
     },
   ],
+  mac: {
+    category: "public.app-category.photography",
+    icon: "buildResources/icon.icns",
+    darkModeSupport: true,
+    target: isTest
+      ? "dir"
+      : {
+          target: "dmg",
+          arch: ["x64", "arm64"],
+        },
+    extraResources: extraResources,
+  },
   beforeBuild: async (context) => {
     console.log(context.platform.nodeName, context.arch);
 

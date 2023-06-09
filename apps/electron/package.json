@@ -17,6 +17,7 @@
     "dev": "cross-env NODE_ENV=development npm run watch:desktop",
     "build": "pnpm run '/^build:.*/'",
     "compile": "cross-env MODE=production ts-node scripts/compile.ts",
+    "test:compile": "cross-env MODE=production CSC_IDENTITY_AUTO_DISCOVERY=false ts-node scripts/compile.ts",
     "watch:web": "ts-node scripts/watchWeb.ts",
     "watch:desktop": "ts-node scripts/watchDesktop.ts",
     "build:main": "cd ./main && tsc && vite build",
