@@ -15,7 +15,7 @@
 
 App
 
-![](https://oss-app.eagle.cool/website/logo@2x.png)
+<p><img width="64" src="https://i.imgur.com/jxirugb.jpg"/></p>
 
 文件类型
 
