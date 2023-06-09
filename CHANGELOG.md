@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0-beta.7](https://github.com/rao-pics/core/compare/v0.5.0-beta.5...v0.5.0-beta.7) (2023-06-09)
+
+
+### Features
+
+* 🎸 支持 MP4 展示 ([8d53b23](https://github.com/rao-pics/core/commit/8d53b23b487e901df21b51ba3308c4856909e6b4)), closes [#192](https://github.com/rao-pics/core/issues/192)
+* 🎸 新增视频格式:mp4,avi,mov,wmv,flv,webm,mkv ([266fc36](https://github.com/rao-pics/core/commit/266fc363feabe9ce02dfaaa8e4a06db54b2ba9ec)), closes [#193](https://github.com/rao-pics/core/issues/193)
+
+
+### Bug Fixes
+
+* 🐛 @acme/eagle 异常处理 ([92eec37](https://github.com/rao-pics/core/commit/92eec37ce92bd6c8f37fa7c1d82b71d3144a097d)), closes [#190](https://github.com/rao-pics/core/issues/190)
+* 🐛 NODE_ENV 问题 ([b2034d5](https://github.com/rao-pics/core/commit/b2034d5889c5742289810eb46c39da26e50c57ec)), closes [#191](https://github.com/rao-pics/core/issues/191)
+* 🐛 类型错误 ([aa1b915](https://github.com/rao-pics/core/commit/aa1b915bf42031c01b46f0fbc5c5b0d8d8b32255)), closes [#189](https://github.com/rao-pics/core/issues/189)
+
+
+### Refactors
+
+* 💡 all ext replace CONSTANT.EXT ([f2d994c](https://github.com/rao-pics/core/commit/f2d994c66decab289d37e862ee12d2eb58014e02))
+
 ## [0.5.0-beta.5](https://github.com/rao-pics/core/compare/v0.5.0-beta.4...v0.5.0-beta.5) (2023-06-07)
 
 
