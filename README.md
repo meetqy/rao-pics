@@ -11,11 +11,18 @@
 
 [![](https://res.cloudinary.com/marcomontalbano/image/upload/v1685437732/video_to_markdown/images/youtube--q8daCjxVjjc-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/q8daCjxVjjc)
 
-## 其他版本
+## 已支持
 
-**Electron App** 是主要维护的版本。无论是 Docker 部署、Node 源码运行，都需要一定的技术能力，使用成本过高，**所以想做一个应用程序，只需要点点点，就完事了。**
+App
 
-NodeJs 代码运行，Docker 部署，可以转到 [main 分支](https://github.com/rao-pics/core/tree/main)。
+![](https://oss-app.eagle.cool/website/logo@2x.png)
+
+文件类型
+
+```ts
+const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
+const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
+```
 
 ## Todo 待办事项
 
@@ -37,9 +44,11 @@ mac ~/Library/Caches/Rao\ Pics
 mac ~/Library/Logs/Rao\ Pics
 ```
 
-## 已支持 App
+## 其他版本
 
-![](https://oss-app.eagle.cool/website/logo@2x.png)
+**Electron App** 是主要维护的版本。无论是 Docker 部署、Node 源码运行，都需要一定的技术能力，使用成本过高，**所以想做一个应用程序，只需要点点点，就完事了。**
+
+NodeJs 代码运行，Docker 部署，可以转到 [main 分支](https://github.com/rao-pics/core/tree/main)。
 
 ## END
 
@@ -55,4 +64,4 @@ UI
 
 ❤️ 特别感谢 [Eagle App](https://eagle.cool/)，在我投稿 DEMO 的时候，给我的肯定，一个 3 折券。没有这个正向反馈，可能项目就夭折了！
 
-❤️ 感谢路上给我鼓励、反馈、提出建议的朋友 **RESPECT** 🙏🏻🙏🏻🙏🏻
+❤️ 感谢一路上给我鼓励、反馈、提出建议的朋友 **RESPECT** 🙏🏻🙏🏻🙏🏻
