@@ -8,7 +8,7 @@ export interface Metadata {
   size: number;
   btime: number;
   mtime: number;
-  ext: Constant["ext"];
+  ext: Constant["ext"] | string;
   url: string;
   annotation: string;
   modificationTime: number;
