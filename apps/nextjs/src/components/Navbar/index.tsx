@@ -5,6 +5,8 @@ import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
 import { CONSTANT } from "@acme/constant";
 
+import Dropdown from "../Dropdown";
+
 const Navbar = () => {
   const { query } = useRouter();
   const libraryName = useMemo(() => query.library as string, [query]);
@@ -108,8 +110,9 @@ const Navbar = () => {
             </button>
           )}
 
-          <div className="dropdown dropdown-end">
-            <label tabIndex={1} className="btn m-1 btn-ghost btn-circle">
+          <Dropdown
+            tabIndex={1}
+            icon={
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path
                   strokeLinecap="round"
@@ -117,28 +120,16 @@ const Navbar = () => {
                   d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"
                 />
               </svg>
-            </label>
-            <ul tabIndex={1} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-40 uppercase">
-              {CONSTANT.EXT.map((item) => (
-                <li key={item}>
-                  <a
-                    onClick={() =>
-                      setParams({
-                        ...params,
-                        ext: item,
-                      })
-                    }
-                    className={item === params.ext ? "active" : ""}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+            }
+            value={params.ext}
+            options={CONSTANT.EXT.map((item) => ({ name: item, value: item }))}
+            onChange={(value) => setParams({ ext: value })}
+          />
 
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn m-1 btn-ghost btn-circle">
+          <Dropdown
+            tabIndex={2}
+            showClose={false}
+            icon={
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path
                   strokeLinecap="round"
@@ -146,24 +137,15 @@ const Navbar = () => {
                   d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
                 />
               </svg>
-            </label>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-52">
-              {orderByOptions.map((item) => (
-                <li key={item.key}>
-                  <a
-                    className={orderBy[0] === item.key ? "active" : ""}
-                    onClick={() => {
-                      setParams({
-                        orderBy: [item.key, orderBy[1]].join(","),
-                      });
-                    }}
-                  >
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+            }
+            value={orderBy[0]}
+            options={orderByOptions.map((item) => ({ name: item.name, value: item.key }))}
+            onChange={(item) => {
+              setParams({
+                orderBy: [item, orderBy[1]].join(","),
+              });
+            }}
+          />
 
           <button className="btn btn-ghost btn-square btn-circle hover:bg-transparent">
             <input

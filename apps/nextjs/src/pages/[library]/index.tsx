@@ -43,6 +43,7 @@ const IndexPage: NextPage = () => {
     const lightbox = new PhotoSwipeLightbox({
       gallery: "#photoswipe",
       children: "a",
+      showHideAnimationType: "none",
       pswpModule: () => import("photoswipe"),
     });
 
