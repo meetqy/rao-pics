@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0-beta.9](https://github.com/rao-pics/core/compare/v0.5.0-beta.8...v0.5.0-beta.9) (2023-06-10)
+
+
+### Bug Fixes
+
+* 🐛 dropdown 无法取消 ([f2a70a8](https://github.com/rao-pics/core/commit/f2a70a8787c1b4ca9388ad3ad96de04705dd1776)), closes [#202](https://github.com/rao-pics/core/issues/202) [#201](https://github.com/rao-pics/core/issues/201)
+* 🐛 Library 名字过长，显示不完整 ([01931c7](https://github.com/rao-pics/core/commit/01931c7ce7df63cb8eed6524e79eb21480295a1f)), closes [#204](https://github.com/rao-pics/core/issues/204)
+
+
+### Refactors
+
+* 🎨 移除 DotEnv，scripts 中的 with-env ([f289aa4](https://github.com/rao-pics/core/commit/f289aa43a218fd5e8de5f3434fcf4812d98cc71a)), closes [#203](https://github.com/rao-pics/core/issues/203)
+
 ## [0.5.0-beta.8](https://github.com/rao-pics/core/compare/v0.5.0-beta.7...v0.5.0-beta.8) (2023-06-09)
 
 
