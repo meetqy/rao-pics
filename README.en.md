@@ -26,9 +26,9 @@ const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
 const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 ```
 
-## Todo to-do list
+## Todo list
 
-Development progress and version planning can be viewed [ Rao Pics Todo ](https://github.com/orgs/rao-pics/projects/1).
+Development progress and version changlog can be viewed [ Rao Pics Todo ](https://github.com/orgs/rao-pics/projects/1).
 
 [![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
 
