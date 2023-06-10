@@ -146,18 +146,17 @@ function Home() {
             <span className="ml-2">添加文件夹/库</span>
           </button>
         </div>
-        <div>
-          <ul className="menu px-2 rounded-box ">
-            {library.data?.map((item) => (
-              <li key={item.id}>
-                <a className={`${item.id === active ? "active" : ""} flex justify-between capitalize`} onClick={() => setActive(item.id)}>
-                  {item.name}
-                  <img src="eagle.jpg" className="w-5 rounded-full shadow-md" />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+
+        <ul className="menu px-2 rounded-box">
+          {library.data?.map((item) => (
+            <li key={item.id} className="w-full">
+              <div className={`${item.id === active ? "active" : ""} capitalize flex w-full tooltip`} data-tip={item.name} onClick={() => setActive(item.id)}>
+                <p className="overflow-hidden truncate flex-1 text-left">{item.name}</p>
+                <img src="eagle.jpg" className="w-5 rounded-full shadow-md" />
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
       {active ? (
         <div className="flex-1 p-4">
