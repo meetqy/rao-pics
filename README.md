@@ -26,7 +26,7 @@ const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
 const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 ```
 
-## Todo 待办清单
+## 🌀 Todo 待办清单
 
 <details>
 <summary>➕显示 / ➖隐藏</summary>
@@ -37,7 +37,7 @@ const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 
 </details>
 
-## 缓存 / 日志
+## 🌀 缓存 / 日志
 
 <details>
 <summary>➕显示 / ➖隐藏</summary>
@@ -58,7 +58,7 @@ win '~\AppData\Roaming\Rao Pics\logs'
 
 </details>
 
-## 其他版本
+## 🌀 其他版本
 
 <details>
 <summary>➕显示 / ➖隐藏</summary>
@@ -76,14 +76,14 @@ UI
 - [HeroIcons](https://heroicons.com/) - Icon
 - [DaysiUI](https://daisyui.com/) - 主题相关
 
-❤️ 特别感谢`electron-trpc-prisma`和`create-t3-turbo`，让项目有了非常 Nice 的开发体验，恩~！让我心情愉悦的写代码。该项目也是基于他们改造出来的。
+特别感谢`electron-trpc-prisma`和`create-t3-turbo`，让项目有了非常 Nice 的开发体验，恩~！让我心情愉悦的写代码。该项目也是基于他们改造出来的。
 
 - [electron-trpc-prisma](https://github.com/NickyMeuleman/electron-trpc-prisma)
 - [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo)
 
-❤️ 特别感谢 [Eagle App](https://eagle.sjv.io/rao)，在我投稿 DEMO 的时候，给我的肯定，一个 3 折券。没有这个正向反馈，可能项目就夭折了！
+特别感谢 [Eagle App](https://eagle.sjv.io/rao)，在我投稿 DEMO 的时候，给我的肯定，一个 3 折券。没有这个正向反馈，可能项目就夭折了！
 
-❤️ 感谢一路上给我鼓励、反馈、提出建议的朋友 **RESPECT** 🎉🎉🎉
+感谢一路上给我鼓励、反馈、提出建议的朋友 **RESPECT** 🎉🎉🎉
 
 ## 芜湖~
 
