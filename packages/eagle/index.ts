@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { join } from "path";
 import * as fg from "fast-glob";
 
 import { type Library } from "@acme/db";
@@ -22,7 +23,7 @@ interface Props {
 export const start = async ({ library, emit, onError }: Props) => {
   try {
     const base = JSON.parse(fs.readFileSync(`${library.dir}/metadata.json`, "utf-8")) as LibraryMetadata;
-    const images = fg.sync(`${library.dir}/images/**/metadata.json`);
+    const images = fg.sync(join(library.dir, "images", "**", "metadata.json").replace(/\\/g, "/"));
 
     await handleFolder(base.folders, library, emit);
 
