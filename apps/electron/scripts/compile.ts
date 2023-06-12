@@ -3,6 +3,8 @@ import fs from "fs-extra";
 
 import { config } from "./config.js";
 
+const { Platform } = builder;
+
 const isTest = process.env["CSC_IDENTITY_AUTO_DISCOVERY"] === "false";
 
 // 额外资源 在 files 中排除
@@ -56,23 +58,39 @@ export const AppConfig: builder.Configuration = {
           target: "dmg",
           arch: ["x64", "arm64"],
         },
-    extraResources: extraResources,
+    extraResources,
   },
-  beforeBuild: async (context) => {
-    console.log(context.platform.nodeName, context.arch);
 
+  win: {
+    icon: "buildResources/icon.png",
+    target: isTest ? "dir" : "nsis",
+    extraResources,
+  },
+
+  beforeBuild: async (context) => {
     extraResources.pop();
-    extraResources.push({
-      from: "../nextjs/.next/standalone",
-      filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*darwin${context.arch === "x64" ? "" : "-arm64"}.*.node`],
-    });
+
+    if (context.platform.name === "mac") {
+      extraResources.push({
+        from: "../nextjs/.next/standalone",
+        filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*darwin${context.arch === "x64" ? "" : "-arm64"}.*.node`],
+      });
+    } else {
+      extraResources.push({
+        from: "../nextjs/.next/standalone",
+        filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*${context.platform.name}*.node`],
+      });
+    }
 
     return Promise.resolve(context);
   },
 };
 
+const targets = new Map().set(Platform.WINDOWS, new Map()).set(Platform.MAC, new Map());
+
 builder
   .build({
+    targets,
     config: AppConfig,
   })
   .then((result) => {

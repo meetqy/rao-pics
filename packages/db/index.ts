@@ -1,4 +1,5 @@
 import { homedir } from "os";
+import { join } from "path";
 import { PrismaClient } from "@prisma/client";
 import * as fs from "fs-extra";
 
@@ -6,22 +7,25 @@ export * from "@prisma/client";
 
 const globalForPrisma = globalThis as { prisma?: PrismaClient };
 
-const cacheDir = `${homedir()}/Library/Caches/Rao Pics`;
+// 数据库地址
+const _cacheDir: { [key in typeof process.platform]?: string } = {
+  darwin: join(homedir(), "/Library/Caches/Rao Pics"),
+  win32: join(homedir(), "/AppData/Local/Rao Pics"),
+};
+
+const cacheDir = _cacheDir[process.platform] || join(homedir(), "Rao Pics");
 
 /**
  * 创建sqlite数据库
  * Dev => db-dev.sqlite
- * mac: ~/Library/Caches/{App Name}/db.sqlite
  */
 export const createSqlite = (sqliteSrc: string) => {
   if (fs.pathExistsSync(`${cacheDir}/db.sqlite`)) return;
 
-  if (process.platform === "darwin") {
-    fs.ensureDirSync(cacheDir);
-    fs.copySync(sqliteSrc, `${cacheDir}/db.sqlite`, {
-      overwrite: false,
-    });
-  }
+  fs.ensureDirSync(cacheDir);
+  fs.copySync(sqliteSrc, `${cacheDir}/db.sqlite`, {
+    overwrite: false,
+  });
 };
 
 const env = process.env.NODE_ENV;

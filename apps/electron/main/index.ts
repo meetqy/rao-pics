@@ -165,6 +165,7 @@ app.on("ready", () => {
       if (process.env["NEXTJS_SERVER"] === "true") return;
       const nextjs = join(process.cwd(), "../nextjs");
       nextjsChild = cp.spawn("npx", ["next", "dev"], {
+        shell: true,
         cwd: nextjs,
         stdio: "inherit",
         env: {
