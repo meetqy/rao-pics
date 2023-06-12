@@ -62,7 +62,8 @@ export const AppConfig: builder.Configuration = {
   },
 
   win: {
-    target: "nsis",
+    icon: "buildResources/icon.png",
+    target: isTest ? "dir" : "nsis",
     extraResources,
   },
 
