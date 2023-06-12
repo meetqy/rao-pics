@@ -17,7 +17,7 @@
 
 App
 
-<p><img width="64" src="https://i.imgur.com/jxirugb.jpg"/></p>
+<p><a href="https://eagle.sjv.io/rao" target="_blank"><img width="64" src="https://i.imgur.com/jxirugb.jpg"/></a></p>
 
 文件类型
 
@@ -26,31 +26,48 @@ const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
 const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 ```
 
-## Todo 待办事项
+## Todo 待办清单
+
+<details>
+<summary>➕显示 / ➖隐藏</summary>
 
 开发进度、版本规划可以查看 [Rao Pics Todo](https://github.com/orgs/rao-pics/projects/1)。
 
 [![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
 
-## 缓存 && 日志
+</details>
 
+## 缓存 / 日志
+
+<details>
+<summary>➕显示 / ➖隐藏</summary>
+<br/>
 db.sqlite
 
 ```sh
 mac ~/Library/Caches/Rao\ Pics
+win '~\AppData\Local\Rao Pics'
 ```
 
-\*.log
+main.log
 
 ```sh
 mac ~/Library/Logs/Rao\ Pics
+win '~\AppData\Roaming\Rao Pics\logs'
 ```
 
+</details>
+
 ## 其他版本
+
+<details>
+<summary>➕显示 / ➖隐藏</summary>
 
 **Electron App** 是主要维护的版本。无论是 Docker 部署、Node 源码运行，都需要一定的技术能力，使用成本过高，**所以想做一个应用程序，只需要点点点，就完事了。**
 
 NodeJs 代码运行，Docker 部署，可以转到 [main 分支](https://github.com/rao-pics/core/tree/main)。
+
+</details>
 
 ## 感谢
 
@@ -64,6 +81,10 @@ UI
 - [electron-trpc-prisma](https://github.com/NickyMeuleman/electron-trpc-prisma)
 - [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo)
 
-❤️ 特别感谢 [Eagle App](https://eagle.cool/)，在我投稿 DEMO 的时候，给我的肯定，一个 3 折券。没有这个正向反馈，可能项目就夭折了！
+❤️ 特别感谢 [Eagle App](https://eagle.sjv.io/rao)，在我投稿 DEMO 的时候，给我的肯定，一个 3 折券。没有这个正向反馈，可能项目就夭折了！
 
-❤️ 感谢一路上给我鼓励、反馈、提出建议的朋友 **RESPECT** 🙏🏻🙏🏻🙏🏻
+❤️ 感谢一路上给我鼓励、反馈、提出建议的朋友 **RESPECT** 🎉🎉🎉
+
+## 芜湖~
+
+本项目已加入[联盟营销计划](https://eagle.cool/affiliate) - 如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击链接 [购买](https://eagle.sjv.io/rao)，支持作者哦 😘😘😘
