@@ -1,5 +1,5 @@
 import { readdirSync } from "fs";
-import { join } from "path";
+import { join, sep } from "path";
 import { dialog, type IpcMain } from "electron";
 
 import { type LibraryAdd } from "@acme/api";
@@ -10,8 +10,10 @@ const updateLibrary = (dir: string): LibraryAdd | null => {
   if (dir.endsWith(".library")) {
     // eagle
     const len = readdirSync(join(dir, "./images")).filter((item) => item.endsWith(".info")).length;
+    const dirArr = dir.split(sep);
+
     return {
-      name: dir.replace(/(.*)\//, ""),
+      name: dirArr[dirArr.length - 1],
       dir,
       fileCount: len,
       type: "eagle",
