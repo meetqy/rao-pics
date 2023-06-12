@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/rao-pics/core/compare/v0.5.0-beta.9...v0.5.0) (2023-06-12)
+
+
+### Features
+
+* 🎸 windows release ([c3839c6](https://github.com/rao-pics/core/commit/c3839c697bb56555aa07f07291fca59dbc582a67)), closes [#210](https://github.com/rao-pics/core/issues/210)
+
 ## [0.5.0-beta.9](https://github.com/rao-pics/core/compare/v0.5.0-beta.8...v0.5.0-beta.9) (2023-06-10)
 
 
