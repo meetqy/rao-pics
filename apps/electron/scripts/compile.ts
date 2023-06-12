@@ -69,10 +69,18 @@ export const AppConfig: builder.Configuration = {
 
   beforeBuild: async (context) => {
     extraResources.pop();
-    extraResources.push({
-      from: "../nextjs/.next/standalone",
-      filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*darwin${context.arch === "x64" ? "" : "-arm64"}.*.node`],
-    });
+
+    if (context.platform.name === "mac") {
+      extraResources.push({
+        from: "../nextjs/.next/standalone",
+        filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*darwin${context.arch === "x64" ? "" : "-arm64"}.*.node`],
+      });
+    } else {
+      extraResources.push({
+        from: "../nextjs/.next/standalone",
+        filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*${context.platform.name}*.node`],
+      });
+    }
 
     return Promise.resolve(context);
   },
