@@ -7,10 +7,8 @@ export * from "@prisma/client";
 
 const globalForPrisma = globalThis as { prisma?: PrismaClient };
 
-type Platform = typeof process.platform;
-
 // 数据库地址
-const _cacheDir: { [key in Platform]?: string } = {
+const _cacheDir: { [key in typeof process.platform]?: string } = {
   darwin: join(homedir(), "/Library/Caches/Rao Pics"),
   win32: join(homedir(), "/AppData/Local/Rao Pics"),
 };
@@ -24,12 +22,10 @@ const cacheDir = _cacheDir[process.platform] || join(homedir(), "Rao Pics");
 export const createSqlite = (sqliteSrc: string) => {
   if (fs.pathExistsSync(`${cacheDir}/db.sqlite`)) return;
 
-  if (process.platform === "darwin") {
-    fs.ensureDirSync(cacheDir);
-    fs.copySync(sqliteSrc, `${cacheDir}/db.sqlite`, {
-      overwrite: false,
-    });
-  }
+  fs.ensureDirSync(cacheDir);
+  fs.copySync(sqliteSrc, `${cacheDir}/db.sqlite`, {
+    overwrite: false,
+  });
 };
 
 const env = process.env.NODE_ENV;
