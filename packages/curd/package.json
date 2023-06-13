@@ -1,0 +1,8 @@
+{
+  "name": "@acme/curd",
+  "version": "^0.0.1",
+  "main": "./index.ts",
+  "devDependencies": {
+    "@acme/db": "^0.1.0"
+  }
+}
