@@ -32,6 +32,7 @@ export const libraryRouter = t.router({
       z.object({
         id: z.number(),
         fileCount: z.number().optional(),
+        failCount: z.number().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

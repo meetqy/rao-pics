@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import "./home.css";
-import { useMutation } from "@tanstack/react-query";
-
 import { EagleEmitOption } from "@acme/eagle";
 
 import { trpc } from "./utils/trpc";
@@ -12,15 +10,14 @@ function Home() {
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
   const config = trpc.config.update.useMutation();
-  const [env, setEnv] = useState<Env>();
 
+  const [env, setEnv] = useState<Env>();
   // 获取 IP 地址
   window.electronAPI.getEnv().then((res) => {
     if (env?.ip === res.ip) return;
 
     setEnv(res);
   });
-
   useEffect(() => {
     if (!env) return;
     const { ip, web_port, assets_port } = env;
@@ -33,68 +30,33 @@ function Home() {
 
   // active id
   const [active, setActive] = useState<number | undefined>();
-  const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
-  const webUrl = useMemo(() => `http://${env?.ip}:${env?.web_port}/${item?.name}`, [item, env]);
+  const activeItem = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
+  // 刷新获取进度
+  useEffect(() => {
+    if (activeItem) {
+      const { _count, failCount, fileCount } = activeItem;
+      setEagleSyncProgress({
+        type: "image",
+        current: _count.images + (failCount || 0),
+        failCount: failCount || 0,
+        count: fileCount || 0,
+      });
+    }
+  }, [active]);
+  const webUrl = useMemo(() => `http://${env?.ip}:${env?.web_port}/${activeItem?.name}`, [activeItem, env]);
 
   const addLibrary = trpc.library.add.useMutation({
-    async onSuccess() {
-      await utils.library.get.invalidate();
+    onSuccess() {
+      utils.library.get.invalidate();
     },
   });
   const removeLibrary = trpc.library.remove.useMutation({
-    async onSuccess() {
-      await utils.library.get.invalidate();
+    onSuccess() {
+      utils.library.get.invalidate();
     },
   });
-  const updateLibrary = trpc.library.update.useMutation({
-    async onSuccess() {
-      if (item) {
-        window.electronAPI.sync({
-          ...item,
-          lastSyncTime: null,
-        });
-
-        if (item.type === "eagle") {
-          window.electronAPI.onEagleSyncProgress((progress) => {
-            if (progress.type === "image") {
-              setEagleSyncProgress(progress);
-            }
-          });
-        }
-      }
-
-      await utils.library.get.invalidate();
-    },
-  });
+  const updateLibrary = trpc.library.update.useMutation();
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
-
-  useEffect(() => {
-    // active 改变重新获取一次本地文件夹信息
-    // 只会监听到文件数量改变
-    if (item) {
-      window.electronAPI.library.update(item.dir).then((res) => {
-        if (res.fileCount === item.fileCount) {
-          return;
-        }
-
-        updateLibrary.mutateAsync({
-          id: item.id,
-          fileCount: res.fileCount,
-        });
-      });
-    }
-
-    setEagleSyncProgress((d) => {
-      return item
-        ? {
-            type: "image",
-            current: item?._count.images || 0,
-            count: item?.fileCount || 0,
-            failCount: item?.failCount || 0,
-          }
-        : d;
-    });
-  }, [item]);
 
   useEffect(() => {
     if (library?.data?.length && !isInit.current) {
@@ -121,31 +83,55 @@ function Home() {
     setDelConfirmVisable(false);
   };
 
+  // 同步进度
   const [eagleSyncProgress, setEagleSyncProgress] = useState<EagleEmitOption>();
-
-  const sync = useMutation({
-    mutationFn: async () => {
-      if (item) {
-        updateLibrary.mutateAsync({
-          id: item.id,
-        });
-      }
-    },
-  });
-
   const percent = useMemo(() => {
     if (eagleSyncProgress) {
-      const { current, count, failCount } = eagleSyncProgress;
+      const { current, count } = eagleSyncProgress;
 
-      return ~~(((current + failCount) / count) * 100);
+      return ~~((current / count) * 100);
     }
 
     return 0;
-  }, [eagleSyncProgress, item]);
+  }, [eagleSyncProgress]);
+  const syncOnClick = () => {
+    if (!activeItem) return;
 
-  const open = () => {
-    window.electronAPI.openUrl(webUrl);
+    updateLibrary.mutateAsync(
+      { id: activeItem.id },
+      {
+        onSuccess: async () => {
+          if (activeItem) {
+            window.electronAPI.sync({
+              ...activeItem,
+              lastSyncTime: null,
+            });
+
+            if (activeItem.type === "eagle") {
+              window.electronAPI.onEagleSyncProgress((progress) => {
+                if (progress.type === "image") {
+                  setEagleSyncProgress(progress);
+
+                  // 同步完成 结果更新到数据库
+                  if (progress.current === progress.count) {
+                    updateLibrary.mutateAsync({
+                      id: activeItem.id,
+                      fileCount: progress.count,
+                      failCount: progress.failCount,
+                    });
+                  }
+                }
+              });
+            }
+          }
+
+          await utils.library.get.invalidate();
+        },
+      },
+    );
   };
+
+  const open = () => window.electronAPI.openUrl(webUrl);
 
   return (
     <div className="h-screen w-full flex text-sm">
@@ -183,7 +169,7 @@ function Home() {
 
                 <span className="ml-2">文件夹/库ID</span>
               </span>
-              <span>{item?.id}</span>
+              <span>{activeItem?.id}</span>
             </div>
 
             <div>
@@ -197,7 +183,7 @@ function Home() {
                 </svg>
                 <span className="ml-2">文件夹/库路径</span>
               </span>
-              <span>{item?.dir}</span>
+              <span>{activeItem?.dir}</span>
             </div>
 
             <div>
@@ -207,7 +193,7 @@ function Home() {
                 </svg>
                 <span className="ml-2">最后同步</span>
               </span>
-              <span>{item?.lastSyncTime?.toLocaleString("zh", { hour12: false }) || "未同步"}</span>
+              <span>{activeItem?.lastSyncTime?.toLocaleString("zh", { hour12: false }) || "未同步"}</span>
             </div>
 
             <div>
@@ -246,14 +232,14 @@ function Home() {
                     />
                   </svg>
 
-                  <span className="font-medium relative top-0.5">{item?.fileCount}</span>
+                  <span className="font-medium relative top-0.5">{activeItem?.fileCount}</span>
                 </span>
               </div>
 
               <div className=" divider divider-horizontal">OR</div>
 
               <div className="flex flex-col space-y-4">
-                <button className="btn" onClick={() => sync.mutate()}>
+                <button className="btn" onClick={syncOnClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
                       strokeLinecap="round"
