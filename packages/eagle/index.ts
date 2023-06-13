@@ -8,7 +8,7 @@ import { handleFolder } from "./folder";
 import { handleImage } from "./image";
 import { type LibraryMetadata } from "./types";
 
-export type EagleEmitOption = { type: "folder" | "image"; current: number; count: number };
+export type EagleEmitOption = { type: "folder" | "image"; current: number; count: number; failCount: number };
 export type EagleEmit = (option: EagleEmitOption) => void;
 
 interface Props {

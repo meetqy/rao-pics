@@ -14,22 +14,28 @@ interface Props {
 }
 
 export const handleImage = async ({ images, library, emit, onError }: Props) => {
+  let failCount = 0;
   for (const [index, image] of images.entries()) {
     // 特殊处理, metadata.json 可能是一个错误的json
     // eagle 本身的问题
     try {
       const metadata = JSON.parse(fs.readFileSync(image, "utf-8")) as Metadata;
-      await transformImage(metadata, library);
+      const res = await transformImage(metadata, library);
+      if (!res) failCount++;
+
       emit?.({
         type: "image",
         current: index + 1,
         count: images.length,
+        failCount: failCount,
       });
     } catch (e) {
+      failCount++;
       emit?.({
         type: "image",
         current: index + 1,
         count: images.length,
+        failCount,
       });
       onError?.((e as Error)["message"] + "\n file path: " + image);
       continue;

@@ -7,6 +7,7 @@ const LibraryAddInput = z.object({
   dir: z.string(),
   type: z.enum(["eagle", "pixcall", "billfish"]),
   fileCount: z.number().optional(),
+  failCount: z.number().optional(),
 });
 
 export type LibraryAdd = z.infer<typeof LibraryAddInput>;
@@ -31,6 +32,7 @@ export const libraryRouter = t.router({
       z.object({
         id: z.number(),
         fileCount: z.number().optional(),
+        failCount: z.number().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
