@@ -11,21 +11,30 @@ function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
-  const { ip, web_port, assets_port, name, version } = window.electronENV;
   const config = trpc.config.update.useMutation();
+  const [env, setEnv] = useState<Env>();
+
+  // 获取 IP 地址
+  window.electronAPI.getEnv().then((res) => {
+    if (env?.ip === res.ip) return;
+
+    setEnv(res);
+  });
 
   useEffect(() => {
+    if (!env) return;
+    const { ip, web_port, assets_port } = env;
     config.mutate({
       ip,
       webPort: Number(web_port),
       assetsPort: Number(assets_port),
     });
-  }, [window.electronENV]);
+  }, [env]);
 
   // active id
   const [active, setActive] = useState<number | undefined>();
   const item = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
-  const webUrl = useMemo(() => `http://${ip}:${web_port}/${item?.name}`, [item]);
+  const webUrl = useMemo(() => `http://${env?.ip}:${env?.web_port}/${item?.name}`, [item, env]);
 
   const addLibrary = trpc.library.add.useMutation({
     async onSuccess() {
@@ -59,9 +68,9 @@ function Home() {
   });
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
-  // active 改变重新获取一次本地文件夹信息
-  // 只会监听到文件数量改变
   useEffect(() => {
+    // active 改变重新获取一次本地文件夹信息
+    // 只会监听到文件数量改变
     if (item) {
       window.electronAPI.library.update(item.dir).then((res) => {
         if (res.fileCount === item.fileCount) {
@@ -74,6 +83,16 @@ function Home() {
         });
       });
     }
+
+    setEagleSyncProgress((d) => {
+      return item
+        ? {
+            type: "image",
+            current: item?._count.images || 0,
+            count: item?.fileCount || 0,
+          }
+        : d;
+    });
   }, [item]);
 
   useEffect(() => {
@@ -100,18 +119,6 @@ function Home() {
     setActive(newL && newL.length > 0 ? newL[0].id : undefined);
     setDelConfirmVisable(false);
   };
-
-  useEffect(() => {
-    setEagleSyncProgress((d) => {
-      return item
-        ? {
-            type: "image",
-            current: item?._count.images || 0,
-            count: item?.fileCount || 0,
-          }
-        : d;
-    });
-  }, [item]);
 
   const [eagleSyncProgress, setEagleSyncProgress] = useState<EagleEmitOption>();
 
@@ -273,8 +280,8 @@ function Home() {
             </figure>
             <div className="card-body items-center text-center">
               <h2 className="card-title uppercase !mb-0">
-                {name}
-                <button className="btn btn-sm btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v{version}</button>
+                {env?.name}
+                <button className="btn btn-sm btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v{env?.version}</button>
               </h2>
               <p className="text-base-content/90 ">~~暂未添加文件夹，请点击下面按钮~~</p>
               <div className="card-actions mt-2">

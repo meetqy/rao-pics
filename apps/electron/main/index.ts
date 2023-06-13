@@ -1,22 +1,19 @@
 import { app, ipcMain, shell, type IpcMain } from "electron";
-import { getPort } from "get-port-please";
-import ip from "ip";
 
 import "./security-restrictions";
-import cp from "child_process";
-import { join } from "path";
+import type cp from "child_process";
 import { callProcedure } from "@trpc/server";
 
 import { appRouter, createContext } from "@acme/api";
 import { closeAssetsServer } from "@acme/assets-server";
-import { createSqlite } from "@acme/db";
 
 import type { IPCRequestOptions } from "../types";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
+import { createWebServer } from "./src/createWebServer";
 
-let nextjsChild: cp.ChildProcess;
+let nextjsWebChild: cp.ChildProcess | undefined;
 
 /**
  * Prevent electron from running multiple instances.
@@ -48,13 +45,17 @@ app.on("window-all-closed", () => {
 
 app.on("will-quit", () => {
   closeAssetsServer();
-  nextjsChild?.kill();
+  nextjsWebChild?.kill();
 });
 
 /**
  * @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
  */
 app.on("activate", () => {
+  void (async () => {
+    nextjsWebChild = await createWebServer(nextjsWebChild);
+  })();
+
   restoreOrCreateWindow().catch((err) => {
     throw err;
   });
@@ -98,6 +99,16 @@ export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
     void shell.openExternal(url);
   });
 
+  ipcMain.handle("get-env", () => {
+    return {
+      ip: process.env["IP"],
+      web_port: process.env["WEB_PORT"],
+      assets_port: process.env["ASSETS_PORT"],
+      name: process.env["APP_NAME"],
+      version: process.env["APP_VERSION"],
+    };
+  });
+
   LibraryIPC.assetsServer(ipcMain);
   LibraryIPC.choose(ipcMain);
   LibraryIPC.update(ipcMain);
@@ -135,46 +146,10 @@ app.on("ready", () => {
   createIPCHandler({ ipcMain });
 
   void (async () => {
-    const { isPackaged } = app;
+    nextjsWebChild = await createWebServer();
 
-    const _ip = ip.address();
-    const _web_port = isPackaged ? (await getPort({ portRange: [9620, 9624], port: 9620 })).toString() : "9620";
-    const _assets_port = isPackaged ? (await getPort({ portRange: [9625, 9629], port: 9625 })).toString() : "9625";
-
-    // Init env variables
-    process.env["IP"] = _ip;
-    process.env["WEB_PORT"] = _web_port;
-    process.env["ASSETS_PORT"] = _assets_port;
-
-    if (app.isPackaged) {
-      // app config production
-      // dev 在 watchDesktop.ts 中指定
-      process.env["APP_VERSION"] = app.getVersion();
-      process.env["APP_NAME"] = app.getName();
-
-      // Create sqlite database file
-      createSqlite(join(process.resourcesPath, "./packages/db/prisma/db.sqlite"));
-
-      // Start nextjs server
-      nextjsChild = cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"), {
-        env: {
-          PORT: (_web_port || 9620).toString(),
-        },
-      });
-    } else {
-      if (process.env["NEXTJS_SERVER"] === "true") return;
-      const nextjs = join(process.cwd(), "../nextjs");
-      nextjsChild = cp.spawn("npx", ["next", "dev"], {
-        shell: true,
-        cwd: nextjs,
-        stdio: "inherit",
-        env: {
-          // 不能省略，否则会报错
-          ...process.env,
-          PORT: _web_port,
-        },
-      });
-      process.env["NEXTJS_SERVER"] = "true";
+    if (!nextjsWebChild) {
+      throw Error("NextJS child process was not created, exiting...");
     }
   })();
 });
