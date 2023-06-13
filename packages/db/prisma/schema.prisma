@@ -46,8 +46,10 @@ model Library {
     dir          String    @unique
     // eagle | billfish | pixcall | finder | ...
     type         String
-    // 本地总数
+    // 本地总数 = images.length + failCount 
     fileCount    Int       @default(0)
+    // 失败的文件数 = 不支持的扩展名 + 无法读取的文件 + 已经删除的文件（metadata.isDeleted=true）
+    failCount    Int?      @default(0)
     // 最后一次同步时间
     lastSyncTime DateTime?
     // 已同步的数量

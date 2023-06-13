@@ -90,6 +90,7 @@ function Home() {
             type: "image",
             current: item?._count.images || 0,
             count: item?.fileCount || 0,
+            failCount: item?.failCount || 0,
           }
         : d;
     });
@@ -134,7 +135,9 @@ function Home() {
 
   const percent = useMemo(() => {
     if (eagleSyncProgress) {
-      return ~~((eagleSyncProgress.current / eagleSyncProgress.count) * 100);
+      const { current, count, failCount } = eagleSyncProgress;
+
+      return ~~(((current + failCount) / count) * 100);
     }
 
     return 0;
