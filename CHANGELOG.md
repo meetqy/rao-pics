@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/rao-pics/core/compare/v0.5.0...v0.5.1) (2023-06-13)
+
+
+### Features
+
+* 🎸 ip 改变 web 预览地址，未同步 ([70c0308](https://github.com/rao-pics/core/commit/70c0308d367b55db68f7107a86b328f67714bac9)), closes [#207](https://github.com/rao-pics/core/issues/207)
+
+
+### Bug Fixes
+
+* 🐛 刷新同步进度显示错误 ([dda405c](https://github.com/rao-pics/core/commit/dda405c4c6f259cfa23aee55494b5240d3852ddd)), closes [#228](https://github.com/rao-pics/core/issues/228)
+
 ## [0.5.0](https://github.com/rao-pics/core/compare/v0.5.0-beta.9...v0.5.0) (2023-06-12)
 
 
