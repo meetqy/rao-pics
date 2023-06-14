@@ -344,12 +344,6 @@ importers:
 
   packages/constant: {}
 
-  packages/curd:
-    devDependencies:
-      '@acme/db':
-        specifier: ^0.1.0
-        version: link:../db
-
   packages/db:
     dependencies:
       '@prisma/client':
