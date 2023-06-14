@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/rao-pics/core/compare/v0.5.1...v0.5.2) (2023-06-14)
+
+
+### Features
+
+* 🎸 web 支持调整一行显示数量 ([23ffb63](https://github.com/rao-pics/core/commit/23ffb63743030c07afdac5bbcab08eb095eccc08)), closes [#242](https://github.com/rao-pics/core/issues/242)
+
+
+### Improves
+
+* ⚡️ 添加不支持的文件夹，给出提示 ([6d4ed22](https://github.com/rao-pics/core/commit/6d4ed2242f93a29403d8cedc0e888971dd6b8487)), closes [#218](https://github.com/rao-pics/core/issues/218)
+
 ### [0.5.1](https://github.com/rao-pics/core/compare/v0.5.0...v0.5.1) (2023-06-13)
 
 
