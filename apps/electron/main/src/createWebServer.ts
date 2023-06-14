@@ -7,8 +7,6 @@ import ip from "ip";
 import { createSqlite } from "@acme/db";
 
 export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
-  preNextChild?.kill();
-
   let nextjsChild: cp.ChildProcess;
 
   const { isPackaged } = app;
@@ -23,6 +21,7 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
   process.env["ASSETS_PORT"] = _assets_port;
 
   if (app.isPackaged) {
+    preNextChild?.kill();
     // app config production
     // dev 在 watchDesktop.ts 中指定
     process.env["APP_VERSION"] = app.getVersion();
@@ -38,7 +37,8 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
       },
     });
   } else {
-    // if (process.env["NEXTJS_SERVER"] === "true") return;
+    // 开发环境 next dev 会自动进行热更新，不需要 kill
+    if (preNextChild) return;
     const nextjs = join(process.cwd(), "../nextjs");
     nextjsChild = cp.spawn("npx", ["next", "dev"], {
       shell: true,
@@ -50,7 +50,6 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
         PORT: _web_port,
       },
     });
-    // process.env["NEXTJS_SERVER"] = "true";
   }
 
   return nextjsChild;
