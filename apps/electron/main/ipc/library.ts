@@ -6,6 +6,7 @@ import { type LibraryAdd } from "@acme/api";
 import { createAssetsServer } from "@acme/assets-server";
 import { type Library } from "@acme/db";
 
+// null: 无效的文件夹
 const updateLibrary = (dir: string): LibraryAdd | null => {
   if (dir.endsWith(".library")) {
     // eagle
