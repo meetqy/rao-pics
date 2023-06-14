@@ -10,6 +10,7 @@ import Dropdown from "../Dropdown";
 const Navbar = () => {
   const { query } = useRouter();
   const libraryName = useMemo(() => query.library as string, [query]);
+
   const [params, setParams] = useQueryParams({
     ext: StringParam,
     // [filed, asc/desc]
@@ -17,8 +18,19 @@ const Navbar = () => {
     tag: StringParam,
     folder: StringParam,
     k: StringParam,
+    grid: withDefault(StringParam, "06"),
   });
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
+
+  const onGridNext = () => {
+    const keys = Object.keys(CONSTANT.GRID_COL);
+    const index = keys.indexOf(params.grid);
+    const nextIndex = index + 1 >= keys.length ? 0 : index + 1;
+
+    setParams({
+      grid: keys[nextIndex],
+    });
+  };
 
   const orderByOptions = [
     { name: "按创建时间", key: "createTime" },
@@ -109,6 +121,10 @@ const Navbar = () => {
               </span>
             </button>
           )}
+
+          <button className="btn btn-square btn-circle btn-ghost m-1 text-xl font-mono font-normal" onClick={onGridNext}>
+            {params.grid}
+          </button>
 
           <Dropdown
             tabIndex={1}
