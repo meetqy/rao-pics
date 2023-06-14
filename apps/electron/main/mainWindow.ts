@@ -18,6 +18,7 @@ async function createWindow() {
     width: 768,
     height: 450,
     resizable: false,
+    autoHideMenuBar: true,
     webPreferences: {
       allowRunningInsecureContent: false, // https://www.electronjs.org/docs/latest/tutorial/security#8-do-not-enable-allowrunninginsecurecontent
       enableBlinkFeatures: "", // https://www.electronjs.org/docs/latest/tutorial/security#10-do-not-use-enableblinkfeatures
