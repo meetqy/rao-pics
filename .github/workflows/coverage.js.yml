@@ -2,8 +2,6 @@ name: Test Coverage
 on:
   push:
     branches: [turbo-electron-prisma]
-  pull_request:
-    branches: [turbo-electron-prisma]
 jobs:
   build:
     runs-on: ubuntu-latest
