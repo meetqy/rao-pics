@@ -12,6 +12,7 @@
       "dependsOn": ["^build"]
     },
     "compile": {
+      "outputs": ["electron/dist/*.exe", "electron/dist/*.dmg"],
       "dependsOn": ["db:reset", "build"]
     },
     "lint": {}
