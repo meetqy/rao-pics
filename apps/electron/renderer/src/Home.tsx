@@ -71,7 +71,7 @@ function Home() {
   const chooseFolder = async () => {
     const res = await window.electronAPI.library.choose();
 
-    if (!res) return Alert.open("暂时不支持此App");
+    if (!res) return Alert.open("暂时不支持此App/文件夹");
 
     if (res) {
       const f = await addLibrary.mutateAsync(res);
