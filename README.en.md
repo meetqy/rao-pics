@@ -29,7 +29,7 @@ const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 ## 🌀 Todo list
 
 <details>
-<summary>➕显示 / ➖隐藏</summary>
+<summary>➕Show / ➖Hide</summary>
 <br/>
 Development progress and version changlog can be viewed [Rao Pics Todo](https://github.com/orgs/rao-pics/projects/1)。
 
@@ -40,7 +40,7 @@ Development progress and version changlog can be viewed [Rao Pics Todo](https://
 ## Cache & & Log
 
 <details>
-<summary>➕显示 / ➖隐藏</summary>
+<summary>➕Show / ➖Hide</summary>
 <br/>
 
 db.sqlite
