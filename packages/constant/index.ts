@@ -18,5 +18,4 @@ export const CONSTANT = {
 
 export interface Constant {
   ext: (typeof CONSTANT.EXT)[number];
-  gridColClassName: "grid-cols-2" | "grid-cols-4" | "grid-cols-6" | "grid-cols-8" | "grid-cols-12";
 }

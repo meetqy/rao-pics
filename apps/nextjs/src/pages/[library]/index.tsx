@@ -41,7 +41,7 @@ const IndexPage: NextPage = () => {
   );
 
   // 显式使用 classname 触发 tailwindcss 的 JIT 编译
-  const gridColClass = useMemo(() => CONSTANT.GRID_COL[query.grid || "06"] as Constant["gridColClassName"], [query.grid]);
+  const gridColClass = useMemo(() => CONSTANT.GRID_COL[query.grid || "06"] as "grid-cols-2" | "grid-cols-4" | "grid-cols-6" | "grid-cols-8" | "grid-cols-12", [query.grid]);
 
   useEffect(() => {
     const lightbox = new PhotoSwipeLightbox({
