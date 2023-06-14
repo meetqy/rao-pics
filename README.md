@@ -7,11 +7,11 @@
 [![release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
 ![download](https://img.shields.io/github/downloads/rao-pics/core/total)
 
-任何设备可通过局域网访问本地素材/媒体。
+任何设备可通过局域网访问媒体。
 
 ## 演示
 
-[![Rao Pics - 任何设备可通过局域网访问本地素材/媒体。](https://res.cloudinary.com/marcomontalbano/image/upload/v1686385245/video_to_markdown/images/youtube--12u12tR03p8-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/12u12tR03p8 "Rao Pics - 任何设备可通过局域网访问本地素材/媒体。")
+[![Rao Pics - 任何设备可通过局域网访问媒体。](https://res.cloudinary.com/marcomontalbano/image/upload/v1686385245/video_to_markdown/images/youtube--12u12tR03p8-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/12u12tR03p8 "Rao Pics - 任何设备可通过局域网访问媒体。")
 
 ## 已支持
 
@@ -85,6 +85,20 @@ UI
 
 感谢一路上给我鼓励、反馈、提出建议的朋友 **RESPECT** 🎉🎉🎉
 
-## 芜湖~
+## 芜湖 ~
 
 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate) - 如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao)，支持作者哦 😘😘😘
+
+---
+
+<div align="center">
+  
+༼ つ ◕_◕ ༽つ  Please share  
+  
+[![][tweet]][tweet-url]
+
+</div>
+
+[desc]: 任何设备可通过局域网访问媒体。
+[tweet]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithu
+[tweet-url]: https://twitter.com/intent/tweet?text=任何设备可通过局域网访问本地素材/媒体https://github.com/rao-pics/core
