@@ -7,11 +7,11 @@
 [![release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
 ![download](https://img.shields.io/github/downloads/rao-pics/core/total)
 
-Visit local material and media by LAN on any device.
+Visit media by LAN on any device.
 
 ## Demo
 
-[![Rao Pics - Visit local material and media by LAN on any device.](https://res.cloudinary.com/marcomontalbano/image/upload/v1686385245/video_to_markdown/images/youtube--12u12tR03p8-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/12u12tR03p8 "Rao Pics - Visit local material and media by LAN on any device.")
+[![Rao Pics - Visit media by LAN on any device.](https://res.cloudinary.com/marcomontalbano/image/upload/v1686385245/video_to_markdown/images/youtube--12u12tR03p8-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/12u12tR03p8 "Rao Pics - Visit media by LAN on any device.")
 
 ## Supported
 
@@ -26,22 +26,48 @@ const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
 const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 ```
 
-## Todo list
+## 🌀 Todo list
 
-Development progress and version changlog can be viewed [ Rao Pics Todo ](https://github.com/orgs/rao-pics/projects/1).
+<details>
+<summary>➕显示 / ➖隐藏</summary>
+<br/>
+Development progress and version changlog can be viewed [Rao Pics Todo](https://github.com/orgs/rao-pics/projects/1)。
 
 [![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
 
+</details>
+
 ## Cache & & Log
+
+<details>
+<summary>➕显示 / ➖隐藏</summary>
+<br/>
 
 db.sqlite
 
 ```sh
 mac ~/Library/Caches/Rao\ Pics
+win '~\AppData\Local\Rao Pics'
 ```
 
-\*.log
+main.log
 
 ```sh
 mac ~/Library/Logs/Rao\ Pics
+win '~\AppData\Roaming\Rao Pics\logs'
 ```
+
+</details>
+
+---
+
+<div align="center">
+  
+༼ つ ◕_◕ ༽つ  Please share  
+  
+[![][tweet]][tweet-url]
+
+</div>
+
+[tweet]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithu
+[tweet-url]: https://twitter.com/intent/tweet?text=Visit%20media%20by%20LAN%20on%20any%20device%20https://github.com/rao-pics/core

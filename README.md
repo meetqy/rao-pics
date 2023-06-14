@@ -30,7 +30,7 @@ const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 
 <details>
 <summary>➕显示 / ➖隐藏</summary>
-
+<br/>
 开发进度、版本规划可以查看 [Rao Pics Todo](https://github.com/orgs/rao-pics/projects/1)。
 
 [![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
@@ -42,6 +42,7 @@ const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 <details>
 <summary>➕显示 / ➖隐藏</summary>
 <br/>
+
 db.sqlite
 
 ```sh
@@ -62,6 +63,7 @@ win '~\AppData\Roaming\Rao Pics\logs'
 
 <details>
 <summary>➕显示 / ➖隐藏</summary>
+<br/>
 
 **Electron App** 是主要维护的版本。无论是 Docker 部署、Node 源码运行，都需要一定的技术能力，使用成本过高，**所以想做一个应用程序，只需要点点点，就完事了。**
 
@@ -99,6 +101,5 @@ UI
 
 </div>
 
-[desc]: 任何设备可通过局域网访问媒体。
 [tweet]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithu
-[tweet-url]: https://twitter.com/intent/tweet?text=任何设备可通过局域网访问本地素材/媒体https://github.com/rao-pics/core
+[tweet-url]: https://twitter.com/intent/tweet?text=任何设备可通过局域网访问媒体https://github.com/rao-pics/core
