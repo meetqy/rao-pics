@@ -248,6 +248,9 @@ importers:
       '@acme/constant':
         specifier: ^0.1.0
         version: link:../constant
+      '@acme/curd':
+        specifier: ^0.0.1
+        version: link:../curd
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
@@ -344,6 +347,19 @@ importers:
 
   packages/constant: {}
 
+  packages/curd:
+    dependencies:
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@acme/db':
+        specifier: ^0.1.0
+        version: link:../db
+      '@acme/mock':
+        specifier: ^0.1.0
+        version: link:../mock
+
   packages/db:
     dependencies:
       '@prisma/client':
@@ -368,6 +384,9 @@ importers:
       '@acme/constant':
         specifier: ^0.1.0
         version: link:../constant
+      '@acme/curd':
+        specifier: ^0.0.1
+        version: link:../curd
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
