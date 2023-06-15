@@ -1,0 +1,10 @@
+{
+  "name": "@acme/curd",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@acme/db": "^0.1.0"
+  },
+  "dependencies": {
+    "zod": "^3.21.4"
+  }
+}

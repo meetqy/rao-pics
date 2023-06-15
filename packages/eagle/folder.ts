@@ -1,4 +1,5 @@
-import { prisma, type Library, type Prisma } from "@acme/db";
+import { Curd } from "@acme/curd";
+import { prisma, type Library } from "@acme/db";
 
 import { type EagleEmit } from ".";
 import { type Folder } from "./types";
@@ -6,17 +7,17 @@ import { type Folder } from "./types";
 export const handleFolder = async (folders: Folder[], library: Library, emit?: EagleEmit) => {
   const f = treeToArray(folders);
 
+  if (f.length === 0) {
+    await Curd(prisma).folder().clear();
+
+    return;
+  }
+
   for (const [index, folder] of f.entries()) {
-    const input: Prisma.FolderCreateInput = {
+    await Curd(prisma).folder().upsert({
       id: folder.id,
       name: folder.name,
-      library: { connect: { id: library.id } },
-    };
-
-    await prisma.folder.upsert({
-      where: { id: folder.id },
-      update: input,
-      create: input,
+      libraryId: library.id,
     });
 
     emit &&
@@ -28,18 +29,13 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
   }
 
   // 清除已经删除，sqlite中还存在的文件夹。
-  await prisma.folder.deleteMany({
-    where: {
-      AND: [
-        {
-          id: {
-            notIn: f.map((folder) => folder.id),
-          },
-        },
-        { libraryId: library.id },
-      ],
-    },
-  });
+  await Curd(prisma)
+    .folder()
+    .delete({
+      libraryId: library.id,
+      ids: f.map((folder) => folder.id),
+      idsRule: "notIn",
+    });
 };
 
 const treeToArray = (folders: Folder[]) => {
