@@ -356,6 +356,9 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
+      '@acme/mock':
+        specifier: ^0.1.0
+        version: link:../mock
 
   packages/db:
     dependencies:
