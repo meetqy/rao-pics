@@ -5,7 +5,9 @@ import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
 import { CONSTANT } from "@acme/constant";
 
-import Dropdown from "../Dropdown";
+import Dropdown from "./Dropdown";
+import Logo from "./Logo";
+import Search from "./Search";
 
 const Navbar = () => {
   const { query } = useRouter();
@@ -56,24 +58,16 @@ const Navbar = () => {
   }, [value]);
 
   return (
-    <header className="w-full sticky top-0 left-0 z-20 px-4 bg-base-100/90 backdrop-blur">
+    <header className="w-full sticky top-0 left-0 z-20 xl:px-4 bg-base-100/90 backdrop-blur">
       <nav className="navbar w-full">
-        <div className="flex-1">
-          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-          </svg>
+        <Logo />
 
-          <input
-            value={value}
-            onInput={(e) => setValue((e.target as EventTarget & HTMLInputElement).value)}
-            type="text"
-            placeholder="搜索"
-            className="input w-1/3 focus:outline-none input-ghost h-12 normal-case"
-          />
+        <div className="flex-1">
+          <Search value={value} onInput={setValue} className="xl:flex hidden" />
         </div>
 
-        <div className="flex-none">
-          <button className="btn btn-ghost m-1 capitalize font-mono">
+        <div className="flex-none xl:gap-1">
+          <button className="btn btn-ghost capitalize font-mono">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path
                 strokeLinecap="round"
@@ -85,7 +79,7 @@ const Navbar = () => {
           </button>
 
           {params.tag && (
-            <button className="btn btn-ghost m-1 capitalize font-mono">
+            <button className="btn btn-ghost capitalize font-mono">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path
                   strokeLinecap="round"
@@ -104,7 +98,7 @@ const Navbar = () => {
           )}
 
           {params.folder && (
-            <button className="btn btn-ghost m-1 capitalize font-mono">
+            <button className="btn btn-ghost capitalize font-mono">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path
                   strokeLinecap="round"
@@ -122,7 +116,7 @@ const Navbar = () => {
             </button>
           )}
 
-          <button className="btn btn-square btn-circle btn-ghost m-1 text-xl font-mono font-normal" onClick={onGridNext}>
+          <button className="btn btn-square btn-circle btn-ghost text-xl font-mono font-normal" onClick={onGridNext}>
             {params.grid}
           </button>
 
