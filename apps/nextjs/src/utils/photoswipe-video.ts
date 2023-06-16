@@ -16,6 +16,7 @@ const initLightboxVideoPlugin = (lightbox: PhotoSwipeLightbox) => {
       video.controls = true;
       video.playsInline = true;
       video.preload = "auto";
+      video.loop = true;
       video.setAttribute("poster", content.data.msrc || "");
       video.src = content.data.src as string;
 

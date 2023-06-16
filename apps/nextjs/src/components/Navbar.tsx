@@ -1,7 +1,7 @@
 import { useRequest, useResponsive } from "ahooks";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { StringParam, useQueryParams, withDefault } from "use-query-params";
+import { StringParam, useQueryParams } from "use-query-params";
 
 import { CONSTANT } from "@acme/constant";
 
