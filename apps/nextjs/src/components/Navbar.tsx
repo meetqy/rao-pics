@@ -1,4 +1,5 @@
 import { useRequest, useResponsive } from "ahooks";
+import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
@@ -10,6 +11,8 @@ import Logo from "./Logo";
 import Search from "./Search";
 
 const Navbar = () => {
+  const router = useRouter();
+
   const [params, setParams] = useQueryParams({
     ext: StringParam,
     // [filed, asc/desc]
@@ -27,15 +30,15 @@ const Navbar = () => {
   const { gridOption } = useMemo(() => getGridOption(responsive), [responsive]);
 
   useEffect(() => {
-    if (gridOption && gridOption.length > 0 && params.grid) {
+    if (gridOption && gridOption.length > 0) {
       const res = gridOption.filter((grid) => grid.replace("grid-cols-", "") === params.grid);
-      if (res.length === 0) {
+      if (res.length === 0 && router.isReady) {
         setParams({
           grid: gridOption[0]?.replace("grid-cols-", ""),
         });
       }
     }
-  }, [gridOption, params.grid, responsive]);
+  }, [gridOption, params, responsive]);
 
   const onGridNext = () => {
     if (!gridOption || gridOption.length === 0) return;
