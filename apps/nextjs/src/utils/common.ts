@@ -21,3 +21,21 @@ export const transformByteToUnit = (bytes = 0, decimals = 2) => {
 
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 };
+
+export const getGridOption = (responsive: { [key in string]: boolean }) => {
+  let res = "";
+  for (const k in responsive) {
+    if (responsive[k]) res = k;
+    else break;
+  }
+
+  return GridScreens[res as keyof typeof GridScreens];
+};
+
+export const GridScreens = {
+  sm: ["grid-cols-1", "grid-cols-2"],
+  md: ["grid-cols-2", "grid-cols-1", "grid-cols-3"],
+  lg: ["grid-cols-3", "grid-cols-4", "grid-cols-6"],
+  xl: ["grid-cols-3", "grid-cols-4", "grid-cols-6"],
+  xxl: ["grid-cols-6", "grid-cols-8", "grid-cols-12"],
+};

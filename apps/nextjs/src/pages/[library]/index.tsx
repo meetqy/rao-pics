@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import { useEffect, useMemo } from "react";
 
-import { getImgUrl, transformByteToUnit } from "~/utils/common";
+import { getGridOption, getImgUrl, transformByteToUnit } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
 import "photoswipe/style.css";
 import { type ParsedUrlQuery } from "querystring";
+import { useResponsive } from "ahooks";
 
 import { type ExtEnum } from "@acme/api";
 import { CONSTANT } from "@acme/constant";
@@ -21,7 +22,7 @@ interface PageUrlQuery extends ParsedUrlQuery {
   tag: string;
   folder: string;
   k: string;
-  grid: keyof typeof CONSTANT.GRID_COL;
+  grid: string;
 }
 
 const IndexPage: NextPage = () => {
@@ -39,10 +40,6 @@ const IndexPage: NextPage = () => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
-
-  // 显式使用 classname 触发 tailwindcss 的 JIT 编译
-  // "grid-cols-2" | "grid-cols-4" | "grid-cols-6" | "grid-cols-8" | "grid-cols-12"
-  const gridColClass = useMemo(() => CONSTANT.GRID_COL[query.grid || "06"], [query.grid]);
 
   useEffect(() => {
     const lightbox = new PhotoSwipeLightbox({
@@ -79,7 +76,7 @@ const IndexPage: NextPage = () => {
     <Layout loadMore={onLoadMore} loadMoreContent={<span className="text-base-300 text-sm">{hasNextPage ? "加载中..." : "已经到底了~~"}</span>}>
       <>
         {assetsUrl && (
-          <div className={`grid gap-4 p-4 ${gridColClass}`} id="photoswipe">
+          <div className={`grid gap-4 p-4 grid-cols-${query.grid}`} id="photoswipe">
             {items?.map((item, index) => (
               <div className="card glass cursor-pointer overflow-hidden" key={item.id}>
                 <a

@@ -8,10 +8,11 @@ import { QueryParamProvider } from "use-query-params";
 import { trpc } from "~/utils/trpc";
 
 configResponsive({
-  sm: 640,
-  md: 768,
-  lg: 1024,
-  xl: 1280,
+  sm: 0,
+  md: 641,
+  lg: 769,
+  xl: 1025,
+  xxl: 1537,
 });
 
 const MyApp: AppType = ({ Component, pageProps: pageProps }) => {

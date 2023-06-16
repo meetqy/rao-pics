@@ -1,9 +1,10 @@
-import { useRequest } from "ahooks";
+import { useRequest, useResponsive } from "ahooks";
 import { useEffect, useMemo, useState } from "react";
 import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
 import { CONSTANT } from "@acme/constant";
 
+import { getGridOption } from "~/utils/common";
 import Dropdown from "./Dropdown";
 import Logo from "./Logo";
 import Search from "./Search";
@@ -16,17 +17,34 @@ const Navbar = () => {
     tag: StringParam,
     folder: StringParam,
     k: StringParam,
-    grid: withDefault(StringParam, "06"),
+    // grid-cols-{grid}
+    grid: StringParam,
   });
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
 
+  const responsive = useResponsive();
+  const gridOption = useMemo(() => getGridOption(responsive), [responsive]);
+
+  useEffect(() => {
+    if (gridOption.length > 0) {
+      setParams({
+        ...params,
+        grid: gridOption[0]?.replace("grid-cols-", ""),
+      });
+    }
+  }, [gridOption, responsive]);
+
   const onGridNext = () => {
-    const keys = Object.keys(CONSTANT.GRID_COL);
-    const index = keys.indexOf(params.grid);
-    const nextIndex = index + 1 >= keys.length ? 0 : index + 1;
+    const len = gridOption.length;
+
+    if (len === 0) return;
+
+    const index = gridOption.findIndex((item) => item === `grid-cols-${params.grid}`);
+    const nextIndex = (index + 1) % len;
 
     setParams({
-      grid: keys[nextIndex],
+      ...params,
+      grid: gridOption[nextIndex]?.replace("grid-cols-", ""),
     });
   };
 
@@ -63,6 +81,10 @@ const Navbar = () => {
         </div>
 
         <div className="flex-none xl:gap-1">
+          <button className="btn btn-square btn-circle btn-ghost text-xl font-mono font-normal" onClick={onGridNext}>
+            {params.grid}
+          </button>
+
           {params.tag && (
             <button className="btn btn-ghost capitalize font-mono">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -100,10 +122,6 @@ const Navbar = () => {
               </span>
             </button>
           )}
-
-          <button className="btn btn-square btn-circle btn-ghost text-xl font-mono font-normal" onClick={onGridNext}>
-            {params.grid}
-          </button>
 
           <Dropdown
             tabIndex={1}
