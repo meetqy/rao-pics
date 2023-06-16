@@ -23,7 +23,7 @@ const Navbar = () => {
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
 
   const responsive = useResponsive();
-  const { responsiveKey, gridOption } = useMemo(() => getGridOption(responsive), [responsive]);
+  const { gridOption } = useMemo(() => getGridOption(responsive), [responsive]);
 
   useEffect(() => {
     if (gridOption && gridOption.length > 0) {

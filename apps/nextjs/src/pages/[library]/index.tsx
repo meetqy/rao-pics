@@ -93,6 +93,10 @@ const IndexPage: NextPage = () => {
     }
   }, [responsive, query.grid]);
 
+  // grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4  grid-cols-6  grid-cols-8  grid-cols-12
+  // gap-1 gap-2 gap-3 gap-4
+  // p-1 p-2 p-3 p-4
+
   return (
     <Layout loadMore={onLoadMore} loadMoreContent={<span className="text-base-300 text-sm">{hasNextPage ? "加载中..." : "已经到底了~~"}</span>}>
       <>
