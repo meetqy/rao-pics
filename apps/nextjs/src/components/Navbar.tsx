@@ -16,7 +16,7 @@ const Navbar = () => {
   const [params, setParams] = useQueryParams({
     ext: StringParam,
     // [filed, asc/desc]
-    orderBy: withDefault(StringParam, "createTime,desc"),
+    orderBy: StringParam,
     tag: StringParam,
     folder: StringParam,
     k: StringParam,
@@ -24,7 +24,7 @@ const Navbar = () => {
     grid: StringParam,
   });
 
-  const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
+  const orderBy = useMemo(() => (params.orderBy || "createTime,desc").split(","), [params.orderBy]);
 
   const responsive = useResponsive();
   const { gridOption } = useMemo(() => getGridOption(responsive), [responsive]);
@@ -38,7 +38,7 @@ const Navbar = () => {
         });
       }
     }
-  }, [gridOption, params, responsive]);
+  }, [gridOption, params, responsive, router.isReady]);
 
   const onGridNext = () => {
     if (!gridOption || gridOption.length === 0) return;
@@ -160,10 +160,10 @@ const Navbar = () => {
               value={orderBy[0]}
               options={orderByOptions.map((item) => ({ name: item.name, value: item.key }))}
               onChange={(item) => {
-                setParams({
-                  ...params,
-                  orderBy: [item, orderBy[1]].join(","),
-                });
+                // setParams({
+                //   ...params,
+                //   orderBy: [item, orderBy[1]].join(","),
+                // });
               }}
             />
 
@@ -173,10 +173,10 @@ const Navbar = () => {
                 type="checkbox"
                 checked={orderBy[1] === "desc"}
                 onChange={(e) => {
-                  setParams({
-                    ...params,
-                    orderBy: [orderBy[0], e.target.checked ? "desc" : "asc"].join(","),
-                  });
+                  // setParams({
+                  //   ...params,
+                  //   orderBy: [orderBy[0], e.target.checked ? "desc" : "asc"].join(","),
+                  // });
                 }}
                 className="toggle toggle-primary toggle-sm -rotate-90"
               />
