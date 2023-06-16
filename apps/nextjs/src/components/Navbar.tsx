@@ -1,5 +1,4 @@
 import { useRequest } from "ahooks";
-import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { StringParam, useQueryParams, withDefault } from "use-query-params";
 
@@ -10,9 +9,6 @@ import Logo from "./Logo";
 import Search from "./Search";
 
 const Navbar = () => {
-  const { query } = useRouter();
-  const libraryName = useMemo(() => query.library as string, [query]);
-
   const [params, setParams] = useQueryParams({
     ext: StringParam,
     // [filed, asc/desc]
@@ -60,10 +56,10 @@ const Navbar = () => {
   return (
     <header className="w-full sticky top-0 left-0 z-20 xl:px-4 bg-base-100/90 backdrop-blur">
       <nav className="navbar w-full">
-        <Logo className="xl:hidden" htmlFor="my-drawer-2" />
+        <Logo className="lg:hidden" htmlFor="my-drawer-2" />
 
         <div className="flex-1">
-          <Search value={value} onInput={setValue} className="xl:flex hidden w-1/2" inputClassName="w-full" />
+          <Search value={value} onInput={setValue} className="lg:flex hidden w-1/2" inputClassName="w-full" />
         </div>
 
         <div className="flex-none xl:gap-1">

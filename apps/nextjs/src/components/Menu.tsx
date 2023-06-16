@@ -17,7 +17,7 @@ const Menu = ({ library, href }: MenuProps) => {
   return (
     <aside className="w-72 bg-base-100 text-base-content z-50">
       <div className="sticky top-0 p-2">
-        <Logo className="xl:flex hidden" />
+        <Logo className="lg:flex hidden" />
         <Search className="flex lg:hidden mt-2" inputClassName="w-full" />
       </div>
 
