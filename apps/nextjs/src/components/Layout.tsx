@@ -1,10 +1,7 @@
 import { useInViewport } from "ahooks";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 
-import Alert from "./Alert";
-import Logo from "./Logo";
 import Menu from "./Menu";
 import Navbar from "./Navbar";
 
@@ -35,7 +32,7 @@ const Layout = (props: Props) => {
   }, [isViewPort]);
 
   return (
-    <div className="drawer">
+    <div className="drawer drawer-mobile">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content bg-base-100">
         <Navbar />

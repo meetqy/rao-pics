@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import Alert from "./Alert";
 import Logo from "./Logo";
+import Search from "./Search";
 
 interface MenuProps {
   library: string;
@@ -15,11 +16,24 @@ const Menu = ({ library, href }: MenuProps) => {
 
   return (
     <aside className="w-72 bg-base-100 text-base-content z-50">
-      <div className="sticky top-0 p-2 xl:block hidden">
-        <Logo />
+      <div className="sticky top-0 p-2">
+        <Logo className="xl:flex hidden" />
+        <Search className="flex lg:hidden mt-2" inputClassName="w-full" />
       </div>
 
       <ul className="menu p-2 my-2">
+        <li>
+          <Link href={`/${library}`} className={`capitalize font-mono font-bold`}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"
+              />
+            </svg>
+            {library}
+          </Link>
+        </li>
         <li>
           <Link href={`/${library}/tags`} className={href === "/tags" ? "active" : ""}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
