@@ -20,19 +20,22 @@ const Navbar = () => {
     // grid-cols-{grid}
     grid: StringParam,
   });
+
   const orderBy = useMemo(() => params.orderBy.split(","), [params.orderBy]);
 
   const responsive = useResponsive();
   const { gridOption } = useMemo(() => getGridOption(responsive), [responsive]);
 
   useEffect(() => {
-    if (gridOption && gridOption.length > 0) {
-      setParams({
-        ...params,
-        grid: gridOption[0]?.replace("grid-cols-", ""),
-      });
+    if (gridOption && gridOption.length > 0 && params.grid) {
+      const res = gridOption.filter((grid) => grid.replace("grid-cols-", "") === params.grid);
+      if (res.length === 0) {
+        setParams({
+          grid: gridOption[0]?.replace("grid-cols-", ""),
+        });
+      }
     }
-  }, [gridOption, responsive]);
+  }, [gridOption, params.grid, responsive]);
 
   const onGridNext = () => {
     if (!gridOption || gridOption.length === 0) return;
@@ -54,22 +57,19 @@ const Navbar = () => {
     { name: "按文件名字", key: "name" },
   ];
 
-  const [value, setValue] = useState<string | undefined>();
+  const [searchValue, setSearchValue] = useState<string | undefined>();
   const setParamsK = (k: string | undefined) => {
-    return Promise.resolve(setParams({ k }));
+    return Promise.resolve(setParams({ ...params, k }));
   };
-
   const { run } = useRequest(setParamsK, {
     debounceWait: 500,
   });
-
   useEffect(() => {
-    setValue(params.k ?? undefined);
+    setSearchValue(params.k ?? undefined);
   }, [params.k]);
-
   useEffect(() => {
-    run(value);
-  }, [value]);
+    run(searchValue);
+  }, [searchValue]);
 
   return (
     <header className="w-full sticky top-0 left-0 z-20 xl:px-4 bg-base-100/90 backdrop-blur">
@@ -77,7 +77,7 @@ const Navbar = () => {
         <Logo className="lg:hidden" htmlFor="my-drawer-2" />
 
         <div className="flex-1">
-          <Search value={value} onInput={setValue} className="lg:flex hidden w-1/2" inputClassName="w-full" />
+          <Search value={searchValue} onInput={setSearchValue} className="lg:flex hidden w-1/2" inputClassName="w-full" />
         </div>
 
         <div className="flex-none xl:gap-1">
@@ -97,7 +97,7 @@ const Navbar = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
                 </svg>
                 <span className="ml-2">{params.tag}</span>
-                <span className="ml-2" onClick={() => setParams({ tag: undefined })}>
+                <span className="ml-2" onClick={() => setParams({ ...params, tag: undefined })}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-error">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -116,7 +116,7 @@ const Navbar = () => {
                 </svg>
 
                 <span className="ml-2">{params.folder}</span>
-                <span className="ml-2" onClick={() => setParams({ folder: undefined })}>
+                <span className="ml-2" onClick={() => setParams({ ...params, folder: undefined })}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-error">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -138,7 +138,7 @@ const Navbar = () => {
             }
             value={params.ext}
             options={CONSTANT.EXT.map((item) => ({ name: item, value: item }))}
-            onChange={(value) => setParams({ ext: value })}
+            onChange={(value) => setParams({ ...params, ext: value })}
           />
 
           <div className="hidden lg:block ">
@@ -158,6 +158,7 @@ const Navbar = () => {
               options={orderByOptions.map((item) => ({ name: item.name, value: item.key }))}
               onChange={(item) => {
                 setParams({
+                  ...params,
                   orderBy: [item, orderBy[1]].join(","),
                 });
               }}
@@ -170,6 +171,7 @@ const Navbar = () => {
                 checked={orderBy[1] === "desc"}
                 onChange={(e) => {
                   setParams({
+                    ...params,
                     orderBy: [orderBy[0], e.target.checked ? "desc" : "asc"].join(","),
                   });
                 }}

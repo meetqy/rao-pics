@@ -16,6 +16,7 @@ const Dropdown = (props: Props) => {
   const [_value, setValue] = useState<Value>(value);
 
   useEffect(() => {
+    if (value === _value) return;
     onChange(_value);
   }, [_value]);
 
