@@ -33,7 +33,7 @@ const Dropdown = (props: Props) => {
         </div>
       )}
 
-      <ul tabIndex={tabIndex} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-40 uppercase">
+      <ul tabIndex={tabIndex} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-40 uppercase ">
         {options.map((item) => (
           <li key={item.value}>
             <a onClick={() => setValue(item.value)} className={item.value === _value ? "active" : ""}>
