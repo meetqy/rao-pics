@@ -16,6 +16,7 @@ const Dropdown = (props: Props) => {
   const [_value, setValue] = useState<Value>(value);
 
   useEffect(() => {
+    if (value === _value) return;
     onChange(_value);
   }, [_value]);
 
@@ -33,14 +34,16 @@ const Dropdown = (props: Props) => {
         </div>
       )}
 
-      <ul tabIndex={tabIndex} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-40 uppercase">
-        {options.map((item) => (
-          <li key={item.value}>
-            <a onClick={() => setValue(item.value)} className={item.value === _value ? "active" : ""}>
-              {item.name}
-            </a>
-          </li>
-        ))}
+      <ul tabIndex={tabIndex} className="dropdown-content menu p-2 shadow-md bg-base-200/90 backdrop-blur rounded-box w-56 uppercase max-h-96 overflow-y-auto">
+        <div className="grid grid-cols-1 w-full">
+          {options.map((item) => (
+            <li key={item.value}>
+              <a onClick={() => setValue(item.value)} className={item.value === _value ? "active" : ""}>
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </div>
       </ul>
     </div>
   );

@@ -1,9 +1,19 @@
+import { configResponsive } from "ahooks";
+
 import "../styles/globals.css";
 import NextAdapterPages from "next-query-params/pages";
 import type { AppType } from "next/app";
 import { QueryParamProvider } from "use-query-params";
 
 import { trpc } from "~/utils/trpc";
+
+configResponsive({
+  sm: 0,
+  md: 641,
+  lg: 769,
+  xl: 1025,
+  xxl: 1537,
+});
 
 const MyApp: AppType = ({ Component, pageProps: pageProps }) => {
   return (
