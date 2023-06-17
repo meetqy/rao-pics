@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/rao-pics/core/compare/v0.5.2...v0.5.3) (2023-06-17)
+
+
+### Features
+
+* 🎸 web 兼容 ipad 移动端 ([9433d58](https://github.com/rao-pics/core/commit/9433d58fad18d857e3685d653f9f7742baa17b8d))
+
+
+### Refactors
+
+* 💡 folder db 操作移动到 @acme/curd ([0235b3f](https://github.com/rao-pics/core/commit/0235b3f324d2b37fbbe77070268ecc2d676fb6fa))
+
+
+### Tests
+
+* 💍 @acme/curd folder ([d2281ae](https://github.com/rao-pics/core/commit/d2281ae08c0c719c1b7c8ce73053c14f735713dd))
+
+
+### Improves
+
+* ⚡️ hide windows menu bar ([75d657d](https://github.com/rao-pics/core/commit/75d657d27fa1978b1d75a48d5fa0319479c74024)), closes [#234](https://github.com/rao-pics/core/issues/234)
+* ⚡️ 预览播放视频改为重复播放 ([4527644](https://github.com/rao-pics/core/commit/4527644fdfbaa92260a3490153a83d692796fa57)), closes [#254](https://github.com/rao-pics/core/issues/254)
+
 ### [0.5.2](https://github.com/rao-pics/core/compare/v0.5.1...v0.5.2) (2023-06-14)
 
 
