@@ -17,8 +17,8 @@
     "lint": "turbo lint && manypkg check",
     "lint:fix": "turbo lint:fix && manypkg fix",
     "type-check": "turbo type-check",
-    "test": "vitest run --coverage.enabled --coverage.reporter='text-summary'",
-    "test:ui": "vitest --ui --no-threads --coverage",
+    "test": "cross-env NODE_ENV=development vitest run --no-threads --coverage.enabled --coverage.reporter='text-summary'",
+    "test:ui": "cross-env NODE_ENV=development vitest --ui --no-threads --coverage",
     "release": "standard-version",
     "release:beta": "standard-version --prerelease beta"
   },
