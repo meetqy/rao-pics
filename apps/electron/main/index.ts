@@ -1,4 +1,4 @@
-import { app, ipcMain, shell, type IpcMain } from "electron";
+import { Menu, app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
 
 import "./security-restrictions";
 import type cp from "child_process";
@@ -12,6 +12,7 @@ import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
+import createTray, { getTrayIcon } from "./src/tray";
 
 let nextjsWebChild: cp.ChildProcess | undefined;
 
@@ -61,17 +62,46 @@ app.on("activate", () => {
   });
 });
 
+let tray: Tray;
+
 /**
  * Create the application window when the background process is ready.
  */
 app
   .whenReady()
-  .then(async () => {
-    await restoreOrCreateWindow().catch((err) => {
+  .then(() => {
+    // 托盘图标
+    tray = createTray();
+
+    // 系统菜单 https://www.electronjs.org/docs/latest/api/menu
+    const menu = Menu.buildFromTemplate([
+      {
+        label: app.name,
+        submenu: [
+          {
+            label: "Quit",
+            accelerator: "CmdOrCtrl+Q",
+            click: () => {
+              app.hide();
+            },
+          },
+        ],
+      },
+    ]);
+
+    Menu.setApplicationMenu(menu);
+
+    app.dock.hide();
+
+    restoreOrCreateWindow().catch((err) => {
       throw err;
     });
   })
   .catch((e) => console.error("Failed create window:", e));
+
+nativeTheme.on("updated", () => {
+  tray && tray.setImage(getTrayIcon());
+});
 
 function validateSender(frame: Electron.WebFrameMain) {
   const frameUrlObj = new URL(frame.url);
