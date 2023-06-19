@@ -34,6 +34,10 @@ export const AppConfig: builder.Configuration = {
   ].concat(excludeFileDir),
   extraResources: [
     {
+      from: "./buildResources",
+      to: "buildResources",
+    },
+    {
       from: "../../packages/db/prisma/db.sqlite",
       to: "packages/db/prisma/db.sqlite",
     },

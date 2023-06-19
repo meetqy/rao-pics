@@ -1,4 +1,4 @@
-import { app, ipcMain, shell, type IpcMain } from "electron";
+import { app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
 
 import "./security-restrictions";
 import type cp from "child_process";
@@ -8,10 +8,13 @@ import { appRouter, createContext } from "@acme/api";
 import { closeAssetsServer } from "@acme/assets-server";
 
 import type { IPCRequestOptions } from "../types";
+import globalApp from "./global";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
+import createMenu from "./src/menu";
+import createTray, { getTrayIcon } from "./src/tray";
 
 let nextjsWebChild: cp.ChildProcess | undefined;
 
@@ -43,7 +46,13 @@ app.on("window-all-closed", () => {
   }
 });
 
-app.on("will-quit", () => {
+app.on("before-quit", (e) => {
+  if (!globalApp.isQuite) {
+    e.preventDefault();
+  }
+});
+
+app.on("quit", () => {
   closeAssetsServer();
   nextjsWebChild?.kill();
 });
@@ -61,17 +70,41 @@ app.on("activate", () => {
   });
 });
 
+let tray: Tray;
+// 创建菜单
+createMenu();
+
+if (process.platform === "darwin") {
+  // 隐藏 docker
+  app.dock.hide();
+}
+
 /**
  * Create the application window when the background process is ready.
  */
 app
   .whenReady()
-  .then(async () => {
-    await restoreOrCreateWindow().catch((err) => {
-      throw err;
-    });
+  .then(() => {
+    restoreOrCreateWindow()
+      .then(async () => {
+        // 托盘图标
+        tray = createTray();
+
+        // 创建 Web/Assets 服务
+        nextjsWebChild = await createWebServer();
+        if (!nextjsWebChild) {
+          throw Error("NextJS child process was not created, exiting...");
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
   })
   .catch((e) => console.error("Failed create window:", e));
+
+nativeTheme.on("updated", () => {
+  tray && tray.setImage(getTrayIcon());
+});
 
 function validateSender(frame: Electron.WebFrameMain) {
   const frameUrlObj = new URL(frame.url);
@@ -144,12 +177,4 @@ async function resolveIPCResponse(opts: IPCRequestOptions) {
 
 app.on("ready", () => {
   createIPCHandler({ ipcMain });
-
-  void (async () => {
-    nextjsWebChild = await createWebServer();
-
-    if (!nextjsWebChild) {
-      throw Error("NextJS child process was not created, exiting...");
-    }
-  })();
 });

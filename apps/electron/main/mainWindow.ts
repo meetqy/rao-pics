@@ -19,6 +19,8 @@ async function createWindow() {
     height: 450,
     resizable: false,
     autoHideMenuBar: true,
+    fullscreen: false,
+    // frame: false,
     webPreferences: {
       allowRunningInsecureContent: false, // https://www.electronjs.org/docs/latest/tutorial/security#8-do-not-enable-allowrunninginsecurecontent
       enableBlinkFeatures: "", // https://www.electronjs.org/docs/latest/tutorial/security#10-do-not-use-enableblinkfeatures
@@ -50,10 +52,28 @@ async function createWindow() {
     }
   });
 
+  browserWindow.on("close", (e) => {
+    if (browserWindow.isFullScreen()) {
+      e.preventDefault();
+      browserWindow.setFullScreen(false);
+      browserWindow.hide();
+    }
+  });
+
   await browserWindow.loadURL(pageUrl);
 
   return browserWindow;
 }
+
+/**
+ * 隐藏 window
+ */
+export const hideWindow = () => {
+  const window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
+  if (window) {
+    window.hide();
+  }
+};
 
 /**
  * Restore an existing BrowserWindow or Create a new BrowserWindow.
@@ -69,5 +89,6 @@ export async function restoreOrCreateWindow() {
     window.restore();
   }
 
+  window.show();
   window.focus();
 }

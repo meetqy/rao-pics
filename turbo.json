@@ -2,18 +2,20 @@
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": ["**/.env"],
   "pipeline": {
-    "db:reset": { "inputs": ["prisma/schema.prisma"] },
+    "db:reset": { "inputs": ["prisma/schema.prisma"], "cache": false },
     "dev": {
       "persistent": true,
       "cache": false
     },
     "build": {
-      "outputs": ["./.next/standalone/**", "!.next/cache/**", "electron/**/dist/**"],
-      "dependsOn": ["^build"]
+      "outputs": ["nextjs/.next/standalone", "!nextjs/.next/cache", "electron/**/dist"],
+      "dependsOn": ["^build"],
+      "cache": false
     },
     "compile": {
       "outputs": ["electron/dist/*.exe", "electron/dist/*.dmg"],
-      "dependsOn": ["db:reset", "build"]
+      "dependsOn": ["db:reset", "build"],
+      "cache": false
     },
     "lint": {}
   },
