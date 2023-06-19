@@ -34,6 +34,10 @@ export const AppConfig: builder.Configuration = {
   ].concat(excludeFileDir),
   extraResources: [
     {
+      from: "./buildResources",
+      to: "buildResources",
+    },
+    {
       from: "../../packages/db/prisma/db.sqlite",
       to: "packages/db/prisma/db.sqlite",
     },
@@ -61,11 +65,11 @@ export const AppConfig: builder.Configuration = {
     extraResources,
   },
 
-  // win: {
-  //   icon: "buildResources/icon.png",
-  //   target: isTest ? "dir" : "nsis",
-  //   extraResources,
-  // },
+  win: {
+    icon: "buildResources/icon.png",
+    target: isTest ? "dir" : "nsis",
+    extraResources,
+  },
 
   beforeBuild: async (context) => {
     extraResources.pop();

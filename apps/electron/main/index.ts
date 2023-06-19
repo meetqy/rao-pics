@@ -1,4 +1,4 @@
-import { Menu, app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
+import { app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
 
 import "./security-restrictions";
 import type cp from "child_process";
@@ -39,12 +39,18 @@ app.disableHardwareAcceleration();
  * Shout down background process if all windows was closed
  */
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  console.log("window-all-closed");
+  // if (process.platform !== "darwin") {
+  //   app.quit();
+  // }
 });
 
-app.on("will-quit", () => {
+app.on("before-quit", (e) => {
+  e.preventDefault();
+  app.hide();
+});
+
+app.on("quit", () => {
   closeAssetsServer();
   nextjsWebChild?.kill();
 });
@@ -70,32 +76,33 @@ let tray: Tray;
 app
   .whenReady()
   .then(() => {
-    // 托盘图标
-    tray = createTray();
+    restoreOrCreateWindow()
+      .then(() => {
+        // 托盘图标
+        tray = createTray();
 
-    // 系统菜单 https://www.electronjs.org/docs/latest/api/menu
-    const menu = Menu.buildFromTemplate([
-      {
-        label: app.name,
-        submenu: [
-          {
-            label: "Quit",
-            accelerator: "CmdOrCtrl+Q",
-            click: () => {
-              app.hide();
-            },
-          },
-        ],
-      },
-    ]);
+        // 系统菜单 https://www.electronjs.org/docs/latest/api/menu
+        // const menu = Menu.buildFromTemplate([
+        //   {
+        //     label: app.name,
+        //     submenu: [
+        //       {
+        //         label: "Quit",
+        //         accelerator: "CmdOrCtrl+Q",
+        //         click: () => {
+        //           app.hide();
+        //         },
+        //       },
+        //     ],
+        //   },
+        // ]);
 
-    Menu.setApplicationMenu(menu);
-
-    app.dock.hide();
-
-    restoreOrCreateWindow().catch((err) => {
-      throw err;
-    });
+        // Menu.setApplicationMenu(menu);
+        // app.dock.hide();
+      })
+      .catch((err) => {
+        throw err;
+      });
   })
   .catch((e) => console.error("Failed create window:", e));
 
