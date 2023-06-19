@@ -31,7 +31,8 @@ const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 <details>
 <summary>➕显示 / ➖隐藏</summary>
 <br/>
-开发进度、版本规划可以查看 [Rao Pics Todo](https://github.com/orgs/rao-pics/projects/1)。
+
+开发进度、版本规划可以查看 [Todo](https://github.com/orgs/rao-pics/projects/1)
 
 [![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
 

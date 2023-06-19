@@ -97,6 +97,8 @@ function Home() {
 
     return 0;
   }, [eagleSyncProgress]);
+  const syncing = useMemo(() => percent > 0 && percent < 100, [percent]);
+
   const syncOnClick = () => {
     if (!activeItem) return;
 
@@ -242,7 +244,7 @@ function Home() {
               <div className=" divider divider-horizontal">OR</div>
 
               <div className="flex flex-col space-y-4">
-                <button className="btn" onClick={syncOnClick}>
+                <button className="btn" disabled={syncing} onClick={syncOnClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
                       strokeLinecap="round"
@@ -253,7 +255,7 @@ function Home() {
                   <span className="ml-2">同步</span>
                 </button>
 
-                <label htmlFor="my-modal" className="btn btn-error  btn-outline" onClick={() => setDelConfirmVisable(true)}>
+                <label htmlFor="my-modal" className={`btn btn-error btn-outline ${syncing ? "btn-disabled" : ""}`} onClick={() => setDelConfirmVisable(true)}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
