@@ -45,6 +45,10 @@ app.on("window-all-closed", () => {
   }
 });
 
+app.on("before-quit", () => {
+  console.log("before-quit");
+});
+
 app.on("quit", () => {
   closeAssetsServer();
   nextjsWebChild?.kill();
@@ -66,8 +70,11 @@ app.on("activate", () => {
 let tray: Tray;
 // 创建菜单
 createMenu();
-// 隐藏 docker
-app.dock.hide();
+
+if (process.platform === "darwin") {
+  // 隐藏 docker
+  app.dock.hide();
+}
 
 /**
  * Create the application window when the background process is ready.

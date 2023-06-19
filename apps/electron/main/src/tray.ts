@@ -1,6 +1,8 @@
 import { join } from "path";
 import { Menu, Tray, app, nativeTheme } from "electron";
 
+import { restoreOrCreateWindow } from "../mainWindow";
+
 export const getTrayIcon = () => {
   if (app.isPackaged) {
     return join(process.resourcesPath, "buildResources", nativeTheme.shouldUseDarkColors ? "tray-dark.png" : "tray-light.png");
@@ -22,7 +24,7 @@ const createTray = () => {
       label: "打开 Rao Pics",
       type: "normal",
       click: () => {
-        app.show();
+        void restoreOrCreateWindow();
       },
     },
     {

@@ -9,11 +9,13 @@
     },
     "build": {
       "outputs": ["nextjs/.next/standalone", "!nextjs/.next/cache", "electron/**/dist"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "cache": false
     },
     "compile": {
       "outputs": ["electron/dist/*.exe", "electron/dist/*.dmg"],
-      "dependsOn": ["db:reset", "build"]
+      "dependsOn": ["db:reset", "build"],
+      "cache": false
     },
     "lint": {}
   },

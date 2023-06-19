@@ -19,6 +19,8 @@ async function createWindow() {
     height: 450,
     resizable: false,
     autoHideMenuBar: true,
+    fullscreen: false,
+    // frame: false,
     webPreferences: {
       allowRunningInsecureContent: false, // https://www.electronjs.org/docs/latest/tutorial/security#8-do-not-enable-allowrunninginsecurecontent
       enableBlinkFeatures: "", // https://www.electronjs.org/docs/latest/tutorial/security#10-do-not-use-enableblinkfeatures
@@ -47,6 +49,14 @@ async function createWindow() {
 
     if (import.meta.env.DEV) {
       browserWindow.webContents.openDevTools();
+    }
+  });
+
+  browserWindow.on("close", (e) => {
+    if (browserWindow.isFullScreen()) {
+      e.preventDefault();
+      browserWindow.setFullScreen(false);
+      browserWindow.hide();
     }
   });
 
