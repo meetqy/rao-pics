@@ -20,7 +20,8 @@
     "test": "cross-env NODE_ENV=development vitest run --no-threads --coverage.enabled --coverage.reporter='text-summary'",
     "test:ui": "cross-env NODE_ENV=development vitest --ui --no-threads --coverage",
     "release": "standard-version",
-    "release:beta": "standard-version --prerelease beta"
+    "release:beta": "standard-version --prerelease beta",
+    "release:minor": "standard-version --release-as minor"
   },
   "dependencies": {
     "@acme/eslint-config": "^0.1.0",
