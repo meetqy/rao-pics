@@ -9,6 +9,10 @@ export const getTrayIcon = () => {
   }
 };
 
+/**
+ * 系统托盘
+ * @returns {Tray}
+ */
 const createTray = () => {
   // 托盘图标
   const tray = new Tray(getTrayIcon());
@@ -19,6 +23,13 @@ const createTray = () => {
       type: "normal",
       click: () => {
         app.show();
+      },
+    },
+    {
+      label: "退出",
+      type: "normal",
+      click: () => {
+        app.quit();
       },
     },
   ]);

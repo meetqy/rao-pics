@@ -1,4 +1,4 @@
-import { app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
+import { Menu, MenuItem, app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
 
 import "./security-restrictions";
 import type cp from "child_process";
@@ -12,6 +12,7 @@ import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
+import createMenu from "./src/menu";
 import createTray, { getTrayIcon } from "./src/tray";
 
 let nextjsWebChild: cp.ChildProcess | undefined;
@@ -40,15 +41,15 @@ app.disableHardwareAcceleration();
  */
 app.on("window-all-closed", () => {
   console.log("window-all-closed");
-  // if (process.platform !== "darwin") {
-  //   app.quit();
-  // }
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
 });
 
-app.on("before-quit", (e) => {
-  e.preventDefault();
-  app.hide();
-});
+// app.on("will-quit", (e) => {
+//   e.preventDefault();
+//   app.hide();
+// });
 
 app.on("quit", () => {
   closeAssetsServer();
@@ -69,6 +70,8 @@ app.on("activate", () => {
 });
 
 let tray: Tray;
+// create menu
+createMenu();
 
 /**
  * Create the application window when the background process is ready.
@@ -80,25 +83,6 @@ app
       .then(() => {
         // 托盘图标
         tray = createTray();
-
-        // 系统菜单 https://www.electronjs.org/docs/latest/api/menu
-        // const menu = Menu.buildFromTemplate([
-        //   {
-        //     label: app.name,
-        //     submenu: [
-        //       {
-        //         label: "Quit",
-        //         accelerator: "CmdOrCtrl+Q",
-        //         click: () => {
-        //           app.hide();
-        //         },
-        //       },
-        //     ],
-        //   },
-        // ]);
-
-        // Menu.setApplicationMenu(menu);
-        // app.dock.hide();
       })
       .catch((err) => {
         throw err;
