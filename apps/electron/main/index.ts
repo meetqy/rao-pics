@@ -8,6 +8,7 @@ import { appRouter, createContext } from "@acme/api";
 import { closeAssetsServer } from "@acme/assets-server";
 
 import type { IPCRequestOptions } from "../types";
+import globalApp from "./global";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
@@ -46,7 +47,9 @@ app.on("window-all-closed", () => {
 });
 
 app.on("before-quit", (e) => {
-  e.preventDefault();
+  if (!globalApp.isQuite) {
+    e.preventDefault();
+  }
 });
 
 app.on("quit", () => {

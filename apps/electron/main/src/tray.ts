@@ -1,6 +1,7 @@
 import { join } from "path";
 import { Menu, Tray, app, nativeTheme } from "electron";
 
+import globalApp from "../global";
 import { restoreOrCreateWindow } from "../mainWindow";
 
 export const getTrayIcon = () => {
@@ -31,6 +32,7 @@ const createTray = () => {
       label: "退出",
       type: "normal",
       click: () => {
+        globalApp.isQuite = true;
         app.quit();
       },
     },
