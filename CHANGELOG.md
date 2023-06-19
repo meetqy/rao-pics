@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/rao-pics/core/compare/v0.5.3...v0.6.0) (2023-06-19)
+
+
+### Features
+
+* 🎸 系统托盘 ([6bcbf1e](https://github.com/rao-pics/core/commit/6bcbf1e1f241016b4b8d7d54083d536e73adb11c)), closes [#224](https://github.com/rao-pics/core/issues/224)
+
+
+### Bug Fixes
+
+* 🐛 一直点击同步按钮问题 ([c608f4f](https://github.com/rao-pics/core/commit/c608f4fec70a41dad93c1752caa098fae9c66667)), closes [#257](https://github.com/rao-pics/core/issues/257)
+
 ### [0.5.3](https://github.com/rao-pics/core/compare/v0.5.2...v0.5.3) (2023-06-17)
 
 
