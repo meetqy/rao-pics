@@ -66,6 +66,16 @@ async function createWindow() {
 }
 
 /**
+ * 隐藏 window
+ */
+export const hideWindow = () => {
+  const window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
+  if (window) {
+    window.hide();
+  }
+};
+
+/**
  * Restore an existing BrowserWindow or Create a new BrowserWindow.
  */
 export async function restoreOrCreateWindow() {
@@ -79,5 +89,6 @@ export async function restoreOrCreateWindow() {
     window.restore();
   }
 
+  window.show();
   window.focus();
 }

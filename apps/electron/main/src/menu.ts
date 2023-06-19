@@ -1,5 +1,7 @@
 import { Menu, app } from "electron";
 
+import { hideWindow } from "../mainWindow";
+
 /**
  * 创建菜单
  */
@@ -11,9 +13,7 @@ const createMenu = () => {
         {
           label: "Quit",
           accelerator: "CmdOrCtrl+Q",
-          click: () => {
-            app.hide();
-          },
+          click: () => hideWindow(),
         },
       ],
     },
