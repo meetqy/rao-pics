@@ -45,8 +45,8 @@ app.on("window-all-closed", () => {
   }
 });
 
-app.on("before-quit", () => {
-  console.log("before-quit");
+app.on("before-quit", (e) => {
+  e.preventDefault();
 });
 
 app.on("quit", () => {
