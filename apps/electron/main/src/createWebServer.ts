@@ -6,6 +6,9 @@ import ip from "ip";
 
 import { createSqlite } from "@acme/db";
 
+/**
+ * 创建 Web/Assets 服务
+ */
 export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
   let nextjsChild: cp.ChildProcess;
 
@@ -20,7 +23,7 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
   process.env["WEB_PORT"] = _web_port;
   process.env["ASSETS_PORT"] = _assets_port;
 
-  if (app.isPackaged) {
+  if (isPackaged) {
     preNextChild?.kill();
     // app config production
     // dev 在 watchDesktop.ts 中指定

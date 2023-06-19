@@ -1,4 +1,4 @@
-import { Menu, MenuItem, app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
+import { app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
 
 import "./security-restrictions";
 import type cp from "child_process";
@@ -40,16 +40,10 @@ app.disableHardwareAcceleration();
  * Shout down background process if all windows was closed
  */
 app.on("window-all-closed", () => {
-  console.log("window-all-closed");
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
-
-// app.on("will-quit", (e) => {
-//   e.preventDefault();
-//   app.hide();
-// });
 
 app.on("quit", () => {
   closeAssetsServer();
@@ -70,8 +64,10 @@ app.on("activate", () => {
 });
 
 let tray: Tray;
-// create menu
+// 创建菜单
 createMenu();
+// 隐藏 docker
+app.dock.hide();
 
 /**
  * Create the application window when the background process is ready.
@@ -80,9 +76,15 @@ app
   .whenReady()
   .then(() => {
     restoreOrCreateWindow()
-      .then(() => {
+      .then(async () => {
         // 托盘图标
         tray = createTray();
+
+        // 创建 Web/Assets 服务
+        nextjsWebChild = await createWebServer();
+        if (!nextjsWebChild) {
+          throw Error("NextJS child process was not created, exiting...");
+        }
       })
       .catch((err) => {
         throw err;
@@ -165,12 +167,4 @@ async function resolveIPCResponse(opts: IPCRequestOptions) {
 
 app.on("ready", () => {
   createIPCHandler({ ipcMain });
-
-  void (async () => {
-    nextjsWebChild = await createWebServer();
-
-    if (!nextjsWebChild) {
-      throw Error("NextJS child process was not created, exiting...");
-    }
-  })();
 });
