@@ -17,6 +17,10 @@ export const TagInput = {
   }),
 };
 
+/**
+ * Tag 不支持单独新建，只能通过 image 创建
+ * Tag 中关联的 image 如果是 0 个，会被自动清除
+ */
 export function Tag(this: PrismaClient) {
   const _ = {
     get: (obj: z.infer<(typeof TagInput)["get"]>) => {
@@ -42,9 +46,9 @@ export function Tag(this: PrismaClient) {
       });
     },
     /**
-     * 清除没有图片的 tag
+     * 清除 image 数量为 0 的 Tag
      */
-    cleanByImageZero: (obj: z.infer<(typeof TagInput)["cleanByImageZero"]>) => {
+    cleanWithImageZero: (obj: z.infer<(typeof TagInput)["cleanByImageZero"]>) => {
       const { libraryId } = obj;
       return this.tag.deleteMany({
         where: {

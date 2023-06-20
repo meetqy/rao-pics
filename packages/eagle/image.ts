@@ -61,7 +61,7 @@ export const handleImage = async ({ images, library, emit, onError }: Props) => 
   });
 
   // 清除 image 为 0 的 tag
-  await Curd(prisma).tag().cleanByImageZero({ libraryId: library.id });
+  await Curd(prisma).tag().cleanWithImageZero({ libraryId: library.id });
 };
 
 /**
