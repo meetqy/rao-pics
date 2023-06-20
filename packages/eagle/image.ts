@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import chroma from "chroma-js";
 
+import { Curd } from "@acme/curd";
 import { prisma, type Library, type Prisma } from "@acme/db";
 
 import { type EagleEmit } from ".";
@@ -58,11 +59,48 @@ export const handleImage = async ({ images, library, emit, onError }: Props) => 
       ],
     },
   });
+
+  // 清除 image 为 0 的 tag
+  await Curd(prisma).tag().cleanWithImageZero({ libraryId: library.id });
+};
+
+/**
+ * 更新 Tags, disconnect 不存在的
+ */
+const updateTags = async (metadata: Metadata, library: Library) => {
+  if (!metadata.tags) return undefined;
+
+  // Fetch existing tags for the library
+
+  const existingTags = await Curd(prisma).tag().get({ library: library.id });
+
+  // Create a set of tag names from metadata.tags
+  const metadataTagNames = new Set(metadata.tags);
+
+  // disconnect tags that are not in metadata.tags
+  for (const tag of existingTags) {
+    if (!metadataTagNames.has(tag.name)) {
+      await prisma.image.update({
+        where: { id: metadata.id },
+        data: { tags: { disconnect: { name: tag.name } } },
+      });
+    }
+  }
+
+  // Create or connect tags in metadata.tags
+  const connectOrCreate: Prisma.Enumerable<Prisma.TagCreateOrConnectWithoutImagesInput> = metadata.tags.map((tag) => ({
+    where: { name: tag },
+    create: { name: tag, library: { connect: { id: library.id } } },
+  }));
+
+  return connectOrCreate;
 };
 
 export const transformImage = async (metadata: Metadata, library: Library) => {
   if (!SUPPORT_EXT.includes(metadata.ext)) return null;
   if (metadata.isDeleted) return null;
+
+  const connectOrCreate = await updateTags(metadata, library);
 
   const imageInput: Prisma.ImageCreateInput = {
     id: metadata.id,
@@ -73,12 +111,7 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
     height: metadata.height,
     noThumbnail: metadata.noThumbnail,
     duration: metadata.duration,
-    tags: {
-      connectOrCreate: metadata.tags?.map((tag) => ({
-        where: { name: tag },
-        create: { name: tag, library: { connect: { id: library.id } } },
-      })),
-    },
+    tags: { connectOrCreate },
     colors: {
       connectOrCreate: metadata.palettes.map(({ color, ratio }) => {
         const rgb = chroma(`rgb(${color.join(",")})`).num();
