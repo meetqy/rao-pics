@@ -7,6 +7,14 @@ export const TagInput = {
     /** library name or id */
     library: z.union([z.string(), z.number()]),
   }),
+
+  delete: z.object({
+    name: z.string(),
+  }),
+
+  cleanByImageZero: z.object({
+    libraryId: z.number().optional(),
+  }),
 };
 
 export function Tag(this: PrismaClient) {
@@ -22,6 +30,26 @@ export function Tag(this: PrismaClient) {
           _count: {
             select: { images: true },
           },
+        },
+      });
+    },
+
+    delete: (obj: z.infer<(typeof TagInput)["delete"]>) => {
+      return this.tag.deleteMany({
+        where: {
+          name: obj.name,
+        },
+      });
+    },
+    /**
+     * 清除没有图片的 tag
+     */
+    cleanByImageZero: (obj: z.infer<(typeof TagInput)["cleanByImageZero"]>) => {
+      const { libraryId } = obj;
+      return this.tag.deleteMany({
+        where: {
+          libraryId,
+          images: { none: {} },
         },
       });
     },
