@@ -1,16 +1,12 @@
 import { join } from "path";
-import { Menu, Tray, app, nativeTheme } from "electron";
+import { Menu, Tray, app, nativeTheme, shell } from "electron";
 
 import globalApp from "../global";
 import { restoreOrCreateWindow } from "../mainWindow";
 
-export const getTrayIcon = () => {
-  if (app.isPackaged) {
-    return join(process.resourcesPath, "buildResources", nativeTheme.shouldUseDarkColors ? "tray-dark.png" : "tray-light.png");
-  } else {
-    return join(__dirname, "../../buildResources", nativeTheme.shouldUseDarkColors ? "tray-dark.png" : "tray-light.png");
-  }
-};
+const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildResources") : join(__dirname, "../../buildResources");
+
+export const getIcon = (name: string) => join(buildResourcesPath, `${name}-${nativeTheme.shouldUseDarkColors ? "light" : "dark"}.png`);
 
 /**
  * 系统托盘
@@ -18,26 +14,59 @@ export const getTrayIcon = () => {
  */
 const createTray = () => {
   // 托盘图标
-  const tray = new Tray(getTrayIcon());
+  const tray = new Tray(getIcon("tray"));
 
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: "打开 Rao Pics",
-      type: "normal",
-      click: () => {
-        void restoreOrCreateWindow();
+  const getMenu = () =>
+    Menu.buildFromTemplate([
+      {
+        label: "打开 Rao Pics",
+        type: "normal",
+        click: () => {
+          void restoreOrCreateWindow();
+        },
       },
-    },
-    {
-      label: "退出",
-      type: "normal",
-      click: () => {
-        globalApp.isQuite = true;
-        app.quit();
+      { type: "separator" },
+      {
+        label: "下载页面",
+        type: "normal",
+        icon: getIcon("download"),
+        click: () => {
+          void shell.openExternal("https://github.com/rao-pics/core/releases");
+        },
       },
-    },
-  ]);
-  tray.setContextMenu(contextMenu);
+      {
+        label: "最新动态",
+        icon: getIcon("twitter"),
+        type: "normal",
+        click: () => {
+          void shell.openExternal("https://twitter.com/meetqy");
+        },
+      },
+      {
+        label: "开发进度",
+        icon: getIcon("todo"),
+        type: "normal",
+        click: () => {
+          void shell.openExternal("https://github.com/orgs/rao-pics/projects/1/views/1");
+        },
+      },
+      { type: "separator" },
+      {
+        label: "退出",
+        type: "normal",
+        click: () => {
+          globalApp.isQuite = true;
+          app.quit();
+        },
+      },
+    ]);
+  tray.setContextMenu(getMenu());
+
+  /** 监听 dark/light */
+  nativeTheme.on("updated", () => {
+    tray.setImage(getIcon("tray"));
+    tray.setContextMenu(getMenu());
+  });
 
   return tray;
 };
