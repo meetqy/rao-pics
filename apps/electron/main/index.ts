@@ -1,4 +1,4 @@
-import { app, ipcMain, nativeTheme, shell, type IpcMain, type Tray } from "electron";
+import { app, ipcMain, shell, type IpcMain, type Tray } from "electron";
 
 import "./security-restrictions";
 import type cp from "child_process";
@@ -14,7 +14,7 @@ import { syncIpc } from "./ipc/sync";
 import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
 import createMenu from "./src/menu";
-import createTray, { getTrayIcon } from "./src/tray";
+import createTray from "./src/tray";
 
 let nextjsWebChild: cp.ChildProcess | undefined;
 
@@ -101,10 +101,6 @@ app
       });
   })
   .catch((e) => console.error("Failed create window:", e));
-
-nativeTheme.on("updated", () => {
-  tray && tray.setImage(getTrayIcon());
-});
 
 function validateSender(frame: Electron.WebFrameMain) {
   const frameUrlObj = new URL(frame.url);
