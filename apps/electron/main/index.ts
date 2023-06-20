@@ -1,4 +1,4 @@
-import { app, ipcMain, shell, type IpcMain, type Tray } from "electron";
+import { app, ipcMain, shell, type IpcMain } from "electron";
 
 import "./security-restrictions";
 import type cp from "child_process";
@@ -70,7 +70,6 @@ app.on("activate", () => {
   });
 });
 
-let tray: Tray;
 // 创建菜单
 createMenu();
 
@@ -88,7 +87,7 @@ app
     restoreOrCreateWindow()
       .then(async () => {
         // 托盘图标
-        tray = createTray();
+        createTray();
 
         // 创建 Web/Assets 服务
         nextjsWebChild = await createWebServer();
