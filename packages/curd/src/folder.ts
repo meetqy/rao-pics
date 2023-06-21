@@ -39,6 +39,7 @@ export function Folder(this: PrismaClient) {
         include: {
           images: {
             take: 1,
+            orderBy: { lastTime: "desc" },
           },
           _count: {
             select: { images: true },
