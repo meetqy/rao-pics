@@ -77,7 +77,7 @@ const Navbar = () => {
   return (
     <header className="w-full sticky top-0 left-0 z-20 xl:px-4 bg-base-100/90 backdrop-blur">
       <nav className="navbar w-full">
-        <Logo className="lg:hidden" htmlFor="my-drawer-2" />
+        <Logo className="lg:hidden" htmlFor="my-drawer" />
 
         <div className="flex-1">
           <Search value={searchValue} onInput={setSearchValue} className="lg:flex hidden w-1/2" inputClassName="w-full" />
