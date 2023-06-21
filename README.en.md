@@ -1,3 +1,5 @@
+![](https://rao.ujump.cn/readme/page1.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
+
 # Rao Pics
 
 [中文](./README.md) | English
@@ -7,11 +9,9 @@
 [![release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
 ![download](https://img.shields.io/github/downloads/rao-pics/core/total)
 
-Visit media by LAN on any device.
+Visit material/media/music by local network on any device.
 
-## Demo
-
-[![Rao Pics - Visit media by LAN on any device.](https://res.cloudinary.com/marcomontalbano/image/upload/v1686385245/video_to_markdown/images/youtube--12u12tR03p8-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/12u12tR03p8 "Rao Pics - Visit media by LAN on any device.")
+![Visit material/media/music by local network on any device.](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
 
 ## Supported
 
@@ -31,13 +31,14 @@ const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 <details>
 <summary>➕Show / ➖Hide</summary>
 <br/>
-Development progress and version changlog can be viewed [Rao Pics Todo](https://github.com/orgs/rao-pics/projects/1)。
+
+Development progress and changelog can be viewed [Todo List](https://github.com/orgs/rao-pics/projects/1)
 
 [![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
 
 </details>
 
-## Cache & & Log
+## Cache and log
 
 <details>
 <summary>➕Show / ➖Hide</summary>
@@ -58,6 +59,10 @@ win '~\AppData\Roaming\Rao Pics\logs'
 ```
 
 </details>
+
+## WuHu ~
+
+This project joined to [eagle sale plan](https://eagle.cool/affiliate). If you want to buy [Eagle App](https://eagle.sjv.io/rao), Clickable this [BUY LINK](https://eagle.sjv.io/rao), Supporting anthor.
 
 ---
 

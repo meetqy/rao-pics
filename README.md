@@ -11,8 +11,6 @@
 
 任何设备可通过局域网访问素材/媒体/音乐。
 
-## 预览
-
 ![Rao Pics - 任何设备可通过本地网络访问素材。desktop/ipad/phone](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
 
 ## 已支持
