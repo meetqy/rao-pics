@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/rao-pics/core/compare/v0.6.0...v0.6.1) (2023-06-21)
+
+
+### Features
+
+* 🎸 托盘添加下载页面跳转 ([c9d0827](https://github.com/rao-pics/core/commit/c9d0827b3686a2fab6342ab04dc59f01866a6c44)), closes [#249](https://github.com/rao-pics/core/issues/249)
+
+
+### Bug Fixes
+
+* 🐛 图片删除标签删除之后未同步 ([0138493](https://github.com/rao-pics/core/commit/01384934ba5faeaad3ad406101402f7d20815542)), closes [#266](https://github.com/rao-pics/core/issues/266)
+
 ## [0.6.0](https://github.com/rao-pics/core/compare/v0.5.3...v0.6.0) (2023-06-19)
 
 
