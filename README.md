@@ -1,3 +1,5 @@
+![Rao Pics - 任何设备可通过网页访问素材。](https://rao.ujump.cn/readme/page1.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
+
 # Rao Pics
 
 中文 | [English](./README.en.md)
@@ -7,11 +9,11 @@
 [![release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
 ![download](https://img.shields.io/github/downloads/rao-pics/core/total)
 
-任何设备可通过局域网访问媒体。
+任何设备可通过局域网访问素材/媒体/音乐。
 
-## 演示
+## 预览
 
-[![Rao Pics - 任何设备可通过网页访问素材。](https://res.cloudinary.com/marcomontalbano/image/upload/v1686385245/video_to_markdown/images/youtube--12u12tR03p8-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/12u12tR03p8 "Rao Pics - 任何设备可通过局域网访问媒体。")
+![Rao Pics - 任何设备可通过本地网络访问素材。desktop/ipad/phone](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
 
 ## 已支持
 
