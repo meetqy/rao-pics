@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/rao-pics/core/compare/v0.6.1...v0.6.2) (2023-06-21)
+
+
+### Bug Fixes
+
+* 🐛 Web 375px 一下屏幕显示异常 ([a13dcf4](https://github.com/rao-pics/core/commit/a13dcf40353d301b063c3c9d2ed042e28b8c4bc3)), closes [#271](https://github.com/rao-pics/core/issues/271)
+* 🐛 紧急修复 0.6.1 无法同步 Bug ([c209116](https://github.com/rao-pics/core/commit/c209116786b289e11db1d0d272499fde998784b5))
+
 ### [0.6.1](https://github.com/rao-pics/core/compare/v0.6.0...v0.6.1) (2023-06-21)
 
 
