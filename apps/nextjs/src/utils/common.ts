@@ -37,8 +37,19 @@ export const getGridOption = (responsive: { [key in string]: boolean }) => {
   };
 };
 
+/**
+ * {screen: [列表可以切换的列数和 GridScreensConfig 对应]}
+ *
+ * @ps 当前设备 iphone SE width:375px 匹配 xs，切换列数为 grid-cols-1 和 grid-cols-2
+ *     当切换到 1，也就是 index=1
+ *
+ * @result GridScreens[xs][1] => grid-cols-1
+ *         GridScreensConfig[xs][1] => { body: true, gap: "gap-4", p: "p-4" }
+ * */
 export const GridScreens = {
-  // 0-640: sm
+  // 0-375: xs
+  xs: ["grid-cols-1", "grid-cols-2"],
+  // 376-640: sm
   sm: ["grid-cols-1", "grid-cols-2", "grid-cols-3"],
   // 641-768: md
   md: ["grid-cols-3", "grid-cols-2", "grid-cols-1"],
@@ -75,5 +86,9 @@ export const GridScreensConfig: Record<string, Record<string, { body: boolean; g
     "1": { body: true, gap: "gap-4", p: "p-4" },
     "2": { body: true, gap: "gap-3", p: "p-2" },
     "3": { body: false, gap: "gap-2", p: "p-2" },
+  },
+  xs: {
+    "1": { body: true, gap: "gap-4", p: "p-4" },
+    "2": { body: false, gap: "gap-3", p: "p-2" },
   },
 };
