@@ -61,7 +61,7 @@ export const handleImage = async ({ images, library, emit, onError }: Props) => 
   });
 
   // 清除 image 为 0 的 tag
-  await Curd(prisma).tag().cleanWithImageZero({ libraryId: library.id });
+  // await Curd(prisma).tag().cleanWithImageZero({ libraryId: library.id });
 };
 
 /**
@@ -80,10 +80,12 @@ const updateTags = async (metadata: Metadata, library: Library) => {
   // disconnect tags that are not in metadata.tags
   for (const tag of existingTags) {
     if (!metadataTagNames.has(tag.name)) {
-      await prisma.image.update({
-        where: { id: metadata.id },
-        data: { tags: { disconnect: { name: tag.name } } },
-      });
+      try {
+        await prisma.image.update({
+          where: { id: metadata.id },
+          data: { tags: { disconnect: { name: tag.name } } },
+        });
+      } catch (e) {}
     }
   }
 
