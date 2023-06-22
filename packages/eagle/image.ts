@@ -1,8 +1,7 @@
 import * as fs from "fs";
 import chroma from "chroma-js";
 
-import { Curd } from "@acme/curd";
-import { prisma, type Library, type Prisma } from "@acme/db";
+import { prisma, type Image, type Library, type Prisma, type Tag } from "@acme/db";
 
 import { type EagleEmit } from ".";
 import { SUPPORT_EXT, type Metadata } from "./types";
@@ -16,13 +15,18 @@ interface Props {
 
 export const handleImage = async ({ images, library, emit, onError }: Props) => {
   let failCount = 0;
+  const successImages: string[] = [];
   for (const [index, image] of images.entries()) {
     // 特殊处理, metadata.json 可能是一个错误的json
     // eagle 本身的问题
     try {
       const metadata = JSON.parse(fs.readFileSync(image, "utf-8")) as Metadata;
       const res = await transformImage(metadata, library);
-      if (!res) failCount++;
+      if (res) {
+        successImages.push(res.id);
+      } else {
+        failCount++;
+      }
 
       emit?.({
         type: "image",
@@ -43,49 +47,59 @@ export const handleImage = async ({ images, library, emit, onError }: Props) => 
     }
   }
 
-  // 清除已经删除，sqlite中还存在的图片。
-  await prisma.image.deleteMany({
-    where: {
-      AND: [
-        {
-          id: {
-            notIn: images.map((image) => {
-              const info = image.match(/(\d|[a-zA-Z])+\.info/g);
-              return info?.[0].replace(".info", "") || "";
-            }),
-          },
-        },
-        { libraryId: library.id },
-      ],
-    },
+  const oldImages = await prisma.image.findMany({
+    where: { libraryId: library.id },
+    select: { id: true },
   });
 
-  // 清除 image 为 0 的 tag
-  // await Curd(prisma).tag().cleanWithImageZero({ libraryId: library.id });
+  function difference<T>(setA: Set<T>, setB: Set<T>) {
+    const _difference = new Set(setA);
+    for (const elem of setB) {
+      _difference.delete(elem);
+    }
+    return _difference;
+  }
+
+  // 对比 oldImageIdsSet 和 successImages，找出本次删除的 image
+  const deleteImages = Array.from(difference(new Set(oldImages.map((v) => v.id)), new Set(successImages)));
+
+  await prisma.image.deleteMany({
+    where: { id: { in: deleteImages }, libraryId: library.id },
+  });
 };
 
 /**
  * 更新 Tags, disconnect 不存在的
  */
-const updateTags = async (metadata: Metadata, library: Library) => {
-  if (!metadata.tags) return undefined;
+const updateTags = async (
+  metadata: Metadata,
+  oldImage:
+    | (Image & {
+        tags: Tag[];
+      })
+    | null,
+  library: Library,
+) => {
+  if (!metadata.tags || metadata.tags.length < 1) return;
+  if (!oldImage) return;
+  if (oldImage.tags.length < 1) return;
 
-  // Fetch existing tags for the library
+  // 图片中存在的 tags.
+  // qs: [a,b,c]
+  const existingTags = oldImage.tags;
 
-  const existingTags = await Curd(prisma).tag().get({ library: library.id });
-
-  // Create a set of tag names from metadata.tags
+  // 现图片中的 tags.
+  // qs: [a,b,d]
   const metadataTagNames = new Set(metadata.tags);
 
-  // disconnect tags that are not in metadata.tags
+  //  对比 metadata.tags，找出本次移除的 tag
+  //  通过 update disconnect 取消关联
   for (const tag of existingTags) {
     if (!metadataTagNames.has(tag.name)) {
-      try {
-        await prisma.image.update({
-          where: { id: metadata.id },
-          data: { tags: { disconnect: { name: tag.name } } },
-        });
-      } catch (e) {}
+      await prisma.image.update({
+        where: { id: metadata.id },
+        data: { tags: { disconnect: { name: tag.name } } },
+      });
     }
   }
 
@@ -102,7 +116,12 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
   if (!SUPPORT_EXT.includes(metadata.ext)) return null;
   if (metadata.isDeleted) return null;
 
-  const connectOrCreate = await updateTags(metadata, library);
+  const oldImage = await prisma.image.findFirst({
+    where: { id: metadata.id },
+    include: { tags: true },
+  });
+
+  const connectOrCreate = await updateTags(metadata, oldImage, library);
 
   const imageInput: Prisma.ImageCreateInput = {
     id: metadata.id,
