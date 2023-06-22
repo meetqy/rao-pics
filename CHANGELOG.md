@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/rao-pics/core/compare/v0.6.2...v0.6.3) (2023-06-22)
+
+
+### Features
+
+* 🎸 文件夹 iPad Mobile 展示 ([9a6d1f3](https://github.com/rao-pics/core/commit/9a6d1f3a8dd055cf6eb3b5168e5b149df935fa48)), closes [#270](https://github.com/rao-pics/core/issues/270)
+* 🎸 标签 mobile ipad 支持 ([19d8d20](https://github.com/rao-pics/core/commit/19d8d20bd187c263c6207877b38a046fcbc674d2)), closes [#269](https://github.com/rao-pics/core/issues/269)
+
+
+### Bug Fixes
+
+* 🐛 IP 无法更新问题 ([a4e72da](https://github.com/rao-pics/core/commit/a4e72da0b73fbb1430b3c12ed43771ca0538a604))
+* 🐛 取消关联已经删除的Tag和已经删除的Image报错问题 ([3354b8d](https://github.com/rao-pics/core/commit/3354b8d06b9385f07137dbf89004ac3a5eb36242))
+
+
+### Improves
+
+* ⚡️ tag/folder 查询返回增加 image 排序 ([5b190c1](https://github.com/rao-pics/core/commit/5b190c166b6ef0aae172099fdb4c3c04ab0b1ca7))
+* ⚡️ 二次同步速度优化 closes [#212](https://github.com/rao-pics/core/issues/212) ([f9234ec](https://github.com/rao-pics/core/commit/f9234ecb4c3fd72098bb87f139e83568eb50976e))
+
 ### [0.6.2](https://github.com/rao-pics/core/compare/v0.6.1...v0.6.2) (2023-06-21)
 
 
