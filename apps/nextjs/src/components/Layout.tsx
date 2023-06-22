@@ -6,6 +6,7 @@ import Menu from "./Menu";
 import Navbar from "./Navbar";
 
 interface Props {
+  navbar?: JSX.Element | null;
   children?: JSX.Element;
   loadMore?: () => void;
   loadMoreContent: JSX.Element | string;
@@ -15,6 +16,7 @@ interface Props {
 const defaultProps: Props = {
   loadMoreContent: "加载中...",
   href: "/",
+  navbar: <Navbar />,
 };
 
 const Layout = (props: Props) => {
@@ -33,9 +35,9 @@ const Layout = (props: Props) => {
 
   return (
     <div className="drawer drawer-mobile">
-      <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content bg-base-100">
-        <Navbar />
+        {props.navbar}
 
         {/* children */}
         <div>
@@ -46,7 +48,7 @@ const Layout = (props: Props) => {
         </div>
       </div>
       <div className="drawer-side">
-        <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+        <label htmlFor="my-drawer" className="drawer-overlay"></label>
 
         <Menu library={library} href={props.href} />
       </div>

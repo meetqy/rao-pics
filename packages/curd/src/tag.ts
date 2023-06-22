@@ -31,6 +31,10 @@ export function Tag(this: PrismaClient) {
           OR: [{ libraryId: typeof library === "number" ? library : undefined }, { library: { name: library.toString() } }],
         },
         include: {
+          images: {
+            take: 1,
+            orderBy: { lastTime: "desc" },
+          },
           _count: {
             select: { images: true },
           },
