@@ -160,24 +160,27 @@ importers:
 
   apps/electron-app:
     dependencies:
+      '@acme/db':
+        specifier: 0.1.0
+        version: link:../../packages/db
       '@tanstack/react-query':
         specifier: ^4.29.14
         version: 4.29.14(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client':
-        specifier: 10.31.0
-        version: 10.31.0(@trpc/server@10.31.0)
+        specifier: 10.23.0
+        version: 10.23.0(@trpc/server@10.23.0)
       '@trpc/react-query':
-        specifier: 10.31.0
-        version: 10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.23.0
+        version: 10.23.0(@tanstack/react-query@4.29.14)(@trpc/client@10.23.0)(@trpc/server@10.23.0)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
-        specifier: 10.31.0
-        version: 10.31.0
+        specifier: 10.23.0
+        version: 10.23.0
       electron:
         specifier: ^25.1.1
         version: 25.1.1
       electron-trpc:
         specifier: 0.5.2
-        version: 0.5.2(@trpc/client@10.31.0)(@trpc/server@10.31.0)(electron@25.1.1)
+        version: 0.5.2(@trpc/client@10.23.0)(@trpc/server@10.23.0)(electron@25.1.1)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -1580,14 +1583,6 @@ packages:
       '@trpc/server': 10.23.0
     dev: false
 
-  /@trpc/client@10.31.0(@trpc/server@10.31.0):
-    resolution: {integrity: sha512-VCqbJEvFJb8C4hQFw7AD+dkQTjgEdV/QAzO4D+/cX5e93u5NpfNXI+PKS0QFXwG/zqgwQwVV6OkYc/D/MFwA6g==}
-    peerDependencies:
-      '@trpc/server': 10.31.0
-    dependencies:
-      '@trpc/server': 10.31.0
-    dev: false
-
   /@trpc/next@10.23.0(@tanstack/react-query@4.29.5)(@trpc/client@10.23.0)(@trpc/react-query@10.25.0)(@trpc/server@10.23.0)(next@13.3.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-IoyoID4wUIFI1nrx6EJM1fBVdkyLiadCsw+r3XLtKnxCwfK5PLeIwwJAQrf+4IFtQT7KYhw4dSkP4gfltIPC3Q==}
     peerDependencies:
@@ -1607,6 +1602,22 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
+    dev: false
+
+  /@trpc/react-query@10.23.0(@tanstack/react-query@4.29.14)(@trpc/client@10.23.0)(@trpc/server@10.23.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-50vfR3HtOEcjCQMuHSGTFOG6W9WunvcI8msTp84UNAqZ9dz4YdjgBVNn2wxqB5LAQ6AGlcKuzJWjEj3yO56tvw==}
+    peerDependencies:
+      '@tanstack/react-query': ^4.18.0
+      '@trpc/client': 10.23.0
+      '@trpc/server': 10.23.0
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@tanstack/react-query': 4.29.14(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client': 10.23.0(@trpc/server@10.23.0)
+      '@trpc/server': 10.23.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@trpc/react-query@10.25.0(@tanstack/react-query@4.29.1)(@trpc/client@10.23.0)(@trpc/server@10.23.0)(react-dom@18.2.0)(react@18.2.0):
@@ -1641,28 +1652,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/react-query@10.31.0(@tanstack/react-query@4.29.14)(@trpc/client@10.31.0)(@trpc/server@10.31.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-+M8sIsbf6e4H5XYvHlzDqhaf+ybfUigA/9OL3wXRp2vXhCedEiIERCnwNuHWFDRASl9vjOcM33AuJ4sbOOINEA==}
-    peerDependencies:
-      '@tanstack/react-query': ^4.18.0
-      '@trpc/client': 10.31.0
-      '@trpc/server': 10.31.0
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@tanstack/react-query': 4.29.14(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client': 10.31.0(@trpc/server@10.31.0)
-      '@trpc/server': 10.31.0
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
   /@trpc/server@10.23.0:
     resolution: {integrity: sha512-0CPfGZK3v3gfAL8ylV5vDJVBQtPp47EB4Vgx6WItSXmwYQlLC39ZC3gkZ4I5cGpQKl4l3QrNNeUvIcse4hlMxA==}
-    dev: false
-
-  /@trpc/server@10.31.0:
-    resolution: {integrity: sha512-9EnRTSDE9nF11LZsvSOqNKqkRYzHqFX4ch5AJ6VIu8uta2vxVTN4FxxsNRSOluTzVYZDeaCISbwmOJ5iihCCIg==}
     dev: false
 
   /@tsconfig/node10@1.0.9:
@@ -3556,15 +3547,15 @@ packages:
       - supports-color
     dev: false
 
-  /electron-trpc@0.5.2(@trpc/client@10.31.0)(@trpc/server@10.31.0)(electron@25.1.1):
+  /electron-trpc@0.5.2(@trpc/client@10.23.0)(@trpc/server@10.23.0)(electron@25.1.1):
     resolution: {integrity: sha512-lJTeTwrd/E1C3VGFvdSBQggdmdDeHGrrpnuiB1e3bQR/1f91HmprySMygs9e4i12+CLqR+RIyKTQWLKCNjy5/Q==}
     peerDependencies:
       '@trpc/client': '>10.0.0'
       '@trpc/server': '>10.0.0'
       electron: '>19.0.0'
     dependencies:
-      '@trpc/client': 10.31.0(@trpc/server@10.31.0)
-      '@trpc/server': 10.31.0
+      '@trpc/client': 10.23.0(@trpc/server@10.23.0)
+      '@trpc/server': 10.23.0
       debug: 4.3.4
       electron: 25.1.1
     transitivePeerDependencies:
