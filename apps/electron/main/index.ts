@@ -12,7 +12,7 @@ import type { IPCRequestOptions } from "../types";
 import globalApp from "./global";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
-import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
+import { getWindow, pageUrl } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
 import createMenu from "./src/menu";
 import createTray from "./src/tray";
@@ -28,9 +28,7 @@ if (!isSingleInstance) {
   process.exit(0);
 }
 app.on("second-instance", () => {
-  restoreOrCreateWindow().catch((err) => {
-    throw err;
-  });
+  void getWindow();
 });
 
 /**
@@ -77,7 +75,7 @@ app.on("activate", () => {
     nextjsWebChild = await createWebServer(nextjsWebChild);
   })();
 
-  restoreOrCreateWindow().catch((err) => {
+  getWindow().catch((err) => {
     throw err;
   });
 });
@@ -96,7 +94,7 @@ if (process.platform === "darwin") {
 app
   .whenReady()
   .then(() => {
-    restoreOrCreateWindow()
+    getWindow()
       .then(async () => {
         // 托盘图标
         createTray();

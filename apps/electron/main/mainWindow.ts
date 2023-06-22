@@ -65,30 +65,15 @@ async function createWindow() {
   return browserWindow;
 }
 
-/**
- * 隐藏 window
- */
-export const hideWindow = () => {
-  const window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
-  if (window) {
-    window.hide();
-  }
-};
+let window: Electron.BrowserWindow | undefined;
 
 /**
- * Restore an existing BrowserWindow or Create a new BrowserWindow.
+ * 获取 window, 当可以显示的时候，会自动显示并且获得焦点
  */
-export async function restoreOrCreateWindow() {
-  let window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
-
-  if (window === undefined) {
+export const getWindow = async () => {
+  if (!window) {
     window = await createWindow();
   }
 
-  if (window.isMinimized()) {
-    window.restore();
-  }
-
-  window.show();
-  window.focus();
-}
+  return window;
+};
