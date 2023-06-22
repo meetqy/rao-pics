@@ -111,12 +111,10 @@ const updateTags = async (
   library: Library,
 ) => {
   if (!metadata.tags || metadata.tags.length < 1) return;
-  if (!oldImage) return;
-  if (oldImage.tags.length < 1) return;
 
   // 图片中存在的 tags.
   // qs: [a,b,c]
-  const existingTags = oldImage.tags;
+  const existingTags = oldImage?.tags || [];
 
   // 现图片中的 tags.
   // qs: [a,b,d]
