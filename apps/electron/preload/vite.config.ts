@@ -1,6 +1,7 @@
-import { chrome } from "../.electron-vendors.cache.json";
 import { builtinModules } from "module";
 import { defineConfig } from "vite";
+
+import { chrome } from "../.electron-vendors.cache.json";
 
 const PACKAGE_ROOT = __dirname;
 
