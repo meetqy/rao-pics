@@ -3,6 +3,7 @@ import { app, ipcMain, shell, type IpcMain } from "electron";
 import "./security-restrictions";
 import type cp from "child_process";
 import { callProcedure } from "@trpc/server";
+import ip from "ip";
 
 import { appRouter, createContext } from "@acme/api";
 import { closeAssetsServer } from "@acme/assets-server";
@@ -55,6 +56,17 @@ app.on("before-quit", (e) => {
 app.on("quit", () => {
   closeAssetsServer();
   nextjsWebChild?.kill();
+});
+
+app.on("browser-window-focus", () => {
+  void (async () => {
+    // 如果 ip 不相同，并且已经启动才需要重启
+    // web server 首次启动在 activate 中触发
+    console.log(process.env["IP"], ip.address());
+    if (nextjsWebChild && process.env["IP"] != ip.address()) {
+      nextjsWebChild = await createWebServer(nextjsWebChild);
+    }
+  })();
 });
 
 /**
