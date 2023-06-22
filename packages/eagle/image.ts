@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { sep } from "path";
 import chroma from "chroma-js";
 
 import { prisma, type Image, type Library, type Prisma, type Tag } from "@acme/db";
@@ -13,6 +14,13 @@ interface Props {
   onError?: (err: unknown) => void;
 }
 
+const getIdByPath = (path: string) => {
+  const arr = path.split(sep);
+  arr.pop();
+  const id = arr.pop()?.replace(".info", "");
+  return id;
+};
+
 export const handleImage = async ({ images, library, emit, onError }: Props) => {
   let failCount = 0;
   const successImages: string[] = [];
@@ -20,7 +28,29 @@ export const handleImage = async ({ images, library, emit, onError }: Props) => 
     // 特殊处理, metadata.json 可能是一个错误的json
     // eagle 本身的问题
     try {
+      const oldImage = await prisma.image.findFirst({
+        where: { id: getIdByPath(image) },
+        include: { tags: true },
+      });
+
+      const mTime = new Date(fs.statSync(image).mtime).getTime();
+
+      // 如果图片存在，且修改时间在 3 秒内，跳过
+      if (oldImage) {
+        if (Math.abs(oldImage.lastTime.getTime() - mTime) < 30 * 1000) {
+          successImages.push(oldImage.id);
+          emit?.({
+            type: "image",
+            current: index + 1,
+            count: images.length,
+            failCount: failCount,
+          });
+          continue;
+        }
+      }
+
       const metadata = JSON.parse(fs.readFileSync(image, "utf-8")) as Metadata;
+      metadata.mtime = mTime;
       const res = await transformImage(metadata, library);
       if (res) {
         successImages.push(res.id);
@@ -145,7 +175,7 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
     },
     library: { connect: { id: library.id } },
     createTime: new Date(metadata.modificationTime),
-    lastTime: new Date(metadata.mtime),
+    lastTime: new Date(),
     folders: { connect: metadata.folders?.map((id) => ({ id })) },
   };
 
