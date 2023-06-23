@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
 import { join } from "path";
 import { URL } from "url";
+import { BrowserWindow, app } from "electron";
+
 /**
  * URL for main window.
  * Vite dev server for development.
@@ -65,4 +66,6 @@ export async function restoreOrCreateWindow() {
   }
 
   window.focus();
+
+  return window;
 }

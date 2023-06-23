@@ -1,24 +1,17 @@
-import { contextBridge, ipcRenderer } from "electron";
-import type { IpcRenderer, ContextBridge } from "electron";
-import type { IPCRequestOptions } from "../types";
+import { type TRPCResponseMessage } from "@trpc/server/rpc";
+import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
+import { type RendererGlobalElectronTRPC } from "types";
 
-export const exposeElectronTRPC = ({
-  contextBridge,
-  ipcRenderer,
-}: {
-  contextBridge: ContextBridge;
-  ipcRenderer: IpcRenderer;
-}) => {
-  return contextBridge.exposeInMainWorld("electronTRPC", {
-    rpc: (opts: IPCRequestOptions) => ipcRenderer.invoke("electron-trpc", opts),
-  });
+const exposeElectronTRPC = () => {
+  const electronTRPC: RendererGlobalElectronTRPC = {
+    sendMessage: (operation: unknown) => ipcRenderer.send("electron-trpc", operation),
+    onMessage: (callback: (args: TRPCResponseMessage) => void) =>
+      ipcRenderer.on("electron-trpc", (_event: IpcRendererEvent, args: unknown) => callback(args as TRPCResponseMessage)),
+  };
+
+  contextBridge.exposeInMainWorld("electronTRPC", electronTRPC);
 };
 
 process.once("loaded", () => {
-  exposeElectronTRPC({ contextBridge, ipcRenderer });
-  // If you expose something here, you get window.something in the React app
-  // type it in types/exposedInMainWorld.d.ts to add it to the window type
-  // contextBridge.exposeInMainWorld("something", {
-  //   exposedThing: "this value was exposed via the preload file",
-  // });
+  exposeElectronTRPC();
 });

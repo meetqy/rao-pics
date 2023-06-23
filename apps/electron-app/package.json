@@ -9,8 +9,6 @@
     "dev": "cross-env NODE_ENV=development npm run watch:desktop",
     "build": "npm run build:main & npm run build:preload & npm run build:renderer",
     "compile": "cross-env MODE=production npm run build && cross-env NODE_ENV=production ts-node scripts/compile.ts",
-    "format": "prettier -w .",
-    "lint": "eslint .",
     "watch:web": "ts-node scripts/watchWeb.ts",
     "watch:desktop": "ts-node scripts/watchDesktop.ts",
     "build:main": "cd ./main && tsc && vite build",
@@ -37,12 +35,15 @@
     "vite": "^3.1.3"
   },
   "dependencies": {
+    "@acme/api": "*",
     "@tanstack/react-query": "^4.13.0",
     "@trpc/client": "^10.23.0",
     "@trpc/react-query": "^10.25.0",
     "@trpc/server": "^10.23.0",
+    "electron-trpc": "^0.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "zod": "^3.19.1"
+    "zod": "^3.19.1",
+    "superjson": "^1.12.3"
   }
 }
