@@ -1,0 +1,28 @@
+import { builtinModules } from "module";
+import { resolve } from "path";
+import react from "@vitejs/plugin-react";
+import { defineConfig, externalizeDepsPlugin } from "electron-vite";
+
+export default defineConfig({
+  main: {
+    plugins: [externalizeDepsPlugin()],
+  },
+  preload: {
+    plugins: [externalizeDepsPlugin()],
+  },
+  renderer: {
+    build: {
+      sourcemap: "inline",
+      emptyOutDir: true,
+      rollupOptions: {
+        external: [...builtinModules.flatMap((p) => [p, `node:${p}`])],
+      },
+    },
+    resolve: {
+      alias: {
+        "@renderer": resolve("src/renderer/src"),
+      },
+    },
+    plugins: [react()],
+  },
+});
