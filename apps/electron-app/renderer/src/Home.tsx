@@ -1,49 +1,27 @@
-import "./App.css";
+import { useEffect, useState } from "react";
+
 import { trpc } from "./utils/trpc";
-import reactLogo from "./assets/react.svg";
 
 function Home() {
-  const examples = trpc.example.getAll.useQuery();
   const utils = trpc.useContext();
-  const addExample = trpc.example.add.useMutation({
-    async onSuccess() {
-      await utils.example.getAll.invalidate();
+  const addLibrary = trpc.library.add.useMutation();
+
+  const { data } = trpc.base.greeting.useQuery({ name: "Electron" });
+
+  trpc.base.subscription.useSubscription(undefined, {
+    onData(d) {
+      console.log(d);
     },
   });
-  const removeExample = trpc.example.remove.useMutation({
-    async onSuccess() {
-      await utils.example.getAll.invalidate();
-    },
-  });
-  const greeting = trpc.greeting.useQuery({ name: "Nicky" });
+
+  if (!data) {
+    return null;
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>{greeting.data}</p>
-      <button onClick={() => addExample.mutate()}>ADD example</button>
-      <ul>
-        {examples.data?.map((example, idx) => {
-          return (
-            <li
-              key={idx}
-              className="example"
-              onClick={() => {
-                removeExample.mutate({ id: example.id });
-              }}
-            >
-              <span>{example.id}</span>
-            </li>
-          );
-        })}
-      </ul>
+    <div className="h-screen w-full flex text-sm">
+      <button className="btn btn-primary">主要按钮</button>
+      {data.text}
     </div>
   );
 }

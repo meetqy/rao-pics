@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ipcLink } from "electron-trpc/renderer";
 import superjson from "superjson";
 
-import HelloElectron from "./HelloElectron";
 import Home from "./Home";
 import { trpc } from "./utils/trpc";
 
@@ -21,7 +20,7 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <HelloElectron />
+        <Home />
       </QueryClientProvider>
     </trpc.Provider>
   );
