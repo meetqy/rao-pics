@@ -57,7 +57,6 @@ app.on("browser-window-focus", () => {
   void (async () => {
     // 如果 ip 不相同，并且已经启动才需要重启
     // web server 首次启动在 activate 中触发
-    console.log(process.env["IP"], ip.address());
     if (nextjsWebChild && process.env["IP"] != ip.address()) {
       nextjsWebChild = await createWebServer(nextjsWebChild);
     }
