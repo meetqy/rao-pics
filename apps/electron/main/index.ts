@@ -1,8 +1,6 @@
-import { app, ipcMain, shell, type IpcMain } from "electron";
-import { createIPCHandler } from "electron-trpc/main";
-
-import "./security-restrictions";
 import type cp from "child_process";
+import { app, ipcMain, shell } from "electron";
+import { createIPCHandler } from "electron-trpc/main";
 import ip from "ip";
 
 import { appRouter } from "@acme/api";
@@ -11,7 +9,7 @@ import { closeAssetsServer } from "@acme/assets-server";
 import globalApp from "./global";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
-import { getWindow, pageUrl } from "./mainWindow";
+import { getWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
 import createMenu from "./src/menu";
 import createTray from "./src/tray";
@@ -93,45 +91,26 @@ if (process.platform === "darwin") {
 app
   .whenReady()
   .then(() => {
-    // getWindow()
-    //   .then(async (win) => {
-    //     createIPCHandler({ router: appRouter, windows: [win] });
-    //     // 托盘图标
-    //     createTray();
-    //     // 创建 Web/Assets 服务
-    //     nextjsWebChild = await createWebServer();
-    //     if (!nextjsWebChild) {
-    //       throw Error("NextJS child process was not created, exiting...");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     throw err;
-    //   });
+    getWindow()
+      .then(async (win) => {
+        createIPCHandler({ router: appRouter, windows: [win] });
+
+        // 托盘图标
+        createTray();
+
+        // 创建 Web/Assets 服务
+        nextjsWebChild = await createWebServer();
+        if (!nextjsWebChild) {
+          throw Error("NextJS child process was not created, exiting...");
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
   })
   .catch((e) => console.error("Failed create window:", e));
 
-// function validateSender(frame: Electron.WebFrameMain) {
-//   const frameUrlObj = new URL(frame.url);
-//   const pageUrlObj = new URL(pageUrl);
-
-//   if (import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined) {
-//     // during dev
-//     if (frameUrlObj.host === pageUrlObj.host) return true;
-//   } else {
-//     // during prod and test
-//     if (frameUrlObj.protocol === "file:") return true;
-//   }
-
-//   return false;
-// }
-
-export function initIpcHandle({ ipcMain }: { ipcMain: IpcMain }) {
-  // // https://www.electronjs.org/docs/latest/tutorial/security#17-validate-the-sender-of-all-ipc-messages
-  // ipcMain.handle("electron-trpc", (event: Electron.IpcMainInvokeEvent, opts: IPCRequestOptions) => {
-  //   if (!validateSender(event.senderFrame)) return null;
-  //   return resolveIPCResponse(opts);
-  // });
-
+app.on("ready", () => {
   ipcMain.handle("open-url", (event, url: string) => {
     void shell.openExternal(url);
   });
@@ -150,52 +129,4 @@ export function initIpcHandle({ ipcMain }: { ipcMain: IpcMain }) {
   LibraryIPC.choose(ipcMain);
   LibraryIPC.update(ipcMain);
   syncIpc(ipcMain);
-}
-
-// functional happy path, types get inferred
-// async function resolveIPCResponse(opts: IPCRequestOptions) {
-//   const { path, type, input } = opts;
-//   const { procedures } = appRouter._def;
-//   const ctx = createContext();
-
-//   try {
-//     const output = await callProcedure({
-//       ctx,
-//       path,
-//       procedures,
-//       rawInput: input,
-//       type,
-//     });
-
-//     return {
-//       result: output,
-//       status: "success",
-//     };
-//   } catch (e) {
-//     return {
-//       result: e,
-//       status: "error",
-//     };
-//   }
-// }
-
-app.on("ready", () => {
-  getWindow()
-    .then(async (win) => {
-      createIPCHandler({ router: appRouter, windows: [win] });
-
-      // 托盘图标
-      createTray();
-
-      // 创建 Web/Assets 服务
-      nextjsWebChild = await createWebServer();
-      if (!nextjsWebChild) {
-        throw Error("NextJS child process was not created, exiting...");
-      }
-    })
-    .catch((err) => {
-      throw err;
-    });
-  // initIpcHandle({ ipcMain });
-  // createIPCHandler({ ipcMain });
 });

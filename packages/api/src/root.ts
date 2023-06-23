@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import { observable } from "@trpc/server/observable";
-import { set, z } from "zod";
+import { z } from "zod";
 
 import { configRouter } from "./router/config";
 import { foldersRouter } from "./router/folder";
@@ -20,7 +20,6 @@ export const appRouter = t.router({
   config: configRouter,
   tags: tagsRouter,
   folders: foldersRouter,
-
   greeting: t.procedure.input(z.object({ name: z.string() })).query((req) => {
     const { input } = req;
 
