@@ -1,10 +1,12 @@
 import { z } from "zod";
 
+import { prisma } from "@acme/db";
+
 import { t } from "../trpc";
 
-export const configRouter = t.router({
-  get: t.procedure.query(async ({ ctx }) => {
-    return await ctx.prisma.config.findFirst();
+export const config = t.router({
+  get: t.procedure.query(async () => {
+    return await prisma.config.findFirst();
   }),
 
   update: t.procedure
@@ -15,8 +17,8 @@ export const configRouter = t.router({
         webPort: z.number(),
       }),
     )
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.config.upsert({
+    .mutation(async ({ input }) => {
+      return await prisma.config.upsert({
         where: { id: "config" },
         update: input,
         create: {

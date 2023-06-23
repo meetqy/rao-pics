@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";
-import { type Prisma } from "@acme/db";
+import { prisma, type Prisma } from "@acme/db";
 
 import { t } from "../../trpc";
 
@@ -30,7 +30,7 @@ export const get = t.procedure
       orderBy: OrderByObject.optional(),
     }),
   )
-  .query(async ({ ctx, input }) => {
+  .query(async ({ input }) => {
     const limit = input.limit ?? 20;
     const { cursor, orderBy, tag, folder, keyword } = input;
     const OR: Prisma.ImageWhereInput[] = [{ libraryId: typeof input.library === "number" ? input.library : undefined }, { library: { name: input.library.toString() } }];
@@ -53,7 +53,7 @@ export const get = t.procedure
       });
     }
 
-    const items = await ctx.prisma.image.findMany({
+    const items = await prisma.image.findMany({
       where: {
         OR,
         AND,
