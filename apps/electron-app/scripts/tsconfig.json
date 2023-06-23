@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "target": "ESNext",
+    "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "noEmit": true,
     "strict": true,
     "strictNullChecks": true
+  },
+  "ts-node": {
+    "esm": true
   }
 }

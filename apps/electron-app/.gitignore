@@ -1,4 +1,9 @@
 node_modules
+.env
+generated
 dist
-out
-*.log*
+.browserslistrc
+.electron-vendors.cache.json
+db.sqlite
+
+.vscode
