@@ -10,8 +10,6 @@ function HelloElectron() {
 
     if (!res) return Alert.open("暂时不支持此App/文件夹");
 
-    console.log(res);
-    console.log(addLibrary);
     addLibrary.mutateAsync(res);
 
     // if (res) {
