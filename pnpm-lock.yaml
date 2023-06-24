@@ -160,6 +160,18 @@ importers:
 
   apps/electron-app:
     dependencies:
+      '@acme/api':
+        specifier: '*'
+        version: link:../../packages/api
+      '@acme/assets-server':
+        specifier: '*'
+        version: link:../../packages/assets-server
+      '@acme/db':
+        specifier: '*'
+        version: link:../../packages/db
+      '@acme/eagle':
+        specifier: '*'
+        version: link:../../packages/eagle
       '@tanstack/react-query':
         specifier: ^4.13.0
         version: 4.29.5(react-dom@18.2.0)(react@18.2.0)
@@ -172,16 +184,25 @@ importers:
       '@trpc/server':
         specifier: ^10.23.0
         version: 10.23.0
+      electron-trpc:
+        specifier: ^0.5.2
+        version: 0.5.2(@trpc/client@10.23.0)(@trpc/server@10.23.0)(electron@20.1.4)
       react:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      superjson:
+        specifier: ^1.12.3
+        version: 1.12.3
       zod:
         specifier: ^3.19.1
         version: 3.21.4
     devDependencies:
+      '@acme/tailwind-config':
+        specifier: ^0.1.0
+        version: link:../../packages/config/tailwind
       '@types/node':
         specifier: ^18.7.18
         version: 18.16.5
@@ -209,6 +230,9 @@ importers:
       electron-builder:
         specifier: 23.3.3
         version: 23.3.3
+      tailwindcss:
+        specifier: ^3.3.2
+        version: 3.3.2(ts-node@10.9.1)
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.16.5)(typescript@4.8.3)

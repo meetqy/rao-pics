@@ -1,10 +1,16 @@
-import { app } from "electron";
+import type cp from "child_process";
+import { app, ipcMain, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import "./security-restrictions";
 import { appRouter } from "@acme/api";
 
+import LibraryIPC from "./ipc/library";
+import { syncIpc } from "./ipc/sync";
 import { restoreOrCreateWindow } from "./mainWindow";
+import { createWebServer } from "./src/createWebServer";
+
+let nextjsWebChild: cp.ChildProcess | undefined;
 
 /**
  * Prevent electron from running multiple instances.
@@ -77,7 +83,32 @@ app
 // }
 
 app.on("ready", () => {
-  void restoreOrCreateWindow().then((win) => {
+  void restoreOrCreateWindow().then(async (win) => {
     createIPCHandler({ router: appRouter, windows: [win] });
+
+    // 创建 Web/Assets 服务
+    nextjsWebChild = await createWebServer();
+    if (!nextjsWebChild) {
+      throw Error("NextJS child process was not created, exiting...");
+    }
   });
+
+  ipcMain.handle("open-url", (event, url: string) => {
+    void shell.openExternal(url);
+  });
+
+  ipcMain.handle("get-env", () => {
+    return {
+      ip: process.env["IP"],
+      web_port: process.env["WEB_PORT"],
+      assets_port: process.env["ASSETS_PORT"],
+      name: process.env["APP_NAME"],
+      version: process.env["APP_VERSION"],
+    };
+  });
+
+  LibraryIPC.assetsServer(ipcMain);
+  LibraryIPC.choose(ipcMain);
+  LibraryIPC.update(ipcMain);
+  syncIpc(ipcMain);
 });
