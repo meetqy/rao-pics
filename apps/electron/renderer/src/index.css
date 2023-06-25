@@ -1,9 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.tooltip {
-  &:before {
-    @apply z-50 break-words w-full bg-neutral/80;
-  }
-}
