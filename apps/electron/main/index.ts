@@ -13,7 +13,6 @@ import { createWebServer } from "./src/createWebServer";
 import { createAppIPCHandler } from "./src/ipcRenderer/app";
 import createTray from "./src/tray";
 
-/** Init app ipcRenderer */
 createAppIPCHandler();
 
 let nextjsWebChild: cp.ChildProcess | undefined;

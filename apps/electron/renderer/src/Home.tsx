@@ -1,10 +1,10 @@
-import { ipcRenderer } from "electron";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import "./home.css";
 import { EagleEmitOption } from "@acme/eagle";
 
 import Alert from "./components/Alert";
+import Empty from "./components/Empty";
 import { trpc } from "./utils/trpc";
 
 function Home() {
@@ -12,14 +12,6 @@ function Home() {
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
   const config = trpc.config.update.useMutation();
-
-  window.app.getVersion().then((res) => {
-    console.log("version", res);
-  });
-
-  window.app.getName().then((res) => {
-    console.log("name", res);
-  });
 
   const [env, setEnv] = useState<Env>();
   // 获取 IP 地址
@@ -276,25 +268,7 @@ function Home() {
           </div>
         </div>
       ) : (
-        <div className="w-3/4 flex justify-center items-center ">
-          <div className="card card-compact w-4/5 bg-base-100">
-            <figure>
-              <img src="icon.png" alt="rao icon" className="w-1/3" />
-            </figure>
-            <div className="card-body items-center text-center">
-              <h2 className="card-title uppercase !mb-0">
-                {env?.name}
-                <button className="btn btn-sm btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v{env?.version}</button>
-              </h2>
-              <p className="text-base-content/90 ">~~暂未添加文件夹，请点击下面按钮~~</p>
-              <div className="card-actions mt-2">
-                <button className="btn btn-wide btn-primary" onClick={chooseFolder}>
-                  添加文件夹/库
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Empty onAddClick={chooseFolder} />
       )}
 
       {/* Modal confirm */}

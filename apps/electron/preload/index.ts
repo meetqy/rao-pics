@@ -1,5 +1,5 @@
 import { type TRPCResponseMessage } from "@trpc/server/rpc";
-import { app, contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
+import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 import { type RendererGlobalElectronTRPC } from "types";
 
 import { type Library } from "@acme/db";
