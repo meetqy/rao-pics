@@ -1,8 +1,8 @@
-import { node } from "../.electron-vendors.cache.json";
-import { join } from "path";
-
-import { defineConfig } from "vite";
 import { builtinModules } from "module";
+import { join } from "path";
+import { defineConfig } from "vite";
+
+import { node } from "../.electron-vendors.cache.json";
 
 const PACKAGE_ROOT = __dirname;
 
