@@ -1,32 +1,101 @@
 import builder from "electron-builder";
+import fs from "fs-extra";
 
-if (process.env.VITE_APP_VERSION === undefined) {
-  const now = new Date();
-  process.env.VITE_APP_VERSION = `${now.getUTCFullYear() - 2000}.${
-    now.getUTCMonth() + 1
-  }.${now.getUTCDate()}-${now.getUTCHours() * 60 + now.getUTCMinutes()}`;
-}
+import { config } from "./config.js";
 
-const config: builder.Configuration = {
+const { Platform } = builder;
+
+const isTest = process.env["CSC_IDENTITY_AUTO_DISCOVERY"] === "false";
+
+// 额外资源 在 files 中排除
+const excludeFileDir = fs.readdirSync("../nextjs/.next/standalone/node_modules").map((item) => {
+  return `!**/node_modules/${item}/**/*`;
+});
+
+const { name, version } = config;
+const extraResources: builder.FileSet[] = [];
+
+export const AppConfig: builder.Configuration = {
+  productName: name,
+  copyright: `Copyright © 2022-${new Date().getFullYear()} meetqy`,
+  asar: isTest ? false : true,
+  extraMetadata: { version },
   directories: {
     output: "dist",
     buildResources: "buildResources",
   },
-  files: ["main/dist/**", "preload/dist/**", "renderer/dist/**"],
-  extraMetadata: {
-    version: process.env.VITE_APP_VERSION,
-  },
+  files: [
+    "main/dist/**",
+    "preload/dist/**",
+    "renderer/dist/**",
+    // 排除 @acme 已经打包到 {main|preload|renderer}/dist 中
+    // TODO: 循环嵌套的 @acme/{db|api|eagle} 无法排除
+    "!**/node_modules/@acme/**/*",
+  ].concat(excludeFileDir),
   extraResources: [
-    "buildResources/db.sqlite",
-    "node_modules/.prisma/**/*",
-    "node_modules/@prisma/client/**/*",
+    {
+      from: "./buildResources",
+      to: "buildResources",
+    },
+    {
+      from: "../../packages/db/prisma/db.sqlite",
+      to: "packages/db/prisma/db.sqlite",
+    },
+    {
+      from: "../nextjs/.next/static",
+      to: "apps/nextjs/.next/static",
+      filter: ["**/*"],
+    },
+    {
+      from: "../nextjs/public",
+      to: "apps/nextjs/public",
+      filter: ["**/*"],
+    },
   ],
+  mac: {
+    category: "public.app-category.photography",
+    icon: "buildResources/icon.icns",
+    darkModeSupport: true,
+    target: isTest
+      ? "dir"
+      : {
+          target: "dmg",
+          arch: ["x64", "arm64"],
+        },
+    extraResources,
+  },
+
+  win: {
+    icon: "buildResources/icon.png",
+    target: isTest ? "dir" : "nsis",
+    extraResources,
+  },
+
+  beforeBuild: async (context) => {
+    extraResources.pop();
+
+    if (context.platform.name === "mac") {
+      extraResources.push({
+        from: "../nextjs/.next/standalone",
+        filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*darwin${context.arch === "x64" ? "" : "-arm64"}.*.node`],
+      });
+    } else {
+      extraResources.push({
+        from: "../nextjs/.next/standalone",
+        filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*${context.platform.name}*.node`],
+      });
+    }
+
+    return Promise.resolve(context);
+  },
 };
+
+const targets = new Map().set(Platform.WINDOWS, new Map()).set(Platform.MAC, new Map());
 
 builder
   .build({
-    config,
-    dir: true,
+    targets,
+    config: AppConfig,
   })
   .then((result) => {
     console.log(JSON.stringify(result));

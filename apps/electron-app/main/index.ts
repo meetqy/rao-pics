@@ -1,14 +1,16 @@
 import type cp from "child_process";
-import { app, ipcMain, shell } from "electron";
+import { Menu, MenuItem, app, ipcMain, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import "./security-restrictions";
 import { appRouter } from "@acme/api";
 
+import globalApp from "./global";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
+import createTray from "./src/tray";
 
 let nextjsWebChild: cp.ChildProcess | undefined;
 
@@ -26,6 +28,12 @@ app.on("second-instance", () => {
   });
 });
 
+app.on("will-quit", (e) => {
+  if (!globalApp.isQuite) {
+    e.preventDefault();
+  }
+});
+
 /**
  * Disable Hardware Acceleration to save more system resources.
  */
@@ -35,10 +43,21 @@ app.disableHardwareAcceleration();
  * Shout down background process if all windows was closed
  */
 app.on("window-all-closed", () => {
+  if (nextjsWebChild) {
+    nextjsWebChild.kill();
+  }
+
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
+
+/**
+ * hide dock
+ */
+if (process.platform === "darwin") {
+  app.dock.hide();
+}
 
 /**
  * @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
@@ -82,9 +101,21 @@ app
 //     .catch((e) => console.error("Failed install extension:", e));
 // }
 
+const menu = new Menu();
+
 app.on("ready", () => {
   void restoreOrCreateWindow().then(async (win) => {
     createIPCHandler({ router: appRouter, windows: [win] });
+
+    menu.append(
+      new MenuItem({
+        label: "Quite",
+        accelerator: "CmdOrCtrl+Q",
+        click: () => {
+          globalApp.isQuite = false;
+        },
+      }),
+    );
 
     // 创建 Web/Assets 服务
     nextjsWebChild = await createWebServer();
@@ -92,6 +123,8 @@ app.on("ready", () => {
       throw Error("NextJS child process was not created, exiting...");
     }
   });
+
+  createTray();
 
   ipcMain.handle("open-url", (event, url: string) => {
     void shell.openExternal(url);

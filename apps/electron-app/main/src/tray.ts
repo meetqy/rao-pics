@@ -2,7 +2,7 @@ import { join } from "path";
 import { Menu, Tray, app, nativeTheme, shell } from "electron";
 
 import globalApp from "../global";
-import { getWindow } from "../mainWindow";
+import { restoreOrCreateWindow } from "../mainWindow";
 
 const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildResources") : join(__dirname, "../../buildResources");
 
@@ -22,7 +22,7 @@ const createTray = () => {
         label: "打开 Rao Pics",
         type: "normal",
         click: () => {
-          void getWindow().then((window) => {
+          void restoreOrCreateWindow().then((window) => {
             window.show();
             window.focus();
           });

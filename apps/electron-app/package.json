@@ -1,5 +1,6 @@
 {
   "name": "@acme/electron-app",
+  "productName": "Rao Pics",
   "version": "1.0.0",
   "description": "",
   "private": true,
