@@ -8,14 +8,11 @@
       "cache": false
     },
     "build": {
-      "outputs": ["nextjs/.next/standalone", "!nextjs/.next/cache", "electron/**/dist"],
-      "dependsOn": ["^build"],
-      "cache": false
+      "outputs": [".next/standalone/**", "!.next/cache"],
+      "dependsOn": ["^build"]
     },
     "compile": {
-      "outputs": ["electron/dist/*.exe", "electron/dist/*.dmg"],
-      "dependsOn": ["db:reset", "build"],
-      "cache": false
+      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
     },
     "lint": {}
   },

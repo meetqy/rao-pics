@@ -9,9 +9,10 @@ import { library } from "./src/router/library";
 import { tags } from "./src/router/tags";
 import { t } from "./src/trpc";
 
-const ee = new EventEmitter();
-
 export * from "./src/router/library";
+export { type ExtEnum } from "./src/router/image/get";
+
+const ee = new EventEmitter();
 
 const base = t.router({
   greeting: t.procedure.input(z.object({ name: z.string() })).query((req) => {

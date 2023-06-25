@@ -27,5 +27,3 @@ export const trpc = createTRPCNext<AppRouter>({
   },
   ssr: false,
 });
-
-export { type RouterInputs, type RouterOutputs } from "@acme/api";
