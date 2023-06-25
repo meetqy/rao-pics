@@ -1,6 +1,5 @@
 packages:
   - apps/nextjs
   - apps/electron
-  - apps/electron-app
   - packages/*
   - packages/config/*
