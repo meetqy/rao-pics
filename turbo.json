@@ -9,7 +9,8 @@
     },
     "build": {
       "outputs": [".next/standalone/**", "!.next/cache"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "cache": false
     },
     "compile": {
       "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"],
