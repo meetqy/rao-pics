@@ -12,7 +12,8 @@
       "dependsOn": ["^build"]
     },
     "compile": {
-      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
+      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"],
+      "cache": false
     },
     "lint": {}
   },

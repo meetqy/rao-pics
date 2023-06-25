@@ -7,8 +7,8 @@
   },
   "packageManager": "pnpm@8.3.1",
   "scripts": {
+    "postinstall": "turbo db:reset",
     "build": "turbo build",
-    "clean:workspace": "turbo clean",
     "compile": "cross-env NODE_ENV=production turbo db:reset build compile",
     "db:reset": "turbo db:reset",
     "dev": "turbo dev --parallel --filter=electron --filter=nextjs --filter=db",

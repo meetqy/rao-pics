@@ -55,16 +55,16 @@ importers:
   apps/electron:
     dependencies:
       '@acme/api':
-        specifier: '*'
+        specifier: ^0.1.0
         version: link:../../packages/api
       '@acme/assets-server':
-        specifier: '*'
+        specifier: ^0.1.0
         version: link:../../packages/assets-server
       '@acme/db':
-        specifier: '*'
+        specifier: ^0.1.0
         version: link:../../packages/db
       '@acme/eagle':
-        specifier: '*'
+        specifier: ^0.1.0
         version: link:../../packages/eagle
       '@tanstack/react-query':
         specifier: ^4.13.0
@@ -78,9 +78,21 @@ importers:
       '@trpc/server':
         specifier: ^10.23.0
         version: 10.23.0
+      electron-log:
+        specifier: 5.0.0-beta.24
+        version: 5.0.0-beta.24
       electron-trpc:
         specifier: ^0.5.2
         version: 0.5.2(@trpc/client@10.23.0)(@trpc/server@10.23.0)(electron@20.1.4)
+      fs-extra:
+        specifier: ^11.1.1
+        version: 11.1.1
+      get-port-please:
+        specifier: ^3.0.1
+        version: 3.0.1
+      ip:
+        specifier: ^1.1.8
+        version: 1.1.8
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -95,8 +107,11 @@ importers:
         version: 3.21.4
     devDependencies:
       '@acme/tailwind-config':
-        specifier: '*'
+        specifier: ^0.1.0
         version: link:../../packages/config/tailwind
+      '@types/ip':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@types/node':
         specifier: ^18.7.18
         version: 18.16.3
@@ -1642,6 +1657,12 @@ packages:
       '@types/node': 18.16.16
     dev: true
     optional: true
+
+  /@types/ip@1.1.0:
+    resolution: {integrity: sha512-dwNe8gOoF70VdL6WJBwVHtQmAX4RMd62M+mAB9HQFjG1/qiCLM/meRy95Pd14FYBbEDwCq7jgJs89cHpLBu4HQ==}
+    dependencies:
+      '@types/node': 18.16.16
+    dev: true
 
   /@types/istanbul-lib-coverage@2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -3414,6 +3435,11 @@ packages:
       - supports-color
     dev: true
 
+  /electron-log@5.0.0-beta.24:
+    resolution: {integrity: sha512-wDrxfCtRJLWL/xKXkRHtSTGoMaJPGbfIuwoo7ssDlgd8TTEBhRncjejzluswCewXJJqZph5PPNn8Y2McwUP29g==}
+    engines: {electron: '>= 13', node: '>= 14'}
+    dev: false
+
   /electron-osx-sign@0.6.0:
     resolution: {integrity: sha512-+hiIEb2Xxk6eDKJ2FFlpofCnemCbjbT5jz+BKGpVBrRNT3kWTGs4DfNX6IzGwgi33hUcXF+kFs9JW+r6Wc1LRg==}
     engines: {node: '>=4.0.0'}
@@ -4377,6 +4403,10 @@ packages:
       yargs: 16.2.0
     dev: true
 
+  /get-port-please@3.0.1:
+    resolution: {integrity: sha512-R5pcVO8Z1+pVDu8Ml3xaJCEkBiiy1VQN9za0YqH8GIi1nIqD4IzQhzY6dDzMRtdS1lyiGlucRzm8IN8wtLIXng==}
+    dev: false
+
   /get-stream@4.1.0:
     resolution: {integrity: sha512-GMat4EJ5161kIy2HevLlr4luNjBgvmj413KaQA7jt4V8B4RDsfpHk7WQ9GVqfYyyx8OS/L66Kox+rJRNklLK7w==}
     engines: {node: '>=6'}
@@ -4754,6 +4784,10 @@ packages:
 
   /intersection-observer@0.12.2:
     resolution: {integrity: sha512-7m1vEcPCxXYI8HqnL8CKI6siDyD+eIWSwgB3DZA+ZTogxk9I4CDnj4wilt9x/+/QbHI4YG5YZNmC6458/e9Ktg==}
+    dev: false
+
+  /ip@1.1.8:
+    resolution: {integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==}
     dev: false
 
   /ipaddr.js@1.9.1:
