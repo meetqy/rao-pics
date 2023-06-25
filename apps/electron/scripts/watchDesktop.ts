@@ -2,14 +2,7 @@ import { spawn, type ChildProcess } from "child_process";
 import electronPath from "electron";
 import { build, type ViteDevServer } from "vite";
 
-import { config } from "./config.js";
 import { listeningWebServer } from "./watchWeb.js";
-
-const { name, version } = config;
-
-process.env["npm_package_version"] = version;
-process.env["APP_NAME"] = name;
-process.env["APP_VERSION"] = version;
 
 // process.env.MODE is used in various vite config files
 const mode = (process.env.MODE = process.env.MODE ?? "development");

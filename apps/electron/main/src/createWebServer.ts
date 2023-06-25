@@ -1,10 +1,10 @@
 import cp from "child_process";
 import { join } from "path";
 import { app } from "electron";
-import { getPort } from "get-port-please";
-import ip from "ip";
 
 import { createSqlite } from "@acme/db";
+
+import { getAndUpdateConfig } from "./utils/config";
 
 /**
  * 创建 Web/Assets 服务
@@ -14,38 +14,23 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
 
   const { isPackaged } = app;
 
-  const _ip = ip.address();
-  const _web_port = isPackaged ? (await getPort({ portRange: [9620, 9624], port: 9620 })).toString() : "9620";
-  const _assets_port = isPackaged ? (await getPort({ portRange: [9625, 9629], port: 9625 })).toString() : "9625";
-
-  // Init env variables
-  process.env["WEB_PORT"] = _web_port;
-  process.env["ASSETS_PORT"] = _assets_port;
+  await getAndUpdateConfig();
 
   if (isPackaged) {
-    process.env["IP"] = _ip;
-
-    preNextChild?.kill();
-    // app config production
-    // dev 在 watchDesktop.ts 中指定
-    process.env["APP_VERSION"] = app.getVersion();
-    process.env["APP_NAME"] = app.getName();
-
     // Create sqlite database file
     createSqlite(join(process.resourcesPath, "./packages/db/prisma/db.sqlite"));
 
     // Start nextjs server
     nextjsChild = cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"), {
       env: {
-        PORT: (_web_port || 9620).toString(),
+        PORT: (process.env["WEB_PORT"] || 9620).toString(),
       },
     });
   } else {
     // 开发环境 next dev 会自动进行热更新，不需要 kill
-    if (preNextChild && _ip === process.env["IP"]) return;
-    process.env["IP"] = _ip;
+    if (preNextChild) return;
+    // process.env["IP"] = ip;
 
-    preNextChild?.kill();
     const nextjs = join(process.cwd(), "../nextjs");
     nextjsChild = cp.spawn("npx", ["next", "dev"], {
       shell: true,
@@ -54,7 +39,7 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
       env: {
         // 不能省略，否则会报错
         ...process.env,
-        PORT: _web_port,
+        PORT: process.env["WEB_PORT"],
       },
     });
   }

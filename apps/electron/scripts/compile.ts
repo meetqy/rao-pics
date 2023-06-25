@@ -1,8 +1,6 @@
 import builder from "electron-builder";
 import fs from "fs-extra";
 
-import { config } from "./config.js";
-
 const { Platform } = builder;
 
 const isTest = process.env["CSC_IDENTITY_AUTO_DISCOVERY"] === "false";
@@ -12,14 +10,11 @@ const excludeFileDir = fs.readdirSync("../nextjs/.next/standalone/node_modules")
   return `!**/node_modules/${item}/**/*`;
 });
 
-const { name, version } = config;
 const extraResources: builder.FileSet[] = [];
 
 export const AppConfig: builder.Configuration = {
-  productName: name,
   copyright: `Copyright © 2022-${new Date().getFullYear()} meetqy`,
   asar: isTest ? false : true,
-  extraMetadata: { version },
   directories: {
     output: "dist",
     buildResources: "buildResources",

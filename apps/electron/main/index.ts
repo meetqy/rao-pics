@@ -12,6 +12,7 @@ import { restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
 import { createAppIPCHandler } from "./src/ipcRenderer/app";
 import createTray from "./src/tray";
+import { getAndUpdateConfig } from "./src/utils/config";
 
 createAppIPCHandler();
 
@@ -55,9 +56,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-/**
- * hide dock
- */
+/** 隐藏 dock */
 if (process.platform === "darwin") {
   app.dock.hide();
 }
@@ -69,6 +68,19 @@ app.on("activate", () => {
   restoreOrCreateWindow().catch((err) => {
     throw err;
   });
+});
+
+app.on("browser-window-focus", () => {
+  void (async () => {
+    // 如果 ip 不相同，并且已经启动才需要重启
+    // web server 首次启动在 activate 中触发
+    const { ip } = await getAndUpdateConfig();
+
+    if (nextjsWebChild && process.env["IP"] != ip) {
+      nextjsWebChild.kill();
+      nextjsWebChild = await createWebServer(nextjsWebChild);
+    }
+  })();
 });
 
 /**
