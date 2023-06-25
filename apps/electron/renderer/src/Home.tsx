@@ -1,3 +1,4 @@
+import { ipcRenderer } from "electron";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import "./home.css";
@@ -11,6 +12,14 @@ function Home() {
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
   const config = trpc.config.update.useMutation();
+
+  window.app.getVersion().then((res) => {
+    console.log("version", res);
+  });
+
+  window.app.getName().then((res) => {
+    console.log("name", res);
+  });
 
   const [env, setEnv] = useState<Env>();
   // 获取 IP 地址

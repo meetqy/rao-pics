@@ -10,7 +10,10 @@ interface Env {
 
 // https://www.electronjs.org/docs/latest/tutorial/context-isolation#usage-with-typescript
 interface Window {
-  readonly electronTRPC: null;
+  readonly app: {
+    getVersion: () => Promise<string>;
+    getName: () => Promise<string>;
+  };
 
   readonly electronAPI: {
     library: {

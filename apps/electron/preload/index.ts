@@ -1,5 +1,5 @@
 import { type TRPCResponseMessage } from "@trpc/server/rpc";
-import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
+import { app, contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 import { type RendererGlobalElectronTRPC } from "types";
 
 import { type Library } from "@acme/db";
@@ -17,6 +17,11 @@ const exposeElectronTRPC = () => {
 
 process.once("loaded", () => {
   exposeElectronTRPC();
+
+  contextBridge.exposeInMainWorld("app", {
+    getVersion: () => ipcRenderer.invoke("app.getVersion"),
+    getName: () => ipcRenderer.invoke("app.getName"),
+  });
 
   contextBridge.exposeInMainWorld("electronAPI", {
     library: {
