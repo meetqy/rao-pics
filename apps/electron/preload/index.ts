@@ -2,7 +2,7 @@ import { type TRPCResponseMessage } from "@trpc/server/rpc";
 import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 import { type RendererGlobalElectronTRPC } from "types";
 
-import { Prisma, type Library } from "@acme/db";
+import { type Library } from "@acme/db";
 import { type EagleEmit, type EagleEmitOption } from "@acme/eagle";
 
 const exposeElectronTRPC = () => {
