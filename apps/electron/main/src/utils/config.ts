@@ -8,10 +8,14 @@ import eLog from "./log";
 /**
  * 获取并且更新配置
  */
-export const getAndUpdateConfig = async () => {
+export const getAndUpdateConfig = async (): Promise<{
+  ip: string;
+  webPort: number;
+  assetsPort: number;
+}> => {
   const _ip = ip.address();
-  const _web_port = await getPort({ portRange: [9620, 9624], port: 9620 });
-  const _assets_port = await getPort({ portRange: [9625, 9629], port: 9625 });
+  const _web_port = Number(process.env["WEB_PORT"]) || (await getPort({ portRange: [9620, 9624], port: 9620 }));
+  const _assets_port = Number(process.env["ASSETS_PORT"]) || (await getPort({ portRange: [9625, 9629], port: 9625 }));
 
   process.env["IP"] = _ip;
   process.env["WEB_PORT"] = _web_port.toString();
