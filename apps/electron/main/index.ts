@@ -32,7 +32,7 @@ app.on("second-instance", () => {
   });
 });
 
-app.on("will-quit", (e) => {
+app.on("before-quit", (e) => {
   if (!globalApp.isQuite) {
     e.preventDefault();
   }
@@ -47,12 +47,17 @@ app.disableHardwareAcceleration();
  * Shout down background process if all windows was closed
  */
 app.on("window-all-closed", () => {
-  if (nextjsWebChild) {
-    nextjsWebChild.kill();
-  }
-
   if (process.platform !== "darwin") {
     app.quit();
+  }
+});
+
+/**
+ * App quit
+ */
+app.on("quit", () => {
+  if (nextjsWebChild) {
+    nextjsWebChild.kill();
   }
 });
 
