@@ -4,30 +4,21 @@ import "./home.css";
 import { EagleEmitOption } from "@acme/eagle";
 
 import Alert from "./components/Alert";
+import Empty from "./components/Empty";
 import { trpc } from "./utils/trpc";
 
 function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
+
+  const { data: config } = trpc.config.get.useQuery();
+
   const library = trpc.library.get.useQuery();
-  const config = trpc.config.update.useMutation();
-
-  const [env, setEnv] = useState<Env>();
-  // 获取 IP 地址
-  window.electronAPI.getEnv().then((res) => {
-    if (env?.ip === res.ip) return;
-
-    setEnv(res);
+  const addLibrary = trpc.library.add.useMutation({
+    onSuccess() {
+      utils.library.get.invalidate();
+    },
   });
-  useEffect(() => {
-    if (!env) return;
-    const { ip, web_port, assets_port } = env;
-    config.mutate({
-      ip,
-      webPort: Number(web_port),
-      assetsPort: Number(assets_port),
-    });
-  }, [env]);
 
   // active id
   const [active, setActive] = useState<number | undefined>();
@@ -44,13 +35,7 @@ function Home() {
       });
     }
   }, [active]);
-  const webUrl = useMemo(() => `http://${env?.ip}:${env?.web_port}/${activeItem?.name}`, [activeItem, env]);
 
-  const addLibrary = trpc.library.add.useMutation({
-    onSuccess() {
-      utils.library.get.invalidate();
-    },
-  });
   const removeLibrary = trpc.library.remove.useMutation({
     onSuccess() {
       utils.library.get.invalidate();
@@ -67,17 +52,6 @@ function Home() {
 
     library.data && window.electronAPI.library.assetsServer(library.data);
   }, [active, library]);
-
-  const chooseFolder = async () => {
-    const res = await window.electronAPI.library.choose();
-
-    if (!res) return Alert.open("暂时不支持此App/文件夹");
-
-    if (res) {
-      const f = await addLibrary.mutateAsync(res);
-      setActive(f.id);
-    }
-  };
 
   const onRemove = () => {
     active && removeLibrary.mutateAsync(active);
@@ -136,13 +110,33 @@ function Home() {
     );
   };
 
-  const open = () => window.electronAPI.openUrl(webUrl);
+  const webUrl = useMemo(() => (config ? `http://${config.ip}:${config.webPort}/${activeItem?.name}` : ""), [activeItem, config]);
+  const openExternal = () => window.shell.openExternal(webUrl);
+
+  const showOpenDialog = () => {
+    window.dialog
+      .showOpenDialog({
+        properties: ["openDirectory"],
+        title: "选择文件夹/库",
+      })
+      .then(async (res) => {
+        if (!res) return;
+
+        const lib = await window.electronAPI.handleDirectory(res[0]);
+        if (!lib) return Alert({ title: "暂时不支持此App/文件夹" });
+
+        if (lib) {
+          const libRes = await addLibrary.mutateAsync(lib);
+          setActive(libRes.id);
+        }
+      });
+  };
 
   return (
     <div className="h-screen w-full flex text-sm">
       <div className="w-1/4 overflow-y-auto scrollbar bg-base-200/70">
         <div className="flex justify-center p-2 sticky top-0  z-10">
-          <button className="btn w-full btn-outline flex items-center" onClick={chooseFolder}>
+          <button className="btn w-full btn-outline flex items-center" onClick={showOpenDialog}>
             <img src="icon.png" className="w-6" />
             <span className="ml-2">添加文件夹/库</span>
           </button>
@@ -213,7 +207,7 @@ function Home() {
 
                 <span className="ml-2">WEB 预览</span>
               </span>
-              <a onClick={open} className="btn btn-link btn-active normal-case p-0 btn-sm text-secondary font-normal">
+              <a onClick={openExternal} className="btn btn-link btn-active normal-case p-0 btn-sm text-secondary font-normal">
                 {webUrl}
               </a>
             </div>
@@ -267,25 +261,7 @@ function Home() {
           </div>
         </div>
       ) : (
-        <div className="w-3/4 flex justify-center items-center ">
-          <div className="card card-compact w-4/5 bg-base-100">
-            <figure>
-              <img src="icon.png" alt="rao icon" className="w-1/3" />
-            </figure>
-            <div className="card-body items-center text-center">
-              <h2 className="card-title uppercase !mb-0">
-                {env?.name}
-                <button className="btn btn-sm btn-link hover:no-underline no-underline p-0 text-secondary normal-case relative -top-2 -left-1">v{env?.version}</button>
-              </h2>
-              <p className="text-base-content/90 ">~~暂未添加文件夹，请点击下面按钮~~</p>
-              <div className="card-actions mt-2">
-                <button className="btn btn-wide btn-primary" onClick={chooseFolder}>
-                  添加文件夹/库
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Empty onAddClick={showOpenDialog} />
       )}
 
       {/* Modal confirm */}

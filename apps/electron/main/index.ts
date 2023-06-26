@@ -1,21 +1,23 @@
-import { app, ipcMain, shell, type IpcMain } from "electron";
+import type cp from "child_process";
+import { Menu, MenuItem, app, ipcMain } from "electron";
+import { createIPCHandler } from "electron-trpc/main";
 
 import "./security-restrictions";
-import type cp from "child_process";
-import { callProcedure } from "@trpc/server";
-import ip from "ip";
+import { appRouter } from "@acme/api";
 
-import { appRouter, createContext } from "@acme/api";
-import { closeAssetsServer } from "@acme/assets-server";
-
-import type { IPCRequestOptions } from "../types";
 import globalApp from "./global";
 import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
-import { pageUrl, restoreOrCreateWindow } from "./mainWindow";
+import { restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
-import createMenu from "./src/menu";
+import createAllIPCHandler from "./src/ipc/create";
 import createTray from "./src/tray";
+import { getAndUpdateConfig } from "./src/utils/config";
+
+/**
+ * Create all ipcHander in 'src/ipc/xxx.ts'
+ */
+createAllIPCHandler();
 
 let nextjsWebChild: cp.ChildProcess | undefined;
 
@@ -33,6 +35,12 @@ app.on("second-instance", () => {
   });
 });
 
+app.on("before-quit", (e) => {
+  if (!globalApp.isQuite) {
+    e.preventDefault();
+  }
+});
+
 /**
  * Disable Hardware Acceleration to save more system resources.
  */
@@ -47,141 +55,101 @@ app.on("window-all-closed", () => {
   }
 });
 
-app.on("before-quit", (e) => {
-  if (!globalApp.isQuite) {
-    e.preventDefault();
+/**
+ * App quit
+ */
+app.on("quit", () => {
+  if (nextjsWebChild) {
+    nextjsWebChild.kill();
   }
 });
 
-app.on("quit", () => {
-  closeAssetsServer();
-  nextjsWebChild?.kill();
+/** Hide dock */
+if (process.platform === "darwin") {
+  app.dock.hide();
+}
+
+/**
+ * @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
+ */
+app.on("activate", () => {
+  restoreOrCreateWindow().catch((err) => {
+    throw err;
+  });
 });
 
 app.on("browser-window-focus", () => {
   void (async () => {
     // 如果 ip 不相同，并且已经启动才需要重启
     // web server 首次启动在 activate 中触发
-    console.log(process.env["IP"], ip.address());
-    if (nextjsWebChild && process.env["IP"] != ip.address()) {
+    const { ip } = await getAndUpdateConfig();
+
+    if (nextjsWebChild && process.env["IP"] != ip) {
+      nextjsWebChild.kill();
       nextjsWebChild = await createWebServer(nextjsWebChild);
     }
   })();
 });
 
 /**
- * @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
- */
-app.on("activate", () => {
-  void (async () => {
-    nextjsWebChild = await createWebServer(nextjsWebChild);
-  })();
-
-  restoreOrCreateWindow().catch((err) => {
-    throw err;
-  });
-});
-
-// 创建菜单
-createMenu();
-
-if (process.platform === "darwin") {
-  // 隐藏 docker
-  app.dock.hide();
-}
-
-/**
  * Create the application window when the background process is ready.
  */
 app
   .whenReady()
-  .then(() => {
-    restoreOrCreateWindow()
-      .then(async () => {
-        // 托盘图标
-        createTray();
-
-        // 创建 Web/Assets 服务
-        nextjsWebChild = await createWebServer();
-        if (!nextjsWebChild) {
-          throw Error("NextJS child process was not created, exiting...");
-        }
-      })
-      .catch((err) => {
-        throw err;
-      });
+  .then(async () => {
+    await restoreOrCreateWindow().catch((err) => {
+      throw err;
+    });
   })
   .catch((e) => console.error("Failed create window:", e));
 
-function validateSender(frame: Electron.WebFrameMain) {
-  const frameUrlObj = new URL(frame.url);
-  const pageUrlObj = new URL(pageUrl);
+/**
+ * Install React devtools in dev mode
+ * works, but throws errors so it's commented out until these issues are resolved:
+ * - https://github.com/MarshallOfSound/electron-devtools-installer/issues/220
+ * - https://github.com/electron/electron/issues/32133
+ * Note: You must install `electron-devtools-installer` manually
+ */
+// if (import.meta.env.DEV) {
+//   app
+//     .whenReady()
+//     .then(() => import("electron-devtools-installer"))
+//     .then(async ({ default: installExtension, REACT_DEVELOPER_TOOLS }) => {
+//       await installExtension(REACT_DEVELOPER_TOOLS, {
+//         loadExtensionOptions: {
+//           allowFileAccess: true,
+//         },
+//       });
+//     })
+//     .catch((e) => console.error("Failed install extension:", e));
+// }
 
-  if (import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined) {
-    // during dev
-    if (frameUrlObj.host === pageUrlObj.host) return true;
-  } else {
-    // during prod and test
-    if (frameUrlObj.protocol === "file:") return true;
-  }
-
-  return false;
-}
-
-export function createIPCHandler({ ipcMain }: { ipcMain: IpcMain }) {
-  // https://www.electronjs.org/docs/latest/tutorial/security#17-validate-the-sender-of-all-ipc-messages
-  ipcMain.handle("electron-trpc", (event: Electron.IpcMainInvokeEvent, opts: IPCRequestOptions) => {
-    if (!validateSender(event.senderFrame)) return null;
-    return resolveIPCResponse(opts);
-  });
-
-  ipcMain.handle("open-url", (event, url: string) => {
-    void shell.openExternal(url);
-  });
-
-  ipcMain.handle("get-env", () => {
-    return {
-      ip: process.env["IP"],
-      web_port: process.env["WEB_PORT"],
-      assets_port: process.env["ASSETS_PORT"],
-      name: process.env["APP_NAME"],
-      version: process.env["APP_VERSION"],
-    };
-  });
-
-  LibraryIPC.assetsServer(ipcMain);
-  LibraryIPC.choose(ipcMain);
-  LibraryIPC.update(ipcMain);
-  syncIpc(ipcMain);
-}
-
-// functional happy path, types get inferred
-async function resolveIPCResponse(opts: IPCRequestOptions) {
-  const { path, type, input } = opts;
-  const { procedures } = appRouter._def;
-  const ctx = createContext();
-
-  try {
-    const output = await callProcedure({
-      ctx,
-      path,
-      procedures,
-      rawInput: input,
-      type,
-    });
-
-    return {
-      result: output,
-      status: "success",
-    };
-  } catch (e) {
-    return {
-      result: e,
-      status: "error",
-    };
-  }
-}
+const menu = new Menu();
 
 app.on("ready", () => {
-  createIPCHandler({ ipcMain });
+  void restoreOrCreateWindow().then(async (win) => {
+    createIPCHandler({ router: appRouter, windows: [win] });
+
+    menu.append(
+      new MenuItem({
+        label: "Quite",
+        accelerator: "CmdOrCtrl+Q",
+        click: () => {
+          globalApp.isQuite = false;
+        },
+      }),
+    );
+
+    // 创建 Web/Assets 服务
+    nextjsWebChild = await createWebServer();
+    if (!nextjsWebChild) {
+      throw Error("NextJS child process was not created, exiting...");
+    }
+  });
+
+  createTray();
+
+  LibraryIPC.assetsServer(ipcMain);
+  LibraryIPC.update(ipcMain);
+  syncIpc(ipcMain);
 });

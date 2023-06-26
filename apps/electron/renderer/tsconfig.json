@@ -17,6 +17,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "../types/exposedInMainWorld.d.ts"],
+  "include": ["src", "../types/exposedInMainWorld.d.ts", "../../../global.d.ts"],
   "references": [{ "path": "../tsconfig.node.json" }]
 }

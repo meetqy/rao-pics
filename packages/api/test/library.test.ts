@@ -4,12 +4,10 @@ import { describe, expect, test } from "vitest";
 import { prisma } from "@acme/db";
 import Mock from "@acme/mock";
 
-import { appRouter } from "../src/root";
-import { createContext } from "../src/trpc";
+import { appRouter } from "../index";
 
 describe("@acme/api library", () => {
-  const ctx = createContext();
-  const caller = appRouter.createCaller(ctx);
+  const caller = appRouter.createCaller({});
 
   const input = Mock.library();
 

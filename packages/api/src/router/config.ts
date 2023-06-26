@@ -1,10 +1,12 @@
 import { z } from "zod";
 
+import curd from "@acme/curd";
+
 import { t } from "../trpc";
 
-export const configRouter = t.router({
-  get: t.procedure.query(async ({ ctx }) => {
-    return await ctx.prisma.config.findFirst();
+export const config = t.router({
+  get: t.procedure.query(() => {
+    return curd.config.get();
   }),
 
   update: t.procedure
@@ -15,14 +17,5 @@ export const configRouter = t.router({
         webPort: z.number(),
       }),
     )
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.config.upsert({
-        where: { id: "config" },
-        update: input,
-        create: {
-          id: "config",
-          ...input,
-        },
-      });
-    }),
+    .mutation(({ input }) => curd.config.update(input)),
 });

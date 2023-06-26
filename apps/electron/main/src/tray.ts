@@ -22,7 +22,10 @@ const createTray = () => {
         label: "打开 Rao Pics",
         type: "normal",
         click: () => {
-          void restoreOrCreateWindow();
+          void restoreOrCreateWindow().then((window) => {
+            window.show();
+            window.focus();
+          });
         },
       },
       { type: "separator" },

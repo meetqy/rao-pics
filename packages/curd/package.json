@@ -1,6 +1,6 @@
 {
   "name": "@acme/curd",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "devDependencies": {
     "@acme/db": "^0.1.0",
     "@acme/mock": "^0.1.0"

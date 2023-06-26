@@ -12,7 +12,7 @@
   "dependencies": {
     "@acme/api": "^0.1.0",
     "@acme/constant": "^0.1.0",
-    "@acme/curd": "^0.0.1",
+    "@acme/curd": "^0.1.0",
     "@acme/db": "^0.1.0",
     "chroma-js": "^2.4.2",
     "fast-glob": "^3.2.12"

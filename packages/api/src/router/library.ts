@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { prisma } from "@acme/db";
+
 import { t } from "../trpc";
 
 const LibraryAddInput = z.object({
@@ -12,17 +14,17 @@ const LibraryAddInput = z.object({
 
 export type LibraryAdd = z.infer<typeof LibraryAddInput>;
 
-export const libraryRouter = t.router({
-  get: t.procedure.query(async ({ ctx }) => {
-    return await ctx.prisma.library.findMany({
+export const library = t.router({
+  get: t.procedure.query(async ({}) => {
+    return await prisma.library.findMany({
       include: {
         _count: { select: { images: true } },
       },
     });
   }),
 
-  add: t.procedure.input(LibraryAddInput).mutation(async ({ ctx, input }) => {
-    return await ctx.prisma.library.create({
+  add: t.procedure.input(LibraryAddInput).mutation(async ({ input }) => {
+    return await prisma.library.create({
       data: input,
     });
   }),
@@ -35,8 +37,8 @@ export const libraryRouter = t.router({
         failCount: z.number().optional(),
       }),
     )
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.library.update({
+    .mutation(async ({ input }) => {
+      return await prisma.library.update({
         where: { id: input.id },
         data: {
           ...input,
@@ -45,20 +47,20 @@ export const libraryRouter = t.router({
       });
     }),
 
-  remove: t.procedure.input(z.number()).mutation(async ({ ctx, input }) => {
-    await ctx.prisma.$transaction([
-      ctx.prisma.image.deleteMany({
+  remove: t.procedure.input(z.number()).mutation(async ({ input }) => {
+    await prisma.$transaction([
+      prisma.image.deleteMany({
         where: { libraryId: input },
       }),
-      ctx.prisma.folder.deleteMany({
+      prisma.folder.deleteMany({
         where: { libraryId: input },
       }),
-      ctx.prisma.tag.deleteMany({
+      prisma.tag.deleteMany({
         where: { libraryId: input },
       }),
     ]);
 
-    return await ctx.prisma.library.delete({
+    return await prisma.library.delete({
       where: { id: input },
     });
   }),

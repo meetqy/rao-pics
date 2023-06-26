@@ -2,13 +2,7 @@ import * as trpc from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { prisma } from "@acme/db";
-
-export const createContext = () => {
-  return { prisma };
-};
-
-export const t = trpc.initTRPC.context<typeof createContext>().create({
+export const t = trpc.initTRPC.create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {

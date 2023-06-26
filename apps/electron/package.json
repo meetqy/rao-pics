@@ -1,39 +1,38 @@
 {
   "name": "@acme/electron",
   "productName": "Rao Pics",
-  "version": "0.1.0",
+  "version": "0.6.3",
+  "description": "Preview your materials on website. Support for eagle.",
   "private": true,
   "main": "main/dist/index.cjs",
-  "description": "Preview your materials on website. Support for eagle.",
+  "type": "module",
   "author": {
     "name": "meetqy",
     "email": "meetqy@qq.com"
   },
-  "type": "module",
   "scripts": {
-    "clean": "rm -rf node_modules dist",
-    "lint": "eslint .",
-    "lint:fix": "pnpm lint --fix",
     "dev": "cross-env NODE_ENV=development npm run watch:desktop",
     "build": "pnpm run '/^build:.*/'",
-    "compile": "cross-env MODE=production ts-node scripts/compile.ts",
+    "compile": "rm -rf dist && ts-node scripts/compile.ts",
     "test:compile": "cross-env MODE=production CSC_IDENTITY_AUTO_DISCOVERY=false ts-node scripts/compile.ts",
     "watch:web": "ts-node scripts/watchWeb.ts",
     "watch:desktop": "ts-node scripts/watchDesktop.ts",
     "build:main": "cd ./main && tsc && vite build",
     "build:preload": "cd ./preload && tsc && vite build",
     "build:renderer": "tsc renderer/**/*.ts && vite build renderer",
+    "sync:version": "node scripts/sync-version.mjs",
     "vendors:update": "cross-env ELECTRON_RUN_AS_NODE=1 electron scripts/update-electron-vendors.mjs",
-    "postinstall": "pnpm vendors:update"
+    "postinstall": "npm run vendors:update & npm run sync:version"
   },
-  "license": "MIT",
   "devDependencies": {
-    "@acme/nextjs": "^0.1.0",
-    "@types/express-http-proxy": "^1.6.3",
+    "@acme/tailwind-config": "^0.1.0",
     "@types/ip": "^1.1.0",
     "@types/node": "^18.7.18",
+    "@types/node-fetch": "^2.6.4",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
     "@vitejs/plugin-react": "^2.1.0",
     "cross-env": "^7.0.3",
     "electron": "20.1.4",
@@ -45,23 +44,23 @@
     "vite": "^3.1.3"
   },
   "dependencies": {
+    "@acme/curd": "^0.1.0",
     "@acme/api": "^0.1.0",
     "@acme/assets-server": "^0.1.0",
     "@acme/db": "^0.1.0",
     "@acme/eagle": "^0.1.0",
-    "@acme/tailwind-config": "^0.1.0",
     "@tanstack/react-query": "^4.13.0",
     "@trpc/client": "^10.23.0",
     "@trpc/react-query": "^10.25.0",
     "@trpc/server": "^10.23.0",
     "electron-log": "5.0.0-beta.24",
+    "electron-trpc": "^0.5.2",
+    "fs-extra": "^11.1.1",
     "get-port-please": "^3.0.1",
     "ip": "^1.1.8",
-    "next": "13.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "superjson": "^1.12.3",
-    "zod": "^3.19.1",
-    "fs-extra": "^11.1.1"
+    "zod": "^3.19.1"
   }
 }

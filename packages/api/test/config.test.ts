@@ -4,13 +4,11 @@ import { describe, expect, test } from "vitest";
 
 import Mock from "@acme/mock";
 
-import { appRouter, type AppRouter } from "../src/root";
-import { createContext } from "../src/trpc";
+import { appRouter, type AppRouter } from "../index";
 
 describe("@acme/api config", async () => {
   await Mock.dbClean();
-  const ctx = createContext();
-  const caller = appRouter.createCaller(ctx);
+  const caller = appRouter.createCaller({});
 
   type Input = inferProcedureInput<AppRouter["config"]["update"]>;
   const input: Input = {
