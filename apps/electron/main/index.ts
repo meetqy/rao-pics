@@ -1,5 +1,5 @@
 import type cp from "child_process";
-import { Menu, MenuItem, app, ipcMain, shell } from "electron";
+import { Menu, MenuItem, app, ipcMain } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import "./security-restrictions";
@@ -64,7 +64,7 @@ app.on("quit", () => {
   }
 });
 
-/** 隐藏 dock */
+/** Hide dock */
 if (process.platform === "darwin") {
   app.dock.hide();
 }
