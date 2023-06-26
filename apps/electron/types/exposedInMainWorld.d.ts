@@ -1,13 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
-interface Env {
-  ip: string;
-  web_port: string;
-  assets_port: string;
-  name: string;
-  version: string;
-}
-
 // https://www.electronjs.org/docs/latest/tutorial/context-isolation#usage-with-typescript
 interface Window {
   readonly app: {
@@ -24,6 +16,5 @@ interface Window {
     sync: (library: import("@acme/db").Library) => void;
     onEagleSyncProgress: (emit: import("@acme/eagle").EagleEmit) => void;
     openUrl: (url: string) => void;
-    getEnv: () => Promise<Env>;
   };
 }

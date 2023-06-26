@@ -11,24 +11,7 @@ function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
   const library = trpc.library.get.useQuery();
-  const config = trpc.config.update.useMutation();
-
-  const [env, setEnv] = useState<Env>();
-  // 获取 IP 地址
-  window.electronAPI.getEnv().then((res) => {
-    if (env?.ip === res.ip) return;
-
-    setEnv(res);
-  });
-  useEffect(() => {
-    if (!env) return;
-    const { ip, web_port, assets_port } = env;
-    config.mutate({
-      ip,
-      webPort: Number(web_port),
-      assetsPort: Number(assets_port),
-    });
-  }, [env]);
+  const { data: config } = trpc.config.get.useQuery();
 
   // active id
   const [active, setActive] = useState<number | undefined>();
@@ -45,7 +28,7 @@ function Home() {
       });
     }
   }, [active]);
-  const webUrl = useMemo(() => `http://${env?.ip}:${env?.web_port}/${activeItem?.name}`, [activeItem, env]);
+  const webUrl = useMemo(() => (config ? `http://${config.ip}:${config.webPort}/${activeItem?.name}` : ""), [activeItem, config]);
 
   const addLibrary = trpc.library.add.useMutation({
     onSuccess() {

@@ -36,7 +36,6 @@ process.once("loaded", () => {
         listener(options);
       }),
     openUrl: (url: string) => ipcRenderer.invoke("open-url", url),
-    getEnv: () => ipcRenderer.invoke("get-env"),
   });
 
   contextBridge.exposeInMainWorld("electronENV", {

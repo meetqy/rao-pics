@@ -145,16 +145,6 @@ app.on("ready", () => {
     void shell.openExternal(url);
   });
 
-  ipcMain.handle("get-env", () => {
-    return {
-      ip: process.env["IP"],
-      web_port: process.env["WEB_PORT"],
-      assets_port: process.env["ASSETS_PORT"],
-      name: process.env["APP_NAME"],
-      version: process.env["APP_VERSION"],
-    };
-  });
-
   LibraryIPC.assetsServer(ipcMain);
   LibraryIPC.choose(ipcMain);
   LibraryIPC.update(ipcMain);
