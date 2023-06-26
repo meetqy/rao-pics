@@ -10,11 +10,18 @@ import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
-import { createAppIPCHandler } from "./src/ipcRenderer/app";
+import { createElectronApiIPCHandler } from "./src/ipc/api";
+import { createAppIPCHandler } from "./src/ipc/app";
+import { createDialogIPCHandler } from "./src/ipc/dialog";
 import createTray from "./src/tray";
 import { getAndUpdateConfig } from "./src/utils/config";
 
+/**
+ * Init ipcRenderer
+ */
 createAppIPCHandler();
+createDialogIPCHandler();
+createElectronApiIPCHandler();
 
 let nextjsWebChild: cp.ChildProcess | undefined;
 

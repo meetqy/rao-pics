@@ -2,7 +2,7 @@ import { type TRPCResponseMessage } from "@trpc/server/rpc";
 import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 import { type RendererGlobalElectronTRPC } from "types";
 
-import { type Library } from "@acme/db";
+import { Prisma, type Library } from "@acme/db";
 import { type EagleEmit, type EagleEmitOption } from "@acme/eagle";
 
 const exposeElectronTRPC = () => {
@@ -23,7 +23,13 @@ process.once("loaded", () => {
     getName: () => ipcRenderer.invoke("app.getName"),
   });
 
+  contextBridge.exposeInMainWorld("dialog", {
+    showOpenDialog: (options: Electron.OpenDialogOptions) => ipcRenderer.invoke("dialog.showOpenDialog", options),
+  });
+
   contextBridge.exposeInMainWorld("electronAPI", {
+    handleDirectory: (dir: string) => ipcRenderer.invoke("api.handleDirectory", dir),
+
     library: {
       choose: () => ipcRenderer.invoke("library-choose"),
       update: (dir: string) => ipcRenderer.invoke("library-update", dir),
@@ -36,13 +42,5 @@ process.once("loaded", () => {
         listener(options);
       }),
     openUrl: (url: string) => ipcRenderer.invoke("open-url", url),
-  });
-
-  contextBridge.exposeInMainWorld("electronENV", {
-    ip: process.env["IP"],
-    web_port: process.env["WEB_PORT"],
-    assets_port: process.env["ASSETS_PORT"],
-    name: process.env["APP_NAME"],
-    version: process.env["APP_VERSION"],
   });
 });

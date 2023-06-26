@@ -10,8 +10,15 @@ import { trpc } from "./utils/trpc";
 function Home() {
   const utils = trpc.useContext();
   const isInit = useRef<boolean>(false);
-  const library = trpc.library.get.useQuery();
+
   const { data: config } = trpc.config.get.useQuery();
+
+  const library = trpc.library.get.useQuery();
+  const addLibrary = trpc.library.add.useMutation({
+    onSuccess() {
+      utils.library.get.invalidate();
+    },
+  });
 
   // active id
   const [active, setActive] = useState<number | undefined>();
@@ -30,11 +37,6 @@ function Home() {
   }, [active]);
   const webUrl = useMemo(() => (config ? `http://${config.ip}:${config.webPort}/${activeItem?.name}` : ""), [activeItem, config]);
 
-  const addLibrary = trpc.library.add.useMutation({
-    onSuccess() {
-      utils.library.get.invalidate();
-    },
-  });
   const removeLibrary = trpc.library.remove.useMutation({
     onSuccess() {
       utils.library.get.invalidate();
@@ -51,17 +53,6 @@ function Home() {
 
     library.data && window.electronAPI.library.assetsServer(library.data);
   }, [active, library]);
-
-  const chooseFolder = async () => {
-    const res = await window.electronAPI.library.choose();
-
-    if (!res) return Alert.open("暂时不支持此App/文件夹");
-
-    if (res) {
-      const f = await addLibrary.mutateAsync(res);
-      setActive(f.id);
-    }
-  };
 
   const onRemove = () => {
     active && removeLibrary.mutateAsync(active);
@@ -122,11 +113,30 @@ function Home() {
 
   const open = () => window.electronAPI.openUrl(webUrl);
 
+  const showOpenDialog = () => {
+    window.dialog
+      .showOpenDialog({
+        properties: ["openDirectory"],
+        title: "选择文件夹/库",
+      })
+      .then(async (res) => {
+        if (!res) return;
+
+        const lib = await window.electronAPI.handleDirectory(res[0]);
+        if (!lib) return Alert({ title: "暂时不支持此App/文件夹" });
+
+        if (lib) {
+          const libRes = await addLibrary.mutateAsync(lib);
+          setActive(libRes.id);
+        }
+      });
+  };
+
   return (
     <div className="h-screen w-full flex text-sm">
       <div className="w-1/4 overflow-y-auto scrollbar bg-base-200/70">
         <div className="flex justify-center p-2 sticky top-0  z-10">
-          <button className="btn w-full btn-outline flex items-center" onClick={chooseFolder}>
+          <button className="btn w-full btn-outline flex items-center" onClick={showOpenDialog}>
             <img src="icon.png" className="w-6" />
             <span className="ml-2">添加文件夹/库</span>
           </button>
@@ -251,7 +261,7 @@ function Home() {
           </div>
         </div>
       ) : (
-        <Empty onAddClick={chooseFolder} />
+        <Empty onAddClick={showOpenDialog} />
       )}
 
       {/* Modal confirm */}
