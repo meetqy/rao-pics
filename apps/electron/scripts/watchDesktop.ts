@@ -83,7 +83,7 @@ function createMainWatcher() {
   return watcher;
 }
 // set up VITE_DEV_SERVER_URL, the URL that's loaded into the electron browser during dev
-process.env.VITE_DEV_SERVER_URL = listeningWebServer.resolvedUrls?.local[0];
+process.env["VITE_DEV_SERVER_URL"] = listeningWebServer.resolvedUrls?.local[0];
 // start preload watcher
 await createPreloadWatcher(listeningWebServer);
 // start main watcher

@@ -1,8 +1,9 @@
 import { getPort } from "get-port-please";
 import ip from "ip";
 
+import curd from "@acme/curd";
+
 import eLog from "./log";
-import { trpc } from "./trpc";
 
 /**
  * 获取并且更新配置
@@ -17,7 +18,7 @@ export const getAndUpdateConfig = async () => {
   process.env["ASSETS_PORT"] = _assets_port.toString();
 
   try {
-    await trpc.config.update.mutate({
+    await curd.config.update({
       ip: _ip,
       webPort: _web_port,
       assetsPort: _assets_port,

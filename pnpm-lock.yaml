@@ -60,6 +60,9 @@ importers:
       '@acme/assets-server':
         specifier: ^0.1.0
         version: link:../../packages/assets-server
+      '@acme/curd':
+        specifier: ^0.1.0
+        version: link:../../packages/curd
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../packages/db
@@ -93,9 +96,6 @@ importers:
       ip:
         specifier: ^1.1.8
         version: 1.1.8
-      node-fetch:
-        specifier: ^2.6.11
-        version: 2.6.11
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -255,7 +255,7 @@ importers:
         specifier: ^0.1.0
         version: link:../constant
       '@acme/curd':
-        specifier: ^0.0.1
+        specifier: ^0.1.0
         version: link:../curd
       '@acme/db':
         specifier: ^0.1.0
@@ -391,7 +391,7 @@ importers:
         specifier: ^0.1.0
         version: link:../constant
       '@acme/curd':
-        specifier: ^0.0.1
+        specifier: ^0.1.0
         version: link:../curd
       '@acme/db':
         specifier: ^0.1.0
@@ -5589,18 +5589,6 @@ packages:
     dev: true
     optional: true
 
-  /node-fetch@2.6.11:
-    resolution: {integrity: sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w==}
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: 5.0.0
-    dev: false
-
   /node-releases@2.0.10:
     resolution: {integrity: sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==}
 
@@ -6970,10 +6958,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /tr46@0.0.3:
-    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
-    dev: false
-
   /trim-newlines@3.0.1:
     resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
     engines: {node: '>=8'}
@@ -7453,21 +7437,10 @@ packages:
       - terser
     dev: true
 
-  /webidl-conversions@3.0.1:
-    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
-    dev: false
-
   /well-known-symbols@2.0.0:
     resolution: {integrity: sha512-ZMjC3ho+KXo0BfJb7JgtQ5IBuvnShdlACNkKkdsqBmYw3bPAaJfPeYUo6tLUaT5tG/Gkh7xkpBhKRQ9e7pyg9Q==}
     engines: {node: '>=6'}
     dev: true
-
-  /whatwg-url@5.0.0:
-    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
-    dependencies:
-      tr46: 0.0.3
-      webidl-conversions: 3.0.1
-    dev: false
 
   /which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
