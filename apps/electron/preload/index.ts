@@ -18,13 +18,26 @@ const exposeElectronTRPC = () => {
 process.once("loaded", () => {
   exposeElectronTRPC();
 
+  /**
+   * window.app same as app.xxx
+   */
   contextBridge.exposeInMainWorld("app", {
     getVersion: () => ipcRenderer.invoke("app.getVersion"),
     getName: () => ipcRenderer.invoke("app.getName"),
   });
 
+  /**
+   * window.dialog same as dialog.xxx
+   */
   contextBridge.exposeInMainWorld("dialog", {
     showOpenDialog: (options: Electron.OpenDialogOptions) => ipcRenderer.invoke("dialog.showOpenDialog", options),
+  });
+
+  /**
+   * window.shell same as shell.xxx
+   */
+  contextBridge.exposeInMainWorld("shell", {
+    openExternal: (url: string, options?: Electron.OpenExternalOptions) => ipcRenderer.invoke("shell.openExternal", url, options),
   });
 
   contextBridge.exposeInMainWorld("electronAPI", {
@@ -40,6 +53,5 @@ process.once("loaded", () => {
         const options = args[0] as EagleEmitOption;
         listener(options);
       }),
-    openUrl: (url: string) => ipcRenderer.invoke("open-url", url),
   });
 });

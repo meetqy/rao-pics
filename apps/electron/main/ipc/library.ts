@@ -1,6 +1,6 @@
 import { readdirSync } from "fs";
 import { join, sep } from "path";
-import { dialog, type IpcMain } from "electron";
+import { type IpcMain } from "electron";
 
 import { type LibraryAdd } from "@acme/api";
 import { createAssetsServer } from "@acme/assets-server";

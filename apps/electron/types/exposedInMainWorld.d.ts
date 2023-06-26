@@ -17,6 +17,13 @@ interface Window {
     showOpenDialog: (options: Electron.OpenDialogOptions) => Promise<string[] | undefined>;
   };
 
+  readonly shell: {
+    /**
+     * Same as shell.openExternal
+     */
+    openExternal: (url: string, options?: Electron.OpenExternalOptions) => Promise<void>;
+  };
+
   readonly electronAPI: {
     /**
      * Handle choose directory by 'showOpendialog'
@@ -28,6 +35,5 @@ interface Window {
     };
     sync: (library: import("@acme/db").Library) => void;
     onEagleSyncProgress: (emit: import("@acme/eagle").EagleEmit) => void;
-    openUrl: (url: string) => void;
   };
 }

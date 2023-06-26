@@ -35,7 +35,6 @@ function Home() {
       });
     }
   }, [active]);
-  const webUrl = useMemo(() => (config ? `http://${config.ip}:${config.webPort}/${activeItem?.name}` : ""), [activeItem, config]);
 
   const removeLibrary = trpc.library.remove.useMutation({
     onSuccess() {
@@ -111,7 +110,8 @@ function Home() {
     );
   };
 
-  const open = () => window.electronAPI.openUrl(webUrl);
+  const webUrl = useMemo(() => (config ? `http://${config.ip}:${config.webPort}/${activeItem?.name}` : ""), [activeItem, config]);
+  const openExternal = () => window.shell.openExternal(webUrl);
 
   const showOpenDialog = () => {
     window.dialog
@@ -207,7 +207,7 @@ function Home() {
 
                 <span className="ml-2">WEB 预览</span>
               </span>
-              <a onClick={open} className="btn btn-link btn-active normal-case p-0 btn-sm text-secondary font-normal">
+              <a onClick={openExternal} className="btn btn-link btn-active normal-case p-0 btn-sm text-secondary font-normal">
                 {webUrl}
               </a>
             </div>

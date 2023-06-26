@@ -10,18 +10,14 @@ import LibraryIPC from "./ipc/library";
 import { syncIpc } from "./ipc/sync";
 import { restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
-import { createElectronApiIPCHandler } from "./src/ipc/api";
-import { createAppIPCHandler } from "./src/ipc/app";
-import { createDialogIPCHandler } from "./src/ipc/dialog";
+import createAllIPCHandler from "./src/ipc/create";
 import createTray from "./src/tray";
 import { getAndUpdateConfig } from "./src/utils/config";
 
 /**
- * Init ipcRenderer
+ * Create all ipcHander in 'src/ipc/xxx.ts'
  */
-createAppIPCHandler();
-createDialogIPCHandler();
-createElectronApiIPCHandler();
+createAllIPCHandler();
 
 let nextjsWebChild: cp.ChildProcess | undefined;
 
@@ -152,10 +148,6 @@ app.on("ready", () => {
   });
 
   createTray();
-
-  ipcMain.handle("open-url", (event, url: string) => {
-    void shell.openExternal(url);
-  });
 
   LibraryIPC.assetsServer(ipcMain);
   LibraryIPC.update(ipcMain);
