@@ -158,7 +158,6 @@ app.on("ready", () => {
   });
 
   LibraryIPC.assetsServer(ipcMain);
-  LibraryIPC.choose(ipcMain);
   LibraryIPC.update(ipcMain);
   syncIpc(ipcMain);
 });

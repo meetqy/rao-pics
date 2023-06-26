@@ -25,23 +25,6 @@ const updateLibrary = (dir: string): LibraryAdd | null => {
 };
 
 const LibraryIPC = {
-  choose: (ipcMain: IpcMain) => {
-    ipcMain.handle("library-choose", (): LibraryAdd | null => {
-      const res = dialog.showOpenDialogSync({
-        title: "选择文件夹/库",
-        properties: ["openDirectory"],
-      });
-
-      if (res) {
-        const dir = res[0];
-
-        return updateLibrary(dir);
-      }
-
-      return null;
-    });
-  },
-
   assetsServer: (ipcMain: IpcMain) => {
     ipcMain.handle("library-assets-server", (event, librarys: Library[]) => {
       createAssetsServer(librarys, Number(process.env["ASSETS_PORT"]));

@@ -31,7 +31,6 @@ process.once("loaded", () => {
     handleDirectory: (dir: string) => ipcRenderer.invoke("api.handleDirectory", dir),
 
     library: {
-      choose: () => ipcRenderer.invoke("library-choose"),
       update: (dir: string) => ipcRenderer.invoke("library-update", dir),
       assetsServer: (librarys: Library[]) => ipcRenderer.invoke("library-assets-server", librarys),
     },

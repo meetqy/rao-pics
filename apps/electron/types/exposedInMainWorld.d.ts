@@ -23,7 +23,6 @@ interface Window {
      */
     handleDirectory: (dir: string) => Promise<import("./index").HandleDirectoryReturn>;
     library: {
-      choose: () => Promise<import("@acme/api").LibraryAdd>;
       update: (dir: string) => Promise<import("@acme/api").LibraryAdd>;
       assetsServer: (librarys: import("@acme/db").Library[]) => void;
     };
