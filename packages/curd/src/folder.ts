@@ -8,14 +8,14 @@ export const FolderInput = {
     library: z.union([z.string(), z.number()]),
   }),
   upsert: z.object({
-    id: z.string(),
+    folderId: z.string(),
     name: z.string(),
     libraryId: z.number(),
   }),
   delete: z.object({
     libraryId: z.number(),
     /** folder ids */
-    ids: z.array(z.string()),
+    folderIds: z.array(z.string()),
     idsRule: z.enum(["in", "notIn"]).optional(),
   }),
   clear: z.object({
@@ -52,13 +52,13 @@ export const Folder = {
    */
   upsert: (obj: z.infer<(typeof FolderInput)["upsert"]>) => {
     const input = {
-      id: obj.id,
+      id: obj.folderId,
       name: obj.name,
       library: { connect: { id: obj.libraryId } },
     };
 
     return prisma.folder.upsert({
-      where: { id: obj.id },
+      where: { id: obj.folderId },
       update: input,
       create: input,
     });
@@ -72,7 +72,7 @@ export const Folder = {
       where: {
         libraryId: obj.libraryId,
         id: {
-          [obj.idsRule || "in"]: obj.ids,
+          [obj.idsRule || "in"]: obj.folderIds,
         },
       },
     });
@@ -88,7 +88,7 @@ export const Folder = {
 
     return Folder.delete({
       libraryId: obj.libraryId,
-      ids: [],
+      folderIds: [],
       idsRule: "notIn",
     });
   },

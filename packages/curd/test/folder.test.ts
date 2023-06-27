@@ -9,7 +9,7 @@ import curd from "../index";
 interface LocalTestContext {
   lib: Library[];
   input: {
-    id: string;
+    folderId: string;
     name: string;
     libraryId: number;
   };
@@ -27,7 +27,7 @@ const createLib = () =>
   });
 
 const createInput = (libraryId: number) => ({
-  id: faker.string.uuid(),
+  folderId: faker.string.uuid(),
   name: faker.lorem.word(),
   libraryId,
 });
@@ -51,7 +51,11 @@ describe("@acme/curd folder", () => {
   test<LocalTestContext>("Upsert folder create", async (ctx) => {
     const { input } = ctx;
 
-    expect(await curd.folder.upsert(input)).toMatchObject(input);
+    expect(await curd.folder.upsert(input)).toMatchObject({
+      id: input.folderId,
+      name: input.name,
+      libraryId: input.libraryId,
+    });
   });
 
   test<LocalTestContext>("Upsert folder update", async (ctx) => {
@@ -60,7 +64,11 @@ describe("@acme/curd folder", () => {
     const libId = lib[0]?.id;
 
     if (libId) {
-      expect(await curd.folder.upsert(input)).toMatchObject(input);
+      expect(await curd.folder.upsert(input)).toMatchObject({
+        id: input.folderId,
+        name: input.name,
+        libraryId: input.libraryId,
+      });
       expect(await curd.folder.get({ library: libId })).toHaveLength(1);
     }
   });
@@ -103,7 +111,7 @@ describe("@acme/curd folder", () => {
       // 创建 3 条 folder
       const folders = await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
 
-      await curd.folder.delete({ libraryId: libId, ids: folders.map((item) => item.id || "") });
+      await curd.folder.delete({ libraryId: libId, folderIds: folders.map((item) => item.id || "") });
 
       expect(await curd.folder.get({ library: libId })).toHaveLength(0);
     }
@@ -118,7 +126,7 @@ describe("@acme/curd folder", () => {
       // 创建 3 条 folder
       const folders = await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
 
-      await curd.folder.delete({ libraryId: libId, ids: folders.map((item) => item.id || ""), idsRule: "notIn" });
+      await curd.folder.delete({ libraryId: libId, folderIds: folders.map((item) => item.id || ""), idsRule: "notIn" });
 
       expect(await curd.folder.get({ library: libId })).toHaveLength(3);
     }

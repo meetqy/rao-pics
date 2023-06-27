@@ -1,11 +1,17 @@
 import { z } from "zod";
 
-import { prisma } from "@acme/db";
+import { prisma, type Prisma } from "@acme/db";
 
 export const TagInput = {
   get: z.object({
     /** library name or id */
     library: z.union([z.string(), z.number()]),
+  }),
+
+  upsert: z.object({
+    name: z.string(),
+    libraryId: z.number(),
+    imageIds: z.array(z.string()).optional(),
   }),
 
   delete: z.object({
@@ -15,12 +21,12 @@ export const TagInput = {
   cleanByImageZero: z.object({
     libraryId: z.number().optional(),
   }),
+
+  clear: z.object({
+    libraryId: z.number(),
+  }),
 };
 
-/**
- * Tag 不支持单独新建，只能通过 image 创建
- * Tag 中关联的 image 如果是 0 个，会被自动清除
- */
 export const Tag = {
   get: (obj: z.infer<(typeof TagInput)["get"]>) => {
     const { library } = obj;
@@ -41,6 +47,28 @@ export const Tag = {
     });
   },
 
+  upsert: (obj: z.infer<(typeof TagInput)["upsert"]>) => {
+    const { libraryId, name, imageIds } = obj;
+    const input: Prisma.TagCreateInput = {
+      name,
+      library: {
+        connect: { id: libraryId },
+      },
+    };
+
+    if (imageIds) {
+      input.images = {
+        connect: imageIds.map((id) => ({ id })),
+      };
+    }
+
+    return prisma.tag.upsert({
+      where: { name },
+      create: input,
+      update: input,
+    });
+  },
+
   delete: (obj: z.infer<(typeof TagInput)["delete"]>) => {
     return prisma.tag.deleteMany({
       where: {
@@ -48,6 +76,16 @@ export const Tag = {
       },
     });
   },
+
+  clear: (obj: z.infer<(typeof TagInput)["clear"]>) => {
+    const { libraryId } = obj;
+    return prisma.tag.deleteMany({
+      where: {
+        libraryId,
+      },
+    });
+  },
+
   /**
    * 清除 image 数量为 0 的 Tag
    */

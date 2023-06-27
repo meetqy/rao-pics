@@ -1,5 +1,4 @@
-import { Curd, ZodInput } from "@acme/curd";
-import { prisma } from "@acme/db";
+import curd, { ZodInput } from "@acme/curd";
 
 import { t } from "../trpc";
 
