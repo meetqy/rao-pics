@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { type PrismaClient } from "@acme/db";
+import { prisma } from "@acme/db";
 
 export const ConfigInput = {
   update: z.object({
@@ -10,23 +10,19 @@ export const ConfigInput = {
   }),
 };
 
-export function Config(this: PrismaClient) {
-  const _ = {
-    get: () => {
-      return this.config.findFirst();
-    },
+export const Config = {
+  get: () => {
+    return prisma.config.findFirst();
+  },
 
-    update: (input: z.infer<(typeof ConfigInput)["update"]>) => {
-      return this.config.upsert({
-        where: { id: "config" },
-        update: input,
-        create: {
-          id: "config",
-          ...input,
-        },
-      });
-    },
-  };
-
-  return _;
-}
+  update: (input: z.infer<(typeof ConfigInput)["update"]>) => {
+    return prisma.config.upsert({
+      where: { id: "config" },
+      update: input,
+      create: {
+        id: "config",
+        ...input,
+      },
+    });
+  },
+};
