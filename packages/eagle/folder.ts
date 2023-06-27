@@ -15,7 +15,7 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
 
   for (const [index, folder] of f.entries()) {
     await curd.folder.upsert({
-      id: folder.id,
+      folderId: folder.id,
       name: folder.name,
       libraryId: library.id,
     });
@@ -31,7 +31,7 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
   // 清除已经删除，sqlite中还存在的文件夹。
   await curd.folder.delete({
     libraryId: library.id,
-    ids: f.map((folder) => folder.id),
+    folderIds: f.map((folder) => folder.id),
     idsRule: "notIn",
   });
 };
