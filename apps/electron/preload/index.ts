@@ -42,16 +42,6 @@ process.once("loaded", () => {
 
   contextBridge.exposeInMainWorld("electronAPI", {
     handleDirectory: (dir: string) => ipcRenderer.invoke("api.handleDirectory", dir),
-
-    library: {
-      update: (dir: string) => ipcRenderer.invoke("library-update", dir),
-      assetsServer: (librarys: Library[]) => ipcRenderer.invoke("library-assets-server", librarys),
-    },
-    sync: (library: Library) => ipcRenderer.send("sync", library),
-    onEagleSyncProgress: (listener: EagleEmit) =>
-      ipcRenderer.on("on-eagle-sync-progress", (_e, ...args) => {
-        const options = args[0] as EagleEmitOption;
-        listener(options);
-      }),
+    createOrRestartAssetsServer: (librarys?: Library[]) => ipcRenderer.invoke("api.createOrRestartAssetsServer", librarys),
   });
 });

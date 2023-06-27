@@ -1,13 +1,11 @@
 import type cp from "child_process";
-import { Menu, MenuItem, app, ipcMain } from "electron";
+import { Menu, MenuItem, app } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import "./security-restrictions";
 import { appRouter } from "@acme/api";
 
 import globalApp from "./global";
-import LibraryIPC from "./ipc/library";
-import { syncIpc } from "./ipc/sync";
 import { restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
 import createAllIPCHandler from "./src/ipc/create";
@@ -148,8 +146,4 @@ app.on("ready", () => {
   });
 
   createTray();
-
-  LibraryIPC.assetsServer(ipcMain);
-  LibraryIPC.update(ipcMain);
-  syncIpc(ipcMain);
 });

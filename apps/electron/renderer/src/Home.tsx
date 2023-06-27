@@ -14,23 +14,31 @@ interface SyncSubscriptionData {
 
 function Home() {
   const utils = trpc.useContext();
-  const isInit = useRef<boolean>(false);
 
   const { data: config } = trpc.config.get.useQuery();
-
   const library = trpc.library.get.useQuery();
   const addLibrary = trpc.library.add.useMutation({
     onSuccess() {
       utils.library.get.invalidate();
+      window.electronAPI.createAssetsServer(library.data);
     },
   });
+  const removeLibrary = trpc.library.remove.useMutation({
+    onSuccess() {
+      utils.library.get.invalidate();
+      window.electronAPI.createAssetsServer(library.data);
+    },
+  });
+  const updateLibrary = trpc.library.update.useMutation();
+
+  const isInit = useRef<boolean>(false);
 
   // active id
   const [active, setActive] = useState<number | undefined>();
   const activeItem = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
 
-  const removeLibrary = trpc.library.remove.useMutation();
-  const updateLibrary = trpc.library.update.useMutation();
+  const webUrl = useMemo(() => (config ? `http://${config.ip}:${config.webPort}/${activeItem?.name}` : ""), [activeItem, config]);
+  const openExternal = () => window.shell.openExternal(webUrl);
 
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
@@ -39,9 +47,7 @@ function Home() {
       setActive(library.data[0].id);
       isInit.current = true;
     }
-
-    library.data && window.electronAPI.library.assetsServer(library.data);
-  }, [active, library]);
+  }, [library]);
 
   const onRemove = () => {
     active && removeLibrary.mutateAsync(active);
@@ -98,9 +104,6 @@ function Home() {
 
     return 0;
   }, [activeItem, progress]);
-
-  const webUrl = useMemo(() => (config ? `http://${config.ip}:${config.webPort}/${activeItem?.name}` : ""), [activeItem, config]);
-  const openExternal = () => window.shell.openExternal(webUrl);
 
   const showOpenDialog = () => {
     window.dialog
