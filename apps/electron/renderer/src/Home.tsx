@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import "./home.css";
-import { EagleEmitOption } from "@acme/eagle";
-
 import Alert from "./components/Alert";
 import Empty from "./components/Empty";
 import { trpc } from "./utils/trpc";
+
+interface SyncSubscriptionData {
+  current: number;
+  count: number;
+  failCount: number;
+  libraryId: number;
+}
 
 function Home() {
   const utils = trpc.useContext();
@@ -23,25 +28,10 @@ function Home() {
   // active id
   const [active, setActive] = useState<number | undefined>();
   const activeItem = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
-  // 刷新获取进度
-  useEffect(() => {
-    if (activeItem) {
-      const { _count, failCount, fileCount } = activeItem;
-      setEagleSyncProgress({
-        type: "image",
-        current: _count.images + (failCount || 0),
-        failCount: failCount || 0,
-        count: fileCount || 0,
-      });
-    }
-  }, [active]);
 
-  const removeLibrary = trpc.library.remove.useMutation({
-    onSuccess() {
-      utils.library.get.invalidate();
-    },
-  });
+  const removeLibrary = trpc.library.remove.useMutation();
   const updateLibrary = trpc.library.update.useMutation();
+
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
   useEffect(() => {
@@ -60,55 +50,54 @@ function Home() {
     setDelConfirmVisable(false);
   };
 
-  // 同步进度
-  const [eagleSyncProgress, setEagleSyncProgress] = useState<EagleEmitOption>();
-  const percent = useMemo(() => {
-    if (eagleSyncProgress) {
-      const { current, count } = eagleSyncProgress;
+  const sync = trpc.sync.start.useMutation();
+  const onSyncClick = async () => {
+    if (!activeItem) return;
 
+    // start sync
+    await sync.mutateAsync({
+      libraryId: activeItem.id,
+    });
+
+    // sync complete
+    if (activeItem && progress) {
+      const { count, failCount } = progress;
+
+      await updateLibrary.mutateAsync({
+        id: activeItem.id,
+        fileCount: count,
+        failCount: failCount,
+      });
+
+      utils.library.get.invalidate();
+      setProgress(undefined);
+    }
+  };
+
+  // progress exits, sync is running
+  const [progress, setProgress] = useState<SyncSubscriptionData>();
+  trpc.sync.subscription.useSubscription(undefined, {
+    onData(data) {
+      setProgress(data as SyncSubscriptionData);
+    },
+  });
+
+  const percent = useMemo(() => {
+    if (progress) {
+      const { count, current } = progress;
       return ~~((current / count) * 100);
     }
 
+    if (activeItem) {
+      const current = activeItem._count.images;
+      const count = activeItem.fileCount;
+      const failCount = activeItem.failCount || 0;
+
+      return ~~(((current + failCount) / count) * 100);
+    }
+
     return 0;
-  }, [eagleSyncProgress]);
-  const syncing = useMemo(() => percent > 0 && percent < 100, [percent]);
-
-  const syncOnClick = () => {
-    if (!activeItem) return;
-
-    updateLibrary.mutateAsync(
-      { id: activeItem.id },
-      {
-        onSuccess: async () => {
-          if (activeItem) {
-            window.electronAPI.sync({
-              ...activeItem,
-              lastSyncTime: null,
-            });
-
-            if (activeItem.type === "eagle") {
-              window.electronAPI.onEagleSyncProgress((progress) => {
-                if (progress.type === "image") {
-                  setEagleSyncProgress(progress);
-
-                  // 同步完成 结果更新到数据库
-                  if (progress.current === progress.count) {
-                    updateLibrary.mutateAsync({
-                      id: activeItem.id,
-                      fileCount: progress.count,
-                      failCount: progress.failCount,
-                    });
-                  }
-                }
-              });
-            }
-          }
-
-          await utils.library.get.invalidate();
-        },
-      },
-    );
-  };
+  }, [activeItem, progress]);
 
   const webUrl = useMemo(() => (config ? `http://${config.ip}:${config.webPort}/${activeItem?.name}` : ""), [activeItem, config]);
   const openExternal = () => window.shell.openExternal(webUrl);
@@ -238,7 +227,7 @@ function Home() {
               <div className=" divider divider-horizontal">OR</div>
 
               <div className="flex flex-col space-y-4">
-                <button className="btn" disabled={syncing} onClick={syncOnClick}>
+                <button className="btn" onClick={onSyncClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
                       strokeLinecap="round"
@@ -249,7 +238,7 @@ function Home() {
                   <span className="ml-2">同步</span>
                 </button>
 
-                <label htmlFor="my-modal" className={`btn btn-error btn-outline ${syncing ? "btn-disabled" : ""}`} onClick={() => setDelConfirmVisable(true)}>
+                <label htmlFor="my-modal" className={`btn btn-error btn-outline`} onClick={() => setDelConfirmVisable(true)}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>

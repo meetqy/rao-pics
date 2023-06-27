@@ -10,7 +10,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/api": "^0.1.0",
     "@acme/constant": "^0.1.0",
     "@acme/curd": "^0.1.0",
     "@acme/db": "^0.1.0",
