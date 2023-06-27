@@ -1,5 +1,3 @@
-import { prisma, type PrismaClient } from "@acme/db";
-
 import { Config, ConfigInput } from "./src/config";
 import { Folder, FolderInput } from "./src/folder";
 import { Tag, TagInput } from "./src/tag";
@@ -11,21 +9,12 @@ export const ZodInput = {
 };
 
 /**
- * Curd 操作函数
- * 思路：https://github.com/rao-pics/core/issues/217
- * @param prisma
+ * curd object
+ * https://github.com/rao-pics/core/issues/217
  */
-export function Curd(customPrisma?: PrismaClient) {
-  if (!customPrisma) customPrisma = prisma;
-
-  return {
-    tag: Tag.bind(customPrisma),
-  };
-}
-
 const curd = {
   folder: Folder,
-  tag: Tag.bind(prisma)(),
+  tag: Tag,
   config: Config,
 };
 
