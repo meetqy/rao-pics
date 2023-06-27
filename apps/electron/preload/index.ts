@@ -3,7 +3,6 @@ import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 import { type RendererGlobalElectronTRPC } from "types";
 
 import { type Library } from "@acme/db";
-import { type EagleEmit, type EagleEmitOption } from "@acme/eagle";
 
 const exposeElectronTRPC = () => {
   const electronTRPC: RendererGlobalElectronTRPC = {
