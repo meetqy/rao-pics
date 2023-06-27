@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, test } from "vitest";
 import { prisma, type Library } from "@acme/db";
 import Mock from "@acme/mock";
 
-import { Curd } from "../index";
+import curd from "../index";
 
 interface LocalTestContext {
   lib: Library[];
@@ -45,17 +45,13 @@ describe("@acme/curd folder", () => {
   test<LocalTestContext>("Upsert folder, but libraryId not exits", (ctx) => {
     const { input } = ctx;
 
-    void expect(() =>
-      Curd(prisma)
-        .folder()
-        .upsert({ ...input, libraryId: -1000 }),
-    ).rejects.toThrowError();
+    void expect(() => curd.folder.upsert({ ...input, libraryId: -1000 })).rejects.toThrowError();
   });
 
   test<LocalTestContext>("Upsert folder create", async (ctx) => {
     const { input } = ctx;
 
-    expect(await Curd(prisma).folder().upsert(input)).toMatchObject(input);
+    expect(await curd.folder.upsert(input)).toMatchObject(input);
   });
 
   test<LocalTestContext>("Upsert folder update", async (ctx) => {
@@ -64,8 +60,8 @@ describe("@acme/curd folder", () => {
     const libId = lib[0]?.id;
 
     if (libId) {
-      expect(await Curd(prisma).folder().upsert(input)).toMatchObject(input);
-      expect(await Curd(prisma).folder().get({ library: libId })).toHaveLength(1);
+      expect(await curd.folder.upsert(input)).toMatchObject(input);
+      expect(await curd.folder.get({ library: libId })).toHaveLength(1);
     }
   });
 
@@ -77,9 +73,9 @@ describe("@acme/curd folder", () => {
 
     if (libName && libId) {
       // 创建 3 条 folder
-      await prisma.$transaction(lib.map(() => Curd(prisma).folder().upsert(createInput(libId))));
+      await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
 
-      expect(await Curd(prisma).folder().get({ library: libName })).toHaveLength(3);
+      expect(await curd.folder.get({ library: libName })).toHaveLength(3);
     }
   });
 
@@ -91,12 +87,10 @@ describe("@acme/curd folder", () => {
 
     if (libName && libId) {
       // 创建 3 条 folder
-      await prisma.$transaction(lib.map(() => Curd(prisma).folder().upsert(createInput(libId))));
-      await Curd(prisma)
-        .folder()
-        .upsert(createInput(lib[1]?.id || 0));
+      await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
+      await curd.folder.upsert(createInput(lib[1]?.id || 0));
 
-      expect(await Curd(prisma).folder().get({ library: libId })).toHaveLength(3);
+      expect(await curd.folder.get({ library: libId })).toHaveLength(3);
     }
   });
 
@@ -107,13 +101,11 @@ describe("@acme/curd folder", () => {
 
     if (libId) {
       // 创建 3 条 folder
-      const folders = await prisma.$transaction(lib.map(() => Curd(prisma).folder().upsert(createInput(libId))));
+      const folders = await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
 
-      await Curd(prisma)
-        .folder()
-        .delete({ libraryId: libId, ids: folders.map((item) => item.id || "") });
+      await curd.folder.delete({ libraryId: libId, ids: folders.map((item) => item.id || "") });
 
-      expect(await Curd(prisma).folder().get({ library: libId })).toHaveLength(0);
+      expect(await curd.folder.get({ library: libId })).toHaveLength(0);
     }
   });
 
@@ -124,13 +116,11 @@ describe("@acme/curd folder", () => {
 
     if (libId) {
       // 创建 3 条 folder
-      const folders = await prisma.$transaction(lib.map(() => Curd(prisma).folder().upsert(createInput(libId))));
+      const folders = await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
 
-      await Curd(prisma)
-        .folder()
-        .delete({ libraryId: libId, ids: folders.map((item) => item.id || ""), idsRule: "notIn" });
+      await curd.folder.delete({ libraryId: libId, ids: folders.map((item) => item.id || ""), idsRule: "notIn" });
 
-      expect(await Curd(prisma).folder().get({ library: libId })).toHaveLength(3);
+      expect(await curd.folder.get({ library: libId })).toHaveLength(3);
     }
   });
 });

@@ -19,14 +19,13 @@ export function Curd(customPrisma?: PrismaClient) {
   if (!customPrisma) customPrisma = prisma;
 
   return {
-    folder: Folder.bind(customPrisma),
     tag: Tag.bind(customPrisma),
     config: Config.bind(customPrisma),
   };
 }
 
 const curd = {
-  folder: Folder.bind(prisma)(),
+  folder: Folder,
   tag: Tag.bind(prisma)(),
   config: Config.bind(prisma)(),
 };

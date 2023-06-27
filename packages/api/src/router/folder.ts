@@ -5,6 +5,6 @@ import { t } from "../trpc";
 
 export const folders = t.router({
   get: t.procedure.input(ZodInput.folder.get).query(({ input }) => {
-    return Curd(prisma).folder().get(input);
+    return curd.folder.get(input);
   }),
 });
