@@ -29,11 +29,10 @@ interface Window {
      * Handle choose directory by 'showOpendialog'
      */
     handleDirectory: (dir: string) => Promise<import("./index").HandleDirectoryReturn>;
-    library: {
-      update: (dir: string) => Promise<import("@acme/api").LibraryAdd>;
-      assetsServer: (librarys: import("@acme/db").Library[]) => void;
-    };
-    sync: (library: import("@acme/db").Library) => void;
-    onEagleSyncProgress: (emit: import("@acme/eagle").EagleEmit) => void;
+
+    /**
+     * create or restart assets server
+     */
+    createAssetsServer: (librarys?: import("@acme/db").Library[]) => Promise<void>;
   };
 }

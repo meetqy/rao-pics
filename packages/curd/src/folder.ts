@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { type PrismaClient } from "@acme/db";
+import { prisma } from "@acme/db";
 
 export const FolderInput = {
   get: z.object({
@@ -8,14 +8,14 @@ export const FolderInput = {
     library: z.union([z.string(), z.number()]),
   }),
   upsert: z.object({
-    id: z.string(),
+    folderId: z.string(),
     name: z.string(),
     libraryId: z.number(),
   }),
   delete: z.object({
     libraryId: z.number(),
     /** folder ids */
-    ids: z.array(z.string()),
+    folderIds: z.array(z.string()),
     idsRule: z.enum(["in", "notIn"]).optional(),
   }),
   clear: z.object({
@@ -23,77 +23,73 @@ export const FolderInput = {
   }),
 };
 
-export function Folder(this: PrismaClient) {
-  const _ = {
-    /**
-     * 根据 library id/name 获取文件夹
-     */
-    get: (obj: z.infer<(typeof FolderInput)["get"]>) => {
-      const { library } = obj;
+export const Folder = {
+  /**
+   * 根据 library id/name 获取文件夹
+   */
+  get: (obj: z.infer<(typeof FolderInput)["get"]>) => {
+    const { library } = obj;
 
-      return this.folder.findMany({
-        where: {
-          OR: [{ libraryId: typeof library === "number" ? library : undefined }, { library: { name: library.toString() } }],
+    return prisma.folder.findMany({
+      where: {
+        OR: [{ libraryId: typeof library === "number" ? library : undefined }, { library: { name: library.toString() } }],
+      },
+
+      include: {
+        images: {
+          take: 1,
+          orderBy: { lastTime: "desc" },
         },
-
-        include: {
-          images: {
-            take: 1,
-            orderBy: { lastTime: "desc" },
-          },
-          _count: {
-            select: { images: true },
-          },
+        _count: {
+          select: { images: true },
         },
-      });
-    },
+      },
+    });
+  },
 
-    /**
-     * folder 存在则更新，反之创建
-     */
-    upsert: (obj: z.infer<(typeof FolderInput)["upsert"]>) => {
-      const input = {
-        id: obj.id,
-        name: obj.name,
-        library: { connect: { id: obj.libraryId } },
-      };
+  /**
+   * folder 存在则更新，反之创建
+   */
+  upsert: (obj: z.infer<(typeof FolderInput)["upsert"]>) => {
+    const input = {
+      id: obj.folderId,
+      name: obj.name,
+      library: { connect: { id: obj.libraryId } },
+    };
 
-      return this.folder.upsert({
-        where: { id: obj.id },
-        update: input,
-        create: input,
-      });
-    },
+    return prisma.folder.upsert({
+      where: { id: obj.folderId },
+      update: input,
+      create: input,
+    });
+  },
 
-    /**
-     * 删除 libraryId 下的文件夹
-     */
-    delete: (obj: z.infer<(typeof FolderInput)["delete"]>) => {
-      return this.folder.deleteMany({
-        where: {
-          libraryId: obj.libraryId,
-          id: {
-            [obj.idsRule || "in"]: obj.ids,
-          },
-        },
-      });
-    },
-
-    /**
-     * 根据 libraryId 清空所有文件夹，不传清空所有
-     */
-    clear: (obj?: z.infer<(typeof FolderInput)["clear"]>) => {
-      if (!obj) {
-        return this.folder.deleteMany({});
-      }
-
-      return _.delete({
+  /**
+   * 删除 libraryId 下的文件夹
+   */
+  delete: (obj: z.infer<(typeof FolderInput)["delete"]>) => {
+    return prisma.folder.deleteMany({
+      where: {
         libraryId: obj.libraryId,
-        ids: [],
-        idsRule: "notIn",
-      });
-    },
-  };
+        id: {
+          [obj.idsRule || "in"]: obj.folderIds,
+        },
+      },
+    });
+  },
 
-  return _;
-}
+  /**
+   * 根据 libraryId 清空所有文件夹，不传清空所有
+   */
+  clear: (obj?: z.infer<(typeof FolderInput)["clear"]>) => {
+    if (!obj) {
+      return prisma.folder.deleteMany({});
+    }
+
+    return Folder.delete({
+      libraryId: obj.libraryId,
+      folderIds: [],
+      idsRule: "notIn",
+    });
+  },
+};

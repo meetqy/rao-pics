@@ -1,5 +1,5 @@
-import { Curd } from "@acme/curd";
-import { prisma, type Library } from "@acme/db";
+import curd from "@acme/curd";
+import { type Library } from "@acme/db";
 
 import { type EagleEmit } from ".";
 import { type Folder } from "./types";
@@ -8,14 +8,14 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
   const f = treeToArray(folders);
 
   if (f.length === 0) {
-    await Curd(prisma).folder().clear();
+    await curd.folder.clear();
 
     return;
   }
 
   for (const [index, folder] of f.entries()) {
-    await Curd(prisma).folder().upsert({
-      id: folder.id,
+    await curd.folder.upsert({
+      folderId: folder.id,
       name: folder.name,
       libraryId: library.id,
     });
@@ -29,13 +29,11 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
   }
 
   // 清除已经删除，sqlite中还存在的文件夹。
-  await Curd(prisma)
-    .folder()
-    .delete({
-      libraryId: library.id,
-      ids: f.map((folder) => folder.id),
-      idsRule: "notIn",
-    });
+  await curd.folder.delete({
+    libraryId: library.id,
+    folderIds: f.map((folder) => folder.id),
+    idsRule: "notIn",
+  });
 };
 
 const treeToArray = (folders: Folder[]) => {

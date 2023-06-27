@@ -8,21 +8,24 @@ let server: ReturnType<typeof app.listen> | null;
 
 const libraryIds: number[] = [];
 
-// 可随意调用，是否重启内部会做判断
-// 重启之后，会关闭上一个服务器
-export const createAssetsServer = (librarys: Library[], port: number) => {
-  if (librarys.map((item) => item.id).join(",") === libraryIds.join(",")) {
-    // library数量 一样无需重启
+/**
+ * create or restart assets server
+ */
+export const createOrRetartAssetsServer = (port: number, librarys?: Library[]) => {
+  if (!librarys || librarys.length === 0) {
+    server?.close();
+    server = null;
     return;
   }
 
-  if (server) {
-    server.close();
-    server = null;
+  if (librarys.map((item) => item.id).join(",") === libraryIds.join(",")) {
+    return;
   }
 
+  // clear library ids
   libraryIds.splice(0, libraryIds.length);
 
+  // Generate app use by library ids
   librarys.forEach((lib) => {
     if (lib.type === "eagle") {
       app.use("/" + lib.id.toString(), express.static(lib.dir + "/images"));
@@ -33,11 +36,4 @@ export const createAssetsServer = (librarys: Library[], port: number) => {
   server = app.listen(port, () => {
     console.log(`Assets server listening on http://localhost:${port}`);
   });
-};
-
-export const closeAssetsServer = () => {
-  if (server) {
-    server.close();
-    server = null;
-  }
 };

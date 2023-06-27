@@ -260,6 +260,9 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
+      '@acme/eagle':
+        specifier: ^0.1.0
+        version: link:../eagle
       '@trpc/client':
         specifier: ^10.23.0
         version: 10.23.0(@trpc/server@10.23.0)
@@ -384,9 +387,6 @@ importers:
 
   packages/eagle:
     dependencies:
-      '@acme/api':
-        specifier: ^0.1.0
-        version: link:../api
       '@acme/constant':
         specifier: ^0.1.0
         version: link:../constant
