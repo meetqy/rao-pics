@@ -8,7 +8,7 @@ import { appRouter } from "@acme/api";
 import globalApp from "./global";
 import { restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
-import createAllIPCHandler from "./src/ipc/create";
+import createAllIPCHandler from "./src/ipc";
 import createTray from "./src/tray";
 import { getAndUpdateConfig } from "./src/utils/config";
 
