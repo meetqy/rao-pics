@@ -2,7 +2,7 @@ import { join, sep } from "path";
 import { ipcMain } from "electron";
 import { readdirSync } from "fs-extra";
 
-import { createOrRetartAssetsServer } from "@acme/assets-server";
+import { createAssetsServer } from "@acme/assets-server";
 import { type Library } from "@acme/db";
 
 import { type HandleDirectoryReturn } from "../../../types";
@@ -26,7 +26,7 @@ export const createElectronApiIPCHandler = () => {
     return null;
   });
 
-  ipcMain.handle("api.createOrRestartAssetsServer", (_e, librarys?: Library[]) => {
-    createOrRetartAssetsServer(Number(process.env["ASSETS_PORT"]), librarys);
+  ipcMain.handle("api.createAssetsServer", (_e, librarys?: Library[]) => {
+    createAssetsServer(Number(process.env["ASSETS_PORT"]), librarys);
   });
 };

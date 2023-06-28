@@ -41,6 +41,6 @@ process.once("loaded", () => {
 
   contextBridge.exposeInMainWorld("electronAPI", {
     handleDirectory: (dir: string) => ipcRenderer.invoke("api.handleDirectory", dir),
-    createOrRestartAssetsServer: (librarys?: Library[]) => ipcRenderer.invoke("api.createOrRestartAssetsServer", librarys),
+    createAssetsServer: (librarys?: Library[]) => ipcRenderer.invoke("api.createAssetsServer", librarys),
   });
 });

@@ -10,6 +10,7 @@ interface SyncSubscriptionData {
   count: number;
   failCount: number;
   libraryId: number;
+  type: "folder" | "image";
 }
 
 function Home() {
@@ -17,18 +18,8 @@ function Home() {
 
   const { data: config } = trpc.config.get.useQuery();
   const library = trpc.library.get.useQuery();
-  const addLibrary = trpc.library.add.useMutation({
-    onSuccess() {
-      utils.library.get.invalidate();
-      window.electronAPI.createAssetsServer(library.data);
-    },
-  });
-  const removeLibrary = trpc.library.remove.useMutation({
-    onSuccess() {
-      utils.library.get.invalidate();
-      window.electronAPI.createAssetsServer(library.data);
-    },
-  });
+  const addLibrary = trpc.library.add.useMutation();
+  const removeLibrary = trpc.library.remove.useMutation();
   const updateLibrary = trpc.library.update.useMutation();
 
   const isInit = useRef<boolean>(false);
@@ -47,6 +38,8 @@ function Home() {
       setActive(library.data[0].id);
       isInit.current = true;
     }
+
+    window.electronAPI.createAssetsServer(library.data);
   }, [library]);
 
   const onRemove = () => {
@@ -54,39 +47,29 @@ function Home() {
     const newL = library.data?.filter((item) => item.id != active);
     setActive(newL && newL.length > 0 ? newL[0].id : undefined);
     setDelConfirmVisable(false);
-  };
-
-  const sync = trpc.sync.start.useMutation();
-  const onSyncClick = async () => {
-    if (!activeItem) return;
-
-    // start sync
-    await sync.mutateAsync({
-      libraryId: activeItem.id,
-    });
-
-    // sync complete
-    if (activeItem && progress) {
-      const { count, failCount } = progress;
-
-      await updateLibrary.mutateAsync({
-        id: activeItem.id,
-        fileCount: count,
-        failCount: failCount,
-      });
-
-      utils.library.get.invalidate();
-      setProgress(undefined);
-    }
+    utils.library.get.invalidate();
   };
 
   // progress exits, sync is running
   const [progress, setProgress] = useState<SyncSubscriptionData>();
   trpc.sync.subscription.useSubscription(undefined, {
     onData(data) {
-      setProgress(data as SyncSubscriptionData);
+      const _data = data as SyncSubscriptionData;
+      if (_data.type === "image") {
+        setProgress(data as SyncSubscriptionData);
+      }
     },
   });
+
+  const sync = trpc.sync.start.useMutation();
+  const onSyncClick = () => {
+    if (!activeItem) return;
+
+    // start sync
+    sync.mutateAsync({
+      libraryId: activeItem.id,
+    });
+  };
 
   const percent = useMemo(() => {
     if (progress) {
@@ -105,6 +88,24 @@ function Home() {
     return 0;
   }, [activeItem, progress]);
 
+  // sync completed.
+  useEffect(() => {
+    if (percent === 100 && progress && activeItem) {
+      const { count, failCount } = progress;
+
+      updateLibrary
+        .mutateAsync({
+          id: activeItem.id,
+          fileCount: count,
+          failCount: failCount,
+        })
+        .then(() => {
+          utils.library.get.invalidate();
+          setProgress(undefined);
+        });
+    }
+  }, [percent, progress, activeItem]);
+
   const showOpenDialog = () => {
     window.dialog
       .showOpenDialog({
@@ -119,6 +120,7 @@ function Home() {
 
         if (lib) {
           const libRes = await addLibrary.mutateAsync(lib);
+          utils.library.get.invalidate();
           setActive(libRes.id);
         }
       });

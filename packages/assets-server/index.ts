@@ -11,10 +11,11 @@ const libraryIds: number[] = [];
 /**
  * create or restart assets server
  */
-export const createOrRetartAssetsServer = (port: number, librarys?: Library[]) => {
+export const createAssetsServer = (port: number, librarys?: Library[]) => {
   if (!librarys || librarys.length === 0) {
     server?.close();
     server = null;
+    libraryIds.splice(0, libraryIds.length);
     return;
   }
 
