@@ -30,6 +30,7 @@ export const sync = t.router({
               count: e.count,
               failCount: e.failCount,
               libraryId: lib.id,
+              type: e.type,
             });
           },
         });
@@ -42,7 +43,7 @@ export const sync = t.router({
 
   subscription: t.procedure.subscription(() => {
     return observable((emit) => {
-      function onGreet(obj: { current: number; count: number; failCount: number; libraryId: number }) {
+      function onGreet(obj: { current: number; count: number; failCount: number; libraryId: number; type: "folder" | "image" }) {
         emit.next(obj);
       }
 
