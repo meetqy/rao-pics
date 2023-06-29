@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.4](https://github.com/rao-pics/core/compare/v0.6.3...v0.6.4) (2023-06-29)
+
+
+### Refactors
+
+* 💡 BrowerWindow 改为单例模式 ([f0c9714](https://github.com/rao-pics/core/commit/f0c9714f574efc557a314f5dc308efa9b6c167d7))
+* 💡 eagle move to support/eagle ([a3e6a7b](https://github.com/rao-pics/core/commit/a3e6a7b1a6c1ae6ec322e541f2b3db604b2bab97))
+* 💡 electron-trpc replacte ipc.on ([6ab83b6](https://github.com/rao-pics/core/commit/6ab83b63692db5f06d1ffbd618a6c00460d2facd))
+* 💡 electron-trpc 替换完成 ([5bbef50](https://github.com/rao-pics/core/commit/5bbef50f46bce744f1d4ea0be374a5f485214dc7))
+
 ### [0.6.3](https://github.com/rao-pics/core/compare/v0.6.2...v0.6.3) (2023-06-22)
 
 
