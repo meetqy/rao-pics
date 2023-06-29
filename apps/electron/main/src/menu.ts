@@ -10,6 +10,14 @@ const createMenu = () => {
     {
       label: app.name,
       submenu: [
+        { role: "about" },
+        { type: "separator" },
+        { role: "services" },
+        { type: "separator" },
+        { role: "hide" },
+        { role: "hideOthers" },
+        { role: "unhide" },
+        { type: "separator" },
         {
           label: "Quit",
           accelerator: "CmdOrCtrl+Q",
@@ -21,6 +29,9 @@ const createMenu = () => {
         },
       ],
     },
+    { role: "editMenu" },
+    { role: "viewMenu" },
+    { role: "windowMenu" },
   ]);
   Menu.setApplicationMenu(menu);
 };
