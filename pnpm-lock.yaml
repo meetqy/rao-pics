@@ -367,6 +367,9 @@ importers:
 
   packages/curd:
     dependencies:
+      '@acme/constant':
+        specifier: ^0.1.0
+        version: link:../constant
       zod:
         specifier: ^3.21.4
         version: 3.21.4

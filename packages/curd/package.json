@@ -6,6 +6,7 @@
     "@acme/mock": "^0.1.0"
   },
   "dependencies": {
+    "@acme/constant": "^0.1.0",
     "zod": "^3.21.4"
   }
 }

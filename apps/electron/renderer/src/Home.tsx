@@ -37,9 +37,8 @@ function Home() {
     if (library?.data?.length && !isInit.current) {
       setActive(library.data[0].id);
       isInit.current = true;
+      window.electronAPI.createAssetsServer(library.data);
     }
-
-    window.electronAPI.createAssetsServer(library.data);
   }, [library]);
 
   const onRemove = () => {

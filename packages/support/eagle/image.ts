@@ -152,7 +152,7 @@ export const transformImage = async (metadata: Metadata, library: Library) => {
   const connectOrCreate = await updateTags(metadata, oldImage, library);
 
   const imageInput: Prisma.ImageCreateInput = {
-    id: metadata.id,
+    extendId: metadata.id,
     name: metadata.name,
     size: metadata.size,
     ext: metadata.ext,
