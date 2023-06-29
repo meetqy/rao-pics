@@ -9,21 +9,34 @@ import { type HandleDirectoryReturn } from "../../../types";
 
 export const createElectronApiIPCHandler = () => {
   ipcMain.handle("api.handleDirectory", (_e, dir: string): HandleDirectoryReturn => {
+    const dirArr = dir.split(sep);
+    const name = dirArr[dirArr.length - 1];
+
     // eagle
     if (dir.endsWith(".library")) {
       const len = readdirSync(join(dir, "./images")).filter((item) => item.endsWith(".info")).length;
-      const dirArr = dir.split(sep);
 
       return {
-        name: dirArr[dirArr.length - 1],
+        name,
         dir,
         fileCount: len,
         failCount: 0,
         type: "eagle",
       };
-    }
+    } else {
+      return null;
+      // const entries = fg.sync(`${dir}/**/*.{${CONSTANT.EXT.join(",")}}`, { deep: 4 });
+      // const len = entries.length;
+      // if (len < 1) return null;
 
-    return null;
+      // return {
+      //   name,
+      //   dir,
+      //   fileCount: len,
+      //   failCount: 0,
+      //   type: "folder",
+      // };
+    }
   });
 
   ipcMain.handle("api.createAssetsServer", (_e, librarys?: Library[]) => {

@@ -1,0 +1,11 @@
+{
+  "name": "@acme/folder",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "dependencies": {
+    "@acme/constant": "^0.1.0",
+    "@acme/curd": "^0.1.0",
+    "@acme/db": "^0.1.0",
+    "fast-glob": "^3.2.12"
+  }
+}

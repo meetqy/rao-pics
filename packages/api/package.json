@@ -11,10 +11,11 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/eagle": "^0.1.0",
     "@acme/constant": "^0.1.0",
     "@acme/curd": "^0.1.0",
     "@acme/db": "^0.1.0",
+    "@acme/eagle": "^0.1.0",
+    "@acme/folder": "^0.1.0",
     "@trpc/client": "^10.23.0",
     "@trpc/server": "^10.23.0",
     "superjson": "^1.12.3",

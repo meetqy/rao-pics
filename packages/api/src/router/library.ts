@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { CONSTANT } from "@acme/constant";
 import { prisma } from "@acme/db";
 
 import { t } from "../trpc";
@@ -7,7 +8,7 @@ import { t } from "../trpc";
 const LibraryAddInput = z.object({
   name: z.string(),
   dir: z.string(),
-  type: z.enum(["eagle", "pixcall", "billfish"]),
+  type: z.enum(CONSTANT.APP),
   fileCount: z.number().optional(),
   failCount: z.number().optional(),
 });

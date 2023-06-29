@@ -2,8 +2,10 @@ import { EventEmitter } from "events";
 import { observable } from "@trpc/server/observable";
 import { z } from "zod";
 
+import { type Constant } from "@acme/constant";
 import curd from "@acme/curd";
 import { start as startEagle } from "@acme/eagle";
+import { start as startFolder } from "@acme/folder";
 
 import { t } from "../trpc";
 
@@ -21,21 +23,36 @@ export const sync = t.router({
       const lib = res[0];
 
       if (lib) {
-        // start syncing
-        await startEagle({
-          library: lib,
-          emit: (e) => {
-            ee.emit("sync", {
-              current: e.current,
-              count: e.count,
-              failCount: e.failCount,
-              libraryId: lib.id,
-              type: e.type,
-            });
-          },
-        });
+        const type = lib.type as Constant["app"];
 
-        return true;
+        // start syncing
+        switch (type) {
+          case "eagle": {
+            await startEagle({
+              library: lib,
+              emit: (e) => {
+                ee.emit("sync", {
+                  current: e.current,
+                  count: e.count,
+                  failCount: e.failCount,
+                  libraryId: lib.id,
+                  type: e.type,
+                });
+              },
+            });
+
+            return true;
+          }
+
+          case "folder": {
+            startFolder(lib);
+            return true;
+          }
+
+          default: {
+            return false;
+          }
+        }
       }
 
       return false;
