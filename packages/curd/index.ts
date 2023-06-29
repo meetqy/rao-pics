@@ -1,6 +1,5 @@
 import { Config, ConfigInput } from "./src/config";
 import { Folder, FolderInput } from "./src/folder";
-import { Image, ImageInput } from "./src/image";
 import { Library, LibraryInput } from "./src/library";
 import { Tag, TagInput } from "./src/tag";
 
@@ -9,7 +8,6 @@ export const ZodInput = {
   tag: TagInput,
   config: ConfigInput,
   library: LibraryInput,
-  image: ImageInput,
 };
 
 // library id => libraryId
@@ -33,7 +31,6 @@ const curd = {
   tag: Tag,
   config: Config,
   library: Library,
-  image: Image,
 };
 
 export default curd;
