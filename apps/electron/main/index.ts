@@ -23,6 +23,13 @@ createAllIPCHandler();
  */
 createMenu();
 
+/**
+ * Hide dock
+ */
+if (process.platform === "darwin") {
+  app.dock.hide();
+}
+
 let nextjsWebChild: cp.ChildProcess | undefined;
 
 /**
@@ -67,11 +74,6 @@ app.on("quit", () => {
     nextjsWebChild.kill();
   }
 });
-
-/** Hide dock */
-if (process.platform === "darwin") {
-  app.dock.hide();
-}
 
 /**
  * @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
