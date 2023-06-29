@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Image {
-    id          String   @id @unique @default(uuid())
+    id          String   @id @unique
     // 名字
     name        String
     // 文件大小
@@ -28,8 +28,6 @@ model Image {
     noThumbnail Boolean?
     // 文件夹
     folders     Folder[]
-    // eagle/pixcall 等内置 image id 
-    extendId    String?
     tags        Tag[]
     colors      Color[]
     library     Library  @relation(fields: [libraryId], references: [id])
@@ -68,9 +66,8 @@ model Tag {
 }
 
 model Folder {
-    // 没有特殊处理 name = id, eagle 就是特殊处理的
     id        String  @id @unique
-    name      String  @unique
+    name      String
     images    Image[]
     library   Library @relation(fields: [libraryId], references: [id])
     libraryId Int

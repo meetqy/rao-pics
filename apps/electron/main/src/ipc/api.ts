@@ -1,10 +1,8 @@
 import { join, sep } from "path";
 import { ipcMain } from "electron";
-import fg from "fast-glob";
 import { readdirSync } from "fs-extra";
 
 import { createAssetsServer } from "@acme/assets-server";
-import { CONSTANT } from "@acme/constant";
 import { type Library } from "@acme/db";
 
 import { type HandleDirectoryReturn } from "../../../types";
@@ -26,17 +24,18 @@ export const createElectronApiIPCHandler = () => {
         type: "eagle",
       };
     } else {
-      const entries = fg.sync(`${dir}/**/*.{${CONSTANT.EXT.join(",")}}`, { deep: 4 });
-      const len = entries.length;
-      if (len < 1) return null;
+      return null;
+      // const entries = fg.sync(`${dir}/**/*.{${CONSTANT.EXT.join(",")}}`, { deep: 4 });
+      // const len = entries.length;
+      // if (len < 1) return null;
 
-      return {
-        name,
-        dir,
-        fileCount: len,
-        failCount: 0,
-        type: "folder",
-      };
+      // return {
+      //   name,
+      //   dir,
+      //   fileCount: len,
+      //   failCount: 0,
+      //   type: "folder",
+      // };
     }
   });
 
