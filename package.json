@@ -1,6 +1,6 @@
 {
   "name": "rao-pics",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "private": true,
   "engines": {
     "node": ">=v16.19.0"
