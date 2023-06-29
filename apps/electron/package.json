@@ -1,7 +1,7 @@
 {
   "name": "@acme/electron",
   "productName": "Rao Pics",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Preview your materials on website. Support for eagle.",
   "private": true,
   "main": "main/dist/index.cjs",
@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development npm run watch:desktop",
     "build": "pnpm run '/^build:.*/'",
-    "compile": "rm -rf dist && ts-node scripts/compile.ts",
+    "compile": "rm -rf dist && npm run sync:version && ts-node scripts/compile.ts",
     "test:compile": "cross-env MODE=production CSC_IDENTITY_AUTO_DISCOVERY=false ts-node scripts/compile.ts",
     "watch:web": "ts-node scripts/watchWeb.ts",
     "watch:desktop": "ts-node scripts/watchDesktop.ts",
@@ -22,7 +22,7 @@
     "build:renderer": "tsc renderer/**/*.ts && vite build renderer",
     "sync:version": "node scripts/sync-version.mjs",
     "vendors:update": "cross-env ELECTRON_RUN_AS_NODE=1 electron scripts/update-electron-vendors.mjs",
-    "postinstall": "npm run vendors:update & npm run sync:version"
+    "postinstall": "npm run vendors:update"
   },
   "devDependencies": {
     "@acme/tailwind-config": "^0.1.0",

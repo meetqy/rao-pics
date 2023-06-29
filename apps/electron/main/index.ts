@@ -9,6 +9,7 @@ import globalApp from "./global";
 import { restoreOrCreateWindow } from "./mainWindow";
 import { createWebServer } from "./src/createWebServer";
 import createAllIPCHandler from "./src/ipc";
+import createMenu from "./src/menu";
 import createTray from "./src/tray";
 import { getAndUpdateConfig } from "./src/utils/config";
 
@@ -16,6 +17,11 @@ import { getAndUpdateConfig } from "./src/utils/config";
  * Create all ipcHander in 'src/ipc/xxx.ts'
  */
 createAllIPCHandler();
+
+/**
+ * Create Menu
+ */
+createMenu();
 
 let nextjsWebChild: cp.ChildProcess | undefined;
 
