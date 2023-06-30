@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-import { prisma } from "@acme/db";
+import { prisma, type Prisma } from "@acme/db";
 
 export const FolderInput = {
   get: z.object({
     /** library name or id */
-    library: z.union([z.string(), z.number()]),
+    library: z.union([z.string(), z.number()]).optional(),
   }),
   upsert: z.object({
     folderId: z.string(),
@@ -30,11 +30,14 @@ export const Folder = {
   get: (obj: z.infer<(typeof FolderInput)["get"]>) => {
     const { library } = obj;
 
-    return prisma.folder.findMany({
-      where: {
-        OR: [{ libraryId: typeof library === "number" ? library : undefined }, { library: { name: library.toString() } }],
-      },
+    const where: Prisma.FolderWhereInput = {};
 
+    if (library) {
+      where.OR = [{ libraryId: typeof library === "number" ? library : undefined }, { library: { name: library.toString() } }];
+    }
+
+    return prisma.folder.findMany({
+      where,
       include: {
         images: {
           take: 1,

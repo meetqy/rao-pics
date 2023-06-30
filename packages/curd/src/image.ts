@@ -16,29 +16,29 @@ export const ImageInput = {
     width: z.number(),
     height: z.number(),
     duration: z.number().optional(),
-    extendId: z.string().optional(),
     folders: z
       .array(
         z.object({
-          id: z.string().optional(),
-          name: z.string(),
+          id: z.string(),
+          name: z.string().optional(),
         }),
       )
+      .max(9)
       .optional(),
     tags: z.array(z.string()).optional(),
-    colors: z
-      .array(
-        z.object({
-          rgb: z.number(),
-          ratio: z.number(),
-        }),
-      )
-      .optional(),
+    /** @type 只有保存9种颜色 */
+    colors: z.array(z.string().length(7).startsWith("#")).optional(),
   }),
 };
 
 export const Image = {
-  create: (input: z.infer<(typeof ImageInput)["create"]>) => {
+  /**
+   * 创建图片的同时创建文件夹、标签、颜色
+   * 文件夹、颜色，可以通过 id 修改，但是标签只能创建，不能修改。
+   */
+  create: (obj: z.infer<(typeof ImageInput)["create"]>) => {
+    const input = ImageInput.create.parse(obj);
+
     let folders: Prisma.FolderUncheckedCreateNestedManyWithoutImagesInput | undefined;
     let tags: Prisma.TagUncheckedCreateNestedManyWithoutImagesInput | undefined;
     let colors: Prisma.ColorUncheckedCreateNestedManyWithoutImageInput | undefined;
@@ -46,11 +46,11 @@ export const Image = {
     if (input.folders) {
       folders = {
         connectOrCreate: input.folders.map((folder) => ({
-          where: { name: folder.name },
+          where: { id: folder.id },
           create: {
-            name: folder.name,
             // 传入 id 时，使用 id 作为 folder 的 id，否则使用 name 作为 id
-            id: folder.id || folder.name,
+            id: folder.id,
+            name: folder.name || folder.id,
             library: { connect: { id: input.libraryId } },
           },
         })),
@@ -59,19 +59,21 @@ export const Image = {
 
     if (input.tags) {
       tags = {
-        connectOrCreate: input.tags.map((tag) => ({
-          where: { name: tag },
-          create: { name: tag, library: { connect: { id: input.libraryId } } },
-        })),
+        create: input.tags.map((tag) => ({ name: tag, library: { connect: { id: input.libraryId } } })),
       };
     }
 
     if (input.colors) {
       colors = {
-        connectOrCreate: input.colors.map((color) => ({
-          where: { rgb: color.rgb },
-          create: { rgb: color.rgb, ratio: color.ratio },
-        })),
+        create: [
+          // 颜色 9 种，每种颜色的值为 100 的倍数，并且去重，将颜色总数减少 100 倍。
+          ...new Set(
+            input.colors.splice(0, 9).map((color) => {
+              const n = parseInt(color.replace("#", ""), 16);
+              return Math.ceil(n / 100) * 100;
+            }),
+          ),
+        ].map((color) => ({ rgb: color })),
       };
     }
 

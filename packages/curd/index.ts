@@ -1,3 +1,4 @@
+import { Color, ColorInput } from "./src/color";
 import { Config, ConfigInput } from "./src/config";
 import { Folder, FolderInput } from "./src/folder";
 import { Image, ImageInput } from "./src/image";
@@ -10,6 +11,7 @@ export const ZodInput = {
   config: ConfigInput,
   library: LibraryInput,
   image: ImageInput,
+  color: ColorInput,
 };
 
 // library id => libraryId
@@ -34,6 +36,7 @@ const curd = {
   config: Config,
   library: Library,
   image: Image,
+  color: Color,
 };
 
 export default curd;
