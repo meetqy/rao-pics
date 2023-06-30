@@ -9,29 +9,31 @@ datasource db {
 }
 
 model Image {
-    id          String   @id @unique
+    id            Int      @id @unique @default(autoincrement())
+    // library.dir + path => originalPath
+    path          String   @unique
+    // UserData 缓存目录 + thumbnailPath => thumbnailPath 
+    thumbnailPath String?  @unique
     // 名字
-    name        String
+    name          String
     // 文件大小
-    size        Int
+    size          Int
     // 创建时间
-    createTime  DateTime
+    createTime    DateTime
     // 修改时间
-    lastTime    DateTime
+    lastTime      DateTime
     // 扩展名
-    ext         String
-    width       Int
-    height      Int
+    ext           String
+    width         Int
+    height        Int
     // 视频时长
-    duration    Float?
-    // 缩略图
-    noThumbnail Boolean?
+    duration      Float?
     // 文件夹
-    folders     Folder[]
-    tags        Tag[]
-    colors      Color[]
-    library     Library  @relation(fields: [libraryId], references: [id])
-    libraryId   Int
+    folders       Folder[]
+    tags          Tag[]
+    colors        Color[]
+    library       Library  @relation(fields: [libraryId], references: [id])
+    libraryId     Int
 }
 
 model Color {
@@ -66,8 +68,9 @@ model Tag {
 }
 
 model Folder {
+    // id = name，特殊情况 egale folder 有自己的id
     id        String  @id @unique
-    name      String
+    name      String  @unique
     images    Image[]
     library   Library @relation(fields: [libraryId], references: [id])
     libraryId Int
