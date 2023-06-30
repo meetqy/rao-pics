@@ -269,9 +269,6 @@ importers:
       '@acme/eagle':
         specifier: ^0.1.0
         version: link:../support/eagle
-      '@acme/folder':
-        specifier: ^0.1.0
-        version: link:../support/folder
       '@trpc/client':
         specifier: ^10.23.0
         version: 10.23.0(@trpc/server@10.23.0)
@@ -414,12 +411,18 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../db
+      chokidar:
+        specifier: ^3.5.3
+        version: 3.5.3
       chroma-js:
         specifier: ^2.4.2
         version: 2.4.2
       fast-glob:
         specifier: ^3.2.12
         version: 3.2.12
+      fs-extra:
+        specifier: ^11.1.1
+        version: 11.1.1
     devDependencies:
       '@acme/eslint-config':
         specifier: ^0.1.0
