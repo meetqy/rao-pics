@@ -1,17 +1,52 @@
+import { join } from "path";
 import * as fs from "fs-extra";
 
+import { CONSTANT, type Constant } from "@acme/constant";
 import curd from "@acme/curd";
 import { type Library } from "@acme/db";
 
-import { type EmitOption, type Metadata } from "../types";
+import { type Metadata } from "../types";
 
-export const createImage = (path: string, library: Library, emit: (option: EmitOption) => void) => {
+const rgbToHex = (rgb: number[]) => {
+  const componentToHex = (c: number) => {
+    const hex = c.toString(16);
+    return hex.length === 1 ? `0${hex}` : hex;
+  };
+
+  const [r, g, b] = rgb;
+  if (!r || !g || !b) return;
+
+  return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+};
+
+export const createImage = async (path: string, library: Library) => {
   try {
     const metadata = fs.readJSONSync(path) as Metadata;
+    const stats = fs.statSync(path);
+    const imagePath = join("images", `${metadata.id}.info`, `${metadata.name}.${metadata.ext}`);
+    const thumbnailPath = metadata.noThumbnail ? imagePath : join("images", `${metadata.id}.info`, `${metadata.name}thumbnail.png`);
+    const ext = metadata.ext as Constant["ext"];
 
-    // curd.image.add({
+    if (!CONSTANT["EXT"].includes(ext)) {
+      return;
+    }
 
-    // })
+    return await curd.image.create({
+      libraryId: library.id,
+      path: imagePath,
+      thumbnailPath,
+      name: metadata.name,
+      size: metadata.size,
+      createTime: stats.ctime,
+      lastTime: stats.mtime,
+      ext,
+      width: metadata.width,
+      height: metadata.height,
+      duration: metadata.duration,
+      folders: metadata.folders?.map((folder) => ({ id: folder })),
+      tags: metadata.tags,
+      colors: metadata.palettes?.map((palette) => rgbToHex(palette.color)).filter((c) => !!c) as string[],
+    });
   } catch (e) {
     throw e;
   }

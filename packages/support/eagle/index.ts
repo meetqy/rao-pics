@@ -1,11 +1,13 @@
 import { join } from "path";
 import chokidar from "chokidar";
 import * as fs from "fs-extra";
+import { debounce } from "lodash";
 
 import curd from "@acme/curd";
 import { type Library } from "@acme/db";
 
-import { handleFolder } from "./folder";
+import { handleFolder } from "./src/folder";
+import { createImage } from "./src/image";
 import { type EmitOption, type LibraryMetadata } from "./types";
 
 interface Props {
@@ -27,28 +29,60 @@ export const isFirst = async (library: Library) => {
   return true;
 };
 
-export const start = async ({ library, emit, onError }: Props) => {
+let watcher: chokidar.FSWatcher;
+
+/** 等待处理的文件 */
+const pendingPath: Set<string> = new Set();
+
+const option: EmitOption = {
+  type: "image",
+  failCount: 0,
+  count: 0,
+  current: 0,
+};
+
+export const start = async (props: Props) => {
+  const { library, onError, emit } = props;
   try {
     // handle folder
     const base = fs.readJSONSync(join(library.dir, "metadata.json")) as LibraryMetadata;
     await handleFolder(base.folders, library, emit);
 
-    const first = await isFirst(library);
+    if (watcher) return;
 
-    chokidar.watch(library.dir).on(join(library.dir, "images", "**", "metadata.json"), (path) => {
-      if (first) {
-      }
+    watcher = chokidar.watch(join(library.dir, "images", "**", "metadata.json"));
+
+    watcher.on("add", (path: string) => {
+      pendingPath.add(path);
+
+      void handlePendingPath(props);
     });
   } catch (e) {
     onError?.(e);
   }
-
-  // try {
-  //   const base = JSON.parse(fs.readFileSync(`${library.dir}/metadata.json`, "utf-8")) as LibraryMetadata;
-  //   const images = fg.sync(join(library.dir, "images", "**", "metadata.json").replace(/\\/g, "/"));
-  //   await handleFolder(base.folders, library, emit);
-  //   await handleImage({ images, library, emit, onError });
-  // } catch (e) {
-  //   onError?.(e);
-  // }
 };
+
+const handlePendingPath = debounce(async (props: Props) => {
+  const { library, emit, onError } = props;
+  try {
+    option.count = pendingPath.size;
+    for (const path of pendingPath) {
+      const res = await createImage(path, library);
+      option.current++;
+
+      if (!res) {
+        option.failCount++;
+      }
+
+      emit?.(option);
+    }
+
+    // // Completed init option
+    // pendingPath.clear();
+    // option.count = 0;
+    // option.current = 0;
+    // option.failCount = 0;
+  } catch (e) {
+    onError?.(e);
+  }
+}, 1000);

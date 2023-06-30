@@ -1,10 +1,9 @@
 import curd from "@acme/curd";
 import { type Library } from "@acme/db";
 
-import { type EagleEmit } from ".";
-import { type Folder } from "./types";
+import { type EmitOption, type Folder } from "../types";
 
-export const handleFolder = async (folders: Folder[], library: Library, emit?: EagleEmit) => {
+export const handleFolder = async (folders: Folder[], library: Library, emit?: (option: EmitOption) => void) => {
   const f = treeToArray(folders);
 
   if (f.length === 0) {
@@ -20,12 +19,12 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: E
       libraryId: library.id,
     });
 
-    emit &&
-      emit({
-        type: "folder",
-        current: index + 1,
-        count: f.length,
-      });
+    emit?.({
+      type: "folder",
+      current: index + 1,
+      failCount: 0,
+      count: f.length,
+    });
   }
 
   // 清除已经删除，sqlite中还存在的文件夹。

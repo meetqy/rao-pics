@@ -23,10 +23,9 @@ export const ImageInput = {
           name: z.string().optional(),
         }),
       )
-      .max(9)
       .optional(),
     tags: z.array(z.string()).optional(),
-    /** @type 只有保存9种颜色 */
+    /** @type 只会保存 9 种颜色 */
     colors: z.array(z.string().length(7).startsWith("#")).optional(),
   }),
 };
@@ -59,13 +58,16 @@ export const Image = {
 
     if (input.tags) {
       tags = {
-        create: input.tags.map((tag) => ({ name: tag, library: { connect: { id: input.libraryId } } })),
+        connectOrCreate: input.tags.map((tag) => ({
+          where: { name: tag },
+          create: { name: tag, library: { connect: { id: input.libraryId } } },
+        })),
       };
     }
 
     if (input.colors) {
       colors = {
-        create: [
+        connectOrCreate: [
           // 颜色 9 种，每种颜色的值为 100 的倍数，并且去重，将颜色总数减少 100 倍。
           ...new Set(
             input.colors.splice(0, 9).map((color) => {
@@ -73,7 +75,10 @@ export const Image = {
               return Math.ceil(n / 100) * 100;
             }),
           ),
-        ].map((color) => ({ rgb: color })),
+        ].map((color) => ({
+          where: { rgb: color },
+          create: { rgb: color },
+        })),
       };
     }
 
