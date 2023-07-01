@@ -20,13 +20,13 @@ export const LibraryInput = {
   }),
 
   update: z.object({
-    libraryId: z.number(),
+    id: z.number(),
     fileCount: z.number().optional(),
     failCount: z.number().optional(),
   }),
 
   delete: z.object({
-    libraryId: z.number(),
+    id: z.number(),
   }),
 };
 
@@ -58,7 +58,7 @@ export const Library = {
 
   update: (obj: z.infer<(typeof LibraryInput)["update"]>) => {
     return prisma.library.update({
-      where: { id: obj.libraryId },
+      where: { id: obj.id },
       data: {
         ...obj,
         lastSyncTime: new Date(),
@@ -67,15 +67,15 @@ export const Library = {
   },
 
   delete: async (obj: z.infer<(typeof LibraryInput)["delete"]>) => {
-    const { libraryId } = obj;
+    const { id } = obj;
     await prisma.$transaction([
       prisma.image.deleteMany({
-        where: { libraryId },
+        where: { id },
       }),
-      curd.folder.clear({ libraryId }),
-      curd.tag.clear({ libraryId }),
+      curd.folder.clear({ libraryId: id }),
+      curd.tag.clear({ libraryId: id }),
     ]);
 
-    return prisma.library.delete({ where: { id: libraryId } });
+    return prisma.library.delete({ where: { id } });
   },
 };

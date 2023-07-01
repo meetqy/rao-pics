@@ -118,9 +118,8 @@ function Home() {
         if (!lib) return Alert({ title: "暂时不支持此App/文件夹" });
 
         if (lib) {
-          const libRes = await addLibrary.mutateAsync(lib);
           utils.library.get.invalidate();
-          setActive(libRes.id);
+          setActive(lib.id);
         }
       });
   };

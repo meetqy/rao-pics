@@ -14,11 +14,12 @@ export const PendingInput = {
 };
 
 export const Pending = {
-  upsert: (obj: z.infer<(typeof PendingInput)["upsert"]>) => {
+  upsert: async (obj: z.infer<(typeof PendingInput)["upsert"]>) => {
     const input = PendingInput.upsert.parse(obj);
-    return prisma.pending.upsert({
+
+    return await prisma.pending.upsert({
       where: { path: input.path },
-      create: { path: input.path, libraryId: input.libraryId },
+      create: input,
       update: {},
     });
   },

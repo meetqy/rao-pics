@@ -72,6 +72,9 @@ importers:
       '@acme/eagle':
         specifier: ^0.1.0
         version: link:../../packages/support/eagle
+      '@acme/watch':
+        specifier: ^0.1.0
+        version: link:../../packages/watch
       '@tanstack/react-query':
         specifier: ^4.13.0
         version: 4.29.1(react-dom@18.2.0)(react@18.2.0)
@@ -439,6 +442,15 @@ importers:
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
+
+  packages/watch:
+    dependencies:
+      '@acme/curd':
+        specifier: ^0.1.0
+        version: link:../curd
+      chokidar:
+        specifier: ^3.5.3
+        version: 3.5.3
 
 packages:
 
