@@ -6,6 +6,7 @@ export const PendingInput = {
   upsert: z.object({
     path: z.string(),
     libraryId: z.number(),
+    type: z.enum(["create", "update", "delete"]),
   }),
 
   get: z.object({
@@ -20,7 +21,7 @@ export const Pending = {
     return await prisma.pending.upsert({
       where: { path: input.path },
       create: input,
-      update: {},
+      update: { type: input.type },
     });
   },
 
