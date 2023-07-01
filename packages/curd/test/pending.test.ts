@@ -51,4 +51,17 @@ describe("@acme/curd pending", async () => {
 
     expect(res).toHaveLength(2);
   });
+
+  test("Delete pending image", async () => {
+    const res = await curd.pending.get({
+      libraryId: lib.id,
+    });
+
+    const p = res[0]?.path;
+    if (p) {
+      const res = await curd.pending.delete(p);
+      expect(res).toHaveProperty("path", p);
+      void expect(curd.pending.get({ libraryId: lib.id })).resolves.toHaveLength(1);
+    }
+  });
 });
