@@ -33,17 +33,6 @@ export const createElectronApiIPCHandler = () => {
       };
     } else {
       return null;
-      // const entries = fg.sync(`${dir}/**/*.{${CONSTANT.EXT.join(",")}}`, { deep: 4 });
-      // const len = entries.length;
-      // if (len < 1) return null;
-
-      // return {
-      //   name,
-      //   dir,
-      //   fileCount: len,
-      //   failCount: 0,
-      //   type: "folder",
-      // };
     }
   });
 

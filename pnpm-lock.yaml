@@ -414,18 +414,9 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../db
-      chroma-js:
-        specifier: ^2.4.2
-        version: 2.4.2
-      fast-glob:
-        specifier: ^3.2.12
-        version: 3.2.12
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
     devDependencies:
       '@acme/eslint-config':
         specifier: ^0.1.0
@@ -2784,10 +2775,6 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
     dev: true
-
-  /chroma-js@2.4.2:
-    resolution: {integrity: sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==}
-    dev: false
 
   /chromium-pickle-js@0.2.0:
     resolution: {integrity: sha512-1R5Fho+jBq0DDydt+/vHWj5KJNJCKdARKOCwZUen84I5BreWoLqRLANH1U87eJy1tiASPtMnGqJJq0ZsLoRPOw==}

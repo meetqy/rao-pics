@@ -13,10 +13,7 @@
     "@acme/constant": "^0.1.0",
     "@acme/curd": "^0.1.0",
     "@acme/db": "^0.1.0",
-    "chroma-js": "^2.4.2",
-    "fast-glob": "^3.2.12",
-    "fs-extra": "^11.1.1",
-    "lodash": "^4.17.21"
+    "fs-extra": "^11.1.1"
   },
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",

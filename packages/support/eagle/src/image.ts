@@ -19,6 +19,12 @@ const rgbToHex = (rgb: number[]) => {
   return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
 };
 
+/**
+ * Create image
+ * @param path metadata.json path
+ * @param library
+ * @returns Image | undefined, undefined means the image is not supported
+ */
 export const createImage = async (path: string, library: Library) => {
   try {
     const metadata = fs.readJSONSync(path) as Metadata;
