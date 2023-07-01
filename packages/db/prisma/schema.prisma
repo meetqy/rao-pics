@@ -55,8 +55,8 @@ model Library {
     lastSyncTime DateTime?
     // 已同步
     images       Image[]
-    // 等待同步
-    pending      Pending[]
+    // 等待同步的 image
+    pendings     Pending[]
     folders      Folder[]
     Tag          Tag[]
 }
