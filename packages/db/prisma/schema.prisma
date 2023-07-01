@@ -63,6 +63,8 @@ model Library {
 
 model Pending {
     path      String   @id @unique
+    // create | delete | update
+    type      String
     Library   Library? @relation(fields: [libraryId], references: [id])
     libraryId Int?
 }

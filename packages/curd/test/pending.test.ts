@@ -21,19 +21,30 @@ describe("@acme/curd pending", async () => {
       libraryId: lib.id,
     };
 
-    const res = await curd.pending.upsert(input);
+    const res = await curd.pending.upsert({
+      ...input,
+      type: "create",
+    });
 
     expect(res).toMatchObject(input);
+    expect(res.type).toBe("create");
   });
 
-  test("Create pending image, and path is exist.", async () => {
+  test("Create pending image, and path is exist, and get by library id.", async () => {
     const input = {
       path: faker.system.filePath(),
       libraryId: lib.id,
     };
 
-    await curd.pending.upsert(input);
-    await curd.pending.upsert(input);
+    await curd.pending.upsert({
+      ...input,
+      type: "create",
+    });
+    await curd.pending.upsert({
+      ...input,
+      type: "create",
+    });
+
     const res = await curd.pending.get({
       libraryId: lib.id,
     });
