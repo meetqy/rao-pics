@@ -1,14 +1,18 @@
+import _ from "lodash";
+
 import curd from "@acme/curd";
 import { type Library } from "@acme/db";
 
 import { type EmitOption, type Folder } from "../types";
 
-export const handleFolder = async (folders: Folder[], library: Library, emit?: (option: EmitOption) => void) => {
+export const handleFolder = async (folders: Folder[], lib: Library, emit?: (option: EmitOption) => void) => {
   const f = treeToArray(folders);
 
-  if (f.length === 0) {
-    await curd.folder.clear();
+  const oldFolders = await curd.folder.get({ libraryId: lib.id });
+  const oldFolderIds = oldFolders.map((v) => v.id);
 
+  if (f.length === 0) {
+    await curd.folder.delete({ libraryId: lib.id });
     return;
   }
 
@@ -16,7 +20,7 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: (
     await curd.folder.upsert({
       folderId: folder.id,
       name: folder.name,
-      libraryId: library.id,
+      libraryId: lib.id,
     });
 
     emit?.({
@@ -27,12 +31,15 @@ export const handleFolder = async (folders: Folder[], library: Library, emit?: (
     });
   }
 
+  const ids = _.difference(
+    oldFolderIds,
+    f.map((folder) => folder.id),
+  );
+
   // 清除已经删除，sqlite中还存在的文件夹。
-  await curd.folder.delete({
-    libraryId: library.id,
-    folderIds: f.map((folder) => folder.id),
-    idsRule: "notIn",
-  });
+  for (const id in ids.entries()) {
+    await curd.folder.delete({ id });
+  }
 };
 
 const treeToArray = (folders: Folder[]) => {
