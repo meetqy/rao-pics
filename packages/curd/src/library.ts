@@ -68,11 +68,12 @@ export const Library = {
 
   delete: async (obj: z.infer<(typeof LibraryInput)["delete"]>) => {
     const { id } = obj;
+
     await prisma.$transaction([
       prisma.image.deleteMany({
         where: { id },
       }),
-      curd.folder.clear({ libraryId: id }),
+      curd.folder.delete({ libraryId: id }),
       curd.tag.clear({ libraryId: id }),
     ]);
 

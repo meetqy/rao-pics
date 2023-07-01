@@ -33,9 +33,15 @@ export const start = async (props: Props) => {
       for (const p of pendings) {
         option.current++;
         try {
-          const res = await createImage(p.path, library);
-          if (!res) {
-            option.failCount++;
+          if (p.type === "delete") {
+            await curd.image.delete({ path: p.path });
+          } else if (p.type === "update") {
+            // TODO: update image
+          } else if (p.type === "create") {
+            const res = await createImage(p.path, library);
+            if (!res) {
+              option.failCount++;
+            }
           }
 
           await curd.pending.delete(p.path);

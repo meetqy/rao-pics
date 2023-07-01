@@ -1,32 +1,46 @@
 import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";
-import { prisma, type Prisma } from "@acme/db";
+import { prisma, type Folder, type Prisma } from "@acme/db";
+
+import curd from "..";
+
+const create = z.object({
+  libraryId: z.number(),
+  path: z.string(),
+  thumbnailPath: z.string(),
+  name: z.string(),
+  size: z.number(),
+  createTime: z.date(),
+  lastTime: z.date(),
+  ext: z.enum(CONSTANT.EXT),
+  width: z.number(),
+  height: z.number(),
+  duration: z.number().optional(),
+  folders: z
+    .array(
+      z.object({
+        id: z.string(),
+        name: z.string().optional(),
+      }),
+    )
+    .optional(),
+  tags: z.array(z.string()).optional(),
+  /** @type 只会保存 9 种颜色 */
+  colors: z.array(z.string().length(7).startsWith("#")).optional(),
+});
 
 export const ImageInput = {
-  create: z.object({
-    libraryId: z.number(),
-    path: z.string(),
-    thumbnailPath: z.string(),
-    name: z.string(),
-    size: z.number(),
-    createTime: z.date(),
-    lastTime: z.date(),
-    ext: z.enum(CONSTANT.EXT),
-    width: z.number(),
-    height: z.number(),
-    duration: z.number().optional(),
-    folders: z
-      .array(
-        z.object({
-          id: z.string(),
-          name: z.string().optional(),
-        }),
-      )
-      .optional(),
-    tags: z.array(z.string()).optional(),
-    /** @type 只会保存 9 种颜色 */
-    colors: z.array(z.string().length(7).startsWith("#")).optional(),
+  create,
+
+  delete: z.object({
+    id: z.number().optional(),
+    path: z.string().optional(),
+  }),
+
+  update: z.object({
+    ...create.shape,
+    id: z.number(),
   }),
 };
 
@@ -101,4 +115,36 @@ export const Image = {
       },
     });
   },
+
+  delete: (obj: z.infer<(typeof ImageInput)["delete"]>) => {
+    const input = ImageInput.delete.parse(obj);
+
+    const where: Prisma.ImageWhereInput = {};
+
+    if (input.id) {
+      where.id = input.id;
+    }
+
+    if (input.path) {
+      where.path = input.path;
+    }
+
+    return prisma.image.deleteMany({ where });
+  },
+
+  update: async (obj: z.infer<(typeof ImageInput)["update"]>) => {
+    const input = ImageInput.update.parse(obj);
+    const [oldTags, oldFolders] = await Promise.all([curd.tag.get({ imageId: input.id }), curd.folder.get({ imageId: input.id })]);
+
+    if (input.folders) {
+      // await curd.folder.upsert()
+    }
+
+    // 找出被删除的 folder， disconnect
+    // const disconnectFolder = findDisconnectFolder(oldFolders, input.folders);
+  },
+};
+
+const findDisconnectFolder = (oldFolders: Folder[], newFolders: { id: string }[]): string[] => {
+  return [];
 };

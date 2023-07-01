@@ -3,7 +3,7 @@ import * as fs from "fs-extra";
 
 import { CONSTANT, type Constant } from "@acme/constant";
 import curd from "@acme/curd";
-import { type Library } from "@acme/db";
+import { type Library, type Pending } from "@acme/db";
 
 import { type Metadata } from "../types";
 

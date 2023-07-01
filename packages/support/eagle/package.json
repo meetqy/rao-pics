@@ -13,7 +13,8 @@
     "@acme/constant": "^0.1.0",
     "@acme/curd": "^0.1.0",
     "@acme/db": "^0.1.0",
-    "fs-extra": "^11.1.1"
+    "fs-extra": "^11.1.1",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",
