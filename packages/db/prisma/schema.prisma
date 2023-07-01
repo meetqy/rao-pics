@@ -53,10 +53,18 @@ model Library {
     failCount    Int?      @default(0)
     // 最后一次同步时间
     lastSyncTime DateTime?
-    // 已同步的数量
+    // 已同步
     images       Image[]
+    // 等待同步
+    pending      Pending[]
     folders      Folder[]
     Tag          Tag[]
+}
+
+model Pending {
+    path      String   @id @unique
+    Library   Library? @relation(fields: [libraryId], references: [id])
+    libraryId Int?
 }
 
 model Tag {

@@ -11,7 +11,7 @@ export const TagInput = {
   upsert: z.object({
     name: z.string(),
     libraryId: z.number(),
-    imageIds: z.array(z.string()).optional(),
+    imageIds: z.array(z.number()).optional(),
   }),
 
   delete: z.object({
