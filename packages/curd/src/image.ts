@@ -208,7 +208,7 @@ export const Image = {
 
     updateArgs.data["folders"] = input.folders ? updateFolders(input.folders, oldImage[0]?.folders || []) : undefined;
     updateArgs.data["tags"] = input.tags ? updateTags(input.tags, oldImage[0]?.tags || []) : undefined;
-    // updateArgs.data["colors"] = input.colors ? updateColors(input.colors, oldImage[0]?.colors || []) : undefined;
+    updateArgs.data["colors"] = input.colors ? updateColors(input.colors, oldImage[0]?.colors || []) : undefined;
 
     return await prisma.image.update(updateArgs);
   },
@@ -250,7 +250,7 @@ const updateColors = (colors: string[], oldColors: Color[]) => {
         );
 
   return {
-    disconnect: waitDeleteIds,
+    disconnect: waitDeleteIds.map((item) => ({ rgb: item.rgb })),
     connect: colors.map((c) => ({ rgb: hexToRgb(c) })),
   };
 };

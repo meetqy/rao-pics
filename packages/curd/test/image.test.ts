@@ -190,7 +190,7 @@ describe("@acme/curd image", async () => {
     }
   });
 
-  test<LocalTestContext>(`Update image and updates tags: string[]`, async ({ imageMock }) => {
+  test<LocalTestContext>(`Update image and tags filed: string[]`, async ({ imageMock }) => {
     await Promise.all([curd.tag.upsert({ name: "abc", libraryId: imageMock.libraryId }), curd.tag.upsert({ name: "xyz", libraryId: imageMock.libraryId })]);
 
     const img = await curd.image.get({ path: "xyz" });
@@ -210,7 +210,7 @@ describe("@acme/curd image", async () => {
     }
   });
 
-  test<LocalTestContext>(`Update image and updates tags: undefined`, async () => {
+  test<LocalTestContext>(`Update image and tags filed: undefined`, async () => {
     const img = await curd.image.get({ path: "xyz" });
     expect(img).toHaveLength(1);
 
@@ -228,7 +228,7 @@ describe("@acme/curd image", async () => {
     }
   });
 
-  test<LocalTestContext>(`Update image and updates tags: []`, async () => {
+  test<LocalTestContext>(`Update image and tags flied: []`, async () => {
     const img = await curd.image.get({ path: "xyz" });
     expect(img).toHaveLength(1);
 
@@ -246,5 +246,57 @@ describe("@acme/curd image", async () => {
     }
   });
 
-  // Todo: update colors
+  test<LocalTestContext>(`Update image and colors filed: string[]`, async () => {
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
+
+    const item = img[0];
+    if (item) {
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        colors: ["#ffffff", "#000000", "#ff0000", "#dd0000"],
+      });
+
+      const img1 = await curd.image.get({ path: "xyz" });
+
+      expect(img1[0]?.colors).toHaveLength(4);
+    }
+  });
+
+  test<LocalTestContext>(`Update image and colors filed: string[]`, async () => {
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
+
+    const item = img[0];
+    if (item) {
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        colors: undefined,
+      });
+
+      const img1 = await curd.image.get({ path: "xyz" });
+
+      expect(img1[0]?.colors).toHaveLength(4);
+    }
+  });
+
+  test<LocalTestContext>(`Update image and colors filed: []`, async () => {
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
+
+    const item = img[0];
+    if (item) {
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        colors: [],
+      });
+
+      const img1 = await curd.image.get({ path: "xyz" });
+
+      expect(img1[0]?.colors).toHaveLength(0);
+    }
+  });
 });
