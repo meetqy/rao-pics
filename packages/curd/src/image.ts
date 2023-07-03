@@ -59,7 +59,6 @@ export const ImageInput = {
       .array(
         z.object({
           id: z.string(),
-          name: z.string().optional(),
         }),
       )
       .optional(),
