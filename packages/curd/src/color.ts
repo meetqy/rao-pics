@@ -1,10 +1,16 @@
 import { z } from "zod";
 
 import { prisma } from "@acme/db";
+import { hexToRgb } from "@acme/util";
 
 export const ColorInput = {
   get: z.object({
     imageId: z.number(),
+  }),
+
+  create: z.object({
+    imageId: z.number(),
+    color: z.string().length(7).startsWith("#"),
   }),
 };
 
@@ -24,5 +30,21 @@ export const Color = {
     if (!img) return [];
 
     return img.colors;
+  },
+
+  create: async (obj: z.infer<(typeof ColorInput)["create"]>) => {
+    const input = ColorInput.create.parse(obj);
+    const rgb = hexToRgb(input.color);
+
+    return prisma.color.upsert({
+      where: { rgb },
+      create: {
+        rgb,
+        images: {
+          connect: { id: input.imageId },
+        },
+      },
+      update: {},
+    });
   },
 };

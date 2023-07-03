@@ -4,6 +4,7 @@ import * as fs from "fs-extra";
 import { CONSTANT, type Constant } from "@acme/constant";
 import curd from "@acme/curd";
 import { type Library } from "@acme/db";
+import { rgbToHex } from "@acme/util";
 
 import { type Metadata } from "../types";
 
@@ -41,9 +42,38 @@ export const updateImage = async (path: string, library: Library) => {
       path: base.imagePath,
     });
 
-    if (image && image[0]) {
+    const item = image[0];
+    if (item) {
+      // update tags
+      await Promise.all(
+        item.tags.map((tag) =>
+          curd.tag.upsert({
+            libraryId: library.id,
+            name: tag.name,
+            imageIds: [item.id],
+          }),
+        ),
+      );
+
+      // update color
+      await Promise.all(
+        item.colors
+          .map((c) => {
+            const hex = rgbToHex(c.rgb);
+            if (hex) {
+              return curd.color.create({
+                imageId: item.id,
+                color: hex,
+              });
+            }
+
+            return null;
+          })
+          .filter(Boolean),
+      );
+
       return await curd.image.update({
-        id: image[0].id,
+        id: item.id,
         ...args,
       });
     }
@@ -55,22 +85,10 @@ export const updateImage = async (path: string, library: Library) => {
 };
 
 /**
- * Color rgb to hex
- * @param rgb
+ * image metadata base
+ * @param path metadata.json path
  * @returns
  */
-const rgbToHex = (rgb: number[]) => {
-  const componentToHex = (c: number) => {
-    const hex = c.toString(16);
-    return hex.length === 1 ? `0${hex}` : hex;
-  };
-
-  const [r, g, b] = rgb;
-  if (!r || !g || !b) return;
-
-  return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
-};
-
 const getImageBase = (path: string) => {
   try {
     const metadata = fs.readJSONSync(path) as Metadata;

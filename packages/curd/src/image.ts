@@ -3,13 +3,9 @@ import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";
 import { prisma, type Color, type Folder, type Prisma, type Tag } from "@acme/db";
+import { hexToRgb } from "@acme/util";
 
 import curd from "..";
-
-const hexToRgb = (hex: string) => {
-  const n = parseInt(hex.replace("#", ""), 16);
-  return Math.ceil(n / 100) * 100;
-};
 
 export const ImageInput = {
   create: z.object({
@@ -110,7 +106,7 @@ export const Image = {
 
     let folders: Prisma.FolderUncheckedCreateNestedManyWithoutImagesInput | undefined;
     let tags: Prisma.TagUncheckedCreateNestedManyWithoutImagesInput | undefined;
-    let colors: Prisma.ColorUncheckedCreateNestedManyWithoutImageInput | undefined;
+    let colors: Prisma.ColorUncheckedCreateNestedManyWithoutImagesInput | undefined;
 
     if (input.folders) {
       folders = {

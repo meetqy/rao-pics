@@ -370,6 +370,9 @@ importers:
       '@acme/constant':
         specifier: ^0.1.0
         version: link:../constant
+      '@acme/util':
+        specifier: ^0.1.0
+        version: link:../util
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -414,6 +417,9 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../../db
+      '@acme/util':
+        specifier: ^0.1.0
+        version: link:../../util
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1
@@ -436,6 +442,8 @@ importers:
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
+
+  packages/util: {}
 
   packages/watch:
     dependencies:

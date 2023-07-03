@@ -37,8 +37,8 @@ model Image {
 }
 
 model Color {
-    rgb   Int     @id @unique
-    Image Image[]
+    rgb    Int     @id @unique
+    images Image[]
 }
 
 model Library {
