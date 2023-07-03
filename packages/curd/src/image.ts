@@ -11,33 +11,31 @@ const hexToRgb = (hex: string) => {
   return Math.ceil(n / 100) * 100;
 };
 
-const create = z.object({
-  libraryId: z.number(),
-  path: z.string(),
-  thumbnailPath: z.string(),
-  name: z.string(),
-  size: z.number(),
-  createTime: z.date(),
-  lastTime: z.date(),
-  ext: z.enum(CONSTANT.EXT),
-  width: z.number(),
-  height: z.number(),
-  duration: z.number().optional(),
-  folders: z
-    .array(
-      z.object({
-        id: z.string(),
-        name: z.string().optional(),
-      }),
-    )
-    .optional(),
-  tags: z.array(z.string()).optional(),
-  /** @type 只会保存 9 种颜色 */
-  colors: z.array(z.string().length(7).startsWith("#")).optional(),
-});
-
 export const ImageInput = {
-  create,
+  create: z.object({
+    libraryId: z.number(),
+    path: z.string(),
+    thumbnailPath: z.string(),
+    name: z.string(),
+    size: z.number(),
+    createTime: z.date(),
+    lastTime: z.date(),
+    ext: z.enum(CONSTANT.EXT),
+    width: z.number(),
+    height: z.number(),
+    duration: z.number().optional(),
+    folders: z
+      .array(
+        z.object({
+          id: z.string(),
+          name: z.string().optional(),
+        }),
+      )
+      .optional(),
+    tags: z.array(z.string()).optional(),
+    /** @type 只会保存 9 种颜色 */
+    colors: z.array(z.string().length(7).startsWith("#")).optional(),
+  }),
 
   delete: z.object({
     id: z.number().optional(),
@@ -45,8 +43,29 @@ export const ImageInput = {
   }),
 
   update: z.object({
-    ...create.shape,
+    libraryId: z.number(),
     id: z.number(),
+    path: z.string().optional(),
+    thumbnailPath: z.string().optional(),
+    name: z.string().optional(),
+    size: z.number().optional(),
+    createTime: z.date().optional(),
+    lastTime: z.date().optional(),
+    ext: z.enum(CONSTANT.EXT).optional(),
+    width: z.number().optional(),
+    height: z.number().optional(),
+    duration: z.number().optional(),
+    folders: z
+      .array(
+        z.object({
+          id: z.string(),
+          name: z.string().optional(),
+        }),
+      )
+      .optional(),
+    tags: z.array(z.string()).optional(),
+    /** @type 只会保存 9 种颜色 */
+    colors: z.array(z.string().length(7).startsWith("#")).optional(),
   }),
 
   get: z.object({
@@ -187,29 +206,32 @@ export const Image = {
       },
     };
 
-    updateArgs.data["folders"] = updateFolders(input.folders || [], oldImage[0]?.folders || []);
-    updateArgs.data["tags"] = updateTags(input.tags || [], oldImage[0]?.tags || []);
-    updateArgs.data["colors"] = updateColors(input.colors || [], oldImage[0]?.colors || []);
+    updateArgs.data["folders"] = input.folders ? updateFolders(input.folders, oldImage[0]?.folders || []) : undefined;
+    updateArgs.data["tags"] = input.tags ? updateTags(input.tags, oldImage[0]?.tags || []) : undefined;
+    updateArgs.data["colors"] = input.colors ? updateColors(input.colors, oldImage[0]?.colors || []) : undefined;
 
     return await prisma.image.update(updateArgs);
   },
 };
 
 const updateFolders = (folders: { id: string }[], oldFolders: Folder[]) => {
-  const waitDeleteIds = differenceBy(folders, oldFolders, "id").map((f) => ({ id: f.id }));
+  const waitDeleteIds = folders.length === 0 ? oldFolders : differenceBy(folders, oldFolders, "id");
 
   return {
-    disconnect: waitDeleteIds,
+    disconnect: waitDeleteIds.map((f) => ({ id: f.id })),
     connect: folders.map((f) => ({ id: f.id })),
   };
 };
 
 const updateTags = (tags: string[], oldTags: Tag[]) => {
-  const waitDeleteIds = differenceBy(
-    tags.map((t) => ({ name: t })),
-    oldTags,
-    "name",
-  );
+  const waitDeleteIds =
+    tags.length === 0
+      ? oldTags
+      : differenceBy(
+          tags.map((t) => ({ name: t })),
+          oldTags,
+          "name",
+        );
 
   return {
     disconnect: waitDeleteIds,
@@ -218,11 +240,14 @@ const updateTags = (tags: string[], oldTags: Tag[]) => {
 };
 
 const updateColors = (colors: string[], oldColors: Color[]) => {
-  const waitDeleteIds = differenceBy(
-    colors.map((c) => ({ rgb: hexToRgb(c) })),
-    oldColors,
-    "rgb",
-  );
+  const waitDeleteIds =
+    colors.length === 0
+      ? oldColors
+      : differenceBy(
+          colors.map((c) => ({ rgb: hexToRgb(c) })),
+          oldColors,
+          "rgb",
+        );
 
   return {
     disconnect: waitDeleteIds,

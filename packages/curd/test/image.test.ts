@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { beforeEach, describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, it, test } from "vitest";
 import { type z } from "zod";
 
 import { type Constant } from "@acme/constant";
@@ -54,7 +54,7 @@ describe("@acme/curd image", async () => {
     });
 
     expect(img).toMatchObject(imageMock);
-    const f = await curd.folder.get({ library: lib.id });
+    const f = await curd.folder.get({ libraryId: lib.id });
     expect(f).toHaveLength(folders.length);
 
     const nfIds = f.map((f) => f.id);
@@ -115,4 +115,64 @@ describe("@acme/curd image", async () => {
     const colors = await curd.color.get({ imageId: img.id });
     expect(colors).toHaveLength(1);
   });
+
+  test<LocalTestContext>(`Update image and updates folder`, async ({ imageMock }) => {
+    const folder = await curd.folder.upsert({
+      id: "xyz",
+      name: faker.system.fileName(),
+      libraryId: imageMock.libraryId,
+    });
+
+    const img = await curd.image.create({
+      ...imageMock,
+      path: "xyz",
+    });
+
+    await curd.image.update({
+      id: img.id,
+      libraryId: img.libraryId,
+      folders: [{ id: folder.id }],
+    });
+
+    // update folder
+    const res = await curd.image.get({ id: img.id });
+    expect(res).toHaveLength(1);
+    expect(res[0]?.folders).toHaveLength(1);
+    expect(res[0]?.folders[0]?.id).toBe(folder.id);
+  });
+
+  test<LocalTestContext>(`Update image and folders = [] | undefined`, async () => {
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
+
+    const item = img[0];
+    if (item) {
+      it("folders:undefined", async () => {
+        await curd.image.update({
+          id: item.id,
+          libraryId: item.libraryId,
+          folders: undefined,
+        });
+
+        const img2 = await curd.image.get({ id: item.id });
+        expect(img2).toHaveLength(1);
+        expect(img2[0]?.folders).toHaveLength(1);
+      });
+
+      it("folders:[]", async () => {
+        await curd.image.update({
+          id: item.id,
+          libraryId: item.libraryId,
+          folders: undefined,
+        });
+
+        const img2 = await curd.image.get({ id: item.id });
+        expect(img2).toHaveLength(1);
+        expect(img2[0]?.folders).toHaveLength(0);
+      });
+    }
+  });
+
+  // Todo: update tags
+  // Todo: update colors
 });
