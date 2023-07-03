@@ -18,7 +18,7 @@ export const handleFolder = async (folders: Folder[], lib: Library, emit?: (opti
 
   for (const [index, folder] of f.entries()) {
     await curd.folder.upsert({
-      folderId: folder.id,
+      id: folder.id,
       name: folder.name,
       libraryId: lib.id,
     });

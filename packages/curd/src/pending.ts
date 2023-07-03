@@ -25,8 +25,8 @@ export const Pending = {
     });
   },
 
-  get: (obj: z.infer<(typeof PendingInput)["get"]>) => {
-    return prisma.pending.findMany({ where: { libraryId: obj.libraryId } });
+  get: async (obj: z.infer<(typeof PendingInput)["get"]>) => {
+    return await prisma.pending.findMany({ where: { libraryId: obj.libraryId } });
   },
 
   delete: (path: string) => {

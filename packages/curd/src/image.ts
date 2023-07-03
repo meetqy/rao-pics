@@ -1,9 +1,15 @@
+import { differenceBy } from "lodash";
 import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";
-import { prisma, type Folder, type Prisma } from "@acme/db";
+import { prisma, type Color, type Folder, type Prisma, type Tag } from "@acme/db";
 
 import curd from "..";
+
+const hexToRgb = (hex: string) => {
+  const n = parseInt(hex.replace("#", ""), 16);
+  return Math.ceil(n / 100) * 100;
+};
 
 const create = z.object({
   libraryId: z.number(),
@@ -42,9 +48,41 @@ export const ImageInput = {
     ...create.shape,
     id: z.number(),
   }),
+
+  get: z.object({
+    id: z.union([z.number(), z.array(z.number())]).optional(),
+    path: z.string().optional(),
+  }),
 };
 
 export const Image = {
+  get: (obj: z.infer<(typeof ImageInput)["get"]>) => {
+    const input = ImageInput.get.parse(obj);
+
+    const { id, path } = input;
+
+    const where: Prisma.ImageWhereInput = {};
+
+    if (id) {
+      where.id = {
+        in: typeof input.id === "number" ? [input.id] : input.id,
+      };
+    }
+
+    if (path) {
+      where.path = path;
+    }
+
+    return prisma.image.findMany({
+      where,
+      include: {
+        folders: true,
+        tags: true,
+        colors: true,
+      },
+    });
+  },
+
   /**
    * 创建图片的同时创建文件夹、标签、颜色
    * 文件夹、颜色，可以通过 id 修改，但是标签只能创建，不能修改。
@@ -83,12 +121,7 @@ export const Image = {
       colors = {
         connectOrCreate: [
           // 颜色 9 种，每种颜色的值为 100 的倍数，并且去重，将颜色总数减少 100 倍。
-          ...new Set(
-            input.colors.splice(0, 9).map((color) => {
-              const n = parseInt(color.replace("#", ""), 16);
-              return Math.ceil(n / 100) * 100;
-            }),
-          ),
+          ...new Set(input.colors.splice(0, 9).map((color) => hexToRgb(color))),
         ].map((color) => ({
           where: { rgb: color },
           create: { rgb: color },
@@ -134,17 +167,65 @@ export const Image = {
 
   update: async (obj: z.infer<(typeof ImageInput)["update"]>) => {
     const input = ImageInput.update.parse(obj);
-    const [oldTags, oldFolders] = await Promise.all([curd.tag.get({ imageId: input.id }), curd.folder.get({ imageId: input.id })]);
+    const oldImage = await curd.image.get({ id: input.id });
 
-    if (input.folders) {
-      // await curd.folder.upsert()
-    }
+    // 更新 tag/folder/color 时，只有一种情况，删除/新增。不会修改到 tag/folder/color 本身。
+    const updateArgs: Prisma.ImageUpdateArgs = {
+      where: { id: input.id },
+      data: {
+        libraryId: input.libraryId,
+        path: input.path,
+        thumbnailPath: input.thumbnailPath,
+        name: input.name,
+        size: input.size,
+        createTime: input.createTime,
+        lastTime: input.lastTime,
+        ext: input.ext,
+        width: input.width,
+        height: input.height,
+        duration: input.duration,
+      },
+    };
 
-    // 找出被删除的 folder， disconnect
-    // const disconnectFolder = findDisconnectFolder(oldFolders, input.folders);
+    updateArgs.data["folders"] = updateFolders(input.folders || [], oldImage[0]?.folders || []);
+    updateArgs.data["tags"] = updateTags(input.tags || [], oldImage[0]?.tags || []);
+    updateArgs.data["colors"] = updateColors(input.colors || [], oldImage[0]?.colors || []);
+
+    return await prisma.image.update(updateArgs);
   },
 };
 
-const findDisconnectFolder = (oldFolders: Folder[], newFolders: { id: string }[]): string[] => {
-  return [];
+const updateFolders = (folders: { id: string }[], oldFolders: Folder[]) => {
+  const waitDeleteIds = differenceBy(folders, oldFolders, "id").map((f) => ({ id: f.id }));
+
+  return {
+    disconnect: waitDeleteIds,
+    connect: folders.map((f) => ({ id: f.id })),
+  };
+};
+
+const updateTags = (tags: string[], oldTags: Tag[]) => {
+  const waitDeleteIds = differenceBy(
+    tags.map((t) => ({ name: t })),
+    oldTags,
+    "name",
+  );
+
+  return {
+    disconnect: waitDeleteIds,
+    connect: tags.map((tag) => ({ name: tag })),
+  };
+};
+
+const updateColors = (colors: string[], oldColors: Color[]) => {
+  const waitDeleteIds = differenceBy(
+    colors.map((c) => ({ rgb: hexToRgb(c) })),
+    oldColors,
+    "rgb",
+  );
+
+  return {
+    disconnect: waitDeleteIds,
+    connect: colors.map((c) => ({ rgb: hexToRgb(c) })),
+  };
 };

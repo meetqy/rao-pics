@@ -9,7 +9,7 @@ import curd from "../index";
 interface LocalTestContext {
   lib: Library;
   input: {
-    folderId: string;
+    id: string;
     name: string;
     libraryId: number;
   };
@@ -24,7 +24,7 @@ const createLib = () =>
   });
 
 const createInput = (libraryId: number) => ({
-  folderId: faker.string.uuid(),
+  id: faker.string.uuid(),
   name: faker.lorem.word(),
   libraryId,
 });
@@ -48,21 +48,13 @@ describe("@acme/curd folder", () => {
   test<LocalTestContext>("Upsert folder create", async (ctx) => {
     const { input } = ctx;
 
-    expect(await curd.folder.upsert(input)).toMatchObject({
-      id: input.folderId,
-      name: input.name,
-      libraryId: input.libraryId,
-    });
+    expect(await curd.folder.upsert(input)).toMatchObject(input);
   });
 
   test<LocalTestContext>("Upsert folder update", async (ctx) => {
     const { input } = ctx;
 
-    expect(await curd.folder.upsert(input)).toMatchObject({
-      id: input.folderId,
-      name: input.name,
-      libraryId: input.libraryId,
-    });
+    expect(await curd.folder.upsert(input)).toMatchObject(input);
   });
 
   test<LocalTestContext>("Get folder by libraryId or id", async (ctx) => {
@@ -92,4 +84,6 @@ describe("@acme/curd folder", () => {
 
     expect(await curd.folder.get({ libraryId: lib.id })).toHaveLength(0);
   });
+
+  // TODO: test get by imageId
 });

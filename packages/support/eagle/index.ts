@@ -30,13 +30,13 @@ export const start = async (props: Props) => {
 
     void curd.pending.get({ libraryId: library.id }).then(async (pendings) => {
       option.count = pendings.length;
+
       for (const p of pendings) {
         option.current++;
         try {
           if (p.type === "delete") {
             await curd.image.delete({ path: p.path });
           } else if (p.type === "update") {
-            // TODO: update image
           } else if (p.type === "create") {
             const res = await createImage(p.path, library);
             if (!res) {
@@ -55,6 +55,7 @@ export const start = async (props: Props) => {
       }
     });
   } catch (e) {
+    console.log(e);
     onError?.(e);
   }
 };

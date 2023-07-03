@@ -5,17 +5,18 @@ import { prisma, type Prisma } from "@acme/db";
 export const FolderInput = {
   get: z.object({
     libraryId: z.number().optional(),
+    imageId: z.number().optional(),
     id: z.string().optional(),
   }),
   upsert: z.object({
-    folderId: z.string(),
+    id: z.string(),
     name: z.string(),
     libraryId: z.number(),
   }),
   delete: z
     .object({
       libraryId: z.number(),
-      id: z.string(),
+      id: z.union([z.string(), z.array(z.string())]),
     })
     .partial()
     .refine((v) => v.libraryId || v.id, { message: "libraryId or id is required" }),
@@ -24,16 +25,21 @@ export const FolderInput = {
 export const Folder = {
   get: (obj: z.infer<(typeof FolderInput)["get"]>) => {
     const input = FolderInput.get.parse(obj);
-    const { libraryId, id } = input;
 
     const where: Prisma.FolderWhereInput = {};
 
-    if (libraryId) {
-      where.libraryId = libraryId;
+    if (input.libraryId) {
+      where.libraryId = input.libraryId;
     }
 
-    if (id) {
-      where.id = id;
+    if (input.id) {
+      where.id = input.id;
+    }
+
+    if (input.imageId) {
+      where.images = {
+        some: { id: input.imageId },
+      };
     }
 
     return prisma.folder.findMany({
@@ -51,16 +57,18 @@ export const Folder = {
   },
 
   upsert: (obj: z.infer<(typeof FolderInput)["upsert"]>) => {
-    const input = {
-      id: obj.folderId,
+    const input = FolderInput.upsert.parse(obj);
+
+    const _input = {
+      id: obj.id,
       name: obj.name,
       library: { connect: { id: obj.libraryId } },
     };
 
     return prisma.folder.upsert({
-      where: { id: obj.folderId },
-      update: input,
-      create: input,
+      where: { id: input.id },
+      update: _input,
+      create: _input,
     });
   },
 
@@ -70,7 +78,9 @@ export const Folder = {
     return prisma.folder.deleteMany({
       where: {
         libraryId: input.libraryId,
-        id: input.id,
+        id: {
+          in: typeof input.id === "string" ? [input.id] : input.id,
+        },
       },
     });
   },
