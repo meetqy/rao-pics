@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, test } from "vitest";
 import { type z } from "zod";
 
 import { type Constant } from "@acme/constant";
-import { type Library } from "@acme/db";
+import { prisma, type Library } from "@acme/db";
 import Mock from "@acme/mock";
 
 import curd, { type ZodInput } from "..";
@@ -116,63 +116,135 @@ describe("@acme/curd image", async () => {
     expect(colors).toHaveLength(1);
   });
 
-  test<LocalTestContext>(`Update image and updates folder`, async ({ imageMock }) => {
-    const folder = await curd.folder.upsert({
-      id: "xyz",
-      name: faker.system.fileName(),
-      libraryId: imageMock.libraryId,
-    });
+  test<LocalTestContext>(`Update image and folders filed: {id: string}[]`, async ({ imageMock }) => {
+    // create two folder and one image.
+    await Promise.all([
+      curd.folder.upsert({
+        id: "xyz",
+        name: faker.system.fileName(),
+        libraryId: imageMock.libraryId,
+      }),
+      curd.folder.upsert({
+        id: "uvw",
+        name: faker.system.fileName(),
+        libraryId: imageMock.libraryId,
+      }),
+      curd.image.create({
+        ...imageMock,
+        path: "xyz",
+      }),
+    ]);
 
-    const img = await curd.image.create({
-      ...imageMock,
-      path: "xyz",
-    });
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
 
-    await curd.image.update({
-      id: img.id,
-      libraryId: img.libraryId,
-      folders: [{ id: folder.id }],
-    });
+    const item = img[0];
 
-    // update folder
-    const res = await curd.image.get({ id: img.id });
-    expect(res).toHaveLength(1);
-    expect(res[0]?.folders).toHaveLength(1);
-    expect(res[0]?.folders[0]?.id).toBe(folder.id);
+    if (item) {
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        folders: [{ id: "xyz" }, { id: "uvw" }],
+      });
+
+      const img2 = await curd.image.get({ id: item.id });
+      expect(img2).toHaveLength(1);
+      expect(img2[0]?.folders).toHaveLength(2);
+    }
   });
 
-  test<LocalTestContext>(`Update image and folders = [] | undefined`, async () => {
+  test<LocalTestContext>(`Update image and folders filed: undefined`, async () => {
     const img = await curd.image.get({ path: "xyz" });
     expect(img).toHaveLength(1);
 
     const item = img[0];
     if (item) {
-      it("folders:undefined", async () => {
-        await curd.image.update({
-          id: item.id,
-          libraryId: item.libraryId,
-          folders: undefined,
-        });
-
-        const img2 = await curd.image.get({ id: item.id });
-        expect(img2).toHaveLength(1);
-        expect(img2[0]?.folders).toHaveLength(1);
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        folders: undefined,
       });
 
-      it("folders:[]", async () => {
-        await curd.image.update({
-          id: item.id,
-          libraryId: item.libraryId,
-          folders: undefined,
-        });
-
-        const img2 = await curd.image.get({ id: item.id });
-        expect(img2).toHaveLength(1);
-        expect(img2[0]?.folders).toHaveLength(0);
-      });
+      const img2 = await curd.image.get({ id: item.id });
+      expect(img2).toHaveLength(1);
+      expect(img2[0]?.folders).toHaveLength(2);
     }
   });
 
-  // Todo: update tags
+  test<LocalTestContext>(`Update image and folders filed: []`, async () => {
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
+
+    const item = img[0];
+
+    if (item) {
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        folders: [],
+      });
+
+      const img2 = await curd.image.get({ id: item.id });
+      expect(img2).toHaveLength(1);
+      expect(img2[0]?.folders).toHaveLength(0);
+    }
+  });
+
+  test<LocalTestContext>(`Update image and updates tags: string[]`, async ({ imageMock }) => {
+    await Promise.all([curd.tag.upsert({ name: "abc", libraryId: imageMock.libraryId }), curd.tag.upsert({ name: "xyz", libraryId: imageMock.libraryId })]);
+
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
+
+    const item = img[0];
+    if (item) {
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        tags: ["abc", "xyz"],
+      });
+
+      const img1 = await curd.image.get({ path: "xyz" });
+
+      expect(img1[0]?.tags).toHaveLength(2);
+    }
+  });
+
+  test<LocalTestContext>(`Update image and updates tags: undefined`, async () => {
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
+
+    const item = img[0];
+    if (item) {
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        tags: undefined,
+      });
+
+      const img1 = await curd.image.get({ path: "xyz" });
+
+      expect(img1[0]?.tags).toHaveLength(2);
+    }
+  });
+
+  test<LocalTestContext>(`Update image and updates tags: []`, async () => {
+    const img = await curd.image.get({ path: "xyz" });
+    expect(img).toHaveLength(1);
+
+    const item = img[0];
+    if (item) {
+      await curd.image.update({
+        id: item.id,
+        libraryId: item.libraryId,
+        tags: [],
+      });
+
+      const img1 = await curd.image.get({ path: "xyz" });
+
+      expect(img1[0]?.tags).toHaveLength(0);
+    }
+  });
+
   // Todo: update colors
 });
