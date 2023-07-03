@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { beforeEach, describe, expect, it, test } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 import { type z } from "zod";
 
 import { type Constant } from "@acme/constant";
-import { prisma, type Library } from "@acme/db";
+import { type Library } from "@acme/db";
 import Mock from "@acme/mock";
 
 import curd, { type ZodInput } from "..";
