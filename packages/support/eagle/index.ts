@@ -27,6 +27,14 @@ export const start = async (props: Props) => {
       failCount: 0,
     };
 
+    const addFail = (path: string, library: Library) => {
+      void curd.fail.create({
+        libraryId: library.id,
+        path,
+      });
+      option.failCount++;
+    };
+
     void curd.pending.get({ libraryId: library.id }).then(async (pendings) => {
       for (const p of pendings) {
         option.current++;
@@ -37,17 +45,17 @@ export const start = async (props: Props) => {
           } else if (p.type === "update") {
             // update
             const res = await updateImage(p.path, library);
-            if (!res) option.failCount++;
+            if (!res) addFail(p.path, library);
           } else if (p.type === "create") {
             // create
             const res = await createImage(p.path, library);
-            if (!res) option.failCount++;
+            if (!res) addFail(p.path, library);
           }
 
           await curd.pending.delete(p.path);
         } catch (e) {
           console.error(e);
-          option.failCount++;
+          addFail(p.path, library);
           await curd.pending.delete(p.path);
           onError?.(e);
         }

@@ -1,5 +1,6 @@
 import { Color, ColorInput } from "./src/color";
 import { Config, ConfigInput } from "./src/config";
+import { Fail, FailInput } from "./src/fail";
 import { Folder, FolderInput } from "./src/folder";
 import { Image, ImageInput } from "./src/image";
 import { Library, LibraryInput } from "./src/library";
@@ -14,6 +15,7 @@ export const ZodInput = {
   image: ImageInput,
   color: ColorInput,
   pending: PendingInput,
+  fail: FailInput,
 };
 
 /**
@@ -29,6 +31,7 @@ const curd = {
   image: Image,
   color: Color,
   pending: Pending,
+  fail: Fail,
 };
 
 export default curd;

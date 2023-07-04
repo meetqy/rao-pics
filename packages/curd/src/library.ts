@@ -37,7 +37,7 @@ export const Library = {
     return prisma.library.findMany({
       where,
       include: {
-        _count: { select: { images: true } },
+        _count: { select: { images: true, pendings: true, fails: true } },
       },
     });
   },

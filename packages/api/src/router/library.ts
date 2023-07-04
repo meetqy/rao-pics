@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";
+import curd, { ZodInput } from "@acme/curd";
 import { prisma } from "@acme/db";
 
 import { t } from "../trpc";
@@ -14,13 +15,7 @@ const LibraryAddInput = z.object({
 export type LibraryAdd = z.infer<typeof LibraryAddInput>;
 
 export const library = t.router({
-  get: t.procedure.query(async ({}) => {
-    return await prisma.library.findMany({
-      include: {
-        _count: { select: { images: true, pendings: true } },
-      },
-    });
-  }),
+  get: t.procedure.input(ZodInput.library.get).query(({ input }) => curd.library.get(input)),
 
   add: t.procedure.input(LibraryAddInput).mutation(async ({ input }) => {
     return await prisma.library.create({

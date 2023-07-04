@@ -177,9 +177,11 @@ function Home() {
                   />
                 </svg>
 
-                <span className="ml-2">已同步</span>
+                <span className="ml-2">已同步/同步失败</span>
               </span>
-              <span className="text-primary font-bold">{activeItem?._count.images}</span>
+              <span className="text-primary font-bold">
+                {activeItem?._count.images}/{activeItem?._count.fails}
+              </span>
             </div>
 
             <div className="flex-1 flex items-center justify-around !px-0">
