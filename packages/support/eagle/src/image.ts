@@ -84,7 +84,7 @@ const getImageBase = (path: string) => {
   const metadata = fs.readJSONSync(path) as Metadata;
   const stats = fs.statSync(path);
   const imagePath = join("images", `${metadata.id}.info`, `${metadata.name}.${metadata.ext}`);
-  const thumbnailPath = metadata.noThumbnail ? imagePath : join("images", `${metadata.id}.info`, `${metadata.name}thumbnail.png`);
+  const thumbnailPath = metadata.noThumbnail ? imagePath : join("images", `${metadata.id}.info`, `${metadata.name}_thumbnail.png`);
   const ext = metadata.ext as Constant["ext"];
 
   if (!CONSTANT["EXT"].includes(ext)) {
