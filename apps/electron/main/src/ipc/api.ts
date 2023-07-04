@@ -16,19 +16,15 @@ export const createElectronApiIPCHandler = () => {
     // eagle
     if (dir.endsWith(".library")) {
       const lib = await curd.library.create({ dir, name, type: "eagle" });
-      const count = await startWatcher({
+      await startWatcher({
         libraryId: lib.id,
         paths: join(dir, "./images/**/metadata.json"),
       });
-
-      await curd.library.update({ id: lib.id, fileCount: count, failCount: 0 });
 
       return {
         id: lib.id,
         name,
         dir,
-        fileCount: count,
-        failCount: 0,
         type: "eagle",
       };
     } else {

@@ -9,8 +9,6 @@ const LibraryAddInput = z.object({
   name: z.string(),
   dir: z.string(),
   type: z.enum(CONSTANT.APP),
-  fileCount: z.number().optional(),
-  failCount: z.number().optional(),
 });
 
 export type LibraryAdd = z.infer<typeof LibraryAddInput>;
@@ -19,7 +17,7 @@ export const library = t.router({
   get: t.procedure.query(async ({}) => {
     return await prisma.library.findMany({
       include: {
-        _count: { select: { images: true } },
+        _count: { select: { images: true, pendings: true } },
       },
     });
   }),
@@ -29,24 +27,6 @@ export const library = t.router({
       data: input,
     });
   }),
-
-  update: t.procedure
-    .input(
-      z.object({
-        id: z.number(),
-        fileCount: z.number().optional(),
-        failCount: z.number().optional(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      return await prisma.library.update({
-        where: { id: input.id },
-        data: {
-          ...input,
-          lastSyncTime: new Date(),
-        },
-      });
-    }),
 
   remove: t.procedure.input(z.number()).mutation(async ({ input }) => {
     await prisma.$transaction([

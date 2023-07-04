@@ -19,7 +19,6 @@ function Home() {
   const { data: config } = trpc.config.get.useQuery();
   const library = trpc.library.get.useQuery();
   const removeLibrary = trpc.library.remove.useMutation();
-  const updateLibrary = trpc.library.update.useMutation();
 
   const isInit = useRef<boolean>(false);
 
@@ -68,41 +67,6 @@ function Home() {
       libraryId: activeItem.id,
     });
   };
-
-  const percent = useMemo(() => {
-    if (progress) {
-      const { count, current } = progress;
-      return ~~((current / count) * 100);
-    }
-
-    if (activeItem) {
-      const current = activeItem._count.images;
-      const count = activeItem.fileCount;
-      const failCount = activeItem.failCount || 0;
-
-      return ~~(((current + failCount) / count) * 100);
-    }
-
-    return 0;
-  }, [activeItem, progress]);
-
-  // sync completed.
-  useEffect(() => {
-    if (percent === 100 && progress && activeItem) {
-      const { count, failCount } = progress;
-
-      updateLibrary
-        .mutateAsync({
-          id: activeItem.id,
-          fileCount: count,
-          failCount: failCount,
-        })
-        .then(() => {
-          utils.library.get.invalidate();
-          setProgress(undefined);
-        });
-    }
-  }, [percent, progress, activeItem]);
 
   const showOpenDialog = () => {
     window.dialog
@@ -159,7 +123,7 @@ function Home() {
 
                 <span className="ml-2">文件夹/库ID</span>
               </span>
-              <span>{activeItem?.id}</span>
+              <span className="font-mono">{activeItem?.id}</span>
             </div>
 
             <div>
@@ -183,7 +147,7 @@ function Home() {
                 </svg>
                 <span className="ml-2">最后同步</span>
               </span>
-              <span>{activeItem?.lastSyncTime?.toLocaleString("zh", { hour12: false }) || "未同步"}</span>
+              <span className="font-mono">{activeItem?.lastSyncTime?.toLocaleString("zh", { hour12: false }) || "未同步"}</span>
             </div>
 
             <div>
@@ -215,21 +179,23 @@ function Home() {
 
                 <span className="ml-2">已同步</span>
               </span>
-              <span className="text-primary font-bold">1024</span>
+              <span className="text-primary font-bold">{activeItem?._count.images}</span>
             </div>
 
             <div className="flex-1 flex items-center justify-around !px-0">
-              <div className="flex justify-center items-center w-1/2 h-full bg-base-200/80">
+              <div className="flex justify-center items-center w-1/2 h-full">
                 <div
                   className="radial-progress text-neutral-content/70 bg-neutral border-neutral/50 border-4"
-                  style={{ "--value": percent, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
+                  style={{ "--value": 23, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
                 >
-                  <span className="text-neutral-content text-xl font-bold">1024</span>
-                  <span className="text-neutral-content/80">待同步</span>
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="text-neutral-content text-xl font-bold">{activeItem?._count.pendings}</span>
+                    <span className="text-neutral-content/80">待同步</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex flex-col space-y-4 w-1/2 h-full justify-center px-8">
+              <div className="flex flex-col space-y-4 w-1/2 h-full justify-center px-8 bg-base-200/40">
                 <button className="btn" onClick={onSyncClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path

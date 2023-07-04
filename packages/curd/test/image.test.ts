@@ -21,7 +21,6 @@ describe("@acme/curd image", async () => {
       type: "eagle",
       name: faker.system.fileName(),
       dir: faker.system.filePath(),
-      fileCount: faker.number.int({ max: 9999999 }),
     });
 
     ctx.lib = lib;

@@ -15,14 +15,6 @@ export const LibraryInput = {
     name: z.string(),
     dir: z.string(),
     type: z.enum(["eagle", "pixcall", "billfish"]),
-    fileCount: z.number().optional(),
-    failCount: z.number().optional(),
-  }),
-
-  update: z.object({
-    id: z.number(),
-    fileCount: z.number().optional(),
-    failCount: z.number().optional(),
   }),
 
   delete: z.object({
@@ -53,16 +45,6 @@ export const Library = {
   create: (obj: z.infer<(typeof LibraryInput)["create"]>) => {
     return prisma.library.create({
       data: obj,
-    });
-  },
-
-  update: (obj: z.infer<(typeof LibraryInput)["update"]>) => {
-    return prisma.library.update({
-      where: { id: obj.id },
-      data: {
-        ...obj,
-        lastSyncTime: new Date(),
-      },
     });
   },
 

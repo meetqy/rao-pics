@@ -19,7 +19,6 @@ const createLib = () =>
   curd.library.create({
     name: faker.lorem.word(),
     dir: faker.system.filePath(),
-    fileCount: faker.number.int({ max: 9999999 }),
     type: "eagle",
   });
 

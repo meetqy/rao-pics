@@ -24,13 +24,10 @@ export const start = async (props: Props) => {
     const option: EmitOption = {
       type: "image",
       current: 0,
-      count: 0,
       failCount: 0,
     };
 
     void curd.pending.get({ libraryId: library.id }).then(async (pendings) => {
-      option.count = pendings.length;
-
       for (const p of pendings) {
         option.current++;
         try {

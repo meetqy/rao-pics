@@ -12,7 +12,6 @@ describe("@acme/curd pending", async () => {
     type: "eagle",
     name: faker.system.fileName(),
     dir: faker.system.filePath(),
-    fileCount: faker.number.int({ max: 9999999 }),
   });
 
   test("Create pending image", async () => {
