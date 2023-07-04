@@ -13,16 +13,12 @@ import { type Metadata } from "../types";
  * @param path metadata.json path
  */
 export const createImage = async (path: string, library: Library) => {
-  try {
-    const base = getImageBase(path);
-    const args = transformImageArgs(base, library);
+  const base = getImageBase(path);
+  const args = transformImageArgs(base, library);
 
-    if (!args) return null;
+  if (!args) return null;
 
-    return await curd.image.create(args);
-  } catch (e) {
-    throw e;
-  }
+  return await curd.image.create(args);
 };
 
 /**
@@ -30,58 +26,55 @@ export const createImage = async (path: string, library: Library) => {
  * @param path metadata.json path
  */
 export const updateImage = async (path: string, library: Library) => {
-  try {
-    const base = getImageBase(path);
-    if (!base) return null;
+  const base = getImageBase(path);
+  if (!base) return null;
 
-    const args = transformImageArgs(base, library);
+  const args = transformImageArgs(base, library);
 
-    if (!args) return null;
+  if (!args) return null;
 
-    const image = await curd.image.get({
-      path: base.imagePath,
+  const image = await curd.image.get({
+    path: base.imagePath,
+  });
+
+  const item = image[0];
+  if (item) {
+    // update tags
+    await Promise.all(
+      item.tags.map((tag) =>
+        curd.tag.upsert({
+          libraryId: library.id,
+          name: tag.name,
+          imageIds: [item.id],
+        }),
+      ),
+    );
+
+    // update color
+    await Promise.all(
+      item.colors
+        .map((c) => {
+          const hex = rgbToHex(c.rgb);
+          if (hex) {
+            return curd.color.create({
+              imageId: item.id,
+              color: hex,
+            });
+          }
+
+          return null;
+        })
+        .filter(Boolean)
+        .splice(0, 9),
+    );
+
+    return await curd.image.update({
+      id: item.id,
+      ...args,
     });
-
-    const item = image[0];
-    if (item) {
-      // update tags
-      await Promise.all(
-        item.tags.map((tag) =>
-          curd.tag.upsert({
-            libraryId: library.id,
-            name: tag.name,
-            imageIds: [item.id],
-          }),
-        ),
-      );
-
-      // update color
-      await Promise.all(
-        item.colors
-          .map((c) => {
-            const hex = rgbToHex(c.rgb);
-            if (hex) {
-              return curd.color.create({
-                imageId: item.id,
-                color: hex,
-              });
-            }
-
-            return null;
-          })
-          .filter(Boolean),
-      );
-
-      return await curd.image.update({
-        id: item.id,
-        ...args,
-      });
-    }
-
-    return;
-  } catch (e) {
-    throw e;
   }
+
+  return;
 };
 
 /**
@@ -90,27 +83,23 @@ export const updateImage = async (path: string, library: Library) => {
  * @returns
  */
 const getImageBase = (path: string) => {
-  try {
-    const metadata = fs.readJSONSync(path) as Metadata;
-    const stats = fs.statSync(path);
-    const imagePath = join("images", `${metadata.id}.info`, `${metadata.name}.${metadata.ext}`);
-    const thumbnailPath = metadata.noThumbnail ? imagePath : join("images", `${metadata.id}.info`, `${metadata.name}thumbnail.png`);
-    const ext = metadata.ext as Constant["ext"];
+  const metadata = fs.readJSONSync(path) as Metadata;
+  const stats = fs.statSync(path);
+  const imagePath = join("images", `${metadata.id}.info`, `${metadata.name}.${metadata.ext}`);
+  const thumbnailPath = metadata.noThumbnail ? imagePath : join("images", `${metadata.id}.info`, `${metadata.name}thumbnail.png`);
+  const ext = metadata.ext as Constant["ext"];
 
-    if (!CONSTANT["EXT"].includes(ext)) {
-      return null;
-    }
-
-    return {
-      metadata,
-      stats,
-      imagePath,
-      thumbnailPath,
-      ext,
-    };
-  } catch (e) {
-    throw e;
+  if (!CONSTANT["EXT"].includes(ext)) {
+    return null;
   }
+
+  return {
+    metadata,
+    stats,
+    imagePath,
+    thumbnailPath,
+    ext,
+  };
 };
 
 /**
@@ -120,27 +109,26 @@ const getImageBase = (path: string) => {
  * @returns Image | undefined, undefined means the image is not supported
  */
 const transformImageArgs = (base: ReturnType<typeof getImageBase>, library: Library) => {
-  try {
-    if (!base) return null;
-    const { metadata, stats, imagePath, thumbnailPath, ext } = base;
+  if (!base) return null;
+  const { metadata, stats, imagePath, thumbnailPath, ext } = base;
 
-    return {
-      libraryId: library.id,
-      path: imagePath,
-      thumbnailPath,
-      name: metadata.name,
-      size: metadata.size,
-      createTime: stats.ctime,
-      lastTime: stats.mtime,
-      ext,
-      width: metadata.width,
-      height: metadata.height,
-      duration: metadata.duration,
-      folders: metadata.folders?.map((folder) => ({ id: folder })),
-      tags: metadata.tags,
-      colors: metadata.palettes?.map((palette) => rgbToHex(palette.color)).filter((c) => !!c) as string[],
-    };
-  } catch (e) {
-    throw e;
-  }
+  return {
+    libraryId: library.id,
+    path: imagePath,
+    thumbnailPath,
+    name: metadata.name,
+    size: metadata.size,
+    createTime: stats.ctime,
+    lastTime: stats.mtime,
+    ext,
+    width: metadata.width,
+    height: metadata.height,
+    duration: metadata.duration,
+    folders: metadata.folders?.map((folder) => ({ id: folder })),
+    tags: metadata.tags,
+    colors: metadata.palettes
+      ?.map((palette) => rgbToHex(palette.color))
+      .filter((c) => !!c)
+      .splice(0, 9) as string[],
+  };
 };

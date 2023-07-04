@@ -23,6 +23,21 @@ export const library = t.router({
     });
   }),
 
+  update: t.procedure
+    .input(
+      z.object({
+        id: z.number(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      return await prisma.library.update({
+        where: { id: input.id },
+        data: {
+          lastSyncTime: new Date(),
+        },
+      });
+    }),
+
   remove: t.procedure.input(z.number()).mutation(async ({ input }) => {
     await prisma.$transaction([
       prisma.image.deleteMany({

@@ -17,6 +17,7 @@ function Home() {
   const { data: config } = trpc.config.get.useQuery();
   const library = trpc.library.get.useQuery();
   const removeLibrary = trpc.library.remove.useMutation();
+  const updateLibrary = trpc.library.update.useMutation();
 
   const isInit = useRef<boolean>(false);
 
@@ -55,6 +56,33 @@ function Home() {
       }
     },
   });
+
+  const percent = useMemo(() => {
+    if (progress) {
+      const { current } = progress;
+      const count = activeItem?._count.pendings || 0;
+
+      if (count === 0) return 100;
+
+      return ~~((current / count) * 100);
+    }
+
+    return 100;
+  }, [activeItem, progress]);
+
+  // sync completed.
+  useEffect(() => {
+    if (percent === 100 && progress && activeItem) {
+      updateLibrary
+        .mutateAsync({
+          id: activeItem.id,
+        })
+        .then(() => {
+          utils.library.get.invalidate();
+          setProgress(undefined);
+        });
+    }
+  }, [percent, progress, activeItem]);
 
   const sync = trpc.sync.start.useMutation();
   const onSyncClick = () => {
@@ -188,7 +216,7 @@ function Home() {
               <div className="flex justify-center items-center w-1/2 h-full">
                 <div
                   className="radial-progress text-neutral-content/70 bg-neutral border-neutral/50 border-4"
-                  style={{ "--value": 23, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
+                  style={{ "--value": percent, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
                 >
                   <div className="flex flex-col items-center justify-center">
                     <span className="text-neutral-content text-xl font-bold">{activeItem?._count.pendings}</span>
