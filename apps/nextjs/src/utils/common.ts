@@ -1,13 +1,13 @@
 import { type Image } from "@acme/db";
 
 export const getImgUrl = (prefix: string, img: Image, original = false) => {
-  let imgName = img.noThumbnail ? `${img.name}.${img.ext}` : `${img.name}_thumbnail.png`;
+  let p = img.thumbnailPath || img.path;
 
   if (original) {
-    imgName = `${img.name}.${img.ext}`;
+    p = img.path;
   }
 
-  return `${prefix}/${img.libraryId}/${img.id}.info/${imgName}`;
+  return `${prefix}/${img.libraryId}/${p}`;
 };
 
 export const transformByteToUnit = (bytes = 0, decimals = 2) => {

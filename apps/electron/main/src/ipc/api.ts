@@ -1,41 +1,34 @@
 import { join, sep } from "path";
 import { ipcMain } from "electron";
-import { readdirSync } from "fs-extra";
 
 import { createAssetsServer } from "@acme/assets-server";
+import curd from "@acme/curd";
 import { type Library } from "@acme/db";
+import startWatcher from "@acme/watch";
 
 import { type HandleDirectoryReturn } from "../../../types";
 
 export const createElectronApiIPCHandler = () => {
-  ipcMain.handle("api.handleDirectory", (_e, dir: string): HandleDirectoryReturn => {
+  ipcMain.handle("api.handleDirectory", async (_e, dir: string): Promise<HandleDirectoryReturn> => {
     const dirArr = dir.split(sep);
     const name = dirArr[dirArr.length - 1];
 
     // eagle
     if (dir.endsWith(".library")) {
-      const len = readdirSync(join(dir, "./images")).filter((item) => item.endsWith(".info")).length;
+      const lib = await curd.library.create({ dir, name, type: "eagle" });
+      await startWatcher({
+        libraryId: lib.id,
+        paths: join(dir, "./images/**/metadata.json"),
+      });
 
       return {
+        id: lib.id,
         name,
         dir,
-        fileCount: len,
-        failCount: 0,
         type: "eagle",
       };
     } else {
       return null;
-      // const entries = fg.sync(`${dir}/**/*.{${CONSTANT.EXT.join(",")}}`, { deep: 4 });
-      // const len = entries.length;
-      // if (len < 1) return null;
-
-      // return {
-      //   name,
-      //   dir,
-      //   fileCount: len,
-      //   failCount: 0,
-      //   type: "folder",
-      // };
     }
   });
 

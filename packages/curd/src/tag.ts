@@ -5,13 +5,14 @@ import { prisma, type Prisma } from "@acme/db";
 export const TagInput = {
   get: z.object({
     /** library name or id */
-    library: z.union([z.string(), z.number()]),
+    library: z.union([z.string(), z.number()]).optional(),
+    imageId: z.number().optional(),
   }),
 
   upsert: z.object({
     name: z.string(),
     libraryId: z.number(),
-    imageIds: z.array(z.string()).optional(),
+    imageIds: z.array(z.number()).optional(),
   }),
 
   delete: z.object({
@@ -31,10 +32,22 @@ export const Tag = {
   get: (obj: z.infer<(typeof TagInput)["get"]>) => {
     const { library } = obj;
 
+    const where: Prisma.TagWhereInput = {};
+
+    if (library) {
+      where.OR = [{ libraryId: typeof library === "number" ? library : undefined }, { library: { name: library.toString() } }];
+    }
+
+    if (obj.imageId) {
+      where.images = {
+        some: {
+          id: obj.imageId,
+        },
+      };
+    }
+
     return prisma.tag.findMany({
-      where: {
-        OR: [{ libraryId: typeof library === "number" ? library : undefined }, { library: { name: library.toString() } }],
-      },
+      where,
       include: {
         images: {
           take: 1,

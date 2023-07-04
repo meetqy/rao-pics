@@ -1,6 +1,10 @@
+import { Color, ColorInput } from "./src/color";
 import { Config, ConfigInput } from "./src/config";
+import { Fail, FailInput } from "./src/fail";
 import { Folder, FolderInput } from "./src/folder";
+import { Image, ImageInput } from "./src/image";
 import { Library, LibraryInput } from "./src/library";
+import { Pending, PendingInput } from "./src/pending";
 import { Tag, TagInput } from "./src/tag";
 
 export const ZodInput = {
@@ -8,18 +12,11 @@ export const ZodInput = {
   tag: TagInput,
   config: ConfigInput,
   library: LibraryInput,
+  image: ImageInput,
+  color: ColorInput,
+  pending: PendingInput,
+  fail: FailInput,
 };
-
-// library id => libraryId
-// image id => imageId
-// folder id => folderId
-// tag id => tagId
-// config id => configId
-
-// images id => imageIds
-// folders id => folderIds
-// tags id => tagIds
-// libraries id => libraryIds
 
 /**
  * curd object
@@ -31,6 +28,10 @@ const curd = {
   tag: Tag,
   config: Config,
   library: Library,
+  image: Image,
+  color: Color,
+  pending: Pending,
+  fail: Fail,
 };
 
 export default curd;

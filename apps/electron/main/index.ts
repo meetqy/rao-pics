@@ -2,8 +2,14 @@ import type cp from "child_process";
 import { Menu, MenuItem, app } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
+import startWatcher from "@acme/watch";
+
 import "./security-restrictions";
+import { join } from "path";
+
 import { appRouter } from "@acme/api";
+import { createAssetsServer } from "@acme/assets-server";
+import curd from "@acme/curd";
 
 import globalApp from "./global";
 import { restoreOrCreateWindow } from "./mainWindow";
@@ -146,7 +152,24 @@ app.on("ready", () => {
       }),
     );
 
-    // 创建 Web/Assets 服务
+    // 创建文件监听
+    const libs = await curd.library.get({});
+    libs.forEach((lib) => {
+      if (lib.type === "eagle") {
+        void startWatcher({
+          libraryId: lib.id,
+          paths: join(lib.dir, "./images/**/metadata.json"),
+          options: {
+            ignoreInitial: true,
+          },
+        });
+      }
+    });
+
+    // 创建 Assets 服务
+    createAssetsServer(Number(process.env["ASSETS_PORT"]), libs);
+
+    // 创建 Web 服务
     nextjsWebChild = await createWebServer();
     if (!nextjsWebChild) {
       throw Error("NextJS child process was not created, exiting...");

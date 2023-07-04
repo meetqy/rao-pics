@@ -2,6 +2,14 @@ import { CONSTANT, type Constant } from "@acme/constant";
 
 export const SUPPORT_EXT = CONSTANT.EXT;
 
+/**
+ * 当前同步的状态
+ */
+export type EmitOption = {
+  type: "image" | "folder";
+  current: number;
+};
+
 export interface Metadata {
   id: string;
   name: string;

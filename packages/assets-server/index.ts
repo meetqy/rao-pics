@@ -29,7 +29,7 @@ export const createAssetsServer = (port: number, librarys?: Library[]) => {
   // Generate app use by library ids
   librarys.forEach((lib) => {
     if (lib.type === "eagle") {
-      app.use("/" + lib.id.toString(), express.static(lib.dir + "/images"));
+      app.use("/" + lib.id.toString() + "/images", express.static(lib.dir + "/images"));
       libraryIds.push(lib.id);
     }
   });

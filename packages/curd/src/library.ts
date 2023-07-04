@@ -7,7 +7,7 @@ import curd from "..";
 export const LibraryInput = {
   get: z
     .object({
-      library: z.union([z.string(), z.number()]),
+      library: z.union([z.string(), z.number()]).optional(),
     })
     .optional(),
 
@@ -15,27 +15,21 @@ export const LibraryInput = {
     name: z.string(),
     dir: z.string(),
     type: z.enum(["eagle", "pixcall", "billfish"]),
-    fileCount: z.number().optional(),
-    failCount: z.number().optional(),
-  }),
-
-  update: z.object({
-    libraryId: z.number(),
-    fileCount: z.number().optional(),
-    failCount: z.number().optional(),
   }),
 
   delete: z.object({
-    libraryId: z.number(),
+    id: z.number(),
   }),
 };
 
 export const Library = {
   get: (obj: z.infer<(typeof LibraryInput)["get"]>) => {
+    const input = LibraryInput.get.parse(obj);
+
     let where: Prisma.LibraryWhereInput | undefined;
 
-    if (obj) {
-      const { library } = obj;
+    if (input && input.library) {
+      const { library } = input;
 
       where = {
         OR: [{ id: typeof library === "number" ? library : undefined }, { name: library.toString() }],
@@ -45,7 +39,7 @@ export const Library = {
     return prisma.library.findMany({
       where,
       include: {
-        _count: { select: { images: true } },
+        _count: { select: { images: true, pendings: true, fails: true } },
       },
     });
   },
@@ -56,26 +50,17 @@ export const Library = {
     });
   },
 
-  update: (obj: z.infer<(typeof LibraryInput)["update"]>) => {
-    return prisma.library.update({
-      where: { id: obj.libraryId },
-      data: {
-        ...obj,
-        lastSyncTime: new Date(),
-      },
-    });
-  },
-
   delete: async (obj: z.infer<(typeof LibraryInput)["delete"]>) => {
-    const { libraryId } = obj;
+    const { id } = obj;
+
     await prisma.$transaction([
       prisma.image.deleteMany({
-        where: { libraryId },
+        where: { id },
       }),
-      curd.folder.clear({ libraryId }),
-      curd.tag.clear({ libraryId }),
+      curd.folder.delete({ libraryId: id }),
+      curd.tag.clear({ libraryId: id }),
     ]);
 
-    return prisma.library.delete({ where: { id: libraryId } });
+    return prisma.library.delete({ where: { id } });
   },
 };

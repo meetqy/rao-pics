@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@acme/constant": "^0.1.0",
+    "@acme/util": "^0.1.0",
     "zod": "^3.21.4"
   }
 }

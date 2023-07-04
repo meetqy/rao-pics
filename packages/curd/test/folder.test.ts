@@ -7,27 +7,23 @@ import Mock from "@acme/mock";
 import curd from "../index";
 
 interface LocalTestContext {
-  lib: Library[];
+  lib: Library;
   input: {
-    folderId: string;
+    id: string;
     name: string;
     libraryId: number;
   };
 }
 
 const createLib = () =>
-  prisma.library.create({
-    data: {
-      id: faker.number.int({ max: 9999999 }),
-      name: faker.lorem.word(),
-      dir: faker.system.filePath(),
-      fileCount: faker.number.int({ max: 9999999 }),
-      type: "eagle",
-    },
+  curd.library.create({
+    name: faker.lorem.word(),
+    dir: faker.system.filePath(),
+    type: "eagle",
   });
 
 const createInput = (libraryId: number) => ({
-  folderId: faker.string.uuid(),
+  id: faker.string.uuid(),
   name: faker.lorem.word(),
   libraryId,
 });
@@ -35,10 +31,10 @@ const createInput = (libraryId: number) => ({
 beforeEach<LocalTestContext>(async (ctx) => {
   await Mock.dbClean();
 
-  const lib = await prisma.$transaction([createLib(), createLib(), createLib()]);
+  const lib = await createLib();
 
   ctx.lib = lib;
-  ctx.input = createInput(lib[0]?.id);
+  ctx.input = createInput(lib.id);
 });
 
 describe("@acme/curd folder", () => {
@@ -51,84 +47,42 @@ describe("@acme/curd folder", () => {
   test<LocalTestContext>("Upsert folder create", async (ctx) => {
     const { input } = ctx;
 
-    expect(await curd.folder.upsert(input)).toMatchObject({
-      id: input.folderId,
-      name: input.name,
-      libraryId: input.libraryId,
-    });
+    expect(await curd.folder.upsert(input)).toMatchObject(input);
   });
 
   test<LocalTestContext>("Upsert folder update", async (ctx) => {
-    const { input, lib } = ctx;
+    const { input } = ctx;
 
-    const libId = lib[0]?.id;
-
-    if (libId) {
-      expect(await curd.folder.upsert(input)).toMatchObject({
-        id: input.folderId,
-        name: input.name,
-        libraryId: input.libraryId,
-      });
-      expect(await curd.folder.get({ library: libId })).toHaveLength(1);
-    }
+    expect(await curd.folder.upsert(input)).toMatchObject(input);
   });
 
-  test<LocalTestContext>("Get folder by name", async (ctx) => {
+  test<LocalTestContext>("Get folder by libraryId or id", async (ctx) => {
     const { lib } = ctx;
 
-    const libName = lib[0]?.name;
-    const libId = lib[0]?.id;
+    // 创建 3 条 folder
+    const folders = await prisma.$transaction([1, 2, 3].map(() => curd.folder.upsert(createInput(lib.id))));
 
-    if (libName && libId) {
-      // 创建 3 条 folder
-      await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
-
-      expect(await curd.folder.get({ library: libName })).toHaveLength(3);
-    }
+    void expect(curd.folder.get({ libraryId: lib.id })).resolves.toHaveLength(3);
+    void expect(curd.folder.get({ id: folders[0]?.id })).resolves.toHaveLength(1);
   });
 
-  test<LocalTestContext>("Get folder by id", async (ctx) => {
+  test<LocalTestContext>("Delete folder by id", async (ctx) => {
     const { lib } = ctx;
 
-    const libName = lib[0]?.name;
-    const libId = lib[0]?.id;
+    const folders = await prisma.$transaction([1, 2, 3].map(() => curd.folder.upsert(createInput(lib.id))));
+    await curd.folder.delete({ id: folders[0]?.id });
 
-    if (libName && libId) {
-      // 创建 3 条 folder
-      await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
-      await curd.folder.upsert(createInput(lib[1]?.id || 0));
-
-      expect(await curd.folder.get({ library: libId })).toHaveLength(3);
-    }
+    expect(await curd.folder.get({ libraryId: lib.id })).toHaveLength(2);
   });
 
-  test<LocalTestContext>("Delete folder 'in' by LibraryId and ids", async (ctx) => {
+  test<LocalTestContext>("Delete folder by libraryId.", async (ctx) => {
     const { lib } = ctx;
 
-    const libId = lib[0]?.id;
+    await prisma.$transaction([1, 2, 3].map(() => curd.folder.upsert(createInput(lib.id))));
+    await curd.folder.delete({ libraryId: lib.id });
 
-    if (libId) {
-      // 创建 3 条 folder
-      const folders = await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
-
-      await curd.folder.delete({ libraryId: libId, folderIds: folders.map((item) => item.id || "") });
-
-      expect(await curd.folder.get({ library: libId })).toHaveLength(0);
-    }
+    expect(await curd.folder.get({ libraryId: lib.id })).toHaveLength(0);
   });
 
-  test<LocalTestContext>("Delete folder 'notIn' by LibraryId and ids", async (ctx) => {
-    const { lib } = ctx;
-
-    const libId = lib[0]?.id;
-
-    if (libId) {
-      // 创建 3 条 folder
-      const folders = await prisma.$transaction(lib.map(() => curd.folder.upsert(createInput(libId))));
-
-      await curd.folder.delete({ libraryId: libId, folderIds: folders.map((item) => item.id || ""), idsRule: "notIn" });
-
-      expect(await curd.folder.get({ library: libId })).toHaveLength(3);
-    }
-  });
+  // TODO: test get by imageId
 });

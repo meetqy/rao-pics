@@ -7,8 +7,6 @@ import { trpc } from "./utils/trpc";
 
 interface SyncSubscriptionData {
   current: number;
-  count: number;
-  failCount: number;
   libraryId: number;
   type: "folder" | "image";
 }
@@ -18,7 +16,6 @@ function Home() {
 
   const { data: config } = trpc.config.get.useQuery();
   const library = trpc.library.get.useQuery();
-  const addLibrary = trpc.library.add.useMutation();
   const removeLibrary = trpc.library.remove.useMutation();
   const updateLibrary = trpc.library.update.useMutation();
 
@@ -60,6 +57,33 @@ function Home() {
     },
   });
 
+  const percent = useMemo(() => {
+    if (progress) {
+      const { current } = progress;
+      const count = activeItem?._count.pendings || 0;
+
+      if (count === 0) return 100;
+
+      return ~~((current / count) * 100);
+    }
+
+    return 100;
+  }, [activeItem, progress]);
+
+  // sync completed.
+  useEffect(() => {
+    if (percent === 100 && progress && activeItem) {
+      updateLibrary
+        .mutateAsync({
+          id: activeItem.id,
+        })
+        .then(() => {
+          utils.library.get.invalidate();
+          setProgress(undefined);
+        });
+    }
+  }, [percent, progress, activeItem]);
+
   const sync = trpc.sync.start.useMutation();
   const onSyncClick = () => {
     if (!activeItem) return;
@@ -69,41 +93,6 @@ function Home() {
       libraryId: activeItem.id,
     });
   };
-
-  const percent = useMemo(() => {
-    if (progress) {
-      const { count, current } = progress;
-      return ~~((current / count) * 100);
-    }
-
-    if (activeItem) {
-      const current = activeItem._count.images;
-      const count = activeItem.fileCount;
-      const failCount = activeItem.failCount || 0;
-
-      return ~~(((current + failCount) / count) * 100);
-    }
-
-    return 0;
-  }, [activeItem, progress]);
-
-  // sync completed.
-  useEffect(() => {
-    if (percent === 100 && progress && activeItem) {
-      const { count, failCount } = progress;
-
-      updateLibrary
-        .mutateAsync({
-          id: activeItem.id,
-          fileCount: count,
-          failCount: failCount,
-        })
-        .then(() => {
-          utils.library.get.invalidate();
-          setProgress(undefined);
-        });
-    }
-  }, [percent, progress, activeItem]);
 
   const showOpenDialog = () => {
     window.dialog
@@ -118,9 +107,8 @@ function Home() {
         if (!lib) return Alert({ title: "暂时不支持此App/文件夹" });
 
         if (lib) {
-          const libRes = await addLibrary.mutateAsync(lib);
           utils.library.get.invalidate();
-          setActive(libRes.id);
+          setActive(lib.id);
         }
       });
   };
@@ -159,9 +147,9 @@ function Home() {
                   />
                 </svg>
 
-                <span className="ml-2">文件夹/库ID</span>
+                <span className="ml-2">文件夹 ID</span>
               </span>
-              <span>{activeItem?.id}</span>
+              <span className="font-mono">{activeItem?.id}</span>
             </div>
 
             <div>
@@ -173,7 +161,7 @@ function Home() {
                     d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
                   />
                 </svg>
-                <span className="ml-2">文件夹/库路径</span>
+                <span className="ml-2">文件夹路径</span>
               </span>
               <span>{activeItem?.dir}</span>
             </div>
@@ -185,7 +173,7 @@ function Home() {
                 </svg>
                 <span className="ml-2">最后同步</span>
               </span>
-              <span>{activeItem?.lastSyncTime?.toLocaleString("zh", { hour12: false }) || "未同步"}</span>
+              <span className="font-mono">{activeItem?.lastSyncTime?.toLocaleString("zh", { hour12: false }) || "未同步"}</span>
             </div>
 
             <div>
@@ -205,32 +193,39 @@ function Home() {
               </a>
             </div>
 
-            <div className="flex-1 flex items-center justify-around px-8 py-4">
-              <div className="flex flex-col justify-center items-center">
+            <div>
+              <span className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                  />
+                </svg>
+
+                <span className="ml-2">已同步/失败</span>
+              </span>
+              <span className=" font-medium font-mono">
+                <span className=" text-primary">{activeItem?._count.images}</span>
+                <span className=" font-normal text-base-300 mx-2">|</span>
+                <span className="text-error">{activeItem?._count.fails}</span>
+              </span>
+            </div>
+
+            <div className="flex-1 flex items-center justify-around !px-0">
+              <div className="flex justify-center items-center w-1/2 h-full">
                 <div
-                  className="radial-progress text-center text-neutral-content/70 bg-neutral border-neutral border-4"
-                  style={{ "--value": percent, "--size": "7rem", "--thickness": "0.5rem" } as React.CSSProperties}
+                  className="radial-progress text-neutral-content/70 bg-neutral border-neutral/50 border-4"
+                  style={{ "--value": percent, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
                 >
-                  <span className="text-lg font-bold text-neutral-content">{percent}%</span>
-                  <span className="text-neutral-content/80 text-xs">已同步</span>
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="text-neutral-content text-xl font-bold">{activeItem?._count.pendings}</span>
+                    <span className="text-neutral-content/80">待同步</span>
+                  </div>
                 </div>
-
-                <span className="mt-4 flex items-end">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-info">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"
-                    />
-                  </svg>
-
-                  <span className="font-medium relative top-0.5">{activeItem?.fileCount}</span>
-                </span>
               </div>
 
-              <div className=" divider divider-horizontal">OR</div>
-
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4 w-1/2 h-full justify-center px-8 bg-base-200/40">
                 <button className="btn" onClick={onSyncClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
