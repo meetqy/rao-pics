@@ -4,7 +4,7 @@
 
 中文 | [English](./README.en.md)
 
-![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/meetqy/5c4881f21bab2cf4f09a8658354fb997/raw/fde0a6c36d83cdd5ac45d6e324cb6b0196ac016e/rao-pics_core__coverage.json)
+![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/meetqy/5c4881f21bab2cf4f09a8658354fb997/raw/rao-pics_core__coverage.json)
 [![License](https://img.shields.io/github/license/rao-pics/core)](https://github.com/rao-pics/core/blob/turbo-electron-prisma/LICENSE)
 [![release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
 ![download](https://img.shields.io/github/downloads/rao-pics/core/total)
