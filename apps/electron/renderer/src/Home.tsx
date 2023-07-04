@@ -19,6 +19,10 @@ function Home() {
   const removeLibrary = trpc.library.remove.useMutation();
   const updateLibrary = trpc.library.update.useMutation();
 
+  window.app.getVersion().then((res) => {
+    document.title = `Rao Pics - v${res}`;
+  });
+
   const isInit = useRef<boolean>(false);
 
   // active id
