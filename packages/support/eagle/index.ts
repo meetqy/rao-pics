@@ -24,7 +24,6 @@ export const start = async (props: Props) => {
     const option: EmitOption = {
       type: "image",
       current: 0,
-      failCount: 0,
     };
 
     const addFail = (path: string, library: Library) => {
@@ -32,7 +31,6 @@ export const start = async (props: Props) => {
         libraryId: library.id,
         path,
       });
-      option.failCount++;
     };
 
     void curd.pending.get({ libraryId: library.id }).then(async (pendings) => {
@@ -54,7 +52,6 @@ export const start = async (props: Props) => {
 
           await curd.pending.delete(p.path);
         } catch (e) {
-          console.error(e);
           addFail(p.path, library);
           await curd.pending.delete(p.path);
           onError?.(e);

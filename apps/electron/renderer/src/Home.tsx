@@ -7,8 +7,6 @@ import { trpc } from "./utils/trpc";
 
 interface SyncSubscriptionData {
   current: number;
-  count: number;
-  failCount: number;
   libraryId: number;
   type: "folder" | "image";
 }
@@ -121,7 +119,7 @@ function Home() {
                   />
                 </svg>
 
-                <span className="ml-2">文件夹/库ID</span>
+                <span className="ml-2">文件夹 ID</span>
               </span>
               <span className="font-mono">{activeItem?.id}</span>
             </div>
@@ -135,7 +133,7 @@ function Home() {
                     d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
                   />
                 </svg>
-                <span className="ml-2">文件夹/库路径</span>
+                <span className="ml-2">文件夹路径</span>
               </span>
               <span>{activeItem?.dir}</span>
             </div>
@@ -177,10 +175,12 @@ function Home() {
                   />
                 </svg>
 
-                <span className="ml-2">已同步/同步失败</span>
+                <span className="ml-2">已同步/失败</span>
               </span>
-              <span className="text-primary font-bold">
-                {activeItem?._count.images}/{activeItem?._count.fails}
+              <span className=" font-medium font-mono">
+                <span className=" text-primary">{activeItem?._count.images}</span>
+                <span className=" font-normal text-base-300 mx-2">|</span>
+                <span className="text-error">{activeItem?._count.fails}</span>
               </span>
             </div>
 

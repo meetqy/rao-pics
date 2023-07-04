@@ -10,9 +10,9 @@ export const FailInput = {
 };
 
 export const Fail = {
-  create: (obj: z.infer<(typeof FailInput)["create"]>) => {
+  create: async (obj: z.infer<(typeof FailInput)["create"]>) => {
     const input = FailInput.create.parse(obj);
-    return prisma.fails.create({
+    return await prisma.fails.create({
       data: {
         libraryId: input.libraryId,
         path: input.path,

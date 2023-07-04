@@ -8,7 +8,6 @@ export const SUPPORT_EXT = CONSTANT.EXT;
 export type EmitOption = {
   type: "image" | "folder";
   current: number;
-  failCount: number;
 };
 
 export interface Metadata {

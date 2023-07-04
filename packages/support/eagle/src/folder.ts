@@ -26,8 +26,6 @@ export const handleFolder = async (folders: Folder[], lib: Library, emit?: (opti
     emit?.({
       type: "folder",
       current: index + 1,
-      failCount: 0,
-      count: f.length,
     });
   }
 
