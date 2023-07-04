@@ -18,7 +18,6 @@ function Home() {
 
   const { data: config } = trpc.config.get.useQuery();
   const library = trpc.library.get.useQuery();
-  const addLibrary = trpc.library.add.useMutation();
   const removeLibrary = trpc.library.remove.useMutation();
   const updateLibrary = trpc.library.update.useMutation();
 
@@ -204,32 +203,33 @@ function Home() {
               </a>
             </div>
 
-            <div className="flex-1 flex items-center justify-around px-8 py-4">
-              <div className="flex flex-col justify-center items-center">
+            <div>
+              <span className="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                  />
+                </svg>
+
+                <span className="ml-2">已同步</span>
+              </span>
+              <span className="text-primary font-bold">1024</span>
+            </div>
+
+            <div className="flex-1 flex items-center justify-around !px-0">
+              <div className="flex justify-center items-center w-1/2 h-full bg-base-200/80">
                 <div
-                  className="radial-progress text-center text-neutral-content/70 bg-neutral border-neutral border-4"
-                  style={{ "--value": percent, "--size": "7rem", "--thickness": "0.5rem" } as React.CSSProperties}
+                  className="radial-progress text-neutral-content/70 bg-neutral border-neutral/50 border-4"
+                  style={{ "--value": percent, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
                 >
-                  <span className="text-lg font-bold text-neutral-content">{percent}%</span>
-                  <span className="text-neutral-content/80 text-xs">已同步</span>
+                  <span className="text-neutral-content text-xl font-bold">1024</span>
+                  <span className="text-neutral-content/80">待同步</span>
                 </div>
-
-                <span className="mt-4 flex items-end">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-info">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12"
-                    />
-                  </svg>
-
-                  <span className="font-medium relative top-0.5">{activeItem?.fileCount}</span>
-                </span>
               </div>
 
-              <div className=" divider divider-horizontal">OR</div>
-
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4 w-1/2 h-full justify-center px-8">
                 <button className="btn" onClick={onSyncClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
