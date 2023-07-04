@@ -205,6 +205,7 @@ export const Image = {
     updateArgs.data["tags"] = input.tags ? updateTags(input.tags, oldImage[0]?.tags || []) : undefined;
     updateArgs.data["colors"] = input.colors ? updateColors(input.colors, oldImage[0]?.colors || []) : undefined;
 
+    console.log(updateArgs);
     return await prisma.image.update(updateArgs);
   },
 };

@@ -7,7 +7,7 @@ import curd from "..";
 export const LibraryInput = {
   get: z
     .object({
-      library: z.union([z.string(), z.number()]),
+      library: z.union([z.string(), z.number()]).optional(),
     })
     .optional(),
 
@@ -24,10 +24,12 @@ export const LibraryInput = {
 
 export const Library = {
   get: (obj: z.infer<(typeof LibraryInput)["get"]>) => {
+    const input = LibraryInput.get.parse(obj);
+
     let where: Prisma.LibraryWhereInput | undefined;
 
-    if (obj) {
-      const { library } = obj;
+    if (input && input.library) {
+      const { library } = input;
 
       where = {
         OR: [{ id: typeof library === "number" ? library : undefined }, { name: library.toString() }],

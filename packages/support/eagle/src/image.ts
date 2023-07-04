@@ -40,15 +40,13 @@ export const updateImage = async (path: string, library: Library) => {
   const item = image[0];
   if (item) {
     // update tags
-    await Promise.all(
-      item.tags.map((tag) =>
-        curd.tag.upsert({
-          libraryId: library.id,
-          name: tag.name,
-          imageIds: [item.id],
-        }),
-      ),
-    );
+    for (const tag of item.tags) {
+      await curd.tag.upsert({
+        libraryId: library.id,
+        name: tag.name,
+        imageIds: [item.id],
+      });
+    }
 
     // update color
     await Promise.all(
@@ -124,11 +122,13 @@ const transformImageArgs = (base: ReturnType<typeof getImageBase>, library: Libr
     width: metadata.width,
     height: metadata.height,
     duration: metadata.duration,
-    folders: metadata.folders?.map((folder) => ({ id: folder })),
+    folders: metadata.folders ? metadata.folders.map((folder) => ({ id: folder })) : undefined,
     tags: metadata.tags,
     colors: metadata.palettes
-      ?.map((palette) => rgbToHex(palette.color))
-      .filter((c) => !!c)
-      .splice(0, 9) as string[],
+      ? (metadata.palettes
+          .map((palette) => rgbToHex(palette.color))
+          .filter((c) => !!c)
+          .splice(0, 9) as string[])
+      : undefined,
   };
 };

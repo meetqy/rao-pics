@@ -2,8 +2,13 @@ import type cp from "child_process";
 import { Menu, MenuItem, app } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
+import startWatcher from "@acme/watch";
+
 import "./security-restrictions";
+import { join } from "path";
+
 import { appRouter } from "@acme/api";
+import curd from "@acme/curd";
 
 import globalApp from "./global";
 import { restoreOrCreateWindow } from "./mainWindow";
@@ -105,6 +110,19 @@ app
   .then(async () => {
     await restoreOrCreateWindow().catch((err) => {
       throw err;
+    });
+
+    const libs = await curd.library.get({});
+    libs.forEach((lib) => {
+      if (lib.type === "eagle") {
+        void startWatcher({
+          libraryId: lib.id,
+          paths: join(lib.dir, "./images/**/metadata.json"),
+          options: {
+            ignoreInitial: true,
+          },
+        });
+      }
     });
   })
   .catch((e) => console.error("Failed create window:", e));
