@@ -5,7 +5,7 @@ import { app } from "electron";
 /**
  * 创建 Web 服务
  */
-export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
+export const createWebServer = (preNextChild?: cp.ChildProcess) => {
   let nextjsChild: cp.ChildProcess;
 
   const { isPackaged } = app;
