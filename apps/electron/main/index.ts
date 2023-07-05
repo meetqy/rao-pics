@@ -106,22 +106,10 @@ app.on("browser-window-focus", () => {
 
     if (nextjsWebChild && process.env["IP"] != ip) {
       nextjsWebChild.kill();
-      nextjsWebChild = await createWebServer(nextjsWebChild);
+      nextjsWebChild = createWebServer(nextjsWebChild);
     }
   })();
 });
-
-/**
- * Create the application window when the background process is ready.
- */
-app
-  .whenReady()
-  .then(async () => {
-    await restoreOrCreateWindow().catch((err) => {
-      throw err;
-    });
-  })
-  .catch((e) => console.error("Failed create window:", e));
 
 /**
  * Install React devtools in dev mode
@@ -144,45 +132,58 @@ app
 //     .catch((e) => console.error("Failed install extension:", e));
 // }
 
-const menu = new Menu();
-
 app.on("ready", () => {
-  void restoreOrCreateWindow().then(async (win) => {
-    createIPCHandler({ router: appRouter, windows: [win] });
-
-    menu.append(
-      new MenuItem({
-        label: "Quite",
-        accelerator: "CmdOrCtrl+Q",
-        click: () => {
-          globalApp.isQuite = false;
-        },
-      }),
-    );
-
-    // 创建文件监听
-    const libs = await curd.library.get({});
-    libs.forEach((lib) => {
-      if (lib.type === "eagle") {
-        void startWatcher({
-          libraryId: lib.id,
-          paths: join(lib.dir, "./images/**/metadata.json"),
-          options: {
-            ignoreInitial: true,
-          },
-        });
-      }
-    });
-
-    // 创建 Assets 服务
-    createAssetsServer(Number(process.env["ASSETS_PORT"]), libs);
-
-    // 创建 Web 服务
-    nextjsWebChild = await createWebServer();
-    if (!nextjsWebChild) {
-      throw Error("NextJS child process was not created, exiting...");
-    }
-  });
-
   createTray();
+
+  // Init menu and cmd+q disabled.
+  const menu = new Menu();
+  menu.append(
+    new MenuItem({
+      label: "Quite",
+      accelerator: "CmdOrCtrl+Q",
+      click: () => {
+        globalApp.isQuite = false;
+      },
+    }),
+  );
+
+  void restoreOrCreateWindow().then((win) => {
+    createIPCHandler({ router: appRouter, windows: [win] });
+  });
 });
+
+/**
+ * Create the application window when the background process is ready.
+ */
+app
+  .whenReady()
+  .then(() => {
+    void (async () => {
+      // 创建文件监听
+      const libs = await curd.library.get({});
+      libs.forEach((lib) => {
+        if (lib.type === "eagle") {
+          void startWatcher({
+            libraryId: lib.id,
+            paths: join(lib.dir, "./images/**/metadata.json"),
+            options: {
+              ignoreInitial: true,
+            },
+          });
+        }
+      });
+
+      // Init config assign to process.env
+      await getAndUpdateConfig();
+
+      // 创建 Web 服务
+      nextjsWebChild = createWebServer();
+      if (!nextjsWebChild) {
+        throw Error("NextJS child process was not created, exiting...");
+      }
+
+      // 创建 Assets 服务
+      createAssetsServer(Number(process.env["ASSETS_PORT"]), libs);
+    })();
+  })
+  .catch((e) => console.error("Failed create window:", e));
