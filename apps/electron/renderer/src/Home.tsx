@@ -18,6 +18,7 @@ function Home() {
   const library = trpc.library.get.useQuery();
   const removeLibrary = trpc.library.remove.useMutation();
   const updateLibrary = trpc.library.update.useMutation();
+  const pending = Number(localStorage.getItem("pending") || 0);
 
   window.app.getVersion().then((res) => {
     document.title = `Rao Pics - v${res}`;
@@ -40,7 +41,7 @@ function Home() {
       isInit.current = true;
       window.electronAPI.createAssetsServer(library.data);
     }
-  }, [library]);
+  }, [library, isInit]);
 
   const onRemove = () => {
     active && removeLibrary.mutateAsync(active);
@@ -64,7 +65,7 @@ function Home() {
   const percent = useMemo(() => {
     if (progress) {
       const { current } = progress;
-      const count = activeItem?._count.pendings || 0;
+      const count = pending || activeItem?._count.pendings || 0;
 
       if (count === 0) return 100;
 
@@ -84,6 +85,7 @@ function Home() {
         .then(() => {
           utils.library.get.invalidate();
           setProgress(undefined);
+          localStorage.removeItem("pending");
         });
     }
   }, [percent, progress, activeItem]);
@@ -96,6 +98,7 @@ function Home() {
     sync.mutateAsync({
       libraryId: activeItem.id,
     });
+    localStorage.setItem("pending", activeItem._count.pendings + "");
   };
 
   const showOpenDialog = () => {
@@ -121,7 +124,7 @@ function Home() {
     <div className="h-screen w-full flex text-sm">
       <div className="w-1/4 overflow-y-auto scrollbar bg-base-200/70">
         <div className="flex justify-center p-2 sticky top-0  z-10">
-          <button className="btn w-full btn-outline flex items-center" onClick={showOpenDialog}>
+          <button className="btn w-full btn-outline flex items-center" disabled={!!progress} onClick={showOpenDialog}>
             <img src="icon.png" className="w-6" />
             <span className="ml-2">添加文件夹/库</span>
           </button>
@@ -130,7 +133,14 @@ function Home() {
         <ul className="menu px-2 rounded-box">
           {library.data?.map((item) => (
             <li key={item.id} className="w-full">
-              <div className={`${item.id === active ? "active" : ""} capitalize flex w-full tooltip`} data-tip={item.name} onClick={() => setActive(item.id)}>
+              <div
+                className={`${item.id === active ? "active" : ""} capitalize flex w-full tooltip`}
+                data-tip={item.name}
+                onClick={() => {
+                  if (!!progress) return;
+                  setActive(item.id);
+                }}
+              >
                 <p className="overflow-hidden truncate flex-1 text-left">{item.name}</p>
                 <img src="eagle.jpg" className="w-5 rounded-full shadow-md" />
               </div>
@@ -230,7 +240,7 @@ function Home() {
               </div>
 
               <div className="flex flex-col space-y-4 w-1/2 h-full justify-center px-8 bg-base-200/40">
-                <button className="btn" onClick={onSyncClick}>
+                <button className="btn" disabled={!!progress} onClick={onSyncClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
                       strokeLinecap="round"
@@ -241,13 +251,15 @@ function Home() {
                   <span className="ml-2">同步</span>
                 </button>
 
-                <label htmlFor="my-modal" className={`btn btn-error btn-outline`} onClick={() => setDelConfirmVisable(true)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                <button className="btn btn-error btn-outline" disabled={!!progress} onClick={() => setDelConfirmVisable(true)}>
+                  <label htmlFor="my-modal" className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
 
-                  <span className="ml-2">移除</span>
-                </label>
+                    <span className="ml-2">移除</span>
+                  </label>
+                </button>
               </div>
             </div>
           </div>
