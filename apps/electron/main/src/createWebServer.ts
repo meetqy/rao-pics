@@ -2,8 +2,6 @@ import cp from "child_process";
 import { join } from "path";
 import { app } from "electron";
 
-import { getAndUpdateConfig } from "./utils/config";
-
 /**
  * 创建 Web 服务
  */
@@ -11,8 +9,6 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
   let nextjsChild: cp.ChildProcess;
 
   const { isPackaged } = app;
-
-  await getAndUpdateConfig();
 
   if (isPackaged) {
     // Start nextjs server
@@ -24,7 +20,6 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
   } else {
     // 开发环境 next dev 会自动进行热更新，不需要 kill
     if (preNextChild) return;
-    // process.env["IP"] = ip;
 
     const nextjs = join(process.cwd(), "../nextjs");
     nextjsChild = cp.spawn("npx", ["next", "dev"], {
