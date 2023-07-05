@@ -1,12 +1,12 @@
 import { join, sep } from "path";
 import { ipcMain } from "electron";
 
-import { createAssetsServer } from "@acme/assets-server";
 import curd from "@acme/curd";
 import { type Library } from "@acme/db";
 import startWatcher from "@acme/watch";
 
 import { type HandleDirectoryReturn } from "../../../types";
+import { createAssetsServer } from "../createAssetsServer";
 
 export const createElectronApiIPCHandler = () => {
   ipcMain.handle("api.handleDirectory", async (_e, dir: string): Promise<HandleDirectoryReturn> => {

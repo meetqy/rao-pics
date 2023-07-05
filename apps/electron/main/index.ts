@@ -8,12 +8,12 @@ import "./security-restrictions";
 import { join } from "path";
 
 import { appRouter } from "@acme/api";
-import { createAssetsServer } from "@acme/assets-server";
 import curd from "@acme/curd";
 import { createSqlite } from "@acme/db";
 
 import globalApp from "./global";
 import { restoreOrCreateWindow } from "./mainWindow";
+import { createAssetsServer } from "./src/createAssetsServer";
 import { createWebServer } from "./src/createWebServer";
 import createAllIPCHandler from "./src/ipc";
 import createMenu from "./src/menu";
