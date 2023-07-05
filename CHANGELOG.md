@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0-beta.0](https://github.com/rao-pics/core/compare/v0.6.5...v0.7.0-beta.0) (2023-07-05)
+
+
+### Features
+
+* 🎸 @acme/curd image create ([b0b2564](https://github.com/rao-pics/core/commit/b0b25649541bb93241bf4f68ac96f214844bea85))
+* 🎸 同步方案改为chokidar,二次同步速度提升非常大 ([0ac6a46](https://github.com/rao-pics/core/commit/0ac6a469609ed29a9db3a2d1f62328bf58afdc32))
+
+
+### Bug Fixes
+
+* 🐛 cmd+q-覆盖掉了其他的菜单事件 ([b033cb7](https://github.com/rao-pics/core/commit/b033cb75c04d3e0048e2dbecc2894775b2503f2d))
+
+
+### Refactors
+
+* 💡 db remove failCount fileCount ([8490c85](https://github.com/rao-pics/core/commit/8490c855a833d5afae239c1006e4f37f4203594b))
+* 💡 schema.prisma ([b07c34f](https://github.com/rao-pics/core/commit/b07c34f0f350e1f7f99cd3033371f44688549eaa))
+
+
+### Improves
+
+* ⚡️ 操作台增加版本显示 ([22eb69a](https://github.com/rao-pics/core/commit/22eb69a62297834b56cb8efc54117eee148c9750)), closes [#285](https://github.com/rao-pics/core/issues/285)
+
 ### [0.6.5](https://github.com/rao-pics/core/compare/v0.6.4...v0.6.5) (2023-06-29)
 
 ### [0.6.4](https://github.com/rao-pics/core/compare/v0.6.3...v0.6.4) (2023-06-29)
