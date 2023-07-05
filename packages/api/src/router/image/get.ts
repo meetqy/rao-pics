@@ -26,7 +26,7 @@ export const get = t.procedure
       keyword: z.string().optional(),
       // https://trpc.io/docs/reactjs/useinfinitequery
       // https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination
-      cursor: z.string().nullish(),
+      cursor: z.number().nullish(),
       orderBy: OrderByObject.optional(),
     }),
   )
