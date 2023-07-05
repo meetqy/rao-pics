@@ -10,6 +10,7 @@ import { join } from "path";
 import { appRouter } from "@acme/api";
 import { createAssetsServer } from "@acme/assets-server";
 import curd from "@acme/curd";
+import { createSqlite } from "@acme/db";
 
 import globalApp from "./global";
 import { restoreOrCreateWindow } from "./mainWindow";
@@ -18,6 +19,13 @@ import createAllIPCHandler from "./src/ipc";
 import createMenu from "./src/menu";
 import createTray from "./src/tray";
 import { getAndUpdateConfig } from "./src/utils/config";
+
+if (app.isPackaged) {
+  /**
+   * Init db.sqlite
+   */
+  createSqlite(join(process.resourcesPath, "./packages/db/prisma/db.sqlite"));
+}
 
 /**
  * Create all ipcHander in 'src/ipc/xxx.ts'

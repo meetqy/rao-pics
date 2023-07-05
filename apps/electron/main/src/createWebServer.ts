@@ -2,12 +2,10 @@ import cp from "child_process";
 import { join } from "path";
 import { app } from "electron";
 
-import { createSqlite } from "@acme/db";
-
 import { getAndUpdateConfig } from "./utils/config";
 
 /**
- * 创建 Web/Assets 服务
+ * 创建 Web 服务
  */
 export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
   let nextjsChild: cp.ChildProcess;
@@ -17,9 +15,6 @@ export const createWebServer = async (preNextChild?: cp.ChildProcess) => {
   await getAndUpdateConfig();
 
   if (isPackaged) {
-    // Create sqlite database file
-    createSqlite(join(process.resourcesPath, "./packages/db/prisma/db.sqlite"));
-
     // Start nextjs server
     nextjsChild = cp.fork(join(process.resourcesPath, "apps/nextjs/server.js"), {
       env: {
