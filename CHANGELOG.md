@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0-beta.1](https://github.com/rao-pics/core/compare/v0.7.0-beta.0...v0.7.0-beta.1) (2023-07-05)
+
+
+### Bug Fixes
+
+* 🐛 @acme/image/get 类型问题 ([a713130](https://github.com/rao-pics/core/commit/a7131303c4c2e5c7ddec4b1c58828000296ddea1))
+* 🐛 createSqlite error ([aac6983](https://github.com/rao-pics/core/commit/aac698346887c1d055fa8969d03b34b9971d5454))
+* 🐛 同步中隐藏后台报错/进度显示不准确 ([d40781b](https://github.com/rao-pics/core/commit/d40781b324a526176aa67bac6bbf9ba147d35a6e)), closes [#290](https://github.com/rao-pics/core/issues/290)
+
+
+### Refactors
+
+* 💡 @acme/assets-server move to electron ([5da8bf9](https://github.com/rao-pics/core/commit/5da8bf95614435e64aeb1d354fca9348bc1e1303))
+
 ## [0.7.0-beta.0](https://github.com/rao-pics/core/compare/v0.6.5...v0.7.0-beta.0) (2023-07-05)
 
 
