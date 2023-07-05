@@ -106,7 +106,7 @@ app.on("browser-window-focus", () => {
 
     if (nextjsWebChild && process.env["IP"] != ip) {
       nextjsWebChild.kill();
-      nextjsWebChild = await createWebServer(nextjsWebChild);
+      nextjsWebChild = createWebServer(nextjsWebChild);
     }
   })();
 });
@@ -177,7 +177,7 @@ app
       await getAndUpdateConfig();
 
       // 创建 Web 服务
-      nextjsWebChild = await createWebServer();
+      nextjsWebChild = createWebServer();
       if (!nextjsWebChild) {
         throw Error("NextJS child process was not created, exiting...");
       }
