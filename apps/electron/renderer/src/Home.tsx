@@ -24,8 +24,6 @@ function Home() {
     document.title = `Rao Pics - v${res}`;
   });
 
-  const isInit = useRef<boolean>(false);
-
   // active id
   const [active, setActive] = useState<number | undefined>();
   const activeItem = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
@@ -36,19 +34,23 @@ function Home() {
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
   useEffect(() => {
-    if (library?.data?.length && !isInit.current) {
-      setActive(library.data[0].id);
-      isInit.current = true;
-      window.electronAPI.createAssetsServer(library.data);
+    const item = library.data?.[0];
+    if (!item) {
+      setDelConfirmVisable(false);
+      setActive(undefined);
+    } else if (item && !active) {
+      setActive(item.id);
     }
-  }, [library, isInit]);
+
+    window.electronAPI.createAssetsServer(library.data);
+  }, [library]);
 
   const onRemove = () => {
-    active && removeLibrary.mutateAsync({ id: active });
-    // const newL = library.data?.filter((item) => item.id != active);
-    // setActive(newL && newL.length > 0 ? newL[0].id : undefined);
-    // setDelConfirmVisable(false);
-    utils.library.get.invalidate();
+    if (active) {
+      removeLibrary.mutateAsync({ id: active }).then(() => {
+        utils.library.get.invalidate();
+      });
+    }
   };
 
   // progress exits, sync is running
@@ -251,10 +253,10 @@ function Home() {
                   <span className="ml-2">同步</span>
                 </button>
 
-                <button className="btn btn-error btn-outline" disabled={!!progress}>
+                <button className="btn btn-error btn-outline px-0" disabled={!!progress}>
                   <label
                     htmlFor="my-modal"
-                    className="flex items-center w-full justify-center"
+                    className="flex items-center w-full justify-center h-full cursor-pointer"
                     onClick={() => {
                       if (!!progress) return;
                       setDelConfirmVisable(true);
