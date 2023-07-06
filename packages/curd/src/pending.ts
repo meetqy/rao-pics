@@ -12,6 +12,14 @@ export const PendingInput = {
   get: z.object({
     libraryId: z.number(),
   }),
+
+  delete: z
+    .object({
+      libraryId: z.number().optional(),
+      path: z.string().optional(),
+    })
+    .partial()
+    .refine((obj) => !!obj.libraryId || !!obj.path, "At least one of libraryId, path is required."),
 };
 
 export const Pending = {
@@ -29,7 +37,13 @@ export const Pending = {
     return await prisma.pending.findMany({ where: { libraryId: obj.libraryId } });
   },
 
-  delete: (path: string) => {
-    return prisma.pending.delete({ where: { path } });
+  delete: (obj: z.infer<(typeof PendingInput)["delete"]>) => {
+    const input = PendingInput.delete.parse(obj);
+
+    if (input.libraryId) {
+      return prisma.pending.deleteMany({ where: { libraryId: input.libraryId } });
+    }
+
+    return prisma.pending.delete({ where: { path: input.path } });
   },
 };

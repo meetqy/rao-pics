@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { prisma } from "@acme/db";
+import { Prisma, prisma } from "@acme/db";
 import { hexToRgb } from "@acme/util";
 
 export const ColorInput = {
@@ -45,6 +45,19 @@ export const Color = {
         },
       },
       update: {},
+    });
+  },
+
+  /**
+   * 清空没有图片的颜色
+   */
+  clear: () => {
+    return prisma.color.deleteMany({
+      where: {
+        images: {
+          none: {},
+        },
+      },
     });
   },
 };

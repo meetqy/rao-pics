@@ -50,10 +50,10 @@ export const start = async (props: Props) => {
             if (!res) addFail(p.path, library);
           }
 
-          await curd.pending.delete(p.path);
+          await curd.pending.delete({ path: p.path });
         } catch (e) {
           addFail(p.path, library);
-          await curd.pending.delete(p.path);
+          await curd.pending.delete({ path: p.path });
           onError?.(e);
         }
 

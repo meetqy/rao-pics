@@ -15,9 +15,13 @@ export const TagInput = {
     imageIds: z.array(z.number()).optional(),
   }),
 
-  delete: z.object({
-    name: z.string(),
-  }),
+  delete: z
+    .object({
+      name: z.string().optional(),
+      libraryId: z.number().optional(),
+    })
+    .partial()
+    .refine((obj) => !!obj.name || !!obj.libraryId, "At least one of name, libraryId is required."),
 
   cleanByImageZero: z.object({
     libraryId: z.number().optional(),
@@ -83,9 +87,12 @@ export const Tag = {
   },
 
   delete: (obj: z.infer<(typeof TagInput)["delete"]>) => {
+    const input = TagInput.delete.parse(obj);
+
     return prisma.tag.deleteMany({
       where: {
-        name: obj.name,
+        name: input.name,
+        libraryId: input.libraryId,
       },
     });
   },

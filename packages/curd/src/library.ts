@@ -17,9 +17,7 @@ export const LibraryInput = {
     type: z.enum(["eagle", "pixcall", "billfish"]),
   }),
 
-  delete: z.object({
-    id: z.number(),
-  }),
+  delete: z.object({ id: z.number() }),
 };
 
 export const Library = {
@@ -53,13 +51,11 @@ export const Library = {
   delete: async (obj: z.infer<(typeof LibraryInput)["delete"]>) => {
     const { id } = obj;
 
-    await prisma.$transaction([
-      prisma.image.deleteMany({
-        where: { id },
-      }),
-      curd.folder.delete({ libraryId: id }),
-      curd.tag.clear({ libraryId: id }),
-    ]);
+    await curd.fail.delete({ libraryId: id });
+    await curd.image.delete({ libraryId: id });
+    await curd.pending.delete({ libraryId: id });
+    await curd.folder.delete({ libraryId: id });
+    await curd.tag.delete({ libraryId: id });
 
     return prisma.library.delete({ where: { id } });
   },

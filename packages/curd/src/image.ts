@@ -33,10 +33,14 @@ export const ImageInput = {
     colors: z.array(z.string().length(7).startsWith("#")).optional(),
   }),
 
-  delete: z.object({
-    id: z.number().optional(),
-    path: z.string().optional(),
-  }),
+  delete: z
+    .object({
+      id: z.number().optional(),
+      path: z.string().optional(),
+      libraryId: z.number().optional(),
+    })
+    .partial()
+    .refine((obj) => !!obj.id || !!obj.path || !!obj.libraryId, "At least one of id, path, libraryId is required."),
 
   update: z.object({
     libraryId: z.number(),
@@ -163,20 +167,11 @@ export const Image = {
     });
   },
 
-  delete: (obj: z.infer<(typeof ImageInput)["delete"]>) => {
+  delete: async (obj: z.infer<(typeof ImageInput)["delete"]>) => {
     const input = ImageInput.delete.parse(obj);
+    await prisma.image.deleteMany({ where: input });
 
-    const where: Prisma.ImageWhereInput = {};
-
-    if (input.id) {
-      where.id = input.id;
-    }
-
-    if (input.path) {
-      where.path = input.path;
-    }
-
-    return prisma.image.deleteMany({ where });
+    return curd.color.clear();
   },
 
   update: async (obj: z.infer<(typeof ImageInput)["update"]>) => {
