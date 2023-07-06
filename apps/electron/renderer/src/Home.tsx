@@ -24,7 +24,7 @@ function Home() {
   /** 解决同步过程中，隐藏控制台，在打开进度显示异常问题 */
   const pending = Number(localStorage.getItem("pending") || 0);
   // 是否在初始化中 首次添加
-  const adding = useRef<boolean>(false);
+  const [adding, setAdding] = useState<boolean>(false);
 
   window.app.getVersion().then((res) => {
     document.title = `Rao Pics - v${res}`;
@@ -71,7 +71,7 @@ function Home() {
   });
 
   /** 禁止操作 */
-  const disabled = useMemo(() => !!progress || adding.current, [progress, adding.current]);
+  const disabled = useMemo(() => !!progress || adding, [progress, adding]);
 
   const percent = useMemo(() => {
     if (progress) {
@@ -94,11 +94,9 @@ function Home() {
           id: activeItem.id,
         })
         .then(() => {
-          setTimeout(() => {
-            utils.library.get.invalidate();
-            setProgress(undefined);
-            localStorage.removeItem("pending");
-          });
+          utils.library.get.invalidate();
+          setProgress(undefined);
+          localStorage.removeItem("pending");
         });
     }
   }, [percent, progress, activeItem]);
@@ -126,21 +124,23 @@ function Home() {
 
         const lib = await window.electronAPI.handleDirectory(res[0]);
         if (!lib) return Alert({ title: "暂时不支持此App/文件夹" });
+
         T = setInterval(() => {
           utils.client.pending.getCount.query({ libraryId: lib.id }).then((res) => {
             if (!res) return;
             setPendingCount(res._count);
 
             if (res._count === lib.count) {
-              adding.current = false;
+              setAdding(false);
               clearInterval(T);
+              utils.library.get.invalidate();
             }
           });
         }, 300);
 
         utils.library.get.invalidate();
         setActive(lib.id);
-        adding.current = true;
+        setAdding(true);
       });
   };
 
@@ -256,7 +256,7 @@ function Home() {
                   className="radial-progress text-neutral-content/70 bg-neutral border-neutral/50 border-4"
                   style={{ "--value": percent, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
                 >
-                  {adding.current ? (
+                  {adding ? (
                     <div className="flex flex-col justify-center items-center text-neutral-content">
                       <span className="text-neutral-content text-xl font-bold">{pendingCount}</span>
                       <span className="text-neutral-content/80">初始化中...</span>
