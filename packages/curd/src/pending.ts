@@ -37,6 +37,10 @@ export const Pending = {
     return await prisma.pending.findMany({ where: { libraryId: obj.libraryId } });
   },
 
+  getCount: async (obj: z.infer<(typeof PendingInput)["get"]>) => {
+    return await prisma.pending.aggregate({ where: { libraryId: obj.libraryId }, _count: true });
+  },
+
   delete: (obj: z.infer<(typeof PendingInput)["delete"]>) => {
     const input = PendingInput.delete.parse(obj);
 

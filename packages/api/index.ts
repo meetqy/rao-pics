@@ -6,6 +6,7 @@ import { config } from "./src/router/config";
 import { folders } from "./src/router/folder";
 import { image } from "./src/router/image";
 import { library } from "./src/router/library";
+import { pending } from "./src/router/pending";
 import { sync } from "./src/router/sync";
 import { tags } from "./src/router/tags";
 import { t } from "./src/trpc";
@@ -50,6 +51,7 @@ export const appRouter = t.router({
   folders,
   config,
   sync,
+  pending,
 });
 
 // export type definition of API

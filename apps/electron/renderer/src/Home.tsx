@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import "./home.css";
 import Alert from "./components/Alert";
@@ -11,14 +11,20 @@ interface SyncSubscriptionData {
   type: "folder" | "image";
 }
 
+let T: NodeJS.Timer;
+
 function Home() {
   const utils = trpc.useContext();
 
   const { data: config } = trpc.config.get.useQuery();
   const library = trpc.library.get.useQuery();
+  const [pendingCount, setPendingCount] = useState<number>(0);
   const removeLibrary = trpc.library.delete.useMutation();
   const updateLibrary = trpc.library.update.useMutation();
+  /** 解决同步过程中，隐藏控制台，在打开进度显示异常问题 */
   const pending = Number(localStorage.getItem("pending") || 0);
+  // 是否在初始化中 首次添加
+  const [adding, setAdding] = useState<boolean>(false);
 
   window.app.getVersion().then((res) => {
     document.title = `Rao Pics - v${res}`;
@@ -64,6 +70,9 @@ function Home() {
     },
   });
 
+  /** 禁止操作 */
+  const disabled = useMemo(() => !!progress || adding, [progress, adding]);
+
   const percent = useMemo(() => {
     if (progress) {
       const { current } = progress;
@@ -96,11 +105,12 @@ function Home() {
   const onSyncClick = () => {
     if (!activeItem) return;
 
+    localStorage.setItem("pending", activeItem._count.pendings + "");
+
     // start sync
     sync.mutateAsync({
       libraryId: activeItem.id,
     });
-    localStorage.setItem("pending", activeItem._count.pendings + "");
   };
 
   const showOpenDialog = () => {
@@ -115,10 +125,22 @@ function Home() {
         const lib = await window.electronAPI.handleDirectory(res[0]);
         if (!lib) return Alert({ title: "暂时不支持此App/文件夹" });
 
-        if (lib) {
-          utils.library.get.invalidate();
-          setActive(lib.id);
-        }
+        T = setInterval(() => {
+          utils.client.pending.getCount.query({ libraryId: lib.id }).then((res) => {
+            if (!res) return;
+            setPendingCount(res._count);
+
+            if (res._count === lib.count) {
+              setAdding(false);
+              clearInterval(T);
+              utils.library.get.invalidate();
+            }
+          });
+        }, 300);
+
+        utils.library.get.invalidate();
+        setActive(lib.id);
+        setAdding(true);
       });
   };
 
@@ -126,7 +148,7 @@ function Home() {
     <div className="h-screen w-full flex text-sm">
       <div className="w-1/4 overflow-y-auto scrollbar bg-base-200/70">
         <div className="flex justify-center p-2 sticky top-0  z-10">
-          <button className="btn w-full btn-outline flex items-center" disabled={!!progress} onClick={showOpenDialog}>
+          <button className="btn w-full btn-outline flex items-center" disabled={disabled} onClick={showOpenDialog}>
             <img src="icon.png" className="w-6" />
             <span className="ml-2">添加文件夹/库</span>
           </button>
@@ -139,7 +161,7 @@ function Home() {
                 className={`${item.id === active ? "active" : ""} capitalize flex w-full tooltip`}
                 data-tip={item.name}
                 onClick={() => {
-                  if (!!progress) return;
+                  if (disabled) return;
                   setActive(item.id);
                 }}
               >
@@ -234,15 +256,22 @@ function Home() {
                   className="radial-progress text-neutral-content/70 bg-neutral border-neutral/50 border-4"
                   style={{ "--value": percent, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
                 >
-                  <div className="flex flex-col items-center justify-center">
-                    <span className="text-neutral-content text-xl font-bold">{activeItem?._count.pendings}</span>
-                    <span className="text-neutral-content/80">待同步</span>
-                  </div>
+                  {adding ? (
+                    <div className="flex flex-col justify-center items-center text-neutral-content">
+                      <span className="text-neutral-content text-xl font-bold">{pendingCount}</span>
+                      <span className="text-neutral-content/80">初始化中...</span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center">
+                      <span className="text-neutral-content text-xl font-bold">{activeItem?._count.pendings}</span>
+                      <span className="text-neutral-content/80">待同步</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
               <div className="flex flex-col space-y-4 w-1/2 h-full justify-center px-8 bg-base-200/40">
-                <button className="btn" disabled={!!progress} onClick={onSyncClick}>
+                <button className="btn" disabled={disabled} onClick={onSyncClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path
                       strokeLinecap="round"
@@ -253,12 +282,12 @@ function Home() {
                   <span className="ml-2">同步</span>
                 </button>
 
-                <button className="btn btn-error btn-outline px-0" disabled={!!progress}>
+                <button className="btn btn-error btn-outline px-0" disabled={disabled}>
                   <label
                     htmlFor="my-modal"
                     className="flex items-center w-full justify-center h-full cursor-pointer"
                     onClick={() => {
-                      if (!!progress) return;
+                      if (disabled) return;
                       setDelConfirmVisable(true);
                     }}
                   >
