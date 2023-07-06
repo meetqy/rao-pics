@@ -1,5 +1,6 @@
 import { join, sep } from "path";
 import { ipcMain } from "electron";
+import fg from "fast-glob";
 
 import curd from "@acme/curd";
 import { type Library } from "@acme/db";
@@ -16,7 +17,8 @@ export const createElectronApiIPCHandler = () => {
     // eagle
     if (dir.endsWith(".library")) {
       const lib = await curd.library.create({ dir, name, type: "eagle" });
-      await startWatcher({
+      const entries = await fg(join(dir, "./images/**/metadata.json"));
+      void startWatcher({
         libraryId: lib.id,
         paths: join(dir, "./images/**/metadata.json"),
       });
@@ -26,6 +28,7 @@ export const createElectronApiIPCHandler = () => {
         name,
         dir,
         type: "eagle",
+        count: entries.length,
       };
     } else {
       return null;

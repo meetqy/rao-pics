@@ -57,9 +57,6 @@ importers:
       '@acme/api':
         specifier: ^0.1.0
         version: link:../../packages/api
-      '@acme/assets-server':
-        specifier: ^0.1.0
-        version: link:../../packages/assets-server
       '@acme/constant':
         specifier: ^0.1.0
         version: link:../../packages/constant
