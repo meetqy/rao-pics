@@ -126,11 +126,10 @@ function Home() {
         if (!lib) return Alert({ title: "暂时不支持此App/文件夹" });
 
         T = setInterval(() => {
-          utils.client.pending.getCount.query({ libraryId: lib.id }).then((res) => {
-            if (!res) return;
-            setPendingCount(res._count);
+          utils.client.pending.getCount.query({ libraryId: lib.id }).then((count) => {
+            setPendingCount(count);
 
-            if (res._count === lib.count) {
+            if (count === lib.count) {
               setAdding(false);
               clearInterval(T);
               utils.library.get.invalidate();

@@ -12,10 +12,12 @@ export const pending = t.router({
       }),
     )
     .query(async ({ input }) => {
-      if (!input.libraryId) return 0;
+      if (!input.libraryId) return Promise.resolve(0);
 
-      return await curd.pending.getCount({
+      const res = await curd.pending.getCount({
         libraryId: input.libraryId,
       });
+
+      return res._count;
     }),
 });
