@@ -23,9 +23,6 @@ export const createElectronApiIPCHandler = () => {
       void startWatcher({
         libraryId: lib.id,
         paths,
-        options: {
-          ignoreInitial: true,
-        },
       });
 
       return {
