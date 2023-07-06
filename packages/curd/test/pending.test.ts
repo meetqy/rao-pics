@@ -58,7 +58,7 @@ describe("@acme/curd pending", async () => {
 
     const p = res[0]?.path;
     if (p) {
-      const res = await curd.pending.delete(p);
+      const res = await curd.pending.delete({ path: p });
       expect(res).toHaveProperty("path", p);
       void expect(curd.pending.get({ libraryId: lib.id })).resolves.toHaveLength(1);
     }

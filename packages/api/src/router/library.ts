@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";
 import curd, { ZodInput } from "@acme/curd";
+import { LibraryInput } from "@acme/curd/src/library";
 import { prisma } from "@acme/db";
 
 import { t } from "../trpc";
@@ -38,21 +39,5 @@ export const library = t.router({
       });
     }),
 
-  remove: t.procedure.input(z.number()).mutation(async ({ input }) => {
-    await prisma.$transaction([
-      prisma.image.deleteMany({
-        where: { libraryId: input },
-      }),
-      prisma.folder.deleteMany({
-        where: { libraryId: input },
-      }),
-      prisma.tag.deleteMany({
-        where: { libraryId: input },
-      }),
-    ]);
-
-    return await prisma.library.delete({
-      where: { id: input },
-    });
-  }),
+  delete: t.procedure.input(LibraryInput["delete"]).mutation(({ input }) => curd.library.delete(input)),
 });

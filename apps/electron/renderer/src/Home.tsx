@@ -16,7 +16,7 @@ function Home() {
 
   const { data: config } = trpc.config.get.useQuery();
   const library = trpc.library.get.useQuery();
-  const removeLibrary = trpc.library.remove.useMutation();
+  const removeLibrary = trpc.library.delete.useMutation();
   const updateLibrary = trpc.library.update.useMutation();
   const pending = Number(localStorage.getItem("pending") || 0);
 
@@ -44,10 +44,10 @@ function Home() {
   }, [library, isInit]);
 
   const onRemove = () => {
-    active && removeLibrary.mutateAsync(active);
-    const newL = library.data?.filter((item) => item.id != active);
-    setActive(newL && newL.length > 0 ? newL[0].id : undefined);
-    setDelConfirmVisable(false);
+    active && removeLibrary.mutateAsync({ id: active });
+    // const newL = library.data?.filter((item) => item.id != active);
+    // setActive(newL && newL.length > 0 ? newL[0].id : undefined);
+    // setDelConfirmVisable(false);
     utils.library.get.invalidate();
   };
 
@@ -251,8 +251,15 @@ function Home() {
                   <span className="ml-2">同步</span>
                 </button>
 
-                <button className="btn btn-error btn-outline" disabled={!!progress} onClick={() => setDelConfirmVisable(true)}>
-                  <label htmlFor="my-modal" className="flex items-center">
+                <button className="btn btn-error btn-outline" disabled={!!progress}>
+                  <label
+                    htmlFor="my-modal"
+                    className="flex items-center w-full justify-center"
+                    onClick={() => {
+                      if (!!progress) return;
+                      setDelConfirmVisable(true);
+                    }}
+                  >
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
