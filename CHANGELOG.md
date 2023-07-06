@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/rao-pics/core/compare/v0.7.0-beta.1...v0.7.0) (2023-07-06)
+
+
+### Bug Fixes
+
+* 🐛 移除library 失败 ([9c08252](https://github.com/rao-pics/core/commit/9c082524dfc3dad340748f1a677e509b7807b5af))
+* 🐛 退出后重启web服务未启动 ([d581be1](https://github.com/rao-pics/core/commit/d581be19bbd02cfcb1898b1260da70dcc10c7f26)), closes [#294](https://github.com/rao-pics/core/issues/294)
+
+
+### Improves
+
+* ⚡️ 优化移除library逻辑 ([51669df](https://github.com/rao-pics/core/commit/51669dfcfa03582ab01f832b98970bc2a3ec641f))
+* ⚡️ 添加时文件过多，等待时间过长添加 loading ([7413d1a](https://github.com/rao-pics/core/commit/7413d1a57b5c430cc827b3aee175a899210bd369)), closes [#289](https://github.com/rao-pics/core/issues/289)
+
 ## [0.7.0-beta.1](https://github.com/rao-pics/core/compare/v0.7.0-beta.0...v0.7.0-beta.1) (2023-07-05)
 
 
