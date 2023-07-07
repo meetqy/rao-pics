@@ -1,7 +1,7 @@
 {
   "name": "@acme/electron",
   "productName": "Rao Pics",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Preview your materials on website. Support for eagle.",
   "private": true,
   "main": "main/dist/index.cjs",

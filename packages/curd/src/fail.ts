@@ -11,9 +11,23 @@ export const FailInput = {
   delete: z.object({
     libraryId: z.number(),
   }),
+
+  get: z.object({
+    libraryId: z.number(),
+  }),
 };
 
 export const Fail = {
+  get: async (obj: z.infer<(typeof FailInput)["get"]>) => {
+    const input = FailInput.get.parse(obj);
+
+    return await prisma.fails.findMany({
+      where: {
+        libraryId: input.libraryId,
+      },
+    });
+  },
+
   create: async (obj: z.infer<(typeof FailInput)["create"]>) => {
     const input = FailInput.create.parse(obj);
     return await prisma.fails.create({

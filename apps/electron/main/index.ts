@@ -165,22 +165,32 @@ app
 
       for (const lib of libs) {
         if (lib.type === "eagle") {
+          /**
+           * 这里只是简单的处理，关闭之后操作了 Eagle，无法同步的问题。
+           * 正常来说，关闭软件之后，去操作 eagle, 没有记录到更新情况，不属于软件本身 Bug。
+           * https://github.com/rao-pics/core/issues/299
+           */
           const paths = join(lib.dir, "images", "**", "metadata.json").replace(/\\/g, "/");
           const entries = fg.sync(paths);
 
+          const failImages = await curd.fail.get({ libraryId: lib.id });
           const exitsImages = await curd.image.get({ libraryId: lib.id });
-          const exitsImagesPaths = exitsImages.map((item) => {
-            const src = item.path.replace(/\.info(.*?)+/, ".info/metadata.json");
-            return join(lib.dir, src).replace(/\\/g, "/");
-          });
 
-          entries.forEach((entry) => {
-            if (exitsImagesPaths.includes(entry)) {
-              void curd.pending.upsert({ libraryId: lib.id, path: entry, type: "update" });
-            } else {
-              void curd.pending.upsert({ libraryId: lib.id, path: entry, type: "create" });
-            }
-          });
+          if (failImages.length + exitsImages.length != entries.length) {
+            const exitsImagesPaths = exitsImages.map((item) => {
+              const src = item.path.replace(/\.info(.*?)+/, ".info/metadata.json");
+              return join(lib.dir, src).replace(/\\/g, "/");
+            });
+
+            entries.forEach((entry) => {
+              if (exitsImagesPaths.includes(entry)) {
+                void curd.pending.upsert({ libraryId: lib.id, path: entry, type: "update" });
+              } else {
+                void curd.pending.upsert({ libraryId: lib.id, path: entry, type: "create" });
+              }
+            });
+          }
+          // END
 
           void startWatcher({
             libraryId: lib.id,
