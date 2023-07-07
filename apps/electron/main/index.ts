@@ -169,10 +169,13 @@ app
           const entries = fg.sync(paths);
 
           const exitsImages = await curd.image.get({ libraryId: lib.id });
-          const exitsImagesPaths = exitsImages.map((item) => item.path);
+          const exitsImagesPaths = exitsImages.map((item) => {
+            const src = item.path.replace(/\.info(.*?)+/, ".info/metadata.json");
+            return join(lib.dir, src).replace(/\\/g, "/");
+          });
 
           entries.forEach((entry) => {
-            if (!exitsImagesPaths.includes(entry)) {
+            if (exitsImagesPaths.includes(entry)) {
               void curd.pending.upsert({ libraryId: lib.id, path: entry, type: "update" });
             } else {
               void curd.pending.upsert({ libraryId: lib.id, path: entry, type: "create" });

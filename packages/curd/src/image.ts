@@ -38,6 +38,7 @@ export const ImageInput = {
       id: z.number().optional(),
       path: z.string().optional(),
       libraryId: z.number().optional(),
+      pathStartsWith: z.string().optional(),
     })
     .partial()
     .refine((obj) => !!obj.id || !!obj.path || !!obj.libraryId, "At least one of id, path, libraryId is required."),
@@ -71,6 +72,7 @@ export const ImageInput = {
     id: z.union([z.number(), z.array(z.number())]).optional(),
     path: z.string().optional(),
     libraryId: z.number().optional(),
+    pathStartsWith: z.string().optional(),
   }),
 };
 
@@ -94,6 +96,12 @@ export const Image = {
 
     if (path) {
       where.path = path;
+    }
+
+    if (input.pathStartsWith) {
+      where.path = {
+        startsWith: input.pathStartsWith,
+      };
     }
 
     return prisma.image.findMany({
@@ -174,7 +182,12 @@ export const Image = {
 
   delete: async (obj: z.infer<(typeof ImageInput)["delete"]>) => {
     const input = ImageInput.delete.parse(obj);
-    await prisma.image.deleteMany({ where: input });
+
+    if (input.pathStartsWith) {
+      await prisma.image.deleteMany({ where: { path: { startsWith: input.pathStartsWith } } });
+    } else {
+      await prisma.image.deleteMany({ where: input });
+    }
 
     return curd.color.clear();
   },
@@ -205,7 +218,7 @@ export const Image = {
     updateArgs.data["tags"] = input.tags ? updateTags(input.tags, oldImage[0]?.tags || []) : undefined;
     updateArgs.data["colors"] = input.colors ? updateColors(input.colors, oldImage[0]?.colors || []) : undefined;
 
-    console.log(updateArgs);
+    // console.log(updateArgs);
     return await prisma.image.update(updateArgs);
   },
 };
