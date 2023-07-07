@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/rao-pics/core/compare/v0.7.1...v0.7.2) (2023-07-07)
+
+
+### Bug Fixes
+
+* 🐛 关闭软件之后,再次开启无法同步 ([42bf4b4](https://github.com/rao-pics/core/commit/42bf4b4b9d0ec3de4db677c6d9fa427f76d5b02a)), closes [#299](https://github.com/rao-pics/core/issues/299)
+* 🐛 回收站图片,不应该显示 ([4af5191](https://github.com/rao-pics/core/commit/4af5191e9bb3dd398d4f0e8a6f6490b205f90bed))
+
+
+### Improves
+
+* ⚡️ 优化同步速度,3秒内未修改的直接跳过 ([916508d](https://github.com/rao-pics/core/commit/916508d31ef82f16a6aa648c9831a8239f949a74))
+* ⚡️ 优化控制台文案 ([93e5a67](https://github.com/rao-pics/core/commit/93e5a671986df2b02270e14f713e02e36403545e))
+
 ### [0.7.1](https://github.com/rao-pics/core/compare/v0.7.0...v0.7.1) (2023-07-06)
 
 ## [0.7.0](https://github.com/rao-pics/core/compare/v0.7.0-beta.1...v0.7.0) (2023-07-06)
