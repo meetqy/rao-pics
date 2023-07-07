@@ -7,19 +7,20 @@
 ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/meetqy/5c4881f21bab2cf4f09a8658354fb997/raw/rao-pics_core__coverage.json)
 [![License](https://img.shields.io/github/license/rao-pics/core)](https://github.com/rao-pics/core/blob/turbo-electron-prisma/LICENSE)
 [![release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
-![download](https://img.shields.io/github/downloads/rao-pics/core/total)
+[![download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/rao-pics/rao-pics/releases)
+[![Twitter URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Frao-pics%2Frao-pics)](https://twitter.com/intent/tweet?text=Visit%20Material%20on%20Any%20device.https://github.com/rao-pics/core)
 
-任何设备可通过局域网访问素材/媒体/音乐。
+在任何设备访问你的素材/媒体/音乐。
 
-![Rao Pics - 任何设备可通过本地网络访问素材。desktop/ipad/phone](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
+![Rao Pics - 在任何设备访问你的素材/媒体/音乐。desktop/ipad/phone](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
 
 ## 已支持
 
-App
+### App
 
 <p><a href="https://eagle.sjv.io/rao" target="_blank"><img width="64" src="https://i.imgur.com/jxirugb.jpg"/></a></p>
 
-文件类型
+### 文件类型
 
 ```ts
 const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
@@ -91,16 +92,3 @@ UI
 ## 芜湖 ~
 
 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate) - 如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao)，支持作者哦 😘😘😘
-
----
-
-<div align="center">
-  
-༼ つ ◕_◕ ༽つ  Please share  
-  
-[![][tweet]][tweet-url]
-
-</div>
-
-[tweet]: https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithu
-[tweet-url]: https://twitter.com/intent/tweet?text=任何设备可通过局域网访问媒体https://github.com/rao-pics/core
