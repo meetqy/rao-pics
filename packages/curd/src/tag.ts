@@ -96,26 +96,4 @@ export const Tag = {
       },
     });
   },
-
-  clear: (obj: z.infer<(typeof TagInput)["clear"]>) => {
-    const { libraryId } = obj;
-    return prisma.tag.deleteMany({
-      where: {
-        libraryId,
-      },
-    });
-  },
-
-  /**
-   * 清除 image 数量为 0 的 Tag
-   */
-  cleanWithImageZero: (obj: z.infer<(typeof TagInput)["cleanByImageZero"]>) => {
-    const { libraryId } = obj;
-    return prisma.tag.deleteMany({
-      where: {
-        libraryId,
-        images: { none: {} },
-      },
-    });
-  },
 };
