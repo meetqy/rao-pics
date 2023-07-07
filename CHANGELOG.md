@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/rao-pics/core/compare/v0.7.1...v0.7.2) (2023-07-07)
+
+
+### Bug Fixes
+
+* 🐛 关闭软件之后,再次开启无法同步 ([42bf4b4](https://github.com/rao-pics/core/commit/42bf4b4b9d0ec3de4db677c6d9fa427f76d5b02a)), closes [#299](https://github.com/rao-pics/core/issues/299)
+
 ### [0.7.1](https://github.com/rao-pics/core/compare/v0.7.0...v0.7.1) (2023-07-06)
 
 ## [0.7.0](https://github.com/rao-pics/core/compare/v0.7.0-beta.1...v0.7.0) (2023-07-06)
