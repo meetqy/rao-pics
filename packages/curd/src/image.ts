@@ -70,6 +70,7 @@ export const ImageInput = {
   get: z.object({
     id: z.union([z.number(), z.array(z.number())]).optional(),
     path: z.string().optional(),
+    libraryId: z.number().optional(),
   }),
 };
 
@@ -85,6 +86,10 @@ export const Image = {
       where.id = {
         in: typeof input.id === "number" ? [input.id] : input.id,
       };
+    }
+
+    if (input.libraryId) {
+      where.libraryId = input.libraryId;
     }
 
     if (path) {

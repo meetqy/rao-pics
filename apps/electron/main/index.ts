@@ -6,6 +6,7 @@ import startWatcher from "@acme/watch";
 
 import "./security-restrictions";
 import { join } from "path";
+import fg from "fast-glob";
 
 import { appRouter } from "@acme/api";
 import curd from "@acme/curd";
@@ -161,17 +162,32 @@ app
     void (async () => {
       // 创建文件监听
       const libs = await curd.library.get({});
-      libs.forEach((lib) => {
+
+      for (const lib of libs) {
         if (lib.type === "eagle") {
+          const paths = join(lib.dir, "images", "**", "metadata.json").replace(/\\/g, "/");
+          const entries = fg.sync(paths);
+
+          const exitsImages = await curd.image.get({ libraryId: lib.id });
+          const exitsImagesPaths = exitsImages.map((item) => item.path);
+
+          entries.forEach((entry) => {
+            if (!exitsImagesPaths.includes(entry)) {
+              void curd.pending.upsert({ libraryId: lib.id, path: entry, type: "update" });
+            } else {
+              void curd.pending.upsert({ libraryId: lib.id, path: entry, type: "create" });
+            }
+          });
+
           void startWatcher({
             libraryId: lib.id,
-            paths: join(lib.dir, "./images/**/metadata.json"),
+            paths,
             options: {
               ignoreInitial: true,
             },
           });
         }
-      });
+      }
 
       // Init config assign to process.env
       await getAndUpdateConfig();
