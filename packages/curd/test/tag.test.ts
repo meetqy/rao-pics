@@ -24,12 +24,29 @@ describe("@acme/curd tag", () => {
 
   test<LocalTestContext>("Upsert tag create", async (ctx) => {
     const { lib } = ctx;
-
     const tag = await curd.tag.upsert({ name: faker.lorem.word(), libraryId: lib.id });
 
     expect(tag).toMatchObject({
       name: tag.name,
       libraryId: lib.id,
     });
+  });
+
+  test<LocalTestContext>("Delete by name", async (ctx) => {
+    const { lib } = ctx;
+    const tag = await curd.tag.upsert({ name: faker.lorem.word(), libraryId: lib.id });
+    await curd.tag.delete({ name: tag.name });
+    const tags = await curd.tag.get({ library: lib.name });
+
+    expect(tags).toHaveLength(0);
+  });
+
+  test<LocalTestContext>("Delete by libraryId", async (ctx) => {
+    const { lib } = ctx;
+    await curd.tag.upsert({ name: faker.lorem.word(), libraryId: lib.id });
+    await curd.tag.delete({ libraryId: lib.id });
+    const tags = await curd.tag.get({ library: lib.name });
+
+    expect(tags).toHaveLength(0);
   });
 });
