@@ -17,6 +17,7 @@ export const createImage = async (path: string, library: Library) => {
   const args = transformImageArgs(base, library);
 
   if (!args) return null;
+  if (args.isDeleted) return null;
 
   return await curd.image.create(args);
 };
@@ -32,6 +33,11 @@ export const updateImage = async (path: string, library: Library) => {
   const args = transformImageArgs(base, library);
 
   if (!args) return null;
+  if (args.isDeleted) {
+    return await curd.image.delete({
+      path: base.imagePath,
+    });
+  }
 
   const image = await curd.image.get({
     path: base.imagePath,
@@ -111,6 +117,7 @@ const transformImageArgs = (base: ReturnType<typeof getImageBase>, library: Libr
   const { metadata, stats, imagePath, thumbnailPath, ext } = base;
 
   return {
+    isDeleted: metadata.isDeleted,
     libraryId: library.id,
     path: imagePath,
     thumbnailPath,
