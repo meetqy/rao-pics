@@ -14,6 +14,14 @@
 
 ![Rao Pics - 在任何设备访问你的素材/媒体/音乐。desktop/ipad/phone](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
 
+## 下载
+
+| 平台      | 地址                                          |
+| --------- | --------------------------------------------- |
+| Mac M1    | https://github.com/rao-pics/rao-pics/releases |
+| Mac Intel | https://github.com/rao-pics/rao-pics/releases |
+| Windows   | https://github.com/rao-pics/rao-pics/releases |
+
 ## 已支持
 
 ### App

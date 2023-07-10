@@ -12,6 +12,14 @@
 
 ![Visit Photos on Any Device.](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
 
+## Download
+
+| Planform  | Herf                                          |
+| --------- | --------------------------------------------- |
+| Mac M1    | https://github.com/rao-pics/rao-pics/releases |
+| Mac Intel | https://github.com/rao-pics/rao-pics/releases |
+| Windows   | https://github.com/rao-pics/rao-pics/releases |
+
 ## Supported
 
 ### App
