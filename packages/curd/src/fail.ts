@@ -8,9 +8,13 @@ export const FailInput = {
     path: z.string(),
   }),
 
-  delete: z.object({
-    libraryId: z.number(),
-  }),
+  delete: z
+    .object({
+      libraryId: z.number().optional(),
+      path: z.string().optional(),
+    })
+    .partial()
+    .refine((input) => input.libraryId || input.path, "Either libraryId or path must be provided"),
 
   get: z.object({
     libraryId: z.number(),
@@ -21,7 +25,7 @@ export const Fail = {
   get: async (obj: z.infer<(typeof FailInput)["get"]>) => {
     const input = FailInput.get.parse(obj);
 
-    return await prisma.fails.findMany({
+    return await prisma.fail.findMany({
       where: {
         libraryId: input.libraryId,
       },
@@ -30,7 +34,7 @@ export const Fail = {
 
   create: async (obj: z.infer<(typeof FailInput)["create"]>) => {
     const input = FailInput.create.parse(obj);
-    return await prisma.fails.create({
+    return await prisma.fail.create({
       data: {
         libraryId: input.libraryId,
         path: input.path,
@@ -38,13 +42,9 @@ export const Fail = {
     });
   },
 
-  delete: (obj: z.infer<(typeof FailInput)["delete"]>) => {
+  delete: async (obj: z.infer<(typeof FailInput)["delete"]>) => {
     const input = FailInput.delete.parse(obj);
 
-    return prisma.fails.deleteMany({
-      where: {
-        libraryId: input.libraryId,
-      },
-    });
+    return await prisma.fail.deleteMany({ where: input });
   },
 };

@@ -25,6 +25,7 @@ function Home() {
   const pending = Number(localStorage.getItem("pending") || 0);
   // 是否在初始化中 首次添加
   const [adding, setAdding] = useState<boolean>(false);
+  const checkFailAndClean = trpc.utils.checkFailAndClean.useMutation();
 
   window.app.getVersion().then((res) => {
     document.title = `Rao Pics - v${res}`;
@@ -94,6 +95,7 @@ function Home() {
           id: activeItem.id,
         })
         .then(() => {
+          void checkFailAndClean.mutate({ libraryId: activeItem.id, libraryDir: activeItem.dir });
           utils.library.get.invalidate();
           setProgress(undefined);
           localStorage.removeItem("pending");
