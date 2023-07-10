@@ -52,14 +52,14 @@ model Library {
     // 已同步
     images       Image[]
     // 同步失败的文件路径（包含不支持的扩展名）
-    fails        Fails[]
+    fails        Fail[]
     // 等待同步的 image
     pendings     Pending[]
     folders      Folder[]
     Tag          Tag[]
 }
 
-model Fails {
+model Fail {
     path      String   @id @unique
     Library   Library? @relation(fields: [libraryId], references: [id])
     libraryId Int?
