@@ -13,7 +13,9 @@ const libraryIds: number[] = [];
  */
 export const createAssetsServer = (port: number, librarys?: Library[]) => {
   if (!librarys || librarys.length === 0) {
-    server?.close();
+    server?.close((err) => {
+      console.log("assets server close", err);
+    });
     server = null;
     libraryIds.splice(0, libraryIds.length);
     return;
@@ -22,6 +24,10 @@ export const createAssetsServer = (port: number, librarys?: Library[]) => {
   if (librarys.map((item) => item.id).join(",") === libraryIds.join(",")) {
     return;
   }
+
+  server?.close((e) => {
+    console.log("assets server restarting", e);
+  });
 
   // clear library ids
   libraryIds.splice(0, libraryIds.length);
