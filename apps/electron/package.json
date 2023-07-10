@@ -1,7 +1,7 @@
 {
   "name": "@acme/electron",
   "productName": "Rao Pics",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Visit Photos on Any Device.",
   "private": true,
   "main": "main/dist/index.cjs",

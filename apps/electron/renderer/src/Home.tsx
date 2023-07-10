@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
 import "./home.css";
-import Alert from "./components/Alert";
 import Empty from "./components/Empty";
 import { trpc } from "./utils/trpc";
 
@@ -124,8 +123,11 @@ function Home() {
       .then(async (res) => {
         if (!res) return;
 
+        const isExits = library.data?.filter((item) => item.dir === res[0]).length || 0;
+        if (isExits > 0) return window.dialog.showMessageBox({ message: "此文件夹已存在", type: "error" });
+
         const lib = await window.electronAPI.handleDirectory(res[0]);
-        if (!lib) return Alert({ title: "暂时不支持此App/文件夹" });
+        if (!lib) return window.dialog.showMessageBox({ message: "暂时不支持此 App 或文件夹", type: "error" });
 
         T = setInterval(() => {
           utils.client.pending.getCount.query({ libraryId: lib.id }).then((count) => {

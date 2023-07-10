@@ -30,6 +30,7 @@ process.once("loaded", () => {
    */
   contextBridge.exposeInMainWorld("dialog", {
     showOpenDialog: (options: Electron.OpenDialogOptions) => ipcRenderer.invoke("dialog.showOpenDialog", options),
+    showMessageBox: (options: Electron.OpenDialogOptions) => ipcRenderer.invoke("dialog.showMessageBox", options),
   });
 
   /**
