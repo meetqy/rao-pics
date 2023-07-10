@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.3](https://github.com/rao-pics/core/compare/v0.7.2...v0.7.3) (2023-07-10)
+
+
+### Bug Fixes
+
+* 🐛 eagle 添加素材库问题 ([ef8e390](https://github.com/rao-pics/core/commit/ef8e3902dbeb33651b0400d56a2e0c6c02f7829b)), closes [#236](https://github.com/rao-pics/core/issues/236)
+* 🐛 文件夹同步问题 ([619c29b](https://github.com/rao-pics/core/commit/619c29b8d3d204b4c0a3b84d42a4e897ffab3783)), closes [#303](https://github.com/rao-pics/core/issues/303) [#302](https://github.com/rao-pics/core/issues/302)
+
+
+### Tests
+
+* 💍 补充单元测试 ([9be44e4](https://github.com/rao-pics/core/commit/9be44e4b1b98abddc63e9bb7f65c3faedad1619e))
+
+
+### Improves
+
+* ⚡️ 同步完成后清除已同步,但未删除的Fail记录 ([1414ef2](https://github.com/rao-pics/core/commit/1414ef2bab29bbd5731785c38bd1fbbbce5233b5)), closes [#301](https://github.com/rao-pics/core/issues/301)
+
+
+### Refactors
+
+* 💡 Fails rename Fail ([7ede144](https://github.com/rao-pics/core/commit/7ede1441ba88928723b5d5b5eceb9ac56e9916ba))
+
 ### [0.7.2](https://github.com/rao-pics/core/compare/v0.7.1...v0.7.2) (2023-07-07)
 
 
