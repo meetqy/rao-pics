@@ -6,7 +6,8 @@ import { type Library } from "@acme/db";
 import { type EmitOption, type Folder } from "../types";
 
 export const handleFolder = async (folders: Folder[], lib: Library, emit?: (option: EmitOption) => void) => {
-  const f = treeToArray(folders);
+  // 相同的文件夹，只保留一个
+  const f = _.uniqBy(treeToArray(folders), "name");
 
   const oldFolders = await curd.folder.get({ libraryId: lib.id });
   const oldFolderIds = oldFolders.map((v) => v.id);
@@ -42,16 +43,31 @@ export const handleFolder = async (folders: Folder[], lib: Library, emit?: (opti
 
 const treeToArray = (folders: Folder[]) => {
   const newFolders: Folder[] = [];
+  const namesJson: { [key in string]: number } = {};
+
+  const calcNumReturnNewFolder = (item: Folder) => {
+    const nameNum = (namesJson[item.name] || 0) + 1;
+    namesJson[item.name] = nameNum;
+
+    if (nameNum > 1) {
+      item.name = `${item.name}-${nameNum - 1}`;
+    }
+
+    return item;
+  };
 
   const callback = (item: Folder) => {
     (item.children || (item.children = [])).forEach((v) => {
+      v.name = item.name + "／" + v.name;
+
       callback(v);
     });
 
     delete item.children;
-    newFolders.push(item);
+    newFolders.push(calcNumReturnNewFolder(item));
   };
 
   folders.map((v) => callback(v));
+
   return newFolders;
 };
