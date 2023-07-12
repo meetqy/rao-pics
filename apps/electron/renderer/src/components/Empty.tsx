@@ -22,9 +22,7 @@ const Empty = (props: Props) => {
   return (
     <div className="w-3/4 flex justify-center items-center ">
       <div className="card card-compact w-4/5 bg-base-100">
-        <figure>
-          <img src="icon.png" alt="rao icon" className="w-1/3" />
-        </figure>
+        <img src="logo.png" alt="rao.pics logo" className="w-1/3 rounded-full shadow shadow-neutral m-auto" />
         <div className="card-body items-center text-center">
           <h2 className="card-title uppercase !mb-0">
             {appName}
