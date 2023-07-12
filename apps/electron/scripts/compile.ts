@@ -49,19 +49,14 @@ export const AppConfig: builder.Configuration = {
   ],
   mac: {
     category: "public.app-category.photography",
-    icon: "buildResources/icon.icns",
+    icon: "buildResources/logo.png",
     darkModeSupport: true,
-    target: isTest
-      ? "dir"
-      : {
-          target: "dmg",
-          arch: ["x64", "arm64"],
-        },
+    target: isTest ? "dir" : { target: "dmg" },
     extraResources,
   },
 
   win: {
-    icon: "buildResources/icon.png",
+    icon: "buildResources/logo.png",
     target: isTest ? "dir" : "nsis",
     extraResources,
   },
