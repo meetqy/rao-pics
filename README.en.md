@@ -1,5 +1,3 @@
-[![Rao Pics - Visit Photos on Any Device](https://rao.ujump.cn/readme/preview1.png?imageMogr2/format/webp/interlace/1/thumbnail/1920&t=1)](https://rao.ujump.cn/readme/preview1.mp4)
-
 # Rao Pics: Visit Photos on Any Device
 
 [中文](./README.md) | English
@@ -10,7 +8,7 @@
 [![download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/rao-pics/rao-pics/releases)
 [![Twitter URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Frao-pics%2Frao-pics)](https://twitter.com/intent/tweet?text=Visit%20Material%20on%20Any%20device.https://github.com/rao-pics/core)
 
-![Visit Photos on Any Device.](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
+https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f256d6ca3ceb
 
 ## Download
 
