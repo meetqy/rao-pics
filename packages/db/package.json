@@ -10,11 +10,11 @@
     "dev": "pnpm prisma studio -b none"
   },
   "dependencies": {
-    "@prisma/client": "^4.15.0",
+    "@prisma/client": "^5.0.0",
     "fs-extra": "^11.1.1"
   },
   "devDependencies": {
-    "prisma": "^4.15.0",
+    "prisma": "^5.0.0",
     "typescript": "^5.0.4"
   }
 }
