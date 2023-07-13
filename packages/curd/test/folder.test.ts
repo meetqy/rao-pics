@@ -2,7 +2,6 @@ import { faker } from "@faker-js/faker";
 import { beforeEach, describe, expect, test } from "vitest";
 
 import { prisma, type Library } from "@acme/db";
-import Mock from "@acme/mock";
 
 import curd from "../index";
 
@@ -29,7 +28,7 @@ const createInput = (libraryId: number) => ({
 });
 
 beforeEach<LocalTestContext>(async (ctx) => {
-  await Mock.dbClean();
+  await curd.util.dbClean();
 
   const lib = await createLib();
 

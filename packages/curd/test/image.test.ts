@@ -4,7 +4,6 @@ import { type z } from "zod";
 
 import { type Constant } from "@acme/constant";
 import { type Library } from "@acme/db";
-import Mock from "@acme/mock";
 
 import curd, { type ZodInput } from "..";
 
@@ -14,7 +13,7 @@ interface LocalTestContext {
 }
 
 describe("@acme/curd image", async () => {
-  await Mock.dbClean();
+  await curd.util.dbClean();
 
   beforeEach<LocalTestContext>(async (ctx) => {
     const lib = await curd.library.create({

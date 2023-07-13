@@ -19,7 +19,6 @@
   },
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",
-    "@acme/mock": "^0.1.0",
     "@types/lodash": "^4.14.195",
     "eslint": "^8.39.0",
     "typescript": "^5.0.4"

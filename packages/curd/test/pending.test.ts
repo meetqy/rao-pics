@@ -1,12 +1,10 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
 
-import Mock from "@acme/mock";
-
 import curd from "..";
 
 describe("@acme/curd pending", async () => {
-  await Mock.dbClean();
+  await curd.util.dbClean();
 
   const lib = await curd.library.create({
     type: "eagle",
