@@ -1,7 +1,8 @@
 name: Test Coverage
 on:
   push:
-    branches: [turbo-electron-prisma]
+    tags:
+      - "v*"
 jobs:
   build:
     runs-on: ubuntu-latest
