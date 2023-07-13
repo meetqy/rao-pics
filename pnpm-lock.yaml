@@ -291,34 +291,9 @@ importers:
       '@acme/eslint-config':
         specifier: ^0.1.0
         version: link:../config/eslint
-      '@acme/mock':
-        specifier: ^0.1.0
-        version: link:../mock
       eslint:
         specifier: ^8.39.0
         version: 8.39.0
-      typescript:
-        specifier: ^5.0.4
-        version: 5.0.4
-
-  packages/assets-server:
-    dependencies:
-      express:
-        specifier: ^4.18.2
-        version: 4.18.2
-    devDependencies:
-      '@acme/db':
-        specifier: ^0.1.0
-        version: link:../db
-      '@acme/eslint-config':
-        specifier: ^0.1.0
-        version: link:../config/eslint
-      '@types/express':
-        specifier: ^4.17.17
-        version: 4.17.17
-      eslint:
-        specifier: ^8.39.0
-        version: 8.40.0
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
@@ -383,9 +358,6 @@ importers:
       '@acme/db':
         specifier: ^0.1.0
         version: link:../db
-      '@acme/mock':
-        specifier: ^0.1.0
-        version: link:../mock
 
   packages/db:
     dependencies:
@@ -402,12 +374,6 @@ importers:
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
-
-  packages/mock:
-    devDependencies:
-      '@acme/db':
-        specifier: ^0.1.0
-        version: link:../db
 
   packages/support/eagle:
     dependencies:
@@ -433,9 +399,6 @@ importers:
       '@acme/eslint-config':
         specifier: ^0.1.0
         version: link:../../config/eslint
-      '@acme/mock':
-        specifier: ^0.1.0
-        version: link:../../mock
       '@types/lodash':
         specifier: ^4.14.195
         version: 4.14.195

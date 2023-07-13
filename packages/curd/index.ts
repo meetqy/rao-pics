@@ -6,6 +6,7 @@ import { Image, ImageInput } from "./src/image";
 import { Library, LibraryInput } from "./src/library";
 import { Pending, PendingInput } from "./src/pending";
 import { Tag, TagInput } from "./src/tag";
+import { Util } from "./src/util";
 
 export const ZodInput = {
   folder: FolderInput,
@@ -32,6 +33,7 @@ const curd = {
   color: Color,
   pending: Pending,
   fail: Fail,
+  util: Util,
 };
 
 export default curd;
