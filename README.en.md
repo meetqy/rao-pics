@@ -1,4 +1,4 @@
-![](https://rao.ujump.cn/readme/page1.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
+[![Rao Pics - Visit Photos on Any Device](https://rao.ujump.cn/readme/preview1.png?imageMogr2/format/webp/interlace/1/thumbnail/1920&t=1)](https://rao.ujump.cn/readme/preview1.mp4)
 
 # Rao Pics: Visit Photos on Any Device
 

@@ -1,4 +1,5 @@
 import { useInViewport } from "ahooks";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 
@@ -34,25 +35,30 @@ const Layout = (props: Props) => {
   }, [isViewPort]);
 
   return (
-    <div className="drawer drawer-mobile">
-      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content bg-base-100">
-        {props.navbar}
+    <>
+      <Head>
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
+      <div className="drawer drawer-mobile">
+        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content bg-base-100">
+          {props.navbar}
 
-        {/* children */}
-        <div>
-          {children}
-          <div className="text-center pb-4" ref={loadMoreDom}>
-            {props.loadMoreContent}
+          {/* children */}
+          <div>
+            {children}
+            <div className="text-center pb-4" ref={loadMoreDom}>
+              {props.loadMoreContent}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="drawer-side">
-        <label htmlFor="my-drawer" className="drawer-overlay"></label>
+        <div className="drawer-side">
+          <label htmlFor="my-drawer" className="drawer-overlay"></label>
 
-        <Menu library={library} href={props.href} />
+          <Menu library={library} href={props.href} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
