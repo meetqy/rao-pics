@@ -3,12 +3,15 @@ import { useRouter } from "next/router";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import { useEffect, useMemo, useState } from "react";
 
-import { GridScreensConfig, getImgUrl, transformByteToUnit } from "~/utils/common";
+import { getImgUrl, GridScreensConfig, transformByteToUnit } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
+
 import "photoswipe/style.css";
+
 import { type ParsedUrlQuery } from "querystring";
 import { useResponsive } from "ahooks";
+import Image from "next/image";
 
 import { type ExtEnum } from "@acme/api";
 import { CONSTANT } from "@acme/constant";
@@ -106,7 +109,7 @@ const IndexPage: NextPage = () => {
             {items?.map((item, index) => (
               <div className="card glass cursor-pointer overflow-hidden" key={item.id}>
                 <a
-                  className="w-full aspect-square overflow-hidden"
+                  className="aspect-square w-full overflow-hidden"
                   key={`${item.id}-${index}`}
                   target="_blank"
                   rel="noreferrer"
@@ -115,13 +118,13 @@ const IndexPage: NextPage = () => {
                   data-pswp-height={item.height}
                   data-pswp-type={CONSTANT.VIDEO_EXT.includes(item.ext) ? "video" : "image"}
                 >
-                  <img draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="w-full h-full object-cover object-top" />
+                  <Image draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="h-full w-full object-cover object-top" />
                 </a>
 
                 <div className={`card-body ${show?.p} ${show?.body ? "flex" : "hidden"}`}>
-                  <p className="text-lg truncate font-medium">{item.name}</p>
+                  <p className="truncate text-lg font-medium">{item.name}</p>
                   {(item.tags || item.folders) && (
-                    <div className="text-xs space-x-2">
+                    <div className="space-x-2 text-xs">
                       {item.tags.map((tag) => (
                         <div className="badge badge-sm badge-secondary bg-secondary/50 border-none" key={tag.name}>
                           {tag.name}
@@ -134,8 +137,8 @@ const IndexPage: NextPage = () => {
                       ))}
                     </div>
                   )}
-                  <p className="text-xs inline-flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <p className="inline-flex items-center text-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                       <path d="M12.75 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM7.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM8.25 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM9.75 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM10.5 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM12.75 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM14.25 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 17.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 15.75a.75.75 0 100-1.5.75.75 0 000 1.5zM15 12.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM16.5 13.5a.75.75 0 100-1.5.75.75 0 000 1.5z" />
                       <path
                         fillRule="evenodd"
@@ -145,15 +148,15 @@ const IndexPage: NextPage = () => {
                     </svg>
                     <span className="ml-2 font-mono">{item.lastTime.toLocaleString("zh", { hour12: false })}</span>
                   </p>
-                  <p className="text-xs inline-flex items-center flex-wrap">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                  <p className="inline-flex flex-wrap items-center text-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                       <path
                         fillRule="evenodd"
                         d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="uppercase ml-2 font-mono">{item.ext}</span>
+                    <span className="ml-2 font-mono uppercase">{item.ext}</span>
                     <span className="mr-1">,</span>
                     <span className="font-mono">
                       {item.width}×{item.height}

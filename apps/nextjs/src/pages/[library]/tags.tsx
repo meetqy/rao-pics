@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -19,11 +20,11 @@ const Page: NextPage = () => {
 
   const Header = () => {
     return (
-      <header className="w-full sticky top-0 left-0 z-20 xl:px-4 bg-base-100/90 backdrop-blur">
+      <header className="bg-base-100/90 sticky left-0 top-0 z-20 w-full backdrop-blur xl:px-4">
         <nav className="navbar">
           <div className="flex-1">
             <label htmlFor="my-drawer" className="btn btn-ghost btn-circle lg:hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -31,7 +32,7 @@ const Page: NextPage = () => {
                 />
               </svg>
             </label>
-            <a className="btn btn-ghost normal-case p-0 hover:bg-transparent text-xl">
+            <a className="btn btn-ghost p-0 text-xl normal-case hover:bg-transparent">
               标签
               {data && <span className="badge ml-2">{data.length}</span>}
             </a>
@@ -45,23 +46,23 @@ const Page: NextPage = () => {
     <Layout navbar={<Header />} href="/tags" loadMoreContent={<span className="text-base-300 text-sm">{"已经到底了~~"}</span>}>
       <>
         {assetsUrl && (
-          <div className="p-4 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
+          <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
             {data?.map((item) =>
               item._count.images ? (
-                <Link href={`/${librarryName}?tag=${item.name}`} key={item.name} className="card glass overflow-hidden shadow-xl relative">
-                  <div className="aspect-square flex justify-center items-center bg-neutral text-neutral-content">
+                <Link href={`/${librarryName}?tag=${item.name}`} key={item.name} className="card glass relative overflow-hidden shadow-xl">
+                  <div className="bg-neutral text-neutral-content flex aspect-square items-center justify-center">
                     {item.images[0] ? (
-                      <img src={getImgUrl(assetsUrl, item.images[0])} className="object-top object-cover aspect-square" />
+                      <Image alt={`first image in tag ${item.name}`} src={getImgUrl(assetsUrl, item.images[0])} className="aspect-square object-cover object-top" />
                     ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-40 h-40">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-40 w-40">
                         <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
                       </svg>
                     )}
                   </div>
-                  <div className="card-body p-4 absolute bottom-0 bg-base-100/60 text-base-content w-full backdrop-blur-sm">
-                    <h2 className="card-title justify-center w-full">{item.name}</h2>
+                  <div className="card-body bg-base-100/60 text-base-content absolute bottom-0 w-full p-4 backdrop-blur-sm">
+                    <h2 className="card-title w-full justify-center">{item.name}</h2>
                   </div>
-                  <button className="btn btn-square absolute z-10 right-1 top-1 btn-sm font-mono btn-circle backdrop-blur bg-secondary/30 text-secondary-content font-normal border-none">
+                  <button className="btn btn-square btn-sm btn-circle bg-secondary/30 text-secondary-content absolute right-1 top-1 z-10 border-none font-mono font-normal backdrop-blur">
                     {item._count.images}
                   </button>
                 </Link>

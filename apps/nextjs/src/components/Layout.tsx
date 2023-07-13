@@ -32,7 +32,7 @@ const Layout = (props: Props) => {
     if (isViewPort) {
       props.loadMore?.();
     }
-  }, [isViewPort]);
+  }, [isViewPort, props]);
 
   return (
     <>
