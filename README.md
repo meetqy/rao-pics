@@ -1,4 +1,4 @@
-[![Rao Pics - 任何设备可通过网页访问素材。](https://rao.ujump.cn/readme/preview1.png?imageMogr2/format/webp/interlace/1/thumbnail/1920&t=1)](https://rao.ujump.cn/readme/preview1.mp4)
+![Rao Pics - 任何设备可通过网页访问素材。](https://rao.ujump.cn/readme/preview1.png?imageMogr2/format/webp/interlace/1/thumbnail/1920&t=1)
 
 # Rao Pics
 
