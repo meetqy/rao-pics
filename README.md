@@ -1,5 +1,3 @@
-[![Rao Pics - 任何设备可通过网页访问素材。](https://rao.ujump.cn/readme/preview1.png?imageMogr2/format/webp/interlace/1/thumbnail/1920&t=1)](https://rao.ujump.cn/readme/preview1.mp4)
-
 # Rao Pics
 
 中文 | [English](./README.en.md)
@@ -12,7 +10,7 @@
 
 在任何设备访问你的素材/媒体/音乐。
 
-![Rao Pics - 在任何设备访问你的素材/媒体/音乐。desktop/ipad/phone](https://rao.ujump.cn/readme/device/any-device.png?imageMogr2/format/webp/interlace/1/thumbnail/1024x)
+https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f256d6ca3ceb
 
 ## 下载
 
