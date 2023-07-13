@@ -18,10 +18,7 @@
     "lint:fix": "turbo lint:fix && manypkg fix",
     "type-check": "turbo type-check",
     "test": "cross-env NODE_ENV=development vitest run --no-threads --coverage.enabled --coverage.reporter='text-summary'",
-    "test:ui": "cross-env NODE_ENV=development vitest --ui --no-threads --coverage",
-    "release": "standard-version",
-    "release:beta": "standard-version --prerelease beta",
-    "release:minor": "standard-version --release-as minor"
+    "test:ui": "cross-env NODE_ENV=development vitest --ui --no-threads --coverage"
   },
   "dependencies": {
     "@acme/eslint-config": "^0.1.0",
@@ -38,7 +35,6 @@
     "@faker-js/faker": "^8.0.2",
     "@vitest/coverage-v8": "^0.32.2",
     "@vitest/ui": "^0.32.2",
-    "standard-version": "^9.5.0",
     "vitest": "^0.32.2"
   },
   "standard-version": {
