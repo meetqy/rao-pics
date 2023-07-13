@@ -4,6 +4,8 @@
   "main": "./index.ts",
   "dependencies": {
     "@acme/curd": "^0.1.0",
-    "chokidar": "^3.5.3"
+    "chokidar": "^3.5.3",
+    "eslint": "8.42.0",
+    "typescript": "^5.1.3"
   }
 }

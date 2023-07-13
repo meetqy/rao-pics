@@ -38,7 +38,7 @@ const Navbar = () => {
         });
       }
     }
-  }, [gridOption, params, responsive, router.isReady]);
+  }, [gridOption, params, responsive, router.isReady, setParams]);
 
   const onGridNext = () => {
     if (!gridOption || gridOption.length === 0) return;
@@ -72,26 +72,26 @@ const Navbar = () => {
   }, [params.k]);
   useEffect(() => {
     run(searchValue);
-  }, [searchValue]);
+  }, [run, searchValue]);
 
   return (
-    <header className="w-full sticky top-0 left-0 z-20 xl:px-4 bg-base-100/90 backdrop-blur">
+    <header className="bg-base-100/90 sticky left-0 top-0 z-20 w-full backdrop-blur xl:px-4">
       <nav className="navbar w-full">
         <Logo className="lg:hidden" htmlFor="my-drawer" />
 
         <div className="flex-1">
-          <Search value={searchValue} onInput={setSearchValue} className="lg:flex hidden w-1/2" inputClassName="w-full" />
+          <Search value={searchValue} onInput={setSearchValue} className="hidden w-1/2 lg:flex" inputClassName="w-full" />
         </div>
 
         <div className="flex-none xl:gap-1">
-          <button className="btn btn-square btn-circle btn-ghost text-xl font-mono font-normal" onClick={onGridNext}>
+          <button className="btn btn-square btn-circle btn-ghost font-mono text-xl font-normal" onClick={onGridNext}>
             {params.grid}
           </button>
 
           <div className="hidden lg:block">
             {params.tag && (
-              <button className="btn btn-ghost capitalize font-mono">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <button className="btn btn-ghost font-mono capitalize">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -101,7 +101,7 @@ const Navbar = () => {
                 </svg>
                 <span className="ml-2">{params.tag}</span>
                 <span className="ml-2" onClick={() => setParams({ ...params, tag: undefined })}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-error">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-error h-4 w-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </span>
@@ -109,8 +109,8 @@ const Navbar = () => {
             )}
 
             {params.folder && (
-              <button className="btn btn-ghost capitalize font-mono">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <button className="btn btn-ghost font-mono capitalize">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -120,7 +120,7 @@ const Navbar = () => {
 
                 <span className="ml-2">{params.folder}</span>
                 <span className="ml-2" onClick={() => setParams({ ...params, folder: undefined })}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-error">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-error h-4 w-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </span>
@@ -131,7 +131,7 @@ const Navbar = () => {
           <Dropdown
             tabIndex={1}
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -149,7 +149,7 @@ const Navbar = () => {
               tabIndex={2}
               showClose={false}
               icon={
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"

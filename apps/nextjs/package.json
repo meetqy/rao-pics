@@ -8,13 +8,13 @@
     "start": "pnpm next start",
     "dev2": "pnpm next dev -p 9620",
     "clean": "git clean -xdf .next .turbo node_modules",
-    "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
+    "lint": "next lint",
     "lint:fix": "pnpm lint --fix",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/constant": "^0.1.0",
     "@acme/api": "^0.1.0",
+    "@acme/constant": "^0.1.0",
     "@acme/db": "^0.1.0",
     "@t3-oss/env-nextjs": "^0.3.1",
     "@tanstack/react-query": "^4.29.5",
@@ -39,9 +39,9 @@
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "autoprefixer": "^10.4.14",
-    "eslint": "^8.40.0",
+    "eslint": "^8.42.0",
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.3"
   }
 }

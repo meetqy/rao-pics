@@ -18,7 +18,7 @@ const Dropdown = (props: Props) => {
   useEffect(() => {
     if (value === _value) return;
     onChange(_value);
-  }, [_value]);
+  }, [_value, onChange, value]);
 
   return (
     <div className="dropdown dropdown-end">
