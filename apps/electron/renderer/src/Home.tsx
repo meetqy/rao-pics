@@ -1,3 +1,4 @@
+import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useMemo, useState } from "react";
 
 import "./home.css";
@@ -37,6 +38,7 @@ function Home() {
 
   const webUrl = useMemo(() => (config && activeItem ? `http://${config.ip}:${config.webPort}/${activeItem.name}` : ""), [activeItem, config]);
   const openExternal = () => void window.shell.openExternal(webUrl);
+  const [isDark, setDark] = useState<boolean>(window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
@@ -53,6 +55,18 @@ function Home() {
 
     void window.electronAPI.createAssetsServer(library.data);
   }, [active, library]);
+
+  useEffect(() => {
+    const listener = (event: MediaQueryListEvent) => {
+      setDark(event.matches);
+    };
+
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", listener);
+
+    return () => {
+      window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", listener);
+    };
+  }, []);
 
   const onRemove = () => {
     if (active) {
@@ -235,10 +249,24 @@ function Home() {
                   />
                 </svg>
 
-                <span className="ml-2">WEB 预览</span>
+                <span className="ml-2 flex items-center">WEB 预览</span>
               </span>
-              <a onClick={openExternal} className="btn btn-link btn-active btn-sm text-secondary p-0 font-normal normal-case">
+              <a onClick={openExternal} className="btn btn-link btn-active btn-sm text-secondary group relative p-0 font-normal normal-case">
                 {webUrl}
+
+                <div className="absolute right-0 top-8 z-50 hidden rounded bg-white p-2 shadow-md group-hover:block">
+                  <QRCodeSVG
+                    value={webUrl}
+                    level="H"
+                    size={156}
+                    imageSettings={{
+                      src: "/logo.png",
+                      width: 48,
+                      height: 48,
+                      excavate: true,
+                    }}
+                  />
+                </div>
               </a>
             </div>
 
