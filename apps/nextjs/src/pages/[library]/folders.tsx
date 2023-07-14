@@ -10,14 +10,13 @@ import Layout from "~/components/Layout";
 
 const Page: NextPage = () => {
   const router = useRouter();
-  const librarryName = router.query.library as string;
+  const libraryName = router.query.library as string;
 
   const { data: config } = trpc.config.get.useQuery();
   const assetsUrl = useMemo(() => (config ? `http://${config?.ip}:${config?.assetsPort}` : null), [config]);
 
-  // TODO: 逻辑错误，无法通过 libraryName 获取所有的 folder
   const { data } = trpc.folders.get.useQuery({
-    libraryId: 1,
+    library: libraryName,
   });
 
   const Header = () => {
@@ -51,7 +50,7 @@ const Page: NextPage = () => {
           <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
             {data?.map((item) =>
               item._count.images ? (
-                <Link href={`/${librarryName}?folder=${item.name}`} key={item.id} className="card glass relative overflow-hidden shadow-xl">
+                <Link href={`/${libraryName}?folder=${item.name}`} key={item.id} className="card glass relative overflow-hidden shadow-xl">
                   <div className="bg-neutral text-neutral-content flex aspect-square items-center justify-center">
                     {item.images[0] ? (
                       <Image fill alt={`first image in folder ${item.name}`} src={getImgUrl(assetsUrl, item.images[0])} className="aspect-square object-cover object-top" />

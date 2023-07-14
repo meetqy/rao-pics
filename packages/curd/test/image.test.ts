@@ -52,7 +52,7 @@ describe("@acme/curd image", async () => {
     });
 
     expect(img).toMatchObject(imageMock);
-    const f = await curd.folder.get({ libraryId: lib.id });
+    const f = await curd.folder.get({ library: lib.id });
     expect(f).toHaveLength(folders.length);
 
     const nfIds = f.map((f) => f.id);
