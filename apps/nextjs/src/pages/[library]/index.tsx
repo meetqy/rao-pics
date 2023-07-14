@@ -109,7 +109,7 @@ const IndexPage: NextPage = () => {
             {items?.map((item, index) => (
               <div className="card glass cursor-pointer overflow-hidden" key={item.id}>
                 <a
-                  className="aspect-square w-full overflow-hidden"
+                  className="relative aspect-square w-full overflow-hidden"
                   key={`${item.id}-${index}`}
                   target="_blank"
                   rel="noreferrer"
@@ -118,7 +118,7 @@ const IndexPage: NextPage = () => {
                   data-pswp-height={item.height}
                   data-pswp-type={CONSTANT.VIDEO_EXT.includes(item.ext) ? "video" : "image"}
                 >
-                  <Image draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="h-full w-full object-cover object-top" />
+                  <Image fill draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="object-cover object-top" />
                 </a>
 
                 <div className={`card-body ${show?.p} ${show?.body ? "flex" : "hidden"}`}>
