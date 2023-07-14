@@ -7,9 +7,11 @@ interface LogoProps {
 
 const Logo = ({ className, htmlFor }: LogoProps) => {
   return (
-    <div className={`rounded-md flex lg:px-2 ${className}`}>
-      <Image alt="Rao Pics logo" src="/icon.png" draggable={false} className="lg:h-12 h-10 lg:block hidden rounded-full shadow" />
-      <label htmlFor={htmlFor} className="flex-0 btn btn-ghost text-xl md:text-3xl hover:bg-transparent capitalize font-mono font-bold">
+    <div className={`flex rounded-md lg:px-2 ${className}`}>
+      <div className="relative hidden h-10 w-10 lg:block lg:h-12 lg:w-12">
+        <Image alt="Rao Pics logo" fill src="/icon.png" draggable={false} className="rounded-full" />
+      </div>
+      <label htmlFor={htmlFor} className="flex-0 btn btn-ghost font-mono text-xl font-bold capitalize hover:bg-transparent md:text-3xl">
         <span className="text-primary">rao</span>
         <span>.</span>
         <span>pics</span>
