@@ -38,7 +38,6 @@ function Home() {
 
   const webUrl = useMemo(() => (config && activeItem ? `http://${config.ip}:${config.webPort}/${activeItem.name}` : ""), [activeItem, config]);
   const openExternal = () => void window.shell.openExternal(webUrl);
-  const [isDark, setDark] = useState<boolean>(window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
 
@@ -55,18 +54,6 @@ function Home() {
 
     void window.electronAPI.createAssetsServer(library.data);
   }, [active, library]);
-
-  useEffect(() => {
-    const listener = (event: MediaQueryListEvent) => {
-      setDark(event.matches);
-    };
-
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", listener);
-
-    return () => {
-      window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", listener);
-    };
-  }, []);
 
   const onRemove = () => {
     if (active) {
