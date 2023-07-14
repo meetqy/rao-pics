@@ -38,7 +38,7 @@ const IndexPage: NextPage = () => {
   }, [query.orderBy]);
 
   const { data, fetchNextPage, hasNextPage } = trpc.image.get.useInfiniteQuery(
-    { limit: 48, library: query.library, ext: query.ext, orderBy, tag: query.tag, folder: query.folder, keyword: query.k },
+    { limit: 15, library: query.library, ext: query.ext, orderBy, tag: query.tag, folder: query.folder, keyword: query.k },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
@@ -104,12 +104,13 @@ const IndexPage: NextPage = () => {
   return (
     <Layout loadMore={onLoadMore} loadMoreContent={<span className="text-base-300 text-sm">{hasNextPage ? "加载中..." : "已经到底了~~"}</span>}>
       <>
-        {assetsUrl && (
-          <div className={`grid ${show?.gap} ${show?.p} grid-cols-${query.grid}`} id="photoswipe">
+        {assetsUrl && show && (
+          <div className={`grid ${show.gap} ${show.p} grid-cols-${query.grid}`} id="photoswipe">
             {items?.map((item, index) => (
               <div className="card glass cursor-pointer overflow-hidden" key={item.id}>
                 <a
-                  className="relative aspect-square w-full overflow-hidden"
+                  className="bg-primary relative w-full overflow-hidden"
+                  style={{ paddingBottom: "100%" }}
                   key={`${item.id}-${index}`}
                   target="_blank"
                   rel="noreferrer"
@@ -118,7 +119,7 @@ const IndexPage: NextPage = () => {
                   data-pswp-height={item.height}
                   data-pswp-type={CONSTANT.VIDEO_EXT.includes(item.ext) ? "video" : "image"}
                 >
-                  <Image fill draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="object-cover object-top" />
+                  <Image loading="lazy" fill draggable={false} src={getImgUrl(assetsUrl, item)} alt={item.name} className="object-cover object-top" />
                 </a>
 
                 <div className={`card-body ${show?.p} ${show?.body ? "flex" : "hidden"}`}>
