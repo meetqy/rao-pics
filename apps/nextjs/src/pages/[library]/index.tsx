@@ -38,7 +38,7 @@ const IndexPage: NextPage = () => {
   }, [query.orderBy]);
 
   const { data, fetchNextPage, hasNextPage } = trpc.image.get.useInfiniteQuery(
-    { limit: 15, library: query.library, ext: query.ext, orderBy, tag: query.tag, folder: query.folder, keyword: query.k },
+    { limit: 48, library: query.library, ext: query.ext, orderBy, tag: query.tag, folder: query.folder, keyword: query.k },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
