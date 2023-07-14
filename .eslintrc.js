@@ -12,6 +12,12 @@ const config = {
     next: {
       rootDir: ["apps/nextjs"],
     },
+    electron: {
+      rootDir: ["apps/electron"],
+    },
+  },
+  rules: {
+    "@next/next/no-img-element": "off",
   },
 };
 

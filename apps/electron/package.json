@@ -22,7 +22,8 @@
     "build:renderer": "tsc renderer/**/*.ts && vite build renderer",
     "sync:version": "node scripts/sync-version.mjs",
     "vendors:update": "cross-env ELECTRON_RUN_AS_NODE=1 electron scripts/update-electron-vendors.mjs",
-    "postinstall": "npm run vendors:update"
+    "postinstall": "npm run vendors:update",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@acme/tailwind-config": "^0.1.0",

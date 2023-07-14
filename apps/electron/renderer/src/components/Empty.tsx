@@ -9,20 +9,20 @@ const Empty = (props: Props) => {
   const [appName, setAppName] = useState<string>();
   const [appVersion, setAppVersion] = useState<string>();
 
-  window.app.getVersion().then((version) => {
+  void window.app.getVersion().then((version) => {
     if (version === appVersion) return;
     setAppVersion(version);
   });
 
-  window.app.getName().then((name) => {
+  void window.app.getName().then((name) => {
     if (name === appName) return;
     setAppName(name);
   });
 
   return (
-    <div className="w-3/4 flex justify-center items-center ">
-      <div className="card card-compact w-4/5 bg-base-100">
-        <img src="logo.png" alt="rao.pics logo" className="w-1/3 rounded-full shadow shadow-neutral m-auto" />
+    <div className="flex w-3/4 items-center justify-center ">
+      <div className="card card-compact bg-base-100 w-4/5">
+        <img src="logo.png" alt="rao.pics logo" className="shadow-neutral m-auto w-1/3 rounded-full shadow" />
         <div className="card-body items-center text-center">
           <h2 className="card-title !mb-0">{appName}</h2>
           <p className="text-base-content/50 ">~~ 暂未添加文件夹 ~~</p>
