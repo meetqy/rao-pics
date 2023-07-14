@@ -4,7 +4,12 @@ import { prisma, type Prisma } from "@acme/db";
 
 export const FolderInput = {
   get: z.object({
+    /**
+     * @deprecated use library instead.
+     */
     libraryId: z.number().optional(),
+    /** library id or name */
+    library: z.union([z.number(), z.string()]).optional(),
     imageId: z.number().optional(),
     id: z.string().optional(),
   }),
@@ -30,6 +35,12 @@ export const Folder = {
 
     if (input.libraryId) {
       where.libraryId = input.libraryId;
+    }
+
+    if (input.library) {
+      where.library = {
+        OR: [{ id: typeof input.library === "number" ? input.library : undefined }, { name: typeof input.library === "string" ? input.library : undefined }].filter((v) => v),
+      };
     }
 
     if (input.id) {

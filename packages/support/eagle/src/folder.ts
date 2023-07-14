@@ -9,7 +9,7 @@ export const handleFolder = async (folders: Folder[], lib: Library, emit?: (opti
   // 相同的文件夹，只保留一个
   const f = _.uniqBy(treeToArray(folders), "name");
 
-  const oldFolders = await curd.folder.get({ libraryId: lib.id });
+  const oldFolders = await curd.folder.get({ library: lib.id });
   const oldFolderIds = oldFolders.map((v) => v.id);
 
   if (f.length === 0) {

@@ -61,7 +61,7 @@ describe("@acme/curd folder", () => {
     // 创建 3 条 folder
     const folders = await prisma.$transaction([1, 2, 3].map(() => curd.folder.upsert(createInput(lib.id))));
 
-    void expect(curd.folder.get({ libraryId: lib.id })).resolves.toHaveLength(3);
+    void expect(curd.folder.get({ library: lib.id })).resolves.toHaveLength(3);
     void expect(curd.folder.get({ id: folders[0]?.id })).resolves.toHaveLength(1);
   });
 
@@ -71,7 +71,7 @@ describe("@acme/curd folder", () => {
     const folders = await prisma.$transaction([1, 2, 3].map(() => curd.folder.upsert(createInput(lib.id))));
     await curd.folder.delete({ id: folders[0]?.id });
 
-    expect(await curd.folder.get({ libraryId: lib.id })).toHaveLength(2);
+    expect(await curd.folder.get({ library: lib.id })).toHaveLength(2);
   });
 
   test<LocalTestContext>("Delete folder by libraryId.", async (ctx) => {
@@ -80,7 +80,7 @@ describe("@acme/curd folder", () => {
     await prisma.$transaction([1, 2, 3].map(() => curd.folder.upsert(createInput(lib.id))));
     await curd.folder.delete({ libraryId: lib.id });
 
-    expect(await curd.folder.get({ libraryId: lib.id })).toHaveLength(0);
+    expect(await curd.folder.get({ library: lib.id })).toHaveLength(0);
   });
 
   // TODO: test get by imageId
