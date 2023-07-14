@@ -1,3 +1,4 @@
+import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useMemo, useState } from "react";
 
 import "./home.css";
@@ -35,7 +36,8 @@ function Home() {
   const [active, setActive] = useState<number | undefined>();
   const activeItem = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
 
-  const webUrl = useMemo(() => (config && activeItem ? `http://${config.ip}:${config.webPort}/${activeItem.name}` : ""), [activeItem, config]);
+  const host = useMemo(() => (config ? `http://${config.ip}:${config.webPort}` : ""), [config]);
+  const webUrl = useMemo(() => (host && activeItem ? `${host}/${activeItem.name}` : ""), [activeItem, host]);
   const openExternal = () => void window.shell.openExternal(webUrl);
 
   const [delConfirmVisable, setDelConfirmVisable] = useState<boolean>(false);
@@ -235,10 +237,23 @@ function Home() {
                   />
                 </svg>
 
-                <span className="ml-2">WEB 预览</span>
+                <span className="ml-2 flex items-center">WEB 预览</span>
               </span>
-              <a onClick={openExternal} className="btn btn-link btn-active btn-sm text-secondary p-0 font-normal normal-case">
+              <a onClick={openExternal} className="btn btn-link btn-active btn-sm text-secondary group relative p-0 font-normal normal-case">
                 {webUrl}
+                <div className="absolute right-0 top-8 z-50 hidden rounded bg-white p-2 shadow-md group-hover:block">
+                  <QRCodeSVG
+                    value={webUrl}
+                    level="H"
+                    size={156}
+                    imageSettings={{
+                      src: "./logo.png",
+                      width: 48,
+                      height: 48,
+                      excavate: true,
+                    }}
+                  />
+                </div>
               </a>
             </div>
 
