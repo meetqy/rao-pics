@@ -109,7 +109,7 @@ const IndexPage: NextPage = () => {
             {items?.map((item, index) => (
               <div className="card glass cursor-pointer overflow-hidden" key={item.id}>
                 <a
-                  className="bg-primary relative w-full overflow-hidden"
+                  className=" bg-base-200/50 relative w-full overflow-hidden"
                   style={{ paddingBottom: "100%" }}
                   key={`${item.id}-${index}`}
                   target="_blank"
