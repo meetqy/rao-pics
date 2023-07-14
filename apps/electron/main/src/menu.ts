@@ -1,4 +1,4 @@
-import { Menu, app } from "electron";
+import { app, Menu } from "electron";
 
 import { restoreOrCreateWindow } from "../mainWindow";
 
@@ -18,6 +18,15 @@ const createMenu = () => {
         { role: "hideOthers" },
         { role: "unhide" },
         { type: "separator" },
+        {
+          label: "Close",
+          accelerator: "CmdOrCtrl+W",
+          click: () => {
+            void restoreOrCreateWindow().then((window) => {
+              window.hide();
+            });
+          },
+        },
         {
           label: "Quit",
           accelerator: "CmdOrCtrl+Q",
