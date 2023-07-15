@@ -2,13 +2,14 @@
   "name": "@acme/curd",
   "version": "0.1.0",
   "devDependencies": {
-    "@acme/db": "^0.1.0"
+    "@acme/db": "^0.1.0",
+    "@acme/eslint-config": "^0.1.0",
+    "eslint": "8.42.0",
+    "typescript": "^5.1.3"
   },
   "dependencies": {
     "@acme/constant": "^0.1.0",
     "@acme/util": "^0.1.0",
-    "eslint": "8.42.0",
-    "typescript": "^5.1.3",
     "zod": "^3.21.4"
   }
 }
