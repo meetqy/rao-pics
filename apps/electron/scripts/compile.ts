@@ -10,8 +10,6 @@ const excludeFileDir = fs.readdirSync("../nextjs/.next/standalone/node_modules")
   return `!**/node_modules/${item}/**/*`;
 });
 
-console.log("excludeFileDir", excludeFileDir);
-
 const extraResources: builder.FileSet[] = [];
 
 export const AppConfig: builder.Configuration = {
@@ -27,7 +25,7 @@ export const AppConfig: builder.Configuration = {
     "renderer/dist/**",
     // 排除 @acme 已经打包到 {main|preload|renderer}/dist 中
     // TODO: 循环嵌套的 @acme/{db|api|eagle} 无法排除
-    "!**/node_modules/@acme*/**/*",
+    "!**/node_modules/@acme/**/*",
   ].concat(excludeFileDir),
   extraResources: [
     {

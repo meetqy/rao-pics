@@ -2,7 +2,8 @@
   "name": "@acme/util",
   "version": "0.1.0",
   "main": "./index.ts",
-  "dependencies": {
+  "devDependencies": {
+    "@acme/eslint-config": "^0.1.0",
     "eslint": "8.42.0",
     "typescript": "^5.1.3"
   }
