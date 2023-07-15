@@ -1,12 +1,12 @@
 import { join } from "path";
-import { Menu, Tray, app, nativeTheme, shell } from "electron";
+import { app, Menu, nativeTheme, shell, Tray } from "electron";
 
 import globalApp from "../global";
 import { restoreOrCreateWindow } from "../mainWindow";
 
 const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildResources") : join(__dirname, "../../buildResources");
 
-export const getIcon = (name: string) => join(buildResourcesPath, `${name}-${nativeTheme.shouldUseDarkColors ? "light" : "dark"}.png`);
+export const getIcon = (name: string) => join(buildResourcesPath, "tray", `${name}-${nativeTheme.shouldUseDarkColors ? "light" : "dark"}.png`);
 
 /**
  * 系统托盘
