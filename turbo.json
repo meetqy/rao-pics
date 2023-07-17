@@ -9,12 +9,10 @@
     },
     "build": {
       "outputs": [".next/standalone/**", "!.next/cache"],
-      "dependsOn": ["^build"],
-      "cache": false
+      "dependsOn": ["@acme/db#db:reset", "^build"]
     },
-    "compile": {
-      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"],
-      "cache": false
+    "release": {
+      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
     },
     "lint": {},
     "lint:fix": {}

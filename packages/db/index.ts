@@ -11,6 +11,7 @@ const globalForPrisma = globalThis as { prisma?: PrismaClient };
 const _cacheDir: { [key in typeof process.platform]?: string } = {
   darwin: join(homedir(), "/Library/Caches/Rao Pics"),
   win32: join(homedir(), "/AppData/Local/Rao Pics"),
+  linux: join(homedir(), "/.cache/Rao Pics"),
 };
 
 const cacheDir = _cacheDir[process.platform] || join(homedir(), "Rao Pics");

@@ -9,9 +9,9 @@
   "packageManager": "pnpm@8.3.1",
   "scripts": {
     "postinstall": "turbo db:reset",
-    "build": "turbo build",
-    "compile": "cross-env NODE_ENV=production turbo db:reset build compile",
     "db:reset": "turbo db:reset",
+    "build": "cross-env NODE_ENV=production turbo db:reset build",
+    "release": "turbo build release",
     "dev": "turbo dev --parallel --filter=electron --filter=nextjs --filter=db",
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
     "lint": "turbo lint && manypkg check",
@@ -34,8 +34,5 @@
     "turbo": "^1.10.6",
     "typescript": "^5.1.3",
     "vitest": "^0.32.2"
-  },
-  "standard-version": {
-    "skip": {}
   }
 }
