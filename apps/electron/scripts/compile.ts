@@ -51,13 +51,20 @@ export const AppConfig: builder.Configuration = {
     category: "public.app-category.photography",
     icon: "buildResources",
     darkModeSupport: true,
-    target: isTest ? "dir" : { target: "dmg" },
+    target: isTest ? "dir" : { target: "dmg", arch: ["arm64", "x64"] },
     extraResources,
   },
 
   win: {
     icon: "buildResources",
     target: isTest ? "dir" : "nsis",
+    extraResources,
+  },
+
+  linux: {
+    category: "Photos",
+    icon: "buildResources",
+    target: "deb",
     extraResources,
   },
 
@@ -69,10 +76,17 @@ export const AppConfig: builder.Configuration = {
         from: "../nextjs/.next/standalone",
         filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*darwin${context.arch === "x64" ? "" : "-arm64"}.*.node`],
       });
-    } else {
+    } else if (context.platform.name === "win") {
       extraResources.push({
         from: "../nextjs/.next/standalone",
         filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*${context.platform.name}*.node`],
+      });
+    } else if (context.platform.name === "linux") {
+      extraResources.push({
+        from: "../nextjs/.next/standalone",
+        // libquery_engine-debian-openssl-1.1.x.so.node
+        // libquery_engine-debian-openssl-3.0.x.so.node
+        filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/libquery_engine-debian-openssl-1.1.x.so.node`],
       });
     }
 
@@ -80,11 +94,11 @@ export const AppConfig: builder.Configuration = {
   },
 };
 
-const targets = new Map().set(Platform.WINDOWS, new Map()).set(Platform.MAC, new Map());
+const targets = new Map().set(Platform.WINDOWS, new Map()).set(Platform.MAC, new Map()).set(Platform.LINUX, new Map());
 
 builder
   .build({
-    targets,
+    targets: new Map().set(Platform.LINUX, new Map()),
     config: AppConfig,
   })
   .then((result) => {

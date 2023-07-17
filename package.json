@@ -11,6 +11,7 @@
     "postinstall": "turbo db:reset",
     "build": "turbo build",
     "compile": "cross-env NODE_ENV=production turbo db:reset build compile",
+    "release:mac": "turbo db:reset build release:mac",
     "db:reset": "turbo db:reset",
     "dev": "turbo dev --parallel --filter=electron --filter=nextjs --filter=db",
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
@@ -34,8 +35,5 @@
     "turbo": "^1.10.6",
     "typescript": "^5.1.3",
     "vitest": "^0.32.2"
-  },
-  "standard-version": {
-    "skip": {}
   }
 }
