@@ -45,6 +45,7 @@ const AppConfig: builder.Configuration = {
   ],
 
   mac: {
+    identity: null,
     category: "public.app-category.share-photos",
     icon: "buildResources",
     darkModeSupport: true,
