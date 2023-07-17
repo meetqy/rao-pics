@@ -14,9 +14,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development npm run watch:desktop",
     "build": "pnpm run '/^build:.*/'",
-    "release:mac": "rm -rf dist && npm run sync:version && ts-node electron-builder/mac.ts",
-    "compile": "rm -rf dist && npm run sync:version && ts-node scripts/compile.ts",
-    "test:compile": "cross-env MODE=production CSC_IDENTITY_AUTO_DISCOVERY=false ts-node scripts/compile.ts",
+    "release:mac": "ts-node electron-builder/mac.ts",
+    "release:linux-openssl-1.1.x": "cross-env OPENSSL_VERSION=openssl-1.1.x ts-node electron-builder/linux.ts",
+    "release:linux-openssl-3.0.x": "cross-env OPENSSL_VERSION=openssl-3.0.x ts-node electron-builder/linux.ts",
     "watch:web": "ts-node scripts/watchWeb.ts",
     "watch:desktop": "ts-node scripts/watchDesktop.ts",
     "build:main": " vite build main",

@@ -20,6 +20,12 @@
     "lint:fix": {},
     "release:mac": {
       "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
+    },
+    "release:linux-openssl-1.1.x": {
+      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
+    },
+    "release:linux-openssl-3.0.x": {
+      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
     }
   },
   "globalEnv": [

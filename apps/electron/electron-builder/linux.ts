@@ -6,11 +6,13 @@ const excludeFileDir = fs.readdirSync("../nextjs/.next/standalone/node_modules")
   return `!**/node_modules/${item}/**/*`;
 });
 
+const openSSL = process.env["OPENSSL_VERSION"];
+
 const extraResources: builder.FileSet[] = [];
 
 const AppConfig: builder.Configuration = {
-  productName: "Rao Pics",
-  copyright: `Copyright © 2022-${new Date().getFullYear()} rao.pics`,
+  appId: "com.rao.pics",
+  copyright: `Copyright © 2022-${new Date().getFullYear()} meetqy`,
   asar: true,
   directories: {
     output: "dist",
@@ -45,12 +47,15 @@ const AppConfig: builder.Configuration = {
     },
   ],
 
-  mac: {
-    identity: null,
-    category: "public.app-category.share-photos",
+  artifactName: "${productName}-${version}-${os}-${arch}-" + openSSL + ".${ext}",
+
+  linux: {
+    category: "Graphics",
     icon: "buildResources",
-    darkModeSupport: true,
-    target: { target: "dmg", arch: ["arm64", "x64"] },
+    target: {
+      target: "deb",
+      arch: ["x64"],
+    },
     extraResources,
   },
 
@@ -59,7 +64,7 @@ const AppConfig: builder.Configuration = {
 
     extraResources.push({
       from: "../nextjs/.next/standalone",
-      filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*darwin${context.arch === "x64" ? "" : "-arm64"}.*.node`],
+      filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/libquery_engine-debian-${openSSL}.so.node`],
     });
 
     return Promise.resolve(context);
@@ -68,7 +73,7 @@ const AppConfig: builder.Configuration = {
 
 builder
   .build({
-    targets: Platform.MAC.createTarget(),
+    targets: Platform.LINUX.createTarget(),
     config: AppConfig,
   })
   .then((result) => {
