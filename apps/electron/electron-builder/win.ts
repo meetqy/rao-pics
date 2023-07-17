@@ -2,18 +2,13 @@ import builder, { Platform } from "electron-builder";
 
 import { baseConfig } from "./base.config.js";
 
-const openSSL = process.env["OPENSSL_VERSION"] || "openssl-1.1.x";
-
 const extraResources: builder.FileSet[] = [];
 
 const AppConfig: builder.Configuration = {
-  ...baseConfig("linux-" + openSSL),
+  ...baseConfig("win"),
 
-  linux: {
-    artifactName: "${productName}-${version}-${os}-${arch}-" + openSSL + ".${ext}",
-    category: "Graphics",
+  win: {
     icon: "buildResources",
-    target: "deb",
     extraResources,
   },
 
@@ -22,7 +17,7 @@ const AppConfig: builder.Configuration = {
 
     extraResources.push({
       from: "../nextjs/.next/standalone",
-      filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/libquery_engine-debian-${openSSL}.so.node`],
+      filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/*-windows.dll.node`],
     });
 
     return Promise.resolve(context);
@@ -31,7 +26,7 @@ const AppConfig: builder.Configuration = {
 
 builder
   .build({
-    targets: Platform.LINUX.createTarget(),
+    targets: Platform.WINDOWS.createTarget(),
     config: AppConfig,
   })
   .then((result) => {

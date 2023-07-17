@@ -9,24 +9,13 @@
     },
     "build": {
       "outputs": [".next/standalone/**", "!.next/cache"],
-      "dependsOn": ["^build"],
-      "cache": false
+      "dependsOn": ["@acme/db#db:reset", "^build"]
     },
-    "compile": {
-      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"],
-      "cache": false
+    "release": {
+      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
     },
     "lint": {},
-    "lint:fix": {},
-    "release:mac": {
-      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
-    },
-    "release:linux-openssl-1.1.x": {
-      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
-    },
-    "release:linux-openssl-3.0.x": {
-      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
-    }
+    "lint:fix": {}
   },
   "globalEnv": [
     "CI",
