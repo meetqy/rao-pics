@@ -19,8 +19,7 @@
     "lint": {},
     "lint:fix": {},
     "release:mac": {
-      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"],
-      "cache": false
+      "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
     }
   },
   "globalEnv": [
