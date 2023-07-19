@@ -107,7 +107,7 @@ const IndexPage: NextPage = () => {
         {assetsUrl && show && (
           <div className={`grid ${show.gap} ${show.p} grid-cols-${query.grid}`} id="photoswipe">
             {items?.map((item, index) => (
-              <div className="card glass cursor-pointer overflow-hidden" key={item.id}>
+              <div className="card glass cursor-pointer overflow-hidden transition-all duration-300 hover:-top-0.5 hover:shadow-lg" key={item.id}>
                 <a
                   className=" bg-base-200/50 relative w-full overflow-hidden"
                   style={{ paddingBottom: "100%" }}
