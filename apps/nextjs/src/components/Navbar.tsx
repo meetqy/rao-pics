@@ -6,6 +6,7 @@ import { StringParam, useQueryParams } from "use-query-params";
 import { CONSTANT } from "@acme/constant";
 
 import { getGridOption } from "~/utils/common";
+import { trpc } from "~/utils/trpc";
 import Dropdown from "./Dropdown";
 import Logo from "./Logo";
 import Search from "./Search";
@@ -23,11 +24,35 @@ const Navbar = () => {
     // grid-cols-{grid}
     grid: StringParam,
   });
-
   const orderBy = useMemo(() => (params.orderBy || "createTime,desc").split(","), [params.orderBy]);
 
   const responsive = useResponsive();
   const { gridOption } = useMemo(() => getGridOption(responsive), [responsive]);
+
+  const { data: extData } = trpc.image.groupByFieldCount.useQuery("ext");
+  const videosExt = useMemo(() => extData?.filter((e) => CONSTANT.VIDEO_EXT.includes(e.ext)), [extData]);
+  const imgsExt = useMemo(() => extData?.filter((e) => CONSTANT.IMG_EXT.includes(e.ext)), [extData]);
+
+  const [videoVal, setVideoVal] = useState<string | null>();
+  const [imgVal, setImgVal] = useState<string | null>();
+
+  useEffect(() => {
+    if (CONSTANT.IMG_EXT.includes(params.ext)) {
+      setImgVal(params.ext);
+    } else if (CONSTANT.VIDEO_EXT.includes(params.ext)) {
+      setVideoVal(params.ext);
+    }
+  }, [videoVal, imgVal, params.ext]);
+
+  const onDropdownChange = (value: string | undefined | null, name: "imgVal" | "videoVal") => {
+    if (name === "imgVal") {
+      setImgVal(value);
+      setParams({ ...params, ext: value });
+    } else if (name === "videoVal") {
+      setVideoVal(value);
+      setParams({ ...params, ext: value });
+    }
+  };
 
   useEffect(() => {
     if (gridOption && gridOption.length > 0) {
@@ -128,22 +153,43 @@ const Navbar = () => {
             )}
           </div>
 
-          <Dropdown
-            tabIndex={1}
-            icon={
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"
-                />
-              </svg>
-            }
-            value={params.ext}
-            options={CONSTANT.EXT.map((item) => ({ name: item, value: item }))}
-            onChange={(value) => setParams({ ...params, ext: value })}
-          />
+          {/* photo */}
+          {imgsExt && (
+            <Dropdown
+              tabIndex={3}
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                  />
+                </svg>
+              }
+              value={imgVal}
+              options={imgsExt.map((item) => ({ name: item.ext, value: item.ext, desc: item._sum.id?.toString() }))}
+              onChange={(val) => onDropdownChange(val, "imgVal")}
+            />
+          )}
 
+          {/* videos */}
+          {videosExt && (
+            <Dropdown
+              tabIndex={2}
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
+                  <path
+                    strokeLinecap="round"
+                    d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
+                  />
+                </svg>
+              }
+              value={videoVal}
+              options={videosExt.map((item) => ({ name: item.ext, value: item.ext, desc: item._sum.id?.toString() }))}
+              onChange={(val) => onDropdownChange(val, "videoVal")}
+            />
+          )}
+          {/* 排序 */}
           <div className="hidden lg:block ">
             <Dropdown
               tabIndex={2}
