@@ -49,7 +49,11 @@ const Page: NextPage = () => {
           <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
             {data?.map((item) =>
               item._count.images ? (
-                <Link href={`/${librarryName}?tag=${item.name}`} key={item.name} className="card glass relative overflow-hidden shadow-xl">
+                <Link
+                  href={`/${librarryName}?tag=${item.name}`}
+                  key={item.name}
+                  className="card glass relative overflow-hidden shadow-none transition-all duration-300 hover:-top-0.5 hover:shadow-md"
+                >
                   <div className="bg-neutral text-neutral-content flex aspect-square items-center justify-center">
                     {item.images[0] ? (
                       <div>
