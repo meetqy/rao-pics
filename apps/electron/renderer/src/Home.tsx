@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import "./home.css";
 
+import { AppLogo } from "./components/AppLogo";
 import Empty from "./components/Empty";
 import { trpc } from "./utils/trpc";
 
@@ -131,12 +132,14 @@ function Home() {
         const isExits = library.data?.filter((item) => item.dir === res[0]).length ?? 0;
         if (isExits > 0) return window.dialog.showMessageBox({ message: "此文件夹已存在", type: "error" });
 
+        // 判断是否添加
         const lib = await window.electronAPI.handleDirectory(res[0]);
         if (!lib) return window.dialog.showMessageBox({ message: "暂时不支持此 App 或文件夹", type: "error" });
 
         T = setInterval(() => {
           void utils.client.pending.getCount.query({ libraryId: lib.id }).then((count) => {
             setPendingCount(count);
+            console.log(count, lib);
 
             if (count === lib.count) {
               setAdding(false);
@@ -179,7 +182,8 @@ function Home() {
                 }}
               >
                 <p className="flex-1 overflow-hidden truncate text-left">{item.name}</p>
-                <img alt="eagle app logo" src="eagle.jpg" className="w-5 rounded-full shadow-md" />
+
+                <AppLogo type={item.type} />
               </div>
             </li>
           ))}
