@@ -57,6 +57,7 @@
     "@acme/curd": "^0.1.0",
     "@acme/db": "^0.1.0",
     "@acme/eagle": "^0.1.0",
+    "@acme/util": "^0.1.0",
     "@acme/watch": "^0.1.0",
     "@tanstack/react-query": "^4.29.5",
     "@trpc/client": "^10.23.0",

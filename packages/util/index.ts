@@ -37,10 +37,15 @@ export const rgbToHex = (rgb: number[] | number) => {
  */
 export const getCacheDir = () => {
   const cache: { [key in typeof process.platform]?: string } = {
-    darwin: join(homedir(), `/Library/Caches/Rao Pics`),
-    win32: join(homedir(), `/AppData/Local/Rao Pics`),
-    linux: join(homedir(), `/.cache/Rao Pics`),
+    darwin: join(homedir(), `/Library/Caches/Rao\ Pics`),
+    win32: join(homedir(), `/AppData/Local/Rao\ Pics`),
+    linux: join(homedir(), `/.cache/Rao\ Pics`),
   };
 
-  return cache[process.platform] || join(homedir(), `Rao Pics`);
+  return cache[process.platform] || join(homedir(), `Rao\ Pics`);
 };
+
+/**
+ * Thumbnail dir cache
+ */
+export const thumbnailDirCache = join(getCacheDir(), "thumbnail");

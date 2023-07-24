@@ -1,6 +1,8 @@
+import { join } from "path";
 import express from "express";
 
 import { type Library } from "@acme/db";
+import { thumbnailDirCache } from "@acme/util";
 
 const app = express();
 
@@ -34,9 +36,18 @@ export const createAssetsServer = (port: number, librarys?: Library[]) => {
 
   // Generate app use by library ids
   librarys.forEach((lib) => {
-    if (lib.type === "eagle") {
-      app.use("/" + lib.id.toString() + "/images", express.static(lib.dir + "/images"));
-      libraryIds.push(lib.id);
+    switch (lib.type) {
+      case "eagle": {
+        app.use("/" + lib.id.toString() + "/images", express.static(lib.dir + "/images"));
+        libraryIds.push(lib.id);
+        break;
+      }
+      case "folder": {
+        app.use("/" + lib.id.toString(), express.static(join(thumbnailDirCache, lib.id.toString())));
+        app.use("/" + lib.id.toString(), express.static(join(lib.dir)));
+        libraryIds.push(lib.id);
+        break;
+      }
     }
   });
 
