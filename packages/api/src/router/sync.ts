@@ -5,6 +5,7 @@ import { z } from "zod";
 import { type Constant } from "@acme/constant";
 import curd from "@acme/curd";
 import { start as startEagle } from "@acme/eagle";
+import { startFolder } from "@acme/folder";
 
 // import { start as startFolder } from "@acme/folder";
 
@@ -39,15 +40,23 @@ export const sync = t.router({
                 });
               },
             });
-
             return true;
           }
 
           case "folder": {
-            // startFolder(lib);
+            startFolder({
+              library: lib,
+              emit: (e) => {
+                ee.emit("sync", {
+                  current: e.current,
+                  libraryId: lib.id,
+                  type: e.type,
+                });
+              },
+            });
+
             return false;
           }
-
           default: {
             return false;
           }

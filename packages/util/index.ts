@@ -1,3 +1,6 @@
+import { homedir } from "os";
+import { join } from "path";
+
 /**
  * hex to Rgb
  * @param hex
@@ -27,4 +30,17 @@ export const rgbToHex = (rgb: number[] | number) => {
   if (!r || !g || !b) return;
 
   return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+};
+
+/**
+ * Cache dir
+ */
+export const getCacheDir = () => {
+  const cache: { [key in typeof process.platform]?: string } = {
+    darwin: join(homedir(), `/Library/Caches/Rao Pics`),
+    win32: join(homedir(), `/AppData/Local/Rao Pics`),
+    linux: join(homedir(), `/.cache/Rao Pics`),
+  };
+
+  return cache[process.platform] || join(homedir(), `Rao Pics`);
 };

@@ -1,20 +1,13 @@
-import { homedir } from "os";
-import { join } from "path";
 import { PrismaClient } from "@prisma/client";
 import * as fs from "fs-extra";
+
+import { getCacheDir } from "@acme/util";
 
 export * from "@prisma/client";
 
 const globalForPrisma = globalThis as { prisma?: PrismaClient };
 
-// 数据库地址
-const _cacheDir: { [key in typeof process.platform]?: string } = {
-  darwin: join(homedir(), "/Library/Caches/Rao Pics"),
-  win32: join(homedir(), "/AppData/Local/Rao Pics"),
-  linux: join(homedir(), "/.cache/Rao Pics"),
-};
-
-const cacheDir = _cacheDir[process.platform] || join(homedir(), "Rao Pics");
+const cacheDir = getCacheDir();
 
 /**
  * 创建sqlite数据库
