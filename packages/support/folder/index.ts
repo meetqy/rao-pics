@@ -60,7 +60,6 @@ export const startFolder = (props: Props) => {
         await curd.pending.delete({ path: p.path });
         emit?.(option);
       } catch (e) {
-        console.log(e);
         addFail(p.path, library);
         await curd.pending.delete({ path: p.path });
         onError?.(e);
