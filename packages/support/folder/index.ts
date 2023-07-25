@@ -48,6 +48,9 @@ export const startFolder = (props: Props) => {
         option.current++;
         const filenameAndExt = basename(p.path);
         const folder = dirname(p.path);
+        console.log(folder, "folder", "-------");
+        const folderId = folder.replace(library.dir + "/", "").replace(/\//g, "-");
+        const folderName = folder.split("/").pop();
         const [filename, ext] = filenameAndExt.split(".");
         const stats = fs.statSync(p.path);
         const _uid: string = uid(16);
@@ -77,6 +80,7 @@ export const startFolder = (props: Props) => {
             lastTime: stats.mtime,
             width: metadata.width || 0,
             height: metadata.height || 0,
+            folders: [{ id: folderId, name: folderName }],
           });
 
           if (!res) addFail(p.path, library);
