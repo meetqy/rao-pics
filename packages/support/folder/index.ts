@@ -5,7 +5,7 @@ import { uid } from "uid";
 
 import { type Constant } from "@acme/constant";
 import curd from "@acme/curd";
-import { type Library } from "@acme/db";
+import { type Library, type Pending } from "@acme/db";
 import { thumbnailDirCache } from "@acme/util";
 
 type EmitOption = { type: "image" | "folder"; current: number };
@@ -46,53 +46,73 @@ export const startFolder = (props: Props) => {
     for (const p of pendings) {
       try {
         option.current++;
-        const filenameAndExt = basename(p.path);
-        const folder = dirname(p.path);
-        console.log(folder, "folder", "-------");
-        const folderId = folder.replace(library.dir + "/", "").replace(/\//g, "-");
-        const folderName = folder.split("/").pop();
-        const [filename, ext] = filenameAndExt.split(".");
-        const stats = fs.statSync(p.path);
-        const _uid: string = uid(16);
-        const thumbnail = `${filename}-${_uid}.webp`;
-        const thumbnailPath = join(thumbnailDirCacheByLibraryId, thumbnail);
-
-        const image = sharp(p.path);
-        const metadata = await image.metadata();
-        await image.toFormat("webp").resize(400).webp({ quality: 75 }).toFile(thumbnailPath);
 
         if (p.type === "delete") {
-          // // delete
-          // await curd.image.delete({ pathStartsWith });
+          // delete image
+          await deleteImage(p.path, library);
         } else if (p.type === "update") {
-          // // update
-          // const res = await updateImage(p.path, library);
-          // if (!res) addFail(p.path, library);
+          // 好像不存在此情况，修改文件名， delete -> create
         } else if (p.type === "create") {
-          const res = await curd.image.create({
-            libraryId: library.id,
-            path: p.path.replace(library.dir + "/", ""),
-            name: filename || Date.now().toString(),
-            ext: ext as Constant["ext"],
-            thumbnailPath: thumbnail,
-            size: stats.size,
-            createTime: stats.ctime,
-            lastTime: stats.mtime,
-            width: metadata.width || 0,
-            height: metadata.height || 0,
-            folders: [{ id: folderId, name: folderName }],
-          });
-
+          const res = await createImage(p, library, thumbnailDirCacheByLibraryId);
           if (!res) addFail(p.path, library);
         }
 
         await curd.pending.delete({ path: p.path });
         emit?.(option);
       } catch (e) {
+        console.log(e);
         addFail(p.path, library);
         await curd.pending.delete({ path: p.path });
         onError?.(e);
       }
     }
   });
+};
+
+const createImage = async (p: Pending, library: Library, thumbnailDirCacheByLibraryId: string) => {
+  const filenameAndExt = basename(p.path);
+  const folder = dirname(p.path);
+  const folderId = folder.replace(library.dir + "/", "").replace(/\//g, "-");
+  const folderName = folder.split("/").pop();
+  const [filename, ext] = filenameAndExt.split(".");
+  const stats = fs.statSync(p.path);
+  const _uid: string = uid(16);
+  const thumbnail = `${filename}-${_uid}.webp`;
+  const thumbnailPath = join(thumbnailDirCacheByLibraryId, thumbnail);
+
+  const image = sharp(p.path);
+  const metadata = await image.metadata();
+  await image.toFormat("webp").resize(400).webp({ quality: 75 }).toFile(thumbnailPath);
+
+  return await curd.image.create({
+    libraryId: library.id,
+    path: p.path.replace(library.dir + "/", ""),
+    name: filename || Date.now().toString(),
+    ext: ext as Constant["ext"],
+    thumbnailPath: thumbnail,
+    size: stats.size,
+    createTime: stats.ctime,
+    lastTime: stats.mtime,
+    width: metadata.width || 0,
+    height: metadata.height || 0,
+    folders: [{ id: folderId, name: folderName }],
+  });
+};
+
+const deleteImage = async (path: string, library: Library) => {
+  const res = await curd.image.get({ path: path.replace(library.dir + "/", "") });
+  const image = res[0];
+  console.log("deleteImage", image);
+
+  if (image) {
+    await curd.image.update({
+      id: image.id,
+      libraryId: library.id,
+      folders: [],
+    });
+    await curd.image.delete({ id: image.id });
+    if (image.thumbnailPath) {
+      await fs.remove(join(thumbnailDirCache, library.id.toString(), image.thumbnailPath));
+    }
+  }
 };
