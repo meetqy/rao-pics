@@ -14,7 +14,7 @@ export const LibraryInput = {
   create: z.object({
     name: z.string(),
     dir: z.string(),
-    type: z.enum(["eagle", "pixcall", "billfish"]),
+    type: z.enum(["eagle", "pixcall", "billfish", "folder"]),
   }),
 
   delete: z.object({ id: z.number() }),
