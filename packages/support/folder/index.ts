@@ -1,4 +1,4 @@
-import { basename, dirname } from "path";
+import { basename, dirname, join, sep } from "path";
 import * as fs from "fs-extra";
 
 import { type Constant } from "@acme/constant";
@@ -63,14 +63,16 @@ export const startFolder = (props: Props) => {
 
 const createImage = async (p: Pending, library: Library) => {
   const filenameAndExt = basename(p.path);
-  const folder = dirname(p.path);
-  const folderId = folder.replace(library.dir + "/", "").replace(/\//g, "-");
-  const folderName = folder.split("/").pop();
   const [filename, ext] = filenameAndExt.split(".");
-  const stats = fs.statSync(p.path);
-  const path = p.path.replace(library.dir + "/", "");
 
-  // TODO: sharp 打包问题未解决
+  const folder = dirname(p.path);
+  const libraryDir = join(library.dir, sep);
+
+  const folderId = folder.replace(libraryDir, "").replaceAll(sep, "-");
+  const folderName = folder.split(sep).pop();
+  const stats = fs.statSync(p.path);
+
+  const path = p.path.replace(libraryDir, "");
 
   return await curd.image.create({
     libraryId: library.id,
@@ -88,7 +90,7 @@ const createImage = async (p: Pending, library: Library) => {
 };
 
 const deleteImage = async (path: string, library: Library) => {
-  const res = await curd.image.get({ path: path.replace(library.dir + "/", "") });
+  const res = await curd.image.get({ path: path.replace(join(library.dir, sep), "") });
   const image = res[0];
 
   if (image) {
@@ -98,10 +100,5 @@ const deleteImage = async (path: string, library: Library) => {
       folders: [],
     });
     await curd.image.delete({ id: image.id });
-
-    // TODO: sharp 打包问题未解决, 不需要缩略图
-    // if (image.thumbnailPath) {
-    //   await fs.remove(join(thumbnailDirCache, library.id.toString(), image.thumbnailPath));
-    // }
   }
 };
