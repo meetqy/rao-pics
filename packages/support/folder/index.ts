@@ -1,5 +1,6 @@
 import { basename, dirname, join, sep } from "path";
 import * as fs from "fs-extra";
+import sizeOf from "image-size";
 
 import { type Constant } from "@acme/constant";
 import curd from "@acme/curd";
@@ -73,6 +74,7 @@ const createImage = async (p: Pending, library: Library) => {
   const stats = fs.statSync(p.path);
 
   const path = p.path.replace(libraryDir, "");
+  const dimensions = sizeOf(p.path);
 
   return await curd.image.create({
     libraryId: library.id,
@@ -83,8 +85,8 @@ const createImage = async (p: Pending, library: Library) => {
     size: stats.size,
     createTime: stats.ctime,
     lastTime: stats.mtime,
-    width: 0,
-    height: 0,
+    width: dimensions.width || 0,
+    height: dimensions.height || 0,
     folders: [{ id: folderId, name: folderName }],
   });
 };
