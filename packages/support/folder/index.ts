@@ -1,12 +1,10 @@
-import { basename, dirname, join } from "path";
+import { basename, dirname, join, sep } from "path";
 import * as fs from "fs-extra";
-import sharp from "sharp";
-import { uid } from "uid";
+import sizeOf from "image-size";
 
 import { type Constant } from "@acme/constant";
 import curd from "@acme/curd";
 import { type Library, type Pending } from "@acme/db";
-import { thumbnailDirCache } from "@acme/util";
 
 type EmitOption = { type: "image" | "folder"; current: number };
 
@@ -38,10 +36,6 @@ export const startFolder = (props: Props) => {
     current: 0,
   };
 
-  // create thumbnail dir by library
-  const thumbnailDirCacheByLibraryId = join(thumbnailDirCache, library.id.toString());
-  fs.ensureDirSync(thumbnailDirCacheByLibraryId);
-
   void curd.pending.get({ libraryId: library.id }).then(async (pendings) => {
     for (const p of pendings) {
       try {
@@ -53,7 +47,7 @@ export const startFolder = (props: Props) => {
         } else if (p.type === "update") {
           // 好像不存在此情况，修改文件名， delete -> create
         } else if (p.type === "create") {
-          const res = await createImage(p, library, thumbnailDirCacheByLibraryId);
+          const res = await createImage(p, library);
           if (!res) addFail(p.path, library);
         }
 
@@ -68,40 +62,38 @@ export const startFolder = (props: Props) => {
   });
 };
 
-const createImage = async (p: Pending, library: Library, thumbnailDirCacheByLibraryId: string) => {
+const createImage = async (p: Pending, library: Library) => {
   const filenameAndExt = basename(p.path);
-  const folder = dirname(p.path);
-  const folderId = folder.replace(library.dir + "/", "").replace(/\//g, "-");
-  const folderName = folder.split("/").pop();
   const [filename, ext] = filenameAndExt.split(".");
-  const stats = fs.statSync(p.path);
-  const _uid: string = uid(16);
-  const thumbnail = `${filename}-${_uid}.webp`;
-  const thumbnailPath = join(thumbnailDirCacheByLibraryId, thumbnail);
 
-  const image = sharp(p.path);
-  const metadata = await image.metadata();
-  await image.toFormat("webp").resize(400).webp({ quality: 75 }).toFile(thumbnailPath);
+  const folder = dirname(p.path);
+  const libraryDir = join(library.dir, sep);
+
+  const folderId = folder.replace(libraryDir, "").replaceAll(sep, "-");
+  const folderName = folder.split(sep).pop();
+  const stats = fs.statSync(p.path);
+
+  const path = p.path.replace(libraryDir, "");
+  const dimensions = sizeOf(p.path);
 
   return await curd.image.create({
     libraryId: library.id,
-    path: p.path.replace(library.dir + "/", ""),
+    path,
     name: filename || Date.now().toString(),
     ext: ext as Constant["ext"],
-    thumbnailPath: thumbnail,
+    thumbnailPath: path,
     size: stats.size,
     createTime: stats.ctime,
     lastTime: stats.mtime,
-    width: metadata.width || 0,
-    height: metadata.height || 0,
+    width: dimensions.width || 0,
+    height: dimensions.height || 0,
     folders: [{ id: folderId, name: folderName }],
   });
 };
 
 const deleteImage = async (path: string, library: Library) => {
-  const res = await curd.image.get({ path: path.replace(library.dir + "/", "") });
+  const res = await curd.image.get({ path: path.replace(join(library.dir, sep), "") });
   const image = res[0];
-  console.log("deleteImage", image);
 
   if (image) {
     await curd.image.update({
@@ -110,8 +102,5 @@ const deleteImage = async (path: string, library: Library) => {
       folders: [],
     });
     await curd.image.delete({ id: image.id });
-    if (image.thumbnailPath) {
-      await fs.remove(join(thumbnailDirCache, library.id.toString(), image.thumbnailPath));
-    }
   }
 };
