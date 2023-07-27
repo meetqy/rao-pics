@@ -1,14 +1,16 @@
 name: 提交 Bug
-about: 请按照模板填写，帮助我快速定位 Bug
+description: 请按照模板填写，帮助我快速定位 Bug
 title: "[Bug]: xxx"
 labels: ["bug"]
-assignees: meetqy
+assignees:
+  - meetqy
 body:
   - type: input
     attributes:
-      label: 请填写问题描述
+      placeholder: 请填写问题描述
 
   - type: dropdown
+    id: platform
     attributes:
       label: 请选择你的操作系统
       multiple: true
