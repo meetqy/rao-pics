@@ -6,15 +6,13 @@ assignees:
   - meetqy
 body:
   - type: checkboxes
-    id: platforms
+    id: systems
     attributes:
       label: 你在哪些平台上遇到了这个问题？
       options:
         - label: Linux
         - label: Windows
         - label: MacOS
-    validations:
-      required: true
 
   - type: textarea
     id: what-happened
