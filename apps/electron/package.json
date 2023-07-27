@@ -1,7 +1,7 @@
 {
   "name": "@acme/electron",
   "productName": "Rao Pics",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Visit Photos on Any Device.",
   "homepage": "https://rao.pics",
   "private": true,
@@ -13,8 +13,8 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development npm run watch:desktop",
-    "build": "pnpm run '/^build:.*/'",
-    "release": "pnpm run '/^release:.*/'",
+    "build": "pnpm '/^build:.*/'",
+    "release": "pnpm sync:version && pnpm '/^release:.*/'",
     "release:mac": "ts-node electron-builder/mac.ts",
     "release:win": "ts-node electron-builder/win.ts",
     "release:linux-openssl-1.1.x": "cross-env OPENSSL_VERSION=openssl-1.1.x ts-node electron-builder/linux.ts",
