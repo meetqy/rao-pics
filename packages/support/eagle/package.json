@@ -15,11 +15,13 @@
     "@acme/db": "^0.1.0",
     "@acme/util": "^0.1.0",
     "fs-extra": "^11.1.1",
-    "lodash": "^4.17.21"
+    "lodash.difference": "^4.5.0",
+    "lodash.uniqby": "^4.7.0"
   },
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",
-    "@types/lodash": "^4.14.195",
+    "@types/lodash.difference": "^4.5.7",
+    "@types/lodash.uniqby": "^4.7.7",
     "eslint": "8.42.0",
     "typescript": "^5.1.3"
   }
