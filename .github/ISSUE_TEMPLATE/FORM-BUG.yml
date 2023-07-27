@@ -7,14 +7,14 @@ body:
   - type: input
     attributes:
       label: 请填写问题描述
-  - type: checkboxes
+  - type: dropdown
     attributes:
       label: 请选择你的操作系统
-      description: 请勾选你的操作系统
-    options:
-      - label: Windows
-      - label: macOS
-      - label: Linux
+      multiple: true
+      options:
+        - Windows
+        - MacOS
+        - Linux
     validations:
       required: true
   - type: input
