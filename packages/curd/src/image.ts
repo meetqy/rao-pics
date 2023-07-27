@@ -1,4 +1,4 @@
-import { differenceBy } from "lodash";
+import differenceBy from "lodash.differenceby";
 import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";

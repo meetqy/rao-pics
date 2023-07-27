@@ -1,4 +1,5 @@
-import _ from "lodash";
+import difference from "lodash.difference";
+import uniqBy from "lodash.uniqby";
 
 import curd from "@acme/curd";
 import { type Library } from "@acme/db";
@@ -7,7 +8,7 @@ import { type EmitOption, type Folder } from "../types";
 
 export const handleFolder = async (folders: Folder[], lib: Library, emit?: (option: EmitOption) => void) => {
   // 相同的文件夹，只保留一个
-  const f = _.uniqBy(treeToArray(folders), "name");
+  const f = uniqBy(treeToArray(folders), "name");
 
   const oldFolders = await curd.folder.get({ library: lib.id });
   const oldFolderIds = oldFolders.map((v) => v.id);
@@ -30,7 +31,7 @@ export const handleFolder = async (folders: Folder[], lib: Library, emit?: (opti
     });
   }
 
-  const ids = _.difference(
+  const ids = difference(
     oldFolderIds,
     f.map((folder) => folder.id),
   );
