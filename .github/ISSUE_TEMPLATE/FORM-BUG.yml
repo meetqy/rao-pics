@@ -9,11 +9,10 @@ body:
     id: platforms
     attributes:
       label: 你在哪些平台上遇到了这个问题？
-      multiple: true
       options:
-        - Linux
-        - Windows
-        - MacOS
+        - label: Linux
+        - label: Windows
+        - label: MacOS
     validations:
       required: true
 
