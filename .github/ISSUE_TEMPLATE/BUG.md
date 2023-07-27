@@ -1,3 +1,4 @@
+---
 name: 提交 Bug
 about: 请按照模板填写，帮助我快速定位 Bug
 title: "[Bug]: xxx"
@@ -32,3 +33,4 @@ body:
         2. xxx
         3. xxx
     required: true
+---
