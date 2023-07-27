@@ -7,6 +7,7 @@ body:
   - type: input
     attributes:
       label: 请填写问题描述
+
   - type: dropdown
     attributes:
       label: 请选择你的操作系统
@@ -17,10 +18,13 @@ body:
         - Linux
     validations:
       required: true
+
   - type: input
     attributes:
       label: 请填写你使用的软件版本
-    required: true
+    validations:
+      required: true
+
   - type: markdown
     attributes:
       label: 请填写复现步骤
@@ -28,4 +32,5 @@ body:
         1. xxx
         2. xxx
         3. xxx
-    required: true
+    validations:
+      required: true
