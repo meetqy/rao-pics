@@ -5,7 +5,7 @@ labels: ["Bug"]
 assignees:
   - meetqy
 body:
-  - type: dropdown
+  - type: checkboxes
     id: platforms
     attributes:
       label: 你在哪些平台上遇到了这个问题？
