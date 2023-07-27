@@ -1,22 +1,26 @@
-name: 提交 Bug
-description: 请按照模板填写，帮助我快速定位 Bug
-title: "[Bug]: xxx"
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
 labels: ["bug"]
 assignees:
   - meetqy
 body:
-  - type: input
+  - type: textarea
+    id: what-happened
     attributes:
-      placeholder: 请填写问题描述
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
 
   - type: dropdown
-    id: platform
+    id: platforms
     attributes:
-      label: 请选择你的操作系统
+      label: What platform are you seeing the problem on?
       multiple: true
       options:
+        - Linux
         - Windows
         - MacOS
-        - Linux
     validations:
       required: true
