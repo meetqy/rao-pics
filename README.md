@@ -1,4 +1,4 @@
-# Rao Pics
+# Rao Pics - 在任何设备上你的素材
 
 中文 | [English](./README.en.md)
 
@@ -6,10 +6,11 @@
 [![License](https://img.shields.io/github/license/rao-pics/core)](https://github.com/rao-pics/core/blob/turbo-electron-prisma/LICENSE)
 [![Release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
 [![Download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/rao-pics/rao-pics/releases)
-[![Platform OS](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-blue)](https://github.com/rao-pics/rao-pics/releases)
 [![Twitter URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Frao-pics%2Frao-pics)](https://twitter.com/intent/tweet?text=Visit%20Material%20on%20Any%20device.https://github.com/rao-pics/core)
 
-在任何设备访问你的素材/媒体/音乐。 - 已支持 Eagle
+基于 Eagle/Billfish/Pixcall 等素材管理工具，让你的素材可以在任何设备上访问。
+
+> 它们负责管理素材，而我负责传播。
 
 https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f256d6ca3ceb
 

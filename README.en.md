@@ -1,4 +1,4 @@
-# Rao Pics: Visit Photos on Any Device
+# Rao Pics: Visit Photos On Any Devices
 
 [中文](./README.md) | English
 
@@ -7,6 +7,8 @@
 [![release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
 [![download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/rao-pics/rao-pics/releases)
 [![Twitter URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Frao-pics%2Frao-pics)](https://twitter.com/intent/tweet?text=Visit%20Material%20on%20Any%20device.https://github.com/rao-pics/core)
+
+RaoPics help you visit material on any devices, base on Eagle/Billfish/Pixcall and other photos material management apps.
 
 https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f256d6ca3ceb
 
