@@ -1,26 +1,39 @@
-name: Bug Report
-description: File a bug report
+name: 提交 Bug
+description: 使用此模板提交 Bug，便于我们更快的定位问题。
 title: "[Bug]: "
 labels: ["bug"]
 assignees:
   - meetqy
 body:
-  - type: textarea
-    id: what-happened
-    attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
-      value: "A bug happened!"
-
   - type: dropdown
     id: platforms
     attributes:
-      label: What platform are you seeing the problem on?
+      label: 你在哪些平台上遇到了这个问题？
       multiple: true
       options:
         - Linux
         - Windows
         - MacOS
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 你遇到了什么问题？
+      description: 请尽可能详细的描述你遇到的问题。
+      value: "描述你的问题"
+    validations:
+      required: true
+
+  - type: textarea
+    id: repeat-steps
+    attributes:
+      label: 如何复现？
+      description: 复现不了的问题，我们很难定位问题。
+      value: |
+        1.xxx
+        2.xxx
+        3.xxx
     validations:
       required: true
