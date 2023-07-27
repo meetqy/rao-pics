@@ -18,16 +18,6 @@ const createTray = () => {
 
   const getMenu = () =>
     Menu.buildFromTemplate([
-      {
-        label: "打开 Rao Pics",
-        type: "normal",
-        click: () => {
-          void restoreOrCreateWindow().then((window) => {
-            window.show();
-            window.focus();
-          });
-        },
-      },
       { type: "separator" },
       {
         label: "下载页面",
@@ -63,7 +53,16 @@ const createTray = () => {
         },
       },
     ]);
-  tray.setContextMenu(getMenu());
+
+  tray.on("click", () => {
+    void restoreOrCreateWindow().then((window) => {
+      window.show();
+      window.focus();
+    });
+  });
+  tray.on("right-click", () => {
+    tray.popUpContextMenu(getMenu());
+  });
 
   /** 监听 dark/light */
   nativeTheme.on("updated", () => {
