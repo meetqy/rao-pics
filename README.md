@@ -4,13 +4,26 @@
 
 ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/meetqy/5c4881f21bab2cf4f09a8658354fb997/raw/rao-pics_core__coverage.json)
 [![License](https://img.shields.io/github/license/rao-pics/core)](https://github.com/rao-pics/core/blob/turbo-electron-prisma/LICENSE)
-[![release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
-[![download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/rao-pics/rao-pics/releases)
+[![Release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
+[![Download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/rao-pics/rao-pics/releases)
+[![Platform OS](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-blue)](https://github.com/rao-pics/rao-pics/releases)
 [![Twitter URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Frao-pics%2Frao-pics)](https://twitter.com/intent/tweet?text=Visit%20Material%20on%20Any%20device.https://github.com/rao-pics/core)
 
 在任何设备访问你的素材/媒体/音乐。 - 已支持 Eagle
 
 https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f256d6ca3ceb
+
+## 已支持
+
+**App**
+
+<p><a href="https://eagle.sjv.io/rao" target="_blank"><img width="64" src="https://i.imgur.com/jxirugb.jpg"/></a></p>
+
+**媒体**
+
+![supported MP4 AVI MOV WMV FLV WEBM MKV](https://img.shields.io/badge/VIDEO-MP4%20%7C%20AVI%20%7C%20MOV%20%7C%20WMV%20%7C%20FLV%20%7C%20WEBM%20%7C%20MKV-brightgreen.svg)
+
+![supported JPG PNG JPEG GIF WEBP](https://img.shields.io/badge/IMAGE-JPG%20%7C%20PNG%20%7C%20JPEG%20%7C%20GIF%20%7C%20WEBP-brightgreen.svg)
 
 ## 下载对应版本
 
@@ -29,19 +42,6 @@ https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f25
 | Arch Linux 2023.04.23 | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/rao-pics/rao-pics/releases)  |
 
 > 参考 https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#binarytargets-options
-
-## 已支持
-
-### App
-
-<p><a href="https://eagle.sjv.io/rao" target="_blank"><img width="64" src="https://i.imgur.com/jxirugb.jpg"/></a></p>
-
-### 文件类型
-
-```ts
-const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
-const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
-```
 
 ## 🌀 Todo 待办清单
 

@@ -10,6 +10,18 @@
 
 https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f256d6ca3ceb
 
+## Supported
+
+**App**
+
+<p><a href="https://eagle.sjv.io/rao" target="_blank"><img width="64" src="https://i.imgur.com/jxirugb.jpg"/></a></p>
+
+**Media**
+
+![supported MP4 AVI MOV WMV FLV WEBM MKV](https://img.shields.io/badge/VIDEO-MP4%20%7C%20AVI%20%7C%20MOV%20%7C%20WMV%20%7C%20FLV%20%7C%20WEBM%20%7C%20MKV-brightgreen.svg)
+
+![supported JPG PNG JPEG GIF WEBP](https://img.shields.io/badge/IMAGE-JPG%20%7C%20PNG%20%7C%20JPEG%20%7C%20GIF%20%7C%20WEBP-brightgreen.svg)
+
 ## Download
 
 | Platform              | Version                                                                                             |
@@ -28,18 +40,7 @@ https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f25
 
 > Reference: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#binarytargets-options
 
-## Supported
-
-### App
-
-<p><img width="64" src="https://i.imgur.com/jxirugb.jpg"/></p>
-
-### File Type
-
-```ts
-const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
-const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
-```
+````
 
 ## 🌀 Todo list
 
@@ -64,7 +65,7 @@ db.sqlite
 ```sh
 mac ~/Library/Caches/Rao\ Pics
 win '~\AppData\Local\Rao Pics'
-```
+````
 
 main.log
 
