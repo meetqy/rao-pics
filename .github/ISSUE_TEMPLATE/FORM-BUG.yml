@@ -8,11 +8,21 @@ body:
   - type: checkboxes
     id: systems
     attributes:
-      label: 你在哪些平台上遇到了这个问题？
+      label: 你在哪些平台上遇到了这个问题？（必选）
       options:
         - label: Linux
         - label: Windows
         - label: MacOS
+    validations:
+      required: true
+
+  - type: dropdown
+    id: app-or-web
+    attributes:
+      label: 网页/客户端？
+      options:
+        - 网页
+        - 客户端
     validations:
       required: true
 
