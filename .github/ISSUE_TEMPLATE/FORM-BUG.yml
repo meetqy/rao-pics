@@ -18,19 +18,3 @@ body:
         - Linux
     validations:
       required: true
-
-  - type: input
-    attributes:
-      label: 请填写你使用的软件版本
-    validations:
-      required: true
-
-  - type: markdown
-    attributes:
-      label: 请填写复现步骤
-      value: |
-        1. xxx
-        2. xxx
-        3. xxx
-    validations:
-      required: true
