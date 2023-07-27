@@ -10,6 +10,8 @@
 
 RaoPics help you visit material on any devices, base on Eagle/Billfish/Pixcall and other photos material management apps.
 
+> They're manage material, and i distribute it. 😄
+
 https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f256d6ca3ceb
 
 ## Supported
