@@ -1,7 +1,7 @@
 name: 提交 Bug
 description: 使用此模板提交 Bug，便于我们更快的定位问题。
 title: "[Bug]: "
-labels: ["bug"]
+labels: ["Bug"]
 assignees:
   - meetqy
 body:
