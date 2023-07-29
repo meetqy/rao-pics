@@ -4,9 +4,7 @@ import { z } from "zod";
 
 import { type Constant } from "@acme/constant";
 import curd from "@acme/curd";
-import { start as startEagle } from "@acme/eagle";
-
-// import { start as startFolder } from "@acme/folder";
+import { startEagle } from "@acme/eagle";
 
 import { t } from "../trpc";
 
@@ -42,12 +40,6 @@ export const sync = t.router({
 
             return true;
           }
-
-          case "folder": {
-            // startFolder(lib);
-            return false;
-          }
-
           default: {
             return false;
           }

@@ -1,4 +1,5 @@
 import { join } from "path";
+import * as Sentry from "@sentry/electron";
 import * as fs from "fs-extra";
 
 import { CONSTANT, type Constant } from "@acme/constant";
@@ -87,23 +88,28 @@ export const updateImage = async (path: string, library: Library) => {
  * @returns
  */
 const getImageBase = (path: string) => {
-  const metadata = fs.readJSONSync(path) as Metadata;
-  const stats = fs.statSync(path);
-  const imagePath = join("images", `${metadata.id}.info`, `${metadata.name}.${metadata.ext}`);
-  const thumbnailPath = metadata.noThumbnail ? imagePath : join("images", `${metadata.id}.info`, `${metadata.name}_thumbnail.png`);
-  const ext = metadata.ext as Constant["ext"];
+  try {
+    const metadata = fs.readJSONSync(path) as Metadata;
+    const stats = fs.statSync(path);
+    const imagePath = join("images", `${metadata.id}.info`, `${metadata.name}.${metadata.ext}`);
+    const thumbnailPath = metadata.noThumbnail ? imagePath : join("images", `${metadata.id}.info`, `${metadata.name}_thumbnail.png`);
+    const ext = metadata.ext as Constant["ext"];
 
-  if (!CONSTANT["EXT"].includes(ext)) {
+    if (!CONSTANT["EXT"].includes(ext)) {
+      throw new Error(`Unsupported image type: ${ext}, ${path}`);
+    }
+
+    return {
+      metadata,
+      stats,
+      imagePath,
+      thumbnailPath,
+      ext,
+    };
+  } catch (error) {
+    Sentry.captureException(error);
     return null;
   }
-
-  return {
-    metadata,
-    stats,
-    imagePath,
-    thumbnailPath,
-    ext,
-  };
 };
 
 /**

@@ -3,8 +3,6 @@ import ip from "ip";
 
 import curd from "@acme/curd";
 
-import eLog from "./log";
-
 /**
  * 获取并且更新配置
  */
@@ -28,7 +26,6 @@ export const getAndUpdateConfig = async (): Promise<{
       assetsPort: _assets_port,
     });
   } catch (e) {
-    eLog.error("main/utils", e);
     process.exit(1);
   }
 
