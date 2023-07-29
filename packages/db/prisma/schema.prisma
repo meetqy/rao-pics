@@ -45,7 +45,7 @@ model Library {
     id           Int       @id @default(autoincrement())
     name         String
     dir          String    @unique
-    // eagle | billfish | pixcall | finder | ...
+    // eagle | billfish | pixcall | ...
     type         String
     // 最后一次同步时间
     lastSyncTime DateTime?

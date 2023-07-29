@@ -1,10 +1,12 @@
 import type cp from "child_process";
-import { Menu, MenuItem, app } from "electron";
+import * as Sentry from "@sentry/electron";
+import { app, Menu, MenuItem } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import startWatcher from "@acme/watch";
 
 import "./security-restrictions";
+
 import { join } from "path";
 import fg from "fast-glob";
 
@@ -132,6 +134,14 @@ app.on("browser-window-focus", () => {
 //     })
 //     .catch((e) => console.error("Failed install extension:", e));
 // }
+
+/**
+ * Sentry init
+ */
+Sentry.init({
+  dsn: "https://178a415c4ef2421a8f52b6c4041319af@o4505321607397376.ingest.sentry.io/4505321612705792",
+  debug: import.meta.env.DEV,
+});
 
 app.on("ready", () => {
   createTray();

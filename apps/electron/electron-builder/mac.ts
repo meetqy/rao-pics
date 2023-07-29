@@ -12,7 +12,7 @@ const AppConfig: builder.Configuration = {
     category: "public.app-category.share-photos",
     icon: "buildResources",
     darkModeSupport: true,
-    target: { target: "dmg", arch: ["arm64", "x64"] },
+    target: process.env.NODE_ENV === "development" ? "dir" : { target: "dmg", arch: ["arm64", "x64"] },
     extraResources,
   },
 
