@@ -19,7 +19,7 @@ interface Window {
      *
      * Same as showMessageBox, But it doesn't have 'browserWindow' argument.
      */
-    showMessageBox: (options: Electron.OpenDialogOptions) => Promise<string[] | undefined>;
+    showMessageBox: (options: Electron.MessageBoxOptions) => Promise<string[] | undefined>;
   };
 
   readonly shell: {
