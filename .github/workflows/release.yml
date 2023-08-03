@@ -57,7 +57,7 @@ jobs:
           cd apps/electron
           ls ./
           pnpm release:linux-openssl-3.0.x
-          env:
+        env:
           USE_HARD_LINKS: false
 
       - name: Upload releases
