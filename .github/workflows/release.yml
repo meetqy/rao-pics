@@ -4,14 +4,15 @@ on:
     branches:
       - turbo-electron-prisma
 jobs:
-  release:
+  install:
+    name: Install
     if: contains(github.event.head_commit.message, '[release]')
     runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -45,6 +46,7 @@ jobs:
         run: pnpm build
 
       - name: Release for linux-openssl-1.1.x
+        if: matrix.os == 'ubuntu-latest'
         run: |
           cd apps/electron
           ls ./
@@ -53,10 +55,29 @@ jobs:
           USE_HARD_LINKS: false
 
       - name: Release for linux-openssl-3.0.x
+        if: matrix.os == 'ubuntu-latest'
         run: |
           cd apps/electron
           ls ./
           pnpm release:linux-openssl-3.0.x
+        env:
+          USE_HARD_LINKS: false
+
+      - name: Release for macos
+        if: matrix.os == 'macos-latest'
+        run: |
+          cd apps/electron
+          ls ./
+          pnpm release:mac
+        env:
+          USE_HARD_LINKS: false
+
+      - name: Release for windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd apps/electron
+          ls ./
+          pnpm release:win
         env:
           USE_HARD_LINKS: false
 
