@@ -9,6 +9,7 @@ const AppConfig: builder.Configuration = {
 
   win: {
     icon: "buildResources",
+    target: process.env.NODE_ENV === "development" ? "dir" : { target: "nsis", arch: ["x64"] },
     extraResources,
   },
 

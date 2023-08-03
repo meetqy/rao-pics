@@ -13,7 +13,13 @@ const AppConfig: builder.Configuration = {
     artifactName: "${productName}-${version}-${os}-${arch}-" + openSSL + ".${ext}",
     category: "Graphics",
     icon: "buildResources",
-    target: "deb",
+    target:
+      process.env.NODE_ENV === "development"
+        ? "dir"
+        : {
+            target: "deb",
+            arch: ["x64", "arm64"],
+          },
     extraResources,
   },
 
@@ -22,7 +28,11 @@ const AppConfig: builder.Configuration = {
 
     extraResources.push({
       from: "../nextjs/.next/standalone",
-      filter: ["**/*", "!**/.prisma/client/*.node", `**/.prisma/client/libquery_engine-debian-${openSSL}.so.node`],
+      filter: [
+        "**/*",
+        "!**/.prisma/client/*.node",
+        context.arch === "arm64" ? `**/.prisma/client/libquery_engine-linux-arm64-${openSSL}.so.node` : `**/.prisma/client/libquery_engine-debian-${openSSL}.so.node`,
+      ],
     });
 
     return Promise.resolve(context);
