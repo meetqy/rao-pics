@@ -1,10 +1,10 @@
 {
   "name": "rao-pics",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "Visit Photos on Any Device.",
   "private": true,
   "engines": {
-    "node": ">=v16.19.0"
+    "node": "v18.17.0"
   },
   "packageManager": "pnpm@8.3.1",
   "scripts": {
@@ -15,13 +15,14 @@
     "lint": "turbo lint && manypkg check",
     "lint:fix": "turbo lint:fix && manypkg fix",
     "type-check": "turbo type-check",
+    "sync:version": "turbo sync:version",
     "build": "cross-env NODE_ENV=production turbo db:reset build",
     "release": "pnpm version:patch && turbo build release",
     "release:minor": "pnpm minor:version && turbo build release",
     "release:major": "pnpm major:version && turbo build release",
-    "version:patch": "npm version patch --no-git-tag-version",
-    "version:minor": "npm version minor --no-git-tag-version",
-    "version:major": "npm version major --no-git-tag-version",
+    "version:patch": "npm version patch --no-git-tag-version && pnpm sync:version",
+    "version:minor": "npm version minor --no-git-tag-version && pnpm sync:version",
+    "version:major": "npm version major --no-git-tag-version && pnpm sync:version",
     "test": "cross-env NODE_ENV=development vitest run --no-threads --coverage.enabled --coverage.reporter='text-summary'",
     "test:ui": "cross-env NODE_ENV=development vitest --ui --no-threads --coverage"
   },

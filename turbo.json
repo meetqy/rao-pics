@@ -15,7 +15,10 @@
       "dependsOn": ["@acme/nextjs#build", "@acme/electron#build"]
     },
     "lint": {},
-    "lint:fix": {}
+    "lint:fix": {},
+    "sync:version": {
+      "cache": false
+    }
   },
   "globalEnv": [
     "CI",
