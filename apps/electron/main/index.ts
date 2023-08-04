@@ -144,8 +144,6 @@ app.on("browser-window-focus", () => {
 // }
 
 app.on("ready", () => {
-  createTray();
-
   // Init menu and cmd+q disabled.
   const menu = new Menu();
   menu.append(
@@ -170,6 +168,8 @@ app
   .whenReady()
   .then(() => {
     void (async () => {
+      createTray();
+
       // 创建文件监听
       const libs = await curd.library.get({});
 
