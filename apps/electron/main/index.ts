@@ -1,6 +1,6 @@
 import type cp from "child_process";
 import * as Sentry from "@sentry/electron";
-import { app, Menu, MenuItem, type Tray } from "electron";
+import { app, Menu, MenuItem } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import startWatcher from "@acme/watch";
