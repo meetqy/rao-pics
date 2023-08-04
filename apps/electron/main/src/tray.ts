@@ -1,22 +1,20 @@
 import { join } from "path";
-import { app, Menu, nativeImage, nativeTheme, shell, Tray } from "electron";
+import { app, Menu, nativeImage, shell, Tray } from "electron";
 
 import globalApp from "../global";
 import { restoreOrCreateWindow } from "../mainWindow";
 
 const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildResources") : join(__dirname, "../../buildResources");
 
-export const getIcon = (name: string) => join(buildResourcesPath, "tray", `${name}-${nativeTheme.shouldUseDarkColors ? "light" : "dark"}.png`);
-
 /**
  * 系统托盘
  * @returns {Tray}
  */
 const createTray = () => {
-  const icon = nativeImage.createFromPath(join("buildResources", "tray", "iconTemplate@5x.png"));
-  const download = nativeImage.createFromPath(join("buildResources", "tray", "downloadTemplate@2x.png"));
-  const todo = nativeImage.createFromPath(join("buildResources", "tray", "todoTemplate@2x.png"));
-  const twitter = nativeImage.createFromPath(join("buildResources", "tray", "twitterTemplate@2x.png"));
+  const icon = nativeImage.createFromPath(join(buildResourcesPath, "tray", "iconTemplate@5x.png"));
+  const download = nativeImage.createFromPath(join(buildResourcesPath, "tray", "downloadTemplate@2x.png"));
+  const todo = nativeImage.createFromPath(join(buildResourcesPath, "tray", "todoTemplate@2x.png"));
+  const twitter = nativeImage.createFromPath(join(buildResourcesPath, "tray", "twitterTemplate@2x.png"));
 
   // 托盘图标
   const tray = new Tray(icon);
