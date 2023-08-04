@@ -89,3 +89,5 @@ jobs:
           message: ${{ env.COVERAGE }}
           color: green
           namedLogo: vitest
+        env:
+          COVERAGE: ${{ env.COVERAGE }}
