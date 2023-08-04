@@ -1,5 +1,5 @@
 import { join } from "path";
-import { app, Menu, nativeTheme, shell, Tray } from "electron";
+import { app, Menu, nativeImage, nativeTheme, shell, Tray } from "electron";
 
 import globalApp from "../global";
 import { restoreOrCreateWindow } from "../mainWindow";
@@ -13,22 +13,27 @@ export const getIcon = (name: string) => join(buildResourcesPath, "tray", `${nam
  * @returns {Tray}
  */
 const createTray = () => {
+  const icon = nativeImage.createFromPath(join("buildResources", "tray", "iconTemplate@5x.png"));
+  const download = nativeImage.createFromPath(join("buildResources", "tray", "downloadTemplate@2x.png"));
+  const todo = nativeImage.createFromPath(join("buildResources", "tray", "todoTemplate@2x.png"));
+  const twitter = nativeImage.createFromPath(join("buildResources", "tray", "twitterTemplate@2x.png"));
+
   // 托盘图标
-  const tray = new Tray(getIcon("tray"));
+  const tray = new Tray(icon);
 
   const contextMenu = Menu.buildFromTemplate([
     { type: "separator" },
     {
       label: "下载页面",
       type: "normal",
-      icon: getIcon("download"),
+      icon: download,
       click: () => {
         void shell.openExternal("https://github.com/rao-pics/core/releases");
       },
     },
     {
       label: "最新动态",
-      icon: getIcon("twitter"),
+      icon: twitter,
       type: "normal",
       click: () => {
         void shell.openExternal("https://twitter.com/meetqy");
@@ -36,7 +41,7 @@ const createTray = () => {
     },
     {
       label: "开发进度",
-      icon: getIcon("todo"),
+      icon: todo,
       type: "normal",
       click: () => {
         void shell.openExternal("https://github.com/orgs/rao-pics/projects/1/views/1");
@@ -68,11 +73,13 @@ const createTray = () => {
     tray.popUpContextMenu(contextMenu);
   });
 
-  /** 监听 dark/light */
-  nativeTheme.on("updated", () => {
-    tray.setImage(getIcon("tray"));
-    tray.setContextMenu(contextMenu);
-  });
+  // /** 监听 dark/light */
+  // nativeTheme.on("updated", () => {
+  //   tray.setImage(icon);
+  //   tray.setContextMenu(contextMenu);
+  // });
+
+  return tray;
 };
 
 export default createTray;
