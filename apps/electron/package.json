@@ -32,6 +32,7 @@
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",
     "@acme/tailwind-config": "^0.1.0",
+    "@sentry/vite-plugin": "^2.5.0",
     "@types/express": "^4.17.17",
     "@types/ip": "^1.1.0",
     "@types/node": "^18.16.5",
@@ -59,6 +60,7 @@
     "@acme/eagle": "^0.1.0",
     "@acme/watch": "^0.1.0",
     "@sentry/electron": "^4.8.0",
+    "@sentry/react": "^7.61.1",
     "@tanstack/react-query": "^4.29.5",
     "@trpc/client": "^10.23.0",
     "@trpc/react-query": "^10.25.0",

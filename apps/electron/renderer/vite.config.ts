@@ -1,10 +1,13 @@
-import { chrome } from "../.electron-vendors.cache.json";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { join } from "path";
 import { builtinModules } from "module";
+import { join } from "path";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+
+import { chrome } from "../.electron-vendors.cache.json";
 
 const PACKAGE_ROOT = __dirname;
+const isDev = process.env.NODE_ENV === "development";
 
 // why is this needed? Isn't `chrome` typed as "string" already?
 if (typeof chrome !== "string") {
@@ -33,12 +36,12 @@ export default defineConfig({
   },
   build: {
     target: `chrome${chrome}`,
-    sourcemap: "inline",
+    sourcemap: true,
     outDir: "dist",
     emptyOutDir: true,
     assetsDir: ".",
     // set to development in the watch script
-    minify: process.env.MODE !== "development",
+    minify: !isDev,
     rollupOptions: {
       input: join(PACKAGE_ROOT, "index.html"),
       external: [
@@ -48,5 +51,17 @@ export default defineConfig({
     },
     reportCompressedSize: false,
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    // Put the Sentry vite plugin after all other plugins
+    !isDev &&
+      sentryVitePlugin({
+        org: "meetqy",
+        project: "rao-pics",
+
+        // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
+        // and need `project:releases` and `org:read` scopes
+        authToken: "7979f62cdaee7ba46204863b5777bec04eed627ccb7a2c5d32262ad3a04672e7",
+      }),
+  ],
 });
