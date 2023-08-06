@@ -1,10 +1,13 @@
 import { builtinModules } from "module";
 import { join } from "path";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from "vite";
 
 import { node } from "../.electron-vendors.cache.json";
 
 const PACKAGE_ROOT = __dirname;
+
+const isDev = process.env.NODE_ENV === "development";
 
 // why is this needed? Isn't `node` typed as "string" already?
 if (typeof node !== "string") {
@@ -29,12 +32,12 @@ export default defineConfig({
   build: {
     ssr: true,
     target: `node${node}`,
-    sourcemap: "inline",
+    sourcemap: true,
     outDir: "dist",
     emptyOutDir: true,
     assetsDir: ".",
     // set to development in the watch script
-    minify: process.env.MODE !== "development",
+    minify: !isDev,
     lib: {
       entry: "./index.ts",
       formats: ["cjs"],
@@ -52,4 +55,15 @@ export default defineConfig({
     },
     reportCompressedSize: false,
   },
+  plugins: [
+    // Put the Sentry vite plugin after all other plugins
+    !isDev &&
+      sentryVitePlugin({
+        org: "meetqy",
+        project: "rao-pics",
+        // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
+        // and need `project:releases` and `org:read` scopes
+        authToken: "7979f62cdaee7ba46204863b5777bec04eed627ccb7a2c5d32262ad3a04672e7",
+      }),
+  ],
 });

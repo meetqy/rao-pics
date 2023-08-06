@@ -1,8 +1,11 @@
-import { chrome } from "../.electron-vendors.cache.json";
 import { builtinModules } from "module";
 import { defineConfig } from "vite";
 
+import { chrome } from "../.electron-vendors.cache.json";
+
 const PACKAGE_ROOT = __dirname;
+
+const isDev = process.env.NODE_ENV === "development";
 
 // why is this needed? Isn't `chrome` typed as "string" already?
 if (typeof chrome !== "string") {
@@ -21,12 +24,12 @@ export default defineConfig({
   build: {
     ssr: true,
     target: `chrome${chrome}`,
-    sourcemap: "inline",
+    sourcemap: true,
     outDir: "dist",
     emptyOutDir: true,
     assetsDir: ".",
     // set to development in the watch script
-    minify: process.env.MODE !== "development",
+    minify: !isDev,
     lib: {
       entry: "./index.ts",
       formats: ["cjs"],
@@ -44,4 +47,5 @@ export default defineConfig({
     },
     reportCompressedSize: false,
   },
+  plugins: [],
 });
