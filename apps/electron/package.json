@@ -1,7 +1,7 @@
 {
   "name": "@acme/electron",
   "productName": "Rao Pics",
-  "version": "0.7.8",
+  "version": "0.7.9",
   "description": "Visit Photos on Any Device.",
   "homepage": "https://rao.pics",
   "private": true,
