@@ -40,4 +40,5 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - run: pnpm install --no-frozen-lockfile
+      - run: pnpm db:reset
       - run: pnpm lint
