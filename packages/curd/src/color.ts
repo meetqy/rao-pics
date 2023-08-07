@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Prisma, prisma } from "@acme/db";
+import { prisma } from "@acme/db";
 import { hexToRgb } from "@acme/util";
 
 export const ColorInput = {

@@ -8,7 +8,7 @@ const excludeFileDir = fs.readdirSync("../nextjs/.next/standalone/node_modules")
 export const baseConfig = (outputName: string) => ({
   appId: "com.rao.pics",
   copyright: `Copyright © 2022-${new Date().getFullYear()} meetqy`,
-  asar: true,
+  asar: process.env.NODE_ENV === "development" ? false : true,
   directories: {
     output: "dist/" + outputName,
     buildResources: "buildResources",

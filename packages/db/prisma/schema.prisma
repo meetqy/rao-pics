@@ -11,9 +11,9 @@ datasource db {
 model Image {
     id            Int      @id @unique @default(autoincrement())
     // library.dir + path => originalPath
-    path          String   @unique
+    path          String
     // UserData 缓存目录 + thumbnailPath => thumbnailPath 
-    thumbnailPath String?  @unique
+    thumbnailPath String?
     // 名字
     name          String
     // 文件大小

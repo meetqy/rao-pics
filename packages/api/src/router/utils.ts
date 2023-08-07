@@ -24,6 +24,7 @@ export const utils = t.router({
       for (const fail of fails) {
         const res = await curd.image.get({
           pathStartsWith: fail.path.replace(/.*?images/, "images").replace("/metadata.json", ""),
+          libraryId: input.libraryId,
         });
 
         const item = res[0];

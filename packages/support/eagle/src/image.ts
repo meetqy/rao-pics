@@ -42,6 +42,7 @@ export const updateImage = async (path: string, library: Library) => {
 
   const image = await curd.image.get({
     path: base.imagePath,
+    libraryId: library.id,
   });
 
   const item = image[0];
@@ -58,19 +59,17 @@ export const updateImage = async (path: string, library: Library) => {
     // update color
     await Promise.all(
       item.colors
-        .map((c) => {
-          const hex = rgbToHex(c.rgb);
-          if (hex) {
-            return curd.color.create({
+        .map((c) => rgbToHex(c.rgb))
+        .filter(Boolean)
+        .splice(0, 9)
+        .map(
+          (hex) =>
+            hex &&
+            curd.color.create({
               imageId: item.id,
               color: hex,
-            });
-          }
-
-          return null;
-        })
-        .filter(Boolean)
-        .splice(0, 9),
+            }),
+        ),
     );
 
     return await curd.image.update({
@@ -79,7 +78,7 @@ export const updateImage = async (path: string, library: Library) => {
     });
   }
 
-  return;
+  return false;
 };
 
 /**

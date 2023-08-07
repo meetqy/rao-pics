@@ -68,12 +68,16 @@ export const ImageInput = {
     colors: z.array(z.string().length(7).startsWith("#")).optional(),
   }),
 
-  get: z.object({
-    id: z.union([z.number(), z.array(z.number())]).optional(),
-    path: z.string().optional(),
-    libraryId: z.number().optional(),
-    pathStartsWith: z.string().optional(),
-  }),
+  get: z
+    .object({
+      id: z.union([z.number(), z.array(z.number())]).optional(),
+      path: z.string().optional(),
+      libraryId: z.number().optional(),
+      pathStartsWith: z.string().optional(),
+    })
+    .refine((object) => object.libraryId || object.id, {
+      message: "id or libraryId is required.",
+    }),
 };
 
 export const Image = {
@@ -193,33 +197,38 @@ export const Image = {
   },
 
   update: async (obj: z.infer<(typeof ImageInput)["update"]>) => {
-    const input = ImageInput.update.parse(obj);
-    const oldImage = await curd.image.get({ id: input.id });
+    try {
+      const input = ImageInput.update.parse(obj);
+      const oldImage = await curd.image.get({ id: input.id });
 
-    // 更新 tag/folder/color 时，只有一种情况，删除/新增。不会修改到 tag/folder/color 本身。
-    const updateArgs: Prisma.ImageUpdateArgs = {
-      where: { id: input.id },
-      data: {
-        libraryId: input.libraryId,
-        path: input.path,
-        thumbnailPath: input.thumbnailPath,
-        name: input.name,
-        size: input.size,
-        createTime: input.createTime,
-        lastTime: input.lastTime,
-        ext: input.ext,
-        width: input.width,
-        height: input.height,
-        duration: input.duration,
-      },
-    };
+      // 更新 tag/folder/color 时，只有一种情况，删除/新增。不会修改到 tag/folder/color 本身。
+      const updateArgs: Prisma.ImageUpdateArgs = {
+        where: { id: input.id },
+        data: {
+          libraryId: input.libraryId,
+          path: input.path,
+          thumbnailPath: input.thumbnailPath,
+          name: input.name,
+          size: input.size,
+          createTime: input.createTime,
+          lastTime: input.lastTime,
+          ext: input.ext,
+          width: input.width,
+          height: input.height,
+          duration: input.duration,
+        },
+      };
 
-    updateArgs.data["folders"] = input.folders ? updateFolders(input.folders, oldImage[0]?.folders || []) : undefined;
-    updateArgs.data["tags"] = input.tags ? updateTags(input.tags, oldImage[0]?.tags || []) : undefined;
-    updateArgs.data["colors"] = input.colors ? updateColors(input.colors, oldImage[0]?.colors || []) : undefined;
+      updateArgs.data["folders"] = input.folders ? updateFolders(input.folders, oldImage[0]?.folders || []) : undefined;
+      updateArgs.data["tags"] = input.tags ? updateTags(input.tags, oldImage[0]?.tags || []) : undefined;
+      updateArgs.data["colors"] = input.colors ? updateColors(input.colors, oldImage[0]?.colors || []) : undefined;
 
-    // console.log(updateArgs);
-    return await prisma.image.update(updateArgs);
+      // console.log(updateArgs);
+      return await prisma.image.update(updateArgs);
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   },
 };
 
