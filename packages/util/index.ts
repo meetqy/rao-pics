@@ -1,9 +1,10 @@
 /**
- * hex to Rgb
+ * Hex to rgb, aways return a number divisible by 100
  * @param hex
  * @returns
  */
 export const hexToRgb = (hex: string) => {
+  if (hex.length !== 7) return NaN;
   const n = parseInt(hex.replace("#", ""), 16);
   return Math.ceil(n / 100) * 100;
 };
@@ -15,18 +16,10 @@ export const hexToRgb = (hex: string) => {
  */
 export const rgbToHex = (rgb: number[] | number) => {
   if (typeof rgb === "number") {
-    return "#" + rgb.toString(16).padEnd(6, "0");
+    rgb = [rgb >> 16, (rgb >> 8) & 255, rgb & 255];
   }
 
-  const componentToHex = (c: number) => {
-    const hex = c.toString(16);
-    return hex.length === 1 ? `0${hex}` : hex;
-  };
+  if (rgb.length != 3) return undefined;
 
-  const [r, g, b] = rgb;
-  if (!r || !g || !b) return;
-
-  const hex = `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
-
-  return hex;
+  return "#" + rgb.map((c) => ("0" + c.toString(16)).slice(-2)).join("");
 };
