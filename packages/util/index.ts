@@ -15,7 +15,7 @@ export const hexToRgb = (hex: string) => {
  */
 export const rgbToHex = (rgb: number[] | number) => {
   if (typeof rgb === "number") {
-    return "#" + rgb.toString(16);
+    return "#" + rgb.toString(16).padEnd(6, "0");
   }
 
   const componentToHex = (c: number) => {
@@ -26,5 +26,7 @@ export const rgbToHex = (rgb: number[] | number) => {
   const [r, g, b] = rgb;
   if (!r || !g || !b) return;
 
-  return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+  const hex = `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+
+  return hex;
 };
