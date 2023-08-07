@@ -39,7 +39,7 @@ export const startEagle = async (props: Props) => {
 
       // 同步前判断时间间隔，小于 3 秒，表示未修改
       const { mtime } = fs.statSync(p.path);
-      const images = await curd.image.get({ pathStartsWith });
+      const images = await curd.image.get({ pathStartsWith, libraryId: library.id });
       const image = images[0];
       if (image) {
         if (new Date(mtime).getTime() - new Date(image.lastTime).getTime() < 3000) {

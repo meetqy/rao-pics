@@ -42,6 +42,7 @@ export const updateImage = async (path: string, library: Library) => {
 
   const image = await curd.image.get({
     path: base.imagePath,
+    libraryId: library.id,
   });
 
   const item = image[0];
@@ -79,7 +80,7 @@ export const updateImage = async (path: string, library: Library) => {
     });
   }
 
-  return;
+  return false;
 };
 
 /**
