@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import "./home.css";
 
 import Empty from "./components/Empty";
+import { FailLogs } from "./components/FailLogs";
 import { trpc } from "./utils/trpc";
 
 interface SyncSubscriptionData {
@@ -342,6 +343,9 @@ function Home() {
       ) : (
         <Empty onAddClick={showOpenDialog} />
       )}
+
+      {/* fails log modal */}
+      {activeItem && <FailLogs libraryId={activeItem.id} />}
 
       {/* Modal confirm */}
       <input type="checkbox" defaultChecked={delConfirmVisable} id="my-modal" className="modal-toggle" />

@@ -4,6 +4,26 @@
 
 .tooltip {
   &:before {
-    @apply z-50 break-words w-full bg-neutral/80;
+    @apply bg-neutral/80 z-50 w-full break-words;
+  }
+}
+
+.scrollbar {
+  /* width */
+  &::-webkit-scrollbar {
+    @apply w-1;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #ddd;
+    @apply rounded;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    @apply bg-neutral/60 rounded;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    @apply bg-base-100;
   }
 }
