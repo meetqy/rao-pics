@@ -33,6 +33,8 @@ function Home() {
     document.title = `Rao Pics - v${res}`;
   });
 
+  const [faillogsVisable, setFaillogsVisable] = useState(false);
+
   // active id
   const [active, setActive] = useState<number | undefined>();
   const activeItem = useMemo(() => library.data?.find((item) => item.id === active), [library, active]);
@@ -284,7 +286,9 @@ function Home() {
               <span className="font-mono font-medium">
                 <span className="text-success">{activeItem?._count.images}</span>
                 <span className="text-base-content/50 relative -top-0.5 mx-2 font-extralight">|</span>
-                <span className="text-error">{activeItem?._count.fails}</span>
+                <span className="text-error cursor-pointer" onClick={() => setFaillogsVisable(true)}>
+                  {activeItem?._count.fails}
+                </span>
               </span>
             </div>
 
@@ -345,7 +349,7 @@ function Home() {
       )}
 
       {/* fails log modal */}
-      {activeItem && <FailLogs libraryId={activeItem.id} />}
+      {activeItem?.id && faillogsVisable && <FailLogs onClose={() => setFaillogsVisable(false)} libraryId={activeItem.id} />}
 
       {/* Modal confirm */}
       <input type="checkbox" defaultChecked={delConfirmVisable} id="my-modal" className="modal-toggle" />
