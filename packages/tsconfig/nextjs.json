@@ -1,21 +1,23 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Next.js",
+  "extends": "./base.json",
   "compilerOptions": {
-    "target": "es2017",
+    "plugins": [{ "name": "next" }],
+    "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "checkJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "noUncheckedIndexedAccess": true
+    "jsx": "preserve"
   },
-  "include": ["prettier.config.mjs"]
+  "include": ["src", "next-env.d.ts"],
+  "exclude": ["node_modules"]
 }
