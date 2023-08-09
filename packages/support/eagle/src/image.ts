@@ -14,7 +14,7 @@ import { type Metadata } from "../types";
  * @param path metadata.json path
  */
 export const createImage = async (path: string, library: Library) => {
-  const base = getImageBase(path, library.id);
+  const base = await getImageBase(path, library.id);
   const args = transformImageArgs(base, library);
 
   if (!args) return null;
@@ -36,7 +36,7 @@ export const createImage = async (path: string, library: Library) => {
  * @param path metadata.json path
  */
 export const updateImage = async (path: string, library: Library) => {
-  const base = getImageBase(path, library.id);
+  const base = await getImageBase(path, library.id);
   if (!base) return null;
 
   const args = transformImageArgs(base, library);
@@ -100,7 +100,7 @@ export const updateImage = async (path: string, library: Library) => {
  * @param path metadata.json path
  * @returns
  */
-const getImageBase = (path: string, libraryId: number) => {
+const getImageBase = async (path: string, libraryId: number) => {
   try {
     const metadata = fs.readJSONSync(path) as Metadata;
     const stats = fs.statSync(path);
@@ -109,7 +109,7 @@ const getImageBase = (path: string, libraryId: number) => {
     const ext = metadata.ext as Constant["ext"];
 
     if (!CONSTANT["EXT"].includes(ext)) {
-      void curd.fail.create({
+      await curd.fail.create({
         libraryId,
         path,
         type: "ext",
@@ -126,12 +126,14 @@ const getImageBase = (path: string, libraryId: number) => {
       ext,
     };
   } catch (error) {
-    Sentry.captureException(error);
-    void curd.fail.create({
+    console.log(error);
+    await curd.fail.create({
       libraryId,
       path,
       type: "json-error",
     });
+
+    Sentry.captureException(error);
 
     return null;
   }
@@ -143,7 +145,7 @@ const getImageBase = (path: string, libraryId: number) => {
  * @param library
  * @returns Image | undefined, undefined means the image is not supported
  */
-const transformImageArgs = (base: ReturnType<typeof getImageBase>, library: Library) => {
+const transformImageArgs = (base: Awaited<ReturnType<typeof getImageBase>>, library: Library) => {
   if (!base) return null;
   const { metadata, stats, imagePath, thumbnailPath, ext } = base;
 
