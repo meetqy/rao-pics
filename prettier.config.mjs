@@ -15,7 +15,7 @@ const config = {
     "^(expo(.*)$)|^(expo$)",
     "<THIRD_PARTY_MODULES>",
     "",
-    "^@acme/(.*)$",
+    "^@rao-pics/(.*)$",
     "",
     "^~/utils/(.*)$",
     "^~/components/(.*)$",

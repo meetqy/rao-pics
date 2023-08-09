@@ -1,5 +1,5 @@
 {
-  "name": "@acme/nextjs",
+  "name": "@rao-pics/nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -20,8 +20,8 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@acme/eslint-config": "^0.2.0",
-    "@acme/tailwind-config": "^0.1.0",
+    "@rao-pics/eslint-config": "^0.2.0",
+    "@rao-pics/tailwind-config": "^0.1.0",
     "@types/node": "^18.17.4",
     "@types/react": "^18.2.19",
     "@types/react-dom": "^18.2.7",
@@ -35,9 +35,9 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/nextjs",
-      "@acme/eslint-config/react"
+      "@rao-pics/eslint-config/base",
+      "@rao-pics/eslint-config/nextjs",
+      "@rao-pics/eslint-config/react"
     ]
   }
 }
