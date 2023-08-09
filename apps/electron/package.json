@@ -8,14 +8,14 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
-    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
-    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
-    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "type-check:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "type-check:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "type-check": "pnpm '/^type-check:.*/'",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
-    "build": "npm run typecheck && electron-vite build",
+    "build": "pnpm type-check && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
-    "build:win": "npm run build && electron-builder --win --config",
+    "build:win": "pnpm run build && electron-builder --win --config",
     "build:mac": "electron-vite build && electron-builder --mac --config",
     "build:linux": "electron-vite build && electron-builder --linux --config"
   },
@@ -25,7 +25,6 @@
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "^0.2.0",
-    "@electron-toolkit/tsconfig": "^1.0.1",
     "@electron/notarize": "^1.2.3",
     "@types/node": "^18.16.19",
     "@types/react": "^18.2.14",
@@ -42,7 +41,29 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@rao-pics/eslint-config/base"
+      "@rao-pics/eslint-config/base",
+      "@rao-pics/eslint-config/react"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "electron.vite.config.*",
+          "src/main/**/*",
+          "src/preload/**/*"
+        ],
+        "parserOptions": {
+          "project": "./tsconfig.node.json"
+        }
+      },
+      {
+        "files": [
+          "src/renderer/src/**/*",
+          "src/preload/*.d.ts"
+        ],
+        "parserOptions": {
+          "project": "./tsconfig.web.json"
+        }
+      }
     ]
   }
 }

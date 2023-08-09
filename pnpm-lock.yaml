@@ -36,9 +36,6 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(electron@24.6.2)
     devDependencies:
-      '@electron-toolkit/tsconfig':
-        specifier: ^1.0.1
-        version: 1.0.1(@types/node@18.17.4)
       '@electron/notarize':
         specifier: ^1.2.3
         version: 1.2.3
@@ -547,14 +544,6 @@ packages:
     dependencies:
       electron: 24.6.2
     dev: false
-
-  /@electron-toolkit/tsconfig@1.0.1(@types/node@18.17.4):
-    resolution: {integrity: sha512-M0Mol3odspvtCuheyujLNAW7bXq7KFNYVMRtpjFa4ZfES4MuklXBC7Nli/omvc+PRKlrklgAGx3l4VakjNo8jg==}
-    peerDependencies:
-      '@types/node': '*'
-    dependencies:
-      '@types/node': 18.17.4
-    dev: true
 
   /@electron-toolkit/utils@1.0.2(electron@24.6.2):
     resolution: {integrity: sha512-EHqVijVPdjBJBivxJH5E/Gu6Dzd5GfoUH0Ilbtx+EQarwaeJLPLxRM5DzD54uuhs1b8TGDI7uMYmcJW2CKrijg==}
