@@ -167,7 +167,7 @@ const Navbar = () => {
                 </svg>
               }
               value={imgVal}
-              options={imgsExt.map((item) => ({ name: item.ext, value: item.ext, desc: item._sum.id?.toString() }))}
+              options={imgsExt.map((item) => ({ name: item.ext, value: item.ext, desc: item._count._all.toString() }))}
               onChange={(val) => onDropdownChange(val, "imgVal")}
             />
           )}
@@ -185,7 +185,7 @@ const Navbar = () => {
                 </svg>
               }
               value={videoVal}
-              options={videosExt.map((item) => ({ name: item.ext, value: item.ext, desc: item._sum.id?.toString() }))}
+              options={videosExt.map((item) => ({ name: item.ext, value: item.ext, desc: item._count._all.toString() }))}
               onChange={(val) => onDropdownChange(val, "videoVal")}
             />
           )}
