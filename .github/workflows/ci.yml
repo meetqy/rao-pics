@@ -47,7 +47,7 @@ jobs:
       - name: Install deps (with cache)
         run: pnpm install
 
-      # Normally, this would be done as part of the turbo pipeline - however since the Expo app doesn't depend on `@acme/db` it doesn't care.
+      # Normally, this would be done as part of the turbo pipeline - however since the Expo app doesn't depend on `@rao-pics/db` it doesn't care.
       # TODO: Free for all to find a better solution here.
       - name: Generate Prisma Client
         run: pnpm turbo db:generate

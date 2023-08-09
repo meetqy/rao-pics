@@ -1,3 +1,4 @@
 packages:
-  - apps/wating
+  - apps/*
+  - packages/*
   - packages/config/*

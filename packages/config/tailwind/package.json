@@ -1,6 +1,6 @@
 {
-  "name": "@acme/tailwind-config",
-  "version": "0.1.0",
+  "name": "@rao-pics/tailwind-config",
+  "version": "1.0.0",
   "main": "index.ts",
   "license": "MIT",
   "files": [
