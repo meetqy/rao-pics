@@ -154,7 +154,7 @@ const Navbar = () => {
           </div>
 
           {/* photo */}
-          {imgsExt && (
+          {imgsExt && imgsExt.length > 0 && (
             <Dropdown
               tabIndex={3}
               icon={
@@ -173,7 +173,7 @@ const Navbar = () => {
           )}
 
           {/* videos */}
-          {videosExt && (
+          {videosExt && videosExt.length > 0 && (
             <Dropdown
               tabIndex={2}
               icon={
