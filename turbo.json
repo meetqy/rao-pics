@@ -1,19 +1,39 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "$schema": "https://turborepo.org/schema.json",
+  "globalDependencies": ["**/.env", "tsconfig.json"],
   "pipeline": {
+    "dev": {
+      "persistent": true,
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
     },
     "lint": {},
-    "check-types": {},
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
+    "lint:fix": {},
     "clean": {
       "cache": false
+    },
+    "//#clean": {
+      "cache": false
+    },
+    "type-check": {
+      "cache": false
     }
-  }
+  },
+  "globalEnv": [
+    "CI",
+    "DATABASE_URL",
+    "DISCORD_CLIENT_ID",
+    "DISCORD_CLIENT_SECRET",
+    "EXPO_ROUTER_APP_ROOT",
+    "NEXTAUTH_SECRET",
+    "NEXTAUTH_URL",
+    "NODE_ENV",
+    "SKIP_ENV_VALIDATION",
+    "PORT",
+    "VERCEL",
+    "VERCEL_URL"
+  ]
 }

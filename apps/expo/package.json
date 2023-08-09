@@ -1,0 +1,58 @@
+{
+  "name": "@acme/expo",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.tsx",
+  "scripts": {
+    "clean": "git clean -xdf .expo .turbo node_modules",
+    "dev": "expo start --ios",
+    "dev:android": "expo start --android",
+    "dev:ios": "expo start --ios",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@expo/metro-config": "^0.10.7",
+    "@shopify/flash-list": "1.4.3",
+    "@tanstack/react-query": "^4.32.6",
+    "@trpc/client": "^10.37.1",
+    "@trpc/react-query": "^10.37.1",
+    "@trpc/server": "^10.37.1",
+    "expo": "^49.0.6",
+    "expo-constants": "~14.4.2",
+    "expo-linking": "~5.0.2",
+    "expo-router": "2.0.0",
+    "expo-splash-screen": "~0.20.5",
+    "expo-status-bar": "~1.6.0",
+    "nativewind": "^2.0.11",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.72.3",
+    "react-native-safe-area-context": "4.6.3",
+    "react-native-screens": "~3.22.1",
+    "superjson": "1.13.1"
+  },
+  "devDependencies": {
+    "@acme/api": "^0.1.0",
+    "@acme/eslint-config": "^0.2.0",
+    "@acme/tailwind-config": "^0.1.0",
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/runtime": "^7.22.10",
+    "@expo/config-plugins": "^7.2.5",
+    "@types/babel__core": "^7.20.1",
+    "@types/react": "^18.2.19",
+    "eslint": "^8.46.0",
+    "postcss": "^8.4.26",
+    "tailwindcss": "3.3.2",
+    "typescript": "^5.1.6"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/react"
+    ]
+  }
+}
