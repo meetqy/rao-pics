@@ -38,6 +38,7 @@ process.once("loaded", () => {
    */
   contextBridge.exposeInMainWorld("shell", {
     openExternal: (url: string, options?: Electron.OpenExternalOptions) => ipcRenderer.invoke("shell.openExternal", url, options),
+    showItemInFolder: (path: string) => ipcRenderer.invoke("shell.showItemInFolder", path),
   });
 
   contextBridge.exposeInMainWorld("electronAPI", {

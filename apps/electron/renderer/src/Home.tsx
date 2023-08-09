@@ -272,7 +272,7 @@ function Home() {
 
                 <div className="ml-2 flex items-center">
                   已同步/未同步
-                  <div className="tooltip before:w-max" data-tip="未同步：已放入回收站、读取失败等素材">
+                  <div className="tooltip before:w-max" data-tip="未同步：回收站、JSON错误、类型不支持">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-base-content/50 h-5 w-5">
                       <path
                         strokeLinecap="round"

@@ -27,6 +27,7 @@ interface Window {
      * Same as shell.openExternal
      */
     openExternal: (url: string, options?: Electron.OpenExternalOptions) => Promise<void>;
+    showItemInFolder: (path: string) => Promise<void>;
   };
 
   readonly electronAPI: {

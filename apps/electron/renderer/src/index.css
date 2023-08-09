@@ -15,12 +15,11 @@
   }
   /* Track */
   &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px #ddd;
     @apply rounded;
   }
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    @apply bg-neutral/60 rounded;
+    @apply bg-neutral rounded;
   }
   /* Handle on hover */
   &::-webkit-scrollbar-thumb:hover {

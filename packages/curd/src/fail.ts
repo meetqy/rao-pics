@@ -6,6 +6,7 @@ export const FailInput = {
   create: z.object({
     libraryId: z.number(),
     path: z.string(),
+    type: z.enum(["trash", "json-error", "ext"]),
   }),
 
   delete: z
@@ -35,10 +36,7 @@ export const Fail = {
   create: async (obj: z.infer<(typeof FailInput)["create"]>) => {
     const input = FailInput.create.parse(obj);
     return await prisma.fail.create({
-      data: {
-        libraryId: input.libraryId,
-        path: input.path,
-      },
+      data: input,
     });
   },
 
