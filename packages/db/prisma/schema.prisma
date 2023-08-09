@@ -63,6 +63,10 @@ model Fail {
     path      String   @id @unique
     Library   Library? @relation(fields: [libraryId], references: [id])
     libraryId Int?
+    // trash 回收站
+    // json-error json 格式错误
+    // ext  扩展名不支持
+    type      String?
 }
 
 model Pending {

@@ -24,13 +24,6 @@ export const startEagle = async (props: Props) => {
     current: 0,
   };
 
-  const addFail = (path: string, library: Library) => {
-    void curd.fail.create({
-      libraryId: library.id,
-      path,
-    });
-  };
-
   void curd.pending.get({ libraryId: library.id }).then(async (pendings) => {
     for (const p of pendings) {
       option.current++;
@@ -54,12 +47,10 @@ export const startEagle = async (props: Props) => {
         await curd.image.delete({ pathStartsWith });
       } else if (p.type === "update") {
         // update
-        const res = await updateImage(p.path, library);
-        if (!res) addFail(p.path, library);
+        await updateImage(p.path, library);
       } else if (p.type === "create") {
         // create
-        const res = await createImage(p.path, library);
-        if (!res) addFail(p.path, library);
+        await createImage(p.path, library);
       }
 
       await curd.pending.delete({ path: p.path });

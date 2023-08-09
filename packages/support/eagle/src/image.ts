@@ -14,11 +14,19 @@ import { type Metadata } from "../types";
  * @param path metadata.json path
  */
 export const createImage = async (path: string, library: Library) => {
-  const base = getImageBase(path);
+  const base = getImageBase(path, library.id);
   const args = transformImageArgs(base, library);
 
   if (!args) return null;
-  if (args.isDeleted) return null;
+  if (args.isDeleted) {
+    void curd.fail.create({
+      libraryId: library.id,
+      path,
+      type: "trash",
+    });
+
+    return null;
+  }
 
   return await curd.image.create(args);
 };
@@ -28,13 +36,19 @@ export const createImage = async (path: string, library: Library) => {
  * @param path metadata.json path
  */
 export const updateImage = async (path: string, library: Library) => {
-  const base = getImageBase(path);
+  const base = getImageBase(path, library.id);
   if (!base) return null;
 
   const args = transformImageArgs(base, library);
 
   if (!args) return null;
   if (args.isDeleted) {
+    void curd.fail.create({
+      libraryId: library.id,
+      path,
+      type: "trash",
+    });
+
     return await curd.image.delete({
       path: base.imagePath,
     });
@@ -86,7 +100,7 @@ export const updateImage = async (path: string, library: Library) => {
  * @param path metadata.json path
  * @returns
  */
-const getImageBase = (path: string) => {
+const getImageBase = (path: string, libraryId: number) => {
   try {
     const metadata = fs.readJSONSync(path) as Metadata;
     const stats = fs.statSync(path);
@@ -95,7 +109,13 @@ const getImageBase = (path: string) => {
     const ext = metadata.ext as Constant["ext"];
 
     if (!CONSTANT["EXT"].includes(ext)) {
-      throw new Error(`Unsupported image type: ${ext}, ${path}`);
+      void curd.fail.create({
+        libraryId,
+        path,
+        type: "ext",
+      });
+
+      return null;
     }
 
     return {
@@ -107,6 +127,12 @@ const getImageBase = (path: string) => {
     };
   } catch (error) {
     Sentry.captureException(error);
+    void curd.fail.create({
+      libraryId,
+      path,
+      type: "json-error",
+    });
+
     return null;
   }
 };

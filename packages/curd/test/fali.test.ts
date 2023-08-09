@@ -14,11 +14,13 @@ describe("@acme/curd fali", async () => {
     await curd.fail.create({
       libraryId: lib.id,
       path: faker.system.filePath(),
+      type: "trash",
     });
 
     await curd.fail.create({
       libraryId: lib.id,
       path: faker.system.filePath(),
+      type: "json-error",
     });
 
     const fails = await curd.fail.get({ libraryId: lib.id });

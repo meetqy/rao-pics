@@ -1,4 +1,5 @@
 import { config } from "./src/router/config";
+import { fail } from "./src/router/fail";
 import { folders } from "./src/router/folder";
 import { image } from "./src/router/image";
 import { library } from "./src/router/library";
@@ -20,6 +21,7 @@ export const appRouter = t.router({
   sync,
   pending,
   utils,
+  fail,
 });
 
 // export type definition of API

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import "./home.css";
 
 import Empty from "./components/Empty";
+import { FailLogs } from "./components/FailLogs";
 import { trpc } from "./utils/trpc";
 
 interface SyncSubscriptionData {
@@ -31,6 +32,8 @@ function Home() {
   void window.app.getVersion().then((res) => {
     document.title = `Rao Pics - v${res}`;
   });
+
+  const [faillogsVisable, setFaillogsVisable] = useState(false);
 
   // active id
   const [active, setActive] = useState<number | undefined>();
@@ -269,7 +272,7 @@ function Home() {
 
                 <div className="ml-2 flex items-center">
                   已同步/未同步
-                  <div className="tooltip before:w-max" data-tip="未同步：已放入回收站、读取失败等素材">
+                  <div className="tooltip before:w-max" data-tip="未同步：回收站、JSON错误、类型不支持">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-base-content/50 h-5 w-5">
                       <path
                         strokeLinecap="round"
@@ -283,7 +286,9 @@ function Home() {
               <span className="font-mono font-medium">
                 <span className="text-success">{activeItem?._count.images}</span>
                 <span className="text-base-content/50 relative -top-0.5 mx-2 font-extralight">|</span>
-                <span className="text-error">{activeItem?._count.fails}</span>
+                <span className="text-error cursor-pointer" onClick={() => setFaillogsVisable(true)}>
+                  {activeItem?._count.fails}
+                </span>
               </span>
             </div>
 
@@ -342,6 +347,9 @@ function Home() {
       ) : (
         <Empty onAddClick={showOpenDialog} />
       )}
+
+      {/* fails log modal */}
+      {activeItem?.id && faillogsVisable && <FailLogs onClose={() => setFaillogsVisable(false)} libraryId={activeItem.id} />}
 
       {/* Modal confirm */}
       <input type="checkbox" defaultChecked={delConfirmVisable} id="my-modal" className="modal-toggle" />
