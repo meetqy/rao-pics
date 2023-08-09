@@ -37,33 +37,5 @@
     "react-dom": "^18.2.0",
     "typescript": "^5.1.6",
     "vite": "^4.4.2"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@rao-pics/eslint-config/base",
-      "@rao-pics/eslint-config/react"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "electron.vite.config.*",
-          "src/main/**/*",
-          "src/preload/**/*"
-        ],
-        "parserOptions": {
-          "project": "./tsconfig.node.json"
-        }
-      },
-      {
-        "files": [
-          "src/renderer/src/**/*",
-          "src/preload/*.d.ts"
-        ],
-        "parserOptions": {
-          "project": "./tsconfig.web.json"
-        }
-      }
-    ]
   }
 }
