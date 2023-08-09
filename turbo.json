@@ -1,6 +1,9 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": ["**/.env", "tsconfig.json"],
+  "remoteCache": {
+    "signature": true
+  },
   "pipeline": {
     "dev": {
       "persistent": true,
