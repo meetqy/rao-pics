@@ -1,6 +1,9 @@
 import { join } from "path";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import { app, BrowserWindow, shell } from "electron";
+import { createIPCHandler } from "electron-trpc/main";
+
+import { router } from "@rao-pics/api";
 
 import icon from "../../resources/icon.png?asset";
 
@@ -18,6 +21,8 @@ function createWindow(): void {
     },
   });
 
+  createIPCHandler({ router, windows: [mainWindow] });
+
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
   });
@@ -31,6 +36,7 @@ function createWindow(): void {
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env.ELECTRON_RENDERER_URL) {
     void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
+    mainWindow.webContents.openDevTools();
   } else {
     void mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
