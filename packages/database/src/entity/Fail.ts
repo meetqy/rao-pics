@@ -25,9 +25,6 @@ export class Fail {
    * json-error json 格式错误
    * ext  扩展名不支持
    */
-  @Column({
-    type: "enum",
-    enum: type,
-  })
+  @Column({ type: "varchar" })
   type?: z.infer<typeof FailType>;
 }

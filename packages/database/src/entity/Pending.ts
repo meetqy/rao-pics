@@ -14,10 +14,7 @@ export class Pending {
   /**
    * create | delete | update
    */
-  @Column({
-    type: "enum",
-    enum: type,
-  })
+  @Column({ type: "varchar" })
   type!: z.infer<typeof PendingType>;
 
   /**

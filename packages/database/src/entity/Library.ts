@@ -24,10 +24,7 @@ export class Library {
   /**
    * eagle | billfish | pixcall
    */
-  @Column({
-    type: "enum",
-    enum: type,
-  })
+  @Column({ type: "varchar" })
   type!: z.infer<typeof LibraryType>;
 
   /**
