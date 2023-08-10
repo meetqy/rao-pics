@@ -10,7 +10,8 @@
   "dependencies": {
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.1.6",
-    "typeorm": "0.3.17"
+    "typeorm": "0.3.17",
+    "zod": "^3.21.4"
   },
   "scripts": {
     "dev": "ts-node src/index.ts",
