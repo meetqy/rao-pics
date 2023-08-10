@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "include": ["electron.vite.config.*", "src/main/*", "src/preload/*"],
   "compilerOptions": {
+    "composite": true,
     "types": ["electron-vite/node"]
   }
 }

@@ -37,6 +37,7 @@
     "SKIP_ENV_VALIDATION",
     "PORT",
     "VERCEL",
-    "VERCEL_URL"
+    "VERCEL_URL",
+    "ELECTRON_RENDERER_URL"
   ]
 }
