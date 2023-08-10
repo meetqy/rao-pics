@@ -1,0 +1,24 @@
+{
+  "name": "@rao-pics/database",
+  "version": "0.2.0",
+  "devDependencies": {
+    "@rao-pics/eslint-config": "^0.2.0",
+    "@types/node": "^16.11.10",
+    "ts-node": "10.7.0",
+    "typeorm": "^0.3.17"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.1.6",
+    "typeorm": "0.3.17"
+  },
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@rao-pics/eslint-config/base"
+    ]
+  }
+}
