@@ -13,7 +13,9 @@
     "typeorm": "0.3.17"
   },
   "scripts": {
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "migration:create": "typeorm-ts-node-commonjs migration:create ./src/migration/sqlite",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migration/sqlite -d ./src/data-source.ts"
   },
   "eslintConfig": {
     "root": true,

@@ -3,13 +3,14 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 
 import { User } from "./entity/User";
+import { Sqlite1691650913914 } from "./migration/1691650913914-sqlite";
 
 export const AppDataSource = new DataSource({
   type: "sqlite",
   database: "db.sqlite",
-  synchronize: true,
   logging: true,
   entities: [User],
-  migrations: [],
   subscribers: [],
+  migrationsRun: true,
+  migrations: [Sqlite1691650913914],
 });
