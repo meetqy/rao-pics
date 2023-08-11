@@ -1,34 +1,21 @@
 {
   "name": "@rao-pics/database",
   "version": "0.2.0",
-  "main": "./index.ts",
-  "files": [
-    "index.ts",
-    "src"
-  ],
   "scripts": {
     "dev": "ts-node index.ts",
-    "test": "dotenv -e ../../.env.test -- vitest test",
-    "migration:create": "typeorm-ts-node-commonjs migration:create ./src/migration/sqlite",
-    "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migration/sqlite -d ./src/data-source.ts"
+    "migrate": "prisma migrate dev --name init"
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "^0.2.0",
-    "@types/node": "^16.11.10",
-    "ts-node": "10.7.0",
-    "typeorm": "^0.3.17",
-    "vitest": "^0.34.1"
+    "@types/node": "^20.4.9",
+    "prisma": "^5.1.1",
+    "ts-node": "10.7.0"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.13",
-    "sqlite3": "^5.1.6",
-    "typeorm": "0.3.17",
-    "zod": "^3.21.4"
+    "@prisma/client": "5.1.1"
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@rao-pics/eslint-config/base"
-    ]
+    "extends": "@rao-pics/eslint-config/base"
   }
 }

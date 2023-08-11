@@ -1,21 +1,29 @@
-import { AppDataSource } from "./src/data-source";
+import { spawnSync } from "child_process";
+import { resolve } from "path";
+import { PrismaClient } from "@prisma/client";
 
-export { AppDataSource } from "./src/data-source";
-export * from "./src/entity/Color";
-export * from "./src/entity/Config";
-export * from "./src/entity/Fail";
-export * from "./src/entity/Image";
-export * from "./src/entity/Library";
-export * from "./src/entity/Pending";
-export * from "./src/entity/Tag";
-export * from "./src/entity/Folder";
+const prisma = new PrismaClient();
 
-export const initAppDataSource = async () => {
-  try {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
+spawnSync(resolve(__dirname, "./node_modules/prisma/build/index.js"), [
+  "migrate",
+  "deploy",
+]);
+
+async function main() {
+  const user = await prisma.user.create({
+    data: {
+      name: "Alice",
+      email: "alice@prisma2.io",
+    },
+  });
+  console.log(user);
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+  });

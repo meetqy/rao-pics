@@ -15,14 +15,14 @@
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.6.0",
     "next": "^13.4.13",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "^0.2.0",
     "@rao-pics/tailwind-config": "^0.1.0",
-    "@types/node": "^18.17.4",
+    "@types/node": "^20.4.9",
     "@types/react": "^18.2.19",
     "@types/react-dom": "^18.2.7",
     "autoprefixer": "^10.4.14",

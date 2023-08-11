@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "lib": ["es5", "es6"],
-    "target": "es5",
+    "target": "ESNext",
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./build",
@@ -10,5 +9,5 @@
     "experimentalDecorators": true,
     "sourceMap": true
   },
-  "include": ["src/**/*", "index.ts", "test"]
+  "include": ["*.ts"]
 }
