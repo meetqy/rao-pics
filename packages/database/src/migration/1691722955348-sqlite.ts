@@ -1,15 +1,15 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Sqlite1691721959817 implements MigrationInterface {
-    name = 'Sqlite1691721959817'
+export class Sqlite1691722955348 implements MigrationInterface {
+    name = 'Sqlite1691722955348'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "fails" ("path" varchar PRIMARY KEY NOT NULL, "libraryId" integer NOT NULL, "type" varchar NOT NULL)`);
         await queryRunner.query(`CREATE TABLE "pendings" ("path" varchar PRIMARY KEY NOT NULL, "type" varchar NOT NULL, "libraryId" integer NOT NULL)`);
         await queryRunner.query(`CREATE TABLE "tags" ("name" varchar PRIMARY KEY NOT NULL, "libraryId" integer NOT NULL)`);
-        await queryRunner.query(`CREATE TABLE "libraries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "dir" varchar NOT NULL, "type" varchar NOT NULL, "lastSyncTime" datetime, CONSTRAINT "UQ_cb2f03568ee87b6b5b43844fc70" UNIQUE ("dir"))`);
+        await queryRunner.query(`CREATE TABLE "libraries" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "dir" varchar NOT NULL, "type" varchar NOT NULL, "lastSyncTime" date, CONSTRAINT "UQ_cb2f03568ee87b6b5b43844fc70" UNIQUE ("dir"))`);
         await queryRunner.query(`CREATE TABLE "folders" ("id" varchar PRIMARY KEY NOT NULL, "name" varchar NOT NULL, "libraryId" integer, CONSTRAINT "UQ_276815e9fa9e4ddac7810288bf9" UNIQUE ("name"))`);
-        await queryRunner.query(`CREATE TABLE "images" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "path" varchar NOT NULL, "thumbnailPath" varchar, "name" varchar NOT NULL, "size" integer NOT NULL, "createTime" datetime NOT NULL, "lastTime" datetime NOT NULL, "ext" varchar NOT NULL, "width" integer NOT NULL, "height" integer NOT NULL, "duration" integer, "libraryId" integer)`);
+        await queryRunner.query(`CREATE TABLE "images" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "path" varchar NOT NULL, "thumbnailPath" varchar, "name" varchar NOT NULL, "size" integer NOT NULL, "createTime" date NOT NULL, "lastTime" date NOT NULL, "ext" varchar NOT NULL, "width" integer NOT NULL, "height" integer NOT NULL, "duration" integer, "libraryId" integer, CONSTRAINT "UQ_b27820f9c4eb00f2afc4e5b6162" UNIQUE ("path"))`);
         await queryRunner.query(`CREATE TABLE "colors" ("rgb" integer PRIMARY KEY NOT NULL)`);
         await queryRunner.query(`CREATE TABLE "configs" ("id" varchar PRIMARY KEY NOT NULL, "webPort" integer NOT NULL, "assetsPort" integer NOT NULL, "ip" varchar NOT NULL)`);
         await queryRunner.query(`CREATE TABLE "images_folders_folders" ("imagesId" integer NOT NULL, "foldersId" varchar NOT NULL, PRIMARY KEY ("imagesId", "foldersId"))`);
@@ -37,7 +37,7 @@ export class Sqlite1691721959817 implements MigrationInterface {
         await queryRunner.query(`INSERT INTO "temporary_folders"("id", "name", "libraryId") SELECT "id", "name", "libraryId" FROM "folders"`);
         await queryRunner.query(`DROP TABLE "folders"`);
         await queryRunner.query(`ALTER TABLE "temporary_folders" RENAME TO "folders"`);
-        await queryRunner.query(`CREATE TABLE "temporary_images" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "path" varchar NOT NULL, "thumbnailPath" varchar, "name" varchar NOT NULL, "size" integer NOT NULL, "createTime" datetime NOT NULL, "lastTime" datetime NOT NULL, "ext" varchar NOT NULL, "width" integer NOT NULL, "height" integer NOT NULL, "duration" integer, "libraryId" integer, CONSTRAINT "FK_79dfee28a88730583e6039649c0" FOREIGN KEY ("libraryId") REFERENCES "libraries" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`);
+        await queryRunner.query(`CREATE TABLE "temporary_images" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "path" varchar NOT NULL, "thumbnailPath" varchar, "name" varchar NOT NULL, "size" integer NOT NULL, "createTime" date NOT NULL, "lastTime" date NOT NULL, "ext" varchar NOT NULL, "width" integer NOT NULL, "height" integer NOT NULL, "duration" integer, "libraryId" integer, CONSTRAINT "UQ_b27820f9c4eb00f2afc4e5b6162" UNIQUE ("path"), CONSTRAINT "FK_79dfee28a88730583e6039649c0" FOREIGN KEY ("libraryId") REFERENCES "libraries" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`);
         await queryRunner.query(`INSERT INTO "temporary_images"("id", "path", "thumbnailPath", "name", "size", "createTime", "lastTime", "ext", "width", "height", "duration", "libraryId") SELECT "id", "path", "thumbnailPath", "name", "size", "createTime", "lastTime", "ext", "width", "height", "duration", "libraryId" FROM "images"`);
         await queryRunner.query(`DROP TABLE "images"`);
         await queryRunner.query(`ALTER TABLE "temporary_images" RENAME TO "images"`);
@@ -93,7 +93,7 @@ export class Sqlite1691721959817 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_1205e3e8e83a9ad159904ee3f7" ON "images_folders_folders" ("foldersId") `);
         await queryRunner.query(`CREATE INDEX "IDX_dc6b5f50681e36ce18196f54a1" ON "images_folders_folders" ("imagesId") `);
         await queryRunner.query(`ALTER TABLE "images" RENAME TO "temporary_images"`);
-        await queryRunner.query(`CREATE TABLE "images" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "path" varchar NOT NULL, "thumbnailPath" varchar, "name" varchar NOT NULL, "size" integer NOT NULL, "createTime" datetime NOT NULL, "lastTime" datetime NOT NULL, "ext" varchar NOT NULL, "width" integer NOT NULL, "height" integer NOT NULL, "duration" integer, "libraryId" integer)`);
+        await queryRunner.query(`CREATE TABLE "images" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "path" varchar NOT NULL, "thumbnailPath" varchar, "name" varchar NOT NULL, "size" integer NOT NULL, "createTime" date NOT NULL, "lastTime" date NOT NULL, "ext" varchar NOT NULL, "width" integer NOT NULL, "height" integer NOT NULL, "duration" integer, "libraryId" integer, CONSTRAINT "UQ_b27820f9c4eb00f2afc4e5b6162" UNIQUE ("path"))`);
         await queryRunner.query(`INSERT INTO "images"("id", "path", "thumbnailPath", "name", "size", "createTime", "lastTime", "ext", "width", "height", "duration", "libraryId") SELECT "id", "path", "thumbnailPath", "name", "size", "createTime", "lastTime", "ext", "width", "height", "duration", "libraryId" FROM "temporary_images"`);
         await queryRunner.query(`DROP TABLE "temporary_images"`);
         await queryRunner.query(`ALTER TABLE "folders" RENAME TO "temporary_folders"`);

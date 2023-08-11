@@ -10,7 +10,7 @@ import { Image } from "./entity/Image";
 import { Library } from "./entity/Library";
 import { Pending } from "./entity/Pending";
 import { Tag } from "./entity/Tag";
-import { Sqlite1691721959817 } from "./migration/1691721959817-sqlite";
+import { Sqlite1691722955348 } from "./migration/1691722955348-sqlite";
 
 export const AppDataSource = new DataSource({
   type: "sqlite",
@@ -19,5 +19,5 @@ export const AppDataSource = new DataSource({
   entities: [Color, ConfigModal, Fail, Image, Library, Pending, Tag, Folder],
   subscribers: [],
   migrationsRun: true,
-  migrations: [Sqlite1691721959817],
+  migrations: [Sqlite1691722955348],
 });
