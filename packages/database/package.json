@@ -3,7 +3,8 @@
   "version": "0.2.0",
   "scripts": {
     "dev": "ts-node index.ts",
-    "migrate": "prisma migrate dev --name init"
+    "migrate": "prisma migrate dev --name init",
+    "migrate:deploy": "./node_modules/prisma/build/index.js migrate deploy  "
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "^0.2.0",
