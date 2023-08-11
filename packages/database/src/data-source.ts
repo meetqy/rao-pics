@@ -3,21 +3,21 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 
 import { Color } from "./entity/Color";
-import { Config } from "./entity/Config";
+import { ConfigModal } from "./entity/Config";
 import { Fail } from "./entity/Fail";
 import { Folder } from "./entity/Folder";
 import { Image } from "./entity/Image";
 import { Library } from "./entity/Library";
 import { Pending } from "./entity/Pending";
 import { Tag } from "./entity/Tag";
-import { Sqlite1691657288550 } from "./migration/1691657288550-sqlite";
+import { Sqlite1691721959817 } from "./migration/1691721959817-sqlite";
 
 export const AppDataSource = new DataSource({
   type: "sqlite",
   database: "db.sqlite",
   logging: true,
-  entities: [Color, Config, Fail, Image, Library, Pending, Tag, Folder],
+  entities: [Color, ConfigModal, Fail, Image, Library, Pending, Tag, Folder],
   subscribers: [],
   migrationsRun: true,
-  migrations: [Sqlite1691657288550],
+  migrations: [Sqlite1691721959817],
 });

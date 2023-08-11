@@ -1,25 +1,25 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity("configs")
-export class Config {
-  @PrimaryColumn()
+export class ConfigModal {
+  @PrimaryColumn({ type: "varchar" })
   id!: string;
 
   /**
    * 页面端口
    */
-  @Column()
+  @Column({ type: "int" })
   webPort!: number;
 
   /**
    * 资源端口
    */
-  @Column()
+  @Column({ type: "int" })
   assetsPort!: number;
 
   /**
    * IP地址
    */
-  @Column()
+  @Column({ type: "varchar" })
   ip!: string;
 }

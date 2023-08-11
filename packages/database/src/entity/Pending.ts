@@ -8,7 +8,7 @@ export const PendingType = z.enum(type);
 
 @Entity("pendings")
 export class Pending {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: "varchar" })
   path!: string;
 
   /**
@@ -23,6 +23,6 @@ export class Pending {
   @ManyToOne(() => Library, (library) => library.pendings)
   library!: Library;
 
-  @Column()
+  @Column({ type: "int" })
   libraryId!: number;
 }

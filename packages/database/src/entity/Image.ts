@@ -14,67 +14,67 @@ import { Tag } from "./Tag";
 
 @Entity("images")
 export class Image {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: "int" })
   id!: number;
 
   /**
    * library.dir + path => originalPath
    */
-  @Column()
+  @Column({ unique: true, type: "varchar" })
   path!: string;
 
   /**
    * UserData 缓存目录 + thumbnailPath => thumbnailPath
    */
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "varchar" })
   thumbnailPath?: string;
 
   /**
    * 名字
    */
-  @Column()
+  @Column({ type: "varchar" })
   name!: string;
 
   /**
    * 文件大小
    */
-  @Column()
+  @Column({ type: "int" })
   size!: number;
 
   /**
    * 创建时间
    */
-  @Column()
+  @Column({ type: "date" })
   createTime!: Date;
 
   /**
    * 修改时间
    */
-  @Column()
+  @Column({ type: "date" })
   lastTime!: Date;
 
   /**
    * 扩展名
    */
-  @Column()
+  @Column({ type: "varchar" })
   ext!: string;
 
   /**
    * 宽度
    */
-  @Column()
+  @Column({ type: "int" })
   width!: number;
 
   /**
    * 高度
    */
-  @Column()
+  @Column({ type: "int" })
   height!: number;
 
   /**
    * 视频时长
    */
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "int" })
   duration?: number;
 
   /**

@@ -4,7 +4,7 @@ import { Image } from "./Image";
 
 @Entity("colors")
 export class Color {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: "int" })
   rgb!: number;
 
   /**

@@ -1,6 +1,16 @@
 {
   "name": "@rao-pics/database",
   "version": "0.2.0",
+  "main": "./index.ts",
+  "files": [
+    "index.ts",
+    "src"
+  ],
+  "scripts": {
+    "dev": "ts-node index.ts",
+    "migration:create": "typeorm-ts-node-commonjs migration:create ./src/migration/sqlite",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migration/sqlite -d ./src/data-source.ts"
+  },
   "devDependencies": {
     "@rao-pics/eslint-config": "^0.2.0",
     "@types/node": "^16.11.10",
@@ -12,11 +22,6 @@
     "sqlite3": "^5.1.6",
     "typeorm": "0.3.17",
     "zod": "^3.21.4"
-  },
-  "scripts": {
-    "dev": "ts-node src/index.ts",
-    "migration:create": "typeorm-ts-node-commonjs migration:create ./src/migration/sqlite",
-    "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migration/sqlite -d ./src/data-source.ts"
   },
   "eslintConfig": {
     "root": true,

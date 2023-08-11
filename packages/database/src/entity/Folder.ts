@@ -8,10 +8,10 @@ export class Folder {
   /**
    * id = name，特殊情况 egale folder 有自己的id
    */
-  @PrimaryColumn()
+  @PrimaryColumn({ type: "varchar" })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: "varchar" })
   name!: string;
 
   /**

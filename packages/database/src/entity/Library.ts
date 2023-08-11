@@ -12,13 +12,13 @@ export const LibraryType = z.enum(type);
 
 @Entity("libraries")
 export class Library {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn({ type: "int" })
   id!: number;
 
-  @Column()
+  @Column({ type: "varchar" })
   name!: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, type: "varchar" })
   dir!: string;
 
   /**
@@ -30,7 +30,7 @@ export class Library {
   /**
    * 最后一次同步时间
    */
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "date" })
   lastSyncTime?: Date;
 
   /**

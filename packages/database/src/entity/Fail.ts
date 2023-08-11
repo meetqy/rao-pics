@@ -8,7 +8,7 @@ export const FailType = z.enum(type);
 
 @Entity("fails")
 export class Fail {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: "varchar" })
   path!: string;
 
   /**
@@ -17,7 +17,7 @@ export class Fail {
   @ManyToOne(() => Library, (library) => library.fails)
   library!: Library;
 
-  @Column()
+  @Column({ type: "int" })
   libraryId!: number;
 
   /**

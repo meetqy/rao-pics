@@ -5,7 +5,7 @@ import { Library } from "./Library";
 
 @Entity("tags")
 export class Tag {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: "varchar" })
   name!: string;
 
   /**
@@ -20,6 +20,6 @@ export class Tag {
   @ManyToOne(() => Library, (library) => library.tags)
   library!: Library;
 
-  @Column()
+  @Column({ type: "int" })
   libraryId!: number;
 }
