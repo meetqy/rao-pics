@@ -14,7 +14,7 @@ import { Sqlite1691722955348 } from "./migration/1691722955348-sqlite";
 
 export const AppDataSource = new DataSource({
   type: "sqlite",
-  database: "db.sqlite",
+  database: "./db.sqlite",
   logging: true,
   entities: [Color, ConfigModal, Fail, Image, Library, Pending, Tag, Folder],
   subscribers: [],

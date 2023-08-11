@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "dev": "ts-node index.ts",
+    "test": "vitest test",
     "migration:create": "typeorm-ts-node-commonjs migration:create ./src/migration/sqlite",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migration/sqlite -d ./src/data-source.ts"
   },
@@ -15,7 +16,8 @@
     "@rao-pics/eslint-config": "^0.2.0",
     "@types/node": "^16.11.10",
     "ts-node": "10.7.0",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.17",
+    "vitest": "^0.34.1"
   },
   "dependencies": {
     "reflect-metadata": "^0.1.13",
