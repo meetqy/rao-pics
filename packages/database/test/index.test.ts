@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import {
   AppDataSource,
@@ -7,7 +7,6 @@ import {
   Fail,
   Folder,
   Image,
-  initAppDataSource,
   Library,
   Pending,
   Tag,
@@ -16,7 +15,7 @@ import { Sqlite1691722955348 } from "../src/migration/1691722955348-sqlite";
 
 describe("@rao-pics/database AppDataSource", () => {
   beforeAll(async () => {
-    await initAppDataSource();
+    await AppDataSource.initialize();
   });
 
   it("should have a type of 'sqlite'", () => {
