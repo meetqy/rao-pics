@@ -15,6 +15,7 @@ model User {
   id    Int     @id @default(autoincrement())
   email String
   name  String?
+  age   Int     @default(0)
   posts Post[]
 }
 

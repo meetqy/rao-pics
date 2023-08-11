@@ -4,6 +4,7 @@ import { app, BrowserWindow, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import { router } from "@rao-pics/api";
+import { migrate } from "@rao-pics/prisma-sqlite";
 
 import icon from "../../resources/icon.png?asset";
 
@@ -46,6 +47,8 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 void app.whenReady().then(() => {
+  migrate();
+
   // Set app user model id for windows
   electronApp.setAppUserModelId("com.electron");
 

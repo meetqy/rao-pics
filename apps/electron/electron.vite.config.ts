@@ -6,7 +6,7 @@ export default defineConfig({
   main: {
     plugins: [
       externalizeDepsPlugin({
-        exclude: ["@rao-pics/api"],
+        exclude: ["@rao-pics/api", "@rao-pics/prisma-sqlite"],
       }),
     ],
   },

@@ -53,6 +53,9 @@ importers:
       '@rao-pics/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@rao-pics/prisma-sqlite':
+        specifier: workspace:*
+        version: link:../../packages/prisma-sqlite
       '@tanstack/react-query':
         specifier: ^4.32.6
         version: 4.32.6(react-dom@18.2.0)(react@18.2.0)
@@ -237,13 +240,13 @@ importers:
       '@prisma/client':
         specifier: 5.1.1
         version: 5.1.1(prisma@5.1.1)
+      prisma:
+        specifier: 5.1.1
+        version: 5.1.1
     devDependencies:
       '@types/node':
         specifier: ^20.4.9
         version: 20.4.9
-      prisma:
-        specifier: 5.1.1
-        version: 5.1.1
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@20.4.9)(typescript@5.1.6)
@@ -1057,6 +1060,7 @@ packages:
   /@prisma/engines@5.1.1:
     resolution: {integrity: sha512-NV/4nVNWFZSJCCIA3HIFJbbDKO/NARc9ej0tX5S9k2EVbkrFJC4Xt9b0u4rNZWL4V+F5LAjvta8vzEUw0rw+HA==}
     requiresBuild: true
+    dev: false
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -4492,6 +4496,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 5.1.1
+    dev: false
 
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
