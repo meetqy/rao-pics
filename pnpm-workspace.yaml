@@ -1,4 +1,6 @@
 packages:
-  - apps/*
+  - apps/electron
+  - apps/nextjs
   - packages/config/*
-  - packages/*
+  - packages/api
+  - packages/prisma-sqlite

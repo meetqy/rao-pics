@@ -4,11 +4,21 @@ import { observable } from "@trpc/server/observable";
 import superjson from "superjson";
 import z from "zod";
 
+import { createUser, getUsers } from "@rao-pics/prisma-sqlite";
+
 const ee = new EventEmitter();
 
 const t = initTRPC.create({ isServer: true, transformer: superjson });
 
 export const router = t.router({
+  getUsers: t.procedure.query(async () => {
+    return await getUsers();
+  }),
+
+  createUser: t.procedure.mutation(async () => {
+    return await createUser();
+  }),
+
   greeting: t.procedure.input(z.object({ name: z.string() })).query((req) => {
     const { input } = req;
 

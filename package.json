@@ -7,7 +7,7 @@
   "packageManager": "pnpm@8.6.12",
   "scripts": {
     "build": "turbo build",
-    "clean": "git clean -xdf node_modules",
+    "clean": "git clean -xdf node_modules coverage",
     "clean:workspaces": "turbo clean",
     "dev": "turbo dev --parallel --filter='./apps/*'",
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",

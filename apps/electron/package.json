@@ -6,6 +6,7 @@
   "author": "example.com",
   "homepage": "https://www.electronjs.org",
   "scripts": {
+    "clean": "git clean -xdf .turbo node_modules out",
     "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
     "type-check:node": "tsc --noEmit -p tsconfig.node.json --composite false",
@@ -22,7 +23,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^1.0.2",
-    "@rao-pics/api": "^0.2.0",
+    "@rao-pics/api": "workspace:*",
     "@tanstack/react-query": "^4.32.6",
     "@trpc/react-query": "^10.37.1",
     "electron-trpc": "^0.5.2",

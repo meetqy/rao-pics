@@ -11,11 +11,7 @@ export default defineConfig({
     ],
   },
   preload: {
-    plugins: [
-      externalizeDepsPlugin({
-        exclude: ["@rao-pics/api"],
-      }),
-    ],
+    plugins: [externalizeDepsPlugin()],
   },
   renderer: {
     resolve: {

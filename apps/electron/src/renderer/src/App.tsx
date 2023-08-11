@@ -27,7 +27,13 @@ function App() {
 }
 
 function HelloElectron() {
+  const utils = trpcReact.useContext();
   const { data } = trpcReact.greeting.useQuery({ name: "Electron" });
+  const { data: users } = trpcReact.getUsers.useQuery();
+  const createUser = trpcReact.createUser.useMutation({
+    onSuccess: () => utils.getUsers.invalidate(),
+  });
+
   const [sub, setSub] = useState<string>();
   trpcReact.subscription.useSubscription(undefined, {
     onData: (data) => {
@@ -42,6 +48,25 @@ function HelloElectron() {
 
   return (
     <div>
+      <table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>email</th>
+            <th>name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users?.map((item) => (
+            <tr key={item.id}>
+              <td>{item.id}</td>
+              <td>{item.email}</td>
+              <td>{item.name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button onClick={() => createUser.mutate()}>添加</button>
       <div>subscription message: {sub}</div>
       <div>{data.text}</div>
     </div>
