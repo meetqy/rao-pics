@@ -8,6 +8,7 @@ export * from "./src/entity/Image";
 export * from "./src/entity/Library";
 export * from "./src/entity/Pending";
 export * from "./src/entity/Tag";
+export * from "./src/entity/Folder";
 
 export const initAppDataSource = async () => {
   try {

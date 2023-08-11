@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "ts-node index.ts",
-    "test": "vitest test",
+    "test": "dotenv -e ../../.env.test vitest test",
     "migration:create": "typeorm-ts-node-commonjs migration:create ./src/migration/sqlite",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migration/sqlite -d ./src/data-source.ts"
   },

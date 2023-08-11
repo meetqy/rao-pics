@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity("configs")
-export class ConfigModal {
+export class Config {
   @PrimaryColumn({ type: "varchar" })
   id!: string;
 
