@@ -1,40 +1,57 @@
 import { faker } from "@faker-js/faker";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
-import { initAppDataSource } from "@rao-pics/database";
+import {
+  AppDataSource,
+  Config as ConfigEntity,
+  initAppDataSource,
+} from "@rao-pics/database";
 
 import { Config } from "../src/config";
 
-describe("@rao-pics/service Config", () => {
-  beforeEach(async () => {
+describe("Config", () => {
+  beforeAll(async () => {
     await initAppDataSource();
   });
 
-  describe("update", () => {
-    it("should update the config with valid input", async () => {
-      const input = {
-        assetsPort: faker.internet.port(),
-        ip: faker.internet.ip(),
-        webPort: faker.internet.port(),
-      };
+  it("no record in config, throw error", async () => {
+    await AppDataSource.getRepository(ConfigEntity).delete({ id: "config" });
+    await expect(() => Config.get()).rejects.toThrowError();
+  });
 
-      const result = await Config.update(input);
+  it("should update the config entity with the given input", async () => {
+    const input = {
+      assetsPort: faker.internet.port(),
+      ip: faker.internet.ip(),
+      webPort: faker.internet.port(),
+    };
+    const result = await Config.update(input);
+    expect(result.assetsPort).toBe(input.assetsPort);
+    expect(result.ip).toBe(input.ip);
+    expect(result.webPort).toBe(input.webPort);
+  });
 
-      expect(result.assetsPort).toEqual(input.assetsPort);
-      expect(result.ip).toEqual(input.ip);
-      expect(result.webPort).toEqual(input.webPort);
-    });
+  it('only one record in config, id is "config"', async () => {
+    const input = {
+      assetsPort: faker.internet.port(),
+      ip: faker.internet.ip(),
+      webPort: faker.internet.port(),
+    };
 
-    // it("should throw an error with invalid input", async () => {
-    //   const input = {
-    //     assetsPort: "not a number",
-    //     ip: "127.0.0.1",
-    //     webPort: 8080,
-    //   };
+    const result = await Config.update(input);
+    expect(result.id).toBe("config");
+  });
 
-    //   await expect(Config.update(input)).rejects.toThrowError(
-    //     ConfigSchema.update._error("Invalid input"),
-    //   );
-    // });
+  it("should get the config entity with id 'config'", async () => {
+    const config = new ConfigEntity();
+    config.id = "config";
+    config.assetsPort = 3000;
+    config.ip = "127.0.0.1";
+    config.webPort = 8080;
+    await AppDataSource.getRepository(ConfigEntity).save(config);
+    const result = await Config.get();
+    expect(result.assetsPort).toBe(config.assetsPort);
+    expect(result.ip).toBe(config.ip);
+    expect(result.webPort).toBe(config.webPort);
   });
 });
