@@ -30,7 +30,14 @@ export const Library = {
       const { library } = input;
 
       where = {
-        OR: [{ id: typeof library === "number" ? library : undefined }, { name: library.toString() }],
+        OR: [
+          { id: typeof library === "number" ? library : undefined },
+          {
+            name: {
+              contains: library.toString(),
+            },
+          },
+        ],
       };
     }
 
