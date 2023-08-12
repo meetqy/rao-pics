@@ -2,7 +2,9 @@
   "name": "@acme/tailwind-config",
   "version": "0.1.0",
   "main": "index.ts",
-  "license": "MIT",
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules"
+  },
   "files": [
     "index.ts",
     "postcss.js"

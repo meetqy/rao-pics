@@ -2,6 +2,9 @@
   "name": "@acme/constant",
   "version": "0.1.0",
   "main": "./index.ts",
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules"
+  },
   "devDependencies": {
     "@acme/eslint-config": "^0.1.0",
     "eslint": "8.42.0",
