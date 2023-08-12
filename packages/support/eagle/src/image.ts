@@ -101,11 +101,10 @@ export const updateImage = async (path: string, library: Library) => {
 
     if (fails.length) {
       await curd.fail.delete({ path });
-      return await createImage(path, library);
     }
-  }
 
-  return false;
+    return await createImage(path, library);
+  }
 };
 
 /**
