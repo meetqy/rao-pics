@@ -10,7 +10,7 @@ const libraryIds: number[] = [];
 
 export const closeAssetsServer = (tips = "assets server close") => {
   server?.close((err) => {
-    console.log(tips, err);
+    console.log(tips, err && err);
   });
 };
 

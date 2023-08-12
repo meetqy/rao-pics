@@ -14,10 +14,9 @@ import { appRouter } from "@acme/api";
 import curd from "@acme/curd";
 import { createSqlite } from "@acme/db";
 
-import globalApp from "./global";
 import { restoreOrCreateWindow } from "./mainWindow";
 import { createAssetsServer } from "./src/createAssetsServer";
-import { createWebServer } from "./src/createWebServer";
+import { closeWebServer, createWebServer } from "./src/createWebServer";
 import createAllIPCHandler from "./src/ipc";
 import createMenu from "./src/menu";
 import createTray from "./src/tray";
@@ -55,8 +54,6 @@ if (process.platform === "darwin") {
   app.dock.hide();
 }
 
-let nextjsWebChild: cp.ChildProcess | undefined;
-
 /**
  * Prevent electron from running multiple instances.
  */
@@ -69,12 +66,6 @@ app.on("second-instance", () => {
   restoreOrCreateWindow().catch((err) => {
     throw err;
   });
-});
-
-app.on("before-quit", (e) => {
-  if (!globalApp.isQuite) {
-    e.preventDefault();
-  }
 });
 
 /**
@@ -95,9 +86,7 @@ app.on("window-all-closed", () => {
  * App quit
  */
 app.on("quit", () => {
-  if (nextjsWebChild) {
-    nextjsWebChild.kill();
-  }
+  closeWebServer();
 });
 
 /**
@@ -115,33 +104,11 @@ app.on("browser-window-focus", () => {
     // web server 首次启动在 activate 中触发
     const { ip } = await getAndUpdateConfig();
 
-    if (nextjsWebChild && process.env["IP"] != ip) {
-      nextjsWebChild.kill();
-      nextjsWebChild = createWebServer(nextjsWebChild);
+    if (process.env["IP"] != ip) {
+      createWebServer();
     }
   })();
 });
-
-/**
- * Install React devtools in dev mode
- * works, but throws errors so it's commented out until these issues are resolved:
- * - https://github.com/MarshallOfSound/electron-devtools-installer/issues/220
- * - https://github.com/electron/electron/issues/32133
- * Note: You must install `electron-devtools-installer` manually
- */
-// if (import.meta.env.DEV) {
-//   app
-//     .whenReady()
-//     .then(() => import("electron-devtools-installer"))
-//     .then(async ({ default: installExtension, REACT_DEVELOPER_TOOLS }) => {
-//       await installExtension(REACT_DEVELOPER_TOOLS, {
-//         loadExtensionOptions: {
-//           allowFileAccess: true,
-//         },
-//       });
-//     })
-//     .catch((e) => console.error("Failed install extension:", e));
-// }
 
 app.on("ready", () => {
   // Init menu and cmd+q disabled.
@@ -151,7 +118,7 @@ app.on("ready", () => {
       label: "Quite",
       accelerator: "CmdOrCtrl+Q",
       click: () => {
-        globalApp.isQuite = false;
+        app.hide();
       },
     }),
   );
@@ -216,10 +183,7 @@ app
       await getAndUpdateConfig();
 
       // 创建 Web 服务
-      nextjsWebChild = createWebServer();
-      if (!nextjsWebChild) {
-        throw Error("NextJS child process was not created, exiting...");
-      }
+      createWebServer();
 
       // 创建 Assets 服务
       createAssetsServer(Number(process.env["ASSETS_PORT"]), libs);
