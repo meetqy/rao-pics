@@ -3,7 +3,7 @@ import { z } from "zod";
 import { prisma } from "@acme/db";
 
 export const FailInput = {
-  create: z.object({
+  upsert: z.object({
     libraryId: z.number(),
     path: z.string(),
     type: z.enum(["trash", "json-error", "ext"]),
@@ -19,6 +19,7 @@ export const FailInput = {
 
   get: z.object({
     libraryId: z.number(),
+    path: z.string().optional(),
   }),
 };
 
@@ -29,14 +30,17 @@ export const Fail = {
     return await prisma.fail.findMany({
       where: {
         libraryId: input.libraryId,
+        path: input.path,
       },
     });
   },
 
-  create: async (obj: z.infer<(typeof FailInput)["create"]>) => {
-    const input = FailInput.create.parse(obj);
-    return await prisma.fail.create({
-      data: input,
+  upsert: async (obj: z.infer<(typeof FailInput)["upsert"]>) => {
+    const input = FailInput.upsert.parse(obj);
+    return await prisma.fail.upsert({
+      where: { path: input.path },
+      create: input,
+      update: input,
     });
   },
 

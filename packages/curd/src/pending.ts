@@ -29,7 +29,7 @@ export const Pending = {
     return await prisma.pending.upsert({
       where: { path: input.path },
       create: input,
-      update: { type: input.type },
+      update: input,
     });
   },
 

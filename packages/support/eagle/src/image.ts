@@ -19,7 +19,7 @@ export const createImage = async (path: string, library: Library) => {
 
   if (!args) return null;
   if (args.isDeleted) {
-    void curd.fail.create({
+    void curd.fail.upsert({
       libraryId: library.id,
       path,
       type: "trash",
@@ -43,7 +43,7 @@ export const updateImage = async (path: string, library: Library) => {
 
   if (!args) return null;
   if (args.isDeleted) {
-    void curd.fail.create({
+    void curd.fail.upsert({
       libraryId: library.id,
       path,
       type: "trash",
@@ -60,6 +60,7 @@ export const updateImage = async (path: string, library: Library) => {
   });
 
   const item = image[0];
+
   if (item) {
     // update tags
     for (const tag of item.tags) {
@@ -90,9 +91,20 @@ export const updateImage = async (path: string, library: Library) => {
       id: item.id,
       ...args,
     });
-  }
+  } else {
+    // 从回收站恢复，image中是不存在该图片的，
+    // 应该走添加逻辑
+    const fails = await curd.fail.get({
+      libraryId: library.id,
+      path,
+    });
 
-  return false;
+    if (fails.length) {
+      await curd.fail.delete({ path });
+    }
+
+    return await createImage(path, library);
+  }
 };
 
 /**
@@ -109,7 +121,7 @@ const getImageBase = async (path: string, libraryId: number) => {
     const ext = metadata.ext as Constant["ext"];
 
     if (!CONSTANT["EXT"].includes(ext)) {
-      await curd.fail.create({
+      await curd.fail.upsert({
         libraryId,
         path,
         type: "ext",
@@ -126,8 +138,8 @@ const getImageBase = async (path: string, libraryId: number) => {
       ext,
     };
   } catch (error) {
-    console.log(error);
-    await curd.fail.create({
+    console.error(error);
+    await curd.fail.upsert({
       libraryId,
       path,
       type: "json-error",

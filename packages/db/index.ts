@@ -39,7 +39,7 @@ export const prisma =
         url: env === "development" ? "file:./db.sqlite?connection_limit=1" : `file:${cacheDir}/db.sqlite?connection_limit=1`,
       },
     },
-    log: env === "development" ? ["query", "error", "warn"] : ["error"],
+    log: env === "development" ? ["error", "warn"] : ["error"],
   });
 
 if (env === "development") globalForPrisma.prisma = prisma;

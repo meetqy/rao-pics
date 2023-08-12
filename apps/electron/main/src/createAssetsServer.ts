@@ -8,14 +8,18 @@ let server: ReturnType<typeof app.listen> | null;
 
 const libraryIds: number[] = [];
 
+export const closeAssetsServer = (tips = "assets server close") => {
+  server?.close((err) => {
+    console.log(tips, err && err);
+  });
+};
+
 /**
  * create or restart assets server
  */
 export const createAssetsServer = (port: number, librarys?: Library[]) => {
   if (!librarys || librarys.length === 0) {
-    server?.close((err) => {
-      console.log("assets server close", err);
-    });
+    closeAssetsServer();
     server = null;
     libraryIds.splice(0, libraryIds.length);
     return;
@@ -25,9 +29,7 @@ export const createAssetsServer = (port: number, librarys?: Library[]) => {
     return;
   }
 
-  server?.close((e) => {
-    console.log("assets server restarting", e);
-  });
+  closeAssetsServer("assets server restarting");
 
   // clear library ids
   libraryIds.splice(0, libraryIds.length);

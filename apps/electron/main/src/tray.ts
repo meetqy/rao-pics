@@ -1,7 +1,6 @@
 import { join } from "path";
 import { app, Menu, nativeImage, shell, Tray } from "electron";
 
-import globalApp from "../global";
 import { restoreOrCreateWindow } from "../mainWindow";
 
 const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildResources") : join(__dirname, "../../buildResources");
@@ -50,7 +49,6 @@ const createTray = () => {
       label: "退出",
       type: "normal",
       click: () => {
-        globalApp.isQuite = true;
         app.quit();
       },
     },
@@ -70,12 +68,6 @@ const createTray = () => {
   tray.on("right-click", () => {
     tray.popUpContextMenu(contextMenu);
   });
-
-  // /** 监听 dark/light */
-  // nativeTheme.on("updated", () => {
-  //   tray.setImage(icon);
-  //   tray.setContextMenu(contextMenu);
-  // });
 
   return tray;
 };
