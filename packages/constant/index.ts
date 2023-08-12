@@ -2,7 +2,7 @@ const VIDEO_EXT = ["mp4", "avi", "mov", "wmv", "flv", "webm", "mkv"] as const;
 const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
 
 // app
-const APP = ["eagle", "pixcall", "billfish", "folder"] as const;
+const APP = ["eagle", "pixcall", "billfish"] as const;
 
 export const CONSTANT = {
   VIDEO_EXT,
