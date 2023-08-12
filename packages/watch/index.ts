@@ -26,12 +26,14 @@ function startWatcher(props: Props): Promise<number> {
       // listener
       .on("add", (path) => {
         count++;
+        console.log("add", path);
         void curd.pending.upsert({ path, libraryId, type: "create" });
       })
       .on("unlink", (path) => {
         void curd.pending.upsert({ path, libraryId, type: "delete" });
       })
       .on("change", (path) => {
+        console.log("change", path);
         void curd.pending.upsert({ path, libraryId, type: "update" });
       })
       .on("ready", () => {

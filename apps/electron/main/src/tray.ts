@@ -3,6 +3,7 @@ import { app, Menu, nativeImage, shell, Tray } from "electron";
 
 import globalApp from "../global";
 import { restoreOrCreateWindow } from "../mainWindow";
+import { closeAssetsServer } from "./createAssetsServer";
 
 const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildResources") : join(__dirname, "../../buildResources");
 
@@ -51,6 +52,7 @@ const createTray = () => {
       type: "normal",
       click: () => {
         globalApp.isQuite = true;
+        closeAssetsServer();
         app.quit();
       },
     },
