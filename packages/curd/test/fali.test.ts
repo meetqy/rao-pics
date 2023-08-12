@@ -11,13 +11,13 @@ describe("@acme/curd fali", async () => {
   });
 
   test("Create and get", async () => {
-    await curd.fail.create({
+    await curd.fail.upsert({
       libraryId: lib.id,
       path: faker.system.filePath(),
       type: "trash",
     });
 
-    await curd.fail.create({
+    await curd.fail.upsert({
       libraryId: lib.id,
       path: faker.system.filePath(),
       type: "json-error",
