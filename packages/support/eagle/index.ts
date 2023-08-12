@@ -30,6 +30,13 @@ export const startEagle = async (props: Props) => {
 
       const pathStartsWith = getImagePathStart(p.path);
 
+      // 判断文件是否存在
+      if (!fs.existsSync(p.path)) {
+        emit?.(option);
+        await curd.pending.delete({ path: p.path });
+        continue;
+      }
+
       // 同步前判断时间间隔，小于 3 秒，表示未修改
       const { mtime } = fs.statSync(p.path);
       const images = await curd.image.get({ pathStartsWith, libraryId: library.id });
