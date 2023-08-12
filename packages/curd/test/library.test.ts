@@ -1,9 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";
-import { prisma, type Library as LibraryType, type Prisma } from "@acme/db";
+import { prisma, type Prisma } from "@acme/db";
 
 import { Library } from "../src/library";
 
