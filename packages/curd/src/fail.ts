@@ -19,6 +19,7 @@ export const FailInput = {
 
   get: z.object({
     libraryId: z.number(),
+    path: z.string().optional(),
   }),
 };
 
@@ -29,6 +30,7 @@ export const Fail = {
     return await prisma.fail.findMany({
       where: {
         libraryId: input.libraryId,
+        path: input.path,
       },
     });
   },
