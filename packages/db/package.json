@@ -4,7 +4,7 @@
   "main": "./index.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf .turbo node_modules prisma/db.* prisma/migrations",
+    "clean": "git clean -xdf .turbo node_modules prisma/db.sqlite*",
     "db:push": "pnpm prisma db push",
     "db:reset": "pnpm db:push --force-reset",
     "dev": "pnpm prisma studio -b none"

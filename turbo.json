@@ -18,6 +18,12 @@
     "lint:fix": {},
     "sync:version": {
       "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "//#clean": {
+      "cache": false
     }
   },
   "globalEnv": [
