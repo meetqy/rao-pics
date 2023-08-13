@@ -2,7 +2,8 @@
   "name": "@acme/curd",
   "version": "0.1.0",
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules"
+    "clean": "git clean -xdf .turbo node_modules",
+    "test": "vitest"
   },
   "devDependencies": {
     "@acme/db": "^0.1.0",

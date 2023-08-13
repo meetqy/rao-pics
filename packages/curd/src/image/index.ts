@@ -1,11 +1,13 @@
-import differenceBy from "lodash.differenceby";
 import { z } from "zod";
 
 import { CONSTANT } from "@acme/constant";
-import { prisma, type Color, type Folder, type Prisma, type Tag } from "@acme/db";
+import { prisma, type Prisma } from "@acme/db";
 import { hexToRgb } from "@acme/util";
 
-import curd from "..";
+import curd from "../..";
+import { updateColors } from "./updateColors";
+import { updateFolders } from "./updateFolders";
+import { updateTags } from "./updateTags";
 
 export const ImageInput = {
   create: z.object({
@@ -220,55 +222,25 @@ export const Image = {
       };
 
       updateArgs.data["folders"] = input.folders ? updateFolders(input.folders, oldImage[0]?.folders || []) : undefined;
-      updateArgs.data["tags"] = input.tags ? updateTags(input.tags, oldImage[0]?.tags || []) : undefined;
-      updateArgs.data["colors"] = input.colors ? updateColors(input.colors, oldImage[0]?.colors || []) : undefined;
 
-      // console.log(updateArgs);
+      updateArgs.data["tags"] = input.tags
+        ? updateTags(
+            input.tags,
+            (oldImage[0]?.tags || []).map((item) => item.name),
+          )
+        : undefined;
+
+      updateArgs.data["colors"] = input.colors
+        ? updateColors(
+            input.colors.map((item) => ({ rgb: hexToRgb(item) })),
+            oldImage[0]?.colors || [],
+          )
+        : undefined;
+
       return await prisma.image.update(updateArgs);
     } catch (e) {
       console.log(e);
       return false;
     }
   },
-};
-
-const updateFolders = (folders: { id: string }[], oldFolders: Folder[]) => {
-  const waitDeleteIds = folders.length === 0 ? oldFolders : differenceBy(folders, oldFolders, "id");
-
-  return {
-    disconnect: waitDeleteIds.map((f) => ({ id: f.id })),
-    connect: folders.map((f) => ({ id: f.id })),
-  };
-};
-
-const updateTags = (tags: string[], oldTags: Tag[]) => {
-  const waitDeleteIds =
-    tags.length === 0
-      ? oldTags
-      : differenceBy(
-          tags.map((t) => ({ name: t })),
-          oldTags,
-          "name",
-        );
-
-  return {
-    disconnect: waitDeleteIds.map((item) => ({ name: item.name })),
-    connect: tags.map((tag) => ({ name: tag })),
-  };
-};
-
-const updateColors = (colors: string[], oldColors: Color[]) => {
-  const waitDeleteIds =
-    colors.length === 0
-      ? oldColors
-      : differenceBy(
-          colors.map((c) => ({ rgb: hexToRgb(c) })),
-          oldColors,
-          "rgb",
-        );
-
-  return {
-    disconnect: waitDeleteIds.map((item) => ({ rgb: item.rgb })),
-    connect: colors.map((c) => ({ rgb: hexToRgb(c) })),
-  };
 };

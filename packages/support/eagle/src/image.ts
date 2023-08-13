@@ -39,10 +39,10 @@ export const updateImage = async (path: string, library: Library) => {
   const base = await getImageBase(path, library.id);
   if (!base) return null;
 
-  const args = transformImageArgs(base, library);
+  const newImage = transformImageArgs(base, library);
 
-  if (!args) return null;
-  if (args.isDeleted) {
+  if (!newImage) return null;
+  if (newImage.isDeleted) {
     void curd.fail.upsert({
       libraryId: library.id,
       path,
@@ -54,42 +54,42 @@ export const updateImage = async (path: string, library: Library) => {
     });
   }
 
-  const image = await curd.image.get({
+  const oldImages = await curd.image.get({
     path: base.imagePath,
     libraryId: library.id,
   });
 
-  const item = image[0];
+  const oldImage = oldImages[0];
 
-  if (item) {
-    // update tags
-    for (const tag of item.tags) {
-      await curd.tag.upsert({
-        libraryId: library.id,
-        name: tag.name,
-        imageIds: [item.id],
-      });
+  if (oldImage) {
+    // update and create tags
+    if (newImage.tags && newImage.tags.length > 0) {
+      for (const tag of newImage.tags) {
+        await curd.tag.upsert({
+          libraryId: library.id,
+          name: tag,
+          imageIds: [oldImage.id],
+        });
+      }
     }
 
-    // update color
-    await Promise.all(
-      item.colors
-        .map((c) => rgbToHex(c.rgb))
-        .filter(Boolean)
-        .splice(0, 9)
-        .map(
+    // update and create color
+    if (newImage.colors && newImage.colors.length > 0) {
+      await Promise.all(
+        newImage.colors.map(
           (hex) =>
             hex &&
             curd.color.create({
-              imageId: item.id,
+              imageId: oldImage.id,
               color: hex,
             }),
         ),
-    );
+      );
+    }
 
     return await curd.image.update({
-      id: item.id,
-      ...args,
+      id: oldImage.id,
+      ...newImage,
     });
   } else {
     // 从回收站恢复，image中是不存在该图片的，
@@ -176,6 +176,7 @@ const transformImageArgs = (base: Awaited<ReturnType<typeof getImageBase>>, libr
     duration: metadata.duration,
     folders: metadata.folders ? metadata.folders.map((folder) => ({ id: folder })) : undefined,
     tags: metadata.tags,
+    // #000000
     colors: metadata.palettes
       ? (metadata.palettes
           .map((palette) => rgbToHex(palette.color))
