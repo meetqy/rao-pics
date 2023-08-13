@@ -1,10 +1,11 @@
 import { faker } from "@faker-js/faker";
-import { beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { CONSTANT } from "@acme/constant";
 import { prisma, type Prisma } from "@acme/db";
 
 import { Library } from "../src/library";
+import { Util } from "../src/util";
 
 const createMany = async (libs: Prisma.LibraryCreateInput[]) => {
   return await Promise.all(libs.map((l) => prisma.library.create({ data: l })));
@@ -18,8 +19,11 @@ const mockLib = (): Prisma.LibraryCreateInput => ({
 
 describe("@acme/curd Library", () => {
   beforeEach(async () => {
-    // Clear the database before each test
-    await prisma.library.deleteMany();
+    await Util.dbClean();
+  });
+
+  afterEach(async () => {
+    await Util.dbClean();
   });
 
   describe("get", () => {
