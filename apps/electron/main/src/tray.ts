@@ -1,6 +1,8 @@
 import { join } from "path";
 import { app, Menu, nativeImage, shell, Tray } from "electron";
 
+import curd from "@acme/curd";
+
 import { restoreOrCreateWindow } from "../mainWindow";
 
 const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildResources") : join(__dirname, "../../buildResources");
@@ -18,55 +20,75 @@ const createTray = () => {
   // 托盘图标
   const tray = new Tray(icon);
 
-  const contextMenu = Menu.buildFromTemplate([
-    { type: "separator" },
-    {
-      label: "下载页面",
-      type: "normal",
-      icon: download,
-      click: () => {
-        void shell.openExternal("https://github.com/rao-pics/core/releases");
+  const contextMenu = async () => {
+    const res = await curd.library.get({});
+
+    return Menu.buildFromTemplate([
+      {
+        label: "资源库",
+        type: "submenu",
+        submenu: res?.map((item) => ({
+          label: `${item.name} ${item._count.pendings > 0 ? "(有更新)" : ""}`,
+          type: "normal",
+          click: () => {
+            void shell.openExternal(`http://${process.env["IP"]}:${process.env["WEB_PORT"]}/${item.name}`);
+          },
+        })),
       },
-    },
-    {
-      label: "最新动态",
-      icon: twitter,
-      type: "normal",
-      click: () => {
-        void shell.openExternal("https://twitter.com/meetqy");
+      { type: "separator" },
+      {
+        label: "下载页面",
+        type: "normal",
+        icon: download,
+        click: () => {
+          void shell.openExternal("https://github.com/rao-pics/core/releases");
+        },
       },
-    },
-    {
-      label: "开发进度",
-      icon: todo,
-      type: "normal",
-      click: () => {
-        void shell.openExternal("https://github.com/orgs/rao-pics/projects/1/views/1");
+      {
+        label: "最新动态",
+        icon: twitter,
+        type: "normal",
+        click: () => {
+          void shell.openExternal("https://twitter.com/meetqy");
+        },
       },
-    },
-    { type: "separator" },
-    {
-      label: "退出",
-      type: "normal",
-      click: () => {
-        app.quit();
+      {
+        label: "开发进度",
+        icon: todo,
+        type: "normal",
+        click: () => {
+          void shell.openExternal("https://github.com/orgs/rao-pics/projects/1/views/1");
+        },
       },
-    },
-  ]);
+      { type: "separator" },
+      {
+        label: "退出",
+        type: "normal",
+        click: () => {
+          app.quit();
+        },
+      },
+    ]);
+  };
 
   tray.on("click", (e) => {
-    if (e.altKey) {
-      tray.popUpContextMenu(contextMenu);
-    } else {
-      void restoreOrCreateWindow().then((window) => {
-        window.show();
-        window.focus();
-      });
-    }
+    void (async () => {
+      if (e.altKey) {
+        tray.popUpContextMenu(await contextMenu());
+      } else {
+        void restoreOrCreateWindow().then((window) => {
+          window.show();
+          window.focus();
+        });
+      }
+    })();
   });
 
   tray.on("right-click", () => {
-    tray.popUpContextMenu(contextMenu);
+    void (async () => {
+      const menu = await contextMenu();
+      tray.popUpContextMenu(menu);
+    })();
   });
 
   return tray;
