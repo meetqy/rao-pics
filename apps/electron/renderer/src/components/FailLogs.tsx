@@ -27,7 +27,7 @@ export const FailLogs = ({ libraryId, onClose }: Props) => {
 
   return (
     <div className="bg-neutral/70 fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center py-8">
-      <button onClick={onClose} className="btn btn-xs btn-error btn-circle absolute right-2 top-2 z-30">
+      <button onClick={onClose} className="btn btn-xs btn-circle absolute right-2 top-2 z-30">
         ✕
       </button>
 

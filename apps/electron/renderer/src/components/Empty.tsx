@@ -20,15 +20,15 @@ const Empty = (props: Props) => {
   });
 
   return (
-    <div className="flex w-3/4 items-center justify-center ">
+    <div className="flex w-3/4 items-center justify-center">
       <div className="card card-compact bg-base-100 w-4/5">
         <img src="logo.png" alt="rao.pics logo" className="shadow-neutral m-auto w-1/3 rounded-full shadow" />
         <div className="card-body items-center text-center">
           <h2 className="card-title !mb-0">{appName}</h2>
-          <p className="text-base-content/50 ">~~ 暂未添加文件夹 ~~</p>
+          <p className="text-base-content/50 ">~~ 暂未添加资源库 ~~</p>
           <div className="card-actions mt-2">
             <button className="btn btn-wide btn-primary" onClick={props.onAddClick}>
-              添加文件夹/库
+              添加资源库
             </button>
           </div>
         </div>

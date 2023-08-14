@@ -1,6 +1,8 @@
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useMemo, useState } from "react";
 
+import { CONSTANT } from "@acme/constant";
+
 import "./home.css";
 
 import Empty from "./components/Empty";
@@ -18,6 +20,7 @@ let T: NodeJS.Timer;
 function Home() {
   const utils = trpc.useContext();
 
+  const { data: imageCount } = trpc.image.groupByFieldCount.useQuery("ext");
   const { data: config } = trpc.config.get.useQuery();
   const library = trpc.library.get.useQuery();
   const [pendingCount, setPendingCount] = useState<number>(0);
@@ -28,6 +31,23 @@ function Home() {
   // 是否在初始化中 首次添加
   const [adding, setAdding] = useState<boolean>(false);
   const checkFailAndClean = trpc.utils.checkFailAndClean.useMutation();
+
+  const statistics = useMemo(() => {
+    console.log(imageCount);
+    const json = {
+      media: 0,
+      image: 0,
+    };
+    imageCount?.forEach((item) => {
+      if (CONSTANT.IMG_EXT.includes(item.ext)) {
+        json.image += item._count._all;
+      } else if (CONSTANT.VIDEO_EXT.includes(item.ext)) {
+        json.media += item._count._all;
+      }
+    });
+
+    return json;
+  }, [imageCount]);
 
   void window.app.getVersion().then((res) => {
     document.title = `Rao Pics - v${res}`;
@@ -104,11 +124,12 @@ function Home() {
         .then(() => {
           checkFailAndClean.mutate({ libraryId: activeItem.id, libraryDir: activeItem.dir });
           void utils.library.get.invalidate();
+          void utils.image.groupByFieldCount.invalidate();
           setProgress(undefined);
           localStorage.removeItem("pending");
         });
     }
-  }, [percent, progress, activeItem, updateLibrary, checkFailAndClean, utils.library.get]);
+  }, [percent, progress, activeItem, updateLibrary, checkFailAndClean, utils.library.get, utils.image.groupByFieldCount]);
 
   const sync = trpc.sync.start.useMutation();
   const onSyncClick = () => {
@@ -157,36 +178,22 @@ function Home() {
 
   return (
     <div className="flex h-screen w-full text-sm">
-      <div className="scrollbar bg-base-200/70 w-1/4 overflow-y-auto">
-        <div className="bg-base-200/70 sticky top-0 z-10 flex justify-center p-2 backdrop-blur">
-          <button className="btn btn-outline flex w-full items-center" disabled={disabled} onClick={showOpenDialog}>
-            <svg className="fill-primary w-6" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-              <path
-                id="a"
-                d="M523.52 453.632l-107.2-32.256a29.888 29.888 0 0 1-20.416-37.632 30.08 30.08 0 0 1 11.712-15.552l137.152-93.952a29.76 29.76 0 0 0 13.12-24.896l-2.176-162.56A30.528 30.528 0 0 1 586.304 56.32a31.68 31.68 0 0 1 18.944 5.952l134.656 97.28a31.872 31.872 0 0 0 28.48 4.352l159.104-52.224a31.232 31.232 0 0 1 39.296 18.816 29.12 29.12 0 0 1 0 19.264l-53.952 154.048a29.248 29.248 0 0 0 4.544 27.584l100.48 130.368a29.44 29.44 0 0 1-6.336 41.984 31.68 31.68 0 0 1-18.944 5.952l-167.936-2.048a31.36 31.36 0 0 0-25.728 12.672l-96.96 132.8a31.68 31.68 0 0 1-43.264 7.168 30.08 30.08 0 0 1-11.712-15.616L615.872 547.84l-393.088 439.36a112.832 112.832 0 0 1-161.408 5.568 104.448 104.448 0 0 1 5.76-156.224L523.52 453.632zM115.648 448C51.84 448 0 397.824 0 336S51.84 224 115.648 224c63.936 0 115.712 50.176 115.712 112S179.52 448 115.648 448z m268.736-320c-36.48 0-66.112-28.672-66.112-64s29.632-64 66.112-64c36.48 0 66.112 28.672 66.112 64s-29.632 64-66.112 64z m478.208 800c-63.872 0-115.648-50.176-115.648-112S798.72 704 862.592 704c63.872 0 115.712 50.176 115.712 112s-51.84 112-115.712 112z"
-              ></path>
-            </svg>
-            <span className="ml-2">添加文件夹/库</span>
-          </button>
-        </div>
+      <div className="bg-neutral flex h-full w-1/4 flex-col items-center justify-between px-2 py-4">
+        <div className="grid w-full grid-cols-1 gap-y-4">
+          <div className="text-neutral-content border-neutral-content/20 select-none border-l-2 p-2 capitalize">
+            <p className="font-mono font-medium">{activeItem?.name ?? "暂未添加资源库"}</p>
+          </div>
 
-        <ul className="menu rounded-box px-2">
-          {library.data?.map((item) => (
-            <li key={item.id} className="w-full">
-              <div
-                className={`${item.id === active ? "active" : ""} tooltip flex w-full capitalize`}
-                data-tip={item.name}
-                onClick={() => {
-                  if (disabled) return;
-                  setActive(item.id);
-                }}
-              >
-                <p className="flex-1 overflow-hidden truncate text-left">{item.name}</p>
-                <img alt="eagle app logo" src="eagle.jpg" className="w-5 rounded-full shadow-md" />
-              </div>
-            </li>
-          ))}
-        </ul>
+          <div className="text-neutral-content border-neutral-content/20 select-none border-l-2 p-2 capitalize">
+            <p className="font-mono text-5xl">{statistics.image}</p>
+            <p className="opacity-25">图片总数</p>
+          </div>
+
+          <div className="text-neutral-content border-neutral-content/20 select-none border-l-2  p-2 capitalize">
+            <p className="font-mono text-5xl">{statistics.media}</p>
+            <p className="opacity-25">媒体总数</p>
+          </div>
+        </div>
       </div>
       {active ? (
         <div className="flex-1 p-4">
@@ -293,7 +300,7 @@ function Home() {
             </div>
 
             <div className="flex flex-1 items-center justify-around !px-0">
-              <div className="flex h-full w-1/2 items-center justify-center">
+              <div className="bg-base-200 flex h-full flex-1 items-center justify-center">
                 <div
                   className="radial-progress text-neutral-content/70 bg-neutral border-neutral/50 border-4"
                   style={{ "--value": percent, "--size": "9rem", "--thickness": "1rem" } as React.CSSProperties}
@@ -312,7 +319,7 @@ function Home() {
                 </div>
               </div>
 
-              <div className="bg-base-200/40 flex h-full w-1/2 flex-col justify-center space-y-4 px-8">
+              <div className="flex h-full w-1/2 flex-col justify-center space-y-4 px-8">
                 <button className="btn" disabled={disabled} onClick={onSyncClick}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
                     <path
