@@ -43,7 +43,7 @@ describe("@acme/curd Color", () => {
 
   describe("create", () => {
     it<LocalTestContext>("should create a new color", async ({ image }) => {
-      const color = await Color.create({
+      const color = await Color.upsert({
         imageId: image.id,
         color: "#FF0000",
       });
@@ -53,7 +53,7 @@ describe("@acme/curd Color", () => {
 
     it<LocalTestContext>("should throw an error if the color is invalid", async ({ image }) => {
       await expect(
-        Color.create({
+        Color.upsert({
           imageId: image.id,
           color: "#FF000",
         }),
@@ -94,7 +94,7 @@ describe("@acme/curd Color", () => {
         },
       });
 
-      await Color.create({
+      await Color.upsert({
         imageId: image.id,
         color: "#ff0000",
       });
