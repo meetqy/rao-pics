@@ -9,6 +9,8 @@
 }
 
 .scrollbar {
+  @apply transition-colors;
+
   /* width */
   &::-webkit-scrollbar {
     @apply w-1;
@@ -19,10 +21,10 @@
   }
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    @apply bg-neutral rounded;
+    @apply bg-neutral/60 rounded;
   }
   /* Handle on hover */
   &::-webkit-scrollbar-thumb:hover {
-    @apply bg-base-100;
+    @apply bg-neutral;
   }
 }

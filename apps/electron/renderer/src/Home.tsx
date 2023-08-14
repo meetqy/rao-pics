@@ -158,7 +158,7 @@ function Home() {
   return (
     <div className="flex h-screen w-full text-sm">
       <div className="scrollbar bg-base-200/70 w-1/4 overflow-y-auto">
-        <div className="sticky top-0 z-10 flex justify-center  p-2">
+        <div className="bg-base-200/70 sticky top-0 z-10 flex justify-center p-2 backdrop-blur">
           <button className="btn btn-outline flex w-full items-center" disabled={disabled} onClick={showOpenDialog}>
             <svg className="fill-primary w-6" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
               <path
