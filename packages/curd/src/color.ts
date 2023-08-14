@@ -8,7 +8,7 @@ export const ColorInput = {
     imageId: z.number(),
   }),
 
-  create: z.object({
+  upsert: z.object({
     imageId: z.number(),
     color: z.string().length(7).startsWith("#"),
   }),
@@ -32,8 +32,8 @@ export const Color = {
     return img.colors;
   },
 
-  create: async (obj: z.infer<(typeof ColorInput)["create"]>) => {
-    const input = ColorInput.create.parse(obj);
+  upsert: async (obj: z.infer<(typeof ColorInput)["upsert"]>) => {
+    const input = ColorInput.upsert.parse(obj);
     const rgb = hexToRgb(input.color);
 
     return prisma.color.upsert({

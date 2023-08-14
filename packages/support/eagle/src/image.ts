@@ -79,7 +79,7 @@ export const updateImage = async (path: string, library: Library) => {
         newImage.colors.map(
           (hex) =>
             hex &&
-            curd.color.create({
+            curd.color.upsert({
               imageId: oldImage.id,
               color: hex,
             }),
