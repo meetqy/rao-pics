@@ -75,11 +75,11 @@ app.disableHardwareAcceleration();
 /**
  * Shout down background process if all windows was closed
  */
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
+// app.on("window-all-closed", () => {
+//   if (process.platform !== "darwin") {
+//     app.quit();
+//   }
+// });
 
 /**
  * App quit
