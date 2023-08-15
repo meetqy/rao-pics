@@ -25,6 +25,10 @@ process.once("loaded", () => {
     getName: () => ipcRenderer.invoke("app.getName"),
   });
 
+  contextBridge.exposeInMainWorld("process", {
+    getPlatform: () => ipcRenderer.invoke("process.platform"),
+  });
+
   /**
    * window.dialog same as dialog.xxx
    */

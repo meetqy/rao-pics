@@ -1,6 +1,7 @@
 import { createElectronApiIPCHandler } from "./api";
 import { createAppIPCHandler } from "./app";
 import { createDialogIPCHandler } from "./dialog";
+import { createProcessIPCHandler } from "./process";
 import { createShellIPCHandler } from "./shell";
 
 /**
@@ -11,6 +12,7 @@ const createAllIPCHandler = () => {
   createDialogIPCHandler();
   createElectronApiIPCHandler();
   createShellIPCHandler();
+  createProcessIPCHandler();
 };
 
 export default createAllIPCHandler;
