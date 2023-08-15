@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { CONSTANT } from "@acme/constant";
 import { prisma, type Prisma } from "@acme/db";
