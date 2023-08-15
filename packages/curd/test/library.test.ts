@@ -27,8 +27,6 @@ describe("@acme/curd Library", () => {
   });
 
   describe("get", () => {
-    beforeAll;
-
     it("returns all libraries when no input is provided", async () => {
       // Create some test data
       const libs = await createMany([mockLib("Library 1"), mockLib("Library 2")]);
