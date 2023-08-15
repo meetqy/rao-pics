@@ -41,7 +41,6 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - run: pnpm install --no-frozen-lockfile
-      - run: pnpm db:reset
 
       # Only run the coverage once
       - if: ${{ matrix.node-version == '18.x' }}

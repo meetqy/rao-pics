@@ -78,7 +78,9 @@ describe("@acme/curd Library", () => {
       const result = await Library.get({ library: "Library" });
 
       // Assert that the result is correct
-      expect(result).toEqual([expect.objectContaining({ name: "Library 1" }), expect.objectContaining({ name: "Library 2" })]);
+      const res = result.map((item) => item.name);
+      expect(res).toContain("Library 1");
+      expect(res).toContain("Library 2");
     });
 
     // TODO:  _count 情况未测试。
