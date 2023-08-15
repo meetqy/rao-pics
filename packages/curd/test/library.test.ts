@@ -37,6 +37,7 @@ describe("@acme/curd Library", () => {
       // Assert that the result is correct
       const res = result.map((item) => item.name);
       const lib = libs.map((item) => item.name);
+      expect(res).toHaveLength(2);
       expect(res).toContain(lib[0]);
       expect(res).toContain(lib[1]);
     });
@@ -79,6 +80,7 @@ describe("@acme/curd Library", () => {
 
       // Assert that the result is correct
       const res = result.map((item) => item.name);
+      expect(res).toHaveLength(2);
       expect(res).toContain("Library 1");
       expect(res).toContain("Library 2");
     });
