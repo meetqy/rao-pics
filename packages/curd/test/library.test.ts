@@ -30,8 +30,10 @@ describe("@acme/curd Library", () => {
     beforeAll;
 
     it("returns all libraries when no input is provided", async () => {
+      const libs = [mockLib(), mockLib()];
+
       // Create some test data
-      const libs = await createMany([mockLib(), mockLib()]);
+      await createMany(libs);
 
       // Call the function being tested
       const result = await Library.get(undefined);
