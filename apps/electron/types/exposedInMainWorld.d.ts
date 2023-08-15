@@ -30,6 +30,10 @@ interface Window {
     showItemInFolder: (path: string) => Promise<void>;
   };
 
+  readonly process: {
+    getPlatform: () => Promise<NodeJS.Platform>;
+  };
+
   readonly electronAPI: {
     /**
      * Handle choose directory by 'showOpendialog'

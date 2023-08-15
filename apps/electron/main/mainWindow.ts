@@ -19,7 +19,16 @@ async function createWindow() {
     height: 450,
     resizable: false,
     autoHideMenuBar: true,
-    // titleBarStyle: "hidden",
+    titleBarStyle: "hidden",
+    titleBarOverlay: {
+      height: 48,
+      color: "#ffffff",
+      symbolColor: "#212936",
+    },
+    trafficLightPosition: {
+      y: 14,
+      x: 10,
+    },
     webPreferences: {
       allowRunningInsecureContent: false, // https://www.electronjs.org/docs/latest/tutorial/security#8-do-not-enable-allowrunninginsecurecontent
       enableBlinkFeatures: "", // https://www.electronjs.org/docs/latest/tutorial/security#10-do-not-use-enableblinkfeatures

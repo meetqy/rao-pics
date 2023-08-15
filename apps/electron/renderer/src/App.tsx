@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import "./App.css";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ipcLink } from "electron-trpc/renderer";
 import superjson from "superjson";

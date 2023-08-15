@@ -7,6 +7,13 @@ import { restoreOrCreateWindow } from "../mainWindow";
 
 const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildResources") : join(__dirname, "../../buildResources");
 
+const show = () => {
+  void restoreOrCreateWindow().then((window) => {
+    window.show();
+    window.focus();
+  });
+};
+
 /**
  * 系统托盘
  * @returns {Tray}
@@ -23,18 +30,23 @@ const createTray = () => {
   const contextMenu = async () => {
     const res = await curd.library.get({});
 
+    const lib = res[0];
+    let first: Electron.MenuItemConstructorOptions | Electron.MenuItem = {
+      label: "添加资源库",
+      type: "normal",
+      click: show,
+    };
+
+    if (lib) {
+      first = {
+        label: `${lib.name} ${lib._count.pendings > 0 ? "(有更新)" : ""}`,
+        type: "normal",
+        click: () => void shell.openExternal(`http://${process.env["IP"]}:${process.env["WEB_PORT"]}/${lib.name}`),
+      };
+    }
+
     return Menu.buildFromTemplate([
-      {
-        label: "资源库",
-        type: "submenu",
-        submenu: res?.map((item) => ({
-          label: `${item.name} ${item._count.pendings > 0 ? "(有更新)" : ""}`,
-          type: "normal",
-          click: () => {
-            void shell.openExternal(`http://${process.env["IP"]}:${process.env["WEB_PORT"]}/${item.name}`);
-          },
-        })),
-      },
+      first,
       { type: "separator" },
       {
         label: "下载页面",
@@ -76,10 +88,7 @@ const createTray = () => {
       if (e.altKey) {
         tray.popUpContextMenu(await contextMenu());
       } else {
-        void restoreOrCreateWindow().then((window) => {
-          window.show();
-          window.focus();
-        });
+        show();
       }
     })();
   });
