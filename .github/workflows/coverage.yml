@@ -47,7 +47,7 @@ jobs:
           NODE_ENV: development
 
       # Only run the coverage once
-      - if: ${{ matrix.node-version == '16.x' }}
+      - if: ${{ matrix.node-version == '18.x' }}
         name: Get Coverage for badge
         run: |
           # var SUMMARY = [
