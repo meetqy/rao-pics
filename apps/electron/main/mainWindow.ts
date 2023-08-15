@@ -62,6 +62,13 @@ async function createWindow() {
 
   await browserWindow.loadURL(pageUrl);
 
+  browserWindow.on("close", function (e) {
+    if (process.env["EXIT"] !== "true") {
+      e.preventDefault();
+      browserWindow.hide();
+    }
+  });
+
   return browserWindow;
 }
 

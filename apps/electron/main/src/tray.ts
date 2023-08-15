@@ -77,6 +77,7 @@ const createTray = () => {
         label: "退出",
         type: "normal",
         click: () => {
+          process.env["EXIT"] = "true";
           app.quit();
         },
       },
