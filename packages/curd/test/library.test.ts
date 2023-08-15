@@ -11,9 +11,9 @@ const createMany = async (libs: Prisma.LibraryCreateInput[]) => {
   return await Promise.all(libs.map((l) => prisma.library.create({ data: l })));
 };
 
-const mockLib = (): Prisma.LibraryCreateInput => ({
-  name: faker.system.fileName(),
-  dir: faker.system.filePath(),
+const mockLib = (name?: string, dir?: string): Prisma.LibraryCreateInput => ({
+  name: name || faker.system.fileName(),
+  dir: dir || faker.system.filePath(),
   type: faker.helpers.arrayElement(CONSTANT["APP"]),
 });
 
@@ -30,7 +30,7 @@ describe("@acme/curd Library", () => {
     beforeAll;
 
     it("returns all libraries when no input is provided", async () => {
-      const libs = [mockLib(), mockLib()];
+      const libs = [mockLib("Library 1"), mockLib("Library 2")];
 
       // Create some test data
       await createMany(libs);
@@ -38,10 +38,8 @@ describe("@acme/curd Library", () => {
       // Call the function being tested
       const result = await Library.get(undefined);
 
-      console.log(result, libs);
-
       // Assert that the result is correct
-      expect(result).toEqual([expect.objectContaining({ name: libs[0]?.name }), expect.objectContaining({ name: libs[1]?.name })]);
+      expect(result).toEqual([expect.objectContaining({ name: "Library 1" }), expect.objectContaining({ name: "Library 2" })]);
     });
 
     it("returns a single library by ID", async () => {
