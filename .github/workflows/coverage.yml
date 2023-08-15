@@ -42,7 +42,7 @@ jobs:
 
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm db:reset
-      - run: pnpm test
+      - run: pnpm test --if-present
         env:
           NODE_ENV: development
 
