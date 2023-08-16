@@ -57,12 +57,6 @@ mac '~/Library/Caches/Rao\ Pics'
 win '~\AppData\Local\Rao Pics'
 ```
 
-## 🌀 其他版本
-
-**Electron App** 是主要维护的版本。无论是 Docker 部署、Node 源码运行，都需要一定的技术能力，使用成本过高，**所以想做一个应用程序，只需要点点点，就完事了。**
-
-NodeJs 代码运行，Docker 部署，可以转到 [main 分支](https://github.com/rao-pics/docker)。
-
 ## 感谢
 
 UI
