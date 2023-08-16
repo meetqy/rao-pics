@@ -46,49 +46,22 @@ https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f25
 
 ## 🌀 Todo 待办清单
 
-<details>
-<summary>➕显示 / ➖隐藏</summary>
-<br/>
+https://github.com/users/meetqy/projects/7/views/1
 
-开发进度、版本规划可以查看 [Todo](https://github.com/orgs/rao-pics/projects/1)
-
-[![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
-
-</details>
-
-## 🌀 缓存 / 日志
-
-<details>
-<summary>➕显示 / ➖隐藏</summary>
-<br/>
+## 🌀 本地数据
 
 db.sqlite
 
 ```sh
-mac ~/Library/Caches/Rao\ Pics
+mac '~/Library/Caches/Rao\ Pics'
 win '~\AppData\Local\Rao Pics'
 ```
 
-main.log
-
-```sh
-mac ~/Library/Logs/Rao\ Pics
-win '~\AppData\Roaming\Rao Pics\logs'
-```
-
-</details>
-
 ## 🌀 其他版本
-
-<details>
-<summary>➕显示 / ➖隐藏</summary>
-<br/>
 
 **Electron App** 是主要维护的版本。无论是 Docker 部署、Node 源码运行，都需要一定的技术能力，使用成本过高，**所以想做一个应用程序，只需要点点点，就完事了。**
 
 NodeJs 代码运行，Docker 部署，可以转到 [main 分支](https://github.com/rao-pics/docker)。
-
-</details>
 
 ## 感谢
 
