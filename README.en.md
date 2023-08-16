@@ -44,25 +44,11 @@ https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f25
 
 > Reference: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#binarytargets-options
 
-````
+## 🌀 Todos
 
-## 🌀 Todo list
+https://github.com/users/meetqy/projects/7
 
-<details>
-<summary>➕Show / ➖Hide</summary>
-<br/>
-
-Development progress and changelog can be viewed [Todo List](https://github.com/orgs/rao-pics/projects/1)
-
-[![Imgur](https://i.imgur.com/52ujyXZ.png)](https://github.com/orgs/rao-pics/projects/1)
-
-</details>
-
-## Cache and log
-
-<details>
-<summary>➕Show / ➖Hide</summary>
-<br/>
+## 🌀 Local Data
 
 db.sqlite
 
@@ -71,15 +57,6 @@ mac ~/Library/Caches/Rao\ Pics
 win '~\AppData\Local\Rao Pics'
 ````
 
-main.log
-
-```sh
-mac ~/Library/Logs/Rao\ Pics
-win '~\AppData\Roaming\Rao Pics\logs'
-```
-
-</details>
-
 ## WuHu ~
 
-This project joined to [eagle sale plan](https://eagle.cool/affiliate). If you want to buy [Eagle App](https://eagle.sjv.io/rao), Clickable this [BUY LINK](https://eagle.sjv.io/rao), Supporting anthor.
+This project joined to [Eagle Sale Plan](https://eagle.cool/affiliate). If you want to buy [Eagle App](https://eagle.sjv.io/rao), Clickable this [BUY LINK](https://eagle.sjv.io/rao) supporting me and thank you.
