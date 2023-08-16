@@ -1,7 +1,8 @@
 import { join } from "path";
-import { app, Menu, nativeImage, shell, Tray } from "electron";
+import { app, Menu, nativeImage, shell, Tray, type MenuItem } from "electron";
 
 import curd from "@acme/curd";
+import { translations } from "@acme/lang";
 
 import { restoreOrCreateWindow } from "../mainWindow";
 
@@ -30,26 +31,54 @@ const createTray = () => {
   const contextMenu = async () => {
     const res = await curd.library.get({});
 
+    const { translation, lang, config } = await translations();
+    const json = {
+      中文简体: "zh-cn",
+      中文繁体: "zh-tw",
+      English: "en-us",
+    };
+
     const lib = res[0];
     let first: Electron.MenuItemConstructorOptions | Electron.MenuItem = {
-      label: "添加资源库",
+      label: translation["electron.main.add"],
       type: "normal",
       click: show,
     };
 
     if (lib) {
       first = {
-        label: `${lib.name} ${lib._count.pendings > 0 ? "(有更新)" : ""}`,
+        label: `${lib.name} ${lib._count.pendings > 0 ? `(${translation["electron.main.add.desc"]})` : ""}`,
         type: "normal",
         click: () => void shell.openExternal(`http://${process.env["IP"]}:${process.env["WEB_PORT"]}/${lib.name}`),
       };
     }
 
+    const langClick = (menu: MenuItem) => {
+      const l = json[menu.label as keyof typeof json] as "zh-cn" | "zh-tw" | "en-us";
+
+      if (config) {
+        void (async () => {
+          await curd.config.update({
+            ...config,
+            lang: l,
+          });
+        })();
+      }
+    };
+
     return Menu.buildFromTemplate([
       first,
+      {
+        label: translation["electron.main.language"],
+        submenu: [
+          { label: "中文简体", type: "radio", checked: lang === "zh_cn", click: langClick },
+          { label: "中文繁体", type: "radio", checked: lang === "zh_tw", click: langClick },
+          { label: "English", type: "radio", checked: lang === "en_us", click: langClick },
+        ],
+      },
       { type: "separator" },
       {
-        label: "下载页面",
+        label: translation["electron.main.download"],
         type: "normal",
         icon: download,
         click: () => {
@@ -57,7 +86,7 @@ const createTray = () => {
         },
       },
       {
-        label: "最新动态",
+        label: translation["electron.main.news"],
         icon: twitter,
         type: "normal",
         click: () => {
@@ -65,7 +94,7 @@ const createTray = () => {
         },
       },
       {
-        label: "开发进度",
+        label: translation["electron.main.todos"],
         icon: todo,
         type: "normal",
         click: () => {
@@ -74,7 +103,7 @@ const createTray = () => {
       },
       { type: "separator" },
       {
-        label: "退出",
+        label: translation["electron.main.quite"],
         type: "normal",
         click: () => {
           app.quit();

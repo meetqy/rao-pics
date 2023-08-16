@@ -23,7 +23,7 @@ describe("Config", () => {
         ip: faker.internet.ip(),
         webPort: faker.internet.port(),
       };
-      await prisma.config.create({ data: { id: "config", ...input } });
+      await prisma.config.create({ data: { id: "config", ...input, lang: "zh-cn" } });
 
       const config = await Config.get();
       expect(config).toEqual(expect.objectContaining(input));
@@ -49,7 +49,7 @@ describe("Config", () => {
         ip: faker.internet.ip(),
         webPort: faker.internet.port(),
       };
-      await prisma.config.create({ data: { id: "config", ...initialInput } });
+      await prisma.config.create({ data: { id: "config", ...initialInput, lang: "zh-cn" } });
 
       const updatedInput = {
         assetsPort: faker.internet.port(),
