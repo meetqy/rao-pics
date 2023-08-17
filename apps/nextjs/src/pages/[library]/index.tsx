@@ -17,6 +17,7 @@ import { type ExtEnum } from "@acme/api";
 import { CONSTANT } from "@acme/constant";
 
 import initLightboxVideoPlugin from "~/utils/photoswipe-video";
+import { languages, type Lang } from "~/lang";
 
 interface PageUrlQuery extends ParsedUrlQuery {
   library: string;
@@ -63,6 +64,8 @@ const IndexPage: NextPage = () => {
 
   const { data: config } = trpc.config.get.useQuery();
 
+  const language = useMemo(() => languages[(config?.lang ?? "zh_cn").replace("-", "_") as Lang], [config]);
+
   const assetsUrl = useMemo(() => (config ? `http://${config?.ip}:${config?.assetsPort}` : null), [config]);
 
   const items = useMemo(() => {
@@ -102,7 +105,7 @@ const IndexPage: NextPage = () => {
   // p-1 p-2 p-3 p-4
 
   return (
-    <Layout loadMore={onLoadMore} loadMoreContent={<span className="text-base-300 text-sm">{hasNextPage ? "加载中..." : "已经到底了~~"}</span>}>
+    <Layout loadMore={onLoadMore} loadMoreContent={<span className="text-base-300 text-sm">{hasNextPage ? language.loading : language.noData}</span>}>
       <>
         {assetsUrl && show && (
           <div className={`grid ${show.gap} ${show.p} grid-cols-${query.grid}`} id="photoswipe">
