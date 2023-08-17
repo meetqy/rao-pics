@@ -7,6 +7,7 @@ interface Window {
   readonly app: {
     getVersion: () => Promise<string>;
     getName: () => Promise<string>;
+    getLanguages: () => Promise<import("@acme/lang").Language>;
   };
 
   /** Same as Main.dialog */

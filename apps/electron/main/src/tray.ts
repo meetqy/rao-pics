@@ -10,6 +10,7 @@ const buildResourcesPath = app.isPackaged ? join(process.resourcesPath, "buildRe
 
 const show = () => {
   void restoreOrCreateWindow().then((window) => {
+    window.hide();
     window.show();
     window.focus();
   });
@@ -62,6 +63,8 @@ const createTray = () => {
             ...config,
             lang: l,
           });
+
+          show();
         })();
       }
     };
