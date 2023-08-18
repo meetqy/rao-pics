@@ -53,9 +53,9 @@ importers:
       '@rao-pics/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@rao-pics/prisma-sqlite':
+      '@rao-pics/db':
         specifier: workspace:*
-        version: link:../../packages/prisma-sqlite
+        version: link:../../packages/db
       '@tanstack/react-query':
         specifier: ^4.32.6
         version: 4.32.6(react-dom@18.2.0)(react@18.2.0)
@@ -163,9 +163,9 @@ importers:
 
   packages/api:
     dependencies:
-      '@rao-pics/prisma-sqlite':
+      '@rao-pics/db':
         specifier: workspace:*
-        version: link:../prisma-sqlite
+        version: link:../db
       '@trpc/server':
         specifier: ^10.37.1
         version: 10.37.1
@@ -235,7 +235,7 @@ importers:
         specifier: 3.3.2
         version: 3.3.2
 
-  packages/prisma-sqlite:
+  packages/db:
     dependencies:
       '@prisma/client':
         specifier: 5.1.1

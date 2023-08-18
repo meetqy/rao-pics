@@ -2,7 +2,7 @@ import { describe, it } from "vitest";
 
 import { createUser, getUsers } from "..";
 
-describe("prisma-sqlite", () => {
+describe("db", () => {
   it("should create a user", async () => {
     await createUser();
   });

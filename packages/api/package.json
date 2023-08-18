@@ -9,7 +9,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@rao-pics/prisma-sqlite": "workspace:*",
+    "@rao-pics/db": "workspace:*",
     "@trpc/server": "^10.37.1",
     "superjson": "^1.13.1",
     "zod": "^3.21.4"

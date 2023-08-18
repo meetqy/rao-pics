@@ -4,7 +4,7 @@ import { observable } from "@trpc/server/observable";
 import superjson from "superjson";
 import z from "zod";
 
-import { createUser, getUsers } from "@rao-pics/prisma-sqlite";
+import { createUser, getUsers } from "@rao-pics/db";
 
 const ee = new EventEmitter();
 

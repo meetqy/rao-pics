@@ -3,4 +3,4 @@ packages:
   - apps/nextjs
   - packages/config/*
   - packages/api
-  - packages/prisma-sqlite
+  - packages/db

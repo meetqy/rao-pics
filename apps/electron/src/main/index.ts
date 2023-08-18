@@ -4,7 +4,7 @@ import { app, BrowserWindow, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import { router } from "@rao-pics/api";
-import { migrate } from "@rao-pics/prisma-sqlite";
+import { migrate } from "@rao-pics/db";
 
 import icon from "../../resources/icon.png?asset";
 

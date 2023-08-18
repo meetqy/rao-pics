@@ -1,8 +1,11 @@
 {
-  "name": "@rao-pics/prisma-sqlite",
+  "name": "@rao-pics/db",
   "version": "0.2.0",
   "main": "./index.ts",
   "scripts": {
+    "postinstall": "pnpm db:reset",
+    "db:push": "prisma db push",
+    "db:reset": "pnpm db:push --force-reset",
     "test": "vitest",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev --name init"
