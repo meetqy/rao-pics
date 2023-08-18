@@ -25,6 +25,11 @@ const Temp = {
     en_us: "In Trash",
     zh_tw: "回收站中",
   },
+  unknown: {
+    zh_cn: "未知错误",
+    en_us: "Unknown Error",
+    zh_tw: "未知錯誤",
+  },
 };
 
 type TempType = keyof typeof Temp;

@@ -28,7 +28,19 @@ export const createImage = async (path: string, library: Library) => {
     return null;
   }
 
-  return await curd.image.create(args);
+  try {
+    return await curd.image.create(args);
+  } catch (e) {
+    void curd.fail.upsert({
+      libraryId: library.id,
+      path,
+      type: "unknown",
+    });
+
+    Sentry.captureException(e);
+
+    return null;
+  }
 };
 
 /**
@@ -87,10 +99,22 @@ export const updateImage = async (path: string, library: Library) => {
       );
     }
 
-    return await curd.image.update({
-      id: oldImage.id,
-      ...newImage,
-    });
+    try {
+      return await curd.image.update({
+        id: oldImage.id,
+        ...newImage,
+      });
+    } catch (e) {
+      void curd.fail.upsert({
+        libraryId: library.id,
+        path,
+        type: "unknown",
+      });
+
+      Sentry.captureException(e);
+
+      return null;
+    }
   } else {
     // 从回收站恢复，image中是不存在该图片的，
     // 应该走添加逻辑

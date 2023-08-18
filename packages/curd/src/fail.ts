@@ -6,7 +6,7 @@ export const FailInput = {
   upsert: z.object({
     libraryId: z.number(),
     path: z.string(),
-    type: z.enum(["trash", "json-error", "ext"]),
+    type: z.enum(["trash", "json-error", "ext", "unknown"]),
   }),
 
   delete: z
