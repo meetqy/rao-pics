@@ -3,7 +3,7 @@
   "extends": ["@rao-pics/eslint-config/base", "@rao-pics/eslint-config/react"],
   "overrides": [
     {
-      "files": ["electron.vite.config.*", "src/main/**/*", "src/preload/**/*"],
+      "files": ["*.ts", "src/main/**/*", "src/preload/**/*"],
       "parserOptions": {
         "project": "./tsconfig.node.json"
       }
