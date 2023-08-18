@@ -7,6 +7,7 @@ export const ConfigInput = {
     assetsPort: z.number(),
     ip: z.string(),
     webPort: z.number(),
+    lang: z.enum(["zh-cn", "zh-tw", "en-us"]).optional(),
   }),
 };
 
@@ -22,6 +23,7 @@ export const Config = {
       create: {
         id: "config",
         ...input,
+        lang: input.lang ?? "zh_cn",
       },
     });
   },

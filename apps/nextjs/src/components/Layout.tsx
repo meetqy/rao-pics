@@ -47,7 +47,7 @@ const Layout = (props: Props) => {
           {/* children */}
           <div>
             {children}
-            <div className="text-center pb-4" ref={loadMoreDom}>
+            <div className="pb-4 text-center" ref={loadMoreDom}>
               {props.loadMoreContent}
             </div>
           </div>

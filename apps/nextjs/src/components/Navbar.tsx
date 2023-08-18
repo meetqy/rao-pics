@@ -7,12 +7,17 @@ import { CONSTANT } from "@acme/constant";
 
 import { getGridOption } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
+import { languages, type Lang } from "~/lang";
 import Dropdown from "./Dropdown";
 import Logo from "./Logo";
 import Search from "./Search";
 
 const Navbar = () => {
   const router = useRouter();
+
+  const { data: config } = trpc.config.get.useQuery();
+
+  const language = useMemo(() => languages[(config?.lang ?? "zh_cn").replace("-", "_") as Lang], [config]);
 
   const [params, setParams] = useQueryParams({
     ext: StringParam,
@@ -80,9 +85,9 @@ const Navbar = () => {
   };
 
   const orderByOptions = [
-    { name: "按创建时间", key: "createTime" },
-    { name: "按文件大小", key: "size" },
-    { name: "按文件名字", key: "name" },
+    { name: language?.createTime, key: "createTime" },
+    { name: language?.fileSize, key: "size" },
+    { name: language?.fileName, key: "name" },
   ];
 
   const [searchValue, setSearchValue] = useState<string | undefined>();
@@ -105,7 +110,7 @@ const Navbar = () => {
         <Logo className="lg:hidden" htmlFor="my-drawer" />
 
         <div className="flex-1">
-          <Search value={searchValue} onInput={setSearchValue} className="hidden w-1/2 lg:flex" inputClassName="w-full" />
+          <Search language={language} value={searchValue} onInput={setSearchValue} className="hidden w-1/2 lg:flex" inputClassName="w-full" />
         </div>
 
         <div className="flex-none xl:gap-1">
@@ -190,7 +195,7 @@ const Navbar = () => {
             />
           )}
           {/* 排序 */}
-          <div className="hidden lg:block ">
+          <div className="hidden lg:block">
             <Dropdown
               tabIndex={2}
               showClose={false}

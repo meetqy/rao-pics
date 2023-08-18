@@ -95,9 +95,11 @@ model Folder {
 
 model Config {
     id         String @id @unique
+    ip         String
     // 页面端口
     webPort    Int
     // 资源端口
     assetsPort Int
-    ip         String
+    // zh-cn | en-us | zh-tw
+    lang       String @default("cn")
 }

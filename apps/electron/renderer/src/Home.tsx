@@ -17,6 +17,7 @@ interface SyncSubscriptionData {
 }
 
 let T: NodeJS.Timer;
+let isInit = false;
 
 function Home() {
   const utils = trpc.useContext();
@@ -33,6 +34,20 @@ function Home() {
   const [adding, setAdding] = useState<boolean>(false);
   const checkFailAndClean = trpc.utils.checkFailAndClean.useMutation();
   const [platform, setPlatform] = useState<NodeJS.Platform>();
+  const [languages, setLanguages] = useState<Awaited<ReturnType<typeof window.app.getLanguages>>>();
+
+  const lang = (config?.lang ?? "zh_cn").replace("-", "_") as keyof typeof languages;
+
+  const language = useMemo(() => (languages ? languages[lang] : undefined), [lang, languages]);
+
+  useEffect(() => {
+    if (isInit) return;
+    isInit = true;
+
+    void (async () => {
+      setLanguages(await window.app.getLanguages());
+    })();
+  }, []);
 
   const getPlatform = async () => {
     const res = await window.process.getPlatform();
@@ -195,12 +210,12 @@ function Home() {
           <div className="grid w-full grid-cols-1 gap-y-4">
             <div className="text-base-content border-base-content/20 select-none border-l-2 p-2 capitalize">
               <p className="font-mono text-5xl">{statistics.image}</p>
-              <p className="opacity-25">图片总数</p>
+              <p className="opacity-25">{language?.["electron.renderer.image_count"]}</p>
             </div>
 
             <div className="text-base-content border-base-content/20 select-none border-l-2  p-2 capitalize">
               <p className="font-mono text-5xl">{statistics.media}</p>
-              <p className="opacity-25">媒体总数</p>
+              <p className="opacity-25">{language?.["electron.renderer.image_count"]}</p>
             </div>
           </div>
         </div>
@@ -218,7 +233,7 @@ function Home() {
                     />
                   </svg>
 
-                  <span className="ml-2">文件夹 ID</span>
+                  <span className="ml-2">{language?.["electron.renderer.file_id"]}</span>
                 </span>
                 <span className="font-mono">{activeItem?.id}</span>
               </div>
@@ -232,7 +247,7 @@ function Home() {
                       d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
                     />
                   </svg>
-                  <span className="ml-2">文件夹路径</span>
+                  <span className="ml-2">{language?.["electron.renderer.file_path"]}</span>
                 </span>
                 <span>{activeItem?.dir}</span>
               </div>
@@ -242,7 +257,7 @@ function Home() {
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="ml-2">最后同步</span>
+                  <span className="ml-2">{language?.["electron.renderer.last_time"]}</span>
                 </span>
                 <span className="font-mono">{activeItem?.lastSyncTime?.toLocaleString("zh", { hour12: false }) ?? "未同步"}</span>
               </div>
@@ -257,7 +272,7 @@ function Home() {
                     />
                   </svg>
 
-                  <span className="ml-2 flex items-center">WEB 预览</span>
+                  <span className="ml-2 flex items-center">{language?.["electron.renderer.preview"]}</span>
                 </span>
                 <a onClick={openExternal} className="btn btn-link btn-active btn-sm text-secondary group relative p-0 font-normal normal-case">
                   {webUrl}
@@ -288,8 +303,8 @@ function Home() {
                   </svg>
 
                   <div className="ml-2 flex items-center">
-                    已同步/未同步
-                    <div className="tooltip before:w-max" data-tip="未同步：回收站、JSON错误、类型不支持">
+                    {language?.["electron.renderer.status"]}
+                    <div className="tooltip before:w-max" data-tip={language?.["electron.renderer.status.tips"]}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="text-base-content/50 h-5 w-5">
                         <path
                           strokeLinecap="round"
@@ -318,12 +333,12 @@ function Home() {
                     {adding ? (
                       <div className="text-neutral-content flex flex-col items-center justify-center">
                         <span className="text-neutral-content text-xl font-bold">{pendingCount}</span>
-                        <span className="text-neutral-content/80">初始化中...</span>
+                        <span className="text-neutral-content/80">{language?.["electron.renderer.statistic.tips2"]}</span>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center">
                         <span className="text-neutral-content text-xl font-bold">{activeItem?._count.pendings}</span>
-                        <span className="text-neutral-content/80">待同步</span>
+                        <span className="text-neutral-content/80">{language?.["electron.renderer.statistic.tips1"]}</span>
                       </div>
                     )}
                   </div>
@@ -366,7 +381,7 @@ function Home() {
         )}
 
         {/* fails log modal */}
-        {activeItem?.id && faillogsVisable && <FailLogs onClose={() => setFaillogsVisable(false)} libraryId={activeItem.id} />}
+        {activeItem?.id && faillogsVisable && <FailLogs lang={lang} language={language} onClose={() => setFaillogsVisable(false)} libraryId={activeItem.id} />}
 
         {/* Modal confirm */}
         <input type="checkbox" defaultChecked={delConfirmVisable} id="my-modal" className="modal-toggle" />

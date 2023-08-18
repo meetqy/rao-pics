@@ -1,0 +1,8 @@
+{
+  "name": "@acme/lang",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "dependencies": {
+    "@acme/curd": "^0.1.0"
+  }
+}
