@@ -7,12 +7,15 @@ import { useMemo } from "react";
 import { getImgUrl } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
+import { languages, type Lang } from "~/lang";
 
 const Page: NextPage = () => {
   const router = useRouter();
   const librarryName = router.query.library as string;
   const { data: config } = trpc.config.get.useQuery();
   const assetsUrl = useMemo(() => (config ? `http://${config?.ip}:${config?.assetsPort}` : null), [config]);
+
+  const language = useMemo(() => languages[(config?.lang ?? "zh_cn").replace("-", "_") as Lang], [config]);
 
   const { data } = trpc.tags.get.useQuery({
     library: librarryName,
@@ -33,7 +36,7 @@ const Page: NextPage = () => {
               </svg>
             </label>
             <a className="btn btn-ghost p-0 text-xl normal-case hover:bg-transparent">
-              标签
+              {language.tag}
               {data && <span className="badge ml-2">{data.length}</span>}
             </a>
           </div>
@@ -43,7 +46,7 @@ const Page: NextPage = () => {
   };
 
   return (
-    <Layout navbar={<Header />} href="/tags" loadMoreContent={<span className="text-base-300 text-sm">{"已经到底了~~"}</span>}>
+    <Layout navbar={<Header />} href="/tags" loadMoreContent={<span className="text-base-300 text-sm">{language.noData}</span>}>
       <>
         {assetsUrl && (
           <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">

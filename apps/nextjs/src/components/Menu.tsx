@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
+import { trpc } from "~/utils/trpc";
+import { languages, type Lang } from "~/lang";
 import Logo from "./Logo";
 import Search from "./Search";
 
@@ -12,6 +15,10 @@ interface MenuProps {
 const Menu = ({ library, href }: MenuProps) => {
   const router = useRouter();
 
+  const { data: config } = trpc.config.get.useQuery();
+
+  const language = useMemo(() => languages[(config?.lang ?? "zh_cn").replace("-", "_") as Lang], [config]);
+
   const goHome = () => {
     const { grid } = router.query;
 
@@ -22,7 +29,7 @@ const Menu = ({ library, href }: MenuProps) => {
     <aside className="bg-base-100 text-base-content z-50 w-72">
       <div className="sticky top-0 p-2">
         <Logo className="hidden lg:flex" />
-        <Search className="mt-2 flex lg:hidden" inputClassName="w-full" />
+        <Search language={language} className="mt-2 flex lg:hidden" inputClassName="w-full" />
       </div>
 
       <ul className="menu my-2 p-2">
@@ -47,7 +54,7 @@ const Menu = ({ library, href }: MenuProps) => {
                 clipRule="evenodd"
               />
             </svg>
-            标签
+            {language?.tag}
           </Link>
         </li>
         <li>
@@ -55,7 +62,7 @@ const Menu = ({ library, href }: MenuProps) => {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
               <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
             </svg>
-            文件夹
+            {language?.folder}
           </Link>
         </li>
       </ul>
