@@ -8,7 +8,8 @@
     "db:reset": "pnpm db:push --force-reset",
     "test": "vitest",
     "generate": "prisma generate",
-    "migrate": "prisma migrate dev --name init"
+    "migrate": "prisma migrate dev --name init",
+    "clean": "git clean -xdf node_modules prisma/db* .turbo"
   },
   "devDependencies": {
     "@types/node": "^20.4.9",

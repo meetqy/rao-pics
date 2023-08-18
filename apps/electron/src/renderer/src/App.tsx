@@ -47,8 +47,17 @@ function HelloElectron() {
   }
 
   return (
-    <div>
-      <table>
+    <div className="container p-4">
+      <button className="btn-neutral btn" onClick={() => createUser.mutate()}>
+        Add user
+      </button>
+
+      <div className="my-4 bg-base-300 p-4">
+        <div>subscription message: {sub}</div>
+        <div>{data.text}</div>
+      </div>
+
+      <table className="table">
         <thead>
           <tr>
             <th>id</th>
@@ -66,9 +75,6 @@ function HelloElectron() {
           ))}
         </tbody>
       </table>
-      <button onClick={() => createUser.mutate()}>添加</button>
-      <div>subscription message: {sub}</div>
-      <div>{data.text}</div>
     </div>
   );
 }

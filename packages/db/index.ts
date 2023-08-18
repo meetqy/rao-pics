@@ -1,5 +1,3 @@
-import { spawn } from "child_process";
-import { resolve } from "path";
 import { PrismaClient } from "@prisma/client";
 
 export const prisma = new PrismaClient();

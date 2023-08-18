@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "^0.2.0",
-    "@rao-pics/tailwind-config": "^0.1.0",
+    "@rao-pics/tailwind-config": "^0.2.0",
     "@types/node": "^20.4.9",
     "@types/react": "^18.2.19",
     "@types/react-dom": "^18.2.7",
