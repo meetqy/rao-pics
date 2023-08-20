@@ -2,7 +2,11 @@
   "name": "create-t3-turbo",
   "private": true,
   "engines": {
-    "node": ">=v18.17.*"
+    "node": ">=v18.17.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meetqy/rao-pics"
   },
   "packageManager": "pnpm@8.6.12",
   "scripts": {
@@ -16,16 +20,13 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
-    "typecheck": "turbo typecheck",
-    "version:check": "manypkg check",
-    "version:fix": "manypkg fix"
+    "typecheck": "turbo typecheck"
   },
+  "prettier": "@acme/prettier-config",
   "dependencies": {
     "@acme/prettier-config": "^0.1.0",
-    "@manypkg/cli": "^0.21.0",
     "prettier": "^3.0.2",
     "turbo": "^1.10.12",
     "typescript": "^5.1.6"
-  },
-  "prettier": "@acme/prettier-config"
+  }
 }
