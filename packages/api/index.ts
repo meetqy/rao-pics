@@ -1,49 +1,18 @@
-import { EventEmitter } from "events";
-import { initTRPC } from "@trpc/server";
-import { observable } from "@trpc/server/observable";
-import superjson from "superjson";
-import z from "zod";
+import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
-import { createUser, getUsers } from "@rao-pics/db";
+import type { AppRouter } from "./src/root";
 
-const ee = new EventEmitter();
+export { appRouter, type AppRouter } from "./src/root";
+export { createTRPCContext } from "./src/trpc";
 
-const t = initTRPC.create({ isServer: true, transformer: superjson });
+/**
+ * Inference helpers for input types
+ * @example type HelloInput = RouterInputs['example']['hello']
+ **/
+export type RouterInputs = inferRouterInputs<AppRouter>;
 
-export const router = t.router({
-  getUsers: t.procedure.query(async () => {
-    return await getUsers();
-  }),
-
-  createUser: t.procedure.mutation(async () => {
-    return await createUser();
-  }),
-
-  greeting: t.procedure.input(z.object({ name: z.string() })).query((req) => {
-    const { input } = req;
-
-    ee.emit(
-      "greeting",
-      `Greeted ${input.name}, time is ${new Date().toISOString()}`,
-    );
-
-    return {
-      text: `Hello ${input.name}` as const,
-    };
-  }),
-  subscription: t.procedure.subscription(() => {
-    return observable((emit) => {
-      function onGreet(text: string) {
-        emit.next({ text });
-      }
-
-      ee.on("greeting", onGreet);
-
-      return () => {
-        ee.off("greeting", onGreet);
-      };
-    });
-  }),
-});
-
-export type AppRouter = typeof router;
+/**
+ * Inference helpers for output types
+ * @example type HelloOutput = RouterOutputs['example']['hello']
+ **/
+export type RouterOutputs = inferRouterOutputs<AppRouter>;

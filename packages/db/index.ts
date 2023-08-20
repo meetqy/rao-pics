@@ -1,18 +1,18 @@
-import { PrismaClient } from "@prisma/client";
+import { Client } from "@planetscale/database";
+import { drizzle } from "drizzle-orm/planetscale-serverless";
 
-export const prisma = new PrismaClient();
+import * as auth from "./schema/auth";
+import * as post from "./schema/post";
 
-export const createUser = async () => {
-  await prisma.user.create({
-    data: {
-      name: `Alice - ${Math.random()}`,
-      email: `alice@prisma2.io - ${Math.random()}`,
-    },
-  });
-};
+export const schema = { ...auth, ...post };
 
-export const getUsers = async () => {
-  const res = await prisma.user.findMany({});
-  console.log(res);
-  return res;
-};
+export { mySqlTable as tableCreator } from "./schema/_table";
+
+export * from "drizzle-orm";
+
+export const db = drizzle(
+  new Client({
+    url: process.env.DATABASE_URL,
+  }).connection(),
+  { schema },
+);

@@ -1,32 +1,29 @@
 {
-  "name": "rao-pics",
+  "name": "create-t3-turbo",
   "private": true,
   "engines": {
-    "node": ">=v18.17.0"
+    "node": ">=v18.17.*"
   },
   "packageManager": "pnpm@8.6.12",
   "scripts": {
     "build": "turbo build",
-    "clean": "git clean -xdf node_modules coverage",
+    "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
-    "dev": "turbo dev --parallel --filter='./apps/*'",
-    "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
-    "lint": "turbo lint && manypkg check",
-    "lint:fix": "turbo lint:fix && manypkg fix",
-    "type-check": "turbo type-check",
-    "test:ui": "dotenv -e ./.env.test -- vitest --ui --no-threads --coverage"
+    "db:push": "pnpm -F db push",
+    "db:studio": "pnpm -F db dev",
+    "dev": "turbo dev --parallel",
+    "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache'",
+    "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
+    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
+    "typecheck": "turbo typecheck"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.0.2",
-    "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
+    "@acme/prettier-config": "^0.1.0",
     "@manypkg/cli": "^0.21.0",
-    "@vitest/coverage-v8": "^0.34.1",
-    "@vitest/ui": "^0.34.1",
-    "dotenv-cli": "^7.2.1",
-    "prettier": "^3.0.1",
-    "prettier-plugin-tailwindcss": "^0.4.1",
+    "prettier": "^3.0.2",
     "turbo": "^1.10.12",
-    "typescript": "^5.1.6",
-    "vitest": "^0.34.1"
-  }
+    "typescript": "^5.1.6"
+  },
+  "prettier": "@acme/prettier-config"
 }

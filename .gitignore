@@ -1,8 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# sqlite
-db.sqlite*
-
 # dependencies
 node_modules
 .pnp
@@ -19,10 +16,10 @@ next-env.d.ts
 # expo
 .expo/
 dist/
+expo-env.d.ts
 
 # production
 build
-!apps/electron/build
 
 # misc
 .DS_Store

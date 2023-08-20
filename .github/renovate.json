@@ -3,7 +3,7 @@
   "extends": ["config:base"],
   "packageRules": [
     {
-      "matchPackagePatterns": ["^@rao-pics/"],
+      "matchPackagePatterns": ["^@acme/"],
       "enabled": false
     }
   ],

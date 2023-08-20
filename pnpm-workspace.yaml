@@ -1,6 +1,4 @@
 packages:
-  - apps/electron
-  - apps/nextjs
-  - packages/config/*
-  - packages/api
-  - packages/db
+  - apps/*
+  - packages/*
+  - tooling/*

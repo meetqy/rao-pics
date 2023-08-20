@@ -8,13 +8,6 @@
       "command": "pnpm dev",
       "cwd": "${workspaceFolder}/apps/nextjs/",
       "skipFiles": ["<node_internals>/**"]
-    },
-    {
-      "name": "Database",
-      "type": "node-terminal",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/packages/database",
-      "command": "pnpm dev"
     }
   ]
 }

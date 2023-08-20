@@ -1,23 +1,36 @@
 {
-  "name": "@rao-pics/db",
-  "version": "0.2.0",
+  "name": "@acme/db",
+  "version": "0.1.0",
+  "private": true,
   "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
   "scripts": {
-    "postinstall": "pnpm db:reset",
-    "db:push": "prisma db push",
-    "db:reset": "pnpm db:push --force-reset",
-    "test": "vitest",
-    "generate": "prisma generate",
-    "migrate": "prisma migrate dev --name init",
-    "clean": "git clean -xdf node_modules prisma/db* .turbo"
-  },
-  "devDependencies": {
-    "@types/node": "^20.4.9",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "push": "drizzle-kit push:mysql",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "prisma": "5.1.1",
-    "@prisma/client": "5.1.1"
-  }
+    "@planetscale/database": "^1.10.0",
+    "drizzle-orm": "^0.28.2"
+  },
+  "devDependencies": {
+    "@acme/eslint-config": "^0.2.0",
+    "@acme/prettier-config": "^0.1.0",
+    "@acme/tsconfig": "^0.1.0",
+    "dotenv-cli": "^7.3.0",
+    "drizzle-kit": "^0.19.13",
+    "eslint": "^8.47.0",
+    "prettier": "^3.0.2",
+    "typescript": "^5.1.6"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base"
+    ]
+  },
+  "prettier": "@acme/prettier-config"
 }
