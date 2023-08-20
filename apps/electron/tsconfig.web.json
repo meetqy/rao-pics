@@ -1,5 +1,8 @@
 {
-  "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
+  "extends": [
+    "@electron-toolkit/tsconfig/tsconfig.web.json",
+    "@acme/tsconfig/base"
+  ],
   "include": [
     "src/renderer/src/env.d.ts",
     "src/renderer/src/**/*",
@@ -10,10 +13,10 @@
     "composite": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {
-      "@renderer/*": [
-        "src/renderer/src/*"
-      ]
+      "@renderer/*": ["src/renderer/src/*"]
     }
-  }
+  },
+  "exclude": ["node_modules"]
 }
