@@ -1,7 +1,8 @@
 {
-  "name": "@acme/db",
+  "name": "@acme/core",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "exports": {
     ".": "./index.ts"
   },
@@ -13,12 +14,8 @@
     }
   },
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
-    "db:push": "prisma db push",
-    "db:reset": "pnpm db:push --force-reset",
-    "dev": "prisma studio -b none",
+    "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "postinstall": "pnpm db:push",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
@@ -28,15 +25,12 @@
       "@acme/eslint-config/base"
     ]
   },
-  "dependencies": {
-    "@prisma/client": "5.1.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@acme/eslint-config": "0.2.0",
     "@acme/prettier-config": "^0.1.0",
     "@acme/tsconfig": "^0.1.0",
     "eslint": "^8.47.0",
-    "prisma": "^5.1.1",
     "typescript": "^5.1.6"
   }
 }
