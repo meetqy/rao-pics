@@ -1,7 +1,7 @@
 {
-  "name": "@acme/{{ name }}",
-  "private": true,
+  "name": "@acme/db",
   "version": "0.1.0",
+  "private": true,
   "exports": {
     ".": "./index.ts"
   },
@@ -11,27 +11,31 @@
         "src/*"
       ]
     }
-  }
-  "license": "MIT",
+  },
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
-    "lint": "eslint .",
+    "clean": "rm -rf .turbo node_modules",
+    "db:push": "prisma db push",
+    "db:reset": "pnpm db:push --force-reset",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "postinstall": "pnpm db:push",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
+  "prettier": "@acme/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@acme/eslint-config/base"
+    ]
+  },
   "dependencies": {
+    "@prisma/client": "5.1.1"
   },
   "devDependencies": {
     "@acme/eslint-config": "0.2.0",
     "@acme/prettier-config": "^0.1.0",
     "@acme/tsconfig": "^0.1.0",
     "eslint": "^8.47.0",
+    "prisma": "^5.1.1",
     "typescript": "^5.1.6"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@acme/eslint-config/base"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  }
 }
