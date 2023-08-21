@@ -1,8 +1,1 @@
-{
-  "extends": "@acme/tsconfig/base.json",
-  "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
-  },
-  "include": ["."],
-  "exclude": ["node_modules"]
-}
+/Users/meetqy/Desktop/me/electron-vite-turbo/packages/api-test/package.json

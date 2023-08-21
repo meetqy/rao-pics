@@ -1,5 +1,5 @@
 {
-  "name": "@acme/nextjs",
+  "name": "@rao-pics/nextjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,19 +12,19 @@
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
   },
-  "prettier": "@acme/prettier-config",
+  "prettier": "@rao-pics/prettier-config",
   "eslintConfig": {
     "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/nextjs",
-      "@acme/eslint-config/react"
+      "@rao-pics/eslint-config/base",
+      "@rao-pics/eslint-config/nextjs",
+      "@rao-pics/eslint-config/react"
     ],
     "root": true
   },
   "dependencies": {
-    "@acme/api-test": "^0.1.0",
-    "@acme/auth": "^0.1.0",
-    "@acme/db-test": "^0.1.0",
+    "@rao-pics/api-test": "^0.1.0",
+    "@rao-pics/auth": "^0.1.0",
+    "@rao-pics/db-test": "^0.1.0",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-devtools": "^4.32.6",
@@ -40,10 +40,10 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@acme/eslint-config": "^0.2.0",
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tailwind-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
+    "@rao-pics/eslint-config": "^0.2.0",
+    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/tailwind-config": "^0.1.0",
+    "@rao-pics/tsconfig": "^0.1.0",
     "@types/node": "^18.17.6",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",

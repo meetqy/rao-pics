@@ -1,7 +1,7 @@
 {
   "extends": [
     "@electron-toolkit/tsconfig/tsconfig.node.json",
-    "@acme/tsconfig/base.json"
+    "@rao-pics/tsconfig/base.json"
   ],
   "include": ["electron.vite.config.*", "src/main/*", "src/preload/*"],
   "compilerOptions": {

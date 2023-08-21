@@ -1,5 +1,5 @@
 {
-  "name": "@acme/db",
+  "name": "@rao-pics/db",
   "version": "0.1.0",
   "private": true,
   "exports": {
@@ -22,19 +22,19 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "@acme/prettier-config",
+  "prettier": "@rao-pics/prettier-config",
   "eslintConfig": {
     "extends": [
-      "@acme/eslint-config/base"
+      "@rao-pics/eslint-config/base"
     ]
   },
   "dependencies": {
     "@prisma/client": "5.1.1"
   },
   "devDependencies": {
-    "@acme/eslint-config": "0.2.0",
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
+    "@rao-pics/eslint-config": "0.2.0",
+    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/tsconfig": "^0.1.0",
     "eslint": "^8.47.0",
     "prisma": "^5.1.1",
     "typescript": "^5.1.6"

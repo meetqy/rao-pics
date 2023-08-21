@@ -1,7 +1,7 @@
 {
   "extends": [
     "@electron-toolkit/tsconfig/tsconfig.web.json",
-    "@acme/tsconfig/base"
+    "@rao-pics/tsconfig/base"
   ],
   "include": [
     "src/renderer/src/env.d.ts",

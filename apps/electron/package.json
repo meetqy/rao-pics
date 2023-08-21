@@ -20,18 +20,18 @@
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false"
   },
-  "prettier": "@acme/prettier-config",
+  "prettier": "@rao-pics/prettier-config",
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^1.0.2",
     "electron-updater": "^5.3.0"
   },
   "devDependencies": {
-    "@acme/eslint-config": "^0.2.0",
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
     "@electron/notarize": "^1.2.3",
+    "@rao-pics/eslint-config": "^0.2.0",
+    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/tsconfig": "^0.1.0",
     "@types/node": "^18.17.6",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",

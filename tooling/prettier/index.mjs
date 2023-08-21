@@ -16,7 +16,7 @@ const config = {
     "^(electron(.*)$)|^(electron$)",
     "<THIRD_PARTY_MODULES>",
     "",
-    "^@acme/(.*)$",
+    "^@rao-pics/(.*)$",
     "",
     "^~/",
     "^[../]",

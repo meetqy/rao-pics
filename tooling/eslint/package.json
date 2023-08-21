@@ -1,5 +1,5 @@
 {
-  "name": "@acme/eslint-config",
+  "name": "@rao-pics/eslint-config",
   "version": "0.2.0",
   "private": true,
   "license": "MIT",
@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "@acme/prettier-config",
+  "prettier": "@rao-pics/prettier-config",
   "eslintConfig": {
     "extends": [
       "./base.js"
@@ -34,8 +34,8 @@
     "eslint-plugin-react-hooks": "^4.6.0"
   },
   "devDependencies": {
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
+    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/tsconfig": "^0.1.0",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6"
   }

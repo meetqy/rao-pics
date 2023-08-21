@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": ["@acme/eslint-config/base", "@acme/eslint-config/react"],
+  "extends": ["@rao-pics/eslint-config/base", "@rao-pics/eslint-config/react"],
   "parserOptions": {
     "project": ["./tsconfig.node.json", "./tsconfig.web.json"]
   }

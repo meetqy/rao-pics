@@ -3,7 +3,7 @@ import type { DefaultSession } from "@auth/core/types";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
 
-import { db, tableCreator } from "@acme/db-test";
+import { db, tableCreator } from "@rao-pics/db-test";
 
 import { env } from "./env.mjs";
 

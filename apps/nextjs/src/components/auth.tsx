@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 
-import type { OAuthProviders } from "@acme/auth";
-import { CSRF_experimental } from "@acme/auth";
+import type { OAuthProviders } from "@rao-pics/auth";
+import { CSRF_experimental } from "@rao-pics/auth";
 
 export function SignIn({
   provider,

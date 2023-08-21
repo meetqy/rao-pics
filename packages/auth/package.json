@@ -1,5 +1,5 @@
 {
-  "name": "@acme/auth",
+  "name": "@rao-pics/auth",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
@@ -11,15 +11,15 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "@acme/prettier-config",
+  "prettier": "@rao-pics/prettier-config",
   "eslintConfig": {
     "extends": [
-      "@acme/eslint-config/base"
+      "@rao-pics/eslint-config/base"
     ],
     "root": true
   },
   "dependencies": {
-    "@acme/db-test": "^0.1.0",
+    "@rao-pics/db-test": "^0.1.0",
     "@auth/core": "^0.12.0",
     "@auth/drizzle-adapter": "^0.3.2",
     "@t3-oss/env-nextjs": "^0.6.1",
@@ -30,9 +30,9 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@acme/eslint-config": "^0.2.0",
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
+    "@rao-pics/eslint-config": "^0.2.0",
+    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/tsconfig": "^0.1.0",
     "eslint": "^8.47.0",
     "prettier": "^3.0.2",
     "typescript": "^5.1.6"

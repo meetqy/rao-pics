@@ -1,5 +1,5 @@
 {
-  "name": "@acme/db-test",
+  "name": "@rao-pics/db-test",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
@@ -12,10 +12,10 @@
     "push": "drizzle-kit push:mysql",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "@acme/prettier-config",
+  "prettier": "@rao-pics/prettier-config",
   "eslintConfig": {
     "extends": [
-      "@acme/eslint-config/base"
+      "@rao-pics/eslint-config/base"
     ],
     "root": true
   },
@@ -24,9 +24,9 @@
     "drizzle-orm": "^0.28.2"
   },
   "devDependencies": {
-    "@acme/eslint-config": "^0.2.0",
-    "@acme/prettier-config": "^0.1.0",
-    "@acme/tsconfig": "^0.1.0",
+    "@rao-pics/eslint-config": "^0.2.0",
+    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/tsconfig": "^0.1.0",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.47.0",
