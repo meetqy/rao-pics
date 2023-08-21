@@ -96,7 +96,7 @@ importers:
       '@acme/auth':
         specifier: ^0.1.0
         version: link:../../packages/auth
-      '@acme/db':
+      '@acme/db-test':
         specifier: ^0.1.0
         version: link:../../packages/db
       '@t3-oss/env-nextjs':
@@ -181,7 +181,7 @@ importers:
       '@acme/auth':
         specifier: ^0.1.0
         version: link:../auth
-      '@acme/db':
+      '@acme/db-test':
         specifier: ^0.1.0
         version: link:../db
       '@trpc/client':
@@ -218,7 +218,7 @@ importers:
 
   packages/auth:
     dependencies:
-      '@acme/db':
+      '@acme/db-test':
         specifier: ^0.1.0
         version: link:../db
       '@auth/core':

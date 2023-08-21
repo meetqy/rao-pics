@@ -19,7 +19,7 @@
     "root": true
   },
   "dependencies": {
-    "@acme/db": "^0.1.0",
+    "@acme/db-test": "^0.1.0",
     "@auth/core": "^0.12.0",
     "@auth/drizzle-adapter": "^0.3.2",
     "@t3-oss/env-nextjs": "^0.6.1",
