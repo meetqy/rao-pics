@@ -1,6 +1,6 @@
+import icons from "../assets/icons.svg";
 import HelloElectron from "../components/Hello";
 import Versions from "../components/Versions";
-import icons from "./assets/icons.svg";
 
 function Home(): JSX.Element {
   return (
