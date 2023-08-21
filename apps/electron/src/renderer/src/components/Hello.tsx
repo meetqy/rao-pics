@@ -12,7 +12,7 @@ function HelloElectron() {
     return null;
   }
 
-  return <div>{data.text}</div>;
+  return <div className="text-xl font-bold">{data.text}</div>;
 }
 
 export default HelloElectron;

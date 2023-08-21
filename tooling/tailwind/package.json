@@ -2,7 +2,6 @@
   "name": "@rao-pics/tailwind-config",
   "version": "0.1.0",
   "private": true,
-  "license": "MIT",
   "main": "index.ts",
   "files": [
     "index.ts",
@@ -25,6 +24,7 @@
     "autoprefixer": "^10.4.15",
     "daisyui": "^3.5.1",
     "postcss": "8.4.26",
+    "postcss-nesting": "^12.0.1",
     "tailwindcss": "3.3.2"
   },
   "devDependencies": {
@@ -32,7 +32,6 @@
     "@rao-pics/prettier-config": "^0.1.0",
     "@rao-pics/tsconfig": "^0.1.0",
     "eslint": "^8.47.0",
-    "postcss-nesting": "^12.0.1",
     "prettier": "^3.0.2",
     "typescript": "^5.1.6"
   }
