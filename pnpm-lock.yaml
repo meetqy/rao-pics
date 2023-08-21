@@ -98,7 +98,7 @@ importers:
         version: link:../../packages/auth
       '@acme/db-test':
         specifier: ^0.1.0
-        version: link:../../packages/db
+        version: link:../../packages/db-test
       '@t3-oss/env-nextjs':
         specifier: ^0.6.1
         version: 0.6.1(typescript@5.1.6)(zod@3.22.2)
@@ -183,7 +183,7 @@ importers:
         version: link:../auth
       '@acme/db-test':
         specifier: ^0.1.0
-        version: link:../db
+        version: link:../db-test
       '@trpc/client':
         specifier: ^10.37.1
         version: 10.37.1(@trpc/server@10.37.1)
@@ -220,7 +220,7 @@ importers:
     dependencies:
       '@acme/db-test':
         specifier: ^0.1.0
-        version: link:../db
+        version: link:../db-test
       '@auth/core':
         specifier: ^0.12.0
         version: 0.12.0
@@ -265,7 +265,7 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
-  packages/db:
+  packages/db-test:
     dependencies:
       '@planetscale/database':
         specifier: ^1.10.0
@@ -2737,6 +2737,7 @@ packages:
 
   /drizzle-kit@0.19.13:
     resolution: {integrity: sha512-Rba5VW1O2JfJlwVBeZ8Zwt2E2us5oZ08PQBDiVSGlug53TOc8hzXjblZFuF+dnll9/RQEHrkzBmJFgqTvn5Rxg==}
+    hasBin: true
     dependencies:
       '@drizzle-team/studio': 0.0.5
       '@esbuild-kit/esm-loader': 2.5.5
@@ -4259,6 +4260,7 @@ packages:
 
   /json-diff@0.9.0:
     resolution: {integrity: sha512-cVnggDrVkAAA3OvFfHpFEhOnmcsUpleEKq4d4O8sQWWSH40MBrWstKigVB1kGrgLWzuom+7rRdaCsnBD6VyObQ==}
+    hasBin: true
     dependencies:
       cli-color: 2.0.3
       difflib: 0.2.4
