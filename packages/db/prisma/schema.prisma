@@ -3,6 +3,10 @@
 
 generator client {
   provider = "prisma-client-js"
+  // FIXME: pnpm not found .prisma/client
+  // https://github.com/prisma/prisma/issues/6603
+  // https://github.com/prisma/prisma/issues/9848
+  output   = "../../../node_modules/.prisma/client"
 }
 
 datasource db {

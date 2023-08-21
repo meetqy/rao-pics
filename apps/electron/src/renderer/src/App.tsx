@@ -3,7 +3,7 @@ import { ipcLink } from "electron-trpc/renderer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import superjson from "superjson";
 
-import Home from "./Home";
+import Home from "./pages/Home";
 import { trpc } from "./utils/trpc";
 
 function App() {

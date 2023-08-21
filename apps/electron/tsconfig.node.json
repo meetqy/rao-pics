@@ -3,7 +3,12 @@
     "@electron-toolkit/tsconfig/tsconfig.node.json",
     "@rao-pics/tsconfig/base.json"
   ],
-  "include": ["electron.vite.config.*", "src/main/*", "src/preload/*"],
+  "include": [
+    "electron.vite.config.*",
+    "src/main/*",
+    "src/preload/*",
+    "tailwind.config.*"
+  ],
   "compilerOptions": {
     "composite": true,
     "types": ["electron-vite/node"],

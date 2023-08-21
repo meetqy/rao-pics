@@ -6,12 +6,7 @@ export default defineConfig({
   main: {
     plugins: [
       externalizeDepsPlugin({
-        exclude: [
-          "@prisma/client",
-          ".prisma/client/index",
-          "@rao-pics/db",
-          "@rao-pics/api",
-        ],
+        exclude: ["@rao-pics/db", "@rao-pics/api"],
       }),
     ],
   },
