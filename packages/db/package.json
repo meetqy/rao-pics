@@ -5,13 +5,7 @@
   "exports": {
     ".": "./index.ts"
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
+  "main": "./index.ts",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "db:push": "prisma db push",

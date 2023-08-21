@@ -1,10 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-let prisma: PrismaClient;
+const _prisma: PrismaClient = new PrismaClient();
 
-export const getPrismaClient = () => {
-  if (!prisma) {
-    prisma = new PrismaClient();
-  }
-  return prisma;
-};
+export * from "@prisma/client";
+export const prisma = _prisma;

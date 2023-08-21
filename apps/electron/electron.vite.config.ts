@@ -4,7 +4,16 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()],
+    plugins: [
+      externalizeDepsPlugin({
+        exclude: [
+          "@prisma/client",
+          ".prisma/client/index",
+          "@rao-pics/db",
+          "@rao-pics/api",
+        ],
+      }),
+    ],
   },
   preload: {
     plugins: [externalizeDepsPlugin()],

@@ -1,1 +1,8 @@
-/Users/meetqy/Desktop/me/electron-vite-turbo/packages/api-test/package.json
+{
+  "extends": "@rao-pics/tsconfig/base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  },
+  "include": ["*.ts", "src"],
+  "exclude": ["node_modules"]
+}

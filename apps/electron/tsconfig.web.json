@@ -11,10 +11,11 @@
   ],
   "compilerOptions": {
     "composite": true,
+    "preserveSymlinks": true,
     "baseUrl": ".",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {
-      "@renderer/*": ["src/renderer/src/*"]
+      "@renderer/*": ["src/renderer/src/*"],
     }
   },
   "exclude": ["node_modules"]

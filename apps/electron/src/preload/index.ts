@@ -1,4 +1,5 @@
 import { contextBridge } from "electron";
+import { exposeElectronTRPC } from "electron-trpc/main";
 import { electronAPI } from "@electron-toolkit/preload";
 
 // Custom APIs for renderer
@@ -11,6 +12,7 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
     contextBridge.exposeInMainWorld("api", api);
+    exposeElectronTRPC();
   } catch (error) {
     console.error(error);
   }

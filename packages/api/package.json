@@ -1,18 +1,9 @@
 {
-  "name": "@rao-pics/core",
+  "name": "@rao-pics/api",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "exports": {
-    ".": "./index.ts"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
+  "main": "./index.ts",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
@@ -25,7 +16,12 @@
       "@rao-pics/eslint-config/base"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "@rao-pics/db": "workspace:*",
+    "@trpc/server": "^10.37.1",
+    "superjson": "1.13.1",
+    "zod": "^3.22.2"
+  },
   "devDependencies": {
     "@rao-pics/eslint-config": "0.2.0",
     "@rao-pics/prettier-config": "^0.1.0",

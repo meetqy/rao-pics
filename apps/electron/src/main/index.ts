@@ -1,6 +1,9 @@
 import { join } from "path";
 import { app, BrowserWindow, shell } from "electron";
+import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
+
+import { router } from "@rao-pics/api";
 
 import icon from "../../resources/icon.png?asset";
 
@@ -34,6 +37,8 @@ function createWindow(): void {
   } else {
     void mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
+
+  createIPCHandler({ router, windows: [mainWindow] });
 }
 
 // This method will be called when Electron has finished
