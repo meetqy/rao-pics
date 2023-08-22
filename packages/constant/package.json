@@ -1,20 +1,13 @@
 {
-  "name": "@rao-pics/db",
+  "name": "@rao-pics/constant",
   "version": "0.1.0",
   "private": true,
-  "exports": {
-    ".": "./index.ts"
-  },
   "main": "./index.ts",
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
-    "db:push": "prisma db push",
-    "db:reset": "pnpm db:push --force-reset",
-    "dev": "prisma studio -b none",
+    "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "postinstall": "pnpm db:push",
     "lint": "eslint .",
-    "test": "vitest",
+    "test": "cross-env NODE_ENV=test vitest",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@rao-pics/prettier-config",
@@ -24,19 +17,14 @@
     ]
   },
   "dependencies": {
-    "@prisma/client": "5.1.1",
-    "@rao-pics/constant": "workspace:^",
-    "fs-extra": "^11.1.1"
+    "env-var": "^7.4.0"
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "0.2.0",
     "@rao-pics/prettier-config": "^0.1.0",
     "@rao-pics/tsconfig": "^0.1.0",
     "@types/node": "^18.17.6",
-    "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
-    "prisma": "^5.1.1",
-    "typescript": "^5.1.6",
-    "vitest": "^0.34.2"
+    "typescript": "^5.1.6"
   }
 }

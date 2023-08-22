@@ -1,6 +1,37 @@
+import { sep } from "path";
 import { PrismaClient } from "@prisma/client";
+import fs from "fs-extra";
 
-const _prisma: PrismaClient = new PrismaClient();
+import { DB_DIRS, IS_DEV, PLATFORM } from "@rao-pics/constant";
+
+const dbPath = DB_DIRS[PLATFORM];
+
+const _prisma: PrismaClient = new PrismaClient({
+  datasources: !IS_DEV
+    ? {
+        db: {
+          url: `file:${dbPath}?connection_limit=1`,
+        },
+      }
+    : undefined,
+});
+
+/**
+ * 创建 Db 目录， 如果不存在
+ * @param defaultPath ...db.sqlite
+ */
+export const createDbPath = (defaultPath: string) => {
+  if (!fs.existsSync(defaultPath)) {
+    throw new Error(`defaultPath: ${defaultPath} not exist`);
+  }
+
+  if (fs.pathExistsSync(dbPath)) return;
+
+  fs.ensureDirSync(dbPath.split(sep).slice(0, -1).join(sep));
+  fs.copySync(defaultPath, dbPath, {
+    overwrite: false,
+  });
+};
 
 export * from "@prisma/client";
 export const prisma = _prisma;
