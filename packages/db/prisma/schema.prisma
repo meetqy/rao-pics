@@ -6,7 +6,7 @@ generator client {
   // FIXME: pnpm not found .prisma/client
   // https://github.com/prisma/prisma/issues/6603
   // https://github.com/prisma/prisma/issues/9848
-  output   = "../../../node_modules/.prisma/client"
+  // output   = "../node_modules/.prisma/client"
 }
 
 datasource db {

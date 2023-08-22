@@ -36,6 +36,7 @@ const config = {
     "**/.eslintrc.cjs",
     "**/*.config.js",
     "**/*.config.cjs",
+    "electron-builder.cjs",
     ".next",
     "dist",
     "pnpm-lock.yaml",

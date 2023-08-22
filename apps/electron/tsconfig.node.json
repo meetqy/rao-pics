@@ -5,6 +5,7 @@
   ],
   "include": [
     "electron.vite.config.*",
+    "electron-builder.*",
     "src/main/*",
     "src/preload/*",
     "tailwind.config.*"

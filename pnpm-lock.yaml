@@ -32,6 +32,9 @@ importers:
       '@rao-pics/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@rao-pics/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@tanstack/react-query':
         specifier: ^4.32.6
         version: 4.32.6(react-dom@18.2.0)(react@18.2.0)
