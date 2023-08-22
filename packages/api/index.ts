@@ -50,6 +50,16 @@ export const router = t.router({
   getUsers: t.procedure.query(async () => {
     return await prisma.user.findMany();
   }),
+
+  deleteUser: t.procedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input }) => {
+      return await prisma.user.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });
 
 export type AppRouter = typeof router;
