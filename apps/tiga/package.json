@@ -1,0 +1,30 @@
+{
+  "name": "@rao-pics/tiga",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start",
+    "clean": "git clean -xdf .next .turbo node_modules",
+    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "prettier": "@rao-pics/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@rao-pics/eslint-config/base",
+      "@rao-pics/eslint-config/nextjs",
+      "@rao-pics/eslint-config/react"
+    ],
+    "root": true
+  },
+  "devDependencies": {
+    "@rao-pics/tailwind-config": "workspace:^0.1.0",
+    "@rao-pics/tsconfig": "workspace:^0.1.0"
+  },
+  "dependencies": {
+    "next": "^13.4.19"
+  }
+}

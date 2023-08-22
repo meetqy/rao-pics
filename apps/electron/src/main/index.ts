@@ -1,5 +1,5 @@
 import { join } from "path";
-import { app, BrowserWindow, dialog, shell } from "electron";
+import { app, BrowserWindow, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 
@@ -43,10 +43,10 @@ function createWindow(): void {
   createIPCHandler({ router, windows: [mainWindow] });
 }
 
-dialog.showErrorBox(
-  "Error",
-  `${join(process.resourcesPath, "extraResources/db.sqlite")}`,
-);
+// dialog.showErrorBox(
+//   "Error",
+//   `${join(process.resourcesPath, "extraResources/db.sqlite")}`,
+// );
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
