@@ -32,6 +32,9 @@ importers:
       '@rao-pics/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@rao-pics/constant':
+        specifier: workspace:^
+        version: link:../../packages/constant
       '@rao-pics/db':
         specifier: workspace:*
         version: link:../../packages/db

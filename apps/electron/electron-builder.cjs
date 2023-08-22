@@ -37,6 +37,12 @@ const options = {
     provider: "generic",
     url: "https://example.com/auto-updates",
   },
+  extraResources: [
+    {
+      from: resolve(__dirname, "./node_modules/@rao-pics/db/prisma/db.sqlite"),
+      to: "extraResources/db.sqlite",
+    },
+  ],
 };
 
 module.exports = options;

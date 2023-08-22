@@ -40,7 +40,7 @@ export const DB_NAME = env
  * @param dir
  */
 const formatDirPath = (dir: string) => {
-  return dir.replace(/\s/g, "_");
+  return dir.replace(/\s/g, "");
 };
 
 /**

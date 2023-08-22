@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm run typecheck && electron-vite build",
     "build:linux": "electron-vite build && electron-builder --linux --config",
-    "build:mac": "pnpm clean:dist && electron-builder --mac --config ./electron-builder.cjs",
+    "build:mac": "pnpm clean:dist && pnpm build && electron-builder --mac --config ./electron-builder.cjs",
     "build:win": "npm run build && electron-builder --win --config",
     "clean": "git clean -xdf .turbo node_modules out dist",
     "clean:dist": "git clean -xdf dist",
@@ -26,6 +26,7 @@
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^1.0.2",
     "@rao-pics/api": "workspace:*",
+    "@rao-pics/constant": "workspace:^",
     "@rao-pics/db": "workspace:*",
     "@tanstack/react-query": "^4.32.6",
     "@trpc/client": "^10.37.1",
