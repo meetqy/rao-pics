@@ -1,4 +1,3 @@
-import { execSync } from "node:child_process";
 
 export default function generator(plop) {
   plop.setGenerator("init", {
@@ -63,17 +62,6 @@ export default function generator(plop) {
         },
       },
       async (answers) => {
-        /**
-         * Install deps and format everything
-         */
-        execSync("pnpm manypkg fix", {
-          stdio: "inherit",
-        });
-        execSync(
-          `pnpm prettier --write packages/${
-            answers.name
-          }/** --list-different`,
-        );
         return "Package scaffolded";
       },
     ],

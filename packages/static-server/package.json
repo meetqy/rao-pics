@@ -1,5 +1,5 @@
 {
-  "name": "@rao-pics/{{ name }}",
+  "name": "@rao-pics/static-server",
   "private": true,
   "version": "0.1.0",
   "exports": {
@@ -12,12 +12,11 @@
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@rao-pics/eslint-config": "workspace:*",
-    "@rao-pics/prettier-config": "workspace:*",
-    "@rao-pics/tsconfig": "workspace:*",
+    "@rao-pics/eslint-config": "0.2.0",
+    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/tsconfig": "^0.1.0",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6"
   },
