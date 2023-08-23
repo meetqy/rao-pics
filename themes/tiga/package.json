@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "next dev",
+    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "lint": "next lint",
     "start": "next start",
-    "clean": "git clean -xdf .next .turbo node_modules",
-    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@rao-pics/prettier-config",
@@ -20,11 +20,12 @@
     ],
     "root": true
   },
-  "devDependencies": {
-    "@rao-pics/tailwind-config": "workspace:^0.1.0",
-    "@rao-pics/tsconfig": "workspace:^0.1.0"
-  },
   "dependencies": {
     "next": "^13.4.19"
+  },
+  "devDependencies": {
+    "@rao-pics/eslint-config": "workspace:*",
+    "@rao-pics/tailwind-config": "workspace:^0.1.0",
+    "@rao-pics/tsconfig": "workspace:^0.1.0"
   }
 }

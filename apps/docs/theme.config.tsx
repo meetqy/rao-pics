@@ -1,7 +1,7 @@
 export default {
-  logo: <span>My Nextra Documentation</span>,
+  logo: <span>Rao Pics</span>,
   project: {
-    link: "https://github.com/shuding/nextra",
+    link: "https://github.com/meetqy/rao-pics",
   },
   // ... other theme options
 };
