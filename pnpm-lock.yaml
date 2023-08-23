@@ -440,9 +440,6 @@ importers:
       '@acme/curd':
         specifier: ^0.1.0
         version: link:../curd
-      '@acme/db':
-        specifier: ^0.1.0
-        version: link:../db
 
   packages/support/eagle:
     dependencies:
