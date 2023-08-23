@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/electron";
-import { app, Menu, MenuItem } from "electron";
+import { app, Menu, MenuItem, nativeTheme } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
 import startWatcher from "@acme/watch";
@@ -20,6 +20,7 @@ import createAllIPCHandler from "./src/ipc";
 import createMenu from "./src/menu";
 import createTray from "./src/tray";
 import { getAndUpdateConfig } from "./src/utils/config";
+import { toggleMode } from "./src/utils/toggleMode";
 
 /**
  * Sentry init
@@ -40,6 +41,10 @@ if (app.isPackaged) {
  * Create all ipcHander in 'src/ipc/xxx.ts'
  */
 createAllIPCHandler();
+
+nativeTheme.on("updated", () => {
+  void toggleMode();
+});
 
 /**
  * Create Menu
@@ -129,6 +134,7 @@ app.on("ready", () => {
   );
 
   void restoreOrCreateWindow().then((win) => {
+    void toggleMode(win);
     createIPCHandler({ router: appRouter, windows: [win] });
   });
 });
