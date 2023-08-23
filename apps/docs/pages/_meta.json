@@ -1,6 +1,6 @@
 {
   "index": {
-    "title": "Home",
+    "title": "主页",
     "type": "page",
     "theme": {
       "layout": "full"
@@ -8,11 +8,11 @@
     "display": "hidden"
   },
   "apis": {
-    "title": "API",
+    "title": "接口",
     "type": "page"
   },
   "about": {
-    "title": "About",
+    "title": "关于项目",
     "type": "page"
   }
 }
