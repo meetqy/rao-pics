@@ -118,19 +118,6 @@ importers:
         specifier: ^4.4.2
         version: 4.4.2(@types/node@18.17.6)
 
-  apps/tiga:
-    dependencies:
-      next:
-        specifier: ^13.4.19
-        version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
-    devDependencies:
-      '@rao-pics/tailwind-config':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/tailwind
-      '@rao-pics/tsconfig':
-        specifier: workspace:^0.1.0
-        version: link:../../tooling/typescript
-
   packages/api:
     dependencies:
       '@rao-pics/db':
@@ -226,6 +213,19 @@ importers:
       vitest:
         specifier: ^0.34.2
         version: 0.34.2
+
+  themes/tiga:
+    dependencies:
+      next:
+        specifier: ^13.4.19
+        version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+    devDependencies:
+      '@rao-pics/tailwind-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/tailwind
+      '@rao-pics/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
 
   tooling/eslint:
     dependencies:
