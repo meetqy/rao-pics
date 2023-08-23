@@ -1,9 +1,12 @@
 {
   "name": "@rao-pics/electron",
   "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
-  "homepage": "https://www.electronjs.org",
-  "author": "example.com",
+  "description": "Preview photos and medias on any device",
+  "homepage": "https://rao.pics",
+  "author": {
+    "name": "meetqy",
+    "email": "meetqy@qq.com"
+  },
   "main": "./out/main/index.js",
   "scripts": {
     "build": "npm run typecheck && electron-vite build",

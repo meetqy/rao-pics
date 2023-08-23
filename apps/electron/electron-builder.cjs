@@ -7,7 +7,7 @@ const isDev = process.env.NODE_ENV === "development";
  * @see https://www.electron.build/configuration/configuration
  */
 const options = {
-  appId: "com.electron.app",
+  appId: "com.rao-pics.app",
   productName: "electron",
   directories: {
     buildResources: "build",
