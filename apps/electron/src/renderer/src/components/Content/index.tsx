@@ -180,7 +180,10 @@ export const Content = () => {
           <span className="relative -top-0.5 mx-2 font-extralight text-base-content/50">
             |
           </span>
-          <span className="cursor-pointer text-error">{123}</span>
+          {/* The button to open modal */}
+          <label htmlFor="fail-log-modal" className="cursor-pointer text-error">
+            {123}
+          </label>
         </span>
       </div>
 

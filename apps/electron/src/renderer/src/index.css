@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scrollbar {
+  @apply transition-colors;
+
+  /* width */
+  &::-webkit-scrollbar {
+    @apply w-1;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    @apply rounded;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    @apply rounded bg-neutral/60;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral;
+  }
+}

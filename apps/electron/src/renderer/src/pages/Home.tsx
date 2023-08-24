@@ -1,5 +1,6 @@
 import { AsideCount } from "@renderer/components/AsideCount";
 import { Content } from "@renderer/components/Content";
+import { FailLogModal } from "@renderer/components/FailLogModal";
 
 const Home = () => {
   return (
@@ -11,6 +12,8 @@ const Home = () => {
       <div className="relative flex-1 p-4 pt-1">
         <Content />
       </div>
+
+      <FailLogModal />
     </>
   );
 };

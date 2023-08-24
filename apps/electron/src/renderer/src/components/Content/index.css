@@ -1,5 +1,6 @@
 .list {
   @apply flex flex-col;
+
   > div {
     @apply flex h-10 items-center justify-between px-4;
 
