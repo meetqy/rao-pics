@@ -8,14 +8,26 @@ import { IS_DEV } from "@rao-pics/constant";
 import { createDbPath } from "@rao-pics/db";
 
 import icon from "../../resources/icon.png?asset";
+import { createCustomIPC } from "./src/ipc";
 
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 768,
+    height: 450,
     show: false,
     autoHideMenuBar: true,
+    resizable: false,
+    titleBarStyle: "hidden",
+    titleBarOverlay: {
+      height: 32,
+      color: "#ffffff",
+      symbolColor: "#212936",
+    },
+    trafficLightPosition: {
+      y: 6,
+      x: 12,
+    },
     ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
@@ -41,6 +53,7 @@ function createWindow(): void {
   }
 
   createIPCHandler({ router, windows: [mainWindow] });
+  createCustomIPC();
 }
 
 // dialog.showErrorBox(

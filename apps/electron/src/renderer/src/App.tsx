@@ -3,6 +3,7 @@ import { ipcLink } from "electron-trpc/renderer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import superjson from "superjson";
 
+import { NavBar } from "./components/NavBar";
 import Home from "./pages/Home";
 import { trpc } from "./utils/trpc";
 
@@ -18,7 +19,13 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <Home />
+        <div className="flex h-screen w-screen flex-col overflow-hidden">
+          <NavBar name="Home" platform="darwin" />
+
+          <div className="flex flex-1">
+            <Home />
+          </div>
+        </div>
       </QueryClientProvider>
     </trpc.Provider>
   );
