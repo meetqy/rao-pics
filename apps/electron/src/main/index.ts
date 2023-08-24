@@ -20,14 +20,14 @@ function createWindow(): void {
     resizable: false,
     titleBarStyle: "hidden",
     titleBarOverlay: {
-      height: 48,
       color: "#ffffff",
       symbolColor: "#212936",
     },
     trafficLightPosition: {
-      y: 10,
+      y: 16,
       x: 12,
     },
+    transparent: true,
     ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),

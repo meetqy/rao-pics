@@ -3,22 +3,25 @@
 @tailwind utilities;
 
 .scrollbar {
-  @apply transition-colors;
-
-  /* width */
-  &::-webkit-scrollbar {
-    @apply w-1;
+  &:hover {
+    &::-webkit-scrollbar {
+      @apply w-2;
+    }
   }
-  /* Track */
+
+  &::-webkit-scrollbar {
+    @apply w-0;
+  }
+
   &::-webkit-scrollbar-track {
     @apply rounded;
   }
-  /* Handle */
+
   &::-webkit-scrollbar-thumb {
-    @apply rounded bg-neutral/60;
+    @apply rounded bg-neutral-300 dark:bg-neutral-500;
   }
-  /* Handle on hover */
-  &::-webkit-scrollbar-thumb:hover {
-    @apply bg-neutral;
-  }
+}
+
+.drag {
+  app-region: "drag";
 }

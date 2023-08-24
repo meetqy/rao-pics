@@ -15,15 +15,21 @@ const formatNumber = (num: number) => {
 
 export const AsideCount = ({ imageCount, mediaCount }: AsideCountProps) => {
   return (
-    <div className="grid w-full grid-cols-1 gap-y-4 pl-2">
-      <div className="select-none border-l-2 border-base-content/20 p-2 capitalize text-base-content">
-        <p className="font-mono text-5xl">{formatNumber(imageCount)}</p>
-        <p className="opacity-25">图片总数</p>
+    <div className="flex h-full flex-col justify-between pb-4">
+      <div className="grid w-full grid-cols-1 gap-y-4 px-2">
+        <div className="select-none border-l-2 border-base-content/20 p-2 capitalize text-base-content">
+          <p className="font-mono text-5xl">{formatNumber(imageCount)}</p>
+          <p className="opacity-25">图片总数</p>
+        </div>
+
+        <div className="select-none border-l-2 border-base-content/20 p-2  capitalize text-base-content">
+          <p className="font-mono text-5xl">{formatNumber(mediaCount)}</p>
+          <p className="opacity-25">媒体总数</p>
+        </div>
       </div>
 
-      <div className="select-none border-l-2 border-base-content/20 p-2  capitalize text-base-content">
-        <p className="font-mono text-5xl">{formatNumber(mediaCount)}</p>
-        <p className="opacity-25">媒体总数</p>
+      <div className="pl-4">
+        <p className="font-mono text-sm text-base-content/50">v1.2.3</p>
       </div>
     </div>
   );

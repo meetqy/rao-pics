@@ -35,6 +35,9 @@ const options = {
     entitlementsInherit: "build/entitlements.mac.plist",
     target: isDev ? "dir" : { target: "dmg", arch: ["arm64", "x64"] },
   },
+  win: {
+    target: isDev ? "dir" : { target: "nsis", arch: ["x64"] },
+  },
   npmRebuild: false,
   publish: {
     provider: "generic",
