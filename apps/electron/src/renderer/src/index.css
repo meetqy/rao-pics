@@ -21,7 +21,3 @@
     @apply rounded bg-neutral-300 dark:bg-neutral-500;
   }
 }
-
-.drag {
-  app-region: "drag";
-}
