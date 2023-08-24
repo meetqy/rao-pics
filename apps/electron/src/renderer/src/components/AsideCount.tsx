@@ -15,7 +15,7 @@ const formatNumber = (num: number) => {
 
 export const AsideCount = ({ imageCount, mediaCount }: AsideCountProps) => {
   return (
-    <div className="grid w-full grid-cols-1 gap-y-4">
+    <div className="grid w-full grid-cols-1 gap-y-4 pl-2">
       <div className="select-none border-l-2 border-base-content/20 p-2 capitalize text-base-content">
         <p className="font-mono text-5xl">{formatNumber(imageCount)}</p>
         <p className="opacity-25">图片总数</p>

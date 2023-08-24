@@ -20,7 +20,7 @@ function App() {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <div className="flex h-screen w-screen flex-col overflow-hidden">
-          <NavBar name="Home" platform="darwin" />
+          <NavBar name="资源库名字" platform="darwin" />
 
           <div className="flex flex-1">
             <Home />

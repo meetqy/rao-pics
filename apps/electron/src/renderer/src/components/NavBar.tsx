@@ -8,7 +8,7 @@ export const NavBar = (props: Props) => {
 
   return (
     <div
-      className="flex h-8 w-full flex-shrink-0"
+      className="flex h-12 w-full flex-shrink-0"
       style={{ "-webkit-app-region": "drag" } as React.CSSProperties}
     >
       <div className="flex h-full w-1/4 items-center bg-base-200/70 px-2">

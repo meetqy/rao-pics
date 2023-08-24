@@ -20,12 +20,12 @@ function createWindow(): void {
     resizable: false,
     titleBarStyle: "hidden",
     titleBarOverlay: {
-      height: 32,
+      height: 48,
       color: "#ffffff",
       symbolColor: "#212936",
     },
     trafficLightPosition: {
-      y: 6,
+      y: 10,
       x: 12,
     },
     ...(process.platform === "linux" ? { icon } : {}),

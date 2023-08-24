@@ -1,0 +1,14 @@
+.list {
+  @apply flex flex-col;
+  > div {
+    @apply flex h-10 items-center justify-between px-4;
+
+    &:not(:last-child) {
+      @apply flex items-center justify-between py-2;
+    }
+
+    &:nth-child(2n-1) {
+      @apply bg-base-200/40;
+    }
+  }
+}
