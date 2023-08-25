@@ -1,5 +1,3 @@
-import "./index.css";
-
 const ChevronRightSVG = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +138,7 @@ const BasicPage = () => {
         </div>
 
         <div className="w-1/2">
-          <div className="m-auto flex h-full w-4/5 flex-col justify-center">
+          <div className="m-auto flex h-full w-5/6 flex-col justify-center">
             <button className="btn-neutral btn">同步</button>
             <button className="btn-error btn-outline btn mt-4">移除</button>
           </div>

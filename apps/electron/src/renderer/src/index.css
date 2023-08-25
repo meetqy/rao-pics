@@ -5,3 +5,19 @@
 .scroll-y {
   @apply overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral/50 scrollbar-track-rounded scrollbar-thumb-rounded;
 }
+
+.card-wrapper {
+  @apply rounded border border-base-300 bg-base-200 px-4;
+
+  .card-row {
+    @apply flex cursor-default justify-between py-3;
+  }
+
+  .card-row:not(:last-child) {
+    @apply border-b border-base-300;
+  }
+
+  .card-row > span {
+    @apply flex items-center;
+  }
+}

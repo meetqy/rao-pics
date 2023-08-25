@@ -18,7 +18,9 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <Layout />
+        <div data-theme="business">
+          <Layout />
+        </div>
       </QueryClientProvider>
     </trpc.Provider>
   );

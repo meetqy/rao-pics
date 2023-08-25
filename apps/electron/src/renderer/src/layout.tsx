@@ -3,6 +3,7 @@ import { useState } from "react";
 import Menu, { menuItems } from "./components/Menu";
 import BasicPage from "./pages/basic";
 import SettingPage from "./pages/setting";
+import ThemePage from "./pages/theme";
 import UnsyncPage from "./pages/unsync";
 
 const Layout = () => {
@@ -39,10 +40,11 @@ const Layout = () => {
 
         {/* main */}
         <div className="scroll-y flex-1">
-          <main className="h-full">
+          <main>
             {current === 0 && <BasicPage />}
             {current === 1 && <UnsyncPage />}
             {current === 2 && <SettingPage />}
+            {current === 3 && <ThemePage />}
           </main>
         </div>
       </div>
