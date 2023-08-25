@@ -14,7 +14,7 @@ export const en_us = {
   "electron.renderer.preview": "WEB Preview",
   "electron.renderer.status": "Synced/Unsynced",
   "electron.renderer.status.tips": "Unsynced: In Trash, JSON Error, Extension Unsupported",
-  "electron.renderer.statistic.tips1": "To Be Synced",
+  "electron.renderer.statistic.tips1": "Pending",
   "electron.renderer.statistic.tips2": "Initializing...",
   "electron.renderer.table.title1": "Path",
   "electron.renderer.table.title2": "Reason",

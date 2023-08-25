@@ -7,6 +7,7 @@ interface Props {
   lang?: keyof Language;
   language?: Language[keyof Language];
   onClose?: () => void;
+  isWin?: boolean;
 }
 
 const Temp = {
@@ -34,7 +35,7 @@ const Temp = {
 
 type TempType = keyof typeof Temp;
 
-export const FailLogs = ({ libraryId, onClose, language, lang }: Props) => {
+export const FailLogs = ({ libraryId, onClose, language, lang, isWin }: Props) => {
   const { data } = trpc.fail.get.useQuery({
     libraryId,
   });
@@ -48,11 +49,11 @@ export const FailLogs = ({ libraryId, onClose, language, lang }: Props) => {
 
   return (
     <div className="bg-neutral/70 fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center py-8">
-      <button onClick={onClose} className="btn btn-xs btn-circle absolute right-2 top-2 z-30">
-        ✕
-      </button>
+      <div className="bg-base-100 relative h-[91%] w-11/12 rounded-md shadow">
+        <button onClick={onClose} className={`btn btn-xs btn-circle absolute top-2 z-30 shadow-md ${isWin ? "left-2" : "right-2"}`}>
+          ✕
+        </button>
 
-      <div className="bg-base-100 relative h-full w-11/12 rounded-md shadow">
         <div className="h-full w-full px-1 py-1">
           <div className="scrollbar m-auto h-full w-full overflow-y-auto px-3 pb-3">
             <div className="relative h-4 w-full"></div>
