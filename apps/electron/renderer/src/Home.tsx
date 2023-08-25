@@ -381,7 +381,9 @@ function Home() {
         )}
 
         {/* fails log modal */}
-        {activeItem?.id && faillogsVisable && <FailLogs lang={lang} language={language} onClose={() => setFaillogsVisable(false)} libraryId={activeItem.id} />}
+        {activeItem?.id && faillogsVisable && (
+          <FailLogs isWin={platform === "win32"} lang={lang} language={language} onClose={() => setFaillogsVisable(false)} libraryId={activeItem.id} />
+        )}
 
         {/* Modal confirm */}
         <input type="checkbox" defaultChecked={delConfirmVisable} id="my-modal" className="modal-toggle" />
