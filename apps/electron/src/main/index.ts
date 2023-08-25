@@ -19,14 +19,12 @@ function createWindow(): void {
     autoHideMenuBar: true,
     resizable: false,
     titleBarStyle: "hidden",
-    titleBarOverlay: {
-      color: "#ffffff",
-      symbolColor: "#212936",
-    },
+    frame: false,
     trafficLightPosition: {
       y: 16,
       x: 12,
     },
+    titleBarOverlay: true,
     transparent: true,
     ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
