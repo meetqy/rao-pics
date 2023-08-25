@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {
-      "@renderer/*": ["src/renderer/src/*"]
+      "@renderer/*": ["src/renderer/src/*"],
+      "@build/*": ["build/*"]
     }
   },
   "exclude": ["node_modules"]
