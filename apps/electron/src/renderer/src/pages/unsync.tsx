@@ -31,6 +31,8 @@ const languages = {
 const UnsyncPage = () => {
   const language = languages["zh-cn"];
 
+  // TODO: 虚拟滚动
+
   return (
     <div className="flex h-full flex-col">
       <div className="scroll-y flex-1">
@@ -52,14 +54,6 @@ const UnsyncPage = () => {
             ))}
           </tbody>
         </table>
-      </div>
-
-      <div className="flex h-12 w-full items-center justify-center">
-        <div className="join">
-          <button className="btn-sm join-item btn">«</button>
-          <button className="btn-sm join-item btn">Page 22</button>
-          <button className="btn-sm join-item btn">»</button>
-        </div>
       </div>
     </div>
   );
