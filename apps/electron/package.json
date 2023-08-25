@@ -43,7 +43,7 @@
     "@electron/notarize": "^1.2.3",
     "@rao-pics/eslint-config": "^0.2.0",
     "@rao-pics/prettier-config": "^0.1.0",
-    "@rao-pics/tailwind-config": "^0.1.0",
+    "@rao-pics/tailwind-config": "workspace:*",
     "@rao-pics/tsconfig": "^0.1.0",
     "@types/node": "^18.17.6",
     "@types/react": "^18.2.20",

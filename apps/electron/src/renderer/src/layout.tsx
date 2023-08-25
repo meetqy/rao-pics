@@ -17,7 +17,7 @@ const Layout = () => {
           style={{ appRegion: "drag" } as React.CSSProperties}
         />
 
-        <div className="scrollbar flex-1 overflow-y-auto bg-base-200/70">
+        <div className="scroll-y flex-1 bg-base-200/70">
           <p className="mx-4 border-b pb-2 font-medium capitalize">
             rao.library
           </p>
@@ -27,23 +27,25 @@ const Layout = () => {
         </div>
       </aside>
 
-      {/* main */}
-      <main className="flex flex-1 flex-col">
+      {/* content */}
+      <div className="flex flex-1 flex-col">
         {/* title */}
         <div
-          className="flex h-12 w-full items-center px-4 font-mono font-bold"
+          className="flex h-12 w-full flex-shrink-0 items-center px-4 font-mono font-bold"
           style={{ appRegion: "drag" } as React.CSSProperties}
         >
           {menuItems[current]?.text}
         </div>
 
-        {/* page */}
-        <div className="px-4">
-          {current === 0 && <BasicPage />}
-          {current === 1 && <UnsyncPage />}
-          {current === 2 && <SettingPage />}
+        {/* main */}
+        <div className="scroll-y flex-1">
+          <main className="h-full">
+            {current === 0 && <BasicPage />}
+            {current === 1 && <UnsyncPage />}
+            {current === 2 && <SettingPage />}
+          </main>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

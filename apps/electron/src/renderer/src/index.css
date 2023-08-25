@@ -2,22 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.scrollbar {
-  &:hover {
-    &::-webkit-scrollbar {
-      @apply w-2;
-    }
-  }
-
-  &::-webkit-scrollbar {
-    @apply w-0;
-  }
-
-  &::-webkit-scrollbar-track {
-    @apply rounded;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    @apply rounded bg-neutral-300 dark:bg-neutral-500;
-  }
+.scroll-y {
+  @apply overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral/50 scrollbar-track-rounded scrollbar-thumb-rounded;
 }

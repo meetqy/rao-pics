@@ -104,7 +104,7 @@ importers:
         specifier: ^0.1.0
         version: link:../../tooling/prettier
       '@rao-pics/tailwind-config':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/tailwind
       '@rao-pics/tsconfig':
         specifier: ^0.1.0
@@ -383,6 +383,9 @@ importers:
       prettier:
         specifier: ^3.0.2
         version: 3.0.2
+      tailwind-scrollbar:
+        specifier: ^3.0.5
+        version: 3.0.5(tailwindcss@3.3.2)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -7137,6 +7140,15 @@ packages:
       '@pkgr/utils': 2.4.2
       tslib: 2.6.2
     dev: false
+
+  /tailwind-scrollbar@3.0.5(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-0ZwxTivevqq9BY9fRP9zDjHl7Tu+J5giBGbln+0O1R/7nHtBUKnjQcA1aTIhK7Oyjp6Uc/Dj6/dn8Dq58k5Uww==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      tailwindcss: 3.x
+    dependencies:
+      tailwindcss: 3.3.2
+    dev: true
 
   /tailwindcss@3.3.2:
     resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}

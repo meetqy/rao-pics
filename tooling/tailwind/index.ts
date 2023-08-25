@@ -5,5 +5,9 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-var-requires
+    require("tailwind-scrollbar")({ nocompatible: true }),
+  ],
 } satisfies Config;

@@ -21,6 +21,7 @@ export const menuItems = [
         />
       </svg>
     ),
+    badge: null,
     text: "基础信息",
   },
   {
@@ -40,6 +41,7 @@ export const menuItems = [
         />
       </svg>
     ),
+    badge: <span className="badge badge-warning badge-sm">99+</span>,
     text: "未同步记录",
   },
   {
@@ -64,6 +66,7 @@ export const menuItems = [
         />
       </svg>
     ),
+    badge: null,
     text: "设置",
   },
 ];
@@ -79,6 +82,7 @@ const Menu = ({ current, onChange }: MenuProps) => {
           >
             {item.icon}
             {item.text}
+            {item.badge}
           </button>
         </li>
       ))}
