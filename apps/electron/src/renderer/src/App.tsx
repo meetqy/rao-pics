@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { ipcLink } from "electron-trpc/renderer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useRecoilState } from "recoil";
 import superjson from "superjson";
 
 import Layout from "./layout";
+import { themeState } from "./state";
 import { trpc } from "./utils/trpc";
 
 function App() {
@@ -15,10 +17,12 @@ function App() {
     }),
   );
 
+  const [theme] = useRecoilState(themeState);
+
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <div data-theme="business">
+        <div data-theme={theme}>
           <Layout />
         </div>
       </QueryClientProvider>

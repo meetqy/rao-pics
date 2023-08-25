@@ -1,9 +1,22 @@
-const Item = ({ theme }: { theme: string }) => {
+import { useState } from "react";
+import { themeState } from "@renderer/state";
+import { useRecoilState } from "recoil";
+
+interface ItemProps {
+  active?: boolean;
+  theme: string;
+  onClick?: () => void;
+}
+
+const Item = ({ theme, onClick, active = false }: ItemProps) => {
   return (
     <div
-      className="overflow-hidden rounded border border-base-content/20 outline outline-2 outline-offset-2 outline-transparent hover:border-base-content/40"
+      className={`overflow-hidden rounded border border-base-content/20 hover:border-base-content/40 ${
+        active ? "outline outline-2" : ""
+      }`}
       data-set-theme={theme}
-      data-act-class="!outline-base-content"
+      onClick={onClick}
+      aria-hidden
     >
       <div
         data-theme={theme}
@@ -39,78 +52,81 @@ const Item = ({ theme }: { theme: string }) => {
 };
 
 const themes = [
-  "light",
-  "dark",
-  "cupcake",
-  "bumblebee",
-  "emerald",
-  "corporate",
-  "synthwave",
-  "retro",
-  "cyberpunk",
-  "valentine",
-  "halloween",
-  "garden",
-  "forest",
-  "aqua",
-  "lofi",
-  "pastel",
-  "fantasy",
-  "wireframe",
-  "black",
-  "luxury",
-  "dracula",
-  "cmyk",
-  "autumn",
-  "business",
-  "acid",
-  "lemonade",
-  "night",
-  "coffee",
-  "winter",
+  ["light", "light,angle"],
+  ["dark", "dark,angle"],
+  ["cupcake", "light,angle"],
+  ["bumblebee", "light,angle"],
+  ["emerald", "light,angle"],
+  ["corporate", "light,right-angle"],
+  ["synthwave", "dark,angle"],
+  ["retro", "light,angle"],
+  ["cyberpunk", "neutral,right-angle"],
+  ["valentine", "neutral,angle"],
+  ["halloween", "dark,angle"],
+  ["garden", "light,angle"],
+  ["forest", "dark,angle"],
+  ["aqua", "neutral,angle"],
+  ["lofi", "light,right-angle"],
+  ["pastel", "light,angle"],
+  ["fantasy", "light,angle"],
+  ["wireframe", "light,right-angle"],
+  ["black", "dark,right-angle"],
+  ["luxury", "dark,angle"],
+  ["dracula", "dark,angle"],
+  ["cmyk", "light,angle"],
+  ["autumn", "light,angle"],
+  ["business", "dark,right-angle"],
+  ["acid", "light,angle"],
+  ["lemonade", "light,angle"],
+  ["night", "dark,angle"],
+  ["coffee", "dark,angle"],
+  ["winter", "light,angle"],
+];
+
+const tags = [
+  { name: "", text: "全部" },
+  { name: "light", text: "浅色" },
+  { name: "dark", text: "深色" },
+  { name: "angle", text: "圆角" },
+  { name: "right-angle", text: "直角" },
+  { name: "neutral", text: "中性" },
 ];
 
 const ThemePage = () => {
+  const [theme, setTheme] = useRecoilState(themeState);
+
+  const [tag, setTag] = useState("");
+
+  const filterThemes = themes.filter((t) => t[1]?.includes(tag));
+
   return (
-    <div className="px-4 pb-4">
-      <div className="card-wrapper">
-        <div className="join py-2">
-          <input
-            className="btn-primary btn-sm join-item btn"
-            type="radio"
-            name="options"
-            aria-label="全部"
-          />
-          <input
-            className="btn-sm join-item btn"
-            type="radio"
-            name="options"
-            aria-label="深色"
-          />
-          <input
-            className="btn-sm join-item btn"
-            type="radio"
-            name="options"
-            aria-label="浅色"
-          />
-          <input
-            className="btn-sm join-item btn"
-            type="radio"
-            name="options"
-            aria-label="直角"
-          />
-          <input
-            className="btn-sm join-item btn"
-            type="radio"
-            name="options"
-            aria-label="圆角"
-          />
+    <div className="pb-4">
+      <div className="sticky left-0 top-0 z-10 px-4">
+        <div className="card-wrapper">
+          <div className="join py-2">
+            {tags.map((item) => (
+              <input
+                key={item.name}
+                className="btn-sm join-item btn"
+                type="radio"
+                name="options"
+                checked={item.name === tag}
+                onChange={() => setTag(item.name)}
+                aria-label={item.text}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        {themes.map((theme) => (
-          <Item key={theme} theme={theme} />
+      <div className="mt-4 grid grid-cols-3 gap-3 px-4">
+        {filterThemes.map((t) => (
+          <Item
+            key={t[0]}
+            theme={t[0] ?? "light"}
+            onClick={() => setTheme(t[0] ?? "light")}
+            active={theme === t[0]}
+          />
         ))}
       </div>
     </div>
