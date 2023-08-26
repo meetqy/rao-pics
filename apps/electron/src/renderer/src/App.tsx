@@ -22,7 +22,10 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <div data-theme={theme}>
+        <div
+          data-theme={theme}
+          className="h-screen w-screen overflow-hidden rounded bg-base-100"
+        >
           <Layout />
         </div>
       </QueryClientProvider>

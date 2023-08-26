@@ -21,3 +21,8 @@
     @apply flex items-center;
   }
 }
+
+/* windows 窗口透明 */
+:root {
+  @apply bg-transparent;
+}

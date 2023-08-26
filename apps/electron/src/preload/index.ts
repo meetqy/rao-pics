@@ -22,6 +22,19 @@ if (process.contextIsolated) {
       showMessageBox: (options: Electron.OpenDialogOptions) =>
         ipcRenderer.invoke("dialog.showMessageBox", options),
     });
+
+    /**
+     * window.process same as process.xxx
+     */
+    contextBridge.exposeInMainWorld("process", {
+      platform: process.platform,
+    });
+
+    /**
+     * window.close same as close()
+     */
+    contextBridge.exposeInMainWorld("close", () => ipcRenderer.send("close"));
+
     exposeElectronTRPC();
   } catch (error) {
     console.error(error);

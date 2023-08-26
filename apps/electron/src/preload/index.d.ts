@@ -19,5 +19,9 @@ declare global {
         options: Electron.MessageBoxOptions,
       ) => Promise<string[] | undefined>;
     };
+    process: {
+      platform: NodeJS.Platform;
+    };
+    close: () => void;
   }
 }

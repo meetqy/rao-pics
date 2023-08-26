@@ -1,6 +1,7 @@
-import { dialog, ipcMain } from "electron";
+import type { BrowserWindow } from "electron";
+import { app, dialog, ipcMain } from "electron";
 
-export const createSystemIPC = () => {
+export const createSystemIPC = (window: BrowserWindow) => {
   ipcMain.handle(
     "dialog.showOpenDialog",
     (_e, options: Electron.OpenDialogOptions) =>
@@ -12,4 +13,6 @@ export const createSystemIPC = () => {
     (_e, options: Electron.MessageBoxOptions) =>
       dialog.showMessageBoxSync(options),
   );
+
+  ipcMain.handle("close", () => window.close());
 };

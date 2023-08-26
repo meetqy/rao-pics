@@ -20,12 +20,11 @@ function createWindow(): void {
     resizable: false,
     titleBarStyle: "hidden",
     frame: false,
+    transparent: true,
     trafficLightPosition: {
       y: 16,
       x: 12,
     },
-    titleBarOverlay: true,
-    transparent: true,
     ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
@@ -51,7 +50,7 @@ function createWindow(): void {
   }
 
   createIPCHandler({ router, windows: [mainWindow] });
-  createCustomIPC();
+  createCustomIPC(mainWindow);
 }
 
 // dialog.showErrorBox(
