@@ -14,6 +14,11 @@ datasource db {
   url      = "file:./db.sqlite?connection_limit=1"
 }
 
+model Config {
+  name     String @id @unique
+  language String
+}
+
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique

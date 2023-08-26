@@ -21,7 +21,8 @@
     @apply border-b border-base-300;
   }
 
-  .card-row > span {
+  .card-row > span,
+  .card-row > div {
     @apply flex items-center;
   }
 }

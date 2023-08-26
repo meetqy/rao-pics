@@ -98,9 +98,9 @@ const BasicPage = () => {
             <span className="ml-2">同步数量</span>
           </span>
 
-          <span>
+          <span className="font-mono">
             <span className="text-success">0</span>
-            <span className="text-base-content/50">｜</span>
+            <span className="mx-1 text-base-content/50">｜</span>
             <span className="text-warning">0</span>
           </span>
         </div>
