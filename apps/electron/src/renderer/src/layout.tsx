@@ -25,7 +25,9 @@ const Layout = () => {
           )}
 
           <p
-            className="mx-4 h-12 border-b border-base-300 pb-2 pt-4 text-base font-medium capitalize"
+            className={`mx-4 border-b border-base-300 pb-2 text-base font-medium capitalize ${
+              windows ? "h-12 pt-4" : "h-8"
+            }`}
             style={
               windows ? ({ appRegion: "drag" } as React.CSSProperties) : {}
             }
@@ -45,14 +47,14 @@ const Layout = () => {
         {/* title */}
         <div className="flex h-12 w-full flex-shrink-0 justify-between pl-8 text-base font-medium">
           <div
-            className="flex h-full flex-1 items-center"
+            className="flex h-full flex-1 select-none items-center"
             style={{ appRegion: "drag" } as React.CSSProperties}
           >
             {menuItems[current]?.text}
           </div>
 
           {/* windows btn group */}
-          <WindowsTitleBarBtnGroup />
+          {windows && <WindowsTitleBarBtnGroup />}
         </div>
 
         {/* main */}

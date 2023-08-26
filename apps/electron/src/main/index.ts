@@ -8,7 +8,6 @@ import { IS_DEV } from "@rao-pics/constant";
 import { createDbPath } from "@rao-pics/db";
 
 import icon from "../../resources/icon.png?asset";
-import { createCustomIPC } from "./src/ipc";
 
 function createWindow(): void {
   // Create the browser window.
