@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import superjson from "superjson";
 
-import Layout from "./layout";
+import Layout from "./Layout";
 import { themeState } from "./state";
 import { trpc } from "./utils/trpc";
 

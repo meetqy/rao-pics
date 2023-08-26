@@ -1,59 +1,78 @@
-const languages = {
-  "zh-cn": {
-    title1: "路径",
-    title2: "原因",
-    confirm: "确认",
-    "json-error": "JSON 解析错误",
-    ext: "类型不支持",
-    trash: "回收站中",
-    unknown: "未知错误",
-  },
-  "en-us": {
-    title1: "Path",
-    title2: "Reason",
-    confirm: "Confirm",
-    "json-error": "JSON parsing error",
-    ext: "Type not supported",
-    trash: "In the trash",
-    unknown: "Unknown error",
-  },
-  "zh-tw": {
-    title1: "路徑",
-    title2: "原因",
-    confirm: "確認",
-    "json-error": "JSON 解析錯誤",
-    ext: "類型不支持",
-    trash: "回收站中",
-    unknown: "未知錯誤",
-  },
-};
+import { useState } from "react";
+import { ArrowRightSvg } from "@renderer/components/Svg";
+
+const types = ["全部", "回收站中", "格式不支持", "JSON 错误", "未知错误"];
 
 const UnsyncPage = () => {
-  const language = languages["zh-cn"];
-
-  // TODO: 虚拟滚动
+  const [collapse, setCollapse] = useState(false);
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="scroll-y flex-1">
-        <table className="table-pin-rows table-zebra table">
-          <thead>
-            <tr>
-              <th className="rounded">{language.title1}</th>
-              <th className="rounded">{language.title2}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {new Array(50).fill(0).map((_item, index) => (
-              <tr key={index}>
-                <td className="cursor-pointer text-base-content/50 hover:underline">
-                  .../127381/123/213
-                </td>
-                <td>啊换手机号尽快</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="pb-4">
+      <div className="sticky left-0 top-0 z-10 px-4">
+        <div
+          className={`card-wrapper overflow-hidden transition-all ${
+            collapse ? "h-28" : "h-14"
+          }`}
+        >
+          <div className="card-row relative items-center">
+            <input
+              type="text"
+              placeholder="ID、路径搜索"
+              className="input input-sm flex-1"
+            />
+            <button
+              className="btn-ghost btn-square btn-sm btn absolute right-0 hover:bg-transparent"
+              onClick={() => setCollapse((prev) => !prev)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className={`h-4 w-4 transition-transform ${
+                  collapse ? "-rotate-180" : ""
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="card-row">
+            <div className="join">
+              {types.map((item) => (
+                <input
+                  key={item}
+                  className="btn-sm join-item btn"
+                  type="radio"
+                  name="options"
+                  aria-label={item}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4">
+        <div className="card-wrapper mt-4">
+          {new Array(50).fill(0).map((_item, index) => (
+            <div className="card-row compact" key={index}>
+              <span className="w-1/4 flex-shrink-0">失败原因</span>
+              <span className="flex w-3/4 justify-end">
+                <span className="overflow-hidden truncate text-base-content/60">
+                  file:/Users/meetqy/Desktop/me/electron-vite-turbo
+                </span>
+                {ArrowRightSvg}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

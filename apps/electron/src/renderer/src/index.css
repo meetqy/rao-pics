@@ -11,6 +11,10 @@
 
   .card-row {
     @apply flex cursor-default justify-between py-3;
+
+    &.compact {
+      @apply py-1.5;
+    }
   }
 
   .card-row:not(:last-child) {

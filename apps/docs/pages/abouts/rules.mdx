@@ -19,3 +19,25 @@
 - page3
     - i18n.js
 ```
+
+## Style
+
+- 不要直接使用 `text-neutral-content/{number}`，除非背景为 `bg-neutral`，其他颜色同理。
+
+**Error**
+
+切换主题可能会造成文字阅读困难。
+
+```html
+<div>
+  <span class="text-neutral-content/50"></span>
+</div>
+```
+
+**Correct**
+
+```html
+<div class="bg-neutral">
+  <span class="text-neutral-content/50"></span>
+</div>
+```
