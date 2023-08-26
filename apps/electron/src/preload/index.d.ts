@@ -22,6 +22,5 @@ declare global {
     process: {
       platform: NodeJS.Platform;
     };
-    close: () => void;
   }
 }

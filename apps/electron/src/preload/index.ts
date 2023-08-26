@@ -30,11 +30,6 @@ if (process.contextIsolated) {
       platform: process.platform,
     });
 
-    /**
-     * window.close same as close()
-     */
-    contextBridge.exposeInMainWorld("close", () => ipcRenderer.send("close"));
-
     exposeElectronTRPC();
   } catch (error) {
     console.error(error);

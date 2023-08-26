@@ -50,7 +50,6 @@ function createWindow(): void {
   }
 
   createIPCHandler({ router, windows: [mainWindow] });
-  createCustomIPC(mainWindow);
 }
 
 // dialog.showErrorBox(
