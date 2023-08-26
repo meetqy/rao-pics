@@ -10,7 +10,8 @@
     "clean": "git clean -xdf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "cross-env NODE_ENV=development vitest"
   },
   "dependencies": {
   },
@@ -18,8 +19,10 @@
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tsconfig": "workspace:*",
+    "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.2"
   },
   "eslintConfig": {
     "extends": [

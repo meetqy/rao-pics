@@ -6,15 +6,15 @@ import { DB_DIRS, IS_DEV, PLATFORM } from "@rao-pics/constant";
 
 const dbPath = DB_DIRS[PLATFORM];
 
-const _prisma: PrismaClient = new PrismaClient({
-  datasources: !IS_DEV
+const _prisma: PrismaClient = new PrismaClient(
+  !IS_DEV
     ? {
-        db: {
-          url: `file:${dbPath}?connection_limit=1`,
+        datasources: {
+          db: { url: `file:${dbPath}?connection_limit=1` },
         },
       }
     : undefined,
-});
+);
 
 /**
  * 创建 Db 目录， 如果不存在

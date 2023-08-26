@@ -10,7 +10,7 @@ import UnsyncPage from "./pages/unsync";
 const Layout = () => {
   const [current, setCurrent] = useState(0);
 
-  const windows = window.process.platform === "win32";
+  const windows = window.electron.process.platform === "win32";
 
   return (
     <div className="flex h-full w-full overflow-hidden text-sm">

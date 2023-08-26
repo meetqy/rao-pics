@@ -160,6 +160,9 @@ importers:
       '@rao-pics/db':
         specifier: workspace:*
         version: link:../db
+      '@trpc/client':
+        specifier: ^10.37.1
+        version: 10.37.1(@trpc/server@10.37.1)
       '@trpc/server':
         specifier: ^10.37.1
         version: 10.37.1
@@ -179,12 +182,18 @@ importers:
       '@rao-pics/tsconfig':
         specifier: ^0.1.0
         version: link:../../tooling/typescript
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
+      vitest:
+        specifier: ^0.34.2
+        version: 0.34.2
 
   packages/constant:
     dependencies:

@@ -23,13 +23,6 @@ if (process.contextIsolated) {
         ipcRenderer.invoke("dialog.showMessageBox", options),
     });
 
-    /**
-     * window.process same as process.xxx
-     */
-    contextBridge.exposeInMainWorld("process", {
-      platform: process.platform,
-    });
-
     exposeElectronTRPC();
   } catch (error) {
     console.error(error);

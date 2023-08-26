@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
-  // FIXME: pnpm not found .prisma/client
-  // https://github.com/prisma/prisma/issues/6603
-  // https://github.com/prisma/prisma/issues/9848
-  // output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -16,6 +9,7 @@ datasource db {
 
 model Config {
   name     String @id @unique
+  // zh-cn、en-us、zh-tw
   language String
 }
 
