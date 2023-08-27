@@ -4,7 +4,7 @@ import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 
 import { router } from "@rao-pics/api";
-import { IS_DEV } from "@rao-pics/constant";
+import { IS_DEV } from "@rao-pics/constant/server";
 import { createDbPath } from "@rao-pics/db";
 
 import icon from "../../resources/icon.png?asset";

@@ -2,14 +2,41 @@ import { useState } from "react";
 import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/title";
+import { useLanguage } from "@renderer/hooks";
 
 const types = ["全部", "回收站中", "格式不支持", "JSON 错误", "未知错误"];
+
+const languages = {
+  "zh-cn": {
+    title: "未同步记录",
+    types: ["全部", "回收站中", "格式不支持", "JSON 错误", "未知错误"],
+    input_placeholder: "ID、路径搜索",
+  },
+  "en-us": {
+    title: "Unsynced Records",
+    types: [
+      "All",
+      "In Recycle Bin",
+      "Format Not Supported",
+      "JSON Error",
+      "Unknown Error",
+    ],
+    input_placeholder: "ID、Path Search",
+  },
+  "zh-tw": {
+    title: "未同步記錄",
+    types: ["全部", "回收站中", "格式不支持", "JSON 錯誤", "未知錯誤"],
+    input_placeholder: "ID、路徑搜索",
+  },
+};
 
 const UnsyncPage = () => {
   const [collapse, setCollapse] = useState(false);
 
+  const { lang } = useLanguage(languages);
+
   return (
-    <Content title={<Title>未同步记录</Title>}>
+    <Content title={<Title>{lang.title}</Title>}>
       <div className="pb-4">
         <div className="sticky left-0 top-0 z-10 px-4">
           <div
@@ -20,7 +47,7 @@ const UnsyncPage = () => {
             <div className="card-row relative items-center">
               <input
                 type="text"
-                placeholder="ID、路径搜索"
+                placeholder={lang.input_placeholder}
                 className="input input-sm flex-1"
               />
               <button

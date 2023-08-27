@@ -2,7 +2,7 @@ import { sep } from "path";
 import { PrismaClient } from "@prisma/client";
 import fs from "fs-extra";
 
-import { DB_DIRS, IS_DEV, PLATFORM } from "@rao-pics/constant";
+import { DB_DIRS, IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 
 const dbPath = DB_DIRS[PLATFORM];
 
