@@ -1,5 +1,5 @@
 import { join } from "path";
-import { app, BrowserWindow, shell } from "electron";
+import { app, BrowserWindow, dialog, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 
@@ -95,6 +95,11 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+// Catch all error.
+process.on("uncaughtException", (error) => {
+  dialog.showErrorBox("Error", error.message);
 });
 
 // In this file you can include the rest of your app"s specific main process

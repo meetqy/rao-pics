@@ -8,14 +8,21 @@ export const config = t.router({
   upsert: t.procedure
     .input(
       z.object({
-        language: z.enum(["zh-cn", "en-us", "zh-tw"]),
+        language: z.enum(["zh-cn", "en-us", "zh-tw"]).optional(),
+        theme: z.string().optional(),
+        skin: z.string().optional(),
       }),
     )
     .mutation(async ({ input }) => {
       return await prisma.config.upsert({
         where: { name: "config" },
-        update: { language: input.language },
-        create: { name: "config", language: input.language },
+        update: input,
+        create: {
+          name: "config",
+          language: input.language ?? "zh-cn",
+          skin: input.skin ?? "tiga",
+          theme: input.theme ?? "light",
+        },
       });
     }),
 

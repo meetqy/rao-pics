@@ -8,9 +8,14 @@ datasource db {
 }
 
 model Config {
-  name     String @id @unique
+  // config
+  name     String  @id @unique
   // zh-cn、en-us、zh-tw
   language String
+  // 外观
+  skin     String?
+  // 主题
+  theme    String?
 }
 
 model User {
