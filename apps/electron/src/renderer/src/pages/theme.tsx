@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Content from "@renderer/components/Content";
+import Title from "@renderer/components/title";
 import { themeState } from "@renderer/state";
 import { useRecoilState } from "recoil";
 
@@ -100,36 +102,38 @@ const ThemePage = () => {
   const filterThemes = themes.filter((t) => t[1]?.includes(tag));
 
   return (
-    <div className="pb-4">
-      <div className="sticky left-0 top-0 z-10 px-4">
-        <div className="card-wrapper">
-          <div className="join py-2">
-            {tags.map((item) => (
-              <input
-                key={item.name}
-                className="btn-sm join-item btn"
-                type="radio"
-                name="options"
-                checked={item.name === tag}
-                onChange={() => setTag(item.name)}
-                aria-label={item.text}
-              />
-            ))}
+    <Content title={<Title>外观</Title>}>
+      <div className="pb-4">
+        <div className="sticky left-0 top-0 z-10 px-4">
+          <div className="card-wrapper">
+            <div className="join py-2">
+              {tags.map((item) => (
+                <input
+                  key={item.name}
+                  className="btn-sm join-item btn"
+                  type="radio"
+                  name="options"
+                  checked={item.name === tag}
+                  onChange={() => setTag(item.name)}
+                  aria-label={item.text}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-3 px-4">
-        {filterThemes.map((t) => (
-          <Item
-            key={t[0]}
-            theme={t[0] ?? "light"}
-            onClick={() => setTheme(t[0] ?? "light")}
-            active={theme === t[0]}
-          />
-        ))}
+        <div className="mt-4 grid grid-cols-3 gap-3 px-4">
+          {filterThemes.map((t) => (
+            <Item
+              key={t[0]}
+              theme={t[0] ?? "light"}
+              onClick={() => setTheme(t[0] ?? "light")}
+              active={theme === t[0]}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </Content>
   );
 };
 

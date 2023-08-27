@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-import Menu, { menuItems } from "./components/Menu";
-import WindowsTitleBarBtnGroup from "./components/WindowsTitleBarBtnGroup";
+import Menu from "./components/Menu";
 import BasicPage from "./pages/basic";
 import SettingPage from "./pages/setting";
 import ThemePage from "./pages/theme";
@@ -43,30 +42,10 @@ const Layout = () => {
       </aside>
 
       {/* content */}
-      <div className="flex flex-1 flex-col bg-base-200/70">
-        {/* title */}
-        <div className="flex h-12 w-full flex-shrink-0 justify-between pl-8 text-base font-medium">
-          <div
-            className="flex h-full flex-1 select-none items-center"
-            style={{ appRegion: "drag" } as React.CSSProperties}
-          >
-            {menuItems[current]?.text}
-          </div>
-
-          {/* windows btn group */}
-          {windows && <WindowsTitleBarBtnGroup />}
-        </div>
-
-        {/* main */}
-        <div className="scroll-y flex-1">
-          <main>
-            {current === 0 && <BasicPage />}
-            {current === 1 && <UnsyncPage />}
-            {current === 2 && <SettingPage />}
-            {current === 3 && <ThemePage />}
-          </main>
-        </div>
-      </div>
+      {current === 0 && <BasicPage />}
+      {current === 1 && <UnsyncPage />}
+      {current === 2 && <SettingPage />}
+      {current === 3 && <ThemePage />}
     </div>
   );
 };

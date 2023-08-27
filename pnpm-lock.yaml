@@ -87,6 +87,9 @@ importers:
       electron-updater:
         specifier: ^5.3.0
         version: 5.3.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       recoil:
         specifier: ^0.7.7
         version: 0.7.7(react-dom@18.2.0)(react@18.2.0)
@@ -112,6 +115,9 @@ importers:
       '@rao-pics/tsconfig':
         specifier: ^0.1.0
         version: link:../../tooling/typescript
+      '@types/lodash':
+        specifier: ^4.14.197
+        version: 4.14.197
       '@types/node':
         specifier: ^18.17.6
         version: 18.17.6
@@ -1574,6 +1580,10 @@ packages:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
       '@types/node': 18.17.6
+
+  /@types/lodash@4.14.197:
+    resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
+    dev: true
 
   /@types/mdast@3.0.12:
     resolution: {integrity: sha512-DT+iNIRNX884cx0/Q1ja7NyUPpZuv0KPyL5rGNxm1WC1OtHstl7n4Jb7nk+xacNShQMbczJjt8uFzznpp6kYBg==}

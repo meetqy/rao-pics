@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "main": "./index.ts",
+  "files": [
+    "index.ts",
+    "server.ts"
+  ],
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
