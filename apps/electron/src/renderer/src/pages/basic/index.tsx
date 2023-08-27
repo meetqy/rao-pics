@@ -1,10 +1,43 @@
 import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/title";
+import { useLanguage } from "@renderer/hooks";
+
+const languages = {
+  "zh-cn": {
+    title: "基础信息",
+    file_path: "文件路径",
+    last_sync: "最后同步",
+    preview: "预览",
+    sync_count: "同步数量",
+    btn_sync: "同步",
+    btn_remove: "移除",
+  },
+  "en-us": {
+    title: "Basic Information",
+    file_path: "File Path",
+    last_sync: "Last Sync",
+    preview: "Preview",
+    sync_count: "Sync Count",
+    btn_sync: "Sync",
+    btn_remove: "Remove",
+  },
+  "zh-tw": {
+    title: "基礎信息",
+    file_path: "文件路徑",
+    last_sync: "最後同步",
+    preview: "預覽",
+    sync_count: "同步數量",
+    btn_sync: "同步",
+    btn_remove: "移除",
+  },
+};
 
 const BasicPage = () => {
+  const { lang } = useLanguage(languages);
+
   return (
-    <Content title={<Title>基础信息</Title>}>
+    <Content title={<Title>{lang.title}</Title>}>
       <div className="px-4">
         <div className="card-wrapper">
           <div className="card-row">
@@ -23,7 +56,7 @@ const BasicPage = () => {
                   d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"
                 />
               </svg>
-              <span className="ml-2">文件路径</span>
+              <span className="ml-2">{lang.file_path}</span>
             </span>
 
             <span>
@@ -48,7 +81,7 @@ const BasicPage = () => {
                   d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span className="ml-2">最后同步</span>
+              <span className="ml-2">{lang.last_sync}</span>
             </span>
             <span>2023-08-25 14:15</span>
           </div>
@@ -72,7 +105,7 @@ const BasicPage = () => {
                 />
               </svg>
 
-              <span className="ml-2 flex items-center">预览</span>
+              <span className="ml-2 flex items-center">{lang.preview}</span>
             </span>
 
             <span>
@@ -98,7 +131,7 @@ const BasicPage = () => {
                 />
               </svg>
 
-              <span className="ml-2">同步数量</span>
+              <span className="ml-2">{lang.sync_count}</span>
             </span>
 
             <span className="font-mono">
@@ -127,8 +160,10 @@ const BasicPage = () => {
 
           <div className="w-1/2">
             <div className="m-auto flex h-full w-5/6 flex-col justify-center">
-              <button className="btn-neutral btn">同步</button>
-              <button className="btn-error btn-outline btn mt-4">移除</button>
+              <button className="btn-neutral btn">{lang.btn_sync}</button>
+              <button className="btn-error btn-outline btn mt-4">
+                {lang.btn_remove}
+              </button>
             </div>
           </div>
         </div>
