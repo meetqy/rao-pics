@@ -1,6 +1,6 @@
 import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
-import Title from "@renderer/components/title";
+import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
 
 const languages = {

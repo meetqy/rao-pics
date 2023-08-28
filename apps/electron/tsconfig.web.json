@@ -5,7 +5,7 @@
   ],
   "include": [
     "src/renderer/src/env.d.ts",
-    "src/renderer/src/**/*.{tsx,ts}",
+    "src/renderer/src/**/*",
     "src/preload/*.d.ts"
   ],
   "compilerOptions": {

@@ -1,5 +1,5 @@
 import Content from "@renderer/components/Content";
-import Title from "@renderer/components/title";
+import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
 
 import { LANGUAGE } from "@rao-pics/constant";
