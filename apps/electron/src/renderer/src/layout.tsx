@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Menu from "./components/Menu";
+import { useColor } from "./hooks";
 import BasicPage from "./pages/basic";
 import ColorPage from "./pages/Color";
 import SettingPage from "./pages/setting";
@@ -9,10 +10,15 @@ import UnsyncPage from "./pages/unsync";
 const Layout = () => {
   const [current, setCurrent] = useState(0);
 
+  const { color } = useColor();
+
   const windows = window.electron.process.platform === "win32";
 
   return (
-    <div className="flex h-full w-full overflow-hidden text-sm">
+    <div
+      data-theme={color}
+      className="flex h-screen w-screen overflow-hidden rounded bg-base-100 text-sm"
+    >
       {/* aside */}
       <aside className="relative flex h-full w-52 flex-col bg-base-200">
         <div>

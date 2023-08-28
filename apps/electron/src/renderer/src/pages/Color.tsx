@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Content from "@renderer/components/Content";
 import Title from "@renderer/components/title";
-import { useLanguage } from "@renderer/hooks";
+import { useColor, useLanguage } from "@renderer/hooks";
 import { colorState } from "@renderer/state";
 import { useRecoilState } from "recoil";
 
@@ -113,7 +113,7 @@ const ColorPage = () => {
     { name: "neutral", text: lang.tags[5] },
   ];
 
-  const [color, setColor] = useRecoilState(colorState);
+  const { color, setColor } = useColor();
 
   const [tag, setTag] = useState("");
 
