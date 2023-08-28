@@ -18,5 +18,13 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
-  "exclude": ["node_modules", "build", "dist", ".next", ".expo", "out"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    ".next",
+    ".expo",
+    "out",
+    "**/*.cjs"
+  ]
 }

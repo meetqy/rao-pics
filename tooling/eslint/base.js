@@ -32,15 +32,7 @@ const config = {
     ],
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
   },
-  ignorePatterns: [
-    "**/.eslintrc.cjs",
-    "**/*.config.js",
-    "**/*.config.cjs",
-    "electron-builder.cjs",
-    ".next",
-    "dist",
-    "pnpm-lock.yaml",
-  ],
+  ignorePatterns: ["**/*.cjs", ".next", "dist", "pnpm-lock.yaml"],
   reportUnusedDisableDirectives: true,
 };
 
