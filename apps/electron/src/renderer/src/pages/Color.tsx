@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Content from "@renderer/components/Content";
 import Title from "@renderer/components/title";
+import { useLanguage } from "@renderer/hooks";
 import { colorState } from "@renderer/state";
 import { useRecoilState } from "recoil";
 
@@ -85,16 +86,33 @@ const colorScheme = [
   ["winter", "light,angle"],
 ];
 
-const tags = [
-  { name: "", text: "全部" },
-  { name: "light", text: "浅色" },
-  { name: "dark", text: "深色" },
-  { name: "angle", text: "圆角" },
-  { name: "right-angle", text: "直角" },
-  { name: "neutral", text: "中性" },
-];
+const languages = {
+  "zh-cn": {
+    title: "外观",
+    tags: ["全部", "浅色", "深色", "圆角", "直角", "中性"],
+  },
+  "zh-tw": {
+    title: "外觀",
+    tags: ["全部", "淺色", "深色", "圓角", "直角", "中性"],
+  },
+  "en-us": {
+    title: "Color Scheme",
+    tags: ["All", "Light", "Dark", "Angle", "Right Angle", "Neutral"],
+  },
+};
 
 const ColorPage = () => {
+  const { lang } = useLanguage(languages);
+
+  const tags = [
+    { name: "", text: lang.tags[0] },
+    { name: "light", text: lang.tags[1] },
+    { name: "dark", text: lang.tags[2] },
+    { name: "angle", text: lang.tags[3] },
+    { name: "right-angle", text: lang.tags[4] },
+    { name: "neutral", text: lang.tags[5] },
+  ];
+
   const [color, setColor] = useRecoilState(colorState);
 
   const [tag, setTag] = useState("");
@@ -102,7 +120,7 @@ const ColorPage = () => {
   const filterColors = colorScheme.filter((t) => t[1]?.includes(tag));
 
   return (
-    <Content title={<Title>外观</Title>}>
+    <Content title={<Title>{lang.title}</Title>}>
       <div className="pb-4">
         <div className="sticky left-0 top-0 z-10 px-4">
           <div className="card-wrapper">

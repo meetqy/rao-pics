@@ -4,8 +4,6 @@ import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/title";
 import { useLanguage } from "@renderer/hooks";
 
-const types = ["全部", "回收站中", "格式不支持", "JSON 错误", "未知错误"];
-
 const languages = {
   "zh-cn": {
     title: "未同步记录",
@@ -14,13 +12,7 @@ const languages = {
   },
   "en-us": {
     title: "Unsynced Records",
-    types: [
-      "All",
-      "In Recycle Bin",
-      "Format Not Supported",
-      "JSON Error",
-      "Unknown Error",
-    ],
+    types: ["All", "In Trash", "Not Supported", "JSON Error", "Unknown Error"],
     input_placeholder: "ID、Path Search",
   },
   "zh-tw": {
@@ -33,7 +25,7 @@ const languages = {
 const UnsyncPage = () => {
   const [collapse, setCollapse] = useState(false);
 
-  const { lang } = useLanguage(languages);
+  const { lang, language } = useLanguage(languages);
 
   return (
     <Content title={<Title>{lang.title}</Title>}>
@@ -75,10 +67,12 @@ const UnsyncPage = () => {
 
             <div className="card-row">
               <div className="join">
-                {types.map((item) => (
+                {lang.types.map((item) => (
                   <input
                     key={item}
-                    className="btn-sm join-item btn"
+                    className={`join-item btn ${
+                      language === "en-us" ? "btn-xs" : "btn-sm"
+                    }`}
                     type="radio"
                     name="options"
                     aria-label={item}
