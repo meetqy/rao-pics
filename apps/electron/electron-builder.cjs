@@ -1,4 +1,6 @@
-const { resolve } = require("path");
+const builder = require("electron-builder");
+
+const { resolve, join } = require("path");
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -35,9 +37,9 @@ const options = {
     entitlementsInherit: "build/entitlements.mac.plist",
     target: isDev ? "dir" : { target: "dmg", arch: ["arm64", "x64"] },
   },
-  win: {
-    target: isDev ? "dir" : { target: "nsis", arch: ["x64"] },
-  },
+  // win: {
+  //   target: isDev ? "dir" : { target: "nsis", arch: ["x64"] },
+  // },
   npmRebuild: false,
   publish: {
     provider: "generic",
@@ -48,7 +50,22 @@ const options = {
       from: resolve(__dirname, "./node_modules/@rao-pics/db/prisma/db.sqlite"),
       to: "extraResources/db.sqlite",
     },
+    {
+      from: join(__dirname, "../../themes/tiga/.next"),
+      to: "themes/tiga",
+      filter: ["standalone/**/*", "public/**/*", "static/**/*"],
+    },
   ],
 };
 
-module.exports = options;
+builder
+  .build({
+    targets: builder.Platform.MAC.createTarget(),
+    config: options,
+  })
+  .then((result) => {
+    console.log(JSON.stringify(result));
+  })
+  .catch((error) => {
+    console.error(error);
+  });
