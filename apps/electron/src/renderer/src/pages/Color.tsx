@@ -2,8 +2,6 @@ import { useState } from "react";
 import Content from "@renderer/components/Content";
 import Title from "@renderer/components/title";
 import { useColor, useLanguage } from "@renderer/hooks";
-import { colorState } from "@renderer/state";
-import { useRecoilState } from "recoil";
 
 interface ItemProps {
   active?: boolean;
