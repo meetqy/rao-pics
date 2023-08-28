@@ -6,29 +6,29 @@ import { useRecoilState } from "recoil";
 
 interface ItemProps {
   active?: boolean;
-  theme: string;
+  color: string;
   onClick?: () => void;
 }
 
-const Item = ({ theme, onClick, active = false }: ItemProps) => {
+const Item = ({ color, onClick, active = false }: ItemProps) => {
   return (
     <div
       className={`overflow-hidden rounded border border-base-content/20 hover:border-base-content/40 ${
         active ? "outline outline-2" : ""
       }`}
-      data-set-theme={theme}
+      data-set-theme={color}
       onClick={onClick}
       aria-hidden
     >
       <div
-        data-theme={theme}
+        data-theme={color}
         className="w-full cursor-pointer bg-base-100 text-base-content"
       >
         <div className="grid grid-cols-3 grid-rows-3">
           <div className="col-start-1 row-span-2 row-start-2 bg-base-200"></div>
           <div className="col-start-1 row-start-2 bg-base-300"></div>
           <div className="col-span-4 col-start-2 row-span-3 row-start-1 flex flex-col gap-1 bg-base-100 p-2">
-            <div className="font-bold capitalize">{theme}</div>
+            <div className="font-bold capitalize">{color}</div>
 
             <div className="flex flex-wrap gap-1">
               <div className="flex aspect-square w-5 items-center justify-center rounded bg-primary lg:w-6">
@@ -126,7 +126,7 @@ const ColorPage = () => {
           {filterColors.map((t) => (
             <Item
               key={t[0]}
-              theme={t[0] ?? "light"}
+              color={t[0] ?? "light"}
               onClick={() => setColor(t[0] ?? "light")}
               active={color === t[0]}
             />
