@@ -7,6 +7,7 @@
 [![Release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
 [![Download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/rao-pics/rao-pics/releases)
 [![Twitter URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Frao-pics%2Frao-pics)](https://twitter.com/intent/tweet?text=Visit%20Material%20on%20Any%20device.https://github.com/rao-pics/core)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmeetqy%2Frao-pics.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmeetqy%2Frao-pics?ref=badge_shield)
 
 基于 Eagle/Billfish/Pixcall 等素材管理工具，让你的素材可以在任何设备上访问。
 
@@ -76,3 +77,7 @@ UI
 ## 芜湖 ~
 
 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate) - 如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao)，支持作者哦 😘😘😘
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmeetqy%2Frao-pics.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmeetqy%2Frao-pics?ref=badge_large)
