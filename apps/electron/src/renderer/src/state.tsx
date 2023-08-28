@@ -1,17 +1,6 @@
 import { atom } from "recoil";
 
-import type { Config } from "@rao-pics/db";
-
-export const themeState = atom({
-  key: "theme",
+export const colorState = atom({
+  key: "color",
   default: "",
-});
-
-export const languageState = atom({
-  key: "language",
-  default: "zh-cn",
-});
-
-export const configState = atom<Config>({
-  key: "config",
 });

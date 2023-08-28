@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Content from "@renderer/components/Content";
 import Title from "@renderer/components/title";
-import { themeState } from "@renderer/state";
+import { colorState } from "@renderer/state";
 import { useRecoilState } from "recoil";
 
 interface ItemProps {
@@ -53,7 +53,7 @@ const Item = ({ theme, onClick, active = false }: ItemProps) => {
   );
 };
 
-const themes = [
+const colorScheme = [
   ["light", "light,angle"],
   ["dark", "dark,angle"],
   ["cupcake", "light,angle"],
@@ -95,11 +95,11 @@ const tags = [
 ];
 
 const ColorPage = () => {
-  const [theme, setTheme] = useRecoilState(themeState);
+  const [color, setColor] = useRecoilState(colorState);
 
   const [tag, setTag] = useState("");
 
-  const filterThemes = themes.filter((t) => t[1]?.includes(tag));
+  const filterColors = colorScheme.filter((t) => t[1]?.includes(tag));
 
   return (
     <Content title={<Title>外观</Title>}>
@@ -123,12 +123,12 @@ const ColorPage = () => {
         </div>
 
         <div className="mt-4 grid grid-cols-3 gap-3 px-4">
-          {filterThemes.map((t) => (
+          {filterColors.map((t) => (
             <Item
               key={t[0]}
               theme={t[0] ?? "light"}
-              onClick={() => setTheme(t[0] ?? "light")}
-              active={theme === t[0]}
+              onClick={() => setColor(t[0] ?? "light")}
+              active={color === t[0]}
             />
           ))}
         </div>
