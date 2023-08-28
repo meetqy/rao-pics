@@ -22,14 +22,14 @@ describe("config module", () => {
       expect(res).toEqual({
         name: "config",
         language: "zh-cn",
-        skin: "tiga",
+        color: "tiga",
         theme: "light",
       });
     });
 
-    it("should update the skin field in the config table", async () => {
+    it("should update the color field in the config table", async () => {
       await caller.config.upsert({
-        skin: "senven",
+        color: "senven",
       });
 
       const res = await caller.config.get();
@@ -37,7 +37,7 @@ describe("config module", () => {
       expect(res).toEqual({
         name: "config",
         language: "zh-cn",
-        skin: "senven",
+        color: "senven",
         theme: "light",
       });
     });
@@ -52,7 +52,7 @@ describe("config module", () => {
       expect(res).toEqual({
         name: "config",
         language: "zh-cn",
-        skin: "tiga",
+        color: "tiga",
         theme: "dark",
       });
     });

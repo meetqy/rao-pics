@@ -94,7 +94,7 @@ const tags = [
   { name: "neutral", text: "中性" },
 ];
 
-const ThemePage = () => {
+const ColorPage = () => {
   const [theme, setTheme] = useRecoilState(themeState);
 
   const [tag, setTag] = useState("");
@@ -137,4 +137,4 @@ const ThemePage = () => {
   );
 };
 
-export default ThemePage;
+export default ColorPage;

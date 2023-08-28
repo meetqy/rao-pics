@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import Menu from "./components/Menu";
 import BasicPage from "./pages/basic";
+import ColorPage from "./pages/Color";
 import SettingPage from "./pages/setting";
-import ThemePage from "./pages/theme";
 import UnsyncPage from "./pages/unsync";
 
 const Layout = () => {
@@ -45,7 +45,7 @@ const Layout = () => {
       {current === 0 && <BasicPage />}
       {current === 1 && <UnsyncPage />}
       {current === 2 && <SettingPage />}
-      {current === 3 && <ThemePage />}
+      {current === 3 && <ColorPage />}
     </div>
   );
 };

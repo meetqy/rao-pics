@@ -10,7 +10,7 @@ export const config = t.router({
       z.object({
         language: z.enum(["zh-cn", "en-us", "zh-tw"]).optional(),
         theme: z.string().optional(),
-        skin: z.string().optional(),
+        color: z.string().optional(),
       }),
     )
     .mutation(async ({ input }) => {
@@ -20,7 +20,7 @@ export const config = t.router({
         create: {
           name: "config",
           language: input.language ?? "zh-cn",
-          skin: input.skin ?? "tiga",
+          color: input.color ?? "tiga",
           theme: input.theme ?? "light",
         },
       });
