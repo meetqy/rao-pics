@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { prisma } from "@rao-pics/db";
@@ -55,6 +56,16 @@ describe("config module", () => {
         color: "tiga",
         theme: "dark",
       });
+    });
+
+    it("language field throw errrr", () => {
+      caller.config
+        .upsert({
+          language: "en-us1" as never,
+        })
+        .catch((e) => {
+          expect(e).toHaveProperty("code", "BAD_REQUEST");
+        });
     });
   });
 });

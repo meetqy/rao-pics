@@ -1,9 +1,7 @@
-import { initTRPC } from "@trpc/server";
-import superjson from "superjson";
-
 import { config } from "./src/config";
+import { t } from "./src/utils";
 
-const t = initTRPC.create({ isServer: true, transformer: superjson });
+export { t } from "./src/utils";
 
 export const router = t.router({
   config,
