@@ -5,26 +5,44 @@
 - 弹窗：使用系统内部弹窗
 - 线上错误使用 `Sentry` 收集，先本地 showErrorMesssage，再上报
 
-## i18n
+## 语言 i18n
 
-在每个页面中，单独定义一个 `i18n` 对象，用于存放当前页面的国际化文案，而不是使用一个全局的 `i18n` 对象。
+在每个页面中，单独定义一个 `language` 对象，用于存放当前页面的国际化文案，而不是使用一个全局的 `language` 对象。
 
 当同步应用修改语言时，在 electron renderer 中监听 `language-changed` 事件，然后切换语言即可。
 
 ```sh
 - page1
-    - i18n.js
+    - language.js
 - page2
-    - i18n.js
+    - language.js
 - page3
-    - i18n.js
+    - language.js
+```
+
+**正确的**
+
+```ts
+const languages = {
+  "zh-cn": {
+    title: "你好世界",
+  },
+  "en-us": {
+    title: "Hello World",
+  },
+};
+
+const { lang, language, setLanguage } = useLanguage(languages);
+
+// lang => languages value
+// language => languages key
 ```
 
 ## Style
 
 - 不要直接使用 `text-neutral-content/{number}`，除非背景为 `bg-neutral`，其他颜色同理。
 
-**Error**
+**错误的**
 
 切换主题可能会造成文字阅读困难。
 
@@ -34,7 +52,7 @@
 </div>
 ```
 
-**Correct**
+**正确的**
 
 ```html
 <div class="bg-neutral">
