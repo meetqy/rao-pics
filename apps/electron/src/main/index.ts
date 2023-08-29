@@ -8,6 +8,7 @@ import { IS_DEV } from "@rao-pics/constant/server";
 import { createDbPath } from "@rao-pics/db";
 
 import icon from "../../resources/icon.png?asset";
+import { createCustomIPCHandle } from "./src/ipc";
 
 function createWindow(): void {
   // Create the browser window.
@@ -49,6 +50,7 @@ function createWindow(): void {
   }
 
   createIPCHandler({ router, windows: [mainWindow] });
+  createCustomIPCHandle();
 }
 
 // dialog.showErrorBox(

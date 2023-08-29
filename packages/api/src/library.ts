@@ -6,14 +6,12 @@ import { t } from "./utils";
 
 export const library = t.router({
   get: t.procedure.query(async () => {
-    const res = await prisma.library.findMany({});
-
-    return res[0];
+    return await prisma.library.findFirst();
   }),
 
   add: t.procedure.input(z.string()).mutation(async ({ input }) => {
     if (!input.endsWith(".library")) {
-      throw new Error("Cannot add a library directory.");
+      throw new Error(`Must be a '.library' directory.`);
     }
 
     const res = await prisma.library.findMany({});

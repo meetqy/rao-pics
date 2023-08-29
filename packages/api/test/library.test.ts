@@ -38,7 +38,7 @@ describe("library module", () => {
       const input = "path/to/library/";
 
       await expect(caller.library.add(input)).rejects.toMatchObject({
-        message: "Cannot add a library directory.",
+        message: "Must be a '.library' directory.",
         code: "INTERNAL_SERVER_ERROR",
       });
 

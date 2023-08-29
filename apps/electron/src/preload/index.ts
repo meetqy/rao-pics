@@ -19,8 +19,12 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld("dialog", {
       showOpenDialog: (options: Electron.OpenDialogOptions) =>
         ipcRenderer.invoke("dialog.showOpenDialog", options),
+
       showMessageBox: (options: Electron.OpenDialogOptions) =>
         ipcRenderer.invoke("dialog.showMessageBox", options),
+
+      showErrorBox: (title: string, content: string) =>
+        ipcRenderer.invoke("dialog.showErrorBox", title, content),
     });
 
     exposeElectronTRPC();

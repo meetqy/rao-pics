@@ -1,5 +1,5 @@
 import { createSystemIPC } from "./system";
 
-export const createCustomIPC = () => {
+export const createCustomIPCHandle = () => {
   createSystemIPC();
 };

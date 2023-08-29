@@ -18,6 +18,11 @@ declare global {
       showMessageBox: (
         options: Electron.MessageBoxOptions,
       ) => Promise<string[] | undefined>;
+
+      /**
+       * Same as showErrorBox
+       */
+      showErrorBox: (title: string, content: string) => void;
     };
   }
 }

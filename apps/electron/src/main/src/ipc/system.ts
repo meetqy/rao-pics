@@ -12,4 +12,11 @@ export const createSystemIPC = () => {
     (_e, options: Electron.MessageBoxOptions) =>
       dialog.showMessageBoxSync(options),
   );
+
+  ipcMain.handle(
+    "dialog.showErrorBox",
+    (_e, title: string, content: string) => {
+      dialog.showErrorBox(title, content);
+    },
+  );
 };
