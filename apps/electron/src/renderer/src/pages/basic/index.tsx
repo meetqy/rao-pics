@@ -7,7 +7,7 @@ import { trpc } from "@renderer/utils/trpc";
 const languages = {
   "zh-cn": {
     title: "基础信息",
-    file_path: "文件路径",
+    file_path: "资源库路径",
     last_sync: "最后同步",
     preview: "预览",
     sync_count: "同步数量",
@@ -20,7 +20,7 @@ const languages = {
   },
   "en-us": {
     title: "Basic Information",
-    file_path: "File Path",
+    file_path: "Library Path",
     last_sync: "Last Sync",
     preview: "Preview",
     sync_count: "Sync Count",
@@ -33,7 +33,7 @@ const languages = {
   },
   "zh-tw": {
     title: "基礎信息",
-    file_path: "文件路徑",
+    file_path: "资源库路径",
     last_sync: "最後同步",
     preview: "預覽",
     sync_count: "同步數量",
@@ -98,7 +98,15 @@ const BasicPage = () => {
               <span className="ml-2">{lang.file_path}</span>
             </span>
 
-            <span>
+            <span
+              className="cursor-pointer"
+              aria-hidden="true"
+              onClick={() => {
+                if (library) {
+                  window.shell.showItemInFolder(library.path);
+                }
+              }}
+            >
               <span>{library?.path}</span>
               {ArrowRightSvg}
             </span>

@@ -20,9 +20,13 @@ model Config {
 
 model Library {
   // 路径
-  path String @unique
+  path        String   @unique
   // eagle | billfish | pixcall
-  type String
+  type        String
+  // created time
+  createdTime DateTime @default(now())
+  // updated time
+  updatedTime DateTime @updatedAt
 }
 
 model User {

@@ -11,16 +11,15 @@ declare global {
       showOpenDialog: (
         options: Electron.OpenDialogOptions,
       ) => Promise<string[] | undefined>;
-      /**
-       *
-       * Same as showMessageBox, But it doesn't have 'browserWindow' argument.
-       */
       showMessageBox: (options: Electron.MessageBoxOptions) => Promise<number>;
-
-      /**
-       * Same as showErrorBox
-       */
       showErrorBox: (title: string, content: string) => void;
+    };
+    shell: {
+      openExternal: (
+        url: string,
+        options?: Electron.OpenExternalOptions,
+      ) => Promise<void>;
+      showItemInFolder: (path: string) => void;
     };
   }
 }

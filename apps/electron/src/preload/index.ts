@@ -27,6 +27,16 @@ if (process.contextIsolated) {
         ipcRenderer.invoke("dialog.showErrorBox", title, content),
     });
 
+    /**
+     * window.shell same as shell.xxx
+     */
+    contextBridge.exposeInMainWorld("shell", {
+      openExternal: (url: string, options?: Electron.OpenExternalOptions) =>
+        ipcRenderer.invoke("shell.openExternal", url, options),
+      showItemInFolder: (path: string) =>
+        ipcRenderer.invoke("shell.showItemInFolder", path),
+    });
+
     exposeElectronTRPC();
   } catch (error) {
     console.error(error);

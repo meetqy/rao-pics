@@ -10,7 +10,7 @@
   @apply rounded border border-base-300 bg-base-200 px-4;
 
   .card-row {
-    @apply flex cursor-default justify-between py-3;
+    @apply flex justify-between py-3;
 
     &.compact {
       @apply py-1.5;
