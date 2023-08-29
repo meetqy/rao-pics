@@ -10,7 +10,7 @@ const _prisma: PrismaClient = new PrismaClient(
   !IS_DEV
     ? {
         datasources: {
-          db: { url: `file:${dbPath}?connection_limit=1` },
+          db: { url: `file:${dbPath}` },
         },
       }
     : undefined,

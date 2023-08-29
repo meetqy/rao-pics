@@ -7,12 +7,16 @@ import ColorPage from "./pages/color";
 import SettingPage from "./pages/setting";
 import UnsyncPage from "./pages/unsync";
 
+// import { trpc } from "./utils/trpc";
+
 const Layout = () => {
   const [current, setCurrent] = useState(0);
 
   const { color } = useColor();
 
   const windows = window.electron.process.platform === "win32";
+
+  // trpc.library.
 
   return (
     <div

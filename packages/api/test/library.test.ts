@@ -8,7 +8,8 @@ const caller = router.createCaller({});
 
 describe("library module", () => {
   beforeEach(async () => {
-    await prisma.library.deleteMany({});
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await prisma.library.deleteMany();
   });
 
   describe("add procedure", () => {
@@ -31,12 +32,11 @@ describe("library module", () => {
 
     it("should throw an error when adding a library directory", async () => {
       const input = "path/to/library/";
-      await caller.library.add(input).catch((err) =>
-        expect(err).toMatchObject({
-          message: "Cannot add a library directory.",
-          code: "INTERNAL_SERVER_ERROR",
-        }),
-      );
+
+      await expect(caller.library.add(input)).rejects.toMatchObject({
+        message: "Cannot add a library directory.",
+        code: "INTERNAL_SERVER_ERROR",
+      });
 
       const libraries = await prisma.library.findMany({});
       expect(libraries).toHaveLength(0);
@@ -47,12 +47,10 @@ describe("library module", () => {
       const input2 = "path/to/bbb.library";
       await caller.library.add(input1);
 
-      caller.library.add(input2).catch((err) =>
-        expect(err).toMatchObject({
-          message: "Cannot add a library directory.",
-          code: "INTERNAL_SERVER_ERROR",
-        }),
-      );
+      await expect(caller.library.add(input2)).rejects.toMatchObject({
+        message: "Cannot add more than one library.",
+        code: "INTERNAL_SERVER_ERROR",
+      });
 
       const libraries = await prisma.library.findMany({});
       expect(libraries).toHaveLength(1);
@@ -72,6 +70,20 @@ describe("library module", () => {
 
       const libraries = await prisma.library.findMany({});
       expect(libraries).toHaveLength(0);
+    });
+  });
+
+  describe("get procedure", () => {
+    it("get library", async () => {
+      const input = "path/to/xxx.library";
+      await caller.library.add(input);
+
+      const result = await caller.library.get();
+
+      expect(result).toMatchObject({
+        path: input,
+        type: "eagle",
+      });
     });
   });
 });
