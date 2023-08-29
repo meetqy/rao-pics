@@ -1,1 +1,78 @@
 # Config 配置信息
+
+- `config/get` 获取配置信息
+- `config/upsert` 更新配置信息
+
+## 获取配置信息
+
+`config/get`
+
+### 请求参数
+
+no params
+
+### 使用方式
+
+trpc
+
+```ts
+const { data: config } = trpc.config.get.useQuery();
+```
+
+### 返回值
+
+```ts
+type Config = {
+  // config
+  name: string;
+  // 语言 zh-cn、en-us、zh-tw
+  language: string;
+  // 外观 | 配色  具体可查看 https://daisyui.com/docs/themes/
+  color: string;
+  // web 主题
+  theme: string;
+};
+```
+
+## 更新配置信息
+
+`config/upsert`
+
+### 请求参数
+
+```ts
+{
+    language?: "zh-cn" | "en-us" | "zh-tw" | undefined;
+    theme?: string | undefined;
+    color?: string | undefined;
+}
+```
+
+### 使用方式
+
+只需传入需要更新的字段。
+
+trpc
+
+```ts
+const { mutate: updateConfig } = trpc.config.upsert.useMutation();
+
+updateConfig.mutate({
+  language: "zh-cn",
+});
+```
+
+### 返回值
+
+```ts
+type Config = {
+  // config
+  name: string;
+  // 语言 zh-cn、en-us、zh-tw
+  language: string;
+  // 外观 | 配色  具体可查看 https://daisyui.com/docs/themes/
+  color: string;
+  // web 主题
+  theme: string;
+};
+```

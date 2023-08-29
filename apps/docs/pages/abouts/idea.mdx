@@ -1,0 +1,18 @@
+# 想法和解决方案
+
+记录临时的想法和解决方案。
+
+## 资源库
+
+一个 db.sqlite 文件只管理一个资源库, library 和 image/tag/folder 之前只能是 1对多 的关系。
+
+如果需要管理多个资源库, 可以通过添加资源库, 切换 db.sqlite 文件来实现，降低复杂度。
+
+之前已经尝试过通过一个 db.sqlite 文件管理多个资源库, 但是会导致很多问题, v0.7.x
+
+## 主题
+
+### 打包方案
+
+1. next build
+2. 通过 Node 脚本，将 standalone, static, public 打包为 zip;
