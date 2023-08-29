@@ -3,7 +3,7 @@ import { useState } from "react";
 import Menu from "./components/Menu";
 import { useColor } from "./hooks";
 import BasicPage from "./pages/basic";
-import ColorPage from "./pages/Color";
+import ColorPage from "./pages/color";
 import SettingPage from "./pages/setting";
 import UnsyncPage from "./pages/unsync";
 
