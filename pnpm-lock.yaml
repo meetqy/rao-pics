@@ -225,6 +225,9 @@ importers:
       '@types/node':
         specifier: ^18.17.6
         version: 18.17.6
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
       eslint:
         specifier: ^8.47.0
         version: 8.47.0

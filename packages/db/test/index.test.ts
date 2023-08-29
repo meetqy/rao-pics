@@ -4,7 +4,7 @@ import { join } from "path";
 import fs from "fs-extra";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
-import { DB_DIRS, PLATFORM } from "@rao-pics/constant";
+import { DB_DIRS, PLATFORM } from "@rao-pics/constant/server";
 
 import { createDbPath } from "..";
 

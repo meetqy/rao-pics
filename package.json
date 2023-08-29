@@ -17,6 +17,7 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
+    "test": "turbo test",
     "typecheck": "turbo typecheck"
   },
   "prettier": "@rao-pics/prettier-config",

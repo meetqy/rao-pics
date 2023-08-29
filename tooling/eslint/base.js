@@ -32,7 +32,14 @@ const config = {
     ],
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
   },
-  ignorePatterns: ["**/*.cjs", ".next", "dist", "pnpm-lock.yaml"],
+  ignorePatterns: [
+    "**/*.cjs",
+    ".next",
+    "dist",
+    "pnpm-lock.yaml",
+    "coverage",
+    "out",
+  ],
   reportUnusedDisableDirectives: true,
 };
 

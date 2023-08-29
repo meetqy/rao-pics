@@ -11,7 +11,6 @@
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=test vitest",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@rao-pics/prettier-config",
@@ -28,6 +27,7 @@
     "@rao-pics/prettier-config": "^0.1.0",
     "@rao-pics/tsconfig": "^0.1.0",
     "@types/node": "^18.17.6",
+    "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6"
   }
