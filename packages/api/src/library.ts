@@ -26,4 +26,8 @@ export const library = t.router({
       },
     });
   }),
+
+  delete: t.procedure.mutation(async () => {
+    return await prisma.library.deleteMany();
+  }),
 });

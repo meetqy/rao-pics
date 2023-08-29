@@ -9,11 +9,11 @@ const caller = router.createCaller({});
 describe("library module", () => {
   beforeEach(async () => {
     await new Promise((resolve) => setTimeout(resolve, 50));
-    await prisma.library.deleteMany();
+    await caller.library.delete();
   });
 
   afterAll(async () => {
-    await prisma.library.deleteMany();
+    await caller.library.delete();
   });
 
   describe("add procedure", () => {

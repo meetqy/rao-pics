@@ -15,9 +15,7 @@ declare global {
        *
        * Same as showMessageBox, But it doesn't have 'browserWindow' argument.
        */
-      showMessageBox: (
-        options: Electron.MessageBoxOptions,
-      ) => Promise<string[] | undefined>;
+      showMessageBox: (options: Electron.MessageBoxOptions) => Promise<number>;
 
       /**
        * Same as showErrorBox

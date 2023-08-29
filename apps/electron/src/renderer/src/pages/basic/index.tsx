@@ -2,6 +2,7 @@ import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
+import { trpc } from "@renderer/utils/trpc";
 
 const languages = {
   "zh-cn": {
@@ -12,6 +13,10 @@ const languages = {
     sync_count: "同步数量",
     btn_sync: "同步",
     btn_remove: "移除",
+    question_btn1: "取消",
+    question_btn2: "确定",
+    question_title: "提示",
+    question_message: "确定要移除此库吗？",
   },
   "en-us": {
     title: "Basic Information",
@@ -21,6 +26,10 @@ const languages = {
     sync_count: "Sync Count",
     btn_sync: "Sync",
     btn_remove: "Remove",
+    question_btn1: "Cancel",
+    question_btn2: "OK",
+    question_title: "Prompt",
+    question_message: "Are you sure you want to remove this library?",
   },
   "zh-tw": {
     title: "基礎信息",
@@ -30,11 +39,41 @@ const languages = {
     sync_count: "同步數量",
     btn_sync: "同步",
     btn_remove: "移除",
+    question_btn1: "取消",
+    question_btn2: "確定",
+    question_title: "提示",
+    question_message: "確定要移除此庫嗎？",
   },
 };
 
 const BasicPage = () => {
   const { lang } = useLanguage(languages);
+  const utils = trpc.useContext();
+
+  const { data: library } = trpc.library.get.useQuery();
+  const deleteLibrary = trpc.library.delete.useMutation({
+    onSuccess: () => {
+      void utils.library.invalidate();
+    },
+  });
+
+  const onBeforeDeleteLibrary = () => {
+    window.dialog
+      .showMessageBox({
+        type: "question",
+        buttons: [lang.question_btn1, lang.question_btn2],
+        title: lang.question_title,
+        message: lang.question_message,
+      })
+      .then((res) => {
+        if (res === 1) {
+          void deleteLibrary.mutateAsync();
+        }
+      })
+      .catch((e) =>
+        window.dialog.showErrorBox("onBeforeDeleteLibrary", JSON.stringify(e)),
+      );
+  };
 
   return (
     <Content title={<Title>{lang.title}</Title>}>
@@ -60,7 +99,7 @@ const BasicPage = () => {
             </span>
 
             <span>
-              <span>/Users/meetqy/Library/Caches/RaoPics</span>
+              <span>{library?.path}</span>
               {ArrowRightSvg}
             </span>
           </div>
@@ -161,7 +200,10 @@ const BasicPage = () => {
           <div className="w-1/2">
             <div className="m-auto flex h-full w-5/6 flex-col justify-center">
               <button className="btn-neutral btn">{lang.btn_sync}</button>
-              <button className="btn-error btn-outline btn mt-4">
+              <button
+                className="btn-error btn-outline btn mt-4"
+                onClick={onBeforeDeleteLibrary}
+              >
                 {lang.btn_remove}
               </button>
             </div>

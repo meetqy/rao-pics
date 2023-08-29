@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Menu from "./components/Menu";
-import { useColor } from "./hooks";
+import { useColor, useLanguage } from "./hooks";
 import BasicPage from "./pages/basic";
 import ColorPage from "./pages/color";
 import Empty from "./pages/empty";
@@ -9,14 +9,29 @@ import SettingPage from "./pages/setting";
 import UnsyncPage from "./pages/unsync";
 import { trpc } from "./utils/trpc";
 
+const languages = {
+  "zh-cn": {
+    no_library: "暂无资源库",
+  },
+  "en-us": {
+    no_library: "No library",
+  },
+  "zh-tw": {
+    no_library: "暫無資源庫",
+  },
+};
+
 const Layout = () => {
   const [current, setCurrent] = useState(0);
+  const { lang } = useLanguage(languages);
 
   const { color } = useColor();
 
   const windows = window.electron.process.platform === "win32";
 
   const { data: library } = trpc.library.get.useQuery();
+
+  const libraryName = library?.path.split("/").slice(-1) ?? lang.no_library;
 
   const Content = () => (
     <>
@@ -50,7 +65,7 @@ const Layout = () => {
               windows ? ({ appRegion: "drag" } as React.CSSProperties) : {}
             }
           >
-            rao.library
+            {libraryName}
           </p>
         </div>
 
