@@ -4,10 +4,10 @@ import Menu from "./components/Menu";
 import { useColor } from "./hooks";
 import BasicPage from "./pages/basic";
 import ColorPage from "./pages/color";
+import Empty from "./pages/empty";
 import SettingPage from "./pages/setting";
 import UnsyncPage from "./pages/unsync";
-
-// import { trpc } from "./utils/trpc";
+import { trpc } from "./utils/trpc";
 
 const Layout = () => {
   const [current, setCurrent] = useState(0);
@@ -16,7 +16,16 @@ const Layout = () => {
 
   const windows = window.electron.process.platform === "win32";
 
-  // trpc.library.
+  const { data: library } = trpc.library.get.useQuery();
+
+  const Content = () => (
+    <>
+      {current === 0 && <BasicPage />}
+      {current === 1 && <UnsyncPage />}
+      {current === 2 && <SettingPage />}
+      {current === 3 && <ColorPage />}
+    </>
+  );
 
   return (
     <div
@@ -52,10 +61,7 @@ const Layout = () => {
       </aside>
 
       {/* content */}
-      {current === 0 && <BasicPage />}
-      {current === 1 && <UnsyncPage />}
-      {current === 2 && <SettingPage />}
-      {current === 3 && <ColorPage />}
+      {library ? <Content /> : <Empty />}
     </div>
   );
 };

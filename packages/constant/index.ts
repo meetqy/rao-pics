@@ -1,3 +1,14 @@
+import env from "env-var";
+
+/**
+ * 项目名称
+ */
+export const PRODUCT_NAME = env
+  .get("PRODUCT_NAME")
+  .required()
+  .default("Rao Pics")
+  .asString();
+
 /**
  * 语言
  */

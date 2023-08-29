@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 import { prisma } from "@rao-pics/db";
 
@@ -9,6 +9,10 @@ const caller = router.createCaller({});
 describe("library module", () => {
   beforeEach(async () => {
     await new Promise((resolve) => setTimeout(resolve, 50));
+    await prisma.library.deleteMany();
+  });
+
+  afterAll(async () => {
     await prisma.library.deleteMany();
   });
 

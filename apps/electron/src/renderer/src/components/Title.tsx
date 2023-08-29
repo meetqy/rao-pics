@@ -2,15 +2,18 @@ import WindowsTitleBarBtnGroup from "./WindowsTitleBarBtnGroup";
 
 interface TitleProps {
   children?: React.ReactNode;
+  className?: string;
 }
 
-const Title = ({ children }: TitleProps) => {
+const Title = ({ children, className }: TitleProps) => {
   const windows = window.electron.process.platform === "win32";
 
   return (
-    <div className="flex h-12 w-full flex-shrink-0 justify-between pl-8 text-base font-medium">
+    <div
+      className={`flex h-12 w-full flex-shrink-0 justify-between pl-8 text-base font-medium ${className}`}
+    >
       <div
-        className="flex h-full flex-1 select-none items-center"
+        className={`flex h-full flex-1 select-none items-center`}
         style={{ appRegion: "drag" } as React.CSSProperties}
       >
         {children}

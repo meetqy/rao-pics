@@ -2,6 +2,8 @@ import { homedir } from "os";
 import { join } from "path";
 import env from "env-var";
 
+import { PRODUCT_NAME } from ".";
+
 /**
  * 是否是开发环境
  */
@@ -16,15 +18,6 @@ export const IS_TEST = process.env.NODE_ENV === "test";
  * 当前平台
  */
 export const PLATFORM = process.platform;
-
-/**
- * 项目名称
- */
-export const PRODUCT_NAME = env
-  .get("PRODUCT_NAME")
-  .required()
-  .default("Rao Pics")
-  .asString();
 
 /**
  * 数据库文件名称

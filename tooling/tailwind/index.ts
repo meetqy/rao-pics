@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 export default {
   content: [""],
@@ -42,5 +43,17 @@ export default {
     require("daisyui"),
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-var-requires
     require("tailwind-scrollbar")({ nocompatible: true }),
+    // drag-none
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".drag-none": {
+          "-webkit-user-drag": "none",
+          "-khtml-user-drag": "none",
+          "-moz-user-drag": "none",
+          "-o-user-drag": "none",
+          "user-drag": "none",
+        },
+      });
+    }),
   ],
 } satisfies Config;
