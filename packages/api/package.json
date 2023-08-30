@@ -25,9 +25,9 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@rao-pics/eslint-config": "0.2.0",
-    "@rao-pics/prettier-config": "^0.1.0",
-    "@rao-pics/tsconfig": "^0.1.0",
+    "@rao-pics/eslint-config": "workspace:*",
+    "@rao-pics/prettier-config": "workspace:*",
+    "@rao-pics/tsconfig": "workspace:*",
     "@vitest/coverage-v8": "^0.34.3",
     "@vitest/ui": "^0.34.3",
     "cross-env": "^7.0.3",

@@ -66,11 +66,10 @@ describe("library module", () => {
 
     it("should validate input using Zod schema", async () => {
       const input = 123;
-      caller.library.add(input as never).catch((err) =>
-        expect(err).toMatchObject({
-          code: "BAD_REQUEST",
-        }),
-      );
+
+      await expect(caller.library.add(input as never)).rejects.toMatchObject({
+        code: "BAD_REQUEST",
+      });
 
       const libraries = await prisma.library.findMany({});
       expect(libraries).toHaveLength(0);
