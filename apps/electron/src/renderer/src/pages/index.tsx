@@ -23,17 +23,20 @@ const languages = {
   },
 };
 
-const Empty = () => {
+const Index = () => {
   const utils = trpc.useContext();
 
   const { lang } = useLanguage(languages);
+
+  const addWatchLibrary = trpc.library.watch.useMutation();
 
   const addLibrary = trpc.library.add.useMutation({
     onError: (err) => {
       window.dialog.showErrorBox(lang.error, err.message);
     },
 
-    onSuccess() {
+    onSuccess({ path }) {
+      addWatchLibrary.mutate(`${path}/images/**/metadata.json`);
       void utils.library.get.invalidate();
     },
   });
@@ -70,4 +73,4 @@ const Empty = () => {
   );
 };
 
-export default Empty;
+export default Index;

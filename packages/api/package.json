@@ -21,6 +21,7 @@
     "@rao-pics/db": "workspace:*",
     "@trpc/client": "^10.37.1",
     "@trpc/server": "^10.37.1",
+    "chokidar": "^3.5.3",
     "superjson": "1.13.1",
     "zod": "^3.22.2"
   },

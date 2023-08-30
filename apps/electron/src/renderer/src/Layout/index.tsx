@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useColor, useLanguage } from "../hooks";
-import Empty from "../pages/empty";
+import Index from "../pages/index";
 import { trpc } from "../utils/trpc";
 import LayoutAside from "./aside";
 import LayoutContent from "./content";
@@ -39,7 +39,7 @@ const Layout = () => {
       />
 
       {/* content */}
-      {library ? <LayoutContent current={current} /> : <Empty />}
+      {library ? <LayoutContent current={current} /> : <Index />}
     </div>
   );
 };

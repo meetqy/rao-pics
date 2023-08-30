@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/Title";
@@ -74,6 +75,13 @@ const BasicPage = () => {
         window.dialog.showErrorBox("onBeforeDeleteLibrary", JSON.stringify(e)),
       );
   };
+
+  // 资源库 watch
+  trpc.library.onWatch.useSubscription(undefined, {
+    onData: (data) => {
+      console.log(data);
+    },
+  });
 
   return (
     <Content title={<Title>{lang.title}</Title>}>

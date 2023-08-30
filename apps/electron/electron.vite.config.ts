@@ -7,6 +7,7 @@ export default defineConfig({
     plugins: [
       externalizeDepsPlugin({
         exclude: ["@rao-pics/db", "@rao-pics/api", "@rao-pics/constant"],
+        include: ["chokidar"],
       }),
     ],
   },

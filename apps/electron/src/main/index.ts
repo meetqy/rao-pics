@@ -50,7 +50,8 @@ function createWindow(): void {
   }
 
   createIPCHandler({ router, windows: [mainWindow] });
-  createCustomIPCHandle();
+  // createCustomIPCHandle();
+  // console.log(123);
 }
 
 // dialog.showErrorBox(
