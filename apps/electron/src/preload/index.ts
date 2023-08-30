@@ -41,4 +41,9 @@ if (process.contextIsolated) {
   } catch (error) {
     console.error(error);
   }
+} else {
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  window["electron"] = electronAPI;
+  // eslint-disable-next-line @typescript-eslint/dot-notation
+  window["api"] = electronAPI;
 }

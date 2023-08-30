@@ -3,16 +3,29 @@ import { observable } from "@trpc/server/observable";
 import chokidar from "chokidar";
 import { z } from "zod";
 
-import { Pending, Prisma, prisma } from "@rao-pics/db";
+import { prisma } from "@rao-pics/db";
 
+import type { PendingTypeEnum } from "..";
 import { router } from "..";
 import { t } from "./utils";
 
 const ee = new EventEmitter();
 
+let watcher: chokidar.FSWatcher;
+
 export const library = t.router({
   get: t.procedure.query(async () => {
-    return await prisma.library.findFirst();
+    const [library, pendingCount] = await prisma.$transaction([
+      prisma.library.findFirst(),
+      prisma.pending.count(),
+    ]);
+
+    if (!library) return null;
+
+    return {
+      ...library,
+      pendingCount,
+    };
   }),
 
   add: t.procedure.input(z.string()).mutation(async ({ input }) => {
@@ -34,41 +47,59 @@ export const library = t.router({
   }),
 
   delete: t.procedure.mutation(async () => {
-    return await prisma.library.deleteMany();
+    if (watcher) {
+      watcher.unwatch("*");
+    }
+
+    return await prisma.$transaction([
+      prisma.library.deleteMany(),
+      prisma.pending.deleteMany(),
+    ]);
   }),
 
   /**
    * 监听 Library 变化
    */
   watch: t.procedure.input(z.string()).mutation(({ input }) => {
-    const watcher = chokidar.watch(input);
+    watcher = chokidar.watch(input);
     const caller = router.createCaller({});
+
+    const paths = new Set<{ path: string; type: PendingTypeEnum }>();
 
     watcher
       .on("add", (path) => {
+        paths.add({ path, type: "create" });
         void caller.pending.upsert({ path, type: "create" });
-        ee.emit("watch", { status: "ok", data: { path, type: "create" } });
       })
       .on("change", (path) => {
-        void caller.pending.upsert({ path, type: "update" });
-        ee.emit("watch", { status: "ok", data: { path, type: "update" } });
+        paths.add({ path, type: "update" });
       })
       .on("unlink", (path) => {
-        void caller.pending.upsert({ path, type: "delete" });
-        ee.emit("watch", { status: "ok", data: { path, type: "delete" } });
+        paths.add({ path, type: "delete" });
       })
       .on("error", (e) => {
         throw Error(e.message);
       })
       .on("ready", () => {
-        ee.emit("watch", { status: "completed" });
+        void (async () => {
+          let count = 0;
+
+          for (const path of paths) {
+            count++;
+            await caller.pending.upsert(path);
+            ee.emit("watch", { status: "ok", data: path, count });
+          }
+
+          paths.clear();
+          ee.emit("watch", { status: "completed" });
+        })();
       });
   }),
 
   onWatch: t.procedure.subscription(() => {
     interface T {
-      status: "ok" | "process";
-      data?: { path: string; type: "create" | "update" | "delete" };
+      status: "ok" | "completed";
+      data?: { path: string; type: PendingTypeEnum; count: number };
     }
 
     return observable<T>((emit) => {

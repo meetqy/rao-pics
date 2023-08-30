@@ -89,4 +89,24 @@ describe("library module", () => {
       });
     });
   });
+
+  describe("delete procedure", () => {
+    it("should delete library", async () => {
+      const input = "path/to/xxx.library";
+      await caller.library.add(input);
+      await caller.pending.upsert({
+        path: "path/to/xxx.library",
+        type: "create",
+      });
+      await caller.pending.upsert({
+        path: "path/to/xxx2.library",
+        type: "create",
+      });
+
+      await caller.library.delete();
+
+      expect(await caller.library.get()).toBeNull();
+      expect(await caller.pending.get()).toHaveLength(0);
+    });
+  });
 });

@@ -35,8 +35,8 @@ const Index = () => {
       window.dialog.showErrorBox(lang.error, err.message);
     },
 
-    onSuccess({ path }) {
-      addWatchLibrary.mutate(`${path}/images/**/metadata.json`);
+    async onSuccess({ path }) {
+      await addWatchLibrary.mutateAsync(`${path}/images/**/metadata.json`);
       void utils.library.get.invalidate();
     },
   });

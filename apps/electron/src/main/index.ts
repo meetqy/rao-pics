@@ -1,7 +1,7 @@
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
-import { electronApp, is, optimizer } from "@electron-toolkit/utils";
+import { electronApp, optimizer } from "@electron-toolkit/utils";
 
 import { router } from "@rao-pics/api";
 import { IS_DEV } from "@rao-pics/constant/server";
@@ -43,21 +43,18 @@ function createWindow(): void {
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env.ELECTRON_RENDERER_URL) {
+  if (IS_DEV && process.env.ELECTRON_RENDERER_URL) {
     void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
+    // 创建 db.sqlite 文件
+    createDbPath(join(process.resourcesPath, "extraResources/db.sqlite"));
     void mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 
   createIPCHandler({ router, windows: [mainWindow] });
-  // createCustomIPCHandle();
-  // console.log(123);
-}
 
-// dialog.showErrorBox(
-//   "Error",
-//   `${join(process.resourcesPath, "extraResources/db.sqlite")}`,
-// );
+  createCustomIPCHandle();
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -65,10 +62,6 @@ function createWindow(): void {
 app
   .whenReady()
   .then(() => {
-    if (!IS_DEV) {
-      createDbPath(join(process.resourcesPath, "extraResources/db.sqlite"));
-    }
-
     // Set app user model id for windows
     electronApp.setAppUserModelId("com.rao-pics");
 

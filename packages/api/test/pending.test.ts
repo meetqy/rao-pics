@@ -9,7 +9,7 @@ const caller = router.createCaller({});
 
 describe("pending module", () => {
   beforeEach(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 100));
     await prisma.pending.deleteMany({});
   });
 

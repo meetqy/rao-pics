@@ -1,9 +1,10 @@
-import { useEffect } from "react";
 import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
+
+import { SyncCircle } from "./SyncCircle";
 
 const languages = {
   "zh-cn": {
@@ -76,10 +77,12 @@ const BasicPage = () => {
       );
   };
 
-  // 资源库 watch
+  // 监听资源库变化
   trpc.library.onWatch.useSubscription(undefined, {
     onData: (data) => {
-      console.log(data);
+      if (data.status === "completed") {
+        void utils.library.invalidate();
+      }
     },
   });
 
@@ -199,18 +202,7 @@ const BasicPage = () => {
 
         <div className="mt-4 flex py-3">
           <div className="flex w-1/2 justify-center">
-            <div
-              className="radial-progress border-4 border-neutral/50 bg-neutral text-neutral-content/70"
-              style={
-                {
-                  "--value": 70,
-                  "--size": "9rem",
-                  "--thickness": "1rem",
-                } as React.CSSProperties
-              }
-            >
-              70%
-            </div>
+            <SyncCircle pendingCount={library?.pendingCount ?? 0} />
           </div>
 
           <div className="w-1/2">
