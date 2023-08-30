@@ -8,6 +8,7 @@ const caller = router.createCaller({});
 
 describe("config module", () => {
   beforeEach(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 50));
     await prisma.config.deleteMany();
   });
 

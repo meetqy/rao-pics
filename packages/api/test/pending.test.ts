@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 import { prisma } from "@rao-pics/db";
 
@@ -13,14 +13,18 @@ describe("pending module", () => {
     await prisma.pending.deleteMany({});
   });
 
-  describe("create", () => {
+  afterAll(async () => {
+    await prisma.pending.deleteMany({});
+  });
+
+  describe("upsert", () => {
     it("creates a new pending item", async () => {
       const input = {
         path: "/api/users/123",
         type: "create" as PendingTypeEnum,
       };
 
-      const result = await caller.pending.create(input);
+      const result = await caller.pending.upsert(input);
 
       expect(result).toMatchObject({
         path: input.path,
@@ -49,9 +53,9 @@ describe("pending module", () => {
 
   describe("get", () => {
     beforeEach(async () => {
-      await caller.pending.create({ path: "/api/users/123", type: "create" });
-      await caller.pending.create({ path: "/api/users/456", type: "update" });
-      await caller.pending.create({ path: "/api/users/789", type: "delete" });
+      await caller.pending.upsert({ path: "/api/users/123", type: "create" });
+      await caller.pending.upsert({ path: "/api/users/456", type: "update" });
+      await caller.pending.upsert({ path: "/api/users/789", type: "delete" });
     });
 
     it("returns all pending items if no input is provided", async () => {
@@ -72,9 +76,9 @@ describe("pending module", () => {
 
   describe("delete", () => {
     beforeEach(async () => {
-      await caller.pending.create({ path: "/api/users/123", type: "create" });
-      await caller.pending.create({ path: "/api/users/456", type: "update" });
-      await caller.pending.create({ path: "/api/users/789", type: "delete" });
+      await caller.pending.upsert({ path: "/api/users/123", type: "create" });
+      await caller.pending.upsert({ path: "/api/users/456", type: "update" });
+      await caller.pending.upsert({ path: "/api/users/789", type: "delete" });
     });
 
     it("deletes a pending item", async () => {

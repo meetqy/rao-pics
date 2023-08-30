@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
 import { t } from "./utils";
@@ -10,7 +9,7 @@ const TypeEnum = z.enum(["create", "update", "delete"]);
 export type PendingTypeEnum = z.infer<typeof TypeEnum>;
 
 export const pending = t.router({
-  create: t.procedure
+  upsert: t.procedure
     .input(
       z.object({
         path: z.string(),
@@ -18,11 +17,10 @@ export const pending = t.router({
       }),
     )
     .mutation(async ({ input }) => {
-      return await prisma.pending.create({
-        data: {
-          path: input.path,
-          type: input.type,
-        },
+      return await prisma.pending.upsert({
+        where: { path: input.path },
+        create: input,
+        update: input,
       });
     }),
 
