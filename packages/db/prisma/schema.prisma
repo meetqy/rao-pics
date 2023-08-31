@@ -80,8 +80,9 @@ model Color {
 }
 
 model Folder {
-  id     String  @id @unique
-  name   String  @unique
-  pid    String?
-  images Image[]
+  id          String  @id @unique
+  name        String
+  pid         String?
+  description String?
+  images      Image[]
 }

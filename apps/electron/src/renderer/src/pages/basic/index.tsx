@@ -63,6 +63,7 @@ const BasicPage = () => {
   const [disabled, setDisabled] = useState(false);
 
   const { data: library } = trpc.library.get.useQuery();
+  const onStartSync = trpc.sync.start.useMutation();
 
   const onBeforeDeleteLibrary = () => {
     window.dialog
@@ -86,6 +87,18 @@ const BasicPage = () => {
       void utils.library.invalidate();
     },
   });
+
+  const onClickSync = async () => {
+    if (library) {
+      setDisabled(true);
+
+      await onStartSync.mutateAsync({
+        libraryPath: library.path,
+      });
+
+      setDisabled(false);
+    }
+  };
 
   return (
     <Content title={<Title>{lang.title}</Title>}>
@@ -207,7 +220,11 @@ const BasicPage = () => {
           </div>
           <div className="w-1/2">
             <div className="m-auto flex h-full w-5/6 flex-col justify-center">
-              <button disabled={disabled} className="btn-neutral btn">
+              <button
+                disabled={disabled}
+                className="btn-neutral btn"
+                onClick={onClickSync}
+              >
                 {lang.btn_sync}
               </button>
               <button

@@ -22,16 +22,7 @@ export const sync = t.router({
 
       // 同步文件夹
       const folders = handleFolder(input.libraryPath);
-
-      let count = 0;
-      for (const f of folders) {
-        count++;
-        console.log(f);
-        await caller.folder.upsert(f);
-        ee.emit("start", { status: "ok", type: "folder", data: f, count });
-      }
-
-      ee.emit("start", { status: "completed", type: "folder" });
+      await syncFolder(folders, caller);
 
       return true;
     }),
@@ -58,3 +49,17 @@ export const sync = t.router({
     });
   }),
 });
+
+export const syncFolder = async (
+  folders: ReturnType<typeof handleFolder>,
+  caller: ReturnType<typeof router.createCaller>,
+) => {
+  let count = 0;
+  for (const f of folders) {
+    count++;
+    await caller.folder.upsert(f);
+    ee.emit("start", { status: "ok", type: "folder", data: f, count });
+  }
+
+  ee.emit("start", { status: "completed", type: "folder" });
+};
