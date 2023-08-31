@@ -20,13 +20,15 @@ model Config {
 
 model Library {
   // 路径
-  path        String   @unique
+  path         String    @unique
   // eagle | billfish | pixcall
-  type        String
+  type         String
   // created time
-  createdTime DateTime @default(now())
+  createdTime  DateTime  @default(now())
   // updated time
-  updatedTime DateTime @updatedAt
+  updatedTime  DateTime  @updatedAt
+  // 最后同步时间
+  lastSyncTime DateTime?
 }
 
 // 等待同步的文件
@@ -36,18 +38,50 @@ model Pending {
   type String
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+model Image {
+  id            Int      @id @unique @default(autoincrement())
+  // library.path + path => originalPath
+  path          String
+  // UserData 缓存目录 + thumbnailPath => thumbnailPath 
+  thumbnailPath String?
+  // 名字
+  name          String
+  // 文件大小
+  size          Int
+  // 创建时间
+  createdTime   DateTime @default(now())
+  // 修改时间 文件的 mtime
+  lastTime      DateTime
+  // 扩展名
+  ext           String
+  // 宽度
+  width         Int
+  // 高度
+  height        Int
+  // 视频时长
+  duration      Float?
+  // 颜色
+  colors        Color[]
+  // 文件夹
+  folders       Folder[]
+  // 标签
+  tags          Tag[]
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+model Tag {
+  name   String  @id @unique
+  images Image[]
+}
+
+model Color {
+  // 16 进制数字
+  rgb    Int     @id @unique
+  images Image[]
+}
+
+model Folder {
+  id     String  @id @unique
+  name   String  @unique
+  pid    String?
+  images Image[]
 }

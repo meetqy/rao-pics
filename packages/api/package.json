@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@rao-pics/db": "workspace:*",
+    "@rao-pics/eagle": "workspace:*",
     "@trpc/client": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "chokidar": "^3.5.3",
