@@ -99,7 +99,8 @@ export const library = t.router({
   onWatch: t.procedure.subscription(() => {
     interface T {
       status: "ok" | "completed";
-      data?: { path: string; type: PendingTypeEnum; count: number };
+      data?: { path: string; type: PendingTypeEnum };
+      count: number;
     }
 
     return observable<T>((emit) => {

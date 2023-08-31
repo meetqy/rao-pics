@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/Title";
@@ -19,6 +20,8 @@ const languages = {
     question_btn2: "确定",
     question_title: "提示",
     question_message: "确定要移除此库吗？",
+    sync_desc1: "读取中...",
+    sync_desc2: "等待同步",
   },
   "en-us": {
     title: "Basic Information",
@@ -32,6 +35,8 @@ const languages = {
     question_btn2: "OK",
     question_title: "Prompt",
     question_message: "Are you sure you want to remove this library?",
+    sync_desc1: "Reading...",
+    sync_desc2: "Waiting...",
   },
   "zh-tw": {
     title: "基礎信息",
@@ -45,6 +50,8 @@ const languages = {
     question_btn2: "確定",
     question_title: "提示",
     question_message: "確定要移除此庫嗎？",
+    sync_desc1: "讀取中...",
+    sync_desc2: "等待同步",
   },
 };
 
@@ -52,12 +59,10 @@ const BasicPage = () => {
   const { lang } = useLanguage(languages);
   const utils = trpc.useContext();
 
+  // 同步中、初始化中 禁用按钮
+  const [disabled, setDisabled] = useState(false);
+
   const { data: library } = trpc.library.get.useQuery();
-  const deleteLibrary = trpc.library.delete.useMutation({
-    onSuccess: () => {
-      void utils.library.invalidate();
-    },
-  });
 
   const onBeforeDeleteLibrary = () => {
     window.dialog
@@ -76,13 +81,9 @@ const BasicPage = () => {
         window.dialog.showErrorBox("onBeforeDeleteLibrary", JSON.stringify(e)),
       );
   };
-
-  // 监听资源库变化
-  trpc.library.onWatch.useSubscription(undefined, {
-    onData: (data) => {
-      if (data.status === "completed") {
-        void utils.library.invalidate();
-      }
+  const deleteLibrary = trpc.library.delete.useMutation({
+    onSuccess: () => {
+      void utils.library.invalidate();
     },
   });
 
@@ -204,11 +205,13 @@ const BasicPage = () => {
           <div className="flex w-1/2 justify-center">
             <SyncCircle pendingCount={library?.pendingCount ?? 0} />
           </div>
-
           <div className="w-1/2">
             <div className="m-auto flex h-full w-5/6 flex-col justify-center">
-              <button className="btn-neutral btn">{lang.btn_sync}</button>
+              <button disabled={disabled} className="btn-neutral btn">
+                {lang.btn_sync}
+              </button>
               <button
+                disabled={disabled}
                 className="btn-error btn-outline btn mt-4"
                 onClick={onBeforeDeleteLibrary}
               >
