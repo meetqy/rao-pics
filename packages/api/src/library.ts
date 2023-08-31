@@ -60,46 +60,64 @@ export const library = t.router({
   /**
    * 监听 Library 变化
    */
-  watch: t.procedure.input(z.string()).mutation(({ input }) => {
+  watch: t.procedure.input(z.string()).mutation(async ({ input }) => {
     watcher = chokidar.watch(input);
+
     const caller = router.createCaller({});
 
     const paths = new Set<{ path: string; type: PendingTypeEnum }>();
 
-    watcher
-      .on("add", (path) => {
-        paths.add({ path, type: "create" });
-        void caller.pending.upsert({ path, type: "create" });
-      })
-      .on("change", (path) => {
-        paths.add({ path, type: "update" });
-      })
-      .on("unlink", (path) => {
-        paths.add({ path, type: "delete" });
-      })
-      .on("error", (e) => {
-        throw Error(e.message);
-      })
-      .on("ready", () => {
-        void (async () => {
-          let count = 0;
+    const startWatcher = () => {
+      return new Promise<void>((reslove, reject) => {
+        return watcher
+          .on("add", (path) => {
+            paths.add({ path, type: "create" });
+          })
+          .on("change", (path) => {
+            paths.add({ path, type: "update" });
+          })
+          .on("unlink", (path) => {
+            paths.add({ path, type: "delete" });
+          })
+          .on("error", (e) => {
+            reject(new Error(e.message));
+          })
+          .on("ready", () => {
+            void (async () => {
+              let count = 0;
 
-          for (const path of paths) {
-            count++;
-            await caller.pending.upsert(path);
-            ee.emit("watch", { status: "ok", data: path, count });
-          }
+              for (const path of paths) {
+                count++;
 
-          paths.clear();
-          ee.emit("watch", { status: "completed" });
-        })();
+                try {
+                  await caller.pending.upsert(path);
+                  ee.emit("watch", { status: "ok", data: path, count });
+                } catch (e) {
+                  ee.emit("watch", {
+                    status: "error",
+                    data: path,
+                    count,
+                    message: (e as Error).message,
+                  });
+                }
+              }
+
+              paths.clear();
+              ee.emit("watch", { status: "completed" });
+              reslove();
+            })();
+          });
       });
+    };
+
+    return await startWatcher();
   }),
 
   onWatch: t.procedure.subscription(() => {
     interface T {
-      status: "ok" | "completed";
+      status: "ok" | "completed" | "error";
       data?: { path: string; type: PendingTypeEnum };
+      message?: string;
       count: number;
     }
 

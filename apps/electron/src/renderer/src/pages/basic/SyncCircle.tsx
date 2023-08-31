@@ -15,6 +15,8 @@ export function SyncCircle({ pendingCount }: SyncCircleProps) {
       if (data.status === "completed") {
         setCount(0);
         void utils.library.invalidate();
+      } else if (data.status === "error") {
+        throw new Error(JSON.stringify(data));
       } else {
         setCount(data.count);
       }
