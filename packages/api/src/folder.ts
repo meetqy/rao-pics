@@ -21,4 +21,29 @@ export const folder = t.router({
         update: input,
       });
     }),
+
+  get: t.procedure
+    .input(
+      z
+        .object({
+          id: z.string().optional(),
+          pid: z.string().optional(),
+        })
+        .optional(),
+    )
+    .query(async ({ input }) => {
+      if (input?.id) {
+        return await prisma.folder.findUnique({
+          where: { id: input.id },
+        });
+      }
+
+      if (input?.pid) {
+        return await prisma.folder.findMany({
+          where: { pid: input.pid },
+        });
+      }
+
+      return await prisma.folder.findMany();
+    }),
 });

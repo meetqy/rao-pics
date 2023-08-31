@@ -10,7 +10,7 @@ import { t } from "./utils";
 const ee = new EventEmitter();
 
 export const sync = t.router({
-  sync: t.procedure
+  start: t.procedure
     .input(
       z.object({
         libraryPath: z.string(),
@@ -22,23 +22,27 @@ export const sync = t.router({
 
       // 同步文件夹
       const folders = handleFolder(input.libraryPath);
+
       let count = 0;
       for (const f of folders) {
         count++;
+        console.log(f);
         await caller.folder.upsert(f);
-        ee.emit("sync", { status: "ok", type: "folder", data: f, count });
+        ee.emit("start", { status: "ok", type: "folder", data: f, count });
       }
-      ee.emit("sync", { status: "completed", type: "folder" });
 
-      return { ok: true };
+      ee.emit("start", { status: "completed", type: "folder" });
+
+      return true;
     }),
 
-  onSync: t.procedure.subscription(() => {
+  onStart: t.procedure.subscription(() => {
     interface T {
-      status: "ok" | "completed";
+      status: "ok" | "completed" | "error";
       type: "folder" | "image";
       data?: { id: string; name: string };
       count: number;
+      message?: string;
     }
 
     return observable<T>((emit) => {
@@ -46,10 +50,10 @@ export const sync = t.router({
         emit.next(data);
       }
 
-      ee.on("sync", onGreet);
+      ee.on("start", onGreet);
 
       return () => {
-        ee.off("sync", onGreet);
+        ee.off("start", onGreet);
       };
     });
   }),
