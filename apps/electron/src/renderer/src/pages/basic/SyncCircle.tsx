@@ -6,22 +6,67 @@ interface SyncCircleProps {
 }
 
 export function SyncCircle({ pendingCount }: SyncCircleProps) {
-  const [conut, setCount] = useState(0);
   const utils = trpc.useContext();
+
+  const [data, setData] = useState<{
+    status: "completed" | "error" | "ok";
+    count: number;
+    type: "folder" | "reading" | "image";
+  }>();
 
   // 监听资源库变化
   trpc.library.onWatch.useSubscription(undefined, {
     onData: (data) => {
       if (data.status === "completed") {
-        setCount(0);
-        void utils.library.invalidate();
+        setTimeout(() => {
+          void utils.library.invalidate();
+          setData(undefined);
+        }, 500);
+
+        return;
       } else if (data.status === "error") {
-        throw new Error(JSON.stringify(data));
-      } else {
-        setCount(data.count);
+        console.error(data);
       }
+
+      setData({
+        status: data.status,
+        count: data.count,
+        type: "reading",
+      });
     },
   });
+
+  // 监听同步变化
+  trpc.sync.onStart.useSubscription(undefined, {
+    onData: (data) => {
+      if (data.status === "completed") {
+        setTimeout(() => {
+          setData(undefined);
+        }, 500);
+
+        return;
+      } else if (data.status === "error") {
+        console.error(data);
+      }
+
+      setData({
+        status: data.status,
+        count: data.count,
+        type: "folder",
+      });
+    },
+  });
+
+  const Description = () => {
+    let text = "等待同步";
+
+    if (data?.type === "folder") text = "文件夹同步中...";
+    if (data?.type === "reading") text = "读取中...";
+
+    return (
+      <p className="text-center text-xs text-neutral-content/70">{text}</p>
+    );
+  };
 
   return (
     <div
@@ -35,11 +80,10 @@ export function SyncCircle({ pendingCount }: SyncCircleProps) {
       }
     >
       <p className="truncate text-center font-mono text-lg font-medium text-neutral-content">
-        {conut || pendingCount}
+        {data?.count ?? pendingCount}
       </p>
-      <p className="text-center text-xs text-neutral-content/70">
-        {conut ? "读取中..." : "等待同步"}
-      </p>
+
+      <Description />
     </div>
   );
 }

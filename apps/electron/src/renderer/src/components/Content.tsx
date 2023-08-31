@@ -5,7 +5,7 @@ interface ContentProps {
 
 const Content = ({ title, children }: ContentProps) => {
   return (
-    <div className="flex flex-1 flex-col bg-base-200/70">
+    <div className="relative flex flex-1 flex-col bg-base-200/70">
       {/* title */}
       {title}
 
