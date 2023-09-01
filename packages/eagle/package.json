@@ -1,19 +1,27 @@
 {
   "name": "@rao-pics/eagle",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "exports": {
     ".": "./index.ts"
   },
   "main": "./index.ts",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "typecheck": "tsc --noEmit",
-    "test": "cross-env NODE_ENV=development vitest"
+    "lint": "eslint .",
+    "test": "cross-env NODE_ENV=development vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "prettier": "@rao-pics/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@rao-pics/eslint-config/base"
+    ]
   },
   "dependencies": {
+    "@rao-pics/constant": "workspace:*",
+    "@rao-pics/db": "workspace:*",
     "fs-extra": "^11.1.1"
   },
   "devDependencies": {
@@ -26,11 +34,5 @@
     "eslint": "^8.47.0",
     "typescript": "^5.1.6",
     "vitest": "^0.34.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@rao-pics/eslint-config/base"
-    ]
-  },
-  "prettier": "@rao-pics/prettier-config"
+  }
 }

@@ -3,9 +3,9 @@ import { observable } from "@trpc/server/observable";
 import chokidar from "chokidar";
 import { z } from "zod";
 
+import type { PendingTypeEnum } from "@rao-pics/constant";
 import { prisma } from "@rao-pics/db";
 
-import type { PendingTypeEnum } from "..";
 import { router } from "..";
 import { t } from "./utils";
 

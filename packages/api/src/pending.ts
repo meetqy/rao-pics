@@ -1,19 +1,16 @@
 import { z } from "zod";
 
+import { PendingTypeEnumZod } from "@rao-pics/constant";
 import { prisma } from "@rao-pics/db";
 
 import { t } from "./utils";
-
-const TypeEnum = z.enum(["create", "update", "delete"]);
-
-export type PendingTypeEnum = z.infer<typeof TypeEnum>;
 
 export const pending = t.router({
   upsert: t.procedure
     .input(
       z.object({
         path: z.string(),
-        type: TypeEnum,
+        type: PendingTypeEnumZod,
       }),
     )
     .mutation(async ({ input }) => {

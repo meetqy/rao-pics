@@ -20,7 +20,8 @@
     ]
   },
   "dependencies": {
-    "env-var": "^7.4.0"
+    "env-var": "^7.4.0",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "0.2.0",

@@ -1,8 +1,8 @@
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
+import type { PendingTypeEnum } from "@rao-pics/constant";
 import { prisma } from "@rao-pics/db";
 
-import type { PendingTypeEnum } from "..";
 import { router } from "..";
 
 const caller = router.createCaller({});

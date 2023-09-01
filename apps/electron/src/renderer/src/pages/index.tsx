@@ -67,7 +67,7 @@ const Index = () => {
         <p
           className="mt-2 text-center text-base text-base-content/80"
           dangerouslySetInnerHTML={{ __html: lang.desc }}
-        ></p>
+        />
         <button className="btn-primary btn mt-12 w-2/5" onClick={openDirectory}>
           {lang.btn}
         </button>

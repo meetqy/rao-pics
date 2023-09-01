@@ -166,6 +166,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@rao-pics/constant':
+        specifier: workspace:*
+        version: link:../constant
       '@rao-pics/db':
         specifier: workspace:*
         version: link:../db
@@ -221,6 +224,9 @@ importers:
       env-var:
         specifier: ^7.4.0
         version: 7.4.0
+      zod:
+        specifier: ^3.22.2
+        version: 3.22.2
     devDependencies:
       '@rao-pics/eslint-config':
         specifier: 0.2.0
@@ -286,6 +292,12 @@ importers:
 
   packages/eagle:
     dependencies:
+      '@rao-pics/constant':
+        specifier: workspace:*
+        version: link:../constant
+      '@rao-pics/db':
+        specifier: workspace:*
+        version: link:../db
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1

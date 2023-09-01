@@ -18,6 +18,7 @@
     ]
   },
   "dependencies": {
+    "@rao-pics/constant": "workspace:*",
     "@rao-pics/db": "workspace:*",
     "@rao-pics/eagle": "workspace:*",
     "@trpc/client": "^10.37.1",
