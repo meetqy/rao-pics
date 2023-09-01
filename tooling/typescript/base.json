@@ -18,6 +18,7 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
+  "files": ["./base.d.ts"],
   "exclude": [
     "node_modules",
     "build",

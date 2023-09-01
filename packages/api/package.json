@@ -8,7 +8,7 @@
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=development vitest",
+    "test": "cross-env NODE_ENV=development vitest --single-thread",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@rao-pics/prettier-config",
@@ -20,10 +20,10 @@
   "dependencies": {
     "@rao-pics/constant": "workspace:*",
     "@rao-pics/db": "workspace:*",
-    "@rao-pics/eagle": "workspace:*",
     "@trpc/client": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "chokidar": "^3.5.3",
+    "fs-extra": "^11.1.1",
     "superjson": "1.13.1",
     "zod": "^3.22.2"
   },

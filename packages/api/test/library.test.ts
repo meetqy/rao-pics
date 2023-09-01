@@ -8,7 +8,6 @@ const caller = router.createCaller({});
 
 describe("library module", () => {
   beforeEach(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 50));
     await caller.library.delete();
   });
 

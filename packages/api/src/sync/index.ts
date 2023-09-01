@@ -2,10 +2,11 @@ import { EventEmitter } from "events";
 import { observable } from "@trpc/server/observable";
 import { z } from "zod";
 
-import { handleFolder } from "@rao-pics/eagle";
+import type { Pending } from "@rao-pics/db";
 
-import { router } from "..";
-import { t } from "./utils";
+import { router } from "../..";
+import { t } from "../utils";
+import { handleFolder } from "./folder";
 
 const ee = new EventEmitter();
 
@@ -18,7 +19,7 @@ export const sync = t.router({
     )
     .mutation(async ({ input }) => {
       const caller = router.createCaller({});
-      const pendings = await caller.pending.get();
+      const pendings = (await caller.pending.get()) as Pending[];
 
       // 同步文件夹
       const folders = handleFolder(input.libraryPath);
@@ -63,3 +64,5 @@ export const syncFolder = async (
 
   ee.emit("start", { status: "completed", type: "folder" });
 };
+
+export const syncImage = async (pendings: Pending[]) => {};

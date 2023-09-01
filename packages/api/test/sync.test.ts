@@ -9,7 +9,6 @@ const caller = router.createCaller({});
 
 describe("folder module", () => {
   beforeEach(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     await prisma.folder.deleteMany();
   });
 

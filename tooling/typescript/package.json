@@ -1,7 +1,8 @@
 {
   "name": "@rao-pics/tsconfig",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
+  "types": "./base.d.ts",
   "files": [
     "base.json"
   ]

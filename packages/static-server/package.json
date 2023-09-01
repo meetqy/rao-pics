@@ -1,29 +1,35 @@
 {
   "name": "@rao-pics/static-server",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "exports": {
     ".": "./index.ts"
   },
   "main": "./index.ts",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "lint": "eslint .",
+    "dev": "ts-node src/index.ts",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "@rao-pics/eslint-config": "0.2.0",
-    "@rao-pics/prettier-config": "^0.1.0",
-    "@rao-pics/tsconfig": "^0.1.0",
-    "eslint": "^8.47.0",
-    "typescript": "^5.1.6"
-  },
+  "prettier": "@rao-pics/prettier-config",
   "eslintConfig": {
     "extends": [
       "@rao-pics/eslint-config/base"
     ]
   },
-  "prettier": "@rao-pics/prettier-config"
+  "dependencies": {
+    "serve-static": "^1.15.0"
+  },
+  "devDependencies": {
+    "@rao-pics/eslint-config": "0.2.0",
+    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/tsconfig": "^0.1.0",
+    "@types/node": "^18.17.6",
+    "@types/serve-static": "^1.15.2",
+    "eslint": "^8.47.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
 }

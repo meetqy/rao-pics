@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import folderMock from "../mocks/folder.json";
-import { treeToFlat } from "../src/folder";
+import { treeToFlat } from "../src/sync/folder";
 
 describe("folder tree to flat", () => {
   it("should return a flat array", () => {
