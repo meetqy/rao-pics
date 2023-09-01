@@ -16,7 +16,7 @@
     "prettier-plugin-tailwindcss": "^0.5.3"
   },
   "devDependencies": {
-    "@rao-pics/tsconfig": "^0.1.0",
+    "@rao-pics/tsconfig": "workspace:*",
     "typescript": "^5.1.6"
   }
 }

@@ -9,7 +9,7 @@ const config = {
     "prettier-plugin-tailwindcss",
     "prettier-plugin-packagejson",
   ],
-  tailwindConfig: "../../tooling/tailwind",
+  // tailwindConfig: "../../tooling/tailwind",
   importOrder: [
     "^(react/(.*)$)|^(react$)|^(react-native(.*)$)",
     "^(next/(.*)$)|^(next$)",

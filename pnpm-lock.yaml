@@ -479,7 +479,7 @@ importers:
         version: 0.5.3(@ianvs/prettier-plugin-sort-imports@4.1.0)(prettier@3.0.2)
     devDependencies:
       '@rao-pics/tsconfig':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../typescript
       typescript:
         specifier: ^5.1.6
@@ -525,7 +525,11 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
-  tooling/typescript: {}
+  tooling/typescript:
+    devDependencies:
+      '@rao-pics/prettier-config':
+        specifier: workspace:*
+        version: link:../prettier
 
 packages:
 
