@@ -4,6 +4,7 @@ import { image } from "./src/image";
 import { library } from "./src/library";
 import { pending } from "./src/pending";
 import { sync } from "./src/sync";
+import { tag } from "./src/tag";
 import { t } from "./src/utils";
 
 export const router = t.router({
@@ -13,6 +14,7 @@ export const router = t.router({
   folder,
   sync,
   image,
+  tag,
 });
 
 export type AppRouter = typeof router;
