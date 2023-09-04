@@ -49,7 +49,7 @@ model Image {
   // 创建时间
   createdTime   DateTime @default(now())
   // 修改时间
-  lastTime      DateTime
+  updateTime    DateTime @updatedAt
   // 文件的 mtime
   mtime         DateTime
   // 扩展名
@@ -91,4 +91,16 @@ model Folder {
   pid         String?
   description String?
   images      Image[]
+}
+
+model Log {
+  path        String   @unique
+  // json-error | unsupported-ext | deleted | unknow
+  // unknow 如果确认了错误，可以从 unknow 改为其他类型
+  type        String
+  // 具体的错误信息
+  message     String
+  // 创建时间
+  createdTime DateTime @default(now())
+  updatedTime DateTime @updatedAt
 }

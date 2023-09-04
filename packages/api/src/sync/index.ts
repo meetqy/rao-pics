@@ -1,11 +1,8 @@
-import { create } from "domain";
 import { EventEmitter } from "events";
 import { join } from "path";
 import { observable } from "@trpc/server/observable";
-import { readJson, readJsonSync } from "fs-extra";
 import { z } from "zod";
 
-import type { PendingTypeEnum } from "@rao-pics/constant";
 import type { Pending } from "@rao-pics/db";
 
 import { router } from "../..";

@@ -30,6 +30,22 @@ export const PendingTypeEnumZod = z.enum(["create", "update", "delete"]);
 export type PendingTypeEnum = z.infer<typeof PendingTypeEnumZod>;
 
 /**
+ * Log type 枚举 Zod
+ */
+
+export const LogTypeEnumZod = z.enum([
+  "json-error",
+  "unsupported-ext",
+  "deleted",
+  "unknow",
+]);
+
+/**
+ * Log type 枚举
+ */
+export type LogTypeEnum = z.infer<typeof LogTypeEnumZod>;
+
+/**
  * 支持的视频格式
  */
 export const VIDEO_EXT = [

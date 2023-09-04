@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
+import { router } from "..";
 import { t } from "./utils";
 
 export const image = t.router({
@@ -58,6 +59,7 @@ export const image = t.router({
       }),
     )
     .mutation(async ({ input }) => {
+      const caller = router.createCaller({});
       const data: Prisma.ImageUpdateInput = {
         path: input.path,
         name: input.name,
@@ -69,7 +71,6 @@ export const image = t.router({
         duration: input.duration,
         annotation: input.annotation,
         url: input.url,
-        lastTime: new Date(),
         mtime: input.mtime,
       };
 
@@ -119,6 +120,9 @@ export const image = t.router({
           data: data as Prisma.ImageCreateInput,
         });
       }
+
+      // 清除日志中的错误信息
+      await caller.log.delete(res.path);
 
       return res;
     }),
