@@ -20,6 +20,7 @@
   "dependencies": {
     "@rao-pics/constant": "workspace:*",
     "@rao-pics/db": "workspace:*",
+    "@rao-pics/utils": "workspace:*",
     "@trpc/client": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "chokidar": "^3.5.3",
@@ -31,6 +32,7 @@
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tsconfig": "workspace:*",
+    "@types/node": "^18.17.6",
     "@vitest/coverage-v8": "^0.34.3",
     "@vitest/ui": "^0.34.3",
     "cross-env": "^7.0.3",

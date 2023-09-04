@@ -1,44 +1,46 @@
-[
-  {
-    "id": "LKRVQVLHGERAX",
-    "name": "期刊",
-    "description": "",
-    "children": [
-      {
-        "id": "LLTF4ZITJSWSS",
-        "name": "04",
-        "description": "",
-        "children": [],
-        "modificationTime": 1693138821077,
-        "tags": [],
-        "password": "",
-        "passwordTips": ""
-      }
-    ],
-    "modificationTime": 1690869001589,
-    "tags": ["期刊"],
-    "password": "",
-    "passwordTips": ""
-  },
-  {
-    "id": "LLNP0K49I63ZA",
-    "name": "套图",
-    "description": "",
-    "children": [
-      {
-        "id": "LLWCB0OZM5GZ3",
-        "name": "08",
-        "description": "",
-        "children": [],
-        "modificationTime": 1693315462211,
-        "tags": [],
-        "password": "",
-        "passwordTips": ""
-      }
-    ],
-    "modificationTime": 1692792613593,
-    "tags": ["套图"],
-    "password": "",
-    "passwordTips": ""
-  }
-]
+{
+  "folders": [
+    {
+      "id": "LKRVQVLHGERAX",
+      "name": "期刊",
+      "description": "",
+      "children": [
+        {
+          "id": "LLTF4ZITJSWSS",
+          "name": "04",
+          "description": "",
+          "children": [],
+          "modificationTime": 1693138821077,
+          "tags": [],
+          "password": "",
+          "passwordTips": ""
+        }
+      ],
+      "modificationTime": 1690869001589,
+      "tags": ["期刊"],
+      "password": "",
+      "passwordTips": ""
+    },
+    {
+      "id": "LLNP0K49I63ZA",
+      "name": "套图",
+      "description": "",
+      "children": [
+        {
+          "id": "LLWCB0OZM5GZ3",
+          "name": "08",
+          "description": "",
+          "children": [],
+          "modificationTime": 1693315462211,
+          "tags": [],
+          "password": "",
+          "passwordTips": ""
+        }
+      ],
+      "modificationTime": 1692792613593,
+      "tags": ["套图"],
+      "password": "",
+      "passwordTips": ""
+    }
+  ]
+}

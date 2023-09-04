@@ -41,9 +41,7 @@ model Pending {
 model Image {
   id            Int      @id @unique @default(autoincrement())
   // library.path + path => originalPath
-  path          String
-  // UserData 缓存目录 + thumbnailPath => thumbnailPath 
-  thumbnailPath String?
+  path          String   @unique
   // 名字
   name          String
   // 文件大小
@@ -58,8 +56,14 @@ model Image {
   width         Int
   // 高度
   height        Int
+  // UserData 缓存目录 + thumbnailPath => thumbnailPath 
+  thumbnailPath String?
   // 视频时长
   duration      Float?
+  // 描述
+  annotation    String?
+  // 链接
+  url           String?
   // 颜色
   colors        Color[]
   // 文件夹

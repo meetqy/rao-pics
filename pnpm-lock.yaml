@@ -175,6 +175,9 @@ importers:
       '@rao-pics/db':
         specifier: workspace:*
         version: link:../db
+      '@rao-pics/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@trpc/client':
         specifier: ^10.37.1
         version: 10.37.1(@trpc/server@10.37.1)
@@ -203,6 +206,9 @@ importers:
       '@rao-pics/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      '@types/node':
+        specifier: ^18.17.6
+        version: 18.17.6
       '@vitest/coverage-v8':
         specifier: ^0.34.3
         version: 0.34.3(vitest@0.34.2)
@@ -323,6 +329,36 @@ importers:
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
+
+  packages/utils:
+    devDependencies:
+      '@rao-pics/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@rao-pics/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@rao-pics/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      '@vitest/coverage-v8':
+        specifier: ^0.34.3
+        version: 0.34.3(vitest@0.34.2)
+      '@vitest/ui':
+        specifier: ^0.34.3
+        version: 0.34.3(vitest@0.34.2)
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      eslint:
+        specifier: ^8.47.0
+        version: 8.47.0
+      typescript:
+        specifier: ^5.1.6
+        version: 5.1.6
+      vitest:
+        specifier: ^0.34.2
+        version: 0.34.2(@vitest/ui@0.34.3)
 
   packages/watch:
     dependencies:

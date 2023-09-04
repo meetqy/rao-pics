@@ -1,4 +1,6 @@
+import { create } from "domain";
 import { EventEmitter } from "events";
+import { join } from "path";
 import { observable } from "@trpc/server/observable";
 import { readJson, readJsonSync } from "fs-extra";
 import { z } from "zod";
@@ -9,8 +11,30 @@ import type { Pending } from "@rao-pics/db";
 import { router } from "../..";
 import { t } from "../utils";
 import { handleFolder } from "./folder";
+import { checkedImage, createImage } from "./image";
 
 const ee = new EventEmitter();
+
+/**
+ * 同步新增逻辑
+ * 1. 同步文件夹
+ * 2. 开始同步图片
+ * 2.1 检测图片是否需要更新 (checkedImage) 默认最后更新时间小于3秒不更新
+ * 2.2 读取图片元数据 (readJson) metadata.json
+ * 2.3 创建标签 (Tag)
+ * 2.4 创建颜色 (Color)
+ * 2.5 创建图片并关联创建的 Tag、Color、Folder
+ */
+
+/**
+ * 同步删除/更新逻辑，更新拆分为 => 创建新的，删除旧的
+ * ... 同步新增逻辑
+ *
+ * 2.3 读取该图片的标签
+ * 2.4 对比标签，找出需要新增/更新/删除的标签
+ * 2.5 对比颜色，找出需要新增/更新/删除的颜色
+ * 2.6 更新图片，并关联/取消关联 Tag、Color、Folder
+ */
 
 export const sync = t.router({
   start: t.procedure
@@ -23,9 +47,16 @@ export const sync = t.router({
       const caller = router.createCaller({});
       const pendings = (await caller.pending.get()) as Pending[];
 
-      // 同步文件夹
-      const folders = handleFolder(input.libraryPath);
-      await syncFolder(folders, caller);
+      try {
+        // 同步文件夹
+        const folders = handleFolder(join(input.libraryPath, "metadata.json"));
+        await syncFolder(folders, caller);
+      } catch (e) {
+        // 每次同步首先同步文件夹，如果文件夹同步失败，直接返回
+        return false;
+      }
+
+      await syncImage(pendings);
 
       return true;
     }),
@@ -69,5 +100,9 @@ export const syncFolder = async (
 
 export const syncImage = async (pendings: Pending[]) => {
   for (const p of pendings) {
+    const data = await checkedImage(p.path);
+    if (data) {
+      await createImage(data);
+    }
   }
 };

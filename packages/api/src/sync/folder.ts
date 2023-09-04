@@ -1,8 +1,7 @@
-import { join } from "path";
 import { readJSONSync } from "fs-extra";
 
-export const handleFolder = (libraryPath: string) => {
-  const f = readJSONSync(join(libraryPath, "metadata.json")) as {
+export const handleFolder = (path: string) => {
+  const f = readJSONSync(path) as {
     folders: FolderTree[];
   };
 
