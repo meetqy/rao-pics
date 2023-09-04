@@ -407,4 +407,32 @@ describe("image module", () => {
       ]);
     });
   });
+
+  it("delete log record after upsert image", async () => {
+    await prisma.log.deleteMany();
+    await prisma.image.deleteMany();
+
+    await caller.log.upsert({
+      path: "/path/to/image.jpg",
+      type: "json-error",
+      message: "Test log message",
+    });
+
+    await caller.image.upsert({
+      path: "/path/to/image.jpg",
+      name: "image.jpg",
+      size: 1024,
+      ext: "jpg",
+      width: 800,
+      height: 600,
+      mtime: new Date(),
+    });
+
+    expect(
+      await prisma.log.findUnique({ where: { path: "/path/to/image.jpg" } }),
+    ).toBeNull();
+    expect(
+      await caller.image.findUnique({ path: "/path/to/image.jpg" }),
+    ).toHaveProperty("path", "/path/to/image.jpg");
+  });
 });
