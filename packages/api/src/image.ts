@@ -32,6 +32,7 @@ export const image = t.router({
         ext: z.string(),
         width: z.number(),
         height: z.number(),
+        mtime: z.date(),
         thumbnailPath: z.string().optional(),
         duration: z.number().optional(),
         annotation: z.string().optional(),
@@ -69,6 +70,7 @@ export const image = t.router({
         annotation: input.annotation,
         url: input.url,
         lastTime: new Date(),
+        mtime: input.mtime,
       };
 
       const { tags, id, colors, folders } = input;

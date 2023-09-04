@@ -63,7 +63,11 @@ const BasicPage = () => {
   const [disabled, setDisabled] = useState(false);
 
   const { data: library } = trpc.library.get.useQuery();
-  const onStartSync = trpc.sync.start.useMutation();
+  const onStartSync = trpc.sync.start.useMutation({
+    onError: (err) => {
+      console.error(err);
+    },
+  });
 
   const onBeforeDeleteLibrary = () => {
     window.dialog

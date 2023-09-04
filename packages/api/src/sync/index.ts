@@ -11,13 +11,14 @@ import type { Pending } from "@rao-pics/db";
 import { router } from "../..";
 import { t } from "../utils";
 import { handleFolder } from "./folder";
-import { checkedImage, createImage } from "./image";
+import { createImage } from "./image";
 
 const ee = new EventEmitter();
 
 /**
  * 同步新增逻辑
  * 1. 同步文件夹
+ * 1.2 对比文件夹，删除旧的，新增新的
  * 2. 开始同步图片
  * 2.1 检测图片是否需要更新 (checkedImage) 默认最后更新时间小于3秒不更新
  * 2.2 读取图片元数据 (readJson) metadata.json
@@ -75,10 +76,10 @@ export const sync = t.router({
         emit.next(data);
       }
 
-      ee.on("start", onGreet);
+      ee.on("sync.start", onGreet);
 
       return () => {
-        ee.off("start", onGreet);
+        ee.off("sync.start", onGreet);
       };
     });
   }),
@@ -92,17 +93,38 @@ export const syncFolder = async (
   for (const f of folders) {
     count++;
     await caller.folder.upsert(f);
-    ee.emit("start", { status: "ok", type: "folder", data: f, count });
+    ee.emit("sync.start", { status: "ok", type: "folder", data: f, count });
   }
 
-  ee.emit("start", { status: "completed", type: "folder" });
+  ee.emit("sync.start", { status: "completed", type: "folder" });
 };
 
 export const syncImage = async (pendings: Pending[]) => {
+  let count = 0;
+
   for (const p of pendings) {
-    const data = await checkedImage(p.path);
-    if (data) {
-      await createImage(data);
+    count++;
+    try {
+      switch (p.type) {
+        case "create":
+          await createImage(p);
+          ee.emit("sync.start", { status: "ok", type: "image", count });
+          break;
+      }
+
+      // 删除 pending
+      await router.createCaller({}).pending.delete(p.path);
+    } catch (e) {
+      ee.emit("sync.start", {
+        status: "error",
+        type: "image",
+        count,
+        message: e,
+      });
+
+      await router.createCaller({}).pending.delete(p.path);
     }
   }
+
+  ee.emit("sync.start", { status: "completed", type: "image", count });
 };

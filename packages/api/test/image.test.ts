@@ -27,6 +27,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
       });
 
       const result = await caller.image.findUnique({ id: testImage.id });
@@ -42,6 +43,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
       });
 
       const result = await caller.image.findUnique({ path: testImage.path });
@@ -69,6 +71,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
       };
       const result = await caller.image.upsert(input);
       expect(result).toMatchObject(input);
@@ -83,6 +86,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
       };
 
       const testImage = await caller.image.upsert(input);
@@ -166,6 +170,7 @@ describe("image module", () => {
         path: "/path/to/image.jpg",
         name: "image.jpg",
         size: 1024,
+        mtime: new Date(),
         ext: "jpg",
         width: 800,
         height: 600,
@@ -197,6 +202,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
       };
 
       const res = await caller.image.upsert({
@@ -247,6 +253,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
         folders: {
           connect: ["1", "2", "3"],
         },
@@ -277,6 +284,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
         folders: {
           connect: ["1", "2", "3"],
         },
@@ -292,6 +300,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
         folders: {
           connect: ["1", "4"],
           disconnect: ["2", "3"],
@@ -333,6 +342,7 @@ describe("image module", () => {
         ext: "jpg",
         width: 800,
         height: 600,
+        mtime: new Date(),
         colors: {
           connect: [color1, color2, color3].map(rgbTo16BitHex) as number[],
         },
@@ -359,6 +369,7 @@ describe("image module", () => {
         path: "/path/to/image.jpg",
         name: "image.jpg",
         size: 1024,
+        mtime: new Date(),
         ext: "jpg",
         width: 800,
         height: 600,
@@ -376,6 +387,7 @@ describe("image module", () => {
         size: 1024,
         ext: "jpg",
         width: 800,
+        mtime: new Date(),
         height: 600,
         colors: {
           connect: [color2, color3].map(rgbTo16BitHex) as number[],

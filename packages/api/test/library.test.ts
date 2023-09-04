@@ -97,13 +97,24 @@ describe("library module", () => {
         path: "path/to/xxx.library",
         type: "create",
       });
-      await caller.pending.upsert({
-        path: "path/to/xxx2.library",
-        type: "create",
+      await caller.image.upsert({
+        path: "path/to/xxx.jpg",
+        name: "xxx",
+        ext: "jpg",
+        size: 123,
+        width: 123,
+        height: 123,
+        mtime: new Date(),
+      });
+      await caller.folder.upsert({
+        name: "xxx",
+        id: "xxx",
       });
 
       await caller.library.delete();
 
+      expect(await prisma.image.findMany()).toHaveLength(0);
+      expect(await prisma.folder.findMany()).toHaveLength(0);
       expect(await caller.library.get()).toBeNull();
       expect(await caller.pending.get()).toHaveLength(0);
     });

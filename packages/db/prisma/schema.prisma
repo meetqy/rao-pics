@@ -48,8 +48,10 @@ model Image {
   size          Int
   // 创建时间
   createdTime   DateTime @default(now())
-  // 修改时间 文件的 mtime
+  // 修改时间
   lastTime      DateTime
+  // 文件的 mtime
+  mtime         DateTime
   // 扩展名
   ext           String
   // 宽度

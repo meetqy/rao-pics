@@ -54,6 +54,9 @@ export const library = t.router({
     return await prisma.$transaction([
       prisma.library.deleteMany(),
       prisma.pending.deleteMany(),
+      prisma.image.deleteMany(),
+      prisma.tag.deleteMany(),
+      prisma.folder.deleteMany(),
     ]);
   }),
 

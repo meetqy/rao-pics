@@ -39,6 +39,7 @@ export function SyncCircle({ pendingCount }: SyncCircleProps) {
   // 监听同步变化
   trpc.sync.onStart.useSubscription(undefined, {
     onData: (data) => {
+      console.log(data);
       if (data.status === "completed") {
         setTimeout(() => {
           setData(undefined);
