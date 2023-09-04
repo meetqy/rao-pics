@@ -1,12 +1,19 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 import { prisma } from "@rao-pics/db";
 
 import { router } from "..";
+import { rgbTo16BitHex } from "../src/color";
 
 const caller = router.createCaller({});
 
 describe("image module", () => {
+  afterAll(async () => {
+    await prisma.image.deleteMany();
+    await prisma.folder.deleteMany();
+    await prisma.tag.deleteMany();
+  });
+
   describe("findUnique", () => {
     beforeEach(async () => {
       await prisma.image.deleteMany();
@@ -300,6 +307,91 @@ describe("image module", () => {
       expect(result?.folders).toMatchObject([
         { name: "folder1" },
         { name: "folder4" },
+      ]);
+    });
+  });
+
+  describe("upsert colors", () => {
+    beforeEach(async () => {
+      await prisma.color.deleteMany();
+      await prisma.image.deleteMany();
+    });
+
+    it("should connect colors", async () => {
+      const color1 = [255, 0, 0];
+      const color2 = [255, 201, 100];
+      const color3 = [20, 201, 12];
+
+      await caller.color.upsert(color1);
+      await caller.color.upsert(color2);
+      await caller.color.upsert(color3);
+
+      await caller.image.upsert({
+        path: "/path/to/image.jpg",
+        name: "image.jpg",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        colors: {
+          connect: [color1, color2, color3].map(rgbTo16BitHex) as number[],
+        },
+      });
+
+      const result = await prisma.image.findUnique({
+        where: { path: "/path/to/image.jpg" },
+        include: { colors: true },
+      });
+
+      expect(result?.colors).toHaveLength(3);
+    });
+
+    it("should connect and disconnect colors", async () => {
+      const color1 = [255, 0, 0];
+      const color2 = [255, 201, 100];
+      const color3 = [20, 201, 12];
+
+      await caller.color.upsert(color1);
+      await caller.color.upsert(color2);
+      await caller.color.upsert(color3);
+
+      const res = await caller.image.upsert({
+        path: "/path/to/image.jpg",
+        name: "image.jpg",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        colors: {
+          connect: [color1, color2, color3].map(rgbTo16BitHex) as number[],
+        },
+      });
+
+      const color4 = [33, 22, 11];
+
+      await caller.image.upsert({
+        id: res.id,
+        path: "/path/to/image.jpg",
+        name: "image.jpg",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        colors: {
+          connect: [color2, color3].map(rgbTo16BitHex) as number[],
+          disconnect: [color1, color4].map(rgbTo16BitHex) as number[],
+        },
+      });
+
+      const result = await prisma.image.findUnique({
+        where: { path: "/path/to/image.jpg" },
+        include: { colors: true },
+      });
+
+      expect(result?.colors).toHaveLength(2);
+      expect(result?.colors).toMatchObject([
+        { rgb: rgbTo16BitHex(color2) },
+        { rgb: rgbTo16BitHex(color3) },
       ]);
     });
   });

@@ -1,3 +1,4 @@
+import { color } from "./src/color";
 import { config } from "./src/config";
 import { folder } from "./src/folder";
 import { image } from "./src/image";
@@ -15,6 +16,7 @@ export const router = t.router({
   sync,
   image,
   tag,
+  color,
 });
 
 export type AppRouter = typeof router;
