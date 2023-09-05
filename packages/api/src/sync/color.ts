@@ -9,7 +9,7 @@ export const syncColor = async (
   const caller = router.createCaller({});
 
   const disconnect = difference(oldColors, newColors);
-  const connect = difference(newColors, oldColors);
+  const connect = difference(newColors, oldColors).slice(0, 9);
 
   if (connect.length > 0) {
     for (const item of connect) {

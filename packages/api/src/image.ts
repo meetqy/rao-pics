@@ -46,6 +46,7 @@ export const image = t.router({
         duration: z.number().optional(),
         annotation: z.string().optional(),
         url: z.string().optional(),
+        isDeleted: z.boolean().optional(),
         tags: z
           .object({
             connect: z.array(z.string()).optional(),
@@ -80,6 +81,7 @@ export const image = t.router({
         annotation: input.annotation,
         url: input.url,
         mtime: input.mtime,
+        isDeleted: input.isDeleted,
       };
 
       const { tags, id, colors, folders } = input;

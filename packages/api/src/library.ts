@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import { observable } from "@trpc/server/observable";
 import chokidar from "chokidar";
+import { debounce } from "lodash";
 import { z } from "zod";
 
 import type { PendingTypeEnum } from "@rao-pics/constant";
@@ -58,63 +59,53 @@ export const library = t.router({
       prisma.tag.deleteMany(),
       prisma.folder.deleteMany(),
       prisma.log.deleteMany(),
+      prisma.color.deleteMany(),
     ]);
   }),
 
   /**
    * 监听 Library 变化
    */
-  watch: t.procedure.input(z.string()).mutation(async ({ input }) => {
+  watch: t.procedure.input(z.string()).mutation(({ input }) => {
+    if (watcher) return;
+
     watcher = chokidar.watch(input);
-
     const caller = router.createCaller({});
-
     const paths = new Set<{ path: string; type: PendingTypeEnum }>();
 
-    const startWatcher = () => {
-      return new Promise<void>((reslove, reject) => {
-        return watcher
-          .on("add", (path) => {
-            paths.add({ path, type: "create" });
-          })
-          .on("change", (path) => {
-            paths.add({ path, type: "update" });
-          })
-          .on("unlink", (path) => {
-            paths.add({ path, type: "delete" });
-          })
-          .on("error", (e) => {
-            reject(new Error(e.message));
-          })
-          .on("ready", () => {
-            void (async () => {
-              let count = 0;
-
-              for (const path of paths) {
-                count++;
-
-                try {
-                  await caller.pending.upsert(path);
-                  ee.emit("watch", { status: "ok", data: path, count });
-                } catch (e) {
-                  ee.emit("watch", {
-                    status: "error",
-                    data: path,
-                    count,
-                    message: (e as Error).message,
-                  });
-                }
-              }
-
-              paths.clear();
-              ee.emit("watch", { status: "completed" });
-              reslove();
-            })();
+    const start = debounce(async () => {
+      let count = 0;
+      for (const path of paths) {
+        count++;
+        try {
+          await caller.pending.upsert(path);
+          ee.emit("watch", { status: "ok", data: path, count });
+        } catch (e) {
+          ee.emit("watch", {
+            status: "error",
+            data: path,
+            count,
+            message: (e as Error).message,
           });
-      });
-    };
+        }
+      }
+      paths.clear();
+      ee.emit("watch", { status: "completed" });
+    }, 1000);
 
-    return await startWatcher();
+    return watcher
+      .on("add", (path) => {
+        paths.add({ path, type: "create" });
+        void start();
+      })
+      .on("change", (path) => {
+        paths.add({ path, type: "update" });
+        void start();
+      })
+      .on("unlink", (path) => {
+        paths.add({ path, type: "delete" });
+        void start();
+      });
   }),
 
   onWatch: t.procedure.subscription(() => {

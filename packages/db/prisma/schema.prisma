@@ -58,6 +58,8 @@ model Image {
   width         Int
   // 高度
   height        Int
+  // 是否删除
+  isDeleted     Boolean  @default(false)
   // UserData 缓存目录 + thumbnailPath => thumbnailPath 
   thumbnailPath String?
   // 视频时长

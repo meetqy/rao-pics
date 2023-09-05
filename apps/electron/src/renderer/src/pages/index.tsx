@@ -39,7 +39,7 @@ const Index = () => {
     },
 
     onSuccess({ path }) {
-      addWatchLibrary.mutate(`${path}/**/*.json`);
+      addWatchLibrary.mutate(`${path}/images/**/*.json`);
       void utils.library.get.invalidate();
     },
   });

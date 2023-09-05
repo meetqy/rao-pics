@@ -4,7 +4,7 @@ import { EXT } from "@rao-pics/constant";
 import type { Pending } from "@rao-pics/db";
 
 import { router } from "../..";
-import { rgbTo16BitHex } from "../color";
+import { rgbToNumberMutilple100 } from "../color";
 import { syncColor } from "./color";
 import { syncTag } from "./tag";
 
@@ -32,10 +32,6 @@ export const checkedImage = async (path: string) => {
     data = readJsonSync(path) as Metadata;
   } catch (e) {
     throw new Error("[json-error] read json error");
-  }
-
-  if (data.isDeleted) {
-    throw new Error("[deleted] image is deleted");
   }
 
   if (!EXT.includes(data.ext)) {
@@ -66,8 +62,8 @@ export const createImage = async (p: Pending) => {
   );
 
   const newColors = newImage.palettes
-    .map((item) => rgbTo16BitHex(item.color))
-    .filter(Boolean) as number[];
+    .map((item) => rgbToNumberMutilple100(item.color))
+    .filter(Boolean);
   const oldColors = oldImage?.colors.map((item) => item.rgb) ?? [];
 
   const colors = await syncColor(newColors, oldColors);
@@ -90,4 +86,11 @@ export const createImage = async (p: Pending) => {
   await caller.color.deleteWithNotConnectImage();
 
   return image;
+};
+
+export const updateImage = async (p: Pending) => {
+  const caller = router.createCaller({});
+  const newImage = await checkedImage(p.path);
+
+  if (!newImage) return;
 };
