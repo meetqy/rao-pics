@@ -175,6 +175,9 @@ importers:
       '@rao-pics/db':
         specifier: workspace:*
         version: link:../db
+      '@rao-pics/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@trpc/client':
         specifier: ^10.37.1
         version: 10.37.1(@trpc/server@10.37.1)

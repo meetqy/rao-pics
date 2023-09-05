@@ -3,22 +3,9 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { prisma } from "@rao-pics/db";
 
 import { router } from "..";
-import { rgbTo16BitHex } from "../src/color";
+import { rgbToNumberMutilple100 } from "../src/color";
 
 const caller = router.createCaller({});
-
-describe("rgbTo16BitHex", () => {
-  it("should convert rgb to 16-bit hex", () => {
-    expect(rgbTo16BitHex([255, 0, 0])).toBe(63500);
-    expect(rgbTo16BitHex([0, 0, 0])).toBe(0);
-  });
-  it("should return undefined for invalid input", () => {
-    expect(rgbTo16BitHex([255, 0])).toBe(undefined);
-  });
-  it("should convert number to 16-bit hex", () => {
-    expect(rgbTo16BitHex(0xff0000)).toBe(63500);
-  });
-});
 
 describe("color module", () => {
   describe("upsert", () => {
@@ -28,15 +15,15 @@ describe("color module", () => {
 
     it("should create a new color", async () => {
       const result = await caller.color.upsert([255, 0, 0]);
-      expect(result).toHaveProperty("rgb", rgbTo16BitHex([255, 0, 0]));
+      expect(result).toHaveProperty("rgb", rgbToNumberMutilple100([255, 0, 0]));
     });
 
     it("should update an existing color", async () => {
       const input = [255, 0, 0];
       const result1 = await caller.color.upsert(input);
       const result2 = await caller.color.upsert(input);
-      expect(result1).toHaveProperty("rgb", rgbTo16BitHex(input));
-      expect(result2).toHaveProperty("rgb", rgbTo16BitHex(input));
+      expect(result1).toHaveProperty("rgb", rgbToNumberMutilple100(input));
+      expect(result2).toHaveProperty("rgb", rgbToNumberMutilple100(input));
       expect(result1).toEqual(result2);
     });
   });

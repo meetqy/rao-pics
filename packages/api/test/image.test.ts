@@ -3,7 +3,7 @@ import { afterAll, beforeEach, describe, expect, it } from "vitest";
 import { prisma } from "@rao-pics/db";
 
 import { router } from "..";
-import { rgbTo16BitHex } from "../src/color";
+import { rgbToNumberMutilple100 } from "../src/color";
 
 const caller = router.createCaller({});
 
@@ -345,8 +345,8 @@ describe("image module", () => {
         mtime: new Date(),
         colors: {
           connect: [color1, color2, color3].map((item) =>
-            rgbTo16BitHex(item),
-          ) as number[],
+            rgbToNumberMutilple100(item),
+          ),
         },
       });
 
@@ -377,8 +377,8 @@ describe("image module", () => {
         height: 600,
         colors: {
           connect: [color1, color2, color3].map((item) =>
-            rgbTo16BitHex(item),
-          ) as number[],
+            rgbToNumberMutilple100(item),
+          ),
         },
       });
 
@@ -394,12 +394,10 @@ describe("image module", () => {
         mtime: new Date(),
         height: 600,
         colors: {
-          connect: [color2, color3].map((item) =>
-            rgbTo16BitHex(item),
-          ) as number[],
+          connect: [color2, color3].map((item) => rgbToNumberMutilple100(item)),
           disconnect: [color1, color4].map((item) =>
-            rgbTo16BitHex(item),
-          ) as number[],
+            rgbToNumberMutilple100(item),
+          ),
         },
       });
 
@@ -410,8 +408,8 @@ describe("image module", () => {
 
       expect(result?.colors).toHaveLength(2);
       expect(result?.colors).toMatchObject([
-        { rgb: rgbTo16BitHex(color2) },
-        { rgb: rgbTo16BitHex(color3) },
+        { rgb: rgbToNumberMutilple100(color2) },
+        { rgb: rgbToNumberMutilple100(color3) },
       ]);
     });
   });

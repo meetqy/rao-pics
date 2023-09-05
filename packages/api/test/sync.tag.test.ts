@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 import { prisma } from "@rao-pics/db";
 
@@ -6,6 +6,10 @@ import { syncTag } from "../src/sync/tag";
 
 describe("syncTag", () => {
   beforeEach(async () => {
+    await prisma.tag.deleteMany({});
+  });
+
+  afterAll(async () => {
     await prisma.tag.deleteMany({});
   });
 

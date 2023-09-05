@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 import { prisma } from "@rao-pics/db";
 
@@ -6,6 +6,10 @@ import { syncColor } from "../src/sync/color";
 
 describe("syncColor", () => {
   beforeEach(async () => {
+    await prisma.color.deleteMany({});
+  });
+
+  afterAll(async () => {
     await prisma.color.deleteMany({});
   });
 
