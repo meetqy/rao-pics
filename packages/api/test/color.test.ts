@@ -15,6 +15,9 @@ describe("rgbTo16BitHex", () => {
   it("should return undefined for invalid input", () => {
     expect(rgbTo16BitHex([255, 0])).toBe(undefined);
   });
+  it("should convert number to 16-bit hex", () => {
+    expect(rgbTo16BitHex(0xff0000)).toBe(63500);
+  });
 });
 
 describe("color module", () => {

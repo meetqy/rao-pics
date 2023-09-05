@@ -344,7 +344,9 @@ describe("image module", () => {
         height: 600,
         mtime: new Date(),
         colors: {
-          connect: [color1, color2, color3].map(rgbTo16BitHex) as number[],
+          connect: [color1, color2, color3].map((item) =>
+            rgbTo16BitHex(item),
+          ) as number[],
         },
       });
 
@@ -374,7 +376,9 @@ describe("image module", () => {
         width: 800,
         height: 600,
         colors: {
-          connect: [color1, color2, color3].map(rgbTo16BitHex) as number[],
+          connect: [color1, color2, color3].map((item) =>
+            rgbTo16BitHex(item),
+          ) as number[],
         },
       });
 
@@ -390,8 +394,12 @@ describe("image module", () => {
         mtime: new Date(),
         height: 600,
         colors: {
-          connect: [color2, color3].map(rgbTo16BitHex) as number[],
-          disconnect: [color1, color4].map(rgbTo16BitHex) as number[],
+          connect: [color2, color3].map((item) =>
+            rgbTo16BitHex(item),
+          ) as number[],
+          disconnect: [color1, color4].map((item) =>
+            rgbTo16BitHex(item),
+          ) as number[],
         },
       });
 

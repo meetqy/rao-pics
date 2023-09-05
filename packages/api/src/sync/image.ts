@@ -4,6 +4,9 @@ import { EXT } from "@rao-pics/constant";
 import type { Pending } from "@rao-pics/db";
 
 import { router } from "../..";
+import { rgbTo16BitHex } from "../color";
+import { syncColor } from "./color";
+import { syncTag } from "./tag";
 
 /**
  * 检测图片是否需要更新
@@ -54,7 +57,20 @@ export const createImage = async (p: Pending) => {
 
   const oldImage = await caller.image.findUnique({
     path: p.path,
+    includes: ["tags", "colors"],
   });
+
+  const tags = await syncTag(
+    newImage.tags,
+    oldImage?.tags.map((item) => item.name),
+  );
+
+  const newColors = newImage.palettes
+    .map((item) => rgbTo16BitHex(item.color))
+    .filter(Boolean) as number[];
+  const oldColors = oldImage?.colors.map((item) => item.rgb) ?? [];
+
+  const colors = await syncColor(newColors, oldColors);
 
   const image = await caller.image.upsert({
     path: p.path,
@@ -66,8 +82,12 @@ export const createImage = async (p: Pending) => {
     mtime: newImage.mtime,
     // 文件件只需要关联，删除处理在 handleFolder 中处理，删除 folder 会同时删除关联的 image
     folders: { connect: newImage.folders },
-    tags: {},
+    tags,
+    colors,
   });
+
+  await caller.tag.deleteWithNotConnectImage();
+  await caller.color.deleteWithNotConnectImage();
 
   return image;
 };

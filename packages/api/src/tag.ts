@@ -20,4 +20,17 @@ export const tag = t.router({
       },
     });
   }),
+
+  /**
+   * 删除没有关联图片的标签
+   */
+  deleteWithNotConnectImage: t.procedure.mutation(async () => {
+    return await prisma.tag.deleteMany({
+      where: {
+        images: {
+          none: {},
+        },
+      },
+    });
+  }),
 });
