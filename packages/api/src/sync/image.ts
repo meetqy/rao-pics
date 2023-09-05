@@ -10,38 +10,39 @@ import { router } from "../..";
  * @param path
  */
 export const checkedImage = async (path: string) => {
-  try {
-    const { mtime } = statSync(path);
+  const { mtime } = statSync(path);
 
-    const caller = router.createCaller({});
-    const image = await caller.image.findUnique({
-      path,
-    });
+  const caller = router.createCaller({});
+  const image = await caller.image.findUnique({
+    path,
+  });
 
-    if (image) {
-      // 对比时间，如果小于3秒，不更新
-      if (mtime.getTime() - image.mtime.getTime() < 3000) {
-        return;
-      }
+  if (image) {
+    // 对比时间，如果小于3秒，不更新
+    if (mtime.getTime() - image.mtime.getTime() < 3000) {
+      return;
     }
-
-    const data = readJsonSync(path) as Metadata;
-
-    if (data.isDeleted) {
-      throw new Error("image is deleted");
-    }
-
-    if (!EXT.includes(data.ext)) {
-      throw new Error("not support file type");
-    }
-
-    return {
-      ...data,
-      mtime,
-    };
-  } catch (error) {
-    throw new Error("read json error");
   }
+
+  let data;
+  try {
+    data = readJsonSync(path) as Metadata;
+  } catch (e) {
+    throw new Error("[json-error] read json error");
+  }
+
+  if (data.isDeleted) {
+    throw new Error("[deleted] image is deleted");
+  }
+
+  if (!EXT.includes(data.ext)) {
+    throw new Error("[unsupported-ext] not support file type");
+  }
+
+  return {
+    ...data,
+    mtime,
+  };
 };
 
 export const createImage = async (p: Pending) => {

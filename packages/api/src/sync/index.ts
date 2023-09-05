@@ -119,6 +119,23 @@ export const syncImage = async (pendings: Pending[]) => {
         message: e,
       });
 
+      const errorMsg = (e as Error).message.match(/\[(?<type>.*)\]/);
+      const caller = router.createCaller({});
+      if (errorMsg) {
+        const type = errorMsg[0].replace(/\[|\]/g, "");
+        await caller.log.upsert({
+          path: p.path,
+          type: type as never,
+          message: (e as Error).message,
+        });
+      } else {
+        await caller.log.upsert({
+          path: p.path,
+          type: "unknow",
+          message: (e as Error).stack ?? JSON.stringify(e),
+        });
+      }
+
       await router.createCaller({}).pending.delete(p.path);
     }
   }

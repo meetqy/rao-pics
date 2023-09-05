@@ -57,6 +57,7 @@ export const library = t.router({
       prisma.image.deleteMany(),
       prisma.tag.deleteMany(),
       prisma.folder.deleteMany(),
+      prisma.log.deleteMany(),
     ]);
   }),
 
