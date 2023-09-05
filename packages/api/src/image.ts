@@ -12,13 +12,21 @@ export const image = t.router({
       z.object({
         id: z.number().optional(),
         path: z.string().optional(),
+        includes: z.enum(["tags", "colors", "folders"]).array().optional(),
       }),
     )
     .query(async ({ input }) => {
+      const { includes } = input;
+
       return prisma.image.findUnique({
         where: {
           id: input.id,
           path: input.path,
+        },
+        include: {
+          tags: includes?.includes("tags"),
+          colors: includes?.includes("colors"),
+          folders: includes?.includes("folders"),
         },
       });
     }),

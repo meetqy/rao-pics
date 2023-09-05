@@ -48,20 +48,25 @@ export const checkedImage = async (path: string) => {
 export const createImage = async (p: Pending) => {
   const caller = router.createCaller({});
 
-  const data = await checkedImage(p.path);
+  const newImage = await checkedImage(p.path);
 
-  if (!data) return;
+  if (!newImage) return;
+
+  const oldImage = await caller.image.findUnique({
+    path: p.path,
+  });
 
   const image = await caller.image.upsert({
     path: p.path,
-    name: data.name,
-    ext: data.ext,
-    size: data.size,
-    width: data.width,
-    height: data.height,
-    mtime: data.mtime,
+    name: newImage.name,
+    ext: newImage.ext,
+    size: newImage.size,
+    width: newImage.width,
+    height: newImage.height,
+    mtime: newImage.mtime,
     // 文件件只需要关联，删除处理在 handleFolder 中处理，删除 folder 会同时删除关联的 image
-    folders: { connect: data.folders },
+    folders: { connect: newImage.folders },
+    tags: {},
   });
 
   return image;
