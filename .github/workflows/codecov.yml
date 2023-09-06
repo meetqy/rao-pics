@@ -44,7 +44,7 @@ jobs:
       - name: Install deps (with cache)
         run: pnpm install --frozen-lockfile
 
-      - name: Build, lint and type-check
+      - name: Test and coverage
         run: pnpm test
 
       - name: Upload coverage reports to Codecov
