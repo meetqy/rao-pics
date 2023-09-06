@@ -3,29 +3,43 @@ import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
+import { trpc } from "@renderer/utils/trpc";
 
 const languages = {
   "zh-cn": {
     title: "未同步记录",
-    types: ["全部", "回收站中", "格式不支持", "JSON 错误", "未知错误"],
+    types: ["全部", "格式不支持", "JSON 错误", "未知错误"],
     input_placeholder: "ID、路径搜索",
   },
   "en-us": {
     title: "Unsynced Records",
-    types: ["All", "In Trash", "Not Supported", "JSON Error", "Unknown Error"],
+    types: ["All", "Not Supported", "JSON Error", "Unknown Error"],
     input_placeholder: "ID、Path Search",
   },
   "zh-tw": {
     title: "未同步記錄",
-    types: ["全部", "回收站中", "格式不支持", "JSON 錯誤", "未知錯誤"],
+    types: ["全部", "格式不支持", "JSON 錯誤", "未知錯誤"],
     input_placeholder: "ID、路徑搜索",
   },
 };
 
 const UnsyncPage = () => {
   const [collapse, setCollapse] = useState(false);
-
   const { lang, language } = useLanguage(languages);
+
+  const [keywords, setKeywords] = useState();
+
+  const logs = trpc.log.get.useInfiniteQuery(
+    {
+      limit: 50,
+      keywords,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
+
+  console.log(logs.data);
 
   return (
     <Content title={<Title>{lang.title}</Title>}>

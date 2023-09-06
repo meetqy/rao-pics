@@ -36,7 +36,7 @@ export type PendingTypeEnum = z.infer<typeof PendingTypeEnumZod>;
 export const LogTypeEnumZod = z.enum([
   "json-error",
   "unsupported-ext",
-  "unknow",
+  "unknown",
 ]);
 
 /**
