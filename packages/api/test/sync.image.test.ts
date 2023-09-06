@@ -58,13 +58,13 @@ describe("sync.image", () => {
 
   describe("upsertImage tags", () => {
     it("should return image if new tag", async () => {
-      writeJSONSync("./mocks/metadata1.json", {
+      writeJSONSync(mockjson, {
         ...mockData,
         tags: ["tag1"],
       });
 
       const image = await upsertImage({
-        path: "./mocks/metadata1.json",
+        path: mockjson,
         type: "create",
       });
 

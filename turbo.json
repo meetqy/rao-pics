@@ -1,6 +1,9 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": ["**/.env"],
+  "remoteCache": {
+    "signature": true
+  },
   "pipeline": {
     "topo": {
       "dependsOn": ["^topo"]

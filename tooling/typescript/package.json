@@ -5,9 +5,5 @@
   "types": "./base.d.ts",
   "files": [
     "base.json"
-  ],
-  "prettier": "@rao-pics/prettier-config",
-  "devDependencies": {
-    "@rao-pics/prettier-config": "workspace:*"
-  }
+  ]
 }

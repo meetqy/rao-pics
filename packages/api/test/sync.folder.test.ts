@@ -1,11 +1,14 @@
+import { join } from "path";
 import { describe, expect, it } from "vitest";
 
 import folderMock from "../mocks/folder.json";
 import { handleFolder, treeToFlat } from "../src/sync/folder";
 
+const mockjson = join(__dirname, "../mocks/folder.json");
+
 describe("handle folder by path", () => {
   it("should return a folder tree", () => {
-    const flat = handleFolder("mocks/folder.json");
+    const flat = handleFolder(mockjson);
     expect(flat).toEqual([
       { name: "期刊", id: "LKRVQVLHGERAX", description: "", pid: undefined },
       {
