@@ -24,9 +24,6 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
-      vitest:
-        specifier: ^0.34.2
-        version: 0.34.2(@vitest/ui@0.34.3)
 
   apps/docs:
     dependencies:

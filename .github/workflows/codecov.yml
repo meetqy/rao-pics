@@ -11,9 +11,7 @@ env:
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 
 jobs:
-  build-lint:
-    env:
-      DATABASE_URL: file:./db.sqlite
+  codecov:
     runs-on: ubuntu-latest
 
     steps:
