@@ -1,0 +1,21 @@
+flags:
+  "@rao-pics/api":
+    paths:
+      - packages/api
+    carryforward: true
+  "@rao-pics/constant":
+    paths:
+      - packages/constant
+    carryforward: true
+  "@rao-pics/db":
+    paths:
+      - packages/db
+    carryforward: true
+  "@rao-pics/utils":
+    paths:
+      - packages/utils
+    carryforward: true
+  "@rao-pics/watch":
+    paths:
+      - packages/watch
+    carryforward: true
