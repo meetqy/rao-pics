@@ -1,24 +1,28 @@
-comment:
-  layout: "header, diff, flags, components"
-
-flags:
-  "@rao-pics/api":
-    paths:
-      - packages/api
+flag_management:
+  default_rules: # the rules that will be followed for any flag added, generally
     carryforward: true
-  "@rao-pics/constant":
-    paths:
-      - packages/constant
-    carryforward: true
-  "@rao-pics/db":
-    paths:
-      - packages/db
-    carryforward: true
-  "@rao-pics/utils":
-    paths:
-      - packages/utils
-    carryforward: true
-  "@rao-pics/watch":
-    paths:
-      - packages/watch
-    carryforward: true
+    statuses:
+      - type: project
+        target: auto
+        threshold: 1%
+      - type: patch
+        target: 90%
+  individual_flags: # exceptions to the default rules above, stated flag by flag
+    - name: api #fill in your own flag name
+      paths:
+        - packages/api #fill in your own path. Note, accepts globs, not regexes
+      carryforward: true
+      statuses:
+        - type: project
+          target: 20%
+        - type: patch
+          target: 100%
+    - name: constant #fill in your own flag name
+      paths:
+        - packages/constant #fill in your own path. Note, accepts globs, not regexes
+      carryforward: true
+      statuses:
+        - type: project
+          target: 20%
+        - type: patch
+          target: 100%
