@@ -42,7 +42,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps (with cache)
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build, lint and type-check
         run: pnpm test
