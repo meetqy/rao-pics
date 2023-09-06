@@ -176,6 +176,7 @@ describe("image module", () => {
         height: 600,
         tags: {
           connect: ["tag1", "tag2"],
+          disconnect: [],
         },
       });
 

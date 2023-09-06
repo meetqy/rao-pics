@@ -60,6 +60,15 @@ export const VIDEO_EXT = [
 /**
  * 支持的图片格式
  */
-export const IMG_EXT = ["jpg", "png", "jpeg", "gif", "webp"] as const;
+export const IMG_EXT = [
+  "jpg",
+  "png",
+  "jpeg",
+  "gif",
+  "webp",
+  "bmp",
+  "ico",
+  "svg",
+] as const;
 
 export const EXT = [...VIDEO_EXT, ...IMG_EXT] as const;

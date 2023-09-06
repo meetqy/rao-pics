@@ -12,7 +12,7 @@ import { syncTag } from "./tag";
  * 检测图片是否需要更新
  * @param path
  */
-export const checkedImage = async (path: string) => {
+export const checkedImage = async (path: string, timeout = 3000) => {
   const { mtime } = statSync(path);
 
   const caller = router.createCaller({});
@@ -22,7 +22,7 @@ export const checkedImage = async (path: string) => {
 
   if (image) {
     // 对比时间，如果小于3秒，不更新
-    if (mtime.getTime() - image.mtime.getTime() < 3000) {
+    if (mtime.getTime() - image.mtime.getTime() < timeout) {
       return;
     }
   }
@@ -44,10 +44,10 @@ export const checkedImage = async (path: string) => {
   };
 };
 
-export const createImage = async (p: Pending) => {
+export const upsertImage = async (p: Pending, timeout = 3000) => {
   const caller = router.createCaller({});
 
-  const newImage = await checkedImage(p.path);
+  const newImage = await checkedImage(p.path, timeout);
 
   if (!newImage) return;
 
@@ -69,6 +69,7 @@ export const createImage = async (p: Pending) => {
   const colors = await syncColor(newColors, oldColors);
 
   const image = await caller.image.upsert({
+    id: oldImage?.id,
     path: p.path,
     name: newImage.name,
     ext: newImage.ext,
@@ -76,7 +77,10 @@ export const createImage = async (p: Pending) => {
     width: newImage.width,
     height: newImage.height,
     mtime: newImage.mtime,
-    // 文件件只需要关联，删除处理在 handleFolder 中处理，删除 folder 会同时删除关联的 image
+    annotation: newImage.annotation,
+    url: newImage.url,
+    duration: newImage.duration,
+    // 文件夹只需要关联，删除处理在 handleFolder 中处理，删除 folder 会同时删除关联的 image
     folders: { connect: newImage.folders },
     tags,
     colors,
@@ -88,9 +92,10 @@ export const createImage = async (p: Pending) => {
   return image;
 };
 
-export const updateImage = async (p: Pending) => {
+export const deleteImage = async (p: Pending) => {
   const caller = router.createCaller({});
-  const newImage = await checkedImage(p.path);
 
-  if (!newImage) return;
+  await caller.image.deleteByUnique({
+    path: p.path,
+  });
 };

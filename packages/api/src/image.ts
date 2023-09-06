@@ -136,4 +136,28 @@ export const image = t.router({
 
       return res;
     }),
+
+  deleteByUnique: t.procedure
+    .input(
+      z
+        .object({ id: z.number().optional(), path: z.string().optional() })
+        .partial()
+        .refine(
+          (input) => !!input.id || !!input.path,
+          "id or path either one is required",
+        ),
+    )
+    .mutation(async ({ input }) => {
+      const { id, path } = input;
+
+      if (id) {
+        return prisma.image.delete({ where: { id } });
+      }
+
+      if (path) {
+        return prisma.image.delete({ where: { path } });
+      }
+
+      return null;
+    }),
 });

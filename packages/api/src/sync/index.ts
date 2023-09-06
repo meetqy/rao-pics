@@ -8,7 +8,7 @@ import type { Pending } from "@rao-pics/db";
 import { router } from "../..";
 import { t } from "../utils";
 import { handleFolder } from "./folder";
-import { createImage } from "./image";
+import { deleteImage, upsertImage } from "./image";
 
 const ee = new EventEmitter();
 
@@ -108,7 +108,15 @@ export const syncImage = async (pendings: Pending[]) => {
     try {
       switch (p.type) {
         case "create":
-          await createImage(p);
+          await upsertImage(p);
+          ee.emit("sync.start", { status: "ok", type: "image", count });
+          break;
+        case "update":
+          await upsertImage(p);
+          ee.emit("sync.start", { status: "ok", type: "image", count });
+          break;
+        case "delete":
+          await deleteImage(p);
           ee.emit("sync.start", { status: "ok", type: "image", count });
           break;
       }
