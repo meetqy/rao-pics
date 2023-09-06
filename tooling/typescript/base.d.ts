@@ -30,6 +30,7 @@ declare global {
     modificationTime: number;
     height: number;
     width: number;
+    duration: number;
     lastModified: number;
     palettes: MetadataPalette[];
   }

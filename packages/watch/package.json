@@ -10,7 +10,6 @@
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=development vitest",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@rao-pics/prettier-config",

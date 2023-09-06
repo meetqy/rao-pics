@@ -5,7 +5,7 @@
   "btime": 1690805699337,
   "mtime": 1690805699707,
   "ext": "jpg",
-  "tags": ["火影", "🚣🏻 高清"],
+  "tags": ["tag1"],
   "folders": [],
   "isDeleted": false,
   "url": "",
@@ -15,13 +15,6 @@
   "width": 2320,
   "lastModified": 1691501265577,
   "palettes": [
-    { "color": [250, 178, 28], "ratio": 43, "$$hashKey": "object:11045" },
-    { "color": [57, 52, 42], "ratio": 30, "$$hashKey": "object:11046" },
-    { "color": [223, 208, 199], "ratio": 10, "$$hashKey": "object:11047" },
-    { "color": [130, 106, 83], "ratio": 5, "$$hashKey": "object:11048" },
-    { "color": [142, 78, 30], "ratio": 3.18, "$$hashKey": "object:11049" },
-    { "color": [199, 149, 117], "ratio": 2.84, "$$hashKey": "object:11050" },
-    { "color": [145, 145, 111], "ratio": 2.41, "$$hashKey": "object:11051" },
-    { "color": [87, 100, 120], "ratio": 0.99, "$$hashKey": "object:11052" }
+    { "color": [250, 178, 28], "ratio": 43, "$$hashKey": "object:11045" }
   ]
 }

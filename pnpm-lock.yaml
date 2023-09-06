@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@rao-pics/prettier-config':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:tooling/prettier
       prettier:
         specifier: ^3.0.2
@@ -20,6 +20,10 @@ importers:
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
+    devDependencies:
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
 
   apps/docs:
     dependencies:
@@ -567,11 +571,7 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
-  tooling/typescript:
-    devDependencies:
-      '@rao-pics/prettier-config':
-        specifier: workspace:*
-        version: link:../prettier
+  tooling/typescript: {}
 
 packages:
 
