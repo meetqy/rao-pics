@@ -143,7 +143,7 @@ export const syncImage = async (pendings: Pending[]) => {
       } else {
         await caller.log.upsert({
           path: p.path,
-          type: "unknow",
+          type: "unknown",
           message: (e as Error).stack ?? JSON.stringify(e),
         });
       }

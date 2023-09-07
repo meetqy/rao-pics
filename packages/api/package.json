@@ -8,7 +8,7 @@
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=development vitest --single-thread",
+    "test": "cross-env NODE_ENV=development vitest --single-thread --ui --coverage",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@rao-pics/prettier-config",

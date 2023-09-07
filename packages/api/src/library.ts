@@ -12,7 +12,7 @@ import { t } from "./utils";
 
 const ee = new EventEmitter();
 
-let watcher: chokidar.FSWatcher;
+let watcher: chokidar.FSWatcher | null = null;
 
 export const library = t.router({
   get: t.procedure.query(async () => {
@@ -50,6 +50,7 @@ export const library = t.router({
   delete: t.procedure.mutation(async () => {
     if (watcher) {
       watcher.unwatch("*");
+      watcher = null;
     }
 
     return await prisma.$transaction([

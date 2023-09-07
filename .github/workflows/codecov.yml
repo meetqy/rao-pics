@@ -1,7 +1,7 @@
 name: CodeCov
 
 on:
-  push:
+  pull_request:
     branches: ["main"]
 
 # You can leverage Vercel Remote Caching with Turbo to speed up your builds

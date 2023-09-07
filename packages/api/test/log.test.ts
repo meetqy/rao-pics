@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 import type { LogTypeEnum } from "@rao-pics/constant";
 import { prisma } from "@rao-pics/db";
@@ -10,6 +10,9 @@ const caller = router.createCaller({});
 describe("log module", () => {
   beforeEach(async () => {
     // Clear the logs table before each test
+    await prisma.log.deleteMany();
+  });
+  afterAll(async () => {
     await prisma.log.deleteMany();
   });
 
@@ -86,6 +89,62 @@ describe("log module", () => {
       const result = await caller.log.delete("/nonexistent");
 
       expect(result.count).toEqual(0);
+    });
+  });
+
+  describe("get", () => {
+    beforeEach(async () => {
+      await prisma.log.deleteMany();
+    });
+
+    it("limit 20", async () => {
+      for (let i = 0; i < 50; i++) {
+        await caller.log.upsert({
+          path: `/aaa/a${i + 1}`,
+          type: "json-error",
+          message: "json-error",
+        });
+      }
+
+      const res1 = await caller.log.get({ limit: 20 });
+      expect(res1.data.length).toEqual(20);
+      expect(res1.nextCursor).toEqual("/aaa/a21");
+      const res2 = await caller.log.get({ limit: 20, cursor: res1.nextCursor });
+      expect(res2.data.length).toEqual(20);
+      expect(res2.nextCursor).toEqual("/aaa/a41");
+    });
+
+    it("keywords", async () => {
+      for (let i = 0; i < 50; i++) {
+        if (i < 20) {
+          await caller.log.upsert({
+            path: `/aaa/a${i + 1}`,
+            type: "json-error",
+            message: "json-error",
+          });
+        } else if (i >= 20 && i < 40) {
+          await caller.log.upsert({
+            path: `/bbb/b${i + 1}`,
+            type: "unknown",
+            message: "unknown",
+          });
+        } else {
+          await caller.log.upsert({
+            path: `/ccc/c${i + 1}`,
+            type: "unsupported-ext",
+            message: "unsupported-ext",
+          });
+        }
+      }
+
+      const res1 = await caller.log.get({ limit: 20, keywords: "aaa" });
+      expect(res1.data.length).toEqual(20);
+      expect(res1.nextCursor).toBeUndefined();
+      const res2 = await caller.log.get({ limit: 20, keywords: "unknown" });
+      expect(res2.data.length).toEqual(20);
+      expect(res2.nextCursor).toBeUndefined();
+      const res3 = await caller.log.get({ limit: 20, keywords: "22" });
+      expect(res3.data.length).toEqual(1);
     });
   });
 });

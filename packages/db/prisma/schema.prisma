@@ -20,7 +20,7 @@ model Config {
 
 model Library {
   // 路径
-  path         String    @unique
+  path         String    @id @unique
   // eagle | billfish | pixcall
   type         String
   // created time
@@ -33,7 +33,7 @@ model Library {
 
 // 等待同步的文件
 model Pending {
-  path String @unique
+  path String @id @unique
   // create | update | delete
   type String
 }
@@ -88,7 +88,7 @@ model Color {
 }
 
 model Folder {
-  id          String  @id @unique
+  id          String  @id @unique @default(uuid())
   name        String
   pid         String?
   description String?
@@ -96,9 +96,9 @@ model Folder {
 }
 
 model Log {
-  path        String   @unique
-  // json-error | unsupported-ext | deleted | unknow
-  // unknow 如果确认了错误，可以从 unknow 改为其他类型
+  path        String   @id @unique
+  // json-error | unsupported-ext | deleted | unknown
+  // unknown 如果确认了错误，可以从 unknown 改为其他类型
   type        String
   // 具体的错误信息
   message     String
