@@ -28,18 +28,19 @@ const UnsyncPage = () => {
   const { lang, language } = useLanguage(languages);
 
   const [keywords, setKeywords] = useState();
+  const lib = trpc.library.get.useQuery();
 
-  const logs = trpc.log.get.useInfiniteQuery(
-    {
-      limit: 50,
-      keywords,
-    },
-    {
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-    },
-  );
+  const logQuery = trpc.log.get.useQuery({
+    limit: 50,
+    keywords,
+    orderBy: "desc",
+  });
 
-  console.log(logs.data);
+  const libPath = `${lib.data?.path}/images/`;
+
+  const data = logQuery.data?.data;
+
+  // const data = logs.data?.pages[0];
 
   return (
     <Content title={<Title>{lang.title}</Title>}>
@@ -97,17 +98,24 @@ const UnsyncPage = () => {
           </div>
         </div>
 
-        <div className="px-4">
-          <div className="card-wrapper mt-4">
-            {new Array(50).fill(0).map((_item, index) => (
+        <div className="flex px-4">
+          <div className="card-wrapper mt-4 w-full">
+            {data?.map((item, index) => (
               <div className="card-row compact" key={index}>
-                <span className="w-1/4 flex-shrink-0">失败原因</span>
-                <span className="flex w-3/4 justify-end">
-                  <span className="overflow-hidden truncate text-base-content/60">
-                    file:/Users/meetqy/Desktop/me/electron-vite-turbo
+                <div className="w-1/4">{item.type}</div>
+                <div className="flex w-3/4 items-center justify-end">
+                  <span
+                    className="tooltip flex cursor-pointer items-center"
+                    data-tip={item.path}
+                  >
+                    <span className="text-base-content/60">
+                      {item.path
+                        .replace(libPath, "")
+                        .replace("/metadata.json", "")}
+                    </span>
+                    {ArrowRightSvg}
                   </span>
-                  {ArrowRightSvg}
-                </span>
+                </div>
               </div>
             ))}
           </div>

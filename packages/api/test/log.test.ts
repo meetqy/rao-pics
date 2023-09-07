@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 import type { LogTypeEnum } from "@rao-pics/constant";
 import { prisma } from "@rao-pics/db";
@@ -10,6 +10,9 @@ const caller = router.createCaller({});
 describe("log module", () => {
   beforeEach(async () => {
     // Clear the logs table before each test
+    await prisma.log.deleteMany();
+  });
+  afterAll(async () => {
     await prisma.log.deleteMany();
   });
 

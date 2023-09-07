@@ -32,12 +32,13 @@ export const log = t.router({
         keywords: z.string().optional(),
         limit: z.number().min(1).max(100).optional(),
         cursor: z.string().nullish(),
+        orderBy: z.enum(["asc", "desc"]).default("asc"),
       }),
     )
     .query(async ({ input }) => {
       const limit = input.limit ?? 50;
 
-      const { cursor, keywords = "" } = input;
+      const { cursor, keywords = "", orderBy } = input;
 
       const logs = await prisma.log.findMany({
         where: {
@@ -48,7 +49,7 @@ export const log = t.router({
         },
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
-        orderBy: { createdTime: "asc" },
+        orderBy: { createdTime: orderBy },
       });
 
       let nextCursor: typeof cursor | undefined = undefined;

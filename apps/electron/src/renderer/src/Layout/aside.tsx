@@ -10,7 +10,7 @@ function LayoutAside({ current, setCurrent, libraryName }: LayoutAsideProps) {
   const windows = window.electron.process.platform === "win32";
 
   return (
-    <aside className="relative flex h-full w-52 flex-col bg-base-200">
+    <aside className="relative flex h-full w-52 flex-shrink-0 flex-col bg-base-200">
       <div>
         {!windows && (
           <div
