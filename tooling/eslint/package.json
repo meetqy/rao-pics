@@ -2,7 +2,6 @@
   "name": "@rao-pics/eslint-config",
   "version": "0.2.0",
   "private": true,
-  "license": "MIT",
   "files": [
     "./base.js",
     "./nextjs.js",

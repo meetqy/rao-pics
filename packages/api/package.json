@@ -2,7 +2,6 @@
   "name": "@rao-pics/api",
   "version": "0.1.0",
   "private": true,
-  "license": "MIT",
   "main": "./index.ts",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
