@@ -2,123 +2,105 @@ import { useState } from "react";
 import Content from "@renderer/components/Content";
 import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/Title";
-import { useLanguage } from "@renderer/hooks";
+import { useDebounce, useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
 
 const languages = {
   "zh-cn": {
     title: "未同步记录",
-    types: ["全部", "格式不支持", "JSON 错误", "未知错误"],
     input_placeholder: "ID、路径搜索",
+    empty: "暂无记录",
   },
   "en-us": {
     title: "Unsynced Records",
-    types: ["All", "Not Supported", "JSON Error", "Unknown Error"],
     input_placeholder: "ID、Path Search",
+    empty: "No Records",
   },
   "zh-tw": {
     title: "未同步記錄",
-    types: ["全部", "格式不支持", "JSON 錯誤", "未知錯誤"],
     input_placeholder: "ID、路徑搜索",
+    empty: "暫無記錄",
   },
 };
 
 const UnsyncPage = () => {
-  const [collapse, setCollapse] = useState(false);
-  const { lang, language } = useLanguage(languages);
+  const { lang } = useLanguage(languages);
 
-  const [keywords, setKeywords] = useState();
+  const [keywords, setKeywords] = useState("");
+  const debounceKeywords = useDebounce(keywords, 300);
   const lib = trpc.library.get.useQuery();
 
   const logQuery = trpc.log.get.useQuery({
     limit: 50,
-    keywords,
+    keywords: debounceKeywords,
     orderBy: "desc",
   });
 
   const libPath = `${lib.data?.path}/images/`;
 
-  const data = logQuery.data?.data;
-
-  // const data = logs.data?.pages[0];
+  const data = logQuery.data?.data ?? [];
 
   return (
     <Content title={<Title>{lang.title}</Title>}>
       <div className="pb-4">
         <div className="sticky left-0 top-0 z-10 px-4">
-          <div
-            className={`card-wrapper overflow-hidden transition-all ${
-              collapse ? "h-28" : "h-14"
-            }`}
-          >
+          <div className={`card-wrapper h-14 overflow-hidden transition-all`}>
             <div className="card-row relative items-center">
               <input
                 type="text"
                 placeholder={lang.input_placeholder}
                 className="input input-sm flex-1"
+                value={keywords}
+                onChange={(e) => setKeywords(e.target.value)}
               />
-              <button
-                className="btn-ghost btn-square btn-sm btn absolute right-0 hover:bg-transparent"
-                onClick={() => setCollapse((prev) => !prev)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className={`h-4 w-4 transition-transform ${
-                    collapse ? "-rotate-180" : ""
-                  }`}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <div className="card-row">
-              <div className="join">
-                {lang.types.map((item) => (
-                  <input
-                    key={item}
-                    className={`join-item btn ${
-                      language === "en-us" ? "btn-xs" : "btn-sm"
-                    }`}
-                    type="radio"
-                    name="options"
-                    aria-label={item}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>
 
         <div className="flex px-4">
-          <div className="card-wrapper mt-4 w-full">
-            {data?.map((item, index) => (
-              <div className="card-row compact" key={index}>
-                <div className="w-1/4">{item.type}</div>
-                <div className="flex w-3/4 items-center justify-end">
-                  <span
-                    className="tooltip flex cursor-pointer items-center"
-                    data-tip={item.path}
-                  >
-                    <span className="text-base-content/60">
-                      {item.path
-                        .replace(libPath, "")
-                        .replace("/metadata.json", "")}
+          {data.length > 0 ? (
+            <div className="card-wrapper mt-4 w-full">
+              {data?.map((item, index) => (
+                <div className="card-row compact" key={index}>
+                  <div className="w-1/4">{item.type}</div>
+                  <div className="flex w-3/4 items-center justify-end">
+                    <span
+                      className="flex cursor-pointer items-center"
+                      title={item.path}
+                      onClick={() => window.shell.showItemInFolder(item.path)}
+                      aria-hidden="true"
+                    >
+                      <span className="text-base-content/60">
+                        {item.path
+                          .replace(libPath, "")
+                          .replace("/metadata.json", "")}
+                      </span>
+                      {ArrowRightSvg}
                     </span>
-                    {ArrowRightSvg}
-                  </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-24 w-full text-center text-base-content/60">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="m-auto h-24 w-24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H6.911a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661z"
+                />
+              </svg>
+
+              <p>{lang.empty}</p>
+            </div>
+          )}
         </div>
       </div>
     </Content>
