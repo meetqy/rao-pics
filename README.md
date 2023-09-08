@@ -1,6 +1,6 @@
 <p align="center">
     <a herf="https://rao.pics" target="_blank">
-        <img width="128" src="./rao-pics.svg" alt="rao.pics logo"/>
+        <img width="128" src="https://rao.ujump.cn/readme/icon_512x512.png" alt="rao.pics logo"/>
     </a>
     <h1 align="center">Rao.Pics</h1>
     <div align="center">
@@ -14,6 +14,8 @@
         帮助你跨设备查看素材、图片、视频文件
     </p>
 </p>
+
+<img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%" />
 
 ## 特点
 
@@ -29,4 +31,4 @@
 - 如果你喜欢 Rao.Pics，可以在 Github Star，更欢迎 [推荐](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) 给你志同道合的朋友使用
 - 可以关注我的 [Twitter](https://twitter.com/meetqy) 获取到最新的消息，或添加微信 `-meetqy-` 拉你入群
 
-![Alt](https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg "Repobeats analytics image")
+
