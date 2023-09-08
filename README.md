@@ -1,11 +1,9 @@
-<p algin="center">
+<p align="center">
     <a herf="https://rao.pics" target="_blank">
-        <img width="64" src="./rao-pics.png" alt="rao.pics logo"/>
-        rao.pics
+        <img width="256" src="./rao-pics.svg" alt="rao.pics logo"/>
     </a>
+    <h1 align="center">Rao.Pics</h1>
 </p>
-
-# Rao.Pics
 
 帮助你跨设备访问素材图片媒体文件，30+ 外观随意切换，还可以自定义主题。
 
