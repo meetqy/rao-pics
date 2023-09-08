@@ -2,7 +2,8 @@
     <a herf="https://rao.pics" target="_blank">
         <img width="128" src="https://rao.ujump.cn/readme/icon_512x512.png" alt="rao.pics logo"/>
     </a>
-    <h1 align="center">Rao.Pics - 帮助你跨设备查看素材、图片、视频</h1>
+    <h1 align="center">Rao Pics</h1>
+    <p align="center">帮助你跨设备查看素材、图片、视频</p>
     <div align="center">
         <a href="https://codecov.io/gh/meetqy/rao-pics" target="_blank"><img alt="codecov" src="https://codecov.io/gh/meetqy/rao-pics/graph/badge.svg?token=G9UG6SEOZK"/></a>
         <a href="https://github.com/rao-pics/core/blob/main/LICENSE" target="_blank"><img alt="License" src="https://img.shields.io/github/license/rao-pics/core"/></a>
