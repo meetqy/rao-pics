@@ -1,12 +1,32 @@
 import { useState } from "react";
+import { useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
 
 interface SyncCircleProps {
   pendingCount: number;
 }
 
+const languages = {
+  "zh-cn": {
+    pending: "等待同步",
+    reading: "读取中...",
+    syncing: "同步中...",
+  },
+  "en-us": {
+    pending: "Pending",
+    reading: "Reading...",
+    syncing: "Syncing...",
+  },
+  "zh-tw": {
+    pending: "等待同步",
+    reading: "讀取中...",
+    syncing: "同步中...",
+  },
+};
+
 export function SyncCircle({ pendingCount }: SyncCircleProps) {
   const utils = trpc.useContext();
+  const { lang } = useLanguage(languages);
 
   const [data, setData] = useState<{
     status: "completed" | "error" | "ok";
@@ -39,9 +59,9 @@ export function SyncCircle({ pendingCount }: SyncCircleProps) {
   // 监听同步变化
   trpc.sync.onStart.useSubscription(undefined, {
     onData: (data) => {
-      console.log(data);
       if (data.status === "completed") {
         setTimeout(() => {
+          void utils.library.invalidate();
           setData(undefined);
         }, 500);
 
@@ -59,10 +79,12 @@ export function SyncCircle({ pendingCount }: SyncCircleProps) {
   });
 
   const Description = () => {
-    let text = "等待同步";
+    let text = lang.pending;
 
-    if (data?.type === "folder") text = "文件夹同步中...";
-    if (data?.type === "reading") text = "读取中...";
+    if (data?.type === "reading") text = lang.reading;
+    else if (data?.type === "image" || data?.type === "folder") {
+      text = lang.syncing;
+    }
 
     return (
       <p className="text-center text-xs text-neutral-content/70">{text}</p>

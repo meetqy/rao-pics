@@ -1,6 +1,6 @@
 # Rao.Pics
 
-帮助你跨设备访问 Eagle、Pixcall、Billfish 的素材资源，30+ 外观随意切换，还可以自定义主题。
+帮助你跨设备访问素材图片媒体文件，30+ 外观随意切换，还可以自定义主题。
 
 [![codecov](https://codecov.io/gh/meetqy/rao-pics/graph/badge.svg?token=G9UG6SEOZK)](https://codecov.io/gh/meetqy/rao-pics)
 [![License](https://img.shields.io/github/license/rao-pics/core)](https://github.com/rao-pics/core/blob/main/LICENSE)
