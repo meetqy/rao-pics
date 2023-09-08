@@ -1,3 +1,10 @@
+<p algin="center">
+    <a herf="https://rao.pics" target="_blank">
+        <img width="64" src="./rao-pics.png" alt="rao.pics logo"/>
+        rao.pics
+    </a>
+</p>
+
 # Rao.Pics
 
 帮助你跨设备访问素材图片媒体文件，30+ 外观随意切换，还可以自定义主题。
@@ -10,4 +17,4 @@
 
 ![Alt](https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg "Repobeats analytics image")
 
-pnpm turbo gen init
+##
