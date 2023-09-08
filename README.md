@@ -1,6 +1,6 @@
 <p align="center">
     <a herf="https://rao.pics" target="_blank">
-        <img width="196" src="https://rao.ujump.cn/readme/icon_512x512.png" alt="rao.pics logo"/>
+        <img width="196" src="./rao-pics.svg" alt="rao.pics logo"/>
     </a>
     <h1 align="center">Rao Pics</h1>
     <p align="center">帮助你跨设备查看素材、图片、视频</p>
