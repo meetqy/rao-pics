@@ -179,6 +179,9 @@ importers:
       '@rao-pics/db':
         specifier: workspace:*
         version: link:../db
+      '@rao-pics/static-server':
+        specifier: workspace:*
+        version: link:../static-server
       '@rao-pics/utils':
         specifier: workspace:*
         version: link:../utils
@@ -311,6 +314,9 @@ importers:
 
   packages/static-server:
     dependencies:
+      get-port:
+        specifier: ^7.0.0
+        version: 7.0.0
       serve-static:
         specifier: ^1.15.0
         version: 1.15.0
@@ -4596,6 +4602,11 @@ packages:
       has: 1.0.3
       has-proto: 1.0.1
       has-symbols: 1.0.3
+
+  /get-port@7.0.0:
+    resolution: {integrity: sha512-mDHFgApoQd+azgMdwylJrv2DX47ywGq1i5VFJE7fZ0dttNq3iQMfsU4IvEgBHojA3KqEudyu7Vq+oN8kNaNkWw==}
+    engines: {node: '>=16'}
+    dev: false
 
   /get-stdin@9.0.0:
     resolution: {integrity: sha512-dVKBjfWisLAicarI2Sf+JuBE/DghV4UzNAVe9yhEJuzeREd3JhOTE9cUaJTeSa77fsbQUK3pcOpJfM59+VKZaA==}

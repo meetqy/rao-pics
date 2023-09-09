@@ -32,6 +32,7 @@ const Index = () => {
   const { lang } = useLanguage(languages);
 
   const addWatchLibrary = trpc.library.watch.useMutation();
+  const startStaticServer = trpc.library.startStaticServer.useMutation();
 
   const addLibrary = trpc.library.add.useMutation({
     onError: (err) => {
@@ -40,6 +41,7 @@ const Index = () => {
 
     onSuccess({ path }) {
       addWatchLibrary.mutate(`${path}/images/**/*.json`);
+      startStaticServer.mutate(path);
       void utils.library.get.invalidate();
     },
   });

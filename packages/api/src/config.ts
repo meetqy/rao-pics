@@ -11,6 +11,7 @@ export const config = t.router({
         language: z.enum(["zh-cn", "en-us", "zh-tw"]).optional(),
         theme: z.string().optional(),
         color: z.string().optional(),
+        staticServerPort: z.number().optional(),
       }),
     )
     .mutation(async ({ input }) => {

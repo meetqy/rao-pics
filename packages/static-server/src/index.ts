@@ -1,8 +1,15 @@
 import http from "http";
 import { join } from "path";
+import getPort, { portNumbers } from "get-port";
 import serveStatic from "serve-static";
 
-export const startStaticServer = (path: string) => {
+let isStaticServerRunning = false;
+
+export const startStaticServer = async (path: string) => {
+  if (isStaticServerRunning) return;
+  const port = await getPort({ port: portNumbers(9100, 9300) });
+  isStaticServerRunning = true;
+
   const serve = serveStatic(join(path, "images"));
 
   const server = http.createServer((req, res) => {
@@ -12,7 +19,9 @@ export const startStaticServer = (path: string) => {
     });
   });
 
-  server.listen(3000, () => {
-    console.log("Static Server is listening on http://localhost:3000");
+  server.listen(port, () => {
+    console.log(`Static Server is listening on http://localhost:${port}`);
   });
+
+  return port;
 };

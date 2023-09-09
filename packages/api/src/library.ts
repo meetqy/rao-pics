@@ -7,6 +7,7 @@ import { z } from "zod";
 import type { PendingTypeEnum } from "@rao-pics/constant";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
+import { startStaticServer } from "@rao-pics/static-server";
 
 import { router } from "..";
 import { t } from "./utils";
@@ -52,6 +53,17 @@ export const library = t.router({
       },
     });
   }),
+
+  startStaticServer: t.procedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      const port = await startStaticServer(input);
+
+      if (port) {
+        const caller = router.createCaller({});
+        await caller.config.upsert({ staticServerPort: port });
+      }
+    }),
 
   update: t.procedure
     .input(

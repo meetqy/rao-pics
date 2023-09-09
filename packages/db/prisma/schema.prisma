@@ -9,13 +9,15 @@ datasource db {
 
 model Config {
   // config
-  name     String  @id @unique
+  name             String  @id @unique
   // zh-cn、en-us、zh-tw
-  language String
+  language         String
   // 配色
-  color    String?
+  color            String?
   // 主题
-  theme    String?
+  theme            String?
+  // static server port: 9100-9300
+  staticServerPort Int?
 }
 
 model Library {
