@@ -1,6 +1,6 @@
 {
   "name": "@rao-pics/api",
-  "version": "0.1.0",
+  "version": "workspace:^",
   "private": true,
   "main": "./index.ts",
   "scripts": {

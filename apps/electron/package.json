@@ -28,7 +28,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^1.0.2",
-    "@rao-pics/api": "workspace:*",
+    "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/db": "workspace:*",
     "@tanstack/react-query": "^4.32.6",
