@@ -23,9 +23,9 @@
     "serve-static": "^1.15.0"
   },
   "devDependencies": {
-    "@rao-pics/eslint-config": "0.2.0",
-    "@rao-pics/prettier-config": "^0.1.0",
-    "@rao-pics/tsconfig": "^0.1.0",
+    "@rao-pics/eslint-config": "workspace:*",
+    "@rao-pics/prettier-config": "workspace:*",
+    "@rao-pics/tsconfig": "workspace:*",
     "@types/node": "^18.17.6",
     "@types/serve-static": "^1.15.2",
     "eslint": "^8.47.0",

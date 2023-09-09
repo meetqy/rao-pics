@@ -71,7 +71,7 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(electron@24.6.5)
       '@rao-pics/api':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/api
       '@rao-pics/constant':
         specifier: workspace:^
@@ -251,13 +251,13 @@ importers:
         version: 3.22.2
     devDependencies:
       '@rao-pics/eslint-config':
-        specifier: 0.2.0
+        specifier: workspace:*
         version: link:../../tooling/eslint
       '@rao-pics/prettier-config':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier
       '@rao-pics/tsconfig':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
         specifier: ^18.17.6
@@ -319,13 +319,13 @@ importers:
         version: 1.15.0
     devDependencies:
       '@rao-pics/eslint-config':
-        specifier: 0.2.0
+        specifier: workspace:*
         version: link:../../tooling/eslint
       '@rao-pics/prettier-config':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/prettier
       '@rao-pics/tsconfig':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
         specifier: ^18.17.6
@@ -376,7 +376,7 @@ importers:
   packages/watch:
     dependencies:
       '@rao-pics/api':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../api
       chokidar:
         specifier: ^3.5.3
@@ -417,7 +417,7 @@ importers:
         version: link:../../packages/api
       '@t3-oss/env-nextjs':
         specifier: ^0.6.1
-        version: 0.6.1(typescript@5.1.6)(zod@3.22.2)
+        version: 0.6.1(typescript@5.2.2)(zod@3.22.2)
       '@tanstack/react-query':
         specifier: ^4.32.6
         version: 4.32.6(react-dom@18.2.0)(react@18.2.0)
@@ -487,10 +487,10 @@ importers:
         version: 4.6.0(eslint@8.47.0)
     devDependencies:
       '@rao-pics/prettier-config':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../prettier
       '@rao-pics/tsconfig':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../typescript
       eslint:
         specifier: ^8.47.0
@@ -540,13 +540,13 @@ importers:
         version: 3.3.2
     devDependencies:
       '@rao-pics/eslint-config':
-        specifier: ^0.2.0
+        specifier: workspace:*
         version: link:../eslint
       '@rao-pics/prettier-config':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../prettier
       '@rao-pics/tsconfig':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../typescript
       eslint:
         specifier: ^8.47.0
@@ -1675,24 +1675,24 @@ packages:
     dependencies:
       defer-to-connect: 2.0.1
 
-  /@t3-oss/env-core@0.6.1(typescript@5.1.6)(zod@3.22.2):
+  /@t3-oss/env-core@0.6.1(typescript@5.2.2)(zod@3.22.2):
     resolution: {integrity: sha512-KQD7qEDJtkWIWWmTVjNvk0wnHpkvAQ6CRbUxbWMFNG/fiosBQDQvtRpBNu6USxBscJCoC4z6y7P9MN52/mLOzw==}
     peerDependencies:
       typescript: '>=4.7.2'
       zod: ^3.0.0
     dependencies:
-      typescript: 5.1.6
+      typescript: 5.2.2
       zod: 3.22.2
     dev: false
 
-  /@t3-oss/env-nextjs@0.6.1(typescript@5.1.6)(zod@3.22.2):
+  /@t3-oss/env-nextjs@0.6.1(typescript@5.2.2)(zod@3.22.2):
     resolution: {integrity: sha512-z1dIC++Vxj9kmzX5nSPfcrCSkszy3dTEPC4Ssx7Ap5AqR3c2Qa7S0xf8axn6coy7D/vCXDAAnHYnCMDhtcY3SQ==}
     peerDependencies:
       typescript: '>=4.7.2'
       zod: ^3.0.0
     dependencies:
-      '@t3-oss/env-core': 0.6.1(typescript@5.1.6)(zod@3.22.2)
-      typescript: 5.1.6
+      '@t3-oss/env-core': 0.6.1(typescript@5.2.2)(zod@3.22.2)
+      typescript: 5.2.2
       zod: 3.22.2
     dev: false
 
@@ -2877,7 +2877,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /chownr@2.0.0:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
@@ -4619,8 +4619,8 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+  /fsevents@2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -7801,7 +7801,7 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /run-applescript@5.0.0:
@@ -8771,6 +8771,12 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  /typescript@5.2.2:
+    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: false
+
   /ufo@1.2.0:
     resolution: {integrity: sha512-RsPyTbqORDNDxqAdQPQBpgqhWle1VcTSou/FraClYlHf6TZnQcGslpLcAphNR+sQW4q5lLWLbOsRlh9j24baQg==}
     dev: true
@@ -9095,7 +9101,7 @@ packages:
       postcss: 8.4.26
       rollup: 3.28.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /vitest@0.34.2(@vitest/ui@0.34.3):
