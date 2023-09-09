@@ -1,8 +1,12 @@
-"use client";
-
 import Image from "next/image";
 
+import { trpc } from "~/utils/trpc";
+
 export default function Home() {
+  const imageQuery = trpc.image.get.useQuery();
+
+  console.log(imageQuery.data);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">

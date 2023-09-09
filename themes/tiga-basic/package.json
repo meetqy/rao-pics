@@ -24,8 +24,6 @@
     "@rao-pics/api": "workspace:^",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tanstack/react-query": "^4.32.6",
-    "@tanstack/react-query-devtools": "^4.35.0",
-    "@tanstack/react-query-next-experimental": "5.0.0-alpha.80",
     "@trpc/client": "^10.37.1",
     "@trpc/next": "^10.38.1",
     "@trpc/react-query": "^10.37.1",
