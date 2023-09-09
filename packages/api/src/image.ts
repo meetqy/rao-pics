@@ -160,4 +160,36 @@ export const image = t.router({
 
       return null;
     }),
+
+  get: t.procedure
+    .input(
+      z
+        .object({
+          limit: z.number().min(1).max(100).optional(),
+          cursor: z.string().nullish(),
+        })
+        .optional(),
+    )
+    .query(async ({ input }) => {
+      const limit = input?.limit ?? 50;
+
+      const { cursor } = input ?? {};
+
+      const images = await prisma.image.findMany({
+        take: limit + 1,
+        cursor: cursor ? { path: cursor } : undefined,
+        orderBy: { createdTime: "desc" },
+      });
+
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (images.length > limit) {
+        const nextImage = images.pop();
+        nextCursor = nextImage!.path;
+      }
+
+      return {
+        data: images,
+        nextCursor,
+      };
+    }),
 });
