@@ -45,7 +45,7 @@
     "@electron/notarize": "^1.2.3",
     "@electron/rebuild": "^3.3.0",
     "@rao-pics/eslint-config": "^0.2.0",
-    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/prettier-config": "workspace:^",
     "@rao-pics/tailwind-config": "workspace:*",
     "@rao-pics/tsconfig": "^0.1.0",
     "@types/lodash": "^4.14.197",

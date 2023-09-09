@@ -28,8 +28,7 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "syncpack": "^11.2.1"
+    "cross-env": "^7.0.3"
   },
   "packageManager": "pnpm@8.6.12",
   "engines": {
