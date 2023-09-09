@@ -29,7 +29,10 @@
     "@trpc/react-query": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "next": "^13.4.19",
+    "react-photo-album": "^2.3.0",
+    "sharp": "^0.32.5",
     "superjson": "1.13.1",
+    "yet-another-react-lightbox": "^3.12.2",
     "zod": "^3.22.2"
   },
   "devDependencies": {

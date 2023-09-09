@@ -12,6 +12,7 @@ export const config = t.router({
         theme: z.string().optional(),
         color: z.string().optional(),
         staticServerPort: z.number().optional(),
+        ip: z.string().optional(),
       }),
     )
     .mutation(async ({ input }) => {
@@ -23,6 +24,7 @@ export const config = t.router({
           language: input.language ?? "zh-cn",
           color: input.color ?? "tiga",
           theme: input.theme ?? "light",
+          ip: input.ip,
         },
       });
     }),
