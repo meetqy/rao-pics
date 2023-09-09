@@ -21,11 +21,13 @@
     "root": true
   },
   "dependencies": {
-    "next": "^13.4.19"
+    "@t3-oss/env-nextjs": "^0.6.1",
+    "next": "^13.4.19",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "workspace:*",
-    "@rao-pics/tailwind-config": "workspace:^0.1.0",
-    "@rao-pics/tsconfig": "workspace:^0.1.0"
+    "@rao-pics/tailwind-config": "workspace:*",
+    "@rao-pics/tsconfig": "workspace:*"
   }
 }
