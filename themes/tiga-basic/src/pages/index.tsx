@@ -1,19 +1,111 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { RenderPhotoProps } from "react-photo-album";
 import { PhotoAlbum } from "react-photo-album";
-import Lightbox from "yet-another-react-lightbox";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import { useWindowScroll } from "react-use";
 
-import "yet-another-react-lightbox/styles.css";
-import "yet-another-react-lightbox/plugins/thumbnails.css";
-
-import LightboxImage from "~/components/LightboxImage";
 import { trpc } from "~/utils/trpc";
 
-export function NextJsImage({
+const Home = () => {
+  const [, setIndex] = useState(-1);
+
+  const imageQuery = trpc.image.get.useInfiniteQuery(
+    { limit: 50 },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
+  const { data: config } = trpc.config.get.useQuery();
+  const isFetching = useRef(false);
+
+  const { x, y } = useWindowScroll();
+  useEffect(() => {
+    const h = document.body.scrollHeight - window.innerHeight;
+    if (h > 0) {
+      const diff = Math.abs(y - h);
+
+      if (diff < 300) {
+        if (imageQuery.hasNextPage && isFetching.current === false) {
+          isFetching.current = true;
+          imageQuery
+            .fetchNextPage()
+            .then(() => {
+              setTimeout(() => {
+                isFetching.current = false;
+              });
+            })
+            .catch(console.error);
+        }
+      }
+    }
+  }, [x, y, imageQuery]);
+
+  const pages = imageQuery.data?.pages;
+
+  return (
+    <div className="space-y-1 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5">
+      {pages?.map((page) => {
+        const photos = page.data?.map((image) => {
+          const id = image.path.split("/").slice(-2)[0];
+          const src = `http://${config?.ip}:${config?.staticServerPort}/${id}/${image.name}.${image.ext}`;
+          return {
+            src,
+            blurDataURL: `/_next/image?url=${src}&w=128&q=1`,
+            width: image.width,
+            height: image.height,
+          };
+        });
+
+        return (
+          <div key={page.nextCursor}>
+            {photos && (
+              <PhotoAlbum
+                sizes={{
+                  size: "calc(100vw - 240px)",
+                  sizes: [
+                    { viewport: "(max-width: 768px)", size: "100vw" },
+                    { viewport: "(max-width: 1280px)", size: "50vw" },
+                  ],
+                }}
+                layout="rows"
+                photos={photos}
+                breakpoints={[640, 768, 1024, 1280, 1536]}
+                spacing={(containerWidth) => {
+                  if (containerWidth < 640) return 4;
+                  if (containerWidth < 768) return 8;
+                  if (containerWidth < 1024) return 12;
+                  if (containerWidth < 1280) return 16;
+                  if (containerWidth < 1536) return 20;
+                  return 20;
+                }}
+                columns={(containerWidth) => {
+                  if (containerWidth < 640) return 1;
+                  if (containerWidth < 768) return 2;
+                  if (containerWidth < 1024) return 3;
+                  if (containerWidth < 1280) return 4;
+                  if (containerWidth < 1536) return 5;
+                  return Math.floor(containerWidth / 240);
+                }}
+                targetRowHeight={(containerWidth) => {
+                  if (containerWidth < 640) return containerWidth / 2;
+                  if (containerWidth < 768) return containerWidth / 3;
+                  if (containerWidth < 1024) return containerWidth / 4;
+                  if (containerWidth < 1280) return containerWidth / 5;
+                  if (containerWidth < 1536) return containerWidth / 6;
+                  return containerWidth / 6;
+                }}
+                renderPhoto={NextJsImage}
+                onClick={({ index }) => setIndex(index)}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+function NextJsImage({
   photo,
   imageProps: { alt, title, sizes, className, onClick },
   wrapperStyle,
@@ -31,48 +123,4 @@ export function NextJsImage({
   );
 }
 
-export default function Home() {
-  const [index, setIndex] = useState(-1);
-
-  const imageQuery = trpc.image.get.useQuery();
-  const { data: config } = trpc.config.get.useQuery();
-
-  const data = imageQuery.data?.data;
-
-  const photos = data?.map((image) => {
-    const id = image.path.split("/").slice(-2)[0];
-    const src = `http://${config?.ip}:${config?.staticServerPort}/${id}/${image.name}.${image.ext}`;
-
-    return {
-      src,
-      blurDataURL: `/_next/image?url=${src}&w=128&q=1`,
-      width: image.width,
-      height: image.height,
-    };
-  });
-
-  return photos ? (
-    <>
-      <PhotoAlbum
-        sizes={{
-          size: "calc(100vw - 240px)",
-          sizes: [{ viewport: "(max-width: 960px)", size: "100vw" }],
-        }}
-        layout="columns"
-        photos={photos}
-        renderPhoto={NextJsImage}
-        onClick={({ index }) => setIndex(index)}
-      />
-
-      <Lightbox
-        slides={photos}
-        open={index >= 0}
-        index={index}
-        close={() => setIndex(-1)}
-        // enable optional lightbox plugins
-        plugins={[Fullscreen, Slideshow, Thumbnails]}
-        render={{ slide: LightboxImage }}
-      />
-    </>
-  ) : null;
-}
+export default Home;
