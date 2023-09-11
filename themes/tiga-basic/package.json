@@ -2,6 +2,7 @@
   "name": "@rao-pics/tiga",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "build": "next build",
     "clean": "git clean -xdf .next .turbo node_modules",
