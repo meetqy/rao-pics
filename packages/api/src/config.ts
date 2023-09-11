@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-import type { Config } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
 import { t } from "./utils";
