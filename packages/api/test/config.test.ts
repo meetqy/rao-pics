@@ -28,6 +28,39 @@ describe("config module", () => {
         language: "zh-cn",
         color: "tiga",
         theme: "light",
+        ip: null,
+        staticServerPort: null,
+      });
+    });
+
+    it("should update the ip and staticServerPort field in the config table", async () => {
+      await caller.config.upsert({
+        ip: "0.0.0.0",
+        staticServerPort: 8080,
+      });
+
+      const res = await caller.config.get();
+
+      expect(res).toEqual({
+        name: "config",
+        language: "zh-cn",
+        color: "tiga",
+        theme: "light",
+        ip: "0.0.0.0",
+        staticServerPort: 8080,
+      });
+
+      expect(
+        await caller.config.upsert({
+          staticServerPort: 8081,
+        }),
+      ).toEqual({
+        name: "config",
+        language: "zh-cn",
+        color: "tiga",
+        theme: "light",
+        ip: "0.0.0.0",
+        staticServerPort: 8081,
       });
     });
 
@@ -43,6 +76,8 @@ describe("config module", () => {
         language: "zh-cn",
         color: "senven",
         theme: "light",
+        ip: null,
+        staticServerPort: null,
       });
     });
 
@@ -58,6 +93,8 @@ describe("config module", () => {
         language: "zh-cn",
         color: "tiga",
         theme: "dark",
+        ip: null,
+        staticServerPort: null,
       });
     });
 
