@@ -3,16 +3,15 @@ import { join } from "path";
 import getPort, { portNumbers } from "get-port";
 import serveStatic from "serve-static";
 
-let isStaticServerRunning = false;
+let server: http.Server | undefined;
 
 export const startStaticServer = async (path: string) => {
-  if (isStaticServerRunning) return;
+  if (server) return;
   const port = await getPort({ port: portNumbers(9100, 9300) });
-  isStaticServerRunning = true;
 
   const serve = serveStatic(join(path, "images"));
 
-  const server = http.createServer((req, res) => {
+  server = http.createServer((req, res) => {
     serve(req, res, () => {
       res.statusCode = 404;
       res.end("Not Found");
@@ -24,4 +23,10 @@ export const startStaticServer = async (path: string) => {
   });
 
   return port;
+};
+
+export const stopStaticServer = () => {
+  if (!server) return;
+  server.close();
+  server = undefined;
 };
