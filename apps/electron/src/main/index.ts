@@ -1,17 +1,24 @@
+import cp from "child_process";
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
+import getPort, { portNumbers } from "get-port";
 import ip from "ip";
 
 import { router } from "@rao-pics/api";
+import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV } from "@rao-pics/constant/server";
 import { createDbPath } from "@rao-pics/db";
+import { stopStaticServer } from "@rao-pics/static-server";
 
 import icon from "../../resources/icon.png?asset";
 import { createCustomIPCHandle } from "./src/ipc";
 
 const caller = router.createCaller({});
+
+const controller = new AbortController();
+const { signal } = controller;
 
 function createWindow(): void {
   // Create the browser window.
@@ -77,6 +84,41 @@ app
       }
     });
 
+    void caller.config.get().then(async (config) => {
+      if (config) {
+        const port =
+          config.staticServerPort ??
+          (await getPort({ port: portNumbers(9301, 9500) }));
+
+        if (IS_DEV) {
+          // TODO: xxx
+        } else {
+          const child = cp.fork(
+            join(
+              process.resourcesPath,
+              "themes",
+              config.theme ?? DEFAULT_THEME,
+              "server.js",
+            ),
+            ["child"],
+            {
+              env: { PORT: port.toString() },
+              signal,
+            },
+          );
+
+          child.on("error", (e) => {
+            dialog.showErrorBox("child process fork error", e.message);
+            controller.abort();
+          });
+        }
+
+        void caller.config.upsert({
+          themeServerPort: port,
+        });
+      }
+    });
+
     // Default open or close DevTools by F12 in development
     // and ignore CommandOrControl + R in production.
     // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
@@ -102,6 +144,11 @@ app
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
+
+    // 关闭子进程
+    controller.abort();
+    // 关闭静态服务器
+    stopStaticServer();
   }
 });
 

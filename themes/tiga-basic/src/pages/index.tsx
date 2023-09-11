@@ -50,7 +50,7 @@ const Home = () => {
           const src = `http://${config?.ip}:${config?.staticServerPort}/${id}/${image.name}.${image.ext}`;
           return {
             src,
-            blurDataURL: `/_next/image?url=${src}&w=128&q=1`,
+            blurDataURL: `/_next/image?url=${src}&w=42&q=1`,
             width: image.width,
             height: image.height,
           };

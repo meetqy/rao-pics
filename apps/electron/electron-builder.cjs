@@ -1,7 +1,6 @@
 const { resolve, join } = require("path");
 
 const isTestBuilder = process.env.IS_TEST_BUILDER === "true";
-console.log(process.env.IS_TEST_BUILDER);
 
 /**
  * @type {import('electron-builder').Configuration}

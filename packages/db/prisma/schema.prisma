@@ -18,6 +18,8 @@ model Config {
   theme            String?
   // static server port: 9100-9300
   staticServerPort Int?
+  // theme server port: 9301-9500
+  themeServerPort  Int?
   // 当前 IP
   ip               String?
 }
