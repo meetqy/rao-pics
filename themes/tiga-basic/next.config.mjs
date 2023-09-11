@@ -1,3 +1,5 @@
+import "./src/env.mjs";
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -7,6 +9,14 @@ const config = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   output: "standalone",
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default config;

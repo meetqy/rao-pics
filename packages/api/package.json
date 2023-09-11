@@ -1,8 +1,7 @@
 {
   "name": "@rao-pics/api",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
-  "license": "MIT",
   "main": "./index.ts",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
@@ -20,6 +19,7 @@
   "dependencies": {
     "@rao-pics/constant": "workspace:*",
     "@rao-pics/db": "workspace:*",
+    "@rao-pics/static-server": "workspace:*",
     "@rao-pics/utils": "workspace:*",
     "@trpc/client": "^10.37.1",
     "@trpc/server": "^10.37.1",

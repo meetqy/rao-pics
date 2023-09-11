@@ -28,9 +28,9 @@
     "tailwindcss": "3.3.2"
   },
   "devDependencies": {
-    "@rao-pics/eslint-config": "^0.2.0",
-    "@rao-pics/prettier-config": "^0.1.0",
-    "@rao-pics/tsconfig": "^0.1.0",
+    "@rao-pics/eslint-config": "workspace:*",
+    "@rao-pics/prettier-config": "workspace:*",
+    "@rao-pics/tsconfig": "workspace:*",
     "eslint": "^8.47.0",
     "prettier": "^3.0.2",
     "tailwind-scrollbar": "^3.0.5",

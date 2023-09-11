@@ -2,6 +2,7 @@ import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
+import ip from "ip";
 
 import { router } from "@rao-pics/api";
 import { IS_DEV } from "@rao-pics/constant/server";
@@ -9,6 +10,8 @@ import { createDbPath } from "@rao-pics/db";
 
 import icon from "../../resources/icon.png?asset";
 import { createCustomIPCHandle } from "./src/ipc";
+
+const caller = router.createCaller({});
 
 function createWindow(): void {
   // Create the browser window.
@@ -34,6 +37,9 @@ function createWindow(): void {
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
+    void caller.config.upsert({
+      ip: ip.address(),
+    });
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -64,6 +70,12 @@ app
   .then(() => {
     // Set app user model id for windows
     electronApp.setAppUserModelId("com.rao-pics");
+
+    void caller.library.get().then((res) => {
+      if (res?.path) {
+        void caller.library.startStaticServer(res.path);
+      }
+    });
 
     // Default open or close DevTools by F12 in development
     // and ignore CommandOrControl + R in production.

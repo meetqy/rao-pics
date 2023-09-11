@@ -13,5 +13,5 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": [".", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "*.cjs"]
+  "exclude": ["node_modules"]
 }

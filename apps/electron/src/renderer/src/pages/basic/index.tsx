@@ -11,8 +11,9 @@ const languages = {
   "zh-cn": {
     title: "基础信息",
     file_path: "资源库路径",
-    last_sync: "最后同步",
     preview: "预览",
+    setting: "设置",
+    setting_desc: "更多关于库的设置",
     sync_count: "同步数量",
     btn_sync: "同步",
     btn_remove: "移除",
@@ -26,8 +27,9 @@ const languages = {
   "en-us": {
     title: "Basic Information",
     file_path: "Library Path",
-    last_sync: "Last Sync",
     preview: "Preview",
+    setting: "Setting",
+    setting_desc: "More settings about the library",
     sync_count: "Sync Count",
     btn_sync: "Sync",
     btn_remove: "Remove",
@@ -41,8 +43,9 @@ const languages = {
   "zh-tw": {
     title: "基礎信息",
     file_path: "资源库路径",
-    last_sync: "最後同步",
     preview: "預覽",
+    setting: "設置",
+    setting_desc: "更多關於庫的設置",
     sync_count: "同步數量",
     btn_sync: "同步",
     btn_remove: "移除",
@@ -128,7 +131,7 @@ const BasicPage = () => {
             </span>
 
             <span
-              className="cursor-pointer"
+              className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content"
               aria-hidden="true"
               onClick={() => {
                 if (library) {
@@ -143,48 +146,27 @@ const BasicPage = () => {
 
           <div className="card-row">
             <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="ml-2">{lang.last_sync}</span>
-            </span>
-            <span>2023-08-25 14:15</span>
-          </div>
-        </div>
-
-        <div className="card-wrapper mt-4">
-          <div className="card-row">
-            <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5"
-                />
-              </svg>
+              <div className="rounded-md bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-4 w-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5"
+                  />
+                </svg>
+              </div>
 
               <span className="ml-2 flex items-center">{lang.preview}</span>
             </span>
 
-            <span>
+            <span className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content">
               <span>http://localhost:3000</span>
               {ArrowRightSvg}
             </span>
@@ -211,9 +193,37 @@ const BasicPage = () => {
             </span>
 
             <span className="font-mono">
-              <span className="text-success">0</span>
-              <span className="mx-1 text-base-content/50">｜</span>
-              <span className="text-warning">0</span>
+              <span className="text-success">{library?.syncCount ?? 0}</span>
+              <span className="mx-1 text-base-content/60">｜</span>
+              <span className="text-warning">{library?.unSyncCount ?? 0}</span>
+            </span>
+          </div>
+        </div>
+
+        <div className="card-wrapper mt-4">
+          <div className="card-row">
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
+                />
+              </svg>
+
+              <span className="ml-2 flex items-center">{lang.setting}</span>
+            </span>
+
+            <span className="cursor-pointer text-base-content/60 transition-colors hover:text-base-content">
+              {lang.setting_desc}
+              {ArrowRightSvg}
             </span>
           </div>
         </div>

@@ -19,7 +19,7 @@
     ]
   },
   "dependencies": {
-    "@rao-pics/api": "workspace:*",
+    "@rao-pics/api": "workspace:^",
     "chokidar": "^3.5.3"
   },
   "devDependencies": {

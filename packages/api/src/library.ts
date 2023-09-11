@@ -5,7 +5,9 @@ import { debounce } from "lodash";
 import { z } from "zod";
 
 import type { PendingTypeEnum } from "@rao-pics/constant";
+import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
+import { startStaticServer } from "@rao-pics/static-server";
 
 import { router } from "..";
 import { t } from "./utils";
@@ -16,16 +18,21 @@ let watcher: chokidar.FSWatcher | null = null;
 
 export const library = t.router({
   get: t.procedure.query(async () => {
-    const [library, pendingCount] = await prisma.$transaction([
-      prisma.library.findFirst(),
-      prisma.pending.count(),
-    ]);
+    const [library, pendingCount, syncCount, unSyncCount] =
+      await prisma.$transaction([
+        prisma.library.findFirst(),
+        prisma.pending.count(),
+        prisma.image.count(),
+        prisma.log.count(),
+      ]);
 
     if (!library) return null;
 
     return {
       ...library,
       pendingCount,
+      syncCount,
+      unSyncCount,
     };
   }),
 
@@ -46,6 +53,35 @@ export const library = t.router({
       },
     });
   }),
+
+  startStaticServer: t.procedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      const port = await startStaticServer(input);
+
+      if (port) {
+        const caller = router.createCaller({});
+        await caller.config.upsert({ staticServerPort: port });
+      }
+    }),
+
+  update: t.procedure
+    .input(
+      z.object({
+        lastSyncTime: z.date().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const json: Prisma.LibraryUpdateManyMutationInput = {};
+
+      if (input.lastSyncTime) {
+        json.lastSyncTime = input.lastSyncTime;
+      }
+
+      return await prisma.library.updateMany({
+        data: json,
+      });
+    }),
 
   delete: t.procedure.mutation(async () => {
     if (watcher) {

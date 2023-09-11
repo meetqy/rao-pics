@@ -28,7 +28,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
     "@electron-toolkit/utils": "^1.0.2",
-    "@rao-pics/api": "workspace:*",
+    "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/db": "workspace:*",
     "@tanstack/react-query": "^4.32.6",
@@ -36,6 +36,7 @@
     "@trpc/react-query": "^10.37.1",
     "electron-trpc": "^0.5.2",
     "electron-updater": "^5.3.0",
+    "ip": "^1.1.8",
     "lodash": "^4.17.21",
     "recoil": "^0.7.7",
     "superjson": "1.13.1"
@@ -45,9 +46,10 @@
     "@electron/notarize": "^1.2.3",
     "@electron/rebuild": "^3.3.0",
     "@rao-pics/eslint-config": "^0.2.0",
-    "@rao-pics/prettier-config": "^0.1.0",
+    "@rao-pics/prettier-config": "workspace:^",
     "@rao-pics/tailwind-config": "workspace:*",
     "@rao-pics/tsconfig": "^0.1.0",
+    "@types/ip": "^1.1.0",
     "@types/lodash": "^4.14.197",
     "@types/node": "^18.17.6",
     "@types/react": "^18.2.20",
