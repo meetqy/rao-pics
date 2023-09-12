@@ -2,6 +2,11 @@ import env from "env-var";
 import { z } from "zod";
 
 /**
+ * 默认主题
+ */
+export const DEFAULT_THEME = "tiga-basic";
+
+/**
  * 项目名称
  */
 export const PRODUCT_NAME = env

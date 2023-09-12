@@ -91,6 +91,9 @@ importers:
       electron-updater:
         specifier: ^5.3.0
         version: 5.3.0
+      get-port:
+        specifier: ^7.0.0
+        version: 7.0.0
       ip:
         specifier: ^1.1.8
         version: 1.1.8
@@ -114,11 +117,14 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       '@rao-pics/eslint-config':
-        specifier: ^0.2.0
+        specifier: workspace:^
         version: link:../../tooling/eslint
       '@rao-pics/prettier-config':
         specifier: workspace:^
         version: link:../../tooling/prettier
+      '@rao-pics/static-server':
+        specifier: workspace:^
+        version: link:../../packages/static-server
       '@rao-pics/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind

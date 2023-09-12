@@ -10,11 +10,6 @@ import { PRODUCT_NAME } from ".";
 export const IS_DEV = process.env.NODE_ENV === "development";
 
 /**
- * 是否是测试环境
- */
-export const IS_TEST = process.env.NODE_ENV === "test";
-
-/**
  * 当前平台
  */
 export const PLATFORM = process.platform;
@@ -25,7 +20,7 @@ export const PLATFORM = process.platform;
 export const DB_NAME = env
   .get("DB_NAME")
   .required()
-  .default(`db${IS_TEST ? "test" : ""}.sqlite`)
+  .default(`db.sqlite`)
   .asString();
 
 /**

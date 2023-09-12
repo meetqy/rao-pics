@@ -6,8 +6,17 @@ export default defineConfig({
   main: {
     plugins: [
       externalizeDepsPlugin({
-        exclude: ["@rao-pics/db", "@rao-pics/api", "@rao-pics/constant"],
-        include: ["chokidar"],
+        exclude: [
+          "@rao-pics/db",
+          "@rao-pics/api",
+          "@rao-pics/constant",
+          // type:module 的依赖，electron 中需要打包到代码中
+          "get-port",
+        ],
+        include: [
+          // @rao-pics/api 中的依赖，electron 中作为外部依赖
+          "chokidar",
+        ],
       }),
     ],
   },

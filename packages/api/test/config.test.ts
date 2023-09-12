@@ -26,10 +26,11 @@ describe("config module", () => {
       expect(res).toEqual({
         name: "config",
         language: "zh-cn",
-        color: "tiga",
-        theme: "light",
+        color: "light",
+        theme: "tiga-basic",
         ip: null,
         staticServerPort: null,
+        themeServerPort: null,
       });
     });
 
@@ -44,10 +45,11 @@ describe("config module", () => {
       expect(res).toEqual({
         name: "config",
         language: "zh-cn",
-        color: "tiga",
-        theme: "light",
+        color: "light",
+        theme: "tiga-basic",
         ip: "0.0.0.0",
         staticServerPort: 8080,
+        themeServerPort: null,
       });
 
       expect(
@@ -57,10 +59,11 @@ describe("config module", () => {
       ).toEqual({
         name: "config",
         language: "zh-cn",
-        color: "tiga",
-        theme: "light",
+        color: "light",
+        theme: "tiga-basic",
         ip: "0.0.0.0",
         staticServerPort: 8081,
+        themeServerPort: null,
       });
     });
 
@@ -75,9 +78,10 @@ describe("config module", () => {
         name: "config",
         language: "zh-cn",
         color: "senven",
-        theme: "light",
+        theme: "tiga-basic",
         ip: null,
         staticServerPort: null,
+        themeServerPort: null,
       });
     });
 
@@ -91,10 +95,11 @@ describe("config module", () => {
       expect(res).toEqual({
         name: "config",
         language: "zh-cn",
-        color: "tiga",
+        color: "light",
         theme: "dark",
         ip: null,
         staticServerPort: null,
+        themeServerPort: null,
       });
     });
 

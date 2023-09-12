@@ -7,7 +7,7 @@ import { z } from "zod";
 import type { PendingTypeEnum } from "@rao-pics/constant";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
-import { startStaticServer } from "@rao-pics/static-server";
+import { startStaticServer, stopStaticServer } from "@rao-pics/static-server";
 
 import { router } from "..";
 import { t } from "./utils";
@@ -54,6 +54,9 @@ export const library = t.router({
     });
   }),
 
+  // TODO: 重构
+  // 是否需要直接在 add library 中启动 static server
+  // 无需通过 renderer 接口调佣
   startStaticServer: t.procedure
     .input(z.string())
     .mutation(async ({ input }) => {
@@ -88,6 +91,8 @@ export const library = t.router({
       watcher.unwatch("*");
       watcher = null;
     }
+
+    stopStaticServer();
 
     return await prisma.$transaction([
       prisma.library.deleteMany(),

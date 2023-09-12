@@ -1,6 +1,6 @@
 const { resolve, join } = require("path");
 
-const isDev = process.env.NODE_ENV === "development";
+const isTestBuilder = process.env.IS_TEST_BUILDER === "true";
 
 /**
  * @type {import('electron-builder').Configuration}
@@ -12,7 +12,7 @@ const options = {
   directories: {
     buildResources: "build",
   },
-  asar: !isDev,
+  asar: !isTestBuilder,
   files: [
     "!**/.vscode/*",
     "!src/*",
@@ -33,10 +33,10 @@ const options = {
   afterSign: "build/notarize.js",
   mac: {
     entitlementsInherit: "build/entitlements.mac.plist",
-    target: isDev ? "dir" : { target: "dmg", arch: ["arm64", "x64"] },
+    target: isTestBuilder ? "dir" : { target: "dmg", arch: ["arm64", "x64"] },
   },
   win: {
-    target: isDev ? "dir" : { target: "nsis", arch: ["x64"] },
+    target: isTestBuilder ? "dir" : { target: "nsis", arch: ["x64"] },
   },
   npmRebuild: false,
   publish: {
@@ -48,30 +48,31 @@ const options = {
       from: resolve(__dirname, "./node_modules/@rao-pics/db/prisma/db.sqlite"),
       to: "extraResources/db.sqlite",
     },
-    ...copyTheme("tiga"),
+    ...copyTheme("tiga-basic"),
   ],
 };
 
 function copyTheme(name) {
-  const dir = join(__dirname, "../../", "themes", name);
+  // 主题目录
+  const project = join(__dirname, "../../", "themes", name);
   const to = `themes/${name}`;
 
   return [
     {
-      from: join(dir, ".next/standalone/node_modules"),
+      from: join(project, ".next/standalone/node_modules"),
       to: `${to}/node_modules`,
     },
     {
-      from: join(dir, ".next/standalone/themes", name),
+      from: join(project, ".next/standalone/themes", name),
       to,
     },
     {
-      from: join(dir, "public"),
+      from: join(project, "public"),
       to: `${to}/public`,
     },
     {
-      from: join(dir, ".next/static"),
-      to: `${to}/.next`,
+      from: join(project, ".next", "static"),
+      to: `${to}/.next/static`,
     },
   ];
 }
