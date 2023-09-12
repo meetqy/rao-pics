@@ -10,7 +10,7 @@ import { router } from "@rao-pics/api";
 import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV } from "@rao-pics/constant/server";
 import { createDbPath } from "@rao-pics/db";
-import { stopStaticServer } from "@rao-pics/static-server";
+import { startStaticServer, stopStaticServer } from "@rao-pics/static-server";
 
 import icon from "../../resources/icon.png?asset";
 import { createCustomIPCHandle } from "./src/ipc";
@@ -78,31 +78,42 @@ app
     // Set app user model id for windows
     electronApp.setAppUserModelId("com.rao-pics");
 
-    void caller.library.get().then((res) => {
-      if (res?.path) {
-        void caller.library.startStaticServer(res.path);
-      }
-    });
+    Promise.all([caller.library.get(), caller.config.get()])
+      .then(async (res) => {
+        const [library, config] = res;
+        // 启动静态资源服务器
+        if (library?.path && config?.staticServerPort) {
+          void startStaticServer(library.path, config.staticServerPort);
+        }
 
-    void caller.config.get().then(async (config) => {
-      if (config) {
-        const port =
-          config.staticServerPort ??
+        // 启动主题服务器
+        const themeServerPort =
+          config?.themeServerPort ??
           (await getPort({ port: portNumbers(9301, 9500) }));
 
         if (IS_DEV) {
           // TODO: xxx
+          dialog.showErrorBox("IS_DEV", IS_DEV + "");
         } else {
+          dialog.showErrorBox(
+            "path",
+            join(
+              process.resourcesPath,
+              "themes",
+              config?.theme ?? DEFAULT_THEME,
+              "server.js",
+            ),
+          );
           const child = cp.fork(
             join(
               process.resourcesPath,
               "themes",
-              config.theme ?? DEFAULT_THEME,
+              config?.theme ?? DEFAULT_THEME,
               "server.js",
             ),
             ["child"],
             {
-              env: { PORT: port.toString() },
+              env: { PORT: themeServerPort.toString(), HOSTNAME: "0.0.0.0" },
               signal,
             },
           );
@@ -114,10 +125,12 @@ app
         }
 
         void caller.config.upsert({
-          themeServerPort: port,
+          themeServerPort,
         });
-      }
-    });
+      })
+      .catch((e) => {
+        throw e;
+      });
 
     // Default open or close DevTools by F12 in development
     // and ignore CommandOrControl + R in production.
@@ -144,12 +157,14 @@ app
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
-
-    // 关闭子进程
-    controller.abort();
-    // 关闭静态服务器
-    stopStaticServer();
   }
+});
+
+app.on("quit", () => {
+  // 关闭子进程
+  controller.abort();
+  // 关闭静态服务器
+  stopStaticServer();
 });
 
 // Catch all error.

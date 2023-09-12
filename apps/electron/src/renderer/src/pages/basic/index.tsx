@@ -64,6 +64,7 @@ const BasicPage = () => {
 
   // 同步中、初始化中 禁用按钮
   const [disabled, setDisabled] = useState(false);
+  const { data: config } = trpc.config.get.useQuery();
 
   const { data: library } = trpc.library.get.useQuery();
   const onStartSync = trpc.sync.start.useMutation({
@@ -167,7 +168,9 @@ const BasicPage = () => {
             </span>
 
             <span className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content">
-              <span>http://localhost:3000</span>
+              {config && (
+                <span>{`http://${config.ip}:${config.themeServerPort}`}</span>
+              )}
               {ArrowRightSvg}
             </span>
           </div>

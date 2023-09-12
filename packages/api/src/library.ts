@@ -46,6 +46,18 @@ export const library = t.router({
       throw new Error("Cannot add more than one library.");
     }
 
+    const caller = router.createCaller({});
+    const config = await caller.config.get();
+
+    const port = await startStaticServer(
+      input,
+      config?.staticServerPort ?? undefined,
+    );
+
+    if (port) {
+      await caller.config.upsert({ staticServerPort: port });
+    }
+
     return await prisma.library.create({
       data: {
         path: input,
@@ -53,20 +65,6 @@ export const library = t.router({
       },
     });
   }),
-
-  // TODO: 重构
-  // 是否需要直接在 add library 中启动 static server
-  // 无需通过 renderer 接口调佣
-  startStaticServer: t.procedure
-    .input(z.string())
-    .mutation(async ({ input }) => {
-      const port = await startStaticServer(input);
-
-      if (port) {
-        const caller = router.createCaller({});
-        await caller.config.upsert({ staticServerPort: port });
-      }
-    }),
 
   update: t.procedure
     .input(

@@ -10,9 +10,9 @@ let server: http.Server | undefined;
  * @param path
  * @returns
  */
-export const startStaticServer = async (path: string) => {
+export const startStaticServer = async (path: string, port?: number) => {
   if (server) return;
-  const port = await getPort({ port: portNumbers(9100, 9300) });
+  const _port = port ?? (await getPort({ port: portNumbers(9100, 9300) }));
 
   const serve = serveStatic(join(path, "images"));
 
@@ -23,11 +23,11 @@ export const startStaticServer = async (path: string) => {
     });
   });
 
-  server.listen(port, () => {
-    console.log(`Static Server is listening on http://localhost:${port}`);
+  server.listen(_port, () => {
+    console.log(`Static Server is listening on http://localhost:${_port}`);
   });
 
-  return port;
+  return _port;
 };
 
 export const stopStaticServer = () => {
