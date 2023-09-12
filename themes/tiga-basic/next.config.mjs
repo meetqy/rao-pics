@@ -1,7 +1,5 @@
 import "./src/env.mjs";
 
-import withPlaiceholder from "@plaiceholder/next";
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -21,4 +19,4 @@ const config = {
   },
 };
 
-export default withPlaiceholder(config);
+export default config;

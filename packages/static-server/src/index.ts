@@ -1,9 +1,24 @@
-import http from "http";
+import { readFileSync } from "fs";
+import type { IncomingMessage, Server, ServerResponse } from "http";
 import { join } from "path";
+import type { NextFunction, Request, RequestHandler, Response } from "express";
+import express from "express";
 import getPort, { portNumbers } from "get-port";
-import serveStatic from "serve-static";
+import { getPlaiceholder } from "plaiceholder";
 
-let server: http.Server | undefined;
+let server: Server<typeof IncomingMessage, typeof ServerResponse> | undefined;
+const app = express();
+
+/**
+ * reference https://stackoverflow.com/questions/51535455/express-js-use-async-function-on-requests
+ * @param fn
+ * @returns
+ */
+const asyncMiddleware =
+  (fn: RequestHandler) =>
+  (req: Request, res: Response, next: NextFunction): void => {
+    Promise.resolve(fn(req, res, next)).catch(next);
+  };
 
 /**
  * 启动静态文件服务器，自动获取获取可用端口 并返回
@@ -15,20 +30,28 @@ export const startStaticServer = async (path: string, port?: number) => {
   if (server) return;
   const _port = port ?? (await getPort({ port: portNumbers(9100, 9300) }));
 
-  const serve = serveStatic(join(path, "images"));
+  app.use(express.static(path));
+  app.use(
+    "/blur",
+    asyncMiddleware((req, res) => {
+      void (async () => {
+        const file = readFileSync(join(path, req.path));
+        const { base64 } = await getPlaiceholder(file);
+        res.send(base64);
+      })();
+    }),
+  );
 
-  server = http.createServer((req, res) => {
-    serve(req, res, () => {
-      res.statusCode = 404;
-      res.end("Not Found");
-    });
+  app.use((req, res) => {
+    res.statusCode = 404;
+    res.end("Not Found");
   });
 
-  server.listen(_port, () => {
-    console.log(`Static Server is listening on http://localhost:${_port}`);
+  server = app.listen(_port, () => {
+    console.log(`static server is listening on http://localhost:${_port}`);
   });
 
-  return _port;
+  return port;
 };
 
 export const stopStaticServer = () => {

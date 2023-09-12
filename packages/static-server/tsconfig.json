@@ -1,7 +1,8 @@
 {
   "extends": "@rao-pics/tsconfig/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "module": "CommonJS"
   },
   "ts-node": {
     "esm": true,

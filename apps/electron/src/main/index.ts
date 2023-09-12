@@ -83,7 +83,10 @@ app
         const [library, config] = res;
         // 启动静态资源服务器
         if (library?.path && config?.staticServerPort) {
-          void startStaticServer(library.path, config.staticServerPort);
+          void startStaticServer(
+            join(library.path, "images"),
+            config.staticServerPort,
+          );
         }
 
         // 启动主题服务器
