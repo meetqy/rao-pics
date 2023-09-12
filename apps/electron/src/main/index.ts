@@ -93,17 +93,8 @@ app
 
         if (IS_DEV) {
           // TODO: xxx
-          dialog.showErrorBox("IS_DEV", IS_DEV + "");
+          // dialog.showErrorBox("IS_DEV", IS_DEV + "");
         } else {
-          dialog.showErrorBox(
-            "path",
-            join(
-              process.resourcesPath,
-              "themes",
-              config?.theme ?? DEFAULT_THEME,
-              "server.js",
-            ),
-          );
           const child = cp.fork(
             join(
               process.resourcesPath,

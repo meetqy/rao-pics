@@ -6,9 +6,10 @@
     ".": "./index.ts"
   },
   "main": "./index.ts",
+  "type": "module",
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
-    "dev": "ts-node src/index.ts",
+    "dev": "ts-node ./index.ts",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"

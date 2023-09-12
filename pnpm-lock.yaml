@@ -427,6 +427,9 @@ importers:
 
   themes/tiga-basic:
     dependencies:
+      '@plaiceholder/next':
+        specifier: ^3.0.0
+        version: 3.0.0(next@13.4.19)(plaiceholder@3.0.0)(sharp@0.32.5)
       '@rao-pics/api':
         specifier: workspace:^
         version: link:../../packages/api
@@ -451,6 +454,9 @@ importers:
       next:
         specifier: ^13.4.19
         version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+      plaiceholder:
+        specifier: ^3.0.0
+        version: 3.0.0(sharp@0.32.5)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -1620,6 +1626,18 @@ packages:
       open: 9.1.0
       picocolors: 1.0.0
       tslib: 2.6.2
+    dev: false
+
+  /@plaiceholder/next@3.0.0(next@13.4.19)(plaiceholder@3.0.0)(sharp@0.32.5):
+    resolution: {integrity: sha512-7UK/H1X64hwo2VaxOPKMXE+OY9IgmKLPsq/xKHZ+gU07oqQSfIWWIgpVVucMB3ZgVYah+68agR15BRuSxAuMHw==}
+    peerDependencies:
+      next: '>= 10.0.0'
+      plaiceholder: '>=3.0.0'
+      sharp: '>= 0.30.6'
+    dependencies:
+      next: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+      plaiceholder: 3.0.0(sharp@0.32.5)
+      sharp: 0.32.5
     dev: false
 
   /@polka/url@1.0.0-next.21:
@@ -7308,6 +7326,14 @@ packages:
       mlly: 1.4.0
       pathe: 1.1.1
     dev: true
+
+  /plaiceholder@3.0.0(sharp@0.32.5):
+    resolution: {integrity: sha512-jwHxxHPnr1BwRzPCeZgEK2BMsEy2327sWynw3qb6XC/oGgGDUTPtR8pFxFQmNArhMBwhkUbUr5OPhhIJpCa8eQ==}
+    peerDependencies:
+      sharp: '>= 0.30.6'
+    dependencies:
+      sharp: 0.32.5
+    dev: false
 
   /plist@3.0.6:
     resolution: {integrity: sha512-WiIVYyrp8TD4w8yCvyeIr+lkmrGRd5u0VbRnU+tP/aRLxP/YadJUYOMZJ/6hIa3oUyVCsycXvtNRgd5XBJIbiA==}

@@ -8,6 +8,7 @@ let server: http.Server | undefined;
 /**
  * 启动静态文件服务器，自动获取获取可用端口 并返回
  * @param path
+ * @param port
  * @returns
  */
 export const startStaticServer = async (path: string, port?: number) => {

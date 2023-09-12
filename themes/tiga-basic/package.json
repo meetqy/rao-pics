@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "clean": "git clean -xdf .next .turbo node_modules",
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0",
     "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "lint": "next lint",
     "start": "next start",
@@ -22,6 +22,7 @@
     "root": true
   },
   "dependencies": {
+    "@plaiceholder/next": "^3.0.0",
     "@rao-pics/api": "workspace:^",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tanstack/react-query": "^4.32.6",
@@ -30,6 +31,7 @@
     "@trpc/react-query": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "next": "^13.4.19",
+    "plaiceholder": "^3.0.0",
     "react": "18.2.0",
     "react-photo-album": "^2.3.0",
     "react-use": "^17.4.0",
