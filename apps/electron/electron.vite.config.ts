@@ -16,6 +16,7 @@ export default defineConfig({
         include: [
           // @rao-pics/api 中的依赖，electron 中作为外部依赖
           "chokidar",
+          "sharp",
         ],
       }),
     ],

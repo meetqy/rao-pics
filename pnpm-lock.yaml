@@ -335,6 +335,9 @@ importers:
       plaiceholder:
         specifier: ^3.0.0
         version: 3.0.0(sharp@0.32.5)
+      sharp:
+        specifier: ^0.32.5
+        version: 0.32.5
     devDependencies:
       '@rao-pics/eslint-config':
         specifier: workspace:*
@@ -433,9 +436,6 @@ importers:
 
   themes/tiga-basic:
     dependencies:
-      '@plaiceholder/next':
-        specifier: ^3.0.0
-        version: 3.0.0(next@13.4.19)(plaiceholder@3.0.0)(sharp@0.32.5)
       '@rao-pics/api':
         specifier: workspace:^
         version: link:../../packages/api
@@ -460,9 +460,6 @@ importers:
       next:
         specifier: ^13.4.19
         version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
-      plaiceholder:
-        specifier: ^3.0.0
-        version: 3.0.0(sharp@0.32.5)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -478,9 +475,6 @@ importers:
       superjson:
         specifier: 1.13.1
         version: 1.13.1
-      yet-another-react-lightbox:
-        specifier: ^3.12.2
-        version: 3.12.2(react-dom@18.2.0)(react@18.2.0)
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -1632,18 +1626,6 @@ packages:
       open: 9.1.0
       picocolors: 1.0.0
       tslib: 2.6.2
-    dev: false
-
-  /@plaiceholder/next@3.0.0(next@13.4.19)(plaiceholder@3.0.0)(sharp@0.32.5):
-    resolution: {integrity: sha512-7UK/H1X64hwo2VaxOPKMXE+OY9IgmKLPsq/xKHZ+gU07oqQSfIWWIgpVVucMB3ZgVYah+68agR15BRuSxAuMHw==}
-    peerDependencies:
-      next: '>= 10.0.0'
-      plaiceholder: '>=3.0.0'
-      sharp: '>= 0.30.6'
-    dependencies:
-      next: 13.4.19(react-dom@18.2.0)(react@18.2.0)
-      plaiceholder: 3.0.0(sharp@0.32.5)
-      sharp: 0.32.5
     dev: false
 
   /@polka/url@1.0.0-next.21:
@@ -9855,17 +9837,6 @@ packages:
     dependencies:
       buffer-crc32: 0.2.13
       fd-slicer: 1.1.0
-
-  /yet-another-react-lightbox@3.12.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-sFypE74Rjjl7WbzKSrGeZ7lbcgduOam/BKj8kqzx/ciC4dJyYdE1SG0dur9oDq/gZiY3VGJh+PYGbq6ZwmPFmA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /yn@3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}

@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import type { RenderPhotoProps } from "react-photo-album";
+import type { Photo, RenderPhotoProps } from "react-photo-album";
 import { PhotoAlbum } from "react-photo-album";
 import { useWindowScroll } from "react-use";
 
 import { trpc } from "~/utils/trpc";
 
-const Home = () => {
+function Home() {
   const [, setIndex] = useState(-1);
+  const limit = 50;
 
   const imageQuery = trpc.image.get.useInfiniteQuery(
-    { limit: 50 },
+    { limit },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
@@ -18,6 +19,7 @@ const Home = () => {
   const { data: config } = trpc.config.get.useQuery();
   const isFetching = useRef(false);
 
+  // 加载更多
   const { x, y } = useWindowScroll();
   useEffect(() => {
     const h = document.body.scrollHeight - window.innerHeight;
@@ -39,6 +41,7 @@ const Home = () => {
       }
     }
   }, [x, y, imageQuery]);
+  // 加载更多 END
 
   const pages = imageQuery.data?.pages;
 
@@ -48,16 +51,18 @@ const Home = () => {
         const photos = page.data?.map((image) => {
           const id = image.path.split("/").slice(-2)[0];
           const src = `http://${config?.ip}:${config?.staticServerPort}/${id}/${image.name}.${image.ext}`;
+          const blurDataURL = `http://${config?.ip}:${config?.staticServerPort}/blur/${id}/${image.name}.${image.ext}`;
+
           return {
             src,
-            blurDataURL: `/_next/image?url=${src}&w=128&q=1`,
+            blurDataURL,
             width: image.width,
             height: image.height,
           };
         });
 
         return (
-          <div key={page.nextCursor}>
+          <div key={page.nextCursor ?? 1}>
             {photos && (
               <PhotoAlbum
                 sizes={{
@@ -103,21 +108,39 @@ const Home = () => {
       })}
     </div>
   );
-};
+}
+
+interface T extends Photo {
+  blurDataURL?: string;
+}
 
 function NextJsImage({
   photo,
-  imageProps: { alt, title, sizes, className, onClick },
+  imageProps: { alt, title, sizes, onClick },
   wrapperStyle,
-}: RenderPhotoProps) {
+}: RenderPhotoProps<T>) {
+  const [loaded, setLoaded] = useState<boolean>(false);
+
   return (
     <div style={{ ...wrapperStyle, position: "relative" }}>
+      {photo.blurDataURL && (
+        <Image
+          fill
+          src={photo.blurDataURL}
+          className={`absolute inset-0 h-full w-full ${
+            loaded ? "opacity-0" : "opacity-100"
+          }`}
+          {...{ alt, title, sizes }}
+        />
+      )}
+
       <Image
         fill
         src={photo}
         draggable={false}
-        placeholder={"blur"}
-        {...{ alt, title, sizes, className, onClick }}
+        className={`${loaded ? "opacity-100" : "opacity-0"}`}
+        {...{ alt, title, sizes, onClick }}
+        onLoadingComplete={() => setLoaded(true)}
       />
     </div>
   );

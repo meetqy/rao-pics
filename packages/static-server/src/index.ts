@@ -30,6 +30,20 @@ export const startStaticServer = async (path: string, port?: number) => {
   if (server) return;
   const _port = port ?? (await getPort({ port: portNumbers(9100, 9300) }));
 
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Authorization,X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method",
+    );
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET, POST, OPTIONS, PATCH, PUT, DELETE",
+    );
+    res.header("Allow", "GET, POST, PATCH, OPTIONS, PUT, DELETE");
+    next();
+  });
+
   app.use(express.static(path));
   app.use(
     "/blur",
@@ -37,7 +51,15 @@ export const startStaticServer = async (path: string, port?: number) => {
       void (async () => {
         const file = readFileSync(join(path, req.path));
         const { base64 } = await getPlaiceholder(file);
-        res.send(base64);
+        const img = Buffer.from(
+          base64.replace(/^data:image\/(png|jpeg|jpg);base64,/, ""),
+          "base64",
+        );
+        res.writeHead(200, {
+          "Content-Type": "image/png",
+        });
+
+        res.end(img);
       })();
     }),
   );
