@@ -10,7 +10,6 @@ const config = {
   typescript: { ignoreBuildErrors: true },
   output: "standalone",
   images: {
-    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "http",

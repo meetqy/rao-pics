@@ -13,10 +13,8 @@ export const rgbToHex = (r: number, g: number, b: number) => {
 };
 
 export const numberToHex = (num: number) => {
-  num = num > 255 ? 255 : num < 0 ? 0 : num;
-
   const hex = num.toString(16);
-  return "#" + (hex.length === 1 ? `0${hex}` : hex).padEnd(6, "0");
+  return `#${hex.padEnd(6, "f")}`;
 };
 
 export const rgbToNumber = (rgb: number[]) => {

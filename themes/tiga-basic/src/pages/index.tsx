@@ -29,7 +29,7 @@ function Home() {
     if (h > 0) {
       const diff = Math.abs(y - h);
 
-      if (diff < 300) {
+      if (diff < 500) {
         if (imageQuery.hasNextPage && isFetching.current === false) {
           isFetching.current = true;
           imageQuery
@@ -143,37 +143,27 @@ function NextJsImage({
   imageProps: { alt, title, sizes, onClick },
   wrapperStyle,
 }: RenderPhotoProps<T>) {
-  const [loaded, setLoaded] = useState<boolean>(false);
-
   return (
     <a
       href={photo.src}
       data-pswp-width={photo.width}
       data-pswp-height={photo.height}
       key={`photo-swipe-lightbox-${photo.id}`}
-      className="photo-swipe-lightbox-a"
+      className="photo-swipe-lightbox-a select-none"
       style={{ ...wrapperStyle, position: "relative" }}
       target="_blank"
       rel="noreferrer"
     >
-      {photo.blurDataURL && (
-        <Image
-          fill
-          src={photo.blurDataURL}
-          className={`absolute inset-0 h-full w-full ${
-            loaded ? "opacity-0" : "opacity-100"
-          }`}
-          {...{ alt, title, sizes }}
-        />
-      )}
-
       <Image
         fill
         src={photo}
         draggable={false}
-        className={`${loaded ? "opacity-100" : "opacity-0"}`}
+        style={{
+          backgroundImage: `url(${photo.blurDataURL})`,
+          backgroundSize: "cover",
+          backgroundPosition: "50% 50%",
+        }}
         {...{ alt, title, sizes, onClick }}
-        onLoadingComplete={() => setLoaded(true)}
       />
     </a>
   );

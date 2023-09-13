@@ -30,7 +30,7 @@ export const startStaticServer = async (path: string, port?: number) => {
   if (server) return;
   const _port = port ?? (await getPort({ port: portNumbers(9100, 9300) }));
 
-  app.use((req, res, next) => {
+  app.use((_req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
@@ -64,7 +64,7 @@ export const startStaticServer = async (path: string, port?: number) => {
     }),
   );
 
-  app.use((req, res) => {
+  app.use((_req, res) => {
     res.statusCode = 404;
     res.end("Not Found");
   });

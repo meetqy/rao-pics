@@ -4,6 +4,7 @@
 
 # prisma
 db.sqlite
+db.sqlite-journal
 
 # dependencies
 node_modules

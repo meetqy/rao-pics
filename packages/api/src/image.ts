@@ -167,18 +167,24 @@ export const image = t.router({
         .object({
           limit: z.number().min(1).max(100).optional(),
           cursor: z.string().nullish(),
+          includes: z.enum(["tags", "colors", "folders"]).array().optional(),
         })
         .optional(),
     )
     .query(async ({ input }) => {
       const limit = input?.limit ?? 50;
 
-      const { cursor } = input ?? {};
+      const { cursor, includes } = input ?? {};
 
       const images = await prisma.image.findMany({
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
         orderBy: { createdTime: "desc" },
+        include: {
+          tags: includes?.includes("tags"),
+          colors: includes?.includes("colors"),
+          folders: includes?.includes("folders"),
+        },
       });
 
       let nextCursor: typeof cursor | undefined = undefined;
