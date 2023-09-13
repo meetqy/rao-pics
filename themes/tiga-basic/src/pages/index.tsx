@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import type { Photo, RenderPhotoProps } from "react-photo-album";
 import { PhotoAlbum } from "react-photo-album";
@@ -155,14 +155,10 @@ function NextJsImage({
       rel="noreferrer"
     >
       <Image
-        fill
         src={photo}
         draggable={false}
-        style={{
-          backgroundImage: `url(${photo.blurDataURL})`,
-          backgroundSize: "cover",
-          backgroundPosition: "50% 50%",
-        }}
+        blurDataURL={photo.blurDataURL}
+        placeholder="blur"
         {...{ alt, title, sizes, onClick }}
       />
     </a>
