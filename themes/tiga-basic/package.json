@@ -30,6 +30,7 @@
     "@trpc/react-query": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "next": "^13.4.19",
+    "photoswipe": "^5.4.0",
     "react": "18.2.0",
     "react-photo-album": "^2.3.0",
     "react-use": "^17.4.0",

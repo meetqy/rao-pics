@@ -460,6 +460,9 @@ importers:
       next:
         specifier: ^13.4.19
         version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
+      photoswipe:
+        specifier: ^5.4.0
+        version: 5.4.0
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -7484,6 +7487,11 @@ packages:
       '@types/estree': 1.0.1
       estree-walker: 3.0.3
       is-reference: 3.0.1
+    dev: false
+
+  /photoswipe@5.4.0:
+    resolution: {integrity: sha512-PZvdK1D94TApU0MNWc9H6eXOolKJOMkgt7CJ9ZfIdkHR4CrEj47MOe4Vrlcv6ZpHslK+uKS6Ai3y3VIe7gsi+Q==}
+    engines: {node: '>= 0.12.0'}
     dev: false
 
   /picocolors@1.0.0:

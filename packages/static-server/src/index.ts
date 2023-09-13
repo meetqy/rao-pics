@@ -44,7 +44,7 @@ export const startStaticServer = async (path: string, port?: number) => {
     next();
   });
 
-  app.use(express.static(path));
+  app.use(express.static(path, { maxAge: 180 * 1000 * 60 * 60 }));
   app.use(
     "/blur",
     asyncMiddleware((req, res) => {

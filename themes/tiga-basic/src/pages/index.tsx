@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
 import type { Photo, RenderPhotoProps } from "react-photo-album";
 import { PhotoAlbum } from "react-photo-album";
 import { useWindowScroll } from "react-use";
+
+import "photoswipe/style.css";
 
 import { trpc } from "~/utils/trpc";
 
@@ -45,8 +48,27 @@ function Home() {
 
   const pages = imageQuery.data?.pages;
 
+  const id = "photo-swipe-lightbox";
+  useEffect(() => {
+    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
+      gallery: "#" + id,
+      children: "a.photo-swipe-lightbox-a",
+      pswpModule: () => import("photoswipe"),
+      showHideAnimationType: "none",
+    });
+    lightbox.init();
+
+    return () => {
+      lightbox?.destroy();
+      lightbox = null;
+    };
+  }, []);
+
   return (
-    <div className="space-y-1 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5">
+    <div
+      className="pswp-gallery space-y-1 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5"
+      id={id}
+    >
       {pages?.map((page) => {
         const photos = page.data?.map((image) => {
           const id = image.path.split("/").slice(-2)[0];
@@ -54,6 +76,7 @@ function Home() {
           const blurDataURL = `http://${config?.ip}:${config?.staticServerPort}/blur/${id}/${image.name}.${image.ext}`;
 
           return {
+            id: image.id,
             src,
             blurDataURL,
             width: image.width,
@@ -112,6 +135,7 @@ function Home() {
 
 interface T extends Photo {
   blurDataURL?: string;
+  id: number;
 }
 
 function NextJsImage({
@@ -122,7 +146,16 @@ function NextJsImage({
   const [loaded, setLoaded] = useState<boolean>(false);
 
   return (
-    <div style={{ ...wrapperStyle, position: "relative" }}>
+    <a
+      href={photo.src}
+      data-pswp-width={photo.width}
+      data-pswp-height={photo.height}
+      key={`photo-swipe-lightbox-${photo.id}`}
+      className="photo-swipe-lightbox-a"
+      style={{ ...wrapperStyle, position: "relative" }}
+      target="_blank"
+      rel="noreferrer"
+    >
       {photo.blurDataURL && (
         <Image
           fill
@@ -142,7 +175,7 @@ function NextJsImage({
         {...{ alt, title, sizes, onClick }}
         onLoadingComplete={() => setLoaded(true)}
       />
-    </div>
+    </a>
   );
 }
 
