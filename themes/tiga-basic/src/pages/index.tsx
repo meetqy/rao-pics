@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import type { RenderPhotoProps } from "react-photo-album";
+import Image from "next/legacy/image";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import type { Photo, RenderPhotoProps } from "react-photo-album";
 import { PhotoAlbum } from "react-photo-album";
 import { useWindowScroll } from "react-use";
 
+import "photoswipe/style.css";
+
 import { trpc } from "~/utils/trpc";
 
-const Home = () => {
+function Home() {
   const [, setIndex] = useState(-1);
+  const limit = 50;
 
   const imageQuery = trpc.image.get.useInfiniteQuery(
-    { limit: 50 },
+    { limit },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
@@ -18,13 +22,14 @@ const Home = () => {
   const { data: config } = trpc.config.get.useQuery();
   const isFetching = useRef(false);
 
+  // 加载更多
   const { x, y } = useWindowScroll();
   useEffect(() => {
     const h = document.body.scrollHeight - window.innerHeight;
     if (h > 0) {
       const diff = Math.abs(y - h);
 
-      if (diff < 300) {
+      if (diff < 500) {
         if (imageQuery.hasNextPage && isFetching.current === false) {
           isFetching.current = true;
           imageQuery
@@ -39,25 +44,48 @@ const Home = () => {
       }
     }
   }, [x, y, imageQuery]);
+  // 加载更多 END
 
   const pages = imageQuery.data?.pages;
 
+  const id = "photo-swipe-lightbox";
+  useEffect(() => {
+    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
+      gallery: "#" + id,
+      children: "a.photo-swipe-lightbox-a",
+      pswpModule: () => import("photoswipe"),
+      showHideAnimationType: "none",
+    });
+    lightbox.init();
+
+    return () => {
+      lightbox?.destroy();
+      lightbox = null;
+    };
+  }, []);
+
   return (
-    <div className="space-y-1 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5">
+    <div
+      className="pswp-gallery space-y-1 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5"
+      id={id}
+    >
       {pages?.map((page) => {
         const photos = page.data?.map((image) => {
           const id = image.path.split("/").slice(-2)[0];
           const src = `http://${config?.ip}:${config?.staticServerPort}/${id}/${image.name}.${image.ext}`;
+          const blurDataURL = `http://${config?.ip}:${config?.staticServerPort}/blur/${id}/${image.name}.${image.ext}`;
+
           return {
+            id: image.id,
             src,
-            blurDataURL: `/_next/image?url=${src}&w=42&q=1`,
+            blurDataURL,
             width: image.width,
             height: image.height,
           };
         });
 
         return (
-          <div key={page.nextCursor}>
+          <div key={page.nextCursor ?? 1}>
             {photos && (
               <PhotoAlbum
                 sizes={{
@@ -103,23 +131,37 @@ const Home = () => {
       })}
     </div>
   );
-};
+}
+
+interface T extends Photo {
+  blurDataURL?: string;
+  id: number;
+}
 
 function NextJsImage({
   photo,
-  imageProps: { alt, title, sizes, className, onClick },
+  imageProps: { alt, title, sizes, onClick },
   wrapperStyle,
-}: RenderPhotoProps) {
+}: RenderPhotoProps<T>) {
   return (
-    <div style={{ ...wrapperStyle, position: "relative" }}>
+    <a
+      href={photo.src}
+      data-pswp-width={photo.width}
+      data-pswp-height={photo.height}
+      key={`photo-swipe-lightbox-${photo.id}`}
+      className="photo-swipe-lightbox-a select-none"
+      style={{ ...wrapperStyle, position: "relative" }}
+      target="_blank"
+      rel="noreferrer"
+    >
       <Image
-        fill
         src={photo}
         draggable={false}
-        placeholder={"blur"}
-        {...{ alt, title, sizes, className, onClick }}
+        blurDataURL={photo.blurDataURL}
+        placeholder="blur"
+        {...{ alt, title, sizes, onClick }}
       />
-    </div>
+    </a>
   );
 }
 

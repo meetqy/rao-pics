@@ -8,7 +8,7 @@ const isTestBuilder = process.env.IS_TEST_BUILDER === "true";
  */
 const options = {
   appId: "com.rao-pics.app",
-  productName: "electron",
+  productName: "Rao Pics",
   directories: {
     buildResources: "build",
   },
@@ -33,7 +33,7 @@ const options = {
   afterSign: "build/notarize.js",
   mac: {
     entitlementsInherit: "build/entitlements.mac.plist",
-    target: isTestBuilder ? "dir" : { target: "dmg", arch: ["arm64", "x64"] },
+    target: isTestBuilder ? "dir" : "dmg",
   },
   win: {
     target: isTestBuilder ? "dir" : { target: "nsis", arch: ["x64"] },

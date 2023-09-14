@@ -4,6 +4,10 @@
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "module": "CommonJS"
   },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
   "include": ["*.ts", "src"],
   "exclude": ["node_modules"]
 }
