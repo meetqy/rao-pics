@@ -42,11 +42,11 @@ export const image = t.router({
         width: z.number(),
         height: z.number(),
         mtime: z.date(),
-        thumbnailPath: z.string().optional(),
         duration: z.number().optional(),
         annotation: z.string().optional(),
         url: z.string().optional(),
         isDeleted: z.boolean().optional(),
+        blurDataURL: z.string().optional(),
         tags: z
           .object({
             connect: z.array(z.string()).optional(),
@@ -76,12 +76,12 @@ export const image = t.router({
         ext: input.ext,
         width: input.width,
         height: input.height,
-        thumbnailPath: input.thumbnailPath,
         duration: input.duration,
         annotation: input.annotation,
         url: input.url,
         mtime: input.mtime,
         isDeleted: input.isDeleted,
+        blurDataURL: input.blurDataURL,
       };
 
       const { tags, id, colors, folders } = input;
@@ -135,6 +135,50 @@ export const image = t.router({
       await caller.log.delete(res.path);
 
       return res;
+    }),
+
+  update: t.procedure
+    .input(
+      z
+        .object({
+          id: z.number().optional(),
+          path: z.string().optional(),
+          name: z.string().optional(),
+          size: z.number().optional(),
+          ext: z.string().optional(),
+          width: z.number().optional(),
+          height: z.number().optional(),
+          mtime: z.date().optional(),
+          duration: z.number().optional(),
+          annotation: z.string().optional(),
+          url: z.string().optional(),
+          isDeleted: z.boolean().optional(),
+          blurDataURL: z.string().optional(),
+        })
+        .partial()
+        .refine(
+          (data) => !!data.id || !!data.path,
+          "id or path either one is required",
+        ),
+    )
+    .mutation(async ({ input }) => {
+      const { id, path, ...data } = input;
+      if (id) {
+        return prisma.image.update({
+          where: { id },
+          data: {
+            ...data,
+            path,
+          },
+        });
+      }
+
+      if (path) {
+        return prisma.image.update({
+          where: { path },
+          data,
+        });
+      }
     }),
 
   deleteByUnique: t.procedure

@@ -6,6 +6,8 @@ import express from "express";
 import getPort, { portNumbers } from "get-port";
 import { getPlaiceholder } from "plaiceholder";
 
+import { router } from "@rao-pics/api";
+
 let server: Server<typeof IncomingMessage, typeof ServerResponse> | undefined;
 const app = express();
 
@@ -27,6 +29,7 @@ const asyncMiddleware =
  * @returns
  */
 export const startStaticServer = async (path: string, port?: number) => {
+  const caller = router.createCaller({});
   if (server) return;
   const _port = port ?? (await getPort({ port: portNumbers(9100, 9300) }));
 
@@ -49,17 +52,44 @@ export const startStaticServer = async (path: string, port?: number) => {
     "/blur",
     asyncMiddleware((req, res) => {
       void (async () => {
-        const file = readFileSync(join(path, req.path));
-        const { base64 } = await getPlaiceholder(file);
-        const img = Buffer.from(
-          base64.replace(/^data:image\/(png|jpeg|jpg);base64,/, ""),
-          "base64",
+        const parts = req.path.split("/");
+        const imageDbPath = join(
+          path,
+          parts[parts.length - 2] ?? "",
+          "metadata.json",
         );
+        const image = await caller.image.findUnique({
+          path: imageDbPath,
+        });
+
         res.writeHead(200, {
           "Content-Type": "image/png",
         });
 
-        res.end(img);
+        if (image?.blurDataURL) {
+          const img = Buffer.from(
+            image.blurDataURL.replace(
+              /^data:image\/(png|jpeg|jpg);base64,/,
+              "",
+            ),
+            "base64",
+          );
+          res.end(img);
+        } else {
+          const file = readFileSync(join(path, req.path));
+          const { base64 } = await getPlaiceholder(file);
+          const img = Buffer.from(
+            base64.replace(/^data:image\/(png|jpeg|jpg);base64,/, ""),
+            "base64",
+          );
+
+          void caller.image.update({
+            path: imageDbPath,
+            blurDataURL: `data:image/png;base64,${img.toString("base64")}`,
+          });
+
+          res.end(img);
+        }
       })();
     }),
   );

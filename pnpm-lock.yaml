@@ -326,6 +326,9 @@ importers:
 
   packages/static-server:
     dependencies:
+      '@rao-pics/api':
+        specifier: workspace:^
+        version: link:../api
       express:
         specifier: ^4.18.2
         version: 4.18.2
