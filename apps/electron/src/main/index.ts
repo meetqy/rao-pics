@@ -20,6 +20,23 @@ const caller = router.createCaller({});
 const controller = new AbortController();
 const { signal } = controller;
 
+// 获取端口
+async function initConfig() {
+  const config = await caller.config.get();
+
+  const staticServerPort =
+    config?.staticServerPort ??
+    (await getPort({ port: portNumbers(9100, 9300) }));
+  const themeServerPort =
+    config?.themeServerPort ??
+    (await getPort({ port: portNumbers(9301, 9500) }));
+
+  return await caller.config.upsert({
+    staticServerPort,
+    themeServerPort,
+  });
+}
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -74,57 +91,38 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app
   .whenReady()
-  .then(() => {
+  .then(async () => {
     // Set app user model id for windows
     electronApp.setAppUserModelId("com.rao-pics");
 
-    Promise.all([caller.library.get(), caller.config.get()])
-      .then(async (res) => {
-        const [library, config] = res;
-        // 启动静态资源服务器
-        if (library?.path && config?.staticServerPort) {
-          void startStaticServer(
-            join(library.path, "images"),
-            config.staticServerPort,
-          );
-        }
+    const config = await initConfig();
+    // 启动静态资源服务器
+    await startStaticServer();
 
-        // 启动主题服务器
-        const themeServerPort =
-          config?.themeServerPort ??
-          (await getPort({ port: portNumbers(9301, 9500) }));
+    const { themeServerPort } = config;
 
-        if (IS_DEV) {
-          // TODO: xxx
-          // dialog.showErrorBox("IS_DEV", IS_DEV + "");
-        } else {
-          const child = cp.fork(
-            join(
-              process.resourcesPath,
-              "themes",
-              config?.theme ?? DEFAULT_THEME,
-              "server.js",
-            ),
-            ["child"],
-            {
-              env: { PORT: themeServerPort.toString(), HOSTNAME: "0.0.0.0" },
-              signal,
-            },
-          );
+    if (!themeServerPort) return;
 
-          child.on("error", (e) => {
-            dialog.showErrorBox("child process fork error", e.message);
-            controller.abort();
-          });
-        }
+    if (!IS_DEV) {
+      const child = cp.fork(
+        join(
+          process.resourcesPath,
+          "themes",
+          config?.theme ?? DEFAULT_THEME,
+          "server.js",
+        ),
+        ["child"],
+        {
+          env: { PORT: themeServerPort.toString(), HOSTNAME: "0.0.0.0" },
+          signal,
+        },
+      );
 
-        void caller.config.upsert({
-          themeServerPort,
-        });
-      })
-      .catch((e) => {
-        throw e;
+      child.on("error", (e) => {
+        dialog.showErrorBox("child process fork error", e.message);
+        controller.abort();
       });
+    }
 
     // Default open or close DevTools by F12 in development
     // and ignore CommandOrControl + R in production.
