@@ -6,8 +6,6 @@ import express from "express";
 import { readFileSync } from "fs-extra";
 import { getPlaiceholder } from "plaiceholder";
 
-import type { Library } from "@rao-pics/db";
-
 import { router } from "..";
 import { createContext } from "./utils";
 

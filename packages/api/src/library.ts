@@ -81,9 +81,7 @@ export const library = t.router({
       watcher = null;
     }
 
-    await updateLibraryPath();
-
-    return await prisma.$transaction([
+    const result = await prisma.$transaction([
       prisma.library.deleteMany(),
       prisma.pending.deleteMany(),
       prisma.image.deleteMany(),
@@ -92,6 +90,10 @@ export const library = t.router({
       prisma.log.deleteMany(),
       prisma.color.deleteMany(),
     ]);
+
+    await updateLibraryPath();
+
+    return result;
   }),
 
   /**
