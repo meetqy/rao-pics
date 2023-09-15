@@ -33,6 +33,7 @@
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tsconfig": "workspace:*",
+    "@types/express": "^4.17.17",
     "@types/lodash": "^4.14.197",
     "@types/node": "^18.17.6",
     "@vitest/coverage-v8": "^0.34.3",
