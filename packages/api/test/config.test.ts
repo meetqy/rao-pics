@@ -29,15 +29,15 @@ describe("config module", () => {
         color: "light",
         theme: "tiga-basic",
         ip: null,
-        staticServerPort: null,
-        themeServerPort: null,
+        serverPort: null,
+        clientPort: null,
       });
     });
 
-    it("should update the ip and staticServerPort field in the config table", async () => {
+    it("should update the ip and serverPort field in the config table", async () => {
       await caller.config.upsert({
         ip: "0.0.0.0",
-        staticServerPort: 8080,
+        serverPort: 8080,
       });
 
       const res = await caller.config.get();
@@ -48,13 +48,13 @@ describe("config module", () => {
         color: "light",
         theme: "tiga-basic",
         ip: "0.0.0.0",
-        staticServerPort: 8080,
-        themeServerPort: null,
+        serverPort: 8080,
+        clientPort: null,
       });
 
       expect(
         await caller.config.upsert({
-          staticServerPort: 8081,
+          serverPort: 8081,
         }),
       ).toEqual({
         name: "config",
@@ -62,8 +62,8 @@ describe("config module", () => {
         color: "light",
         theme: "tiga-basic",
         ip: "0.0.0.0",
-        staticServerPort: 8081,
-        themeServerPort: null,
+        serverPort: 8081,
+        clientPort: null,
       });
     });
 
@@ -80,8 +80,8 @@ describe("config module", () => {
         color: "senven",
         theme: "tiga-basic",
         ip: null,
-        staticServerPort: null,
-        themeServerPort: null,
+        serverPort: null,
+        clientPort: null,
       });
     });
 
@@ -98,8 +98,8 @@ describe("config module", () => {
         color: "light",
         theme: "dark",
         ip: null,
-        staticServerPort: null,
-        themeServerPort: null,
+        serverPort: null,
+        clientPort: null,
       });
     });
 

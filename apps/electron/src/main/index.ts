@@ -23,16 +23,14 @@ const { signal } = controller;
 async function initConfig() {
   const config = await caller.config.get();
 
-  const staticServerPort =
-    config?.staticServerPort ??
-    (await getPort({ port: portNumbers(9100, 9300) }));
-  const themeServerPort =
-    config?.themeServerPort ??
-    (await getPort({ port: portNumbers(9301, 9500) }));
+  const serverPort =
+    config?.serverPort ?? (await getPort({ port: portNumbers(9100, 9300) }));
+  const clientPort =
+    config?.clientPort ?? (await getPort({ port: portNumbers(9301, 9500) }));
 
   return await caller.config.upsert({
-    staticServerPort,
-    themeServerPort,
+    serverPort,
+    clientPort,
   });
 }
 
@@ -99,9 +97,9 @@ app
     // 启动静态资源服务器
     // await startStaticServer();
 
-    const { themeServerPort } = config;
+    const { clientPort } = config;
 
-    if (!themeServerPort) return;
+    if (!clientPort) return;
 
     if (!IS_DEV) {
       const child = cp.fork(
@@ -113,7 +111,7 @@ app
         ),
         ["child"],
         {
-          env: { PORT: themeServerPort.toString(), HOSTNAME: "0.0.0.0" },
+          env: { PORT: clientPort.toString(), HOSTNAME: "0.0.0.0" },
           signal,
         },
       );

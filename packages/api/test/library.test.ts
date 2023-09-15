@@ -18,7 +18,7 @@ describe("library module", () => {
   describe("add procedure", () => {
     beforeEach(async () => {
       await caller.config.upsert({
-        staticServerPort: 9100,
+        serverPort: 9100,
       });
     });
 

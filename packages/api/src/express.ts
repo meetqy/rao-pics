@@ -32,9 +32,9 @@ export const startExpressServer = async () => {
   const config = await caller.config.get();
   const library = await caller.library.get();
 
-  const port = config?.staticServerPort;
+  const port = config?.serverPort;
 
-  if (!port) throw new Error("staticServerPort is not defined");
+  if (!port) throw new Error("serverPort is not defined");
 
   app.use((_req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");

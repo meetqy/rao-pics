@@ -12,8 +12,8 @@ export const config = t.router({
         language: z.enum(["zh-cn", "en-us", "zh-tw"]).optional(),
         theme: z.string().optional(),
         color: z.string().optional(),
-        staticServerPort: z.number().optional(),
-        themeServerPort: z.number().optional(),
+        serverPort: z.number().optional(),
+        clientPort: z.number().optional(),
         ip: z.string().optional(),
       }),
     )
@@ -25,8 +25,8 @@ export const config = t.router({
           color: input.color ?? undefined,
           theme: input.theme ?? undefined,
           ip: input.ip ?? undefined,
-          staticServerPort: input.staticServerPort ?? undefined,
-          themeServerPort: input.themeServerPort ?? undefined,
+          serverPort: input.serverPort ?? undefined,
+          clientPort: input.clientPort ?? undefined,
         },
         create: {
           name: "config",
@@ -34,8 +34,8 @@ export const config = t.router({
           color: input.color ?? "light",
           theme: input.theme ?? DEFAULT_THEME,
           ip: input.ip,
-          staticServerPort: input.staticServerPort,
-          themeServerPort: input.themeServerPort,
+          serverPort: input.serverPort,
+          clientPort: input.clientPort,
         },
       });
     }),

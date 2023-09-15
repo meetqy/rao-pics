@@ -169,7 +169,7 @@ const BasicPage = () => {
 
             <span className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content">
               {config && (
-                <span>{`http://${config.ip}:${config.themeServerPort}`}</span>
+                <span>{`http://${config.ip}:${config.clientPort}`}</span>
               )}
               {ArrowRightSvg}
             </span>

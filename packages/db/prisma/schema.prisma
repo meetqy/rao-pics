@@ -9,19 +9,19 @@ datasource db {
 
 model Config {
   // config
-  name             String  @id @unique
+  name       String  @id @unique
   // zh-cn、en-us、zh-tw
-  language         String
+  language   String
   // 配色
-  color            String?
+  color      String?
   // 主题
-  theme            String?
-  // static server port: 9100-9300
-  staticServerPort Int?
-  // theme server port: 9301-9500
-  themeServerPort  Int?
+  theme      String?
+  // port: 9100-9300
+  serverPort Int?
+  // port: 9301-9500
+  clientPort Int?
   // 当前 IP
-  ip               String?
+  ip         String?
 }
 
 model Library {
