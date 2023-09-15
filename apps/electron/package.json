@@ -38,6 +38,7 @@
     "get-port": "^7.0.0",
     "ip": "^1.1.8",
     "lodash": "^4.17.21",
+    "plaiceholder": "^3.0.0",
     "recoil": "^0.7.7",
     "superjson": "1.13.1"
   },
@@ -47,7 +48,6 @@
     "@electron/rebuild": "^3.3.0",
     "@rao-pics/eslint-config": "workspace:^",
     "@rao-pics/prettier-config": "workspace:^",
-    "@rao-pics/static-server": "workspace:^",
     "@rao-pics/tailwind-config": "workspace:*",
     "@rao-pics/tsconfig": "^0.1.0",
     "@types/ip": "^1.1.0",

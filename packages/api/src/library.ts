@@ -7,9 +7,8 @@ import { z } from "zod";
 import type { PendingTypeEnum } from "@rao-pics/constant";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
-import { startStaticServer, stopStaticServer } from "@rao-pics/static-server";
 
-import { router } from "..";
+import { router, updateLibraryPath } from "..";
 import { t } from "./utils";
 
 const ee = new EventEmitter();
@@ -53,7 +52,7 @@ export const library = t.router({
       },
     });
 
-    await startStaticServer();
+    await updateLibraryPath();
 
     return lib;
   }),
@@ -82,7 +81,7 @@ export const library = t.router({
       watcher = null;
     }
 
-    stopStaticServer();
+    await updateLibraryPath();
 
     return await prisma.$transaction([
       prisma.library.deleteMany(),

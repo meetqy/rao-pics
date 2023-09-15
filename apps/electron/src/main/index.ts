@@ -6,11 +6,10 @@ import { electronApp, optimizer } from "@electron-toolkit/utils";
 import getPort, { portNumbers } from "get-port";
 import ip from "ip";
 
-import { router } from "@rao-pics/api";
+import { router, startExpressServer, stopExpressServer } from "@rao-pics/api";
 import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV } from "@rao-pics/constant/server";
 import { createDbPath } from "@rao-pics/db";
-import { startStaticServer, stopStaticServer } from "@rao-pics/static-server";
 
 import icon from "../../resources/icon.png?asset";
 import { createCustomIPCHandle } from "./src/ipc";
@@ -96,8 +95,9 @@ app
     electronApp.setAppUserModelId("com.rao-pics");
 
     const config = await initConfig();
+    await startExpressServer();
     // 启动静态资源服务器
-    await startStaticServer();
+    // await startStaticServer();
 
     const { themeServerPort } = config;
 
@@ -156,7 +156,7 @@ app.on("quit", () => {
   // 关闭子进程
   controller.abort();
   // 关闭静态服务器
-  stopStaticServer();
+  stopExpressServer();
 });
 
 // Catch all error.

@@ -23,3 +23,4 @@ export const router = t.router({
 
 export type AppRouter = typeof router;
 export { t } from "./src/utils";
+export * from "./src/express";

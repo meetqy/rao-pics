@@ -71,8 +71,8 @@ function Home() {
       {pages?.map((page) => {
         const photos = page.data?.map((image) => {
           const id = image.path.split("/").slice(-2)[0];
-          const src = `http://${config?.ip}:${config?.staticServerPort}/${id}/${image.name}.${image.ext}`;
-          const blurDataURL = `http://${config?.ip}:${config?.staticServerPort}/blur/${id}/${image.name}.${image.ext}`;
+          const src = `http://${config?.ip}:${config?.staticServerPort}/static/${id}/${image.name}.${image.ext}`;
+          const blurDataURL = `http://${config?.ip}:${config?.staticServerPort}/static/blur/${id}/${image.name}.${image.ext}`;
 
           return {
             id: image.id,
