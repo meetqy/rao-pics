@@ -54,7 +54,6 @@ function Home() {
       gallery: "#" + id,
       children: "a.photo-swipe-lightbox-a",
       pswpModule: () => import("photoswipe"),
-      showHideAnimationType: "none",
     });
     lightbox.init();
 
@@ -62,11 +61,11 @@ function Home() {
       lightbox?.destroy();
       lightbox = null;
     };
-  }, []);
+  }, [config]);
 
   return (
     <div
-      className="pswp-gallery space-y-1 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5"
+      className="pswp-gallery space-y-1 p-4 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5"
       id={id}
     >
       {pages?.map((page) => {
@@ -78,9 +77,15 @@ function Home() {
           return {
             id: image.id,
             src,
-            blurDataURL,
+            blurDataURL: image.blurDataURL ?? blurDataURL,
             width: image.width,
             height: image.height,
+            srcset: [
+              16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200,
+              1920, 2048, 3840,
+            ]
+              .map((size) => `/_next/image?url=${src}?w=${size}&q=75 ${size}w`)
+              .join(", "),
           };
         });
 
@@ -98,29 +103,13 @@ function Home() {
                 layout="rows"
                 photos={photos}
                 breakpoints={[640, 768, 1024, 1280, 1536]}
-                spacing={(containerWidth) => {
-                  if (containerWidth < 640) return 4;
-                  if (containerWidth < 768) return 8;
-                  if (containerWidth < 1024) return 12;
-                  if (containerWidth < 1280) return 16;
-                  if (containerWidth < 1536) return 20;
-                  return 20;
-                }}
-                columns={(containerWidth) => {
-                  if (containerWidth < 640) return 1;
-                  if (containerWidth < 768) return 2;
-                  if (containerWidth < 1024) return 3;
-                  if (containerWidth < 1280) return 4;
-                  if (containerWidth < 1536) return 5;
-                  return Math.floor(containerWidth / 240);
-                }}
+                spacing={16}
                 targetRowHeight={(containerWidth) => {
-                  if (containerWidth < 640) return containerWidth / 2;
-                  if (containerWidth < 768) return containerWidth / 3;
-                  if (containerWidth < 1024) return containerWidth / 4;
-                  if (containerWidth < 1280) return containerWidth / 5;
-                  if (containerWidth < 1536) return containerWidth / 6;
-                  return containerWidth / 6;
+                  if (containerWidth < 640) return containerWidth / 1;
+                  if (containerWidth < 768) return containerWidth / 1;
+                  if (containerWidth < 1024) return containerWidth / 3;
+                  if (containerWidth < 1280) return containerWidth / 4;
+                  return containerWidth / 5;
                 }}
                 renderPhoto={NextJsImage}
                 onClick={({ index }) => setIndex(index)}
@@ -148,8 +137,9 @@ function NextJsImage({
       href={photo.src}
       data-pswp-width={photo.width}
       data-pswp-height={photo.height}
+      data-src-set={photo.srcSet}
       key={`photo-swipe-lightbox-${photo.id}`}
-      className="photo-swipe-lightbox-a select-none"
+      className="photo-swipe-lightbox-a select-none overflow-hidden rounded-md border shadow"
       style={{ ...wrapperStyle, position: "relative" }}
       target="_blank"
       rel="noreferrer"

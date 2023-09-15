@@ -1,5 +1,5 @@
 <p align="center">
-    <a herf="https://rao.pics" target="_blank">
+    <a href="https://rao.pics" target="_blank">
         <img width="196" src="./rao-pics.svg" alt="rao.pics logo"/>
     </a>
     <h1 align="center">Rao Pics</h1>
@@ -13,7 +13,7 @@
     </div>
 </p>
 
-<img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%" />
+<img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
 
 ## 特点
 

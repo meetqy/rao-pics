@@ -46,24 +46,16 @@ export const library = t.router({
       throw new Error("Cannot add more than one library.");
     }
 
-    const caller = router.createCaller({});
-    const config = await caller.config.get();
-
-    const port = await startStaticServer(
-      input,
-      config?.staticServerPort ?? undefined,
-    );
-
-    if (port) {
-      await caller.config.upsert({ staticServerPort: port });
-    }
-
-    return await prisma.library.create({
+    const lib = await prisma.library.create({
       data: {
         path: input,
         type: "eagle",
       },
     });
+
+    await startStaticServer();
+
+    return lib;
   }),
 
   update: t.procedure

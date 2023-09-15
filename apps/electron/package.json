@@ -17,7 +17,6 @@
     "clean:dist": "git clean -xdf dist",
     "dev": "electron-vite dev",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "postinstall": "electron-builder install-app-deps",
     "lint": "eslint .",
     "start": "electron-vite preview",
     "typecheck": "pnpm typecheck:node && pnpm typecheck:web",

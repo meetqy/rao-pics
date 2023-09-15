@@ -3,8 +3,9 @@ import type { IncomingMessage, Server, ServerResponse } from "http";
 import { join } from "path";
 import type { NextFunction, Request, RequestHandler, Response } from "express";
 import express from "express";
-import getPort, { portNumbers } from "get-port";
 import { getPlaiceholder } from "plaiceholder";
+
+import { router } from "@rao-pics/api";
 
 let server: Server<typeof IncomingMessage, typeof ServerResponse> | undefined;
 const app = express();
@@ -21,14 +22,23 @@ const asyncMiddleware =
   };
 
 /**
- * 启动静态文件服务器，自动获取获取可用端口 并返回
+ *
  * @param path
- * @param port
  * @returns
  */
-export const startStaticServer = async (path: string, port?: number) => {
+export const startStaticServer = async () => {
+  const caller = router.createCaller({});
+  const config = await caller.config.get();
+  const library = await caller.library.get();
+
+  const port = config?.staticServerPort;
+
+  if (!port) throw new Error("staticServerPort is not defined");
+
+  if (!library) return;
   if (server) return;
-  const _port = port ?? (await getPort({ port: portNumbers(9100, 9300) }));
+
+  const path = join(library.path, "images");
 
   app.use((_req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -49,17 +59,44 @@ export const startStaticServer = async (path: string, port?: number) => {
     "/blur",
     asyncMiddleware((req, res) => {
       void (async () => {
-        const file = readFileSync(join(path, req.path));
-        const { base64 } = await getPlaiceholder(file);
-        const img = Buffer.from(
-          base64.replace(/^data:image\/(png|jpeg|jpg);base64,/, ""),
-          "base64",
+        const parts = req.path.split("/");
+        const imageDbPath = join(
+          path,
+          parts[parts.length - 2] ?? "",
+          "metadata.json",
         );
+        const image = await caller.image.findUnique({
+          path: imageDbPath,
+        });
+
         res.writeHead(200, {
           "Content-Type": "image/png",
         });
 
-        res.end(img);
+        if (image?.blurDataURL) {
+          const img = Buffer.from(
+            image.blurDataURL.replace(
+              /^data:image\/(png|jpeg|jpg);base64,/,
+              "",
+            ),
+            "base64",
+          );
+          res.end(img);
+        } else {
+          const file = readFileSync(join(path, req.path));
+          const { base64 } = await getPlaiceholder(file);
+          const img = Buffer.from(
+            base64.replace(/^data:image\/(png|jpeg|jpg);base64,/, ""),
+            "base64",
+          );
+
+          void caller.image.update({
+            path: imageDbPath,
+            blurDataURL: `data:image/png;base64,${img.toString("base64")}`,
+          });
+
+          res.end(img);
+        }
       })();
     }),
   );
@@ -69,11 +106,9 @@ export const startStaticServer = async (path: string, port?: number) => {
     res.end("Not Found");
   });
 
-  server = app.listen(_port, () => {
-    console.log(`static server is listening on http://localhost:${_port}`);
+  server = app.listen(port, () => {
+    console.log(`static server is listening on http://localhost:${port}`);
   });
-
-  return port;
 };
 
 export const stopStaticServer = () => {

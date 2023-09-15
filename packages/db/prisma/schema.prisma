@@ -45,41 +45,41 @@ model Pending {
 }
 
 model Image {
-  id            Int      @id @unique @default(autoincrement())
-  // library.path + path => originalPath
-  path          String   @unique
+  id          Int      @id @unique @default(autoincrement())
+  // 完整地址
+  path        String   @unique
   // 名字
-  name          String
+  name        String
   // 文件大小
-  size          Int
+  size        Int
   // 创建时间
-  createdTime   DateTime @default(now())
+  createdTime DateTime @default(now())
   // 修改时间
-  updateTime    DateTime @updatedAt
+  updateTime  DateTime @updatedAt
   // 文件的 mtime
-  mtime         DateTime
+  mtime       DateTime
   // 扩展名
-  ext           String
+  ext         String
   // 宽度
-  width         Int
+  width       Int
   // 高度
-  height        Int
+  height      Int
   // 是否删除
-  isDeleted     Boolean  @default(false)
-  // UserData 缓存目录 + thumbnailPath => thumbnailPath 
-  thumbnailPath String?
+  isDeleted   Boolean  @default(false)
   // 视频时长
-  duration      Float?
+  duration    Float?
   // 描述
-  annotation    String?
+  annotation  String?
   // 链接
-  url           String?
+  url         String?
   // 颜色
-  colors        Color[]
+  colors      Color[]
   // 文件夹
-  folders       Folder[]
+  folders     Folder[]
   // 标签
-  tags          Tag[]
+  tags        Tag[]
+  // blurDataURL Base64
+  blurDataURL String?
 }
 
 model Tag {

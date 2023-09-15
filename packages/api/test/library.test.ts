@@ -16,6 +16,12 @@ describe("library module", () => {
   });
 
   describe("add procedure", () => {
+    beforeEach(async () => {
+      await caller.config.upsert({
+        staticServerPort: 9100,
+      });
+    });
+
     it("should create a new library when none exist", async () => {
       const input = "path/to/xxx.library";
       const result = await caller.library.add(input);
