@@ -1,25 +1,45 @@
+import { OptionTable } from "@components/table";
+
 # Config 配置信息
 
-- `config/get` 获取配置信息
+- [`config/findUnique`](#获取配置信息) 获取配置信息
 - `config/upsert` 更新配置信息
 
 ## 获取配置信息
 
-`config/get`
-
-### 请求参数
-
-no params
+`config/findUnique`
 
 ### 使用方式
 
-trpc
+TRPC
 
 ```ts
-const { data: config } = trpc.config.get.useQuery();
+const configQuery = trpc.config.findUnique.useQuery();
+
+console.log(configQuery.data);
 ```
 
+HTTP
+
+```sh
+GET /trpc/config/findUnique
+```
+
+### 参数
+
+no params
+
 ### 返回值
+
+<OptionTable
+  options={[
+    [
+      "useNextSeoProps",
+      "() => NextSeoProps",
+      "A React hook function that returns options for Next SEO.",
+    ],
+  ]}
+/>
 
 ```ts
 type Config = {
@@ -31,6 +51,12 @@ type Config = {
   color: string;
   // web 主题
   theme: string;
+  // port: 9100-9300
+  serverPort: number;
+  // port: 9301-9500
+  clientPort: number;
+  // 当前 IP
+  ip: string;
 };
 ```
 

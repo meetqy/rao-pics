@@ -20,6 +20,7 @@
     "root": true
   },
   "dependencies": {
+    "framer-motion": "^10.16.4",
     "next": "^13.4.19",
     "nextra": "^2.11.1",
     "nextra-theme-docs": "^2.11.1",
