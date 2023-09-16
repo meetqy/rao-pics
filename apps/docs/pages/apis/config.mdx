@@ -13,7 +13,7 @@ import { OptionTable } from "@components/table";
 
 TRPC
 
-```ts
+```tsx
 const configQuery = trpc.config.findUnique.useQuery();
 
 console.log(configQuery.data);
@@ -33,32 +33,34 @@ no params
 
 <OptionTable
   options={[
+    ["name", "string", "`config` 唯一值"],
+    ["language", "string", "语言"],
     [
-      "useNextSeoProps",
-      "() => NextSeoProps",
-      "A React hook function that returns options for Next SEO.",
+      "color",
+      "string",
+      <>
+        外观 | 配色，具体可查看{" "}
+        <a href="https://daisyui.com/docs/themes/">daisyui themes</a>
+      </>,
     ],
+    ["theme", "string", "WEB 主题"],
+    [
+      "serverPort",
+      "number",
+      <>
+        服务端 PORT <code>9301-9500</code>
+      </>,
+    ],
+    [
+      "clientPort",
+      "number",
+      <>
+        客户端 PORT <code>9301-9500</code>
+      </>,
+    ],
+    ["ip", "string", "当前 IP 改变后会自动更新"],
   ]}
 />
-
-```ts
-type Config = {
-  // config
-  name: string;
-  // 语言 zh-cn、en-us、zh-tw
-  language: string;
-  // 外观 | 配色  具体可查看 https://daisyui.com/docs/themes/
-  color: string;
-  // web 主题
-  theme: string;
-  // port: 9100-9300
-  serverPort: number;
-  // port: 9301-9500
-  clientPort: number;
-  // 当前 IP
-  ip: string;
-};
-```
 
 ## 更新配置信息
 
