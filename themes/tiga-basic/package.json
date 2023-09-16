@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "workspace:*",
+    "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tailwind-config": "workspace:*",
     "@rao-pics/tsconfig": "workspace:*"
   }

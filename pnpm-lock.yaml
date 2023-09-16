@@ -52,15 +52,12 @@ importers:
       '@rao-pics/prettier-config':
         specifier: workspace:*
         version: link:../../tooling/prettier
+      '@rao-pics/tailwind-config':
+        specifier: workspace:*
+        version: link:../../tooling/tailwind
       '@rao-pics/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.47.0
-        version: 8.47.0
-      typescript:
-        specifier: ^5.1.6
-        version: 5.1.6
 
   apps/electron:
     dependencies:
@@ -451,6 +448,9 @@ importers:
       '@rao-pics/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
+      '@rao-pics/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
       '@rao-pics/tailwind-config':
         specifier: workspace:*
         version: link:../../tooling/tailwind
