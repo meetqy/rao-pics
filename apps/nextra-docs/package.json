@@ -1,0 +1,32 @@
+{
+  "name": "nextra-docs-template",
+  "version": "0.0.1",
+  "description": "Nextra docs template",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
+  },
+  "prettier": "@rao-pics/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@rao-pics/eslint-config/base",
+      "@rao-pics/eslint-config/nextjs",
+      "@rao-pics/eslint-config/react"
+    ],
+    "root": true
+  },
+  "dependencies": {
+    "next": "^13.4.19",
+    "nextra": "latest",
+    "nextra-theme-docs": "latest",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@rao-pics/eslint-config": "workspace:*",
+    "@rao-pics/prettier-config": "workspace:*",
+    "@rao-pics/tailwind-config": "workspace:*",
+    "@rao-pics/tsconfig": "workspace:*"
+  }
+}

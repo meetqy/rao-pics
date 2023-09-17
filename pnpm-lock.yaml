@@ -192,10 +192,10 @@ importers:
         specifier: latest
         version: 2.12.3(next@13.4.19)(nextra@2.12.3)(react-dom@18.2.0)(react@18.2.0)
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@rao-pics/eslint-config':
