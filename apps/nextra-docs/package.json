@@ -1,8 +1,10 @@
 {
-  "name": "@rao-pics/docs",
-  "version": "0.1.0",
+  "name": "@rao-pics/nextra-docs",
+  "version": "0.0.1",
+  "description": "Nextra docs template",
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "build": "next build",
+    "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "next dev",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "next lint",
@@ -22,13 +24,14 @@
     "next": "^13.4.19",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tailwind-config": "workspace:*",
-    "@rao-pics/tsconfig": "workspace:*"
+    "@rao-pics/tsconfig": "workspace:*",
+    "@types/node": "18.11.10"
   }
 }
