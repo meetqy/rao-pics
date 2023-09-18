@@ -1,9 +1,14 @@
 {
-  "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
-  "about": {
-    "title": "About",
+  "index": {
+    "title": "主页",
+    "type": "page",
+    "theme": {
+      "layout": "full"
+    },
+    "display": "hidden"
+  },
+  "apis": {
+    "title": "Api 接口",
     "type": "page"
   },
   "contact": {
