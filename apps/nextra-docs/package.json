@@ -1,13 +1,11 @@
 {
-  "name": "@rao-pics/docs",
-  "version": "0.1.0",
+  "name": "nextra-docs-template",
+  "version": "0.0.1",
+  "description": "Nextra docs template",
   "scripts": {
-    "clean": "git clean -xdf .turbo node_modules",
+    "build": "next build",
     "dev": "next dev",
-    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "lint": "next lint",
-    "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "start": "next start"
   },
   "prettier": "@rao-pics/prettier-config",
   "eslintConfig": {
