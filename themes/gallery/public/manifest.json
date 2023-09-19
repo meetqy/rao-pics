@@ -1,0 +1,9 @@
+{
+  "short_name": "Gallery",
+  "name": "Gallery For Rao Pics",
+  "theme_color": "#000",
+  "background_color": "#FFF",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

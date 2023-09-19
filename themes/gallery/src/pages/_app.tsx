@@ -23,7 +23,7 @@ function App({ Component, pageProps }: AppProps) {
 
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icons/icon_rounded/icon_512x512.png" />
-        <title>Tiga Basic for Rao Pics</title>
+        <title>Gallery for Rao Pics</title>
       </Head>
       <Component {...pageProps} />
     </>

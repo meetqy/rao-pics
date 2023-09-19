@@ -434,7 +434,7 @@ importers:
         specifier: ^0.34.2
         version: 0.34.2(@vitest/ui@0.34.3)
 
-  themes/tiga-basic:
+  themes/gallery:
     dependencies:
       '@rao-pics/api':
         specifier: workspace:^
