@@ -45,6 +45,11 @@ convert "${SOURCE_FILE_PATH}" \
     "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png"
 
 
+convert "${SOURCE_FILE_PATH}" \
+    -resize 824x824 \
+    "./${OUT_ICON_NAME}.iconset/temp_1024.png"    
+
+
 # Apply sizing and add shadow to the 1024px image.
 #
 # This works by:
@@ -59,15 +64,13 @@ convert "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png" \
     -compose DstOver -flatten \
     "./${OUT_ICON_NAME}_shadow.iconset/icon_512x512@2x.png"
 
-convert "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png" \
+convert "./${OUT_ICON_NAME}.iconset/temp_1024.png" \
     -resize 824x824 \
-    -bordercolor none -border 0x0 \
-    \( +clone -background none \) \
-    -flatten \
     "./${OUT_ICON_NAME}.iconset/icon_512x512@2x.png"    
 
 # Remove temporary file
 rm "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png"
+rm "./${OUT_ICON_NAME}.iconset/temp_1024.png"
 
 # Generate all sizes.
 # 16/32/128/256/512, each single & double resolution
