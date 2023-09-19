@@ -3,6 +3,7 @@ import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
+import * as Sentry from "@sentry/electron";
 import getPort, { portNumbers } from "get-port";
 import ip from "ip";
 
@@ -14,13 +15,20 @@ import { createDbPath } from "@rao-pics/db";
 import icon from "../../resources/icon.png?asset";
 import { createCustomIPCHandle } from "./src/ipc";
 
-const caller = router.createCaller({});
+/**
+ * Sentry init
+ */
+Sentry.init({
+  dsn: "https://178a415c4ef2421a8f52b6c4041319af@o4505321607397376.ingest.sentry.io/4505321612705792",
+  debug: false,
+});
 
 const controller = new AbortController();
 const { signal } = controller;
 
 // 获取端口
 async function initConfig() {
+  const caller = router.createCaller({});
   const config = await caller.config.get();
 
   const serverPort =
@@ -31,8 +39,39 @@ async function initConfig() {
   return await caller.config.upsert({
     serverPort,
     clientPort,
+    ip: ip.address(),
   });
 }
+
+const mainWindowReadyToShow = async () => {
+  const config = await initConfig();
+  await startExpressServer();
+
+  const { clientPort } = config;
+
+  if (!clientPort) return;
+
+  if (!IS_DEV) {
+    const child = cp.fork(
+      join(
+        process.resourcesPath,
+        "themes",
+        config?.theme ?? DEFAULT_THEME,
+        "server.js",
+      ),
+      ["child"],
+      {
+        env: { PORT: clientPort.toString(), HOSTNAME: "0.0.0.0" },
+        signal,
+      },
+    );
+
+    child.on("error", (e) => {
+      dialog.showErrorBox("child process fork error", e.message);
+      controller.abort();
+    });
+  }
+};
 
 function createWindow(): void {
   // Create the browser window.
@@ -58,9 +97,6 @@ function createWindow(): void {
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
-    void caller.config.upsert({
-      ip: ip.address(),
-    });
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -78,8 +114,8 @@ function createWindow(): void {
     void mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 
+  void mainWindowReadyToShow();
   createIPCHandler({ router, windows: [mainWindow] });
-
   createCustomIPCHandle();
 }
 
@@ -88,39 +124,9 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app
   .whenReady()
-  .then(async () => {
+  .then(() => {
     // Set app user model id for windows
     electronApp.setAppUserModelId("com.rao-pics");
-
-    const config = await initConfig();
-    await startExpressServer();
-    // 启动静态资源服务器
-    // await startStaticServer();
-
-    const { clientPort } = config;
-
-    if (!clientPort) return;
-
-    if (!IS_DEV) {
-      const child = cp.fork(
-        join(
-          process.resourcesPath,
-          "themes",
-          config?.theme ?? DEFAULT_THEME,
-          "server.js",
-        ),
-        ["child"],
-        {
-          env: { PORT: clientPort.toString(), HOSTNAME: "0.0.0.0" },
-          signal,
-        },
-      );
-
-      child.on("error", (e) => {
-        dialog.showErrorBox("child process fork error", e.message);
-        controller.abort();
-      });
-    }
 
     // Default open or close DevTools by F12 in development
     // and ignore CommandOrControl + R in production.

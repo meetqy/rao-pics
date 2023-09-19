@@ -63,15 +63,15 @@ export const startExpressServer = async () => {
    */
   app.use("/static/", (req, res, next) => {
     if (!library) {
-      return res.status(404).send("library is not defined");
+      res.status(404).send("library is not defined");
+    } else {
+      libraryPath = join(library.path, "images");
+      express.static(libraryPath, { maxAge: 180 * 1000 * 60 * 60 })(
+        req,
+        res,
+        next,
+      );
     }
-
-    libraryPath = join(library.path, "images");
-    express.static(libraryPath, { maxAge: 180 * 1000 * 60 * 60 })(
-      req,
-      res,
-      next,
-    );
   });
 
   /**

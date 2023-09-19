@@ -9,23 +9,21 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        {/* IOS https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html */}
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
-        {/* 会影响状态栏文字颜色 时间 信号 WIFI */}
-        <meta name="theme-color" content="#fff" />
+        <meta name="application-name" content="PWA App" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="PWA App" />
+        <meta name="description" content="Best PWA App in the world" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-config" content="/icons/browserconfig.xml" />
+        <meta name="msapplication-TileColor" content="#2B5797" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="theme-color" content="#fff" />
 
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/icons/icon_rounded/icon_512x512.png" />
-        <title>Tiga Theme for RaoPics</title>
+        <title>Tiga Basic for Rao Pics</title>
       </Head>
       <Component {...pageProps} />
     </>

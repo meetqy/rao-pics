@@ -1,6 +1,6 @@
 {
-  "name": "Tiga-Basic theme for Rao Pics",
-  "short_name": "Tiga Basic",
+  "short_name": "Rao Pics",
+  "name": "Tiga Basic For Rao Pics",
   "icons": [
     {
       "src": "/icons/icon/icon_512x512.png",
@@ -8,8 +8,9 @@
       "type": "image/png"
     }
   ],
-  "id": "/?source=pwa",
-  "start_url": "/?source=pwa",
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
+  "start_url": "/",
   "display": "standalone",
-  "scope": "/"
+  "orientation": "portrait"
 }

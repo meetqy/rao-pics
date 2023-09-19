@@ -179,6 +179,8 @@ export const image = t.router({
           data,
         });
       }
+
+      return null;
     }),
 
   deleteByUnique: t.procedure
