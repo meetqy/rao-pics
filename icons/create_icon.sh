@@ -62,8 +62,8 @@ convert "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png" \
 convert "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png" \
     -resize 824x824 \
     -bordercolor none -border 0x0 \
-    \( +clone -background black -background none \) \
-    -compose DstOver -flatten \
+    \( +clone -background none \) \
+    -flatten \
     "./${OUT_ICON_NAME}.iconset/icon_512x512@2x.png"    
 
 # Remove temporary file
@@ -100,3 +100,8 @@ cd '..'
 # Convert to .icns format and remove iconset
 iconutil -c icns "./${OUT_ICON_NAME}.iconset"
 # rm -r "./${OUT_ICON_NAME}.iconset"
+
+
+path="$(pwd)"
+
+ln -s $path ../themes/tiga-basic/public
