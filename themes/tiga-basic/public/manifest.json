@@ -1,0 +1,16 @@
+{
+  "short_name": "Rao Pics",
+  "name": "Tiga Basic For Rao Pics",
+  "icons": [
+    {
+      "src": "/icons/icon/icon_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

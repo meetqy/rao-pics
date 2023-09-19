@@ -65,7 +65,7 @@ function Home() {
 
   return (
     <div
-      className="pswp-gallery space-y-1 p-4 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5"
+      className="pswp-gallery space-y-1 p-3 sm:px-4 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5"
       id={id}
     >
       {pages?.map((page) => {
@@ -103,7 +103,11 @@ function Home() {
                 layout="rows"
                 photos={photos}
                 breakpoints={[640, 768, 1024, 1280, 1536]}
-                spacing={16}
+                spacing={(containerWidth) => {
+                  if (containerWidth < 640) return 12;
+
+                  return 16;
+                }}
                 targetRowHeight={(containerWidth) => {
                   if (containerWidth < 640) return containerWidth / 1;
                   if (containerWidth < 768) return containerWidth / 1;

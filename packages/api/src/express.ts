@@ -6,6 +6,8 @@ import express from "express";
 import { readFileSync } from "fs-extra";
 import { getPlaiceholder } from "plaiceholder";
 
+import type { Library } from "@rao-pics/db";
+
 import { router } from "..";
 import { createContext } from "./utils";
 
@@ -22,6 +24,7 @@ const asyncMiddleware =
 
 let server: Server<typeof IncomingMessage, typeof ServerResponse> | undefined;
 let libraryPath: string | undefined;
+let library: Library | null;
 
 export const startExpressServer = async () => {
   if (server) return;
@@ -30,7 +33,7 @@ export const startExpressServer = async () => {
 
   const caller = router.createCaller({});
   const config = await caller.config.get();
-  const library = await caller.library.get();
+  library = await caller.library.get();
 
   const port = config?.serverPort;
 
@@ -63,15 +66,15 @@ export const startExpressServer = async () => {
    */
   app.use("/static/", (req, res, next) => {
     if (!library) {
-      return res.status(404).send("library is not defined");
+      res.status(404).send("library is not defined");
+    } else {
+      libraryPath = join(library.path, "images");
+      express.static(libraryPath, { maxAge: 180 * 1000 * 60 * 60 })(
+        req,
+        res,
+        next,
+      );
     }
-
-    libraryPath = join(library.path, "images");
-    express.static(libraryPath, { maxAge: 180 * 1000 * 60 * 60 })(
-      req,
-      res,
-      next,
-    );
   });
 
   /**
@@ -130,7 +133,7 @@ export const startExpressServer = async () => {
 
 export const updateLibraryPath = async () => {
   const caller = router.createCaller({});
-  const library = await caller.library.get();
+  library = await caller.library.get();
 
   if (library?.path) {
     libraryPath = join(library.path, "images");
