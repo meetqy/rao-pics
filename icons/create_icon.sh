@@ -130,7 +130,3 @@ mv "./${OUT_ICON_NAME}.icns" "./icons/${OUT_ICON_NAME}.icns"
 mv "./${OUT_ICON_NAME}_shadow_rounded.iconset" "./icons/${OUT_ICON_NAME}_shadow_rounded"
 mv "./${OUT_ICON_NAME}_rounded.iconset" "./icons/${OUT_ICON_NAME}_rounded"
 mv "./${OUT_ICON_NAME}.iconset" "./icons/${OUT_ICON_NAME}"
-
-# 软连接
-path="$(pwd)"
-ln -s "${path}/icons" ../themes/tiga-basic/public
