@@ -3,7 +3,7 @@
   "short_name": "Tiga Basic",
   "icons": [
     {
-      "src": "/icons/icon.iconset/icon_512x512.png",
+      "src": "/icons/icon/icon_512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

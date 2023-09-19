@@ -24,7 +24,8 @@ function App({ Component, pageProps }: AppProps) {
         />
 
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/icons/icon.iconset/icon_512x512.png" />
+        <link rel="icon" href="/icons/icon_rounded/icon_512x512.png" />
+        <title>Tiga Theme for RaoPics</title>
       </Head>
       <Component {...pageProps} />
     </>

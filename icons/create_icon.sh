@@ -28,7 +28,8 @@ fi
 
 # Prepare an iconset folder
 mkdir "./${OUT_ICON_NAME}.iconset"
-mkdir "./${OUT_ICON_NAME}_shadow.iconset"
+mkdir "./${OUT_ICON_NAME}_shadow_rounded.iconset"
+mkdir "./${OUT_ICON_NAME}_rounded.iconset"
 
 
 # Add rounded corners to the 1024px image.
@@ -62,7 +63,14 @@ convert "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png" \
     -bordercolor none -border 100x100 \
     \( +clone -background black -shadow 30x10+0+10 -background none \) \
     -compose DstOver -flatten \
-    "./${OUT_ICON_NAME}_shadow.iconset/icon_512x512@2x.png"
+    "./${OUT_ICON_NAME}_shadow_rounded.iconset/icon_512x512@2x.png"
+
+convert "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png" \
+    -resize 824x824 \
+    -bordercolor none -border 0x0 \
+    \( +clone -background none \) \
+    -compose DstOver -flatten \
+    "./${OUT_ICON_NAME}_rounded.iconset/icon_512x512@2x.png"    
 
 convert "./${OUT_ICON_NAME}.iconset/temp_1024.png" \
     -resize 824x824 \
@@ -87,7 +95,20 @@ convert './icon_512x512@2x.png' \
               -resize x512        './icon_512x512.png'
 cd '..'
 
-cd "./${OUT_ICON_NAME}_shadow.iconset/"
+cd "./${OUT_ICON_NAME}_shadow_rounded.iconset/"
+convert './icon_512x512@2x.png' \
+    \( +clone -resize  x16 -write './icon_16x16.png'      +delete \) \
+    \( +clone -resize  x32 -write './icon_16x16@2x.png'   +delete \) \
+    \( +clone -resize  x32 -write './icon_32x32.png'      +delete \) \
+    \( +clone -resize  x64 -write './icon_32x32@2x.png'   +delete \) \
+    \( +clone -resize x128 -write './icon_128x128.png'    +delete \) \
+    \( +clone -resize x256 -write './icon_128x128@2x.png' +delete \) \
+    \( +clone -resize x256 -write './icon_256x256.png'    +delete \) \
+    \( +clone -resize x512 -write './icon_256x256@2x.png' +delete \) \
+              -resize x512        './icon_512x512.png'
+cd '..'
+
+cd "./${OUT_ICON_NAME}_rounded.iconset/"
 convert './icon_512x512@2x.png' \
     \( +clone -resize  x16 -write './icon_16x16.png'      +delete \) \
     \( +clone -resize  x32 -write './icon_16x16@2x.png'   +delete \) \
@@ -104,7 +125,12 @@ cd '..'
 iconutil -c icns "./${OUT_ICON_NAME}.iconset"
 # rm -r "./${OUT_ICON_NAME}.iconset"
 
+mkdir icons
+mv "./${OUT_ICON_NAME}.icns" "./icons/${OUT_ICON_NAME}.icns"
+mv "./${OUT_ICON_NAME}_shadow_rounded.iconset" "./icons/${OUT_ICON_NAME}_shadow_rounded"
+mv "./${OUT_ICON_NAME}_rounded.iconset" "./icons/${OUT_ICON_NAME}_rounded"
+mv "./${OUT_ICON_NAME}.iconset" "./icons/${OUT_ICON_NAME}"
 
+# 软连接
 path="$(pwd)"
-
-ln -s $path ../themes/tiga-basic/public
+ln -s "${path}/icons" ../themes/tiga-basic/public
