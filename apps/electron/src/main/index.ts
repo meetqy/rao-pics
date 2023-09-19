@@ -67,8 +67,7 @@ const mainWindowReadyToShow = async () => {
     );
 
     child.on("error", (e) => {
-      dialog.showErrorBox("child process fork error", e.message);
-      controller.abort();
+      console.error(e);
     });
   }
 };
