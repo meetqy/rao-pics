@@ -5,12 +5,8 @@ import App from "./App";
 
 import "./index.css";
 
-import { RecoilRoot } from "recoil";
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RecoilRoot>
-      <App />
-    </RecoilRoot>
+    <App />
   </React.StrictMode>,
 );
