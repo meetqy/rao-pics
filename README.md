@@ -45,6 +45,14 @@ https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f25
 
 > 参考 https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#binarytargets-options
 
+## Mac "文件已损坏"
+
+打开终端执行以下命令
+
+```sh
+sudo xattr -r -d com.apple.quarantine  /Applications/Rao\ Pics.app
+```
+
 ## 🌀 Todo 待办清单
 
 https://github.com/users/meetqy/projects/7/views/1
