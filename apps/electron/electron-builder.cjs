@@ -12,6 +12,7 @@ const options = {
   directories: {
     buildResources: "build",
   },
+  icon: "build/icons/icon.icns",
   asar: !isTestBuilder,
   files: [
     "!**/.vscode/*",

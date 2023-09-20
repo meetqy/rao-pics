@@ -6,6 +6,8 @@ set -eo pipefail
 SOURCE_FILE_PATH='./1024x1024.png' # has to be of size 1024x1024 px
 OUT_ICON_NAME='icon'
 
+rm -rf ./icons
+
 
 # The "design" and magic numbers below are derived from Apple's macOS app icon
 # guidelines and design templates:
@@ -122,11 +124,10 @@ convert './icon_512x512@2x.png' \
 cd '..'
 
 # Convert to .icns format and remove iconset
-iconutil -c icns "./${OUT_ICON_NAME}.iconset"
-# rm -r "./${OUT_ICON_NAME}.iconset"
+iconutil -c icns "./${OUT_ICON_NAME}_shadow_rounded.iconset"
 
 mkdir icons
-mv "./${OUT_ICON_NAME}.icns" "./icons/${OUT_ICON_NAME}.icns"
+mv "./${OUT_ICON_NAME}_shadow_rounded.icns" "./icons/${OUT_ICON_NAME}.icns"
 mv "./${OUT_ICON_NAME}_shadow_rounded.iconset" "./icons/${OUT_ICON_NAME}_shadow_rounded"
 mv "./${OUT_ICON_NAME}_rounded.iconset" "./icons/${OUT_ICON_NAME}_rounded"
 mv "./${OUT_ICON_NAME}.iconset" "./icons/${OUT_ICON_NAME}"

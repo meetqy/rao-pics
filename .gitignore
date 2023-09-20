@@ -4,6 +4,7 @@
 icons/*
 !icons/create_icon.sh
 !icons/1024x1024.png
+!icons/logo.svg
 
 .idea
 

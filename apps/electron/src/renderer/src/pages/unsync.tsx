@@ -75,7 +75,7 @@ const UnsyncPage = () => {
                           .replace(libPath, "")
                           .replace("/metadata.json", "")}
                       </span>
-                      {ArrowRightSvg}
+                      <ArrowRightSvg />
                     </span>
                   </div>
                 </div>

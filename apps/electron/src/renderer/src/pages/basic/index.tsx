@@ -141,7 +141,7 @@ const BasicPage = () => {
               }}
             >
               <span>{library?.path}</span>
-              {ArrowRightSvg}
+              <ArrowRightSvg />
             </span>
           </div>
 
@@ -171,7 +171,7 @@ const BasicPage = () => {
               {config && (
                 <span>{`http://${config.ip}:${config.clientPort}`}</span>
               )}
-              {ArrowRightSvg}
+              <ArrowRightSvg />
             </span>
           </div>
 
@@ -226,7 +226,7 @@ const BasicPage = () => {
 
             <span className="cursor-pointer text-base-content/60 transition-colors hover:text-base-content">
               {lang.setting_desc}
-              {ArrowRightSvg}
+              <ArrowRightSvg />
             </span>
           </div>
         </div>

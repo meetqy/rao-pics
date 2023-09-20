@@ -1,7 +1,7 @@
 /**
  * 右侧箭头
  */
-export const ArrowRightSvg = (
+export const ArrowRightSvg = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

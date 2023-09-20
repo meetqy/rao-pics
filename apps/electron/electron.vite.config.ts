@@ -4,6 +4,7 @@ import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react";
 
 const IS_DEV = process.env.NODE_ENV === "development";
+const IS_TEST_BUILDER = process.env.IS_TEST_BUILDER === "true";
 
 export default defineConfig({
   main: {
@@ -28,6 +29,7 @@ export default defineConfig({
       }),
 
       !IS_DEV &&
+        !IS_TEST_BUILDER &&
         sentryVitePlugin({
           org: "meetqy",
           project: "rao-pics",
