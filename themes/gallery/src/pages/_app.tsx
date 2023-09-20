@@ -22,7 +22,7 @@ function App({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#fff" />
 
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/icons/icon_rounded/icon_512x512.png" />
+        <link rel="icon" href="/logo.svg" />
         <title>Gallery for Rao Pics</title>
       </Head>
       <Component {...pageProps} />
