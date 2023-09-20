@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://rao.pics" target="_blank">
-        <img width="196" src="./rao-pics.svg" alt="rao.pics logo"/>
+        <img width="196" src="./logo.svg" alt="rao.pics logo"/>
     </a>
     <h1 align="center">Rao Pics</h1>
     <p align="center">基于素材管理软件，帮助你跨设备查看素材、图片、视频</p>
@@ -12,6 +12,8 @@
         <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fmeetqy%2Frao-pics?ref=badge_small" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmeetqy%2Frao-pics.svg?type=small"/></a>
     </div>
 </p>
+
+fill="rgb(32,127,76)"
 
 <img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
 
