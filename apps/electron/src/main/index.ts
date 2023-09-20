@@ -12,7 +12,6 @@ import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV } from "@rao-pics/constant/server";
 import { createDbPath } from "@rao-pics/db";
 
-import icon from "../../resources/icon.png?asset";
 import { createCustomIPCHandle } from "./src/ipc";
 
 /**
@@ -87,7 +86,6 @@ function createWindow(): void {
       y: 16,
       x: 12,
     },
-    ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false,
