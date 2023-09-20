@@ -13,7 +13,8 @@
     </div>
 </p>
 
-fill="rgb(32,127,76)"
+rgb(120,193,140)
+
 
 <img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
 
