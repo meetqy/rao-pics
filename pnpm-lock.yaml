@@ -246,6 +246,9 @@ importers:
       plaiceholder:
         specifier: ^3.0.0
         version: 3.0.0(sharp@0.32.5)
+      sharp:
+        specifier: ^0.32.5
+        version: 0.32.5
       superjson:
         specifier: 1.13.1
         version: 1.13.1
@@ -283,9 +286,6 @@ importers:
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
-      sharp:
-        specifier: ^0.32.5
-        version: 0.32.5
       typescript:
         specifier: ^5.1.6
         version: 5.1.6

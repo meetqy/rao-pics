@@ -9,10 +9,13 @@ import ip from "ip";
 
 import { router, startExpressServer, stopExpressServer } from "@rao-pics/api";
 import { DEFAULT_THEME } from "@rao-pics/constant";
-import { IS_DEV } from "@rao-pics/constant/server";
+import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath } from "@rao-pics/db";
 
+import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
+import createMenu from "./src/menu";
+import createTray from "./src/tray";
 
 /**
  * Sentry init
@@ -101,6 +104,13 @@ function createWindow(): void {
     return { action: "deny" };
   });
 
+  mainWindow.on("close", (e) => {
+    if (process.env.QUITE != "true") {
+      e.preventDefault();
+      mainWindow.hide();
+    }
+  });
+
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (IS_DEV && process.env.ELECTRON_RENDERER_URL) {
@@ -114,6 +124,9 @@ function createWindow(): void {
   void mainWindowReadyToShow();
   createIPCHandler({ router, windows: [mainWindow] });
   createCustomIPCHandle();
+  createMenu(mainWindow);
+  createTray(mainWindow);
+  hideDock(mainWindow);
 }
 
 // This method will be called when Electron has finished
@@ -153,11 +166,21 @@ app.on("window-all-closed", () => {
   }
 });
 
+app.on("before-quit", (e) => {
+  if (process.env.QUITE != "true") {
+    e.preventDefault();
+  }
+});
+
 app.on("quit", () => {
   // 关闭子进程
   controller.abort();
   // 关闭静态服务器
   stopExpressServer();
+
+  if (PLATFORM != "darwin") {
+    app.quit();
+  }
 });
 
 // Catch all error.
