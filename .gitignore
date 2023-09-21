@@ -1,10 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # icons
-icons/*
-!icons/create_icon.sh
-!icons/1024x1024.png
-!icons/logo.svg
+icons/icons
 
 .idea
 
