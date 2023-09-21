@@ -1,10 +1,15 @@
 import type { BrowserWindow } from "electron";
 import { app, Menu, nativeImage, Tray } from "electron";
 
+import { PLATFORM } from "@rao-pics/constant/server";
+
+import iconWin from "../../../resources/icon-winTemplate@3x.png?asset";
 import icon from "../../../resources/iconTemplate@3x.png?asset";
 
 const createTray = (window: BrowserWindow) => {
-  const tray = new Tray(nativeImage.createFromPath(icon));
+  const tray = new Tray(
+    nativeImage.createFromPath(PLATFORM === "win32" ? iconWin : icon),
+  );
 
   const contextMenu = Menu.buildFromTemplate([
     {
