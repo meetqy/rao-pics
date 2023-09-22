@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { Prisma } from "@rao-pics/db";
+import type { Color, Folder, Image, Prisma, Tag } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
 import { router } from "..";
@@ -18,7 +18,7 @@ export const image = t.router({
     .query(async ({ input }) => {
       const { includes } = input;
 
-      return prisma.image.findUnique({
+      const image = await prisma.image.findUnique({
         where: {
           id: input.id,
           path: input.path,
@@ -29,6 +29,18 @@ export const image = t.router({
           folders: includes?.includes("folders"),
         },
       });
+
+      return image
+        ? {
+            ...image,
+            thumbnailPath: image.noThumbnail
+              ? image.path
+              : image.path.replace(
+                  "metadata.json",
+                  `${image.name}_thumbnail.png`,
+                ),
+          }
+        : null;
     }),
 
   upsert: t.procedure
@@ -225,7 +237,7 @@ export const image = t.router({
 
       const { cursor, includes } = input ?? {};
 
-      const images = await prisma.image.findMany({
+      let images = await prisma.image.findMany({
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
         orderBy: { createdTime: "desc" },
@@ -234,6 +246,19 @@ export const image = t.router({
           colors: includes?.includes("colors"),
           folders: includes?.includes("folders"),
         },
+      });
+
+      type ResultImage = Image & { tags: Tag[] } & { colors: Color[] } & {
+        folders: Folder[];
+      } & { thumbnailPath: string };
+
+      images = images.map((item) => {
+        const _item = item as ResultImage;
+        _item.thumbnailPath = _item.noThumbnail
+          ? _item.path
+          : _item.path.replace("metadata.json", `${_item.name}_thumbnail.png`);
+
+        return _item;
       });
 
       let nextCursor: typeof cursor | undefined = undefined;

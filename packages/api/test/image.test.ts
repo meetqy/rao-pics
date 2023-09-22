@@ -21,8 +21,28 @@ describe("image module", () => {
 
     it("should find an image by id", async () => {
       const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+      });
+
+      const result = await caller.image.findUnique({ id: testImage.id });
+      console.log(result);
+
+      expect(result).toEqual({
+        ...testImage,
+        thumbnailPath: "/path/to/image_thumbnail.png",
+      });
+    });
+
+    it("should find an image by id", async () => {
+      const testImage = await caller.image.upsert({
         path: "/path/to/image.jpg",
-        name: "image.jpg",
+        name: "image",
         size: 1024,
         ext: "jpg",
         width: 800,
@@ -32,7 +52,10 @@ describe("image module", () => {
 
       const result = await caller.image.findUnique({ id: testImage.id });
 
-      expect(result).toEqual(testImage);
+      expect(result).toEqual({
+        ...testImage,
+        thumbnailPath: "/path/to/image.jpg",
+      });
     });
 
     it("should find an image by path", async () => {
@@ -48,7 +71,10 @@ describe("image module", () => {
 
       const result = await caller.image.findUnique({ path: testImage.path });
 
-      expect(result).toEqual(testImage);
+      expect(result).toEqual({
+        ...testImage,
+        thumbnailPath: "/path/to/1image.jpg",
+      });
     });
 
     it("should return null if no image is found", async () => {
