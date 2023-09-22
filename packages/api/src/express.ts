@@ -18,7 +18,7 @@ export const startExpressServer = async () => {
   const app = express();
 
   const caller = router.createCaller({});
-  const config = await caller.config.get();
+  const config = await caller.config.findUnique();
   library = await caller.library.get();
 
   const port = config?.serverPort;

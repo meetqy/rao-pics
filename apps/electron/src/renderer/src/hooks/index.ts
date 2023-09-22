@@ -10,7 +10,7 @@ type Language = "zh-cn" | "en-us" | "zh-tw";
 export function useLanguage<T>(languages: T) {
   const utils = trpc.useContext();
 
-  const { data: config } = trpc.config.get.useQuery();
+  const { data: config } = trpc.config.findUnique.useQuery();
 
   const setLanguage = trpc.config.upsert.useMutation({
     onSuccess: () => {
@@ -35,7 +35,7 @@ export function useLanguage<T>(languages: T) {
  */
 export function useColor() {
   const utils = trpc.useContext();
-  const { data: config } = trpc.config.get.useQuery();
+  const { data: config } = trpc.config.findUnique.useQuery();
 
   const setColor = trpc.config.upsert.useMutation({
     onSuccess: () => {

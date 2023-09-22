@@ -64,7 +64,7 @@ const BasicPage = () => {
 
   // 同步中、初始化中 禁用按钮
   const [disabled, setDisabled] = useState(false);
-  const { data: config } = trpc.config.get.useQuery();
+  const { data: config } = trpc.config.findUnique.useQuery();
 
   const { data: library } = trpc.library.get.useQuery();
   const onStartSync = trpc.sync.start.useMutation({

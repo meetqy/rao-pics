@@ -19,7 +19,7 @@ function Home() {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
-  const { data: config } = trpc.config.get.useQuery();
+  const { data: config } = trpc.config.findUnique.useQuery();
   const isFetching = useRef(false);
 
   // 加载更多

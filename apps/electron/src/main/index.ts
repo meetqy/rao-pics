@@ -31,7 +31,7 @@ const { signal } = controller;
 // 获取端口
 async function initConfig() {
   const caller = router.createCaller({});
-  const config = await caller.config.get();
+  const config = await caller.config.findUnique();
 
   const serverPort =
     config?.serverPort ?? (await getPort({ port: portNumbers(9100, 9300) }));

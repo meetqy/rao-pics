@@ -21,7 +21,7 @@ describe("config module", () => {
         language: "zh-cn",
       });
 
-      const res = await caller.config.get();
+      const res = await caller.config.findUnique();
 
       expect(res).toEqual({
         name: "config",
@@ -40,7 +40,7 @@ describe("config module", () => {
         serverPort: 8080,
       });
 
-      const res = await caller.config.get();
+      const res = await caller.config.findUnique();
 
       expect(res).toEqual({
         name: "config",
@@ -72,7 +72,7 @@ describe("config module", () => {
         color: "senven",
       });
 
-      const res = await caller.config.get();
+      const res = await caller.config.findUnique();
 
       expect(res).toEqual({
         name: "config",
@@ -90,7 +90,7 @@ describe("config module", () => {
         theme: "dark",
       });
 
-      const res = await caller.config.get();
+      const res = await caller.config.findUnique();
 
       expect(res).toEqual({
         name: "config",

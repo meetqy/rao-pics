@@ -40,7 +40,7 @@ export const config = t.router({
       });
     }),
 
-  get: t.procedure.query(async () => {
+  findUnique: t.procedure.query(async () => {
     return await prisma.config.findFirst({ where: { name: "config" } });
   }),
 });
