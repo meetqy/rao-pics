@@ -10,12 +10,7 @@ const config = {
   typescript: { ignoreBuildErrors: true },
   output: "standalone",
   images: {
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "**",
-      },
-    ],
+    unoptimized: true,
   },
 };
 

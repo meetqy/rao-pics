@@ -268,7 +268,7 @@ export const image = t.router({
       }
 
       return {
-        data: images,
+        data: images as ResultImage[],
         nextCursor,
       };
     }),

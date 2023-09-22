@@ -74,20 +74,6 @@ const SettingPage = () => {
               </select>
             </div>
           </div>
-
-          <div className="card-row">
-            <div>
-              <div className="h-5 w-5 text-center">
-                <span
-                  className="text-xl font-light"
-                  style={{ lineHeight: "16px" }}
-                >
-                  v
-                </span>
-              </div>
-              <span className="ml-2">版本号</span>
-            </div>
-          </div>
         </div>
       </div>
     </Content>

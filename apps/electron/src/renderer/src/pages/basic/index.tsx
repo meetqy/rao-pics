@@ -12,8 +12,8 @@ const languages = {
     title: "基础信息",
     file_path: "资源库路径",
     preview: "预览",
-    setting: "设置",
-    setting_desc: "更多关于库的设置",
+    last_time: "最后同步",
+    un_sync: "暂未同步",
     sync_count: "同步数量",
     btn_sync: "同步",
     btn_remove: "移除",
@@ -28,8 +28,8 @@ const languages = {
     title: "Basic Information",
     file_path: "Library Path",
     preview: "Preview",
-    setting: "Setting",
-    setting_desc: "More settings about the library",
+    last_time: "Last Time",
+    un_sync: "Un Sync",
     sync_count: "Sync Count",
     btn_sync: "Sync",
     btn_remove: "Remove",
@@ -44,8 +44,8 @@ const languages = {
     title: "基礎信息",
     file_path: "资源库路径",
     preview: "預覽",
-    setting: "設置",
-    setting_desc: "更多關於庫的設置",
+    last_time: "最後同步",
+    un_sync: "暫未同步",
     sync_count: "同步數量",
     btn_sync: "同步",
     btn_remove: "移除",
@@ -147,31 +147,27 @@ const BasicPage = () => {
 
           <div className="card-row">
             <span>
-              <div className="rounded-md bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 text-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="h-4 w-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5"
-                  />
-                </svg>
-              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
 
-              <span className="ml-2 flex items-center">{lang.preview}</span>
+              <span className="ml-2 flex items-center">{lang.last_time}</span>
             </span>
 
             <span className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content">
-              {config && (
-                <span>{`http://${config.ip}:${config.clientPort}`}</span>
-              )}
-              <ArrowRightSvg />
+              {library?.lastSyncTime?.toLocaleString("zh", { hour12: false }) ??
+                lang.un_sync}
             </span>
           </div>
 
@@ -206,26 +202,38 @@ const BasicPage = () => {
         <div className="card-wrapper mt-4">
           <div className="card-row">
             <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
-                />
-              </svg>
+              <div className="rounded-md bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-4 w-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5"
+                  />
+                </svg>
+              </div>
 
-              <span className="ml-2 flex items-center">{lang.setting}</span>
+              <span className="ml-2 flex items-center">{lang.preview}</span>
             </span>
 
-            <span className="cursor-pointer text-base-content/60 transition-colors hover:text-base-content">
-              {lang.setting_desc}
+            <span
+              aria-hidden="true"
+              onClick={() => {
+                void window.shell.openExternal(
+                  `http://${config?.ip}:${config?.clientPort}`,
+                );
+              }}
+              className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content"
+            >
+              {config && (
+                <span>{`http://${config.ip}:${config.clientPort}`}</span>
+              )}
               <ArrowRightSvg />
             </span>
           </div>

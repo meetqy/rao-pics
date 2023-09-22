@@ -7,6 +7,8 @@ import { useWindowScroll } from "react-use";
 
 import "photoswipe/style.css";
 
+import { numberToHex } from "@rao-pics/utils";
+
 import { trpc } from "~/utils/trpc";
 
 function Home() {
@@ -14,11 +16,12 @@ function Home() {
   const limit = 50;
 
   const imageQuery = trpc.image.find.useInfiniteQuery(
-    { limit },
+    { limit, includes: ["colors"] },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
+
   const { data: config } = trpc.config.findUnique.useQuery();
   const isFetching = useRef(false);
 
@@ -72,20 +75,15 @@ function Home() {
         const photos = page.data?.map((image) => {
           const id = image.path.split("/").slice(-2)[0];
           const src = `http://${config?.ip}:${config?.serverPort}/static/${id}/${image.name}.${image.ext}`;
-          const blurDataURL = `http://${config?.ip}:${config?.serverPort}/static/blur/${id}/${image.name}.${image.ext}`;
+          const thumbnailPath = `http://${config?.ip}:${config?.serverPort}/static/${id}/${image.name}_thumbnail.png`;
 
           return {
             id: image.id,
             src,
-            blurDataURL: image.blurDataURL ?? blurDataURL,
+            thumbnailPath,
+            bgColor: numberToHex(image.colors?.[0]?.rgb ?? 0),
             width: image.width,
             height: image.height,
-            // srcset: [
-            //   16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200,
-            //   1920, 2048, 3840,
-            // ]
-            //   .map((size) => `/_next/image?url=${src}?w=${size}&q=75`)
-            //   .join(", "),
           };
         });
 
@@ -127,8 +125,9 @@ function Home() {
 }
 
 interface T extends Photo {
-  blurDataURL?: string;
+  thumbnailPath: string;
   id: number;
+  bgColor: string;
 }
 
 function NextJsImage({
@@ -141,7 +140,6 @@ function NextJsImage({
       href={photo.src}
       data-pswp-width={photo.width}
       data-pswp-height={photo.height}
-      // data-src-set={photo.srcSet}
       key={`photo-swipe-lightbox-${photo.id}`}
       className="photo-swipe-lightbox-a select-none overflow-hidden rounded-md border shadow"
       style={{ ...wrapperStyle, position: "relative" }}
@@ -149,10 +147,13 @@ function NextJsImage({
       rel="noreferrer"
     >
       <Image
-        src={photo}
+        style={{ backgroundColor: photo.bgColor + "20" }}
+        src={{
+          src: photo.thumbnailPath,
+          width: photo.width,
+          height: photo.height,
+        }}
         draggable={false}
-        blurDataURL={photo.blurDataURL}
-        placeholder="blur"
         {...{ alt, title, sizes, onClick }}
       />
     </a>
