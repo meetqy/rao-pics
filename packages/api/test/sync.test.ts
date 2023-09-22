@@ -35,7 +35,7 @@ describe("folder module", () => {
     ];
     await syncFolder(input, caller);
 
-    expect(await caller.config.find()).toHaveLength(4);
-    expect(await caller.config.find({ pid: "LKRVQVLHGERAX" })).toHaveLength(1);
+    expect(await caller.folder.find()).toHaveLength(4);
+    expect(await caller.folder.find({ pid: "LKRVQVLHGERAX" })).toHaveLength(1);
   });
 });
