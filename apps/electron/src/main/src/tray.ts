@@ -1,7 +1,7 @@
 import type { BrowserWindow } from "electron";
 import { app, Menu, nativeImage, Tray } from "electron";
 
-import icon from "../../../resources/iconTemplate@3x.png?asset";
+import icon from "../../../resources/rTemplate@4x.png?asset";
 
 const createTray = (window: BrowserWindow) => {
   const tray = new Tray(nativeImage.createFromPath(icon));
