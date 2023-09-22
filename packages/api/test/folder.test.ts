@@ -27,7 +27,7 @@ describe("folder module", () => {
 
       expect(result).toMatchObject(input);
 
-      const dbItem = await caller.folder.get({
+      const dbItem = await caller.config.find({
         id: input.id,
       });
 
@@ -51,7 +51,7 @@ describe("folder module", () => {
 
       expect(result).toMatchObject(input);
 
-      const dbItem = await caller.folder.get({ id: input.id });
+      const dbItem = await caller.config.find({ id: input.id });
 
       expect(dbItem).toMatchObject(input);
     });
@@ -79,7 +79,7 @@ describe("folder module", () => {
 
       await caller.folder.upsert(input);
 
-      const result = await caller.folder.get();
+      const result = await caller.config.find();
 
       expect(result).toMatchObject([input]);
     });
@@ -93,7 +93,7 @@ describe("folder module", () => {
 
       await caller.folder.upsert(input);
 
-      const result = await caller.folder.get({ id: input.id });
+      const result = await caller.config.find({ id: input.id });
 
       expect(result).toMatchObject(input);
     });
@@ -123,7 +123,7 @@ describe("folder module", () => {
       await caller.folder.upsert(input1);
       await caller.folder.upsert(input2);
 
-      const result = await caller.folder.get({ pid: input.id });
+      const result = await caller.config.find({ pid: input.id });
 
       expect(result).toHaveLength(2);
       expect(result).toMatchObject([input1, input2]);
