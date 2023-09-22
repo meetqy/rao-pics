@@ -13,7 +13,7 @@ function Home() {
   const [, setIndex] = useState(-1);
   const limit = 50;
 
-  const imageQuery = trpc.image.get.useInfiniteQuery(
+  const imageQuery = trpc.image.find.useInfiniteQuery(
     { limit },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

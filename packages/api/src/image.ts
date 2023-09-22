@@ -210,7 +210,7 @@ export const image = t.router({
       return null;
     }),
 
-  get: t.procedure
+  find: t.procedure
     .input(
       z
         .object({
