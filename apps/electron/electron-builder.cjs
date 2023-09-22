@@ -49,7 +49,7 @@ const options = {
       from: resolve(__dirname, "./node_modules/@rao-pics/db/prisma/db.sqlite"),
       to: "extraResources/db.sqlite",
     },
-    ...copyTheme("tiga-basic"),
+    ...copyTheme("gallery"),
   ],
 };
 

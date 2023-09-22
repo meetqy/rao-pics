@@ -80,12 +80,12 @@ function Home() {
             blurDataURL: image.blurDataURL ?? blurDataURL,
             width: image.width,
             height: image.height,
-            srcset: [
-              16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200,
-              1920, 2048, 3840,
-            ]
-              .map((size) => `/_next/image?url=${src}?w=${size}&q=75 ${size}w`)
-              .join(", "),
+            // srcset: [
+            //   16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200,
+            //   1920, 2048, 3840,
+            // ]
+            //   .map((size) => `/_next/image?url=${src}?w=${size}&q=75`)
+            //   .join(", "),
           };
         });
 
@@ -141,7 +141,7 @@ function NextJsImage({
       href={photo.src}
       data-pswp-width={photo.width}
       data-pswp-height={photo.height}
-      data-src-set={photo.srcSet}
+      // data-src-set={photo.srcSet}
       key={`photo-swipe-lightbox-${photo.id}`}
       className="photo-swipe-lightbox-a select-none overflow-hidden rounded-md border shadow"
       style={{ ...wrapperStyle, position: "relative" }}

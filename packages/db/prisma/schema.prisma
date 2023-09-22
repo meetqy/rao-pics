@@ -80,6 +80,8 @@ model Image {
   tags        Tag[]
   // blurDataURL Base64
   blurDataURL String?
+  // 没有缩略图
+  noThumbnail Boolean  @default(false)
 }
 
 model Tag {

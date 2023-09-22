@@ -4,7 +4,7 @@ import { z } from "zod";
 /**
  * 默认主题
  */
-export const DEFAULT_THEME = "tiga-basic";
+export const DEFAULT_THEME = "gallery";
 
 /**
  * 项目名称
