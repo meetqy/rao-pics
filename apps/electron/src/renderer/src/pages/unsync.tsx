@@ -28,7 +28,7 @@ const UnsyncPage = () => {
 
   const [keywords, setKeywords] = useState("");
   const debounceKeywords = useDebounce(keywords, 300);
-  const lib = trpc.library.get.useQuery();
+  const lib = trpc.library.findUnique.useQuery();
 
   const logQuery = trpc.log.get.useQuery({
     limit: 50,

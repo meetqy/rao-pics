@@ -19,7 +19,7 @@ export const startExpressServer = async () => {
 
   const caller = router.createCaller({});
   const config = await caller.config.findUnique();
-  library = await caller.library.get();
+  library = await caller.library.findUnique();
 
   const port = config?.serverPort;
 
@@ -70,7 +70,7 @@ export const startExpressServer = async () => {
 
 export const updateLibraryPath = async () => {
   const caller = router.createCaller({});
-  library = await caller.library.get();
+  library = await caller.library.findUnique();
 
   if (library?.path) {
     libraryPath = join(library.path, "images");

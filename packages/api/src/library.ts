@@ -16,7 +16,7 @@ const ee = new EventEmitter();
 let watcher: chokidar.FSWatcher | null = null;
 
 export const library = t.router({
-  get: t.procedure.query(async () => {
+  findUnique: t.procedure.query(async () => {
     const [library, pendingCount, syncCount, unSyncCount] =
       await prisma.$transaction([
         prisma.library.findFirst(),

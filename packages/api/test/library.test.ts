@@ -86,7 +86,7 @@ describe("library module", () => {
       const input = "path/to/xxx.library";
       await caller.library.add(input);
 
-      const result = await caller.library.get();
+      const result = await caller.library.findUnique();
 
       expect(result).toMatchObject({
         path: input,
@@ -121,7 +121,7 @@ describe("library module", () => {
 
       expect(await prisma.image.findMany()).toHaveLength(0);
       expect(await prisma.folder.findMany()).toHaveLength(0);
-      expect(await caller.library.get()).toBeNull();
+      expect(await caller.library.findUnique()).toBeNull();
       expect(await caller.pending.get()).toHaveLength(0);
     });
   });

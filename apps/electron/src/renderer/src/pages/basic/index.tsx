@@ -66,7 +66,7 @@ const BasicPage = () => {
   const [disabled, setDisabled] = useState(false);
   const { data: config } = trpc.config.findUnique.useQuery();
 
-  const { data: library } = trpc.library.get.useQuery();
+  const { data: library } = trpc.library.findUnique.useQuery();
   const onStartSync = trpc.sync.start.useMutation({
     onError: (err) => {
       console.error(err);

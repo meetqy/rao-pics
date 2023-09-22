@@ -23,7 +23,7 @@ const Layout = () => {
   const { lang } = useLanguage(languages);
   const { color } = useColor();
 
-  const { data: library } = trpc.library.get.useQuery();
+  const { data: library } = trpc.library.findUnique.useQuery();
   const libraryName = library?.path.split("/").slice(-1)[0] ?? lang.no_library;
 
   return (

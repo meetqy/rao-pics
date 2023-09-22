@@ -22,7 +22,7 @@ export const folder = t.router({
       });
     }),
 
-  get: t.procedure
+  find: t.procedure
     .input(
       z
         .object({
