@@ -1,26 +1,12 @@
 import type { IncomingMessage, Server, ServerResponse } from "http";
 import { join } from "path";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import type { NextFunction, Request, RequestHandler, Response } from "express";
 import express from "express";
-import { readFileSync } from "fs-extra";
-import { getPlaiceholder } from "plaiceholder";
 
 import type { Library } from "@rao-pics/db";
 
 import { router } from "..";
 import { createContext } from "./utils";
-
-/**
- * reference https://stackoverflow.com/questions/51535455/express-js-use-async-function-on-requests
- * @param fn
- * @returns
- */
-const asyncMiddleware =
-  (fn: RequestHandler) =>
-  (req: Request, res: Response, next: NextFunction): void => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
 
 let server: Server<typeof IncomingMessage, typeof ServerResponse> | undefined;
 let libraryPath: string | undefined;
@@ -76,55 +62,6 @@ export const startExpressServer = async () => {
       );
     }
   });
-
-  /**
-   * 占位图
-   */
-  app.use(
-    "/static/blur/",
-    asyncMiddleware((req, res) => {
-      void (async () => {
-        const parts = req.path.split("/");
-        const imageDbPath = join(
-          libraryPath ?? "",
-          parts[parts.length - 2] ?? "",
-          "metadata.json",
-        );
-        const image = await caller.image.findUnique({
-          path: imageDbPath,
-        });
-
-        res.writeHead(200, {
-          "Content-Type": "image/png",
-        });
-
-        if (image?.blurDataURL) {
-          const img = Buffer.from(
-            image.blurDataURL.replace(
-              /^data:image\/(png|jpeg|jpg);base64,/,
-              "",
-            ),
-            "base64",
-          );
-          res.end(img);
-        } else {
-          const file = readFileSync(join(libraryPath ?? "", req.path));
-          const { base64 } = await getPlaiceholder(file);
-          const img = Buffer.from(
-            base64.replace(/^data:image\/(png|jpeg|jpg);base64,/, ""),
-            "base64",
-          );
-
-          void caller.image.update({
-            path: imageDbPath,
-            blurDataURL: `data:image/png;base64,${img.toString("base64")}`,
-          });
-
-          res.end(img);
-        }
-      })();
-    }),
-  );
 
   server = app.listen(port, () => {
     console.log(`express server is listening on http://localhost:${port}`);

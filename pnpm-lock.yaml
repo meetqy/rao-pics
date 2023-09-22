@@ -243,12 +243,6 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      plaiceholder:
-        specifier: ^3.0.0
-        version: 3.0.0(sharp@0.32.5)
-      sharp:
-        specifier: ^0.32.5
-        version: 0.32.5
       superjson:
         specifier: 1.13.1
         version: 1.13.1
@@ -9392,7 +9386,7 @@ packages:
   /tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
     dependencies:
-      safe-buffer: 5.1.2
+      safe-buffer: 5.2.1
     dev: false
 
   /turbo-darwin-64@1.10.13:

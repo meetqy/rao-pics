@@ -47,6 +47,7 @@ export const image = t.router({
         url: z.string().optional(),
         isDeleted: z.boolean().optional(),
         blurDataURL: z.string().optional(),
+        noThumbnail: z.boolean().optional().default(false),
         tags: z
           .object({
             connect: z.array(z.string()).optional(),
@@ -82,6 +83,7 @@ export const image = t.router({
         mtime: input.mtime,
         isDeleted: input.isDeleted,
         blurDataURL: input.blurDataURL,
+        noThumbnail: input.noThumbnail,
       };
 
       const { tags, id, colors, folders } = input;
@@ -154,6 +156,7 @@ export const image = t.router({
           url: z.string().optional(),
           isDeleted: z.boolean().optional(),
           blurDataURL: z.string().optional(),
+          noThumbnail: z.boolean().optional(),
         })
         .partial()
         .refine(
