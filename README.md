@@ -24,14 +24,6 @@
 - 📱 同时支持手机、平板、PC
 - 📌 默认主题支持 PWA，你可以保存为应用，无需每次打开浏览器
 
-## Mac软件打开提示：已损坏，无法打开。
-
-打开终端执下命令：
-
-```sh
-sudo xattr -r -d com.apple.quarantine  /Applications/Rao\ Pics.app
-```
-
 ## 支持
 
 - 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate)，如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao) 支持作者 😘😘😘
