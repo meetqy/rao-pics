@@ -34,7 +34,12 @@ const options = {
   afterSign: "build/notarize.js",
   mac: {
     entitlementsInherit: "build/entitlements.mac.plist",
-    target: isTestBuilder ? "dir" : "dmg",
+    target: isTestBuilder
+      ? "dir"
+      : {
+          target: "dmg",
+          arch: ["arm64", "x64"],
+        },
   },
   win: {
     target: isTestBuilder ? "dir" : { target: "nsis", arch: ["x64"] },
