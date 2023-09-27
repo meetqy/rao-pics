@@ -1,4 +1,8 @@
-> v1.0.0-alpha 属于测试版，BUG 比较多，建议使用稳定版 [v0.7.16](https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma)
+<p align="center">
+    <strong>
+        v1.0.0-alpha 是测试版 BUG 比较多，建议使用稳定版 <a href="https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma">v0.7.16</a>
+    </strong>
+</p>
 
 <div align="center">
     <a href="https://rao.pics" target="_blank">
