@@ -13,12 +13,15 @@
     </p>
 </div>
 
-<p float="left">
-    <img src="https://github.com/meetqy/rao-pics/assets/18411315/5c106f28-1122-4f81-a7be-3ac5d1f3d446" alt="rao.pics screenshot1"/>
-    <img src="https://github.com/meetqy/rao-pics/assets/18411315/13a82543-50b5-43b5-9d02-2dc50a03aaa3" alt="rao.pics screenshot2"/>
-    <img src="https://github.com/meetqy/rao-pics/assets/18411315/de85b011-f8be-45fd-8841-e9cffcb5a7e5" alt="rao.pics screenshot3"/>
-    <img src="https://github.com/meetqy/rao-pics/assets/18411315/644f81bb-b444-42c3-ae53-e2a2399a1e03" alt="rao.pics screenshot4"/>
-</p>
+<div align="center">
+    <img width='48%' src="https://github.com/meetqy/rao-pics/assets/18411315/5c106f28-1122-4f81-a7be-3ac5d1f3d446" alt="rao.pics screenshot1"/>
+    <img width='48%' src="https://github.com/meetqy/rao-pics/assets/18411315/13a82543-50b5-43b5-9d02-2dc50a03aaa3" alt="rao.pics screenshot2"/>
+</div>
+
+<div align="center">
+    <img width='48%' src="https://github.com/meetqy/rao-pics/assets/18411315/de85b011-f8be-45fd-8841-e9cffcb5a7e5" alt="rao.pics screenshot3"/>
+    <img width='48%' src="https://github.com/meetqy/rao-pics/assets/18411315/644f81bb-b444-42c3-ae53-e2a2399a1e03" alt="rao.pics screenshot4"/>
+</div>
 
 ## 特点
 
