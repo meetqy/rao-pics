@@ -32,6 +32,12 @@
 - 📱 同时支持手机、平板、PC
 - 📌 默认主题支持 PWA，你可以保存为应用，无需每次打开浏览器
 
+## 其他版本
+
+- [Electron 0.7.16](https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma) - 初代 Electron App
+- [Docker](https://github.com/rao-pics/docker) - 支持 Eagle，素材库过大，同步会有些卡
+- [Eagle Api](https://github.com/meetqy/eagle-api) - 让你的 eagle 拥有 api 查询能力，基于 json-server
+
 ## 支持
 
 - 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate)，如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao) 支持作者 😘😘😘
