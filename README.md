@@ -5,7 +5,7 @@
 ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/meetqy/5c4881f21bab2cf4f09a8658354fb997/raw/rao-pics_core__coverage.json)
 [![License](https://img.shields.io/github/license/rao-pics/core)](https://github.com/rao-pics/core/blob/turbo-electron-prisma/LICENSE)
 [![Release](https://img.shields.io/github/v/release/rao-pics/core)](https://github.com/rao-pics/core/releases)
-[![Download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/rao-pics/rao-pics/releases)
+[![Download](https://img.shields.io/github/downloads/rao-pics/core/total)](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16)
 [![Twitter URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Frao-pics%2Frao-pics)](https://twitter.com/intent/tweet?text=Visit%20Material%20on%20Any%20device.https://github.com/rao-pics/core)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmeetqy%2Frao-pics.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmeetqy%2Frao-pics?ref=badge_shield)
 
@@ -29,19 +29,19 @@ https://github.com/rao-pics/rao-pics/assets/18411315/e534b1a1-709b-4af7-9c40-f25
 
 ## 下载对应版本
 
-| 平台                  | 对应版本                                                                                            |
-| --------------------- | --------------------------------------------------------------------------------------------------- |
-| Mac M1                | [Rao.Pics-${version}-arm64.dmg](https://github.com/rao-pics/rao-pics/releases)                      |
-| Mac Intel             | [Rao.Pics-${version}.dmg](https://github.com/rao-pics/rao-pics/releases)                            |
-| Windows               | [Rao.Pics.Setup.${version}.exe](https://github.com/rao-pics/rao-pics/releases)                      |
-| Ubuntu 18/19/20/21    | [Rao.Pics-${version}-linux-amd64-openssl-1.1.x.deb ](https://github.com/rao-pics/rao-pics/releases) |
-| Debian 9/10/11        | [Rao.Pics-${version}-linux-amd64-openssl-1.1.x.deb ](https://github.com/rao-pics/rao-pics/releases) |
-| Linux Mint 19/20      | [Rao.Pics-${version}-linux-amd64-openssl-1.1.x.deb ](https://github.com/rao-pics/rao-pics/releases) |
-| Arch Linux 2019.09.01 | [Rao.Pics-${version}-linux-amd64-openssl-1.1.x.deb ](https://github.com/rao-pics/rao-pics/releases) |
-| Ubuntu 22/23          | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/rao-pics/rao-pics/releases)  |
-| Debian 12             | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/rao-pics/rao-pics/releases)  |
-| Linux Mint 21         | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/rao-pics/rao-pics/releases)  |
-| Arch Linux 2023.04.23 | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/rao-pics/rao-pics/releases)  |
+| 平台                  | 对应版本                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Mac M1                | [Rao.Pics-${version}-arm64.dmg](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16)                      |
+| Mac Intel             | [Rao.Pics-${version}.dmg](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16)                            |
+| Windows               | [Rao.Pics.Setup.${version}.exe](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16)                      |
+| Ubuntu 18/19/20/21    | [Rao.Pics-${version}-linux-amd64-openssl-1.1.x.deb ](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16) |
+| Debian 9/10/11        | [Rao.Pics-${version}-linux-amd64-openssl-1.1.x.deb ](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16) |
+| Linux Mint 19/20      | [Rao.Pics-${version}-linux-amd64-openssl-1.1.x.deb ](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16) |
+| Arch Linux 2019.09.01 | [Rao.Pics-${version}-linux-amd64-openssl-1.1.x.deb ](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16) |
+| Ubuntu 22/23          | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16)  |
+| Debian 12             | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16)  |
+| Linux Mint 21         | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16)  |
+| Arch Linux 2023.04.23 | [Rao.Pics-${version}-linux-amd64-openssl-3.0.x.deb](https://github.com/meetqy/rao-pics/releases/tag/v0.7.16)  |
 
 > 参考 https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#binarytargets-options
 
