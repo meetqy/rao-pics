@@ -14,13 +14,13 @@
 </div>
 
 <div align="center">
-    <img width='48%' src="https://github.com/meetqy/rao-pics/assets/18411315/5c106f28-1122-4f81-a7be-3ac5d1f3d446" alt="rao.pics screenshot1"/>
-    <img width='48%' src="https://github.com/meetqy/rao-pics/assets/18411315/13a82543-50b5-43b5-9d02-2dc50a03aaa3" alt="rao.pics screenshot2"/>
+    <img width='49.5%' src="https://github.com/meetqy/rao-pics/assets/18411315/5c106f28-1122-4f81-a7be-3ac5d1f3d446" alt="rao.pics screenshot1"/>
+    <img width='49.5%' src="https://github.com/meetqy/rao-pics/assets/18411315/13a82543-50b5-43b5-9d02-2dc50a03aaa3" alt="rao.pics screenshot2"/>
 </div>
 
 <div align="center">
-    <img width='48%' src="https://github.com/meetqy/rao-pics/assets/18411315/de85b011-f8be-45fd-8841-e9cffcb5a7e5" alt="rao.pics screenshot3"/>
-    <img width='48%' src="https://github.com/meetqy/rao-pics/assets/18411315/644f81bb-b444-42c3-ae53-e2a2399a1e03" alt="rao.pics screenshot4"/>
+    <img width='49.5%' src="https://github.com/meetqy/rao-pics/assets/18411315/de85b011-f8be-45fd-8841-e9cffcb5a7e5" alt="rao.pics screenshot3"/>
+    <img width='49.5%' src="https://github.com/meetqy/rao-pics/assets/18411315/644f81bb-b444-42c3-ae53-e2a2399a1e03" alt="rao.pics screenshot4"/>
 </div>
 
 ## 特点
@@ -32,18 +32,18 @@
 - 📱 同时支持手机、平板、PC
 - 📌 默认主题支持 PWA，你可以保存为应用，无需每次打开浏览器
 
-## 其他版本
-
-- [Electron 0.7.16](https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma) - 初代 Electron App
-- [Docker](https://github.com/rao-pics/docker) - 支持 Eagle，素材库过大，同步会有些卡
-- [Eagle Api](https://github.com/meetqy/eagle-api) - 让你的 eagle 拥有 api 查询能力，基于 json-server
-
 ## 支持
 
 - 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate)，如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao) 支持作者 😘😘😘
 - 如果你喜欢 Rao.Pics，可以在 Github Star，更欢迎 [推荐](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) 给你志同道合的朋友使用
 - 可以关注我的 [Twitter](https://twitter.com/meetqy) 获取到最新的消息，或添加微信 `-meetqy-` 拉你入群
 
-## 活动
+## 其他版本
+
+- [Electron 0.7.16](https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma) - 初代 Electron App
+- [Docker](https://github.com/rao-pics/docker) - 支持 Eagle，素材库过大，同步会有些卡
+- [Eagle Api](https://github.com/meetqy/eagle-api) - 让你的 eagle 拥有 api 查询能力，基于 json-server
+
+## Repobeats
 
 <img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
