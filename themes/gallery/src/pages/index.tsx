@@ -7,8 +7,11 @@ import { useWindowScroll } from "react-use";
 
 import "photoswipe/style.css";
 
+import type { EXT } from "@rao-pics/constant";
+import { VIDEO_EXT } from "@rao-pics/constant";
 import { numberToHex } from "@rao-pics/utils";
 
+import initLightboxVideoPlugin from "~/utils/photoswipe-video";
 import { trpc } from "~/utils/trpc";
 
 function Home() {
@@ -58,6 +61,9 @@ function Home() {
       children: "a.photo-swipe-lightbox-a",
       pswpModule: () => import("photoswipe"),
     });
+
+    initLightboxVideoPlugin(lightbox);
+
     lightbox.init();
 
     return () => {
@@ -84,6 +90,7 @@ function Home() {
             bgColor: numberToHex(image.colors?.[0]?.rgb ?? 0),
             width: image.width,
             height: image.height,
+            ext: image.ext as unknown as typeof EXT,
           };
         });
 
@@ -128,6 +135,7 @@ interface T extends Photo {
   thumbnailPath: string;
   id: number;
   bgColor: string;
+  ext: typeof EXT;
 }
 
 function NextJsImage({
@@ -140,6 +148,7 @@ function NextJsImage({
       href={photo.src}
       data-pswp-width={photo.width}
       data-pswp-height={photo.height}
+      data-pswp-type={VIDEO_EXT.includes(photo.ext) ? "video" : "image"}
       key={`photo-swipe-lightbox-${photo.id}`}
       className="photo-swipe-lightbox-a select-none overflow-hidden rounded-md border shadow"
       style={{ ...wrapperStyle, position: "relative" }}
