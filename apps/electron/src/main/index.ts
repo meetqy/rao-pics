@@ -45,9 +45,21 @@ async function initConfig() {
   });
 }
 
+async function initWatchLibrary() {
+  const caller = router.createCaller({});
+  const res = await caller.library.findUnique();
+  if (!res) return;
+
+  const { path } = res;
+  if (res.type === "eagle") {
+    await caller.library.watch(join(path, "images/**/metadata.json"));
+  }
+}
+
 const mainWindowReadyToShow = async () => {
   const config = await initConfig();
   await startExpressServer();
+  await initWatchLibrary();
 
   const { clientPort } = config;
 
@@ -122,6 +134,8 @@ function createWindow(): void {
   }
 
   void mainWindowReadyToShow();
+  initWatchLibrary();
+
   createIPCHandler({ router, windows: [mainWindow] });
   createCustomIPCHandle();
   createMenu(mainWindow);
