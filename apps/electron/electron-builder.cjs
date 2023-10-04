@@ -40,9 +40,7 @@ const options = {
         },
   },
   win: {
-    target: isTestBuilder
-      ? "dir"
-      : { target: "nsis", arch: ["x64", "ia32", "arm64"] },
+    target: isTestBuilder ? "dir" : { target: "nsis", arch: ["x64"] },
   },
   npmRebuild: false,
   publish: {
