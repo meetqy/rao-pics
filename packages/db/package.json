@@ -8,12 +8,12 @@
   "main": "./index.ts",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "db:push": "prisma db push",
-    "db:reset": "pnpm db:push --force-reset",
     "dev": "prisma studio -b none",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "postinstall": "pnpm db:push",
+    "postinstall": "pnpm push",
     "lint": "eslint .",
+    "push": "prisma db push",
+    "reset": "pnpm push --force-reset",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },

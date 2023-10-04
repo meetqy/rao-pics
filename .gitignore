@@ -25,6 +25,7 @@ next-env.d.ts
 # expo
 .expo/
 dist/
+releases/
 expo-env.d.ts
 
 # production

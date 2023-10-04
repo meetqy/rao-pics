@@ -1,4 +1,4 @@
-const { resolve, join } = require("path");
+const { join } = require("path");
 
 const isTestBuilder = process.env.IS_TEST_BUILDER === "true";
 
@@ -9,9 +9,7 @@ const isTestBuilder = process.env.IS_TEST_BUILDER === "true";
 const options = {
   appId: "com.rao-pics.app",
   productName: "Rao Pics",
-  directories: {
-    buildResources: "build",
-  },
+  directories: { buildResources: "build", output: "releases" },
   icon: "resources/icon.icns",
   asar: !isTestBuilder,
   files: [
@@ -26,7 +24,7 @@ const options = {
     "!**/node_modules/prisma/libquery_engine-*",
     "!**/node_modules/@prisma/engines/**",
     {
-      from: resolve(__dirname, "../../node_modules/.prisma"),
+      from: join(__dirname, "../../node_modules/.prisma"),
       to: "node_modules/.prisma",
     },
   ],
@@ -38,11 +36,13 @@ const options = {
       ? "dir"
       : {
           target: "dmg",
-          arch: ["arm64", "x64"],
+          arch: ["x64", "arm64"],
         },
   },
   win: {
-    target: isTestBuilder ? "dir" : { target: "nsis", arch: ["x64"] },
+    target: isTestBuilder
+      ? "dir"
+      : { target: "nsis", arch: ["x64", "ia32", "arm64"] },
   },
   npmRebuild: false,
   publish: {
@@ -51,7 +51,7 @@ const options = {
   },
   extraResources: [
     {
-      from: resolve(__dirname, "./node_modules/@rao-pics/db/prisma/db.sqlite"),
+      from: join(__dirname, "./node_modules/@rao-pics/db/prisma/db.sqlite"),
       to: "extraResources/db.sqlite",
     },
     ...copyTheme("gallery"),
