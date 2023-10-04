@@ -60,9 +60,14 @@ function Home() {
       gallery: "#" + id,
       children: "a.photo-swipe-lightbox-a",
       pswpModule: () => import("photoswipe"),
+      loop: false,
     });
 
     initLightboxVideoPlugin(lightbox);
+
+    lightbox.addFilter("placeholderSrc", (placeholderSrc, content) => {
+      return content.data.msrc ?? placeholderSrc;
+    });
 
     lightbox.init();
 
@@ -146,6 +151,7 @@ function NextJsImage({
   return (
     <a
       href={photo.src}
+      data-pswp-msrc={photo.thumbnailPath}
       data-pswp-width={photo.width}
       data-pswp-height={photo.height}
       data-pswp-type={VIDEO_EXT.includes(photo.ext) ? "video" : "image"}
