@@ -5,7 +5,6 @@
   ],
   "include": [
     "electron.vite.config.*",
-    "electron-builder.*",
     "src/main/**/*",
     "src/preload/*",
     "tailwind.config.*"
@@ -15,5 +14,6 @@
     "types": ["electron-vite/node"],
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
+
   "exclude": ["node_modules"]
 }

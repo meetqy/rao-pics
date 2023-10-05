@@ -10,9 +10,8 @@
   "main": "./out/main/index.js",
   "scripts": {
     "build": "npm run typecheck && electron-vite build",
-    "build:linux": "electron-vite build && electron-builder --linux --config",
-    "build:mac": "electron-builder --mac --config ./electron-builder.cjs",
-    "build:win": "electron-builder --win --config ./electron-builder.cjs",
+    "build:mac": "node ./electron-builder/mac.cjs",
+    "build:win": "node ./electron-builder/win.cjs",
     "clean": "git clean -xdf node_modules out releases .turbo",
     "dev": "electron-vite dev",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
@@ -46,7 +45,6 @@
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
     "@electron/notarize": "^1.2.3",
-    "@electron/rebuild": "^3.3.0",
     "@rao-pics/eslint-config": "workspace:^",
     "@rao-pics/prettier-config": "workspace:^",
     "@rao-pics/tailwind-config": "workspace:*",
