@@ -134,7 +134,7 @@ function createWindow(): void {
   }
 
   void mainWindowReadyToShow();
-  initWatchLibrary();
+  void initWatchLibrary();
 
   createIPCHandler({ router, windows: [mainWindow] });
   createCustomIPCHandle();

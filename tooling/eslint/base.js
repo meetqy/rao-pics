@@ -39,6 +39,7 @@ const config = {
     "pnpm-lock.yaml",
     "coverage",
     "out",
+    "releases",
   ],
   reportUnusedDisableDirectives: true,
 };

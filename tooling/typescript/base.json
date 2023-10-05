@@ -23,6 +23,7 @@
     "node_modules",
     "build",
     "dist",
+    "releases",
     ".next",
     ".expo",
     "out",
