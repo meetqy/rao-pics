@@ -6,15 +6,19 @@ const isTestBuilder = process.env.IS_TEST_BUILDER === "true";
  * @type {import('electron-builder').Configuration}
  * @see https://www.electron.build/configuration/configuration
  */
-const options = {
+const BaseConfig = {
   appId: "com.rao-pics.app",
+  copyright: `Copyright © 2022 meetqy`,
   productName: "Rao Pics",
-  directories: { buildResources: "build", output: "releases" },
-  icon: "resources/icon.icns",
+  directories: {
+    buildResources: "build",
+    output: "releases",
+  },
   asar: !isTestBuilder,
   files: [
     "!**/.vscode/*",
     "!src/*",
+    "!electron-builder",
     "!electron.vite.config.{js,ts,mjs,cjs}",
     "!{.eslintignore,.eslintrc.json,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md,tailwind.config.ts,postcss.config.cjs,electron-builder.cjs}",
     "!{.env,.env.*,.npmrc,pnpm-lock.yaml}",
@@ -23,33 +27,10 @@ const options = {
     "!**/.turbo/*",
     "!**/node_modules/prisma/libquery_engine-*",
     "!**/node_modules/@prisma/engines/**",
-    {
-      from: join(__dirname, "../../node_modules/.prisma"),
-      to: "node_modules/.prisma",
-    },
   ],
-  asarUnpack: ["resources/**/*"],
-  afterSign: "build/notarize.js",
-  mac: {
-    entitlementsInherit: "build/entitlements.mac.plist",
-    target: isTestBuilder
-      ? "dir"
-      : {
-          target: "dmg",
-          arch: ["x64", "arm64"],
-        },
-  },
-  win: {
-    target: isTestBuilder ? "dir" : { target: "nsis", arch: ["x64"] },
-  },
-  npmRebuild: false,
-  publish: {
-    provider: "generic",
-    url: "https://example.com/auto-updates",
-  },
   extraResources: [
     {
-      from: join(__dirname, "./node_modules/@rao-pics/db/prisma/db.sqlite"),
+      from: join(__dirname, "../node_modules/@rao-pics/db/prisma/db.sqlite"),
       to: "extraResources/db.sqlite",
     },
     ...copyTheme("gallery"),
@@ -58,7 +39,7 @@ const options = {
 
 function copyTheme(name) {
   // 主题目录
-  const project = join(__dirname, "../../", "themes", name);
+  const project = join(__dirname, "../../../", "themes", name);
   const to = `themes/${name}`;
 
   return [
@@ -81,4 +62,4 @@ function copyTheme(name) {
   ];
 }
 
-module.exports = options;
+module.exports = BaseConfig;
