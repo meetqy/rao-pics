@@ -84,7 +84,8 @@ function Home() {
     >
       {pages?.map((page) => {
         const photos = page.data?.map((image) => {
-          const id = image.path.split("/").slice(-2)[0];
+          const reg = image.path.match(/[0-9a-zA-Z]+\.info/);
+          const id = reg ? reg[0] : "";
           const host = `http://${config?.ip}:${config?.serverPort}`;
           const src = `${host}/static/${id}/${image.name}.${image.ext}`;
           const thumbnailPath = image.noThumbnail
