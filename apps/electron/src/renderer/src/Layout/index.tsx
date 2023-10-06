@@ -24,7 +24,8 @@ const Layout = () => {
   const { color } = useColor();
 
   const { data: library } = trpc.library.findUnique.useQuery();
-  const libraryName = library?.path.split("/").slice(-1)[0] ?? lang.no_library;
+  const libraryName =
+    library?.path.split(/\/|\\/).slice(-1)[0] ?? lang.no_library;
 
   return (
     <div
