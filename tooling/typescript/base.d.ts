@@ -32,6 +32,7 @@ declare global {
     width: number;
     duration: number;
     lastModified: number;
+    noThumbnail: boolean?;
     palettes: MetadataPalette[];
   }
 

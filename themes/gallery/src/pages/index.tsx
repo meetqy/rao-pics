@@ -85,10 +85,11 @@ function Home() {
       {pages?.map((page) => {
         const photos = page.data?.map((image) => {
           const id = image.path.split("/").slice(-2)[0];
-          const src = `http://${config?.ip}:${config?.serverPort}/static/${id}/${image.name}.${image.ext}`;
+          const host = `http://${config?.ip}:${config?.serverPort}`;
+          const src = `${host}/static/${id}/${image.name}.${image.ext}`;
           const thumbnailPath = image.noThumbnail
             ? src
-            : `http://${config?.ip}:${config?.serverPort}/static/${id}/${image.name}_thumbnail.png`;
+            : `${host}/static/${id}/${image.name}_thumbnail.png`;
 
           return {
             id: image.id,
