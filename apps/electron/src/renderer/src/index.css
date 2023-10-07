@@ -25,6 +25,10 @@
   .card-row > div {
     @apply flex items-center;
   }
+
+  .card-row .right-svg {
+    @apply ml-1 h-4 w-4 text-base-content/30;
+  }
 }
 
 /* windows 窗口透明 */

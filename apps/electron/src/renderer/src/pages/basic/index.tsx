@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import Content from "@renderer/components/Content";
-import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
@@ -141,7 +141,7 @@ const BasicPage = () => {
               }}
             >
               <span>{library?.path}</span>
-              <ArrowRightSvg />
+              <ChevronRightIcon className="right-svg" />
             </span>
           </div>
 
@@ -234,7 +234,7 @@ const BasicPage = () => {
               {config && (
                 <span>{`http://${config.ip}:${config.clientPort}`}</span>
               )}
-              <ArrowRightSvg />
+              <ChevronRightIcon className="right-svg" />
             </span>
           </div>
         </div>
