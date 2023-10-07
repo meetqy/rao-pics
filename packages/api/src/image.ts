@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
-import { router } from "..";
+import { getCaller, routerCore } from "..";
 import { t } from "./utils";
 
 export const image = t.router({
@@ -71,7 +71,6 @@ export const image = t.router({
       }),
     )
     .mutation(async ({ input }) => {
-      const caller = router.createCaller({});
       const data: Prisma.ImageUpdateInput = {
         path: input.path,
         name: input.name,
@@ -136,7 +135,7 @@ export const image = t.router({
       }
 
       // 清除日志中的错误信息
-      await caller.log.delete(res.path);
+      await getCaller().log.delete(res.path);
 
       return res;
     }),
@@ -224,10 +223,14 @@ export const image = t.router({
     )
     .query(async ({ input }) => {
       const limit = input?.limit ?? 50;
-
       const { cursor, includes } = input ?? {};
 
+      const config = await routerCore.config.findUnique();
+
       const images = await prisma.image.findMany({
+        where: {
+          isDeleted: config?.trash ?? undefined,
+        },
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
         orderBy: { createdTime: "desc" },
@@ -239,6 +242,7 @@ export const image = t.router({
       });
 
       let nextCursor: typeof cursor | undefined = undefined;
+
       if (images.length > limit) {
         const nextImage = images.pop();
         nextCursor = nextImage!.path;

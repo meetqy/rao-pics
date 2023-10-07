@@ -1,5 +1,5 @@
 import { color } from "./src/color";
-import { config } from "./src/config";
+import { config, configCore } from "./src/config";
 import { folder } from "./src/folder";
 import { image } from "./src/image";
 import { library } from "./src/library";
@@ -21,6 +21,24 @@ export const router = t.router({
   log,
 });
 
+export const routerCore = {
+  config: configCore,
+};
+
 export type AppRouter = typeof router;
 export { t } from "./src/utils";
 export * from "./src/express";
+
+let caller: ReturnType<typeof router.createCaller>;
+
+/**
+ * router.createCaller()
+ * @returns
+ */
+export const getCaller = () => {
+  if (!caller) {
+    caller = router.createCaller({});
+  }
+
+  return caller;
+};
