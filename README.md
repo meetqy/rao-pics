@@ -44,6 +44,10 @@
 - 如果你喜欢 Rao.Pics，可以在 Github Star，更欢迎 [推荐](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) 给你志同道合的朋友使用
 - 可以关注我的 [Twitter](https://twitter.com/meetqy) 获取到最新的消息，或添加微信 `-meetqy-` 拉你入群
 
+---
+
+<a href="https://afdian.net/a/raopics" target="_blank" title="爱发电（RaoPics）"><img width="72" src="https://static.afdiancdn.com/static/img/logo/logo.png" /></a>
+
 ## 其他版本
 
 - [Electron 0.7.16](https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma) - 初代 Electron App
