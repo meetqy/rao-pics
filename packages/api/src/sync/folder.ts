@@ -14,6 +14,8 @@ interface FolderTree {
   description?: string;
   pid?: string;
   children: FolderTree[];
+  password?: string;
+  passwordTips?: string;
 }
 
 export const treeToFlat = (folderTree: FolderTree[]) => {
@@ -22,6 +24,8 @@ export const treeToFlat = (folderTree: FolderTree[]) => {
     id: string;
     description?: string;
     pid?: string;
+    password?: string;
+    passwordTips?: string;
   }[] = [];
 
   const callback = (folderTree: FolderTree[]) => {
@@ -31,6 +35,8 @@ export const treeToFlat = (folderTree: FolderTree[]) => {
         id: folder.id,
         description: folder.description,
         pid: folder.pid,
+        password: folder.password ?? undefined,
+        passwordTips: folder.passwordTips ?? undefined,
       });
       if (folder.children.length > 0) {
         callback(

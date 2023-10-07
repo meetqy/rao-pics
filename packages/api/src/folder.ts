@@ -12,6 +12,8 @@ export const folder = t.router({
         name: z.string(),
         description: z.string().optional(),
         pid: z.string().optional(),
+        password: z.string().optional(),
+        passwordTips: z.string().optional(),
       }),
     )
     .mutation(async ({ input }) => {

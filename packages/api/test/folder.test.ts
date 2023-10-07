@@ -21,6 +21,8 @@ describe("folder module", () => {
         id: "folder-1",
         name: "Folder 1",
         description: "This is folder 1",
+        password: "password",
+        passwordTips: "password tips",
       };
 
       const result = await caller.folder.upsert(input);
@@ -45,6 +47,8 @@ describe("folder module", () => {
         id: "folder-1",
         name: "Updated Folder 1",
         description: "This is the updated folder 1",
+        password: "password",
+        passwordTips: "password tips",
       };
 
       const result = await caller.folder.upsert(input);
