@@ -33,10 +33,7 @@ describe("image module", () => {
       const result = await caller.image.findUnique({ id: testImage.id });
       console.log(result);
 
-      expect(result).toEqual({
-        ...testImage,
-        thumbnailPath: "/path/to/image_thumbnail.png",
-      });
+      expect(result).toEqual(testImage);
     });
 
     it("should find an image by id", async () => {
@@ -52,10 +49,7 @@ describe("image module", () => {
 
       const result = await caller.image.findUnique({ id: testImage.id });
 
-      expect(result).toEqual({
-        ...testImage,
-        thumbnailPath: "/path/to/image.jpg",
-      });
+      expect(result).toEqual(testImage);
     });
 
     it("should find an image by path", async () => {
@@ -71,10 +65,7 @@ describe("image module", () => {
 
       const result = await caller.image.findUnique({ path: testImage.path });
 
-      expect(result).toEqual({
-        ...testImage,
-        thumbnailPath: "/path/to/1image.jpg",
-      });
+      expect(result).toEqual(testImage);
     });
 
     it("should return null if no image is found", async () => {
