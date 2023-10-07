@@ -15,6 +15,8 @@ export const config = t.router({
         serverPort: z.number().optional(),
         clientPort: z.number().optional(),
         ip: z.string().optional(),
+        pwdFolder: z.boolean().optional(),
+        trash: z.boolean().optional(),
       }),
     )
     .mutation(async ({ input }) => {
@@ -27,6 +29,8 @@ export const config = t.router({
           ip: input.ip ?? undefined,
           serverPort: input.serverPort ?? undefined,
           clientPort: input.clientPort ?? undefined,
+          trash: input.trash ?? undefined,
+          pwdFolder: input.pwdFolder ?? undefined,
         },
         create: {
           name: "config",
@@ -36,6 +40,8 @@ export const config = t.router({
           ip: input.ip,
           serverPort: input.serverPort,
           clientPort: input.clientPort,
+          trash: input.trash ?? false,
+          pwdFolder: input.pwdFolder ?? false,
         },
       });
     }),
