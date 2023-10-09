@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
-import { getCaller, routerCore } from "..";
+import { getCaller } from "..";
 import { t } from "./utils";
 
 export const image = t.router({
@@ -211,6 +211,9 @@ export const image = t.router({
       return null;
     }),
 
+  /**
+   * 查询时不返回 回收站 和 不显示文件夹中的素材
+   */
   find: t.procedure
     .input(
       z
@@ -225,11 +228,14 @@ export const image = t.router({
       const limit = input?.limit ?? 50;
       const { cursor, includes } = input ?? {};
 
-      const config = await routerCore.config.findUnique();
-
       const images = await prisma.image.findMany({
         where: {
-          isDeleted: config?.trash ?? undefined,
+          // 回收站的素材不显示
+          isDeleted: false,
+          // 文件夹显示的素材不显示
+          folders: {
+            every: { show: true },
+          },
         },
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,

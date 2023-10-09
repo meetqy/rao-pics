@@ -108,6 +108,7 @@ model Folder {
   images       Image[]
   password     String?
   passwordTips String?
+  show         Boolean @default(true)
 }
 
 model Log {
