@@ -146,53 +146,6 @@ export const image = t.router({
       return res;
     }),
 
-  update: t.procedure
-    .input(
-      z
-        .object({
-          id: z.number().optional(),
-          path: z.string().optional(),
-          name: z.string().optional(),
-          size: z.number().optional(),
-          ext: z.string().optional(),
-          width: z.number().optional(),
-          height: z.number().optional(),
-          mtime: z.date().optional(),
-          duration: z.number().optional(),
-          annotation: z.string().optional(),
-          url: z.string().optional(),
-          isDeleted: z.boolean().optional(),
-          blurDataURL: z.string().optional(),
-          noThumbnail: z.boolean().optional(),
-        })
-        .partial()
-        .refine(
-          (data) => !!data.id || !!data.path,
-          "id or path either one is required",
-        ),
-    )
-    .mutation(async ({ input }) => {
-      const { id, path, ...data } = input;
-      if (id) {
-        return prisma.image.update({
-          where: { id },
-          data: {
-            ...data,
-            path,
-          },
-        });
-      }
-
-      if (path) {
-        return prisma.image.update({
-          where: { path },
-          data,
-        });
-      }
-
-      return null;
-    }),
-
   deleteByUnique: t.procedure
     .input(
       z
