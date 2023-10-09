@@ -166,8 +166,6 @@ export const image = t.router({
       if (path) {
         return prisma.image.delete({ where: { path } });
       }
-
-      return null;
     }),
 
   /**

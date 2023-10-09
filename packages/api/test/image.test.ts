@@ -12,6 +12,7 @@ describe("image module", () => {
     await prisma.image.deleteMany();
     await prisma.folder.deleteMany();
     await prisma.tag.deleteMany();
+    await prisma.config.deleteMany();
   });
 
   describe("findUnique", () => {
@@ -630,5 +631,101 @@ describe("image module", () => {
     expect(
       await caller.image.findUnique({ path: "/path/to/image.jpg" }),
     ).toHaveProperty("path", "/path/to/image.jpg");
+  });
+
+  describe("deleteByUnique", () => {
+    beforeEach(async () => {
+      await prisma.image.deleteMany();
+    });
+
+    it("delete by path", async () => {
+      const testImage = await caller.image.upsert({
+        path: "/path/to/image.jpg",
+        name: "image.jpg",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+      });
+
+      expect(
+        await caller.image.deleteByUnique({ path: "/path/to/image.jpg" }),
+      ).toEqual(testImage);
+
+      expect(
+        await caller.image.findUnique({ path: "/path/to/image.jpg" }),
+      ).toBeNull();
+    });
+
+    it("delete by path", async () => {
+      const testImage = await caller.image.upsert({
+        path: "/path/to/image.jpg",
+        name: "image.jpg",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+      });
+
+      expect(await caller.image.deleteByUnique({ id: testImage.id })).toEqual(
+        testImage,
+      );
+
+      expect(await caller.image.findUnique({ id: testImage.id })).toBeNull();
+    });
+  });
+
+  describe("find", () => {
+    beforeEach(async () => {
+      await prisma.image.deleteMany();
+    });
+
+    it("should find all images and nextCursor", async () => {
+      for (let i = 0; i < 25; i++) {
+        await caller.image.upsert({
+          path: `/path/to/image${i}.jpg`,
+          name: `image${i}.jpg`,
+          size: 1024,
+          ext: "jpg",
+          width: 800,
+          height: 600,
+          mtime: new Date(),
+        });
+      }
+
+      const res = await caller.image.find({ limit: 24 });
+      expect(res.data).toHaveLength(24);
+      expect(res.nextCursor).toEqual(`/path/to/image0.jpg`);
+
+      const res2 = await caller.image.find({
+        limit: 24,
+        cursor: res.nextCursor,
+      });
+      expect(res2.data).toHaveLength(1);
+      expect(res2.nextCursor).toEqual(undefined);
+    });
+
+    it("includes tags, colors, folders", async () => {
+      await caller.image.upsert({
+        path: `/path/to/image.jpg`,
+        name: `image.jpg`,
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+      });
+
+      const res = await caller.image.find({
+        includes: ["folders", "tags", "colors"],
+      });
+
+      expect(res.data).toHaveLength(1);
+      expect(res.data[0]).toHaveProperty("folders");
+      expect(res.data[0]).toHaveProperty("tags");
+      expect(res.data[0]).toHaveProperty("colors");
+    });
   });
 });
