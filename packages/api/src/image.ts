@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
-import { getCaller } from "..";
+import { getCaller, routerCore } from "..";
 import { t } from "./utils";
 
 export const image = t.router({
@@ -18,10 +18,16 @@ export const image = t.router({
     .query(async ({ input }) => {
       const { includes } = input;
 
+      const config = await routerCore.config.findUnique();
+
       const image = await prisma.image.findUnique({
         where: {
           id: input.id,
           path: input.path,
+          // 回收站需要显示 => isDeleted: undefined
+          // 回收站不需要显示 => isDeleted: false
+          isDeleted: config?.trash ? undefined : false,
+          folders: config?.pwdFolder ? undefined : { every: { show: true } },
         },
         include: {
           tags: includes?.includes("tags"),
