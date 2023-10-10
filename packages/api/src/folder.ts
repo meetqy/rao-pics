@@ -73,13 +73,34 @@ export const folderCore = {
     });
   },
 
+  /**
+   * 修改所有有密码的文件夹的 show
+   * 子级的 show 保持和父级一致
+   * 父级有密码，子项没有，子项也会设置为 父级 相同的 show
+   */
   setPwdFolderShow: async (
     input: z.infer<typeof folderInput.setPwdFolderShow>,
   ) => {
+    // 所有有密码的文件夹
+    const pFolders = await prisma.folder.findMany({
+      where: { password: { not: "" } },
+    });
+
+    // 父级文件有密码、子级没有密码的文件夹 id
+    const pids = pFolders.filter((f) => !f.pid).map((f) => f.id);
+
+    const childFolders = await prisma.folder.findMany({
+      where: {
+        pid: {
+          in: pids,
+        },
+      },
+    });
+
     return await prisma.folder.updateMany({
       where: {
-        password: {
-          not: "",
+        id: {
+          in: pFolders.concat(childFolders).map((item) => item.id),
         },
       },
       data: {

@@ -6,6 +6,8 @@ import { z } from "zod";
 import type { Pending } from "@rao-pics/db";
 
 import { router } from "../..";
+import { configCore } from "../config";
+import { folderCore } from "../folder";
 import { t } from "../utils";
 import { handleFolder } from "./folder";
 import { deleteImage, upsertImage } from "./image";
@@ -53,6 +55,8 @@ export const sync = t.router({
         // 同步文件夹
         const folders = handleFolder(join(input.libraryPath, "metadata.json"));
         await syncFolder(folders, caller);
+        const config = await configCore.findUnique();
+        await folderCore.setPwdFolderShow(config?.pwdFolder ?? false);
       } catch (e) {
         // 每次同步首先同步文件夹，如果文件夹同步失败，直接返回
         return false;

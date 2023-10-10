@@ -3,6 +3,7 @@ import { z } from "zod";
 import { DEFAULT_THEME } from "@rao-pics/constant";
 import { prisma } from "@rao-pics/db";
 
+import { folderCore } from "./folder";
 import { t } from "./utils";
 
 export const configInput = {
@@ -28,7 +29,11 @@ export const configCore = {
   //    2.1 如果修改的是父级 folder, 则需要同步修改子级 folder
   // 3. 查询 Folder 时，只需要返回 folder.show = true 的 folder
   upsert: async (input: z.infer<typeof configInput.upsert>) => {
-    // const { pwdFolder } = input;
+    const { pwdFolder } = input;
+
+    if (pwdFolder != undefined) {
+      await folderCore.setPwdFolderShow(pwdFolder);
+    }
 
     return await prisma.config.upsert({
       where: { name: "config" },
