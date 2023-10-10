@@ -22,7 +22,14 @@ export const configCore = {
   findUnique: async () =>
     await prisma.config.findFirst({ where: { name: "config" } }),
 
+  // pwdFolder 更新逻辑
+  // 1. config.pwdFolder = true
+  // 2. 修改 folder.password != null 的 folder.show = true
+  //    2.1 如果修改的是父级 folder, 则需要同步修改子级 folder
+  // 3. 查询 Folder 时，只需要返回 folder.show = true 的 folder
   upsert: async (input: z.infer<typeof configInput.upsert>) => {
+    // const { pwdFolder } = input;
+
     return await prisma.config.upsert({
       where: { name: "config" },
       update: input,
