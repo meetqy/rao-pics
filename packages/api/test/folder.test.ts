@@ -69,7 +69,7 @@ describe("folder module", () => {
     });
   });
 
-  describe("get", () => {
+  describe("find", () => {
     it("returns all folders if no input is provided", async () => {
       const input = {
         id: "folder-1",
@@ -127,6 +127,46 @@ describe("folder module", () => {
 
       expect(result).toHaveLength(2);
       expect(result).toMatchObject([input1, input2]);
+    });
+
+    it("returns an folder.show=false is null", async () => {
+      const input = {
+        id: "folder-1",
+        name: "Folder 1",
+        description: "This is folder 1",
+        password: "123",
+      };
+
+      await caller.folder.upsert(input);
+
+      const result = await caller.folder.find({ id: input.id });
+
+      expect(result).toBeNull();
+    });
+  });
+
+  describe("setPwdFolderShow", () => {
+    it("sets config.pwdFolder to true", async () => {
+      const input = {
+        id: "folder-1",
+        name: "Folder 1",
+        description: "This is folder 1",
+        password: "123",
+      };
+
+      await caller.folder.upsert(input);
+
+      await caller.folder.setPwdFolderShow(true);
+
+      const result = await caller.folder.find({ id: input.id });
+
+      expect(result).toMatchObject({
+        id: input.id,
+        name: input.name,
+        description: input.description,
+        password: input.password,
+        show: true,
+      });
     });
   });
 });

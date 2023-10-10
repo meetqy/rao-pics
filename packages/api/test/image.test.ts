@@ -12,6 +12,7 @@ describe("image module", () => {
     await prisma.image.deleteMany();
     await prisma.folder.deleteMany();
     await prisma.tag.deleteMany();
+    await prisma.config.deleteMany();
   });
 
   describe("findUnique", () => {
@@ -31,12 +32,8 @@ describe("image module", () => {
       });
 
       const result = await caller.image.findUnique({ id: testImage.id });
-      console.log(result);
 
-      expect(result).toEqual({
-        ...testImage,
-        thumbnailPath: "/path/to/image_thumbnail.png",
-      });
+      expect(result).toEqual(testImage);
     });
 
     it("should find an image by id", async () => {
@@ -52,10 +49,7 @@ describe("image module", () => {
 
       const result = await caller.image.findUnique({ id: testImage.id });
 
-      expect(result).toEqual({
-        ...testImage,
-        thumbnailPath: "/path/to/image.jpg",
-      });
+      expect(result).toEqual(testImage);
     });
 
     it("should find an image by path", async () => {
@@ -71,16 +65,186 @@ describe("image module", () => {
 
       const result = await caller.image.findUnique({ path: testImage.path });
 
-      expect(result).toEqual({
-        ...testImage,
-        thumbnailPath: "/path/to/1image.jpg",
-      });
+      expect(result).toEqual(testImage);
     });
 
     it("should return null if no image is found", async () => {
       const result = await caller.image.findUnique({ id: 1234 });
 
       expect(result).toBeNull();
+    });
+  });
+
+  describe("findUnique, config.trash", () => {
+    beforeEach(async () => {
+      await prisma.image.deleteMany();
+      await prisma.config.deleteMany();
+    });
+
+    it("config.trash = true, isDeleted = true should find an image by path", async () => {
+      const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        isDeleted: true,
+        mtime: new Date(),
+      });
+      await caller.config.upsert({ trash: true });
+
+      const result = await caller.image.findUnique({ path: testImage.path });
+      expect(result).toEqual(testImage);
+    });
+
+    it("config.trash = true, isDeleted = false should find an image by path", async () => {
+      const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        isDeleted: false,
+        mtime: new Date(),
+      });
+      await caller.config.upsert({ trash: true });
+
+      const result = await caller.image.findUnique({ path: testImage.path });
+      expect(result).toEqual(testImage);
+    });
+
+    it("config.trash = false, isDeleted = true should find an image by path", async () => {
+      const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        isDeleted: true,
+        mtime: new Date(),
+      });
+      await caller.config.upsert({ trash: false });
+
+      const result = await caller.image.findUnique({ path: testImage.path });
+      expect(result).toBeNull();
+    });
+
+    it("config.trash = false, isDeleted = false should find an image by path", async () => {
+      const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        isDeleted: false,
+        mtime: new Date(),
+      });
+      await caller.config.upsert({ trash: false });
+
+      const result = await caller.image.findUnique({ path: testImage.path });
+      expect(result).toEqual(testImage);
+    });
+  });
+
+  describe("findUnique, config.pwdFolder", () => {
+    beforeEach(async () => {
+      await prisma.image.deleteMany();
+      await prisma.config.deleteMany();
+      await prisma.folder.deleteMany();
+    });
+
+    it("config.pwdFolder = true, folder.show = true should find an image by path", async () => {
+      await caller.folder.upsert({ name: "folder1", id: "1", show: true });
+
+      const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+        folders: {
+          connect: ["1"],
+        },
+      });
+      await caller.config.upsert({ pwdFolder: true });
+
+      const result = await caller.image.findUnique({ path: testImage.path });
+      expect(result).toEqual(testImage);
+    });
+
+    it("config.pwdFolder = true, folder.show = false should find an image by path", async () => {
+      await caller.folder.upsert({ name: "folder1", id: "1", show: false });
+
+      const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+        folders: {
+          connect: ["1"],
+        },
+      });
+      await caller.config.upsert({ pwdFolder: true });
+
+      const result = await caller.image.findUnique({ path: testImage.path });
+      expect(result).toEqual(testImage);
+    });
+
+    it("config.pwdFolder = false, folder.show = false should find an image by path", async () => {
+      await caller.folder.upsert({ name: "folder1", id: "1", show: false });
+
+      const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+        folders: {
+          connect: ["1"],
+        },
+      });
+      await caller.config.upsert({ pwdFolder: false });
+
+      const result = await caller.image.findUnique({
+        path: testImage.path,
+        includes: ["folders"],
+      });
+      expect(result).toBeNull();
+    });
+
+    it("config.pwdFolder = false, folder.show = true should find an image by path", async () => {
+      await caller.folder.upsert({ name: "folder1", id: "1", show: true });
+
+      const testImage = await caller.image.upsert({
+        path: "/path/to/metadata.json",
+        name: "image",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+        folders: {
+          connect: ["1"],
+        },
+      });
+      await caller.config.upsert({ pwdFolder: false });
+
+      const result = await caller.image.findUnique({
+        path: testImage.path,
+      });
+
+      expect(result).toEqual(testImage);
     });
   });
 
@@ -467,5 +631,101 @@ describe("image module", () => {
     expect(
       await caller.image.findUnique({ path: "/path/to/image.jpg" }),
     ).toHaveProperty("path", "/path/to/image.jpg");
+  });
+
+  describe("deleteByUnique", () => {
+    beforeEach(async () => {
+      await prisma.image.deleteMany();
+    });
+
+    it("delete by path", async () => {
+      const testImage = await caller.image.upsert({
+        path: "/path/to/image.jpg",
+        name: "image.jpg",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+      });
+
+      expect(
+        await caller.image.deleteByUnique({ path: "/path/to/image.jpg" }),
+      ).toEqual(testImage);
+
+      expect(
+        await caller.image.findUnique({ path: "/path/to/image.jpg" }),
+      ).toBeNull();
+    });
+
+    it("delete by path", async () => {
+      const testImage = await caller.image.upsert({
+        path: "/path/to/image.jpg",
+        name: "image.jpg",
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+      });
+
+      expect(await caller.image.deleteByUnique({ id: testImage.id })).toEqual(
+        testImage,
+      );
+
+      expect(await caller.image.findUnique({ id: testImage.id })).toBeNull();
+    });
+  });
+
+  describe("find", () => {
+    beforeEach(async () => {
+      await prisma.image.deleteMany();
+    });
+
+    it("should find all images and nextCursor", async () => {
+      for (let i = 0; i < 25; i++) {
+        await caller.image.upsert({
+          path: `/path/to/image${i}.jpg`,
+          name: `image${i}.jpg`,
+          size: 1024,
+          ext: "jpg",
+          width: 800,
+          height: 600,
+          mtime: new Date(),
+        });
+      }
+
+      const res = await caller.image.find({ limit: 24 });
+      expect(res.data).toHaveLength(24);
+      expect(res.nextCursor).toEqual(`/path/to/image0.jpg`);
+
+      const res2 = await caller.image.find({
+        limit: 24,
+        cursor: res.nextCursor,
+      });
+      expect(res2.data).toHaveLength(1);
+      expect(res2.nextCursor).toEqual(undefined);
+    });
+
+    it("includes tags, colors, folders", async () => {
+      await caller.image.upsert({
+        path: `/path/to/image.jpg`,
+        name: `image.jpg`,
+        size: 1024,
+        ext: "jpg",
+        width: 800,
+        height: 600,
+        mtime: new Date(),
+      });
+
+      const res = await caller.image.find({
+        includes: ["folders", "tags", "colors"],
+      });
+
+      expect(res.data).toHaveLength(1);
+      expect(res.data[0]).toHaveProperty("folders");
+      expect(res.data[0]).toHaveProperty("tags");
+      expect(res.data[0]).toHaveProperty("colors");
+    });
   });
 });

@@ -6,6 +6,18 @@ import { router } from "..";
 
 const caller = router.createCaller({});
 
+const defaultConfig = {
+  name: "config",
+  language: "zh-cn",
+  color: "light",
+  theme: "gallery",
+  ip: null,
+  serverPort: null,
+  clientPort: null,
+  pwdFolder: false,
+  trash: false,
+};
+
 describe("config module", () => {
   beforeEach(async () => {
     await prisma.config.deleteMany();
@@ -24,13 +36,8 @@ describe("config module", () => {
       const res = await caller.config.findUnique();
 
       expect(res).toEqual({
-        name: "config",
+        ...defaultConfig,
         language: "zh-cn",
-        color: "light",
-        theme: "gallery",
-        ip: null,
-        serverPort: null,
-        clientPort: null,
       });
     });
 
@@ -43,13 +50,9 @@ describe("config module", () => {
       const res = await caller.config.findUnique();
 
       expect(res).toEqual({
-        name: "config",
-        language: "zh-cn",
-        color: "light",
-        theme: "gallery",
+        ...defaultConfig,
         ip: "0.0.0.0",
         serverPort: 8080,
-        clientPort: null,
       });
 
       expect(
@@ -57,17 +60,13 @@ describe("config module", () => {
           serverPort: 8081,
         }),
       ).toEqual({
-        name: "config",
-        language: "zh-cn",
-        color: "light",
-        theme: "gallery",
+        ...defaultConfig,
         ip: "0.0.0.0",
         serverPort: 8081,
-        clientPort: null,
       });
     });
 
-    it("should update the color field in the config table", async () => {
+    it("should update the color and theme field in the config table", async () => {
       await caller.config.upsert({
         color: "senven",
       });
@@ -75,13 +74,8 @@ describe("config module", () => {
       const res = await caller.config.findUnique();
 
       expect(res).toEqual({
-        name: "config",
-        language: "zh-cn",
+        ...defaultConfig,
         color: "senven",
-        theme: "gallery",
-        ip: null,
-        serverPort: null,
-        clientPort: null,
       });
     });
 
@@ -93,13 +87,8 @@ describe("config module", () => {
       const res = await caller.config.findUnique();
 
       expect(res).toEqual({
-        name: "config",
-        language: "zh-cn",
-        color: "light",
+        ...defaultConfig,
         theme: "dark",
-        ip: null,
-        serverPort: null,
-        clientPort: null,
       });
     });
 
@@ -111,6 +100,22 @@ describe("config module", () => {
         .catch((e) => {
           expect(e).toHaveProperty("code", "BAD_REQUEST");
         });
+    });
+  });
+
+  describe("findUnique procedure", () => {
+    it("should return the default config", async () => {
+      await caller.config.upsert({
+        language: "zh-cn",
+        color: "light",
+        theme: "gallery",
+        pwdFolder: false,
+        trash: false,
+      });
+
+      const res = await caller.config.findUnique();
+
+      expect(res).toEqual(defaultConfig);
     });
   });
 });

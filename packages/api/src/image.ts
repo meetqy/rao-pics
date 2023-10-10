@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import type { Color, Folder, Image, Prisma, Tag } from "@rao-pics/db";
+import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
-import { router } from "..";
+import { getCaller, routerCore } from "..";
 import { t } from "./utils";
 
 export const image = t.router({
@@ -18,10 +18,16 @@ export const image = t.router({
     .query(async ({ input }) => {
       const { includes } = input;
 
+      const config = await routerCore.config.findUnique();
+
       const image = await prisma.image.findUnique({
         where: {
           id: input.id,
           path: input.path,
+          // 回收站需要显示 => isDeleted: undefined
+          // 回收站不需要显示 => isDeleted: false
+          isDeleted: config?.trash ? undefined : false,
+          folders: config?.pwdFolder ? undefined : { every: { show: true } },
         },
         include: {
           tags: includes?.includes("tags"),
@@ -30,17 +36,7 @@ export const image = t.router({
         },
       });
 
-      return image
-        ? {
-            ...image,
-            thumbnailPath: image.noThumbnail
-              ? image.path
-              : image.path.replace(
-                  "metadata.json",
-                  `${image.name}_thumbnail.png`,
-                ),
-          }
-        : null;
+      return image;
     }),
 
   upsert: t.procedure
@@ -81,7 +77,6 @@ export const image = t.router({
       }),
     )
     .mutation(async ({ input }) => {
-      const caller = router.createCaller({});
       const data: Prisma.ImageUpdateInput = {
         path: input.path,
         name: input.name,
@@ -146,56 +141,9 @@ export const image = t.router({
       }
 
       // 清除日志中的错误信息
-      await caller.log.delete(res.path);
+      await getCaller().log.delete(res.path);
 
       return res;
-    }),
-
-  update: t.procedure
-    .input(
-      z
-        .object({
-          id: z.number().optional(),
-          path: z.string().optional(),
-          name: z.string().optional(),
-          size: z.number().optional(),
-          ext: z.string().optional(),
-          width: z.number().optional(),
-          height: z.number().optional(),
-          mtime: z.date().optional(),
-          duration: z.number().optional(),
-          annotation: z.string().optional(),
-          url: z.string().optional(),
-          isDeleted: z.boolean().optional(),
-          blurDataURL: z.string().optional(),
-          noThumbnail: z.boolean().optional(),
-        })
-        .partial()
-        .refine(
-          (data) => !!data.id || !!data.path,
-          "id or path either one is required",
-        ),
-    )
-    .mutation(async ({ input }) => {
-      const { id, path, ...data } = input;
-      if (id) {
-        return prisma.image.update({
-          where: { id },
-          data: {
-            ...data,
-            path,
-          },
-        });
-      }
-
-      if (path) {
-        return prisma.image.update({
-          where: { path },
-          data,
-        });
-      }
-
-      return null;
     }),
 
   deleteByUnique: t.procedure
@@ -218,10 +166,11 @@ export const image = t.router({
       if (path) {
         return prisma.image.delete({ where: { path } });
       }
-
-      return null;
     }),
 
+  /**
+   * 查询时不返回 回收站 和 不显示文件夹中的素材
+   */
   find: t.procedure
     .input(
       z
@@ -234,10 +183,17 @@ export const image = t.router({
     )
     .query(async ({ input }) => {
       const limit = input?.limit ?? 50;
-
       const { cursor, includes } = input ?? {};
 
-      let images = await prisma.image.findMany({
+      const images = await prisma.image.findMany({
+        where: {
+          // 回收站的素材不显示
+          isDeleted: false,
+          // 文件夹显示的素材不显示
+          folders: {
+            every: { show: true },
+          },
+        },
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
         orderBy: { createdTime: "desc" },
@@ -248,27 +204,15 @@ export const image = t.router({
         },
       });
 
-      type ResultImage = Image & { tags: Tag[] } & { colors: Color[] } & {
-        folders: Folder[];
-      } & { thumbnailPath: string };
-
-      images = images.map((item) => {
-        const _item = item as ResultImage;
-        _item.thumbnailPath = _item.noThumbnail
-          ? _item.path
-          : _item.path.replace("metadata.json", `${_item.name}_thumbnail.png`);
-
-        return _item;
-      });
-
       let nextCursor: typeof cursor | undefined = undefined;
+
       if (images.length > limit) {
         const nextImage = images.pop();
         nextCursor = nextImage!.path;
       }
 
       return {
-        data: images as ResultImage[],
+        data: images,
         nextCursor,
       };
     }),

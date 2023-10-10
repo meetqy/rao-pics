@@ -23,6 +23,10 @@ model Config {
   clientPort Int?
   // 当前 IP
   ip         String?
+  // 显示回收站
+  trash      Boolean @default(false)
+  // 显示加密文件夹
+  pwdFolder  Boolean @default(false)
 }
 
 model Library {
@@ -97,11 +101,14 @@ model Color {
 }
 
 model Folder {
-  id          String  @id @unique @default(uuid())
-  name        String
-  pid         String?
-  description String?
-  images      Image[]
+  id           String  @id @unique @default(uuid())
+  name         String
+  pid          String?
+  description  String?
+  images       Image[]
+  password     String?
+  passwordTips String?
+  show         Boolean @default(true)
 }
 
 model Log {

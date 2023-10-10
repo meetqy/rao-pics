@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import Content from "@renderer/components/Content";
-import { ArrowRightSvg } from "@renderer/components/Svg";
 import Title from "@renderer/components/Title";
 import { useDebounce, useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
@@ -75,7 +75,7 @@ const UnsyncPage = () => {
                           .replace(libPath, "")
                           .replace("/metadata.json", "")}
                       </span>
-                      <ArrowRightSvg />
+                      <ChevronRightIcon className="right-svg" />
                     </span>
                   </div>
                 </div>

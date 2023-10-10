@@ -1,28 +1,58 @@
+import {
+  FolderMinusIcon,
+  LanguageIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import Content from "@renderer/components/Content";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
+import { trpc } from "@renderer/utils/trpc";
 
 import { LANGUAGE } from "@rao-pics/constant";
+
+import "./index.css";
 
 const languages = {
   "zh-cn": {
     title: "通用",
     language_title: "语言",
     language_desc: "选择语言",
+    trash: "回收站素材",
+    pwd_folder: "加密文件夹素材",
+    show: "显示",
+    hide: "不显示",
   },
   "en-us": {
     title: "General",
     language_title: "Language",
     language_desc: "Select language",
+    trash: "Trash Material",
+    pwd_folder: "Password Folder Material",
+    show: "Show",
+    hide: "Hide",
   },
   "zh-tw": {
     title: "通用",
     language_title: "語言",
     language_desc: "選擇語言",
+    trash: "回收站素材",
+    pwd_folder: "加密文件夾素材",
+    show: "顯示",
+    hide: "不顯示",
   },
 };
 
 const SettingPage = () => {
+  const utils = trpc.useContext();
+
+  const configUpsert = trpc.config.upsert.useMutation({
+    onSuccess() {
+      void utils.config.invalidate();
+    },
+  });
+
+  const { data: config } = trpc.config.findUnique.useQuery();
+
   const { lang, language, setLanguage } =
     useLanguage<typeof languages>(languages);
 
@@ -37,20 +67,7 @@ const SettingPage = () => {
         <div className="card-wrapper">
           <div className="card-row">
             <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="h-5 w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802"
-                />
-              </svg>
+              <LanguageIcon className="h-5 w-5" />
               <span className="ml-2">{lang.language_title}</span>
             </div>
 
@@ -64,13 +81,60 @@ const SettingPage = () => {
                   }
                 }}
                 value={language}
-                className="select select-xs w-full bg-transparent text-right text-sm font-normal focus:outline-none"
+                className="custom-select"
               >
                 {items.map((item) => (
                   <option key={item.value} value={item.value}>
                     {item.text}
                   </option>
                 ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="card-wrapper mt-4">
+          <div className="card-row">
+            <div>
+              <TrashIcon className="h-5 w-5" />
+
+              <span className="ml-2">{lang.trash}</span>
+            </div>
+
+            <div>
+              <select
+                className="custom-select"
+                value={config?.trash ? 1 : 0}
+                onChange={(e) => {
+                  configUpsert.mutate({
+                    trash: Number(e.target.value) === 1,
+                  });
+                }}
+              >
+                <option value={0}>{lang.hide}</option>
+                <option value={1}>{lang.show}</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="card-row">
+            <div>
+              <FolderMinusIcon className="h-5 w-5" />
+              <span className="ml-2">{lang.pwd_folder}</span>
+            </div>
+
+            <div>
+              <select
+                className="custom-select"
+                value={config?.pwdFolder ? 1 : 0}
+                onChange={(e) => {
+                  configUpsert.mutate({
+                    pwdFolder: Number(e.target.value) === 1,
+                  });
+                }}
+              >
+                <option value={0}>{lang.hide}</option>
+                <option value={1}>{lang.show}</option>
               </select>
             </div>
           </div>
