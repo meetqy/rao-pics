@@ -1,6 +1,6 @@
 import { color } from "./src/color";
 import { config, configCore } from "./src/config";
-import { folder } from "./src/folder";
+import { folder, folderCore } from "./src/folder";
 import { image } from "./src/image";
 import { library } from "./src/library";
 import { log } from "./src/log";
@@ -23,6 +23,7 @@ export const router = t.router({
 
 export const routerCore = {
   config: configCore,
+  folder: folderCore,
 };
 
 export type AppRouter = typeof router;
