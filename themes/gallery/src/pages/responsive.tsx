@@ -1,22 +1,32 @@
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
-import { useWindowScroll } from "@react-hook/window-scroll";
-import PhotoSwipeLightbox from "photoswipe/lightbox";
-import type { Photo, RenderPhotoProps } from "react-photo-album";
-import { PhotoAlbum } from "react-photo-album";
-
-import "photoswipe/style.css";
+import { useWindowSize } from "@react-hook/window-size";
+import justifyLayout from "justified-layout";
+import {
+  MasonryScroller,
+  useContainerPosition,
+  useInfiniteLoader,
+  usePositioner,
+} from "masonic";
 
 import type { EXT } from "@rao-pics/constant";
-import { VIDEO_EXT } from "@rao-pics/constant";
 import { numberToHex } from "@rao-pics/utils";
 
-import initLightboxVideoPlugin from "~/utils/photoswipe-video";
 import { trpc } from "~/utils/trpc";
 
+type JustifyLayoutResult = ReturnType<typeof justifyLayout>;
+
 function Home() {
-  const [, setIndex] = useState(-1);
   const limit = 50;
+  const containerRef = useRef(null);
+  const [windowWidth, windowHeight] = useWindowSize();
+  const { offset, width } = useContainerPosition(containerRef, [
+    windowWidth,
+    windowHeight,
+  ]);
+
+  const { data: config } = trpc.config.findUnique.useQuery();
 
   const imageQuery = trpc.image.find.useInfiniteQuery(
     { limit, includes: ["colors"] },
@@ -25,157 +35,124 @@ function Home() {
     },
   );
 
-  const { data: config } = trpc.config.findUnique.useQuery();
-  const isFetching = useRef(false);
-
-  // 加载更多
-  const y = useWindowScroll();
-  useEffect(() => {
-    const h = document.body.scrollHeight - window.innerHeight;
-    if (h > 0) {
-      const diff = Math.abs(y - h);
-
-      if (diff < 500) {
-        if (imageQuery.hasNextPage && isFetching.current === false) {
-          isFetching.current = true;
-          imageQuery
-            .fetchNextPage()
-            .then(() => {
-              setTimeout(() => {
-                isFetching.current = false;
-              });
-            })
-            .catch(console.error);
-        }
-      }
-    }
-  }, [y, imageQuery]);
-  // 加载更多 END
-
   const pages = imageQuery.data?.pages;
 
-  const id = "photo-swipe-lightbox";
-  useEffect(() => {
-    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
-      gallery: "#" + id,
-      children: "a.photo-swipe-lightbox-a",
-      pswpModule: () => import("photoswipe"),
-      loop: false,
+  const images = useMemo(() => {
+    const result = pages?.map((page) => {
+      return page.data.map((image) => {
+        const id = image.path.split(/\/|\\/).slice(-2)[0];
+        const host = `http://${config?.ip}:${config?.serverPort}`;
+        const src = `${host}/static/${id}/${image.name}.${image.ext}`;
+        const thumbnailPath = image.noThumbnail
+          ? src
+          : `${host}/static/${id}/${image.name}_thumbnail.png`;
+
+        return {
+          id: image.id,
+          src,
+          thumbnailPath,
+          bgColor: numberToHex(image.colors?.[0]?.rgb ?? 0),
+          width: image.width,
+          height: image.height,
+          ext: image.ext as unknown as typeof EXT,
+        };
+      });
     });
 
-    initLightboxVideoPlugin(lightbox);
+    return result?.flat();
+  }, [config?.ip, config?.serverPort, pages]);
 
-    lightbox.addFilter("placeholderSrc", (placeholderSrc, content) => {
-      return content.data.msrc ?? placeholderSrc;
-    });
+  const items = useMemo(() => {
+    if (images) {
+      const results: JustifyLayoutResult[] = [];
+      const imageTemp = JSON.parse(JSON.stringify(images)) as typeof images;
+      const imageResult: (typeof images)[] = [];
 
-    lightbox.init();
-
-    return () => {
-      lightbox?.destroy();
-      lightbox = null;
-    };
-  }, [config]);
-
-  return (
-    <div
-      className="pswp-gallery space-y-1 p-3 sm:px-4 md:space-y-2 lg:space-y-3 xl:space-y-4 2xl:space-y-5"
-      id={id}
-    >
-      {pages?.map((page) => {
-        const photos = page.data?.map((image) => {
-          const id = image.path.split(/\/|\\/).slice(-2)[0];
-          const host = `http://${config?.ip}:${config?.serverPort}`;
-          const src = `${host}/static/${id}/${image.name}.${image.ext}`;
-          const thumbnailPath = image.noThumbnail
-            ? src
-            : `${host}/static/${id}/${image.name}_thumbnail.png`;
-
-          return {
-            id: image.id,
-            src,
-            thumbnailPath,
-            bgColor: numberToHex(image.colors?.[0]?.rgb ?? 0),
-            width: image.width,
-            height: image.height,
-            ext: image.ext as unknown as typeof EXT,
-          };
+      while (imageTemp.length > 0) {
+        const result = justifyLayout(imageTemp, {
+          maxNumRows: 1,
+          containerWidth: width,
+          containerPadding: 0,
+          boxSpacing: 12,
         });
 
-        return (
-          <div key={page.nextCursor ?? 1}>
-            {photos && (
-              <PhotoAlbum
-                sizes={{
-                  size: "calc(100vw - 240px)",
-                  sizes: [
-                    { viewport: "(max-width: 768px)", size: "100vw" },
-                    { viewport: "(max-width: 1280px)", size: "50vw" },
-                  ],
-                }}
-                layout="rows"
-                photos={photos}
-                breakpoints={[640, 768, 1024, 1280, 1536]}
-                spacing={(containerWidth) => {
-                  if (containerWidth < 640) return 12;
+        imageResult.push(imageTemp.splice(0, result.boxes.length));
+        results.push(result);
+      }
 
-                  return 16;
-                }}
-                targetRowHeight={(containerWidth) => {
-                  if (containerWidth < 640) return containerWidth / 1;
-                  if (containerWidth < 768) return containerWidth / 1;
-                  if (containerWidth < 1024) return containerWidth / 3;
-                  if (containerWidth < 1280) return containerWidth / 4;
-                  return containerWidth / 5;
-                }}
-                renderPhoto={NextJsImage}
-                onClick={({ index }) => setIndex(index)}
-              />
-            )}
-          </div>
-        );
-      })}
+      return {
+        justify: results,
+        images: imageResult,
+      };
+    }
+
+    return null;
+  }, [images, width]);
+
+  const positioner = usePositioner({
+    width: width,
+    columnGutter: windowWidth < 768 ? 8 : 12,
+    columnCount: 1,
+  });
+
+  const onLoadMore = useInfiniteLoader(
+    async () => {
+      if (imageQuery.hasNextPage) {
+        await imageQuery.fetchNextPage();
+      }
+    },
+    {
+      minimumBatchSize: limit,
+      threshold: 3,
+    },
+  );
+
+  return (
+    <div className="p-2 md:p-3">
+      <MasonryScroller
+        onRender={onLoadMore}
+        positioner={positioner}
+        offset={offset}
+        height={windowHeight}
+        containerRef={containerRef}
+        items={items?.justify ?? []}
+        render={({ data, index }) => {
+          const itemImages = items?.images[index];
+          return (
+            <div
+              style={{
+                height: data.containerHeight + "px",
+                position: "relative",
+              }}
+            >
+              {data.boxes.map((box, i) => {
+                const image = itemImages?.[i];
+
+                return (
+                  image && (
+                    <div
+                      key={image.id}
+                      className="relative overflow-hidden rounded"
+                      style={{
+                        width: `${box.width}px`,
+                        height: `${box.height}px`,
+                        position: "absolute",
+                        top: `${box.top}px`,
+                        left: `${box.left}px`,
+                        backgroundColor: image.bgColor + "7F",
+                      }}
+                    >
+                      <Image src={image.thumbnailPath} layout="fill" />
+                    </div>
+                  )
+                );
+              })}
+            </div>
+          );
+        }}
+      />
     </div>
   );
 }
 
-interface T extends Photo {
-  thumbnailPath: string;
-  id: number;
-  bgColor: string;
-  ext: typeof EXT;
-}
-
-function NextJsImage({
-  photo,
-  imageProps: { alt, title, sizes, onClick },
-  wrapperStyle,
-}: RenderPhotoProps<T>) {
-  return (
-    <a
-      href={photo.src}
-      data-pswp-msrc={photo.thumbnailPath}
-      data-pswp-width={photo.width}
-      data-pswp-height={photo.height}
-      data-pswp-type={VIDEO_EXT.includes(photo.ext) ? "video" : "image"}
-      key={`photo-swipe-lightbox-${photo.id}`}
-      className="photo-swipe-lightbox-a select-none overflow-hidden rounded-md border shadow"
-      style={{ ...wrapperStyle, position: "relative" }}
-      target="_blank"
-      rel="noreferrer"
-    >
-      <Image
-        style={{ backgroundColor: photo.bgColor + "20" }}
-        src={{
-          src: photo.thumbnailPath,
-          width: photo.width,
-          height: photo.height,
-        }}
-        draggable={false}
-        {...{ alt, title, sizes, onClick }}
-      />
-    </a>
-  );
-}
-
-export default Home;
+export default dynamic(() => Promise.resolve(Home), { ssr: false });
