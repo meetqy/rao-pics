@@ -25,17 +25,22 @@
     "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/utils": "workspace:^",
+    "@react-hook/window-scroll": "^1.3.0",
+    "@react-hook/window-size": "^3.1.1",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tanstack/react-query": "^4.32.6",
     "@trpc/client": "^10.37.1",
     "@trpc/next": "^10.38.1",
     "@trpc/react-query": "^10.37.1",
     "@trpc/server": "^10.37.1",
+    "@types/lodash": "^4.14.197",
+    "justified-layout": "^4.1.0",
+    "lodash": "^4.17.21",
+    "masonic": "^3.7.0",
     "next": "^13.4.19",
     "photoswipe": "^5.4.0",
     "react": "18.2.0",
     "react-photo-album": "^2.3.0",
-    "react-use": "^17.4.0",
     "superjson": "1.13.1",
     "zod": "^3.22.2"
   },
@@ -43,6 +48,8 @@
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tailwind-config": "workspace:*",
-    "@rao-pics/tsconfig": "workspace:*"
+    "@rao-pics/tsconfig": "workspace:*",
+    "@types/justified-layout": "^4.1.1",
+    "@types/react-window": "^1.8.6"
   }
 }
