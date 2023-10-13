@@ -54,7 +54,12 @@ function Home() {
     return result?.flat();
   }, [config?.ip, config?.serverPort, pages]);
 
+  const cardWidth = useRef<number>();
   const [windowWidth, windowHeight] = useWindowSize();
+  if (windowWidth >= 1920 && !cardWidth.current) {
+    cardWidth.current = 240;
+  }
+
   const { offset, width } = useContainerPosition(containerRef, [
     windowWidth,
     windowHeight,
@@ -78,7 +83,7 @@ function Home() {
   );
 
   return (
-    <div className="p-2 md:p-3">
+    <main className="p-2 md:p-3">
       <MasonryScroller
         onRender={onLoadMore}
         positioner={positioner}
@@ -88,7 +93,7 @@ function Home() {
         items={images ?? []}
         itemKey={(data) => data.id}
         render={({ data, width: w }) => {
-          const h = data.height / (data.width / w);
+          const h = data.height / (data.width / (cardWidth.current ?? w));
 
           return (
             <div
@@ -107,7 +112,7 @@ function Home() {
           );
         }}
       />
-    </div>
+    </main>
   );
 }
 

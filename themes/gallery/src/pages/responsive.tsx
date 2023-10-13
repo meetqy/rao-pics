@@ -108,7 +108,7 @@ function Home() {
   );
 
   return (
-    <div className="p-2 md:p-3">
+    <main className="p-2 md:p-3">
       <MasonryScroller
         onRender={onLoadMore}
         positioner={positioner}
@@ -151,7 +151,7 @@ function Home() {
           );
         }}
       />
-    </div>
+    </main>
   );
 }
 
