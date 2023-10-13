@@ -63,7 +63,7 @@ function Home() {
   }, [config?.ip, config?.serverPort, pages]);
 
   const items = useMemo(() => {
-    if (images) {
+    if (images && width) {
       const results: JustifyLayoutResult[] = [];
       const imageTemp = JSON.parse(JSON.stringify(images)) as typeof images;
       const imageResult: (typeof images)[] = [];
@@ -74,6 +74,7 @@ function Home() {
           containerWidth: width,
           containerPadding: 0,
           boxSpacing: 12,
+          targetRowHeight: 300,
         });
 
         imageResult.push(imageTemp.splice(0, result.boxes.length));
@@ -127,6 +128,8 @@ function Home() {
             >
               {data.boxes.map((box, i) => {
                 const image = itemImages?.[i];
+
+                console.log(box.height);
 
                 return (
                   image && (

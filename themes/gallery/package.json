@@ -22,6 +22,7 @@
     "root": true
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/utils": "workspace:^",
