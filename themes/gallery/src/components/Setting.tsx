@@ -16,7 +16,6 @@ const Setting = () => {
   const handleLayoutChange = async (layout: string) => {
     setSetting((prev) => ({ ...prev, layout }));
     await router.replace("/" + layout);
-    // router.reload();
   };
 
   return (
@@ -38,7 +37,7 @@ const Setting = () => {
             className="drawer-overlay"
           ></label>
           <div className="min-h-full w-80 bg-base-100 p-4 text-base md:w-96">
-            <div className="rounded-md border bg-base-200/30 px-4">
+            <div className="rounded-md border border-base-content/10 bg-base-200/30 px-4">
               <div className="flex justify-between py-3">
                 <span className="flex items-center">
                   <AdjustmentsVerticalIcon className="mr-1 h-4 w-4" />
@@ -65,7 +64,7 @@ const Setting = () => {
                 </div>
               </div>
 
-              <div className="flex justify-between border-t py-3">
+              <div className="flex justify-between border-t border-base-content/10 py-3">
                 <span className="flex items-center">
                   <ArrowsUpDownIcon className="mr-1 h-4 w-4" />
                   排序方式

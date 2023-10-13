@@ -31,6 +31,23 @@ function Home() {
 
   const cardWidth = useRef<number>(240);
 
+  const [windowWidth, windowHeight] = useWindowSize();
+
+  const { offset, width } = useContainerPosition(containerRef, [
+    windowWidth,
+    windowHeight,
+  ]);
+
+  if (windowWidth >= 1536) {
+    cardWidth.current = 240;
+  } else if (windowWidth >= 1024 && windowWidth < 1536) {
+    cardWidth.current = 220;
+  } else if (windowWidth < 1024 && windowWidth >= 640) {
+    cardWidth.current = Number(windowWidth / 3);
+  } else {
+    cardWidth.current = Number(windowWidth / 2);
+  }
+
   const images = useMemo(() => {
     const result = pages?.map((page) => {
       return page.data.map((image) => {
@@ -55,23 +72,6 @@ function Home() {
 
     return result?.flat();
   }, [config?.ip, config?.serverPort, pages]);
-
-  const [windowWidth, windowHeight] = useWindowSize();
-
-  const { offset, width } = useContainerPosition(containerRef, [
-    windowWidth,
-    windowHeight,
-  ]);
-
-  if (windowWidth >= 1536) {
-    cardWidth.current = 240;
-  } else if (windowWidth >= 1024 && windowWidth < 1536) {
-    cardWidth.current = 220;
-  } else if (windowWidth < 1024 && windowWidth >= 640) {
-    cardWidth.current = Number(windowWidth / 3);
-  } else {
-    cardWidth.current = Number(windowWidth / 2);
-  }
 
   const positioner = usePositioner({
     width,

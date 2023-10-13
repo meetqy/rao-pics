@@ -129,8 +129,6 @@ function Home() {
               {data.boxes.map((box, i) => {
                 const image = itemImages?.[i];
 
-                console.log(box.height);
-
                 return (
                   image && (
                     <div
