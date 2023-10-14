@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   AdjustmentsHorizontalIcon,
   AdjustmentsVerticalIcon,
   ArrowsUpDownIcon,
 } from "@heroicons/react/24/outline";
+import { useThrottle } from "@react-hook/throttle";
+import useScrollPosition from "@react-hook/window-scroll";
 
+let T: ReturnType<typeof setTimeout> | null = null;
 const Setting = () => {
   const router = useRouter();
   const [setting, setSetting] = useState({
@@ -18,6 +21,30 @@ const Setting = () => {
     await router.replace("/" + layout);
   };
 
+  const [btn, setBtn] = useThrottle(false);
+  const scrollY = useScrollPosition(60);
+
+  useEffect(() => {
+    setBtn(true);
+
+    const clear = () => {
+      if (T) {
+        clearTimeout(T);
+        T = null;
+      }
+    };
+
+    clear();
+
+    T = setTimeout(() => {
+      setBtn(false);
+    }, 3000);
+
+    return () => {
+      clear();
+    };
+  }, [scrollY, setBtn]);
+
   return (
     <>
       <div className="drawer drawer-end">
@@ -25,7 +52,9 @@ const Setting = () => {
         <div className="drawer-content">
           <label
             htmlFor="my-drawer"
-            className="drawer-button glass btn-md btn-circle btn fixed right-2 top-2"
+            className={`drawer-button glass btn-md btn-circle btn fixed transition-all duration-200 ease-in ${
+              btn ? "right-3 top-3" : "-right-6 -top-6 opacity-30"
+            }`}
           >
             <AdjustmentsHorizontalIcon className="h-6 w-6" />
           </label>

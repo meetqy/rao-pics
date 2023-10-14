@@ -26,6 +26,7 @@
     "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/utils": "workspace:^",
+    "@react-hook/throttle": "^2.2.0",
     "@react-hook/window-scroll": "^1.3.0",
     "@react-hook/window-size": "^3.1.1",
     "@t3-oss/env-nextjs": "^0.6.1",

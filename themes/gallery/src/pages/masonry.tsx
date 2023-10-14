@@ -128,7 +128,7 @@ function Home() {
 
           return (
             <a
-              className="relative block rounded"
+              className="relative block rounded shadow"
               href={data.src}
               data-pswp-width={data.width}
               data-pswp-height={data.height}

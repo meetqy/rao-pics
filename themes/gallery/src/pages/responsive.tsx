@@ -164,7 +164,7 @@ function Home() {
                       }
                       target="_blank"
                       rel="noreferrer"
-                      className="relative block overflow-hidden rounded"
+                      className="relative block overflow-hidden rounded shadow"
                       style={{
                         width: `${box.width}px`,
                         height: `${box.height}px`,
