@@ -1,6 +1,8 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
 
+import Setting from "~/components/Setting";
+
 import "~/styles/globals.css";
 
 import { trpc } from "~/utils/trpc";
@@ -26,6 +28,7 @@ function App({ Component, pageProps }: AppProps) {
         <title>Gallery for Rao Pics</title>
       </Head>
       <Component {...pageProps} />
+      <Setting />
     </>
   );
 }

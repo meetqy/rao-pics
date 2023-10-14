@@ -20,7 +20,7 @@ function LayoutAside({ current, setCurrent, libraryName }: LayoutAsideProps) {
         )}
 
         <p
-          className={`mx-4 border-b border-base-300 pb-2 text-base font-medium capitalize ${
+          className={`mx-4 border-b border-base-content/10 pb-2 text-base font-medium capitalize ${
             windows ? "h-12 pt-4" : "h-8"
           }`}
           style={windows ? ({ appRegion: "drag" } as React.CSSProperties) : {}}
