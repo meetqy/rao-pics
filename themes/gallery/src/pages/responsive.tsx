@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
 import { useWindowSize } from "@react-hook/window-size";
@@ -9,11 +9,16 @@ import {
   useInfiniteLoader,
   usePositioner,
 } from "masonic";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
 
+import { VIDEO_EXT } from "@rao-pics/constant";
 import type { EXT } from "@rao-pics/constant";
 import { numberToHex } from "@rao-pics/utils";
 
+import initLightboxVideoPlugin from "~/utils/photoswipe-video";
 import { trpc } from "~/utils/trpc";
+
+import "photoswipe/style.css";
 
 type JustifyLayoutResult = ReturnType<typeof justifyLayout>;
 
@@ -108,8 +113,26 @@ function Home() {
     },
   );
 
+  useEffect(() => {
+    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
+      gallery: "#photo-swipe-lightbox",
+      children: "a",
+      pswpModule: () => import("photoswipe"),
+      loop: false,
+    });
+
+    initLightboxVideoPlugin(lightbox);
+
+    lightbox.init();
+
+    return () => {
+      lightbox?.destroy();
+      lightbox = null;
+    };
+  }, []);
+
   return (
-    <main className="p-2 md:p-3">
+    <main className="p-2 md:p-3" id="photo-swipe-lightbox">
       <MasonryScroller
         onRender={onLoadMore}
         positioner={positioner}
@@ -131,9 +154,17 @@ function Home() {
 
                 return (
                   image && (
-                    <div
+                    <a
+                      href={image.src}
                       key={image.id}
-                      className="relative overflow-hidden rounded"
+                      data-pswp-width={image.width}
+                      data-pswp-height={image.height}
+                      data-pswp-type={
+                        VIDEO_EXT.includes(image.ext) ? "video" : "image"
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                      className="relative block overflow-hidden rounded"
                       style={{
                         width: `${box.width}px`,
                         height: `${box.height}px`,
@@ -144,7 +175,7 @@ function Home() {
                       }}
                     >
                       <Image src={image.thumbnailPath} layout="fill" />
-                    </div>
+                    </a>
                   )
                 );
               })}

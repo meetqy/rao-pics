@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
 import { useWindowSize } from "@react-hook/window-size";
@@ -8,11 +8,16 @@ import {
   useInfiniteLoader,
   usePositioner,
 } from "masonic";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
 
+import { VIDEO_EXT } from "@rao-pics/constant";
 import type { EXT } from "@rao-pics/constant";
 import { numberToHex } from "@rao-pics/utils";
 
+import initLightboxVideoPlugin from "~/utils/photoswipe-video";
 import { trpc } from "~/utils/trpc";
+
+import "photoswipe/style.css";
 
 function Home() {
   const limit = 50;
@@ -90,8 +95,26 @@ function Home() {
     },
   );
 
+  useEffect(() => {
+    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
+      gallery: "#photo-swipe-lightbox",
+      children: "a",
+      pswpModule: () => import("photoswipe"),
+      loop: false,
+    });
+
+    initLightboxVideoPlugin(lightbox);
+
+    lightbox.init();
+
+    return () => {
+      lightbox?.destroy();
+      lightbox = null;
+    };
+  });
+
   return (
-    <main className="p-2 md:p-3">
+    <main className="p-2 md:p-3" id="photo-swipe-lightbox">
       <MasonryScroller
         onRender={onLoadMore}
         positioner={positioner}
@@ -104,19 +127,25 @@ function Home() {
           const h = data.height / (data.width / (cardWidth.current ?? w));
 
           return (
-            <div
-              className="relative rounded"
+            <a
+              className="relative block rounded"
+              href={data.src}
+              data-pswp-width={data.width}
+              data-pswp-height={data.height}
+              data-pswp-type={VIDEO_EXT.includes(data.ext) ? "video" : "image"}
               style={{
                 backgroundColor: data.bgColor + "7F",
                 height: h,
               }}
+              target="_blank"
+              rel="noreferrer"
             >
               <Image
                 src={data.thumbnailPath}
                 layout="fill"
                 className="rounded"
               />
-            </div>
+            </a>
           );
         }}
       />

@@ -401,15 +401,9 @@ importers:
       '@trpc/server':
         specifier: ^10.37.1
         version: 10.37.1
-      '@types/lodash':
-        specifier: ^4.14.197
-        version: 4.14.197
       justified-layout:
         specifier: ^4.1.0
         version: 4.1.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       masonic:
         specifier: ^3.7.0
         version: 3.7.0(react@18.2.0)
@@ -422,9 +416,6 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      react-photo-album:
-        specifier: ^2.3.0
-        version: 2.3.0(react@18.2.0)
       superjson:
         specifier: 1.13.1
         version: 1.13.1
@@ -1799,6 +1790,7 @@ packages:
 
   /@types/lodash@4.14.197:
     resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
+    dev: true
 
   /@types/mime@1.3.2:
     resolution: {integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==}
@@ -5777,15 +5769,6 @@ packages:
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
-
-  /react-photo-album@2.3.0(react@18.2.0):
-    resolution: {integrity: sha512-CU+UMK4ZQHIoPZ672TSst9loKE5bxy6w0+bf7bY4XOw1g1C7+VdDWCW+wD8wPpbg2ve38QBTS73HVe6xYLAQ3w==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      react: '>=16.8.0'
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
