@@ -10,7 +10,7 @@ import ip from "ip";
 import { router, startExpressServer, stopExpressServer } from "@rao-pics/api";
 import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
-import { createDbPath } from "@rao-pics/db";
+import { createDbPath, migrate } from "@rao-pics/db";
 
 import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
@@ -86,7 +86,7 @@ const mainWindowReadyToShow = async () => {
   }
 };
 
-function createWindow(): void {
+async function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 768,
@@ -126,10 +126,11 @@ function createWindow(): void {
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (IS_DEV && process.env.ELECTRON_RENDERER_URL) {
+    await migrate();
     void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
     // 创建 db.sqlite 文件
-    createDbPath(join(process.resourcesPath, "extraResources/db.sqlite"));
+    await createDbPath(join(process.resourcesPath, "extraResources/db.sqlite"));
     void mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 
