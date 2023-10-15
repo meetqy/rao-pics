@@ -137,8 +137,8 @@ async function createWindow() {
     void mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 
-  void mainWindowReadyToShow();
-  void initWatchLibrary();
+  await mainWindowReadyToShow();
+  await initWatchLibrary();
 
   createIPCHandler({ router, windows: [mainWindow] });
   createCustomIPCHandle();
@@ -152,7 +152,7 @@ async function createWindow() {
 // Some APIs can only be used after this event occurs.
 app
   .whenReady()
-  .then(() => {
+  .then(async () => {
     // Set app user model id for windows
     electronApp.setAppUserModelId("com.rao-pics");
 
@@ -163,7 +163,7 @@ app
       optimizer.watchWindowShortcuts(window);
     });
 
-    void createWindow();
+    await createWindow();
 
     app.on("activate", function () {
       // On macOS it's common to re-create a window in the app when the
@@ -172,7 +172,9 @@ app
     });
   })
   .catch((e) => {
-    throw e;
+    if (e instanceof Error) {
+      dialog.showErrorBox("Error [app.whenReady]", e.message);
+    }
   });
 
 // Quit when all windows are closed, except on macOS. There, it's common

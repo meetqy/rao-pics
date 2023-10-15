@@ -16,7 +16,7 @@ const diffMigrate = async (migratesPath: string, file: string) => {
   if (!fs.existsSync(file)) {
     latestVersion && fs.writeFileSync(file, latestVersion);
   } else {
-    if (oldVersion === latestVersion) return;
+    // if (oldVersion === latestVersion) return;
 
     const sqls = fs
       .readFileSync(join(migratesPath, latestVersion, "migration.sql"), "utf-8")
@@ -36,19 +36,29 @@ const diffMigrate = async (migratesPath: string, file: string) => {
 
 // TODO: 跨多个版本的迁移，暂未实现
 export const migrate = async () => {
-  if (IS_DEV) {
-    const migratesPath = join(
-      __dirname,
-      "../../../../",
-      "packages",
-      "db",
-      "prisma",
-      "migrations",
-    );
+  try {
+    if (IS_DEV) {
+      const migratesPath = join(
+        __dirname,
+        "../../../../",
+        "packages",
+        "db",
+        "prisma",
+        "migrations",
+      );
 
-    return await diffMigrate(migratesPath, join(migratesPath, ".version"));
-  } else {
-    // TODO: 打包之后的 migrations 目录
-    return await diffMigrate("xxx", DB_MIGRATION_VERSION_FILE);
+      return await diffMigrate(migratesPath, join(migratesPath, ".version"));
+    } else {
+      // TODO: 打包之后的 migrations 目录
+      return await diffMigrate("xxx", DB_MIGRATION_VERSION_FILE);
+    }
+  } catch (e) {
+    if (e instanceof Error) {
+      if (e.message.includes("duplicate column name")) {
+        return console.error("migrate error: ", e.message);
+      }
+
+      throw e;
+    }
   }
 };
