@@ -1,6 +1,5 @@
 import { homedir } from "os";
 import { join } from "path";
-import env from "env-var";
 
 import { PRODUCT_NAME } from ".";
 
@@ -15,15 +14,6 @@ export const IS_DEV = process.env.NODE_ENV === "development";
 export const PLATFORM = process.platform;
 
 /**
- * 数据库文件名称
- */
-export const DB_NAME = env
-  .get("DB_NAME")
-  .required()
-  .default(`db.sqlite`)
-  .asString();
-
-/**
  * @rao-pics/constants 中所有的目录必须调用此方法格式化
  * @param dir
  */
@@ -34,12 +24,35 @@ const formatDirPath = (dir: string) => {
 /**
  * sqlite.db 存放目录，不同的系统存放目录不同
  */
-export const DB_DIRS = {
+const DB_DIRS = {
   darwin: formatDirPath(
-    join(homedir(), "Library", "Caches", PRODUCT_NAME, DB_NAME),
+    join(homedir(), "Library", "Caches", PRODUCT_NAME, "db.sqlite"),
   ),
   win32: formatDirPath(
-    join(homedir(), "AppData", "Local", PRODUCT_NAME, DB_NAME),
+    join(homedir(), "AppData", "Local", PRODUCT_NAME, "db.sqlite"),
   ),
-  linux: formatDirPath(join(homedir(), ".cache", PRODUCT_NAME, DB_NAME)),
+  linux: formatDirPath(join(homedir(), ".cache", PRODUCT_NAME, "db.sqlite")),
 } as { [key in NodeJS.Platform]: string };
+
+/**
+ * 当前系统的数据库文件存放路径
+ */
+export const DB_PATH = DB_DIRS[PLATFORM];
+
+/**
+ * 数据库版本存放目录
+ */
+const DB_MIGRATION_VERSION_FILES = {
+  darwin: formatDirPath(
+    join(homedir(), "Library", "Caches", PRODUCT_NAME, ".version"),
+  ),
+  win32: formatDirPath(
+    join(homedir(), "AppData", "Local", PRODUCT_NAME, ".version"),
+  ),
+  linux: formatDirPath(join(homedir(), ".cache", PRODUCT_NAME, ".version")),
+} as { [key in NodeJS.Platform]: string };
+
+/**
+ * 当前系统数据库版本存放路径
+ */
+export const DB_MIGRATION_VERSION_FILE = DB_MIGRATION_VERSION_FILES[PLATFORM];

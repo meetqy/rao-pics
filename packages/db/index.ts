@@ -2,15 +2,15 @@ import { sep } from "path";
 import { PrismaClient } from "@prisma/client";
 import fs from "fs-extra";
 
-import { DB_DIRS, IS_DEV, PLATFORM } from "@rao-pics/constant/server";
+import { DB_PATH, IS_DEV } from "@rao-pics/constant/server";
 
-const dbPath = DB_DIRS[PLATFORM];
+import { migrate } from "./migrate";
 
 const _prisma: PrismaClient = new PrismaClient(
   !IS_DEV
     ? {
         datasources: {
-          db: { url: `file:${dbPath}` },
+          db: { url: `file:${DB_PATH}` },
         },
       }
     : undefined,
@@ -25,9 +25,9 @@ export const createDbPath = async (defaultPath: string) => {
     throw new Error(`defaultPath: ${defaultPath} not exist`);
   }
 
-  if (!fs.pathExistsSync(dbPath)) {
-    fs.ensureDirSync(dbPath.split(sep).slice(0, -1).join(sep));
-    fs.copySync(defaultPath, dbPath, {
+  if (!fs.pathExistsSync(DB_PATH)) {
+    fs.ensureDirSync(DB_PATH.split(sep).slice(0, -1).join(sep));
+    fs.copySync(defaultPath, DB_PATH, {
       overwrite: false,
     });
 
@@ -37,12 +37,7 @@ export const createDbPath = async (defaultPath: string) => {
   return await migrate();
 };
 
-export const migrate = async () => {
-  return await prisma.$transaction([
-    prisma.$executeRaw`ALTER TABLE "Config" ADD COLUMN "pwdFolder" BOOLEAN DEFAULT false;`,
-    prisma.$executeRaw`ALTER TABLE "Config" ADD COLUMN "trash" BOOLEAN DEFAULT false;`,
-  ]);
-};
-
+export * from "./migrate";
 export * from "@prisma/client";
+
 export const prisma = _prisma;

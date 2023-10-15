@@ -8,6 +8,7 @@ icons/icons
 # prisma
 db.sqlite
 db.sqlite-journal
+packages/db/prisma/migrations/.version
 
 # dependencies
 node_modules

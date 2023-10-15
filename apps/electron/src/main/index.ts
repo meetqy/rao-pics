@@ -17,6 +17,9 @@ import { createCustomIPCHandle } from "./src/ipc";
 import createMenu from "./src/menu";
 import createTray from "./src/tray";
 
+/** 当前版本 */
+process.env.VERSION = app.getVersion();
+
 /**
  * Sentry init
  */
@@ -160,12 +163,12 @@ app
       optimizer.watchWindowShortcuts(window);
     });
 
-    createWindow();
+    void createWindow();
 
     app.on("activate", function () {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
-      if (BrowserWindow.getAllWindows().length === 0) createWindow();
+      if (BrowserWindow.getAllWindows().length === 0) void createWindow();
     });
   })
   .catch((e) => {

@@ -1,6 +1,6 @@
 {
   "name": "@rao-pics/electron",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "Preview photos and medias on any device",
   "homepage": "https://rao.pics",
   "author": {
@@ -40,7 +40,6 @@
     "get-port": "^7.0.0",
     "ip": "^1.1.8",
     "lodash": "^4.17.21",
-    "plaiceholder": "^3.0.0",
     "superjson": "1.13.1"
   },
   "devDependencies": {

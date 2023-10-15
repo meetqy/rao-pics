@@ -1,4 +1,3 @@
-import env from "env-var";
 import { z } from "zod";
 
 /**
@@ -9,11 +8,7 @@ export const DEFAULT_THEME = "gallery";
 /**
  * 项目名称
  */
-export const PRODUCT_NAME = env
-  .get("PRODUCT_NAME")
-  .required()
-  .default("Rao Pics")
-  .asString();
+export const PRODUCT_NAME = "Rao Pics";
 
 /**
  * 语言
