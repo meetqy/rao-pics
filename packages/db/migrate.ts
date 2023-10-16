@@ -57,7 +57,6 @@ export const migrate = async (appMigrationsPath?: string) => {
 
       return await diffMigrate(migratesPath, join(migratesPath, ".version"));
     } else {
-      // TODO: 打包之后的 migrations 目录
       if (appMigrationsPath) {
         return await diffMigrate(appMigrationsPath, DB_MIGRATION_VERSION_FILE);
       }
