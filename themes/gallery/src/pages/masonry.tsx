@@ -19,40 +19,30 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
+let lastWidth = 0;
 function Home() {
   const limit = 50;
   const containerRef = useRef(null);
 
-  const { data: config } = trpc.config.findUnique.useQuery();
+  const [windowWidth, windowHeight] = useWindowSize();
+  const { offset, width } = useContainerPosition(containerRef, [
+    windowWidth,
+    windowHeight,
+  ]);
+  const positioner = usePositioner({
+    width,
+    columnGutter: windowWidth < 768 ? 8 : 12,
+    rowGutter: windowWidth < 768 ? 8 : 12,
+  });
 
+  const { data: config } = trpc.config.findUnique.useQuery();
   const imageQuery = trpc.image.find.useInfiniteQuery(
     { limit, includes: ["colors"] },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
-
   const pages = imageQuery.data?.pages;
-
-  const cardWidth = useRef<number>(240);
-
-  const [windowWidth, windowHeight] = useWindowSize();
-
-  const { offset, width } = useContainerPosition(containerRef, [
-    windowWidth,
-    windowHeight,
-  ]);
-
-  if (windowWidth >= 1536) {
-    cardWidth.current = 240;
-  } else if (windowWidth >= 1024 && windowWidth < 1536) {
-    cardWidth.current = 220;
-  } else if (windowWidth < 1024 && windowWidth >= 640) {
-    cardWidth.current = Number(windowWidth / 3);
-  } else {
-    cardWidth.current = Number(windowWidth / 2);
-  }
-
   const images = useMemo(() => {
     const result = pages?.map((page) => {
       return page.data.map((image) => {
@@ -77,11 +67,6 @@ function Home() {
 
     return result?.flat();
   }, [config?.ip, config?.serverPort, pages]);
-
-  const positioner = usePositioner({
-    width,
-    columnGutter: windowWidth < 768 ? 8 : 12,
-  });
 
   const onLoadMore = useInfiniteLoader(
     async () => {
@@ -124,7 +109,12 @@ function Home() {
         items={images ?? []}
         itemKey={(data) => data.id}
         render={({ data, width: w }) => {
-          const h = data.height / (data.width / (cardWidth.current ?? w));
+          if (w) {
+            lastWidth = w;
+          }
+
+          const m = data.width / lastWidth;
+          const h = data.height / m;
 
           return (
             <a
