@@ -34,24 +34,12 @@ function Home() {
 
   const pages = imageQuery.data?.pages;
 
-  const cardWidth = useRef<number>(240);
-
   const [windowWidth, windowHeight] = useWindowSize();
 
   const { offset, width } = useContainerPosition(containerRef, [
     windowWidth,
     windowHeight,
   ]);
-
-  if (windowWidth >= 1536) {
-    cardWidth.current = 240;
-  } else if (windowWidth >= 1024 && windowWidth < 1536) {
-    cardWidth.current = 220;
-  } else if (windowWidth < 1024 && windowWidth >= 640) {
-    cardWidth.current = Number(windowWidth / 3);
-  } else {
-    cardWidth.current = Number(windowWidth / 2);
-  }
 
   const images = useMemo(() => {
     const result = pages?.map((page) => {
@@ -124,7 +112,8 @@ function Home() {
         items={images ?? []}
         itemKey={(data) => data.id}
         render={({ data, width: w }) => {
-          const h = data.height / (data.width / (cardWidth.current ?? w));
+          const m = data.width / w;
+          const h = data.height / m;
 
           return (
             <a
