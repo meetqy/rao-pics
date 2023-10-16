@@ -43,6 +43,17 @@ function Home() {
     },
   );
   const pages = imageQuery.data?.pages;
+<<<<<<< HEAD
+=======
+
+  const [windowWidth, windowHeight] = useWindowSize();
+
+  const { offset, width } = useContainerPosition(containerRef, [
+    windowWidth,
+    windowHeight,
+  ]);
+
+>>>>>>> e0c0dac451810f99a1b2eeac8b5d63f6e2c73a84
   const images = useMemo(() => {
     const result = pages?.map((page) => {
       return page.data.map((image) => {
@@ -109,11 +120,15 @@ function Home() {
         items={images ?? []}
         itemKey={(data) => data.id}
         render={({ data, width: w }) => {
+<<<<<<< HEAD
           if (w) {
             lastWidth = w;
           }
 
           const m = data.width / lastWidth;
+=======
+          const m = data.width / w;
+>>>>>>> e0c0dac451810f99a1b2eeac8b5d63f6e2c73a84
           const h = data.height / m;
 
           return (
