@@ -1,3 +1,5 @@
+import "chai";
+
 import { join } from "path";
 import fs from "fs-extra";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
@@ -18,13 +20,13 @@ describe("createDbPath", () => {
   });
 
   it("should throw an error if the default path does not exist", () => {
-    expect(async () => {
-      await createDbPath("./test/nonexistent.sqlite");
+    expect(() => {
+      createDbPath("./test/nonexistent.sqlite");
     }).to.throw(Error, "defaultPath: ./test/nonexistent.sqlite not exist");
   });
 
-  it("should create the db directory if it does not exist", async () => {
-    await createDbPath(defaultPath);
+  it("should create the db directory if it does not exist", () => {
+    createDbPath(defaultPath);
     expect(fs.existsSync(DB_PATH)).to.be.true;
   });
 

@@ -133,7 +133,9 @@ async function createWindow() {
     void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
     // 创建 db.sqlite 文件
-    await createDbPath(join(process.resourcesPath, "extraResources/db.sqlite"));
+    createDbPath(join(process.resourcesPath, "extraResources", "db.sqlite"));
+    // 迁移
+    await migrate(join(process.resourcesPath, "extraResources", "migrations"));
     void mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 

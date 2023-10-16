@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "push": "prisma db push",
     "reset": "pnpm push --force-reset",
-    "test": "vitest",
+    "test": "cross-env NODE_ENV=development vitest --single-thread --ui --coverage",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@rao-pics/prettier-config",
