@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
-import { getCaller, routerCore } from "..";
+import { getCaller } from "..";
 import { t } from "./utils";
 
 export const image = t.router({
