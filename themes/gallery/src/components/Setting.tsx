@@ -54,7 +54,8 @@ const Setting = () => {
     setSetting((prev) => ({
       ...prev,
       orderBy: {
-        createdTime: e.target.value as SettingType["orderBy"]["createdTime"],
+        modificationTime: e.target
+          .value as SettingType["orderBy"]["modificationTime"],
       },
     }));
   };
@@ -114,12 +115,12 @@ const Setting = () => {
                 </span>
 
                 <select
-                  value={setting.orderBy.createdTime}
+                  value={setting.orderBy.modificationTime}
                   onChange={changeOrderBy}
                   className="select select-sm bg-base-200 font-normal focus:outline-none"
                 >
-                  <option value={"asc"}>↑ 创建时间升序</option>
-                  <option value={"desc"}>↓ 创建时间降序</option>
+                  <option value={"asc"}>↑ 添加时间</option>
+                  <option value={"desc"}>↓ 添加时间</option>
                 </select>
               </div>
             </div>

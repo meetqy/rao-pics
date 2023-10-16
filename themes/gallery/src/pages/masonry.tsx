@@ -83,10 +83,7 @@ function Home() {
         await imageQuery.fetchNextPage();
       }
     },
-    {
-      minimumBatchSize: limit,
-      threshold: 3,
-    },
+    { minimumBatchSize: limit },
   );
   useEffect(() => {
     let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({

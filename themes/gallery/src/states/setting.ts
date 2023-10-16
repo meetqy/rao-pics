@@ -3,7 +3,8 @@ import { atom, selector } from "recoil";
 export interface SettingType {
   layout: "masonry" | "responsive";
   orderBy: {
-    createdTime: "asc" | "desc";
+    mtime?: "asc" | "desc";
+    modificationTime?: "asc" | "desc";
   };
 }
 
@@ -12,7 +13,7 @@ const settingAtom = atom({
   default: {
     layout: "masonry",
     orderBy: {
-      createdTime: "desc",
+      modificationTime: "desc",
     },
   } as SettingType,
 });

@@ -23,7 +23,7 @@ function InitState({ children }: { children: ReactNode }) {
         : {
             layout: "masonry",
             orderBy: {
-              createdTime: "desc",
+              mtime: "desc",
             },
           }) as SettingType,
     );

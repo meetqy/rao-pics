@@ -48,6 +48,7 @@ export const image = t.router({
         width: z.number(),
         height: z.number(),
         mtime: z.date(),
+        modificationTime: z.date().optional(),
         duration: z.number().optional(),
         annotation: z.string().optional(),
         url: z.string().optional(),
@@ -86,6 +87,7 @@ export const image = t.router({
         annotation: input.annotation,
         url: input.url,
         mtime: input.mtime,
+        modificationTime: input.modificationTime,
         isDeleted: input.isDeleted,
         blurDataURL: input.blurDataURL,
         noThumbnail: input.noThumbnail,
@@ -180,10 +182,11 @@ export const image = t.router({
           includes: z.enum(["tags", "colors", "folders"]).array().optional(),
           orderBy: z
             .object({
-              createdTime: z.enum(["asc", "desc"]).optional(),
+              modificationTime: z.enum(["asc", "desc"]).optional(),
+              mtime: z.enum(["asc", "desc"]).optional(),
             })
             .optional()
-            .default({ createdTime: "desc" }),
+            .default({ modificationTime: "desc" }),
         })
         .optional(),
     )
