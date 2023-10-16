@@ -1,4 +1,4 @@
-import { use, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
 import { useWindowSize } from "@react-hook/window-size";
@@ -19,7 +19,6 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
-import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
 
 import { settingSelector } from "~/states/setting";
@@ -29,18 +28,20 @@ function Home() {
   const limit = 50;
   const containerRef = useRef(null);
   const setting = useRecoilValue(settingSelector);
-  const router = useRouter();
 
   const [windowWidth, windowHeight] = useWindowSize();
   const { offset, width } = useContainerPosition(containerRef, [
     windowWidth,
     windowHeight,
   ]);
-  const positioner = usePositioner({
-    width,
-    columnGutter: windowWidth < 768 ? 8 : 12,
-    rowGutter: windowWidth < 768 ? 8 : 12,
-  });
+  const positioner = usePositioner(
+    {
+      width,
+      columnGutter: windowWidth < 768 ? 8 : 12,
+      rowGutter: windowWidth < 768 ? 8 : 12,
+    },
+    [setting.orderBy],
+  );
 
   const { data: config } = trpc.config.findUnique.useQuery();
   const imageQuery = trpc.image.find.useInfiniteQuery(
@@ -49,11 +50,6 @@ function Home() {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
-
-  useEffect(() => {
-    console.log(setting.orderBy);
-    // void router.replace("/masonry");
-  }, [setting.orderBy, router]);
 
   const pages = imageQuery.data?.pages;
   const images = useMemo(() => {
