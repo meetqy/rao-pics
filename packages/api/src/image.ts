@@ -18,16 +18,16 @@ export const image = t.router({
     .query(async ({ input }) => {
       const { includes } = input;
 
-      const config = await routerCore.config.findUnique();
-
-      const image = await prisma.image.findUnique({
+      return await prisma.image.findUnique({
         where: {
           id: input.id,
           path: input.path,
-          // 回收站需要显示 => isDeleted: undefined
-          // 回收站不需要显示 => isDeleted: false
-          isDeleted: config?.trash ? undefined : false,
-          folders: config?.pwdFolder ? undefined : { every: { show: true } },
+          // 回收站的素材不显示
+          isDeleted: false,
+          // 文件夹显示的素材不显示
+          folders: {
+            every: { show: true },
+          },
         },
         include: {
           tags: includes?.includes("tags"),
@@ -35,8 +35,6 @@ export const image = t.router({
           folders: includes?.includes("folders"),
         },
       });
-
-      return image;
     }),
 
   upsert: t.procedure
@@ -180,12 +178,18 @@ export const image = t.router({
           limit: z.number().min(1).max(100).optional(),
           cursor: z.string().nullish(),
           includes: z.enum(["tags", "colors", "folders"]).array().optional(),
+          orderBy: z
+            .object({
+              createdTime: z.enum(["asc", "desc"]).optional(),
+            })
+            .optional()
+            .default({ createdTime: "desc" }),
         })
         .optional(),
     )
     .query(async ({ input }) => {
       const limit = input?.limit ?? 50;
-      const { cursor, includes } = input ?? {};
+      const { cursor, includes, orderBy } = input ?? {};
 
       const images = await prisma.image.findMany({
         where: {
@@ -198,7 +202,7 @@ export const image = t.router({
         },
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
-        orderBy: { createdTime: "desc" },
+        orderBy,
         include: {
           tags: includes?.includes("tags"),
           colors: includes?.includes("colors"),

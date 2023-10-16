@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   AdjustmentsHorizontalIcon,
@@ -7,17 +8,21 @@ import {
 } from "@heroicons/react/24/outline";
 import { useThrottle } from "@react-hook/throttle";
 import useScrollPosition from "@react-hook/window-scroll";
+import { useRecoilState } from "recoil";
+
+import type { SettingType } from "~/states/setting";
+import { settingSelector } from "~/states/setting";
 
 let T: ReturnType<typeof setTimeout> | null = null;
 const Setting = () => {
   const router = useRouter();
-  const [setting, setSetting] = useState({
-    layout: router.pathname.replace("/", "") || "masonry",
-    sort: "asc",
-  });
+  const [setting, setSetting] = useRecoilState(settingSelector);
 
-  const handleLayoutChange = async (layout: string) => {
-    setSetting((prev) => ({ ...prev, layout }));
+  const handleLayoutChange = async (layout: SettingType["layout"]) => {
+    setSetting((prev) => ({
+      ...prev,
+      layout,
+    }));
     await router.replace("/" + layout);
   };
 
@@ -45,15 +50,24 @@ const Setting = () => {
     };
   }, [scrollY, setBtn]);
 
+  const changeOrderBy = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSetting((prev) => ({
+      ...prev,
+      orderBy: {
+        createdTime: e.target.value as SettingType["orderBy"]["createdTime"],
+      },
+    }));
+  };
+
   return (
     <>
-      <div className="drawer drawer-end">
+      <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           <label
             htmlFor="my-drawer"
             className={`drawer-button glass btn-md btn-circle btn fixed transition-all duration-200 ease-in ${
-              btn ? "right-3 top-3" : "-right-6 -top-6 opacity-30"
+              btn ? "left-3 top-3" : "-left-6 -top-6 opacity-30 "
             }`}
           >
             <AdjustmentsHorizontalIcon className="h-6 w-6" />
@@ -99,9 +113,13 @@ const Setting = () => {
                   排序方式
                 </span>
 
-                <select className="select select-sm bg-base-200 font-normal focus:outline-none">
-                  <option>↑ 创建时间升序</option>
-                  <option>↓ 创建时间降序</option>
+                <select
+                  value={setting.orderBy.createdTime}
+                  onChange={changeOrderBy}
+                  className="select select-sm bg-base-200 font-normal focus:outline-none"
+                >
+                  <option value={"asc"}>↑ 创建时间升序</option>
+                  <option value={"desc"}>↓ 创建时间降序</option>
                 </select>
               </div>
             </div>

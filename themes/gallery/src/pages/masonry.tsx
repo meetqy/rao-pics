@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { use, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
 import { useWindowSize } from "@react-hook/window-size";
@@ -19,10 +19,17 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
+import { useRouter } from "next/router";
+import { useRecoilValue } from "recoil";
+
+import { settingSelector } from "~/states/setting";
+
 let lastWidth = 0;
 function Home() {
   const limit = 50;
   const containerRef = useRef(null);
+  const setting = useRecoilValue(settingSelector);
+  const router = useRouter();
 
   const [windowWidth, windowHeight] = useWindowSize();
   const { offset, width } = useContainerPosition(containerRef, [
@@ -37,11 +44,17 @@ function Home() {
 
   const { data: config } = trpc.config.findUnique.useQuery();
   const imageQuery = trpc.image.find.useInfiniteQuery(
-    { limit, includes: ["colors"] },
+    { limit, includes: ["colors"], orderBy: setting.orderBy },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
+
+  useEffect(() => {
+    console.log(setting.orderBy);
+    // void router.replace("/masonry");
+  }, [setting.orderBy, router]);
+
   const pages = imageQuery.data?.pages;
   const images = useMemo(() => {
     const result = pages?.map((page) => {
@@ -79,7 +92,6 @@ function Home() {
       threshold: 3,
     },
   );
-
   useEffect(() => {
     let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
       gallery: "#photo-swipe-lightbox",
