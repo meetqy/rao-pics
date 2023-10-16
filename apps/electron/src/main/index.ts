@@ -10,12 +10,15 @@ import ip from "ip";
 import { router, startExpressServer, stopExpressServer } from "@rao-pics/api";
 import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
-import { createDbPath } from "@rao-pics/db";
+import { createDbPath, migrate } from "@rao-pics/db";
 
 import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
 import createMenu from "./src/menu";
 import createTray from "./src/tray";
+
+/** 当前版本 */
+process.env.VERSION = app.getVersion();
 
 /**
  * Sentry init
@@ -86,7 +89,7 @@ const mainWindowReadyToShow = async () => {
   }
 };
 
-function createWindow(): void {
+async function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 768,
@@ -126,15 +129,18 @@ function createWindow(): void {
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (IS_DEV && process.env.ELECTRON_RENDERER_URL) {
+    await migrate();
     void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
     // 创建 db.sqlite 文件
-    createDbPath(join(process.resourcesPath, "extraResources/db.sqlite"));
+    createDbPath(join(process.resourcesPath, "extraResources", "db.sqlite"));
+    // 迁移
+    await migrate(join(process.resourcesPath, "extraResources", "migrations"));
     void mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 
-  void mainWindowReadyToShow();
-  void initWatchLibrary();
+  await mainWindowReadyToShow();
+  await initWatchLibrary();
 
   createIPCHandler({ router, windows: [mainWindow] });
   createCustomIPCHandle();
@@ -148,7 +154,7 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app
   .whenReady()
-  .then(() => {
+  .then(async () => {
     // Set app user model id for windows
     electronApp.setAppUserModelId("com.rao-pics");
 
@@ -159,16 +165,18 @@ app
       optimizer.watchWindowShortcuts(window);
     });
 
-    createWindow();
+    await createWindow();
 
     app.on("activate", function () {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
-      if (BrowserWindow.getAllWindows().length === 0) createWindow();
+      if (BrowserWindow.getAllWindows().length === 0) void createWindow();
     });
   })
   .catch((e) => {
-    throw e;
+    if (e instanceof Error) {
+      dialog.showErrorBox("Error [app.whenReady]", e.message);
+    }
   });
 
 // Quit when all windows are closed, except on macOS. There, it's common

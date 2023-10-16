@@ -30,8 +30,9 @@ const BaseConfig = {
   ],
   extraResources: [
     {
-      from: join(__dirname, "../node_modules/@rao-pics/db/prisma/db.sqlite"),
-      to: "extraResources/db.sqlite",
+      from: join(__dirname, "../node_modules/@rao-pics/db/prisma"),
+      to: "extraResources",
+      filter: ["db.sqlite", "migrations/**/*", "!migrations/.version"],
     },
     ...copyTheme("gallery"),
   ],

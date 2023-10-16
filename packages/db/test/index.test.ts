@@ -4,21 +4,19 @@ import { join } from "path";
 import fs from "fs-extra";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
-import { DB_DIRS, PLATFORM } from "@rao-pics/constant/server";
+import { DB_PATH } from "@rao-pics/constant/server";
 
 import { createDbPath } from "..";
 
 describe("createDbPath", () => {
   const defaultPath = join(__dirname, "..", "prisma", "db.sqlite");
 
-  const dbPath = DB_DIRS[PLATFORM];
-
   beforeEach(() => {
-    fs.removeSync(dbPath);
+    fs.removeSync(DB_PATH);
   });
 
   afterAll(() => {
-    fs.removeSync(dbPath);
+    fs.removeSync(DB_PATH);
   });
 
   it("should throw an error if the default path does not exist", () => {
@@ -29,15 +27,15 @@ describe("createDbPath", () => {
 
   it("should create the db directory if it does not exist", () => {
     createDbPath(defaultPath);
-    expect(fs.existsSync(dbPath)).to.be.true;
+    expect(fs.existsSync(DB_PATH)).to.be.true;
   });
 
   it("should not overwrite the existing db file by default", () => {
-    fs.ensureDirSync(dbPath);
-    fs.writeFileSync(`${dbPath}/db.sqlite`, "existing data");
+    fs.ensureDirSync(DB_PATH);
+    fs.writeFileSync(`${DB_PATH}/db.sqlite`, "existing data");
 
     expect(createDbPath(defaultPath)).toBeUndefined();
-    expect(fs.readFileSync(`${dbPath}/db.sqlite`, "utf-8")).to.equal(
+    expect(fs.readFileSync(`${DB_PATH}/db.sqlite`, "utf-8")).to.equal(
       "existing data",
     );
   });
