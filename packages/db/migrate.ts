@@ -15,27 +15,35 @@ const diffMigrate = async (migratesPath: string, file: string) => {
   // 不存在 .version 文件，设置为当前的版本
   if (!fs.existsSync(file)) {
     latestVersion && fs.writeFileSync(file, latestVersion);
-  } else {
-    // if (oldVersion === latestVersion) return;
 
-    const sqls = fs
-      .readFileSync(join(migratesPath, latestVersion, "migration.sql"), "utf-8")
-      .split(";\n")
-      .map((sql) => sql.replace(/(\n)?--.*?\n/, ""))
-      .filter(Boolean)
-      .map(
-        (sql) =>
-          eval(`prisma.$executeRaw\`${sql};\``) as ReturnType<
-            typeof prisma.$executeRaw
-          >,
-      );
-
-    return await prisma.$transaction(sqls);
+    return;
   }
+
+  if (oldVersion === latestVersion) return;
+
+  const sqls = fs
+    .readFileSync(join(migratesPath, latestVersion, "migration.sql"), "utf-8")
+    .split(";\n")
+    .map((sql) => sql.replace(/(\n)?--.*?\n/, ""))
+    .filter(Boolean)
+    .map(
+      (sql) =>
+        eval(`prisma.$executeRaw\`${sql};\``) as ReturnType<
+          typeof prisma.$executeRaw
+        >,
+    );
+
+  fs.writeFileSync(file, latestVersion);
+  return await prisma.$transaction(sqls);
 };
 
 // TODO: 跨多个版本的迁移，暂未实现
-export const migrate = async () => {
+/**
+ * 迁移
+ * @param appMigrationsPath 打包后的 miggrations 目录
+ * @returns
+ */
+export const migrate = async (appMigrationsPath?: string) => {
   try {
     if (IS_DEV) {
       const migratesPath = join(
@@ -50,7 +58,11 @@ export const migrate = async () => {
       return await diffMigrate(migratesPath, join(migratesPath, ".version"));
     } else {
       // TODO: 打包之后的 migrations 目录
-      return await diffMigrate("xxx", DB_MIGRATION_VERSION_FILE);
+      if (appMigrationsPath) {
+        return await diffMigrate(appMigrationsPath, DB_MIGRATION_VERSION_FILE);
+      }
+
+      throw new Error("migrate error: appMigrationsPath is undefined");
     }
   } catch (e) {
     if (e instanceof Error) {

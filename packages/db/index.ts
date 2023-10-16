@@ -1,4 +1,4 @@
-import { sep } from "path";
+import { join, sep } from "path";
 import { PrismaClient } from "@prisma/client";
 import fs from "fs-extra";
 
@@ -34,7 +34,7 @@ export const createDbPath = async (defaultPath: string) => {
     return;
   }
 
-  return await migrate();
+  return await migrate(join(defaultPath, "..", "migrations"));
 };
 
 export * from "./migrate";
