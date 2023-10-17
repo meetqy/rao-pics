@@ -4,15 +4,23 @@ import {
   AdjustmentsHorizontalIcon,
   AdjustmentsVerticalIcon,
   ArrowsUpDownIcon,
+  FolderMinusIcon,
+  FolderOpenIcon,
 } from "@heroicons/react/24/outline";
 import { useRecoilState } from "recoil";
 
 import type { SettingType } from "~/states/setting";
 import { settingSelector } from "~/states/setting";
+import { trpc } from "~/utils/trpc";
+import styles from "./index.module.css";
 
 const Setting = () => {
   const router = useRouter();
   const [setting, setSetting] = useRecoilState(settingSelector);
+
+  const { data: folderTree } = trpc.folder.findTree.useQuery();
+
+  console.log(folderTree);
 
   const handleLayoutChange = async (layout: SettingType["layout"]) => {
     setSetting((prev) => ({
@@ -34,7 +42,7 @@ const Setting = () => {
 
   return (
     <>
-      <div className="drawer">
+      <div className="setting drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           <label
@@ -50,10 +58,10 @@ const Setting = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="min-h-full w-80 bg-base-100 p-4 text-base md:w-96">
+          <div className="min-h-full w-80 bg-base-100 p-4 md:w-96">
             <div className="rounded-md border border-base-content/10 bg-base-200/30 px-4">
-              <div className="flex justify-between py-3">
-                <span className="flex items-center">
+              <div className={styles.row}>
+                <span className={styles.rowTitle}>
                   <AdjustmentsVerticalIcon className="mr-1 h-4 w-4" />
                   布局方式
                 </span>
@@ -78,8 +86,8 @@ const Setting = () => {
                 </div>
               </div>
 
-              <div className="flex justify-between border-t border-base-content/10 py-3">
-                <span className="flex items-center">
+              <div className={styles.row}>
+                <span className={styles.rowTitle}>
                   <ArrowsUpDownIcon className="mr-1 h-4 w-4" />
                   排序方式
                 </span>
@@ -94,11 +102,75 @@ const Setting = () => {
                 </select>
               </div>
             </div>
+
+            <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30 ">
+              {folderTree && <FileTree data={folderTree} />}
+            </div>
           </div>
         </div>
       </div>
     </>
   );
 };
+
+interface Folder {
+  name: string;
+  id: string;
+  pid: string | null;
+  description: string | null;
+  passwordTips: string | null;
+  children?: Folder[];
+}
+
+interface FileTreeProps {
+  data: Folder[];
+}
+
+function FileTree({ data }: FileTreeProps) {
+  const Document = ({ data }: { data: Folder }) => {
+    return (
+      <li>
+        <span>
+          <FolderMinusIcon className="h-4 w-4" />
+          {data.name}
+        </span>
+      </li>
+    );
+  };
+
+  const FolderRoot = ({ data }: { data: Folder }) => {
+    return (
+      <li>
+        <details>
+          <summary>
+            <FolderOpenIcon className="h-4 w-4" />
+            {data.name}
+          </summary>
+          <ul>
+            {data.children?.map((item) => {
+              if (!item.children?.length) {
+                return <Document key={item.id} data={item} />;
+              } else {
+                return <FolderRoot key={item.id} data={item} />;
+              }
+            })}
+          </ul>
+        </details>
+      </li>
+    );
+  };
+
+  return (
+    <ul className="menu w-full text-base">
+      {data.map((item) => {
+        if (!item.children?.length) {
+          return <Document key={item.id} data={item} />;
+        } else {
+          return <FolderRoot key={item.id} data={item} />;
+        }
+      })}
+    </ul>
+  );
+}
 
 export default Setting;

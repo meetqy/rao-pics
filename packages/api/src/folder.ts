@@ -1,8 +1,10 @@
 import { z } from "zod";
 
+import type { Folder } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
 import { configCore } from "./config";
+import { flatToTree } from "./sync/folder";
 import { t } from "./utils";
 
 export const folderInput = {
@@ -122,4 +124,19 @@ export const folder = t.router({
   setPwdFolderShow: t.procedure
     .input(folderInput.setPwdFolderShow)
     .mutation(async ({ input }) => folderCore.setPwdFolderShow(input)),
+
+  findTree: t.procedure.query(async () => {
+    const folders = await prisma.folder.findMany({
+      where: { password: "" },
+      select: {
+        id: true,
+        pid: true,
+        name: true,
+        description: true,
+        passwordTips: true,
+      },
+    });
+
+    return flatToTree<(typeof folders)[number]>(folders);
+  }),
 });

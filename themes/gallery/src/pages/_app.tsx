@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { RecoilRoot, useRecoilState } from "recoil";
 
-import Setting from "~/components/Setting";
+import Setting from "~/components/Setting/index";
 import type { SettingType } from "~/states/setting";
 import { settingSelector } from "~/states/setting";
 

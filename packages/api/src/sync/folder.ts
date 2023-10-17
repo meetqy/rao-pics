@@ -1,5 +1,7 @@
 import { readJSONSync } from "fs-extra";
 
+import type { Folder } from "@rao-pics/db";
+
 export const handleFolder = (path: string) => {
   const f = readJSONSync(path) as {
     folders: FolderTree[];
@@ -50,3 +52,20 @@ export const treeToFlat = (folderTree: FolderTree[]) => {
 
   return flat;
 };
+
+export function flatToTree<
+  T extends { id: string | number; pid: string | number | null },
+>(flat: T[], parent?: string | number) {
+  return flat.reduce(
+    (r, item) => {
+      if (parent == item.pid) {
+        const obj = { ...item, children: flatToTree(flat, item.id) };
+
+        r.push(obj);
+      }
+
+      return r;
+    },
+    [] as (T & { children: T[] })[],
+  );
+}
