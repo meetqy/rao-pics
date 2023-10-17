@@ -1,19 +1,15 @@
 import type { ChangeEvent } from "react";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   AdjustmentsHorizontalIcon,
   AdjustmentsVerticalIcon,
   ArrowsUpDownIcon,
 } from "@heroicons/react/24/outline";
-import { useThrottle } from "@react-hook/throttle";
-import useScrollPosition from "@react-hook/window-scroll";
 import { useRecoilState } from "recoil";
 
 import type { SettingType } from "~/states/setting";
 import { settingSelector } from "~/states/setting";
 
-let T: ReturnType<typeof setTimeout> | null = null;
 const Setting = () => {
   const router = useRouter();
   const [setting, setSetting] = useRecoilState(settingSelector);
@@ -25,30 +21,6 @@ const Setting = () => {
     }));
     await router.replace("/" + layout);
   };
-
-  const [btn, setBtn] = useThrottle(false);
-  const scrollY = useScrollPosition(60);
-
-  useEffect(() => {
-    setBtn(true);
-
-    const clear = () => {
-      if (T) {
-        clearTimeout(T);
-        T = null;
-      }
-    };
-
-    clear();
-
-    T = setTimeout(() => {
-      setBtn(false);
-    }, 3000);
-
-    return () => {
-      clear();
-    };
-  }, [scrollY, setBtn]);
 
   const changeOrderBy = (e: ChangeEvent<HTMLSelectElement>) => {
     setSetting((prev) => ({
@@ -67,9 +39,7 @@ const Setting = () => {
         <div className="drawer-content">
           <label
             htmlFor="my-drawer"
-            className={`drawer-button glass btn-md btn-circle btn fixed transition-all duration-200 ease-in ${
-              btn ? "left-3 top-3" : "-left-6 -top-6 opacity-30 "
-            }`}
+            className={`drawer-button glass btn-md btn-circle btn fixed left-3 top-3 transition-all duration-200 ease-in`}
           >
             <AdjustmentsHorizontalIcon className="h-6 w-6" />
           </label>

@@ -371,12 +371,6 @@ importers:
       '@rao-pics/utils':
         specifier: workspace:^
         version: link:../../packages/utils
-      '@react-hook/throttle':
-        specifier: ^2.2.0
-        version: 2.2.0(react@18.2.0)
-      '@react-hook/window-scroll':
-        specifier: ^1.3.0
-        version: 1.3.0(react@18.2.0)
       '@react-hook/window-size':
         specifier: ^3.1.1
         version: 3.1.1(react@18.2.0)

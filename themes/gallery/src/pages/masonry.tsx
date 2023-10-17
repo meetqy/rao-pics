@@ -23,7 +23,6 @@ import { useRecoilValue } from "recoil";
 
 import { settingSelector } from "~/states/setting";
 
-let lastWidth = 0;
 function Home() {
   const limit = 50;
   const containerRef = useRef(null);
@@ -34,14 +33,6 @@ function Home() {
     windowWidth,
     windowHeight,
   ]);
-  const positioner = usePositioner(
-    {
-      width,
-      columnGutter: windowWidth < 768 ? 8 : 12,
-      rowGutter: windowWidth < 768 ? 8 : 12,
-    },
-    [setting.orderBy],
-  );
 
   const { data: config } = trpc.config.findUnique.useQuery();
   const imageQuery = trpc.image.find.useInfiniteQuery(
@@ -76,6 +67,16 @@ function Home() {
 
     return result?.flat();
   }, [config?.ip, config?.serverPort, pages]);
+
+  const positioner = usePositioner(
+    {
+      width,
+      columnGutter: windowWidth < 768 ? 8 : 12,
+      rowGutter: windowWidth < 768 ? 8 : 12,
+      columnWidth: windowWidth < 768 ? windowWidth / 3 : undefined,
+    },
+    [setting.orderBy, images],
+  );
 
   const onLoadMore = useInfiniteLoader(
     async () => {
@@ -114,11 +115,7 @@ function Home() {
         items={images ?? []}
         itemKey={(data) => data.id}
         render={({ data, width: w }) => {
-          if (w) {
-            lastWidth = w;
-          }
-
-          const m = data.width / lastWidth;
+          const m = data.width / w;
           const h = data.height / m;
 
           return (

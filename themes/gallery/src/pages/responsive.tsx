@@ -106,7 +106,7 @@ function Home() {
       columnGutter: windowWidth < 768 ? 8 : 12,
       columnCount: 1,
     },
-    [setting.orderBy],
+    [setting.orderBy, images],
   );
 
   const onLoadMore = useInfiniteLoader(
