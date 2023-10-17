@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
 import { useWindowSize } from "@react-hook/window-size";
@@ -68,6 +68,14 @@ function Home() {
     return result?.flat();
   }, [config?.ip, config?.serverPort, pages]);
 
+  const [isLoad, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (images?.length && !isLoad) {
+      setLoad(true);
+    }
+  }, [images, isLoad]);
+
   const positioner = usePositioner(
     {
       width,
@@ -75,7 +83,7 @@ function Home() {
       rowGutter: windowWidth < 768 ? 8 : 12,
       columnWidth: windowWidth < 768 ? windowWidth / 3 : 224,
     },
-    [setting.orderBy, images],
+    [setting.orderBy, isLoad],
   );
 
   const onLoadMore = useInfiniteLoader(
