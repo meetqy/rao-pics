@@ -73,7 +73,7 @@ function Home() {
       width,
       columnGutter: windowWidth < 768 ? 8 : 12,
       rowGutter: windowWidth < 768 ? 8 : 12,
-      columnWidth: windowWidth < 768 ? windowWidth / 3 : undefined,
+      columnWidth: windowWidth < 768 ? windowWidth / 3 : 224,
     },
     [setting.orderBy, images],
   );
