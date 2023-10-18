@@ -1,5 +1,5 @@
 import {
-  FolderMinusIcon,
+  // FolderMinusIcon,
   LanguageIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
@@ -117,7 +117,7 @@ const SettingPage = () => {
             </div>
           </div>
 
-          <div className="card-row">
+          {/* <div className="card-row">
             <div>
               <FolderMinusIcon className="h-5 w-5" />
               <span className="ml-2">{lang.pwd_folder}</span>
@@ -137,7 +137,7 @@ const SettingPage = () => {
                 <option value={1}>{lang.show}</option>
               </select>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Content>
