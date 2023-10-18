@@ -75,6 +75,8 @@ describe("image module", () => {
     });
   });
 
+  // findUnique
+  // 不返回 回收站/加密文件夹/folder.show=false 的素材
   describe("findUnique, config.trash", () => {
     beforeEach(async () => {
       await prisma.image.deleteMany();
@@ -95,7 +97,7 @@ describe("image module", () => {
       await caller.config.upsert({ trash: true });
 
       const result = await caller.image.findUnique({ path: testImage.path });
-      expect(result).toEqual(testImage);
+      expect(result).toBeNull();
     });
 
     it("config.trash = true, isDeleted = false should find an image by path", async () => {
@@ -196,7 +198,7 @@ describe("image module", () => {
       await caller.config.upsert({ pwdFolder: true });
 
       const result = await caller.image.findUnique({ path: testImage.path });
-      expect(result).toEqual(testImage);
+      expect(result).toBeNull();
     });
 
     it("config.pwdFolder = false, folder.show = false should find an image by path", async () => {
