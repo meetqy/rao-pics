@@ -6,7 +6,7 @@ import { RecoilRoot, useRecoilState } from "recoil";
 
 import Setting from "~/components/Setting/index";
 import type { SettingType } from "~/states/setting";
-import { settingSelector } from "~/states/setting";
+import { defaultSetting, settingSelector } from "~/states/setting";
 
 import "~/styles/globals.css";
 
@@ -17,17 +17,7 @@ function InitState({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const local = localStorage.getItem("setting");
-    setSetting(
-      (local
-        ? JSON.parse(local)
-        : {
-            layout: "masonry",
-            orderBy: {
-              mtime: "desc",
-            },
-            openFolderIds: [],
-          }) as SettingType,
-    );
+    setSetting((local ? JSON.parse(local) : defaultSetting) as SettingType);
   }, [setSetting]);
 
   return children;

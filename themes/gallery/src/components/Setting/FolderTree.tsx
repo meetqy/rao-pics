@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { FolderMinusIcon, FolderOpenIcon } from "@heroicons/react/24/outline";
 import { useRecoilState } from "recoil";

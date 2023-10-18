@@ -9,15 +9,17 @@ export interface SettingType {
   openFolderIds: string[];
 }
 
+export const defaultSetting: SettingType = {
+  layout: "masonry",
+  orderBy: {
+    modificationTime: "desc",
+  },
+  openFolderIds: [],
+};
+
 const settingAtom = atom({
   key: "settingState",
-  default: {
-    layout: "masonry",
-    orderBy: {
-      modificationTime: "desc",
-    },
-    openFolderIds: [],
-  } as SettingType,
+  default: defaultSetting,
 });
 
 export const settingSelector = selector({

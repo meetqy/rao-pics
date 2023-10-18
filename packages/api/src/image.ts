@@ -271,4 +271,40 @@ export const image = t.router({
         nextCursor,
       };
     }),
+
+  /**
+   * 回收站中的素材
+   */
+  findByTrash: t.procedure
+    .input(imageInput.find.optional())
+    .query(async ({ input }) => {
+      const limit = input?.limit ?? 50;
+      const { cursor, includes, orderBy } = input ?? {};
+
+      const images = await prisma.image.findMany({
+        where: {
+          isDeleted: true,
+        },
+        take: limit + 1,
+        cursor: cursor ? { path: cursor } : undefined,
+        orderBy,
+        include: {
+          tags: includes?.includes("tags"),
+          colors: includes?.includes("colors"),
+          folders: includes?.includes("folders"),
+        },
+      });
+
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (images.length > limit) {
+        const nextImage = images.pop();
+        nextCursor = nextImage!.path;
+      }
+
+      return {
+        data: images,
+        nextCursor,
+      };
+    }),
 });

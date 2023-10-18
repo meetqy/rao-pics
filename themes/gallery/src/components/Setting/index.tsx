@@ -109,13 +109,13 @@ const Setting = () => {
             <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30">
               <ul className="menu font-mono text-base">
                 <li>
-                  <Link href={"/"}>
+                  <Link href={`/${setting.layout}`}>
                     <WalletIcon className="h-4 w-4" />
                     全部
                   </Link>
                 </li>
                 <li>
-                  <Link href={""}>
+                  <Link href={`/${setting.layout}/trash`}>
                     <TrashIcon className="h-4 w-4" />
                     回收站
                   </Link>

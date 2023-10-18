@@ -19,7 +19,6 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
-import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
 
 import { settingSelector } from "~/states/setting";
@@ -28,7 +27,6 @@ function Home() {
   const limit = 50;
   const containerRef = useRef(null);
   const setting = useRecoilValue(settingSelector);
-  const router = useRouter();
 
   const [windowWidth, windowHeight] = useWindowSize();
   const { offset, width } = useContainerPosition(containerRef, [
@@ -37,13 +35,8 @@ function Home() {
   ]);
 
   const { data: config } = trpc.config.findUnique.useQuery();
-  const imageQuery = trpc.image.findByFolderId.useInfiniteQuery(
-    {
-      limit,
-      includes: ["colors"],
-      orderBy: setting.orderBy,
-      id: router.query.folderId as string,
-    },
+  const imageQuery = trpc.image.findByTrash.useInfiniteQuery(
+    { limit, includes: ["colors"], orderBy: setting.orderBy },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
@@ -90,7 +83,7 @@ function Home() {
       rowGutter: windowWidth < 768 ? 8 : 12,
       columnWidth: windowWidth < 768 ? windowWidth / 3 : 224,
     },
-    [setting.orderBy, isLoad, router],
+    [setting.orderBy, isLoad],
   );
 
   const onLoadMore = useInfiniteLoader(
@@ -128,7 +121,7 @@ function Home() {
         height={windowHeight}
         containerRef={containerRef}
         items={images ?? []}
-        // itemKey={(data) => data.id}
+        itemKey={(data) => data.id}
         render={({ data, width: w }) => {
           const m = data.width / w;
           const h = data.height / m;

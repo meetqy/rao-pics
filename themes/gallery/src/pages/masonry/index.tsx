@@ -140,11 +140,11 @@ function Home() {
               target="_blank"
               rel="noreferrer"
             >
-              {/* <Image
+              <Image
                 src={data.thumbnailPath}
                 layout="fill"
                 className="rounded"
-              /> */}
+              />
             </a>
           );
         }}
