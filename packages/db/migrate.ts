@@ -6,11 +6,8 @@ import { DB_MIGRATION_VERSION_FILE, IS_DEV } from "@rao-pics/constant/server";
 import { prisma } from ".";
 
 const diffMigrate = async (migratesPath: string, file: string) => {
-  const oldVersion = fs.readFileSync(file, "utf-8");
-
   const dirs = fs.readdirSync(migratesPath);
   const latestVersion = dirs[dirs.length - 2];
-  if (!latestVersion) return;
 
   // 不存在 .version 文件，设置为当前的版本
   if (!fs.existsSync(file)) {
@@ -18,6 +15,9 @@ const diffMigrate = async (migratesPath: string, file: string) => {
 
     return;
   }
+
+  if (!latestVersion) return;
+  const oldVersion = fs.readFileSync(file, "utf-8");
 
   if (oldVersion === latestVersion) return;
 

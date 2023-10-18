@@ -1,5 +1,9 @@
 import "./src/env.mjs";
 
+if (process.env.NODE_ENV === "development") {
+  process.env.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = "false";
+}
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,

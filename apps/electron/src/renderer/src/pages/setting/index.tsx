@@ -1,5 +1,5 @@
 import {
-  FolderMinusIcon,
+  // FolderMinusIcon,
   LanguageIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
@@ -17,8 +17,8 @@ const languages = {
     title: "通用",
     language_title: "语言",
     language_desc: "选择语言",
-    trash: "回收站素材",
-    pwd_folder: "加密文件夹素材",
+    trash: "回收站",
+    pwd_folder: "加密文件夹",
     show: "显示",
     hide: "不显示",
   },
@@ -26,8 +26,8 @@ const languages = {
     title: "General",
     language_title: "Language",
     language_desc: "Select language",
-    trash: "Trash Material",
-    pwd_folder: "Password Folder Material",
+    trash: "Trash",
+    pwd_folder: "Password Folder",
     show: "Show",
     hide: "Hide",
   },
@@ -35,8 +35,8 @@ const languages = {
     title: "通用",
     language_title: "語言",
     language_desc: "選擇語言",
-    trash: "回收站素材",
-    pwd_folder: "加密文件夾素材",
+    trash: "回收站",
+    pwd_folder: "加密文件夾",
     show: "顯示",
     hide: "不顯示",
   },
@@ -117,7 +117,7 @@ const SettingPage = () => {
             </div>
           </div>
 
-          <div className="card-row">
+          {/* <div className="card-row">
             <div>
               <FolderMinusIcon className="h-5 w-5" />
               <span className="ml-2">{lang.pwd_folder}</span>
@@ -137,7 +137,7 @@ const SettingPage = () => {
                 <option value={1}>{lang.show}</option>
               </select>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Content>

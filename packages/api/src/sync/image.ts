@@ -81,6 +81,8 @@ export const upsertImage = async (p: Pending, timeout = 3000) => {
     url: newImage.url,
     duration: newImage.duration,
     noThumbnail: newImage.noThumbnail ?? false,
+    // 添加时间
+    modificationTime: new Date(newImage.modificationTime),
     // 文件夹只需要关联，删除处理在 handleFolder 中处理，删除 folder 会同时删除关联的 image
     folders: { connect: newImage.folders },
     tags,

@@ -20,11 +20,18 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
+import { useRouter } from "next/router";
+import { useRecoilValue } from "recoil";
+
+import { settingSelector } from "~/states/setting";
+
 type JustifyLayoutResult = ReturnType<typeof justifyLayout>;
 
 function Home() {
   const limit = 50;
   const containerRef = useRef(null);
+  const router = useRouter();
+  const setting = useRecoilValue(settingSelector);
   const [windowWidth, windowHeight] = useWindowSize();
   const { offset, width } = useContainerPosition(containerRef, [
     windowWidth,
@@ -33,8 +40,13 @@ function Home() {
 
   const { data: config } = trpc.config.findUnique.useQuery();
 
-  const imageQuery = trpc.image.find.useInfiniteQuery(
-    { limit, includes: ["colors"] },
+  const imageQuery = trpc.image.findByFolderId.useInfiniteQuery(
+    {
+      limit,
+      includes: ["colors"],
+      orderBy: setting.orderBy,
+      id: router.query.folderId as string,
+    },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
@@ -79,7 +91,7 @@ function Home() {
           containerWidth: width,
           containerPadding: 0,
           boxSpacing: 12,
-          targetRowHeight: 300,
+          targetRowHeight: 240,
         });
 
         imageResult.push(imageTemp.splice(0, result.boxes.length));
@@ -95,11 +107,14 @@ function Home() {
     return null;
   }, [images, width]);
 
-  const positioner = usePositioner({
-    width: width,
-    columnGutter: windowWidth < 768 ? 8 : 12,
-    columnCount: 1,
-  });
+  const positioner = usePositioner(
+    {
+      width: width,
+      columnGutter: windowWidth < 768 ? 8 : 12,
+      columnCount: 1,
+    },
+    [setting.orderBy, router],
+  );
 
   const onLoadMore = useInfiniteLoader(
     async () => {

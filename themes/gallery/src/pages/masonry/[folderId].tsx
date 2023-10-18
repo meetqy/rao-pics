@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
 import { useWindowSize } from "@react-hook/window-size";
@@ -19,40 +19,37 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
+import { useRouter } from "next/router";
+import { useRecoilValue } from "recoil";
+
+import { settingSelector } from "~/states/setting";
+
 function Home() {
   const limit = 50;
   const containerRef = useRef(null);
+  const setting = useRecoilValue(settingSelector);
+  const router = useRouter();
+
+  const [windowWidth, windowHeight] = useWindowSize();
+  const { offset, width } = useContainerPosition(containerRef, [
+    windowWidth,
+    windowHeight,
+  ]);
 
   const { data: config } = trpc.config.findUnique.useQuery();
-
-  const imageQuery = trpc.image.find.useInfiniteQuery(
-    { limit, includes: ["colors"] },
+  const imageQuery = trpc.image.findByFolderId.useInfiniteQuery(
+    {
+      limit,
+      includes: ["colors"],
+      orderBy: setting.orderBy,
+      id: router.query.folderId as string,
+    },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
 
   const pages = imageQuery.data?.pages;
-
-  const cardWidth = useRef<number>(240);
-
-  const [windowWidth, windowHeight] = useWindowSize();
-
-  const { offset, width } = useContainerPosition(containerRef, [
-    windowWidth,
-    windowHeight,
-  ]);
-
-  if (windowWidth >= 1536) {
-    cardWidth.current = 240;
-  } else if (windowWidth >= 1024 && windowWidth < 1536) {
-    cardWidth.current = 220;
-  } else if (windowWidth < 1024 && windowWidth >= 640) {
-    cardWidth.current = Number(windowWidth / 3);
-  } else {
-    cardWidth.current = Number(windowWidth / 2);
-  }
-
   const images = useMemo(() => {
     const result = pages?.map((page) => {
       return page.data.map((image) => {
@@ -78,10 +75,23 @@ function Home() {
     return result?.flat();
   }, [config?.ip, config?.serverPort, pages]);
 
-  const positioner = usePositioner({
-    width,
-    columnGutter: windowWidth < 768 ? 8 : 12,
-  });
+  const [isLoad, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (images?.length && !isLoad) {
+      setLoad(true);
+    }
+  }, [images, isLoad]);
+
+  const positioner = usePositioner(
+    {
+      width,
+      columnGutter: windowWidth < 768 ? 8 : 12,
+      rowGutter: windowWidth < 768 ? 8 : 12,
+      columnWidth: windowWidth < 768 ? windowWidth / 3 : 224,
+    },
+    [setting.orderBy, isLoad, router],
+  );
 
   const onLoadMore = useInfiniteLoader(
     async () => {
@@ -89,12 +99,8 @@ function Home() {
         await imageQuery.fetchNextPage();
       }
     },
-    {
-      minimumBatchSize: limit,
-      threshold: 3,
-    },
+    { minimumBatchSize: limit },
   );
-
   useEffect(() => {
     let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
       gallery: "#photo-swipe-lightbox",
@@ -122,9 +128,10 @@ function Home() {
         height={windowHeight}
         containerRef={containerRef}
         items={images ?? []}
-        itemKey={(data) => data.id}
+        // itemKey={(data) => data.id}
         render={({ data, width: w }) => {
-          const h = data.height / (data.width / (cardWidth.current ?? w));
+          const m = data.width / w;
+          const h = data.height / m;
 
           return (
             <a

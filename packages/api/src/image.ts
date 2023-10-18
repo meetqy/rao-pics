@@ -3,10 +3,29 @@ import { z } from "zod";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
-import { getCaller, routerCore } from "..";
+import { getCaller } from "..";
 import { t } from "./utils";
 
+export const imageInput = {
+  find: z.object({
+    limit: z.number().min(1).max(100).optional(),
+    cursor: z.string().nullish(),
+    includes: z.enum(["tags", "colors", "folders"]).array().optional(),
+    orderBy: z
+      .object({
+        modificationTime: z.enum(["asc", "desc"]).optional(),
+        mtime: z.enum(["asc", "desc"]).optional(),
+      })
+      .optional()
+      .default({ modificationTime: "desc" }),
+  }),
+};
+
 export const image = t.router({
+  /**
+   * 根据 id 或 path 查询素材
+   * 不返回 回收站 和 不显示文件夹中的素材
+   */
   findUnique: t.procedure
     .input(
       z.object({
@@ -18,16 +37,16 @@ export const image = t.router({
     .query(async ({ input }) => {
       const { includes } = input;
 
-      const config = await routerCore.config.findUnique();
-
-      const image = await prisma.image.findUnique({
+      return await prisma.image.findUnique({
         where: {
           id: input.id,
           path: input.path,
-          // 回收站需要显示 => isDeleted: undefined
-          // 回收站不需要显示 => isDeleted: false
-          isDeleted: config?.trash ? undefined : false,
-          folders: config?.pwdFolder ? undefined : { every: { show: true } },
+          // 回收站的素材不显示
+          isDeleted: false,
+          // 文件夹显示的素材不显示
+          folders: {
+            every: { show: true },
+          },
         },
         include: {
           tags: includes?.includes("tags"),
@@ -35,8 +54,6 @@ export const image = t.router({
           folders: includes?.includes("folders"),
         },
       });
-
-      return image;
     }),
 
   upsert: t.procedure
@@ -50,6 +67,7 @@ export const image = t.router({
         width: z.number(),
         height: z.number(),
         mtime: z.date(),
+        modificationTime: z.date().optional(),
         duration: z.number().optional(),
         annotation: z.string().optional(),
         url: z.string().optional(),
@@ -88,6 +106,7 @@ export const image = t.router({
         annotation: input.annotation,
         url: input.url,
         mtime: input.mtime,
+        modificationTime: input.modificationTime,
         isDeleted: input.isDeleted,
         blurDataURL: input.blurDataURL,
         noThumbnail: input.noThumbnail,
@@ -171,21 +190,14 @@ export const image = t.router({
     }),
 
   /**
-   * 查询时不返回 回收站 和 不显示文件夹中的素材
+   * 查询时不返回
+   * 回收站 和 不显示文件夹中的素材
    */
   find: t.procedure
-    .input(
-      z
-        .object({
-          limit: z.number().min(1).max(100).optional(),
-          cursor: z.string().nullish(),
-          includes: z.enum(["tags", "colors", "folders"]).array().optional(),
-        })
-        .optional(),
-    )
+    .input(imageInput.find.optional())
     .query(async ({ input }) => {
       const limit = input?.limit ?? 50;
-      const { cursor, includes } = input ?? {};
+      const { cursor, includes, orderBy } = input ?? {};
 
       const images = await prisma.image.findMany({
         where: {
@@ -198,7 +210,89 @@ export const image = t.router({
         },
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
-        orderBy: { createdTime: "desc" },
+        orderBy,
+        include: {
+          tags: includes?.includes("tags"),
+          colors: includes?.includes("colors"),
+          folders: includes?.includes("folders"),
+        },
+      });
+
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (images.length > limit) {
+        const nextImage = images.pop();
+        nextCursor = nextImage!.path;
+      }
+
+      return {
+        data: images,
+        nextCursor,
+      };
+    }),
+
+  /**
+   * 根据文件夹 id 查询素材
+   */
+  findByFolderId: t.procedure
+    .input(
+      imageInput.find.merge(
+        z.object({
+          id: z.string(),
+        }),
+      ),
+    )
+    .query(async ({ input }) => {
+      const limit = input?.limit ?? 50;
+      const { cursor, includes, orderBy, id } = input ?? {};
+
+      const images = await prisma.image.findMany({
+        where: {
+          folders: {
+            some: {
+              OR: [{ id }, { pid: id }],
+            },
+          },
+        },
+        take: limit + 1,
+        cursor: cursor ? { path: cursor } : undefined,
+        orderBy,
+        include: {
+          tags: includes?.includes("tags"),
+          colors: includes?.includes("colors"),
+          folders: includes?.includes("folders"),
+        },
+      });
+
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (images.length > limit) {
+        const nextImage = images.pop();
+        nextCursor = nextImage!.path;
+      }
+
+      return {
+        data: images,
+        nextCursor,
+      };
+    }),
+
+  /**
+   * 回收站中的素材
+   */
+  findTrash: t.procedure
+    .input(imageInput.find.optional())
+    .query(async ({ input }) => {
+      const limit = input?.limit ?? 50;
+      const { cursor, includes, orderBy } = input ?? {};
+
+      const images = await prisma.image.findMany({
+        where: {
+          isDeleted: true,
+        },
+        take: limit + 1,
+        cursor: cursor ? { path: cursor } : undefined,
+        orderBy,
         include: {
           tags: includes?.includes("tags"),
           colors: includes?.includes("colors"),
