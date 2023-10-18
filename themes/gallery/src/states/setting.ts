@@ -6,6 +6,7 @@ export interface SettingType {
     mtime?: "asc" | "desc";
     modificationTime?: "asc" | "desc";
   };
+  openFolderIds: string[];
 }
 
 const settingAtom = atom({
@@ -15,6 +16,7 @@ const settingAtom = atom({
     orderBy: {
       modificationTime: "desc",
     },
+    openFolderIds: [],
   } as SettingType,
 });
 

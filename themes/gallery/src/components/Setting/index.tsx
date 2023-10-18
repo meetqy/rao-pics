@@ -1,9 +1,12 @@
 import type { ChangeEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import {
   AdjustmentsHorizontalIcon,
   AdjustmentsVerticalIcon,
   ArrowsUpDownIcon,
+  TrashIcon,
+  WalletIcon,
 } from "@heroicons/react/24/outline";
 import { useRecoilState } from "recoil";
 
@@ -103,10 +106,25 @@ const Setting = () => {
               </div>
             </div>
 
-            <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30 ">
-              {folderTree && (
-                <FolderTree data={folderTree} layout={setting.layout} />
-              )}
+            <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30">
+              <ul className="menu font-mono text-base">
+                <li>
+                  <Link href={"/"}>
+                    <WalletIcon className="h-4 w-4" />
+                    全部
+                  </Link>
+                </li>
+                <li>
+                  <Link href={""}>
+                    <TrashIcon className="h-4 w-4" />
+                    回收站
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30">
+              {folderTree && <FolderTree data={folderTree} />}
             </div>
           </div>
         </div>

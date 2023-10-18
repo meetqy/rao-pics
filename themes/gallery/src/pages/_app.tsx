@@ -25,6 +25,7 @@ function InitState({ children }: { children: ReactNode }) {
             orderBy: {
               mtime: "desc",
             },
+            openFolderIds: [],
           }) as SettingType,
     );
   }, [setSetting]);

@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FolderMinusIcon, FolderOpenIcon } from "@heroicons/react/24/outline";
+import { useRecoilState } from "recoil";
 
-import type { SettingType } from "~/states/setting";
+import { settingSelector } from "~/states/setting";
 
 interface Folder {
   name: string;
@@ -14,17 +16,27 @@ interface Folder {
 
 interface FileTreeProps {
   data: Folder[];
-  layout: SettingType["layout"];
 }
 
-function FolderTree({ data, layout }: FileTreeProps) {
+function FolderTree({ data }: FileTreeProps) {
+  const [setting, setSetting] = useRecoilState(settingSelector);
+  const router = useRouter();
+
+  const { layout, openFolderIds } = setting;
+
   const Document = ({ data }: { data: Folder }) => {
     return (
       <li>
-        <Link href={`/${layout}/${data.id}`}>
+        <span
+          aria-hidden="true"
+          onClick={(e) => {
+            e.stopPropagation();
+            void router.push(`/${layout}/${data.id}`);
+          }}
+        >
           <FolderMinusIcon className="h-4 w-4" />
           {data.name}
-        </Link>
+        </span>
       </li>
     );
   };
@@ -32,7 +44,18 @@ function FolderTree({ data, layout }: FileTreeProps) {
   const FolderRoot = ({ data }: { data: Folder }) => {
     return (
       <li>
-        <details>
+        <details
+          open={openFolderIds.includes(data.id)}
+          aria-hidden="true"
+          onClick={() => {
+            setSetting((prev) => ({
+              ...prev,
+              openFolderIds: prev.openFolderIds.includes(data.id)
+                ? prev.openFolderIds.filter((id) => id !== data.id)
+                : [...prev.openFolderIds, data.id],
+            }));
+          }}
+        >
           <summary>
             <FolderOpenIcon className="h-4 w-4" />
             {data.name}
