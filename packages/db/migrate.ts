@@ -9,11 +9,12 @@ const diffMigrate = async (migratesPath: string, file: string) => {
   const dirs = fs.readdirSync(migratesPath);
   const latestVersion = dirs[dirs.length - 2];
 
+  if (!latestVersion) return;
+
   // 不存在 .version 文件，设置为当前的版本
   if (!fs.existsSync(file)) {
-    latestVersion && fs.writeFileSync(file, latestVersion);
-
-    return;
+    fs.writeFileSync(file, latestVersion);
+    return runSql(migratesPath, latestVersion, file);
   }
 
   if (!latestVersion) return;
@@ -21,6 +22,14 @@ const diffMigrate = async (migratesPath: string, file: string) => {
 
   if (oldVersion === latestVersion) return;
 
+  return await runSql(migratesPath, latestVersion, file);
+};
+
+const runSql = async (
+  migratesPath: string,
+  latestVersion: string,
+  file: string,
+) => {
   const sqls = fs
     .readFileSync(join(migratesPath, latestVersion, "migration.sql"), "utf-8")
     .split(";\n")
