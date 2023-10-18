@@ -275,7 +275,7 @@ export const image = t.router({
   /**
    * 回收站中的素材
    */
-  findByTrash: t.procedure
+  findTrash: t.procedure
     .input(imageInput.find.optional())
     .query(async ({ input }) => {
       const limit = input?.limit ?? 50;

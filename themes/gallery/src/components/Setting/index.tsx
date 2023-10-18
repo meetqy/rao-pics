@@ -19,6 +19,7 @@ import styles from "./index.module.css";
 const Setting = () => {
   const router = useRouter();
   const [setting, setSetting] = useRecoilState(settingSelector);
+  const { data: config } = trpc.config.findUnique.useQuery();
 
   const { data: folderTree } = trpc.folder.findTree.useQuery();
 
@@ -65,7 +66,7 @@ const Setting = () => {
             <div className="rounded-md border border-base-content/10 bg-base-200/30 px-4">
               <div className={styles.row}>
                 <span className={styles.rowTitle}>
-                  <AdjustmentsVerticalIcon className="mr-1 h-4 w-4" />
+                  <AdjustmentsVerticalIcon className="mr-1 h-5 w-5" />
                   布局方式
                 </span>
 
@@ -91,7 +92,7 @@ const Setting = () => {
 
               <div className={styles.row}>
                 <span className={styles.rowTitle}>
-                  <ArrowsUpDownIcon className="mr-1 h-4 w-4" />
+                  <ArrowsUpDownIcon className="mr-1 h-5 w-5" />
                   排序方式
                 </span>
 
@@ -109,17 +110,22 @@ const Setting = () => {
             <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30">
               <ul className="menu font-mono text-base">
                 <li>
-                  <Link href={`/${setting.layout}`}>
-                    <WalletIcon className="h-4 w-4" />
+                  <Link
+                    href={`/${setting.layout}`}
+                    className="flex items-center"
+                  >
+                    <WalletIcon className="h-5 w-5" />
                     全部
                   </Link>
                 </li>
-                <li>
-                  <Link href={`/${setting.layout}/trash`}>
-                    <TrashIcon className="h-4 w-4" />
-                    回收站
-                  </Link>
-                </li>
+                {config?.trash && (
+                  <li>
+                    <Link href={`/${setting.layout}/trash`}>
+                      <TrashIcon className="h-5 w-5" />
+                      回收站
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
 

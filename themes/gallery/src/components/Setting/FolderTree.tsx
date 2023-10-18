@@ -33,7 +33,7 @@ function FolderTree({ data }: FileTreeProps) {
             void router.push(`/${layout}/${data.id}`);
           }}
         >
-          <FolderMinusIcon className="h-4 w-4" />
+          <FolderMinusIcon className="h-5 w-5" />
           {data.name}
         </span>
       </li>
@@ -46,7 +46,8 @@ function FolderTree({ data }: FileTreeProps) {
         <details
           open={openFolderIds.includes(data.id)}
           aria-hidden="true"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setSetting((prev) => ({
               ...prev,
               openFolderIds: prev.openFolderIds.includes(data.id)
@@ -56,7 +57,7 @@ function FolderTree({ data }: FileTreeProps) {
           }}
         >
           <summary>
-            <FolderOpenIcon className="h-4 w-4" />
+            <FolderOpenIcon className="h-5 w-5" />
             {data.name}
           </summary>
           <ul>

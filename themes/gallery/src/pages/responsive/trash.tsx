@@ -38,7 +38,7 @@ function Home() {
 
   const { data: config } = trpc.config.findUnique.useQuery();
 
-  const imageQuery = trpc.image.find.useInfiniteQuery(
+  const imageQuery = trpc.image.findTrash.useInfiniteQuery(
     { limit, includes: ["colors"], orderBy: setting.orderBy },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
