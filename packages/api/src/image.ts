@@ -6,6 +6,21 @@ import { prisma } from "@rao-pics/db";
 import { getCaller } from "..";
 import { t } from "./utils";
 
+export const imageInput = {
+  find: z.object({
+    limit: z.number().min(1).max(100).optional(),
+    cursor: z.string().nullish(),
+    includes: z.enum(["tags", "colors", "folders"]).array().optional(),
+    orderBy: z
+      .object({
+        modificationTime: z.enum(["asc", "desc"]).optional(),
+        mtime: z.enum(["asc", "desc"]).optional(),
+      })
+      .optional()
+      .default({ modificationTime: "desc" }),
+  }),
+};
+
 export const image = t.router({
   findUnique: t.procedure
     .input(
@@ -174,22 +189,7 @@ export const image = t.router({
    * 查询时不返回 回收站 和 不显示文件夹中的素材
    */
   find: t.procedure
-    .input(
-      z
-        .object({
-          limit: z.number().min(1).max(100).optional(),
-          cursor: z.string().nullish(),
-          includes: z.enum(["tags", "colors", "folders"]).array().optional(),
-          orderBy: z
-            .object({
-              modificationTime: z.enum(["asc", "desc"]).optional(),
-              mtime: z.enum(["asc", "desc"]).optional(),
-            })
-            .optional()
-            .default({ modificationTime: "desc" }),
-        })
-        .optional(),
-    )
+    .input(imageInput.find.optional())
     .query(async ({ input }) => {
       const limit = input?.limit ?? 50;
       const { cursor, includes, orderBy } = input ?? {};
@@ -201,6 +201,50 @@ export const image = t.router({
           // 文件夹显示的素材不显示
           folders: {
             every: { show: true },
+          },
+        },
+        take: limit + 1,
+        cursor: cursor ? { path: cursor } : undefined,
+        orderBy,
+        include: {
+          tags: includes?.includes("tags"),
+          colors: includes?.includes("colors"),
+          folders: includes?.includes("folders"),
+        },
+      });
+
+      let nextCursor: typeof cursor | undefined = undefined;
+
+      if (images.length > limit) {
+        const nextImage = images.pop();
+        nextCursor = nextImage!.path;
+      }
+
+      return {
+        data: images,
+        nextCursor,
+      };
+    }),
+
+  /**
+   * 根据文件夹 id 查询素材
+   */
+  findByFolderId: t.procedure
+    .input(
+      imageInput.find.merge(
+        z.object({
+          id: z.string(),
+        }),
+      ),
+    )
+    .query(async ({ input }) => {
+      const limit = input?.limit ?? 50;
+      const { cursor, includes, orderBy, id } = input ?? {};
+
+      const images = await prisma.image.findMany({
+        where: {
+          folders: {
+            some: { id },
           },
         },
         take: limit + 1,

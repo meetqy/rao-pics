@@ -20,8 +20,6 @@ const Setting = () => {
 
   const { data: folderTree } = trpc.folder.findTree.useQuery();
 
-  console.log(folderTree);
-
   const handleLayoutChange = async (layout: SettingType["layout"]) => {
     setSetting((prev) => ({
       ...prev,
@@ -161,7 +159,7 @@ function FileTree({ data }: FileTreeProps) {
   };
 
   return (
-    <ul className="menu w-full text-base">
+    <ul className="menu w-full font-mono text-base">
       {data.map((item) => {
         if (!item.children?.length) {
           return <Document key={item.id} data={item} />;

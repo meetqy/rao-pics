@@ -1,7 +1,5 @@
 import { readJSONSync } from "fs-extra";
 
-import type { Folder } from "@rao-pics/db";
-
 export const handleFolder = (path: string) => {
   const f = readJSONSync(path) as {
     folders: FolderTree[];

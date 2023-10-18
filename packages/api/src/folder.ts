@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-import type { Folder } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
 import { configCore } from "./config";
