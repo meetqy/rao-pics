@@ -244,7 +244,9 @@ export const image = t.router({
       const images = await prisma.image.findMany({
         where: {
           folders: {
-            some: { id },
+            some: {
+              OR: [{ id }, { pid: id }],
+            },
           },
         },
         take: limit + 1,

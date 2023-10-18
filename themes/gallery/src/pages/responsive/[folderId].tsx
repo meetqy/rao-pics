@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/legacy/image";
 import { useWindowSize } from "@react-hook/window-size";
+import justifyLayout from "justified-layout";
 import {
   MasonryScroller,
   useContainerPosition,
@@ -19,15 +20,18 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
+import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
 
 import { settingSelector } from "~/states/setting";
 
+type JustifyLayoutResult = ReturnType<typeof justifyLayout>;
+
 function Home() {
   const limit = 50;
   const containerRef = useRef(null);
+  const router = useRouter();
   const setting = useRecoilValue(settingSelector);
-
   const [windowWidth, windowHeight] = useWindowSize();
   const { offset, width } = useContainerPosition(containerRef, [
     windowWidth,
@@ -35,14 +39,21 @@ function Home() {
   ]);
 
   const { data: config } = trpc.config.findUnique.useQuery();
-  const imageQuery = trpc.image.find.useInfiniteQuery(
-    { limit, includes: ["colors"], orderBy: setting.orderBy },
+
+  const imageQuery = trpc.image.findByFolderId.useInfiniteQuery(
+    {
+      limit,
+      includes: ["colors"],
+      orderBy: setting.orderBy,
+      id: router.query.folderId as string,
+    },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   );
 
   const pages = imageQuery.data?.pages;
+
   const images = useMemo(() => {
     const result = pages?.map((page) => {
       return page.data.map((image) => {
@@ -68,22 +79,41 @@ function Home() {
     return result?.flat();
   }, [config?.ip, config?.serverPort, pages]);
 
-  const [isLoad, setLoad] = useState(false);
+  const items = useMemo(() => {
+    if (images && width) {
+      const results: JustifyLayoutResult[] = [];
+      const imageTemp = JSON.parse(JSON.stringify(images)) as typeof images;
+      const imageResult: (typeof images)[] = [];
 
-  useEffect(() => {
-    if (images?.length && !isLoad) {
-      setLoad(true);
+      while (imageTemp.length > 0) {
+        const result = justifyLayout(imageTemp, {
+          maxNumRows: 1,
+          containerWidth: width,
+          containerPadding: 0,
+          boxSpacing: 12,
+          targetRowHeight: 240,
+        });
+
+        imageResult.push(imageTemp.splice(0, result.boxes.length));
+        results.push(result);
+      }
+
+      return {
+        justify: results,
+        images: imageResult,
+      };
     }
-  }, [images, isLoad]);
+
+    return null;
+  }, [images, width]);
 
   const positioner = usePositioner(
     {
-      width,
+      width: width,
       columnGutter: windowWidth < 768 ? 8 : 12,
-      rowGutter: windowWidth < 768 ? 8 : 12,
-      columnWidth: windowWidth < 768 ? windowWidth / 3 : 224,
+      columnCount: 1,
     },
-    [setting.orderBy, isLoad],
+    [setting.orderBy, router],
   );
 
   const onLoadMore = useInfiniteLoader(
@@ -92,8 +122,12 @@ function Home() {
         await imageQuery.fetchNextPage();
       }
     },
-    { minimumBatchSize: limit },
+    {
+      minimumBatchSize: limit,
+      threshold: 3,
+    },
   );
+
   useEffect(() => {
     let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
       gallery: "#photo-swipe-lightbox",
@@ -110,7 +144,7 @@ function Home() {
       lightbox?.destroy();
       lightbox = null;
     };
-  });
+  }, []);
 
   return (
     <main className="p-2 md:p-3" id="photo-swipe-lightbox">
@@ -120,32 +154,47 @@ function Home() {
         offset={offset}
         height={windowHeight}
         containerRef={containerRef}
-        items={images ?? []}
-        itemKey={(data) => data.id}
-        render={({ data, width: w }) => {
-          const m = data.width / w;
-          const h = data.height / m;
-
+        items={items?.justify ?? []}
+        render={({ data, index }) => {
+          const itemImages = items?.images[index];
           return (
-            <a
-              className="relative block rounded shadow"
-              href={data.src}
-              data-pswp-width={data.width}
-              data-pswp-height={data.height}
-              data-pswp-type={VIDEO_EXT.includes(data.ext) ? "video" : "image"}
+            <div
               style={{
-                backgroundColor: data.bgColor + "7F",
-                height: h,
+                height: data.containerHeight + "px",
+                position: "relative",
               }}
-              target="_blank"
-              rel="noreferrer"
             >
-              <Image
-                src={data.thumbnailPath}
-                layout="fill"
-                className="rounded"
-              />
-            </a>
+              {data.boxes.map((box, i) => {
+                const image = itemImages?.[i];
+
+                return (
+                  image && (
+                    <a
+                      href={image.src}
+                      key={image.id}
+                      data-pswp-width={image.width}
+                      data-pswp-height={image.height}
+                      data-pswp-type={
+                        VIDEO_EXT.includes(image.ext) ? "video" : "image"
+                      }
+                      target="_blank"
+                      rel="noreferrer"
+                      className="relative block overflow-hidden rounded shadow"
+                      style={{
+                        width: `${box.width}px`,
+                        height: `${box.height}px`,
+                        position: "absolute",
+                        top: `${box.top}px`,
+                        left: `${box.left}px`,
+                        backgroundColor: image.bgColor + "7F",
+                      }}
+                    >
+                      <Image src={image.thumbnailPath} layout="fill" />
+                    </a>
+                  )
+                );
+              })}
+            </div>
           );
         }}
       />

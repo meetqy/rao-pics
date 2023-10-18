@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import {
   AdjustmentsHorizontalIcon,
@@ -25,7 +26,10 @@ const Setting = () => {
       ...prev,
       layout,
     }));
-    await router.replace("/" + layout);
+
+    await router.replace(
+      `/${layout}/${(router.query.folderId as string) ?? ""}`,
+    );
   };
 
   const changeOrderBy = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -102,7 +106,9 @@ const Setting = () => {
             </div>
 
             <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30 ">
-              {folderTree && <FileTree data={folderTree} />}
+              {folderTree && (
+                <FileTree data={folderTree} layout={setting.layout} />
+              )}
             </div>
           </div>
         </div>
@@ -122,16 +128,17 @@ interface Folder {
 
 interface FileTreeProps {
   data: Folder[];
+  layout: SettingType["layout"];
 }
 
-function FileTree({ data }: FileTreeProps) {
+function FileTree({ data, layout }: FileTreeProps) {
   const Document = ({ data }: { data: Folder }) => {
     return (
       <li>
-        <span>
+        <Link href={`/${layout}/${data.id}`}>
           <FolderMinusIcon className="h-4 w-4" />
           {data.name}
-        </span>
+        </Link>
       </li>
     );
   };
