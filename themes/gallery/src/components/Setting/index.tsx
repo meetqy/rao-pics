@@ -1,18 +1,16 @@
 import type { ChangeEvent } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import {
   AdjustmentsHorizontalIcon,
   AdjustmentsVerticalIcon,
   ArrowsUpDownIcon,
-  FolderMinusIcon,
-  FolderOpenIcon,
 } from "@heroicons/react/24/outline";
 import { useRecoilState } from "recoil";
 
 import type { SettingType } from "~/states/setting";
 import { settingSelector } from "~/states/setting";
 import { trpc } from "~/utils/trpc";
+import FolderTree from "./FolderTree";
 import styles from "./index.module.css";
 
 const Setting = () => {
@@ -107,7 +105,7 @@ const Setting = () => {
 
             <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30 ">
               {folderTree && (
-                <FileTree data={folderTree} layout={setting.layout} />
+                <FolderTree data={folderTree} layout={setting.layout} />
               )}
             </div>
           </div>
@@ -116,66 +114,5 @@ const Setting = () => {
     </>
   );
 };
-
-interface Folder {
-  name: string;
-  id: string;
-  pid: string | null;
-  description: string | null;
-  passwordTips: string | null;
-  children?: Folder[];
-}
-
-interface FileTreeProps {
-  data: Folder[];
-  layout: SettingType["layout"];
-}
-
-function FileTree({ data, layout }: FileTreeProps) {
-  const Document = ({ data }: { data: Folder }) => {
-    return (
-      <li>
-        <Link href={`/${layout}/${data.id}`}>
-          <FolderMinusIcon className="h-4 w-4" />
-          {data.name}
-        </Link>
-      </li>
-    );
-  };
-
-  const FolderRoot = ({ data }: { data: Folder }) => {
-    return (
-      <li>
-        <details>
-          <summary>
-            <FolderOpenIcon className="h-4 w-4" />
-            {data.name}
-          </summary>
-          <ul>
-            {data.children?.map((item) => {
-              if (!item.children?.length) {
-                return <Document key={item.id} data={item} />;
-              } else {
-                return <FolderRoot key={item.id} data={item} />;
-              }
-            })}
-          </ul>
-        </details>
-      </li>
-    );
-  };
-
-  return (
-    <ul className="menu w-full font-mono text-base">
-      {data.map((item) => {
-        if (!item.children?.length) {
-          return <Document key={item.id} data={item} />;
-        } else {
-          return <FolderRoot key={item.id} data={item} />;
-        }
-      })}
-    </ul>
-  );
-}
 
 export default Setting;
