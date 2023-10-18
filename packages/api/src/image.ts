@@ -22,6 +22,10 @@ export const imageInput = {
 };
 
 export const image = t.router({
+  /**
+   * 根据 id 或 path 查询素材
+   * 不返回 回收站 和 不显示文件夹中的素材
+   */
   findUnique: t.procedure
     .input(
       z.object({
@@ -186,7 +190,8 @@ export const image = t.router({
     }),
 
   /**
-   * 查询时不返回 回收站 和 不显示文件夹中的素材
+   * 查询时不返回
+   * 回收站 和 不显示文件夹中的素材
    */
   find: t.procedure
     .input(imageInput.find.optional())
