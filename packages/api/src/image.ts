@@ -19,6 +19,51 @@ export const imageInput = {
       .optional()
       .default({ modificationTime: "desc" }),
   }),
+  findUnique: z.object({
+    id: z.number().optional(),
+    path: z.string().optional(),
+    includes: z.enum(["tags", "colors", "folders"]).array().optional(),
+  }),
+};
+
+export const imageCore = {
+  /**
+   *
+   * @param input @type imageInput.findUnique
+   * @param extra.isTrash 是否返回回收站(isDeleted=true)中的素材 默认 true
+   * @param extra.isFolder 是否返回 folder.show=false 中的素材  默认 true
+   */
+  findUnique: async (
+    input: z.infer<typeof imageInput.findUnique>,
+    extra?: {
+      isTrash: boolean;
+      isFolder: boolean;
+    },
+  ) => {
+    const { includes } = input;
+    if (!extra) extra = { isTrash: true, isFolder: true };
+    const { isTrash, isFolder } = extra;
+
+    return await prisma.image.findUnique({
+      where: {
+        id: input.id,
+        path: input.path,
+        // true => undefined
+        isDeleted: isTrash ? undefined : false,
+        // true => undefined
+        folders: isFolder
+          ? undefined
+          : {
+              every: { show: true },
+            },
+      },
+      include: {
+        tags: includes?.includes("tags"),
+        colors: includes?.includes("colors"),
+        folders: includes?.includes("folders"),
+      },
+    });
+  },
 };
 
 export const image = t.router({
@@ -34,27 +79,10 @@ export const image = t.router({
         includes: z.enum(["tags", "colors", "folders"]).array().optional(),
       }),
     )
-    .query(async ({ input }) => {
-      const { includes } = input;
-
-      return await prisma.image.findUnique({
-        where: {
-          id: input.id,
-          path: input.path,
-          // 回收站的素材不显示
-          isDeleted: false,
-          // 文件夹显示的素材不显示
-          folders: {
-            every: { show: true },
-          },
-        },
-        include: {
-          tags: includes?.includes("tags"),
-          colors: includes?.includes("colors"),
-          folders: includes?.includes("folders"),
-        },
-      });
-    }),
+    .query(
+      async ({ input }) =>
+        await imageCore.findUnique(input, { isFolder: false, isTrash: false }),
+    ),
 
   upsert: t.procedure
     .input(

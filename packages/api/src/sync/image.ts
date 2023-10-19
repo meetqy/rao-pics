@@ -3,7 +3,7 @@ import { readJsonSync, statSync } from "fs-extra";
 import { EXT } from "@rao-pics/constant";
 import type { Pending } from "@rao-pics/db";
 
-import { router } from "../..";
+import { router, routerCore } from "../..";
 import { rgbToNumberMutilple100 } from "../color";
 import { syncColor } from "./color";
 import { syncTag } from "./tag";
@@ -15,16 +15,11 @@ import { syncTag } from "./tag";
 export const checkedImage = async (path: string, timeout = 3000) => {
   const { mtime } = statSync(path);
 
-  const caller = router.createCaller({});
-  const image = await caller.image.findUnique({
-    path,
-  });
+  const image = await routerCore.image.findUnique({ path });
 
-  if (image) {
-    // 对比时间，如果小于3秒，不更新
-    if (mtime.getTime() - image.mtime.getTime() < timeout) {
-      return;
-    }
+  // 对比时间，如果小于3秒，不更新
+  if (image && mtime.getTime() - image.mtime.getTime() < timeout) {
+    return;
   }
 
   let data;
