@@ -140,7 +140,6 @@ async function createWindow() {
   }
 
   await mainWindowReadyToShow();
-  await initWatchLibrary();
 
   createIPCHandler({ router, windows: [mainWindow] });
   createCustomIPCHandle();
