@@ -79,6 +79,7 @@ export const upsertImage = async (p: Pending, timeout = 3000) => {
     mtime: newImage.mtime,
     annotation: newImage.annotation,
     url: newImage.url,
+    isDeleted: newImage.isDeleted,
     duration: newImage.duration,
     noThumbnail: newImage.noThumbnail ?? false,
     // 添加时间
