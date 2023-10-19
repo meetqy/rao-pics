@@ -3,7 +3,7 @@ import fs from "fs-extra";
 
 import { DB_MIGRATION_VERSION_FILE, IS_DEV } from "@rao-pics/constant/server";
 
-import { prisma } from ".";
+import type { prisma } from ".";
 
 const diffMigrate = async (migratesPath: string, file: string) => {
   const dirs = fs.readdirSync(migratesPath);
@@ -11,7 +11,9 @@ const diffMigrate = async (migratesPath: string, file: string) => {
 
   if (!latestVersion) return;
 
-  // 不存在 .version 文件，设置为当前的版本
+  // 不存在 .version 文件，分 2 种情况
+  // 1. 首次安装，无需执行迁移
+  // 2. 之前安装的版本中没有 .version 文件，需要执行迁移
   if (!fs.existsSync(file)) {
     fs.writeFileSync(file, latestVersion);
     return runSql(migratesPath, latestVersion, file);
@@ -43,7 +45,14 @@ const runSql = async (
     );
 
   fs.writeFileSync(file, latestVersion);
-  return await prisma.$transaction(sqls);
+
+  for (const sql of sqls) {
+    try {
+      await sql;
+    } catch (e) {
+      console.error(e);
+    }
+  }
 };
 
 // TODO: 跨多个版本的迁移，暂未实现

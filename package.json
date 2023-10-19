@@ -15,7 +15,7 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
-    "releases": "pnpm -F gallery build && pnpm -F electron releases",
+    "releases": "pnpm -F db build && pnpm -F gallery build && pnpm -F electron releases",
     "test": "cross-env NODE_ENV=development vitest run --coverage.enabled  --single-thread",
     "test:ui": "cross-env NODE_ENV=development vitest --ui --coverage.enabled --single-thread",
     "typecheck": "turbo typecheck"

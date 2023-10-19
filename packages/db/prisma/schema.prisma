@@ -50,21 +50,21 @@ model Pending {
 }
 
 model Image {
-  id               Int       @id @unique @default(autoincrement())
+  id               Int      @id @unique @default(autoincrement())
   // 完整地址
-  path             String    @unique
+  path             String   @unique
   // 名字
   name             String
   // 文件大小
   size             Int
   // 创建时间
-  createdTime      DateTime  @default(now())
+  createdTime      DateTime @default(now())
   // 修改时间
-  updateTime       DateTime  @updatedAt
+  updateTime       DateTime @updatedAt
   // 文件的 mtime
   mtime            DateTime
   // 添加时间
-  modificationTime DateTime? @default(now())
+  modificationTime DateTime @default(now())
   // 扩展名
   ext              String
   // 宽度
@@ -72,7 +72,7 @@ model Image {
   // 高度
   height           Int
   // 是否删除
-  isDeleted        Boolean   @default(false)
+  isDeleted        Boolean  @default(false)
   // 视频时长
   duration         Float?
   // 描述
@@ -88,7 +88,7 @@ model Image {
   // blurDataURL Base64
   blurDataURL      String?
   // 没有缩略图
-  noThumbnail      Boolean   @default(false)
+  noThumbnail      Boolean  @default(false)
 }
 
 model Tag {
