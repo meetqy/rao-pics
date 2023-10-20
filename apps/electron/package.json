@@ -31,7 +31,7 @@
     "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/db": "workspace:*",
-    "@sentry/node": "^7.70.0",
+    "@sentry/electron": "^4.14.0",
     "@tanstack/react-query": "^4.32.6",
     "@trpc/client": "^10.37.1",
     "@trpc/react-query": "^10.37.1",
