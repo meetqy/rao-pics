@@ -2,7 +2,13 @@ import { difference } from "lodash";
 
 import { router } from "../..";
 
-export const syncColor = async (
+/**
+ * 对比 color 找出 disconnect 和 connect
+ * @param newColors
+ * @param oldColors
+ * @returns
+ */
+export const diffColor = async (
   newColors: number[] = [],
   oldColors: number[] = [],
 ) => {

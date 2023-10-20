@@ -58,6 +58,7 @@ export const sync = t.router({
 
       // 同步完成自动更新 library lastSyncTime
       await caller.library.update({ lastSyncTime: new Date() });
+      await folderCore.deleteWithNotConnectImage();
 
       return true;
     }),
