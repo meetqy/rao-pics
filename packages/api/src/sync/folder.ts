@@ -1,4 +1,5 @@
 import { readJSONSync } from "fs-extra";
+import { difference } from "lodash";
 
 export const handleFolder = (path: string) => {
   const f = readJSONSync(path) as {
@@ -67,3 +68,22 @@ export function flatToTree<
     [] as (T & { children: T[] })[],
   );
 }
+
+/**
+ * 对比 folder 找出 disconnect 和 connect
+ * @param newColors
+ * @param oldColors
+ * @returns
+ */
+export const diffFolder = (
+  newFolderIds: string[] = [],
+  oldFolderIds: string[] = [],
+) => {
+  const disconnect = difference(oldFolderIds, newFolderIds);
+  const connect = difference(newFolderIds, oldFolderIds);
+
+  return {
+    disconnect,
+    connect,
+  };
+};

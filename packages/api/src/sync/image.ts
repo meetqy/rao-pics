@@ -5,7 +5,9 @@ import type { Pending } from "@rao-pics/db";
 
 import { router, routerCore } from "../..";
 import { rgbToNumberMutilple100 } from "../color";
-import { syncColor } from "./color";
+import { imageCore } from "../image";
+import { diffColor } from "./color";
+import { diffFolder } from "./folder";
 import { syncTag } from "./tag";
 
 /**
@@ -46,9 +48,9 @@ export const upsertImage = async (p: Pending, timeout = 3000) => {
 
   if (!newImage) return;
 
-  const oldImage = await caller.image.findUnique({
+  const oldImage = await imageCore.findUnique({
     path: p.path,
-    includes: ["tags", "colors"],
+    includes: ["tags", "colors", "folders"],
   });
 
   const tags = await syncTag(
@@ -60,8 +62,10 @@ export const upsertImage = async (p: Pending, timeout = 3000) => {
     .map((item) => rgbToNumberMutilple100(item.color))
     .filter(Boolean);
   const oldColors = oldImage?.colors.map((item) => item.rgb) ?? [];
+  const colors = await diffColor(newColors, oldColors);
 
-  const colors = await syncColor(newColors, oldColors);
+  const oldFolderIds = oldImage?.folders.map((item) => item.id);
+  const folders = diffFolder(newImage.folders, oldFolderIds);
 
   const image = await caller.image.upsert({
     id: oldImage?.id,
@@ -79,8 +83,8 @@ export const upsertImage = async (p: Pending, timeout = 3000) => {
     noThumbnail: newImage.noThumbnail ?? false,
     // 添加时间
     modificationTime: new Date(newImage.modificationTime),
-    // 文件夹只需要关联，删除处理在 handleFolder 中处理，删除 folder 会同时删除关联的 image
-    folders: { connect: newImage.folders },
+    // 从 A 文件夹 移动素材到 B, 需要取消 A 文件夹的关联，添加 B 文件夹的关联
+    folders,
     tags,
     colors,
   });

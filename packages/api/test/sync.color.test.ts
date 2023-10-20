@@ -2,9 +2,9 @@ import { afterAll, beforeEach, describe, expect, it } from "vitest";
 
 import { prisma } from "@rao-pics/db";
 
-import { syncColor } from "../src/sync/color";
+import { diffColor } from "../src/sync/color";
 
-describe("syncColor", () => {
+describe("diffColor", () => {
   beforeEach(async () => {
     await prisma.color.deleteMany({});
   });
@@ -17,7 +17,7 @@ describe("syncColor", () => {
     const newColors = [1, 2, 3];
     const oldColors = [1, 4];
 
-    const result = await syncColor(newColors, oldColors);
+    const result = await diffColor(newColors, oldColors);
 
     expect(result).toHaveProperty("disconnect", [4]);
     expect(result).toHaveProperty("connect", [2, 3]);
@@ -28,14 +28,14 @@ describe("syncColor", () => {
     const newColors = [1, 2];
     const oldColors = [1, 2];
 
-    await syncColor(newColors, oldColors);
+    await diffColor(newColors, oldColors);
     expect(await prisma.color.findMany({})).toHaveLength(0);
   });
 
   it("should have length 2 if not old colors", async () => {
     const newColors = [1, 2];
 
-    await syncColor(newColors);
+    await diffColor(newColors);
     expect(await prisma.color.findMany({})).toHaveLength(2);
   });
 });

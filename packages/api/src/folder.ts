@@ -20,7 +20,7 @@ export const folderInput = {
     pid: z.string().optional(),
     password: z.string().optional(),
     passwordTips: z.string().optional(),
-    show: z.boolean().optional().default(true),
+    show: z.boolean().default(true).optional(),
   }),
 
   setPwdFolderShow: z.boolean(),
@@ -109,6 +109,14 @@ export const folderCore = {
       },
     });
   },
+
+  deleteWithNotConnectImage: async () =>
+    await prisma.folder.deleteMany({
+      where: {
+        images: { none: {} },
+        pid: null,
+      },
+    }),
 };
 
 export const folder = t.router({
@@ -138,4 +146,14 @@ export const folder = t.router({
 
     return flatToTree<(typeof folders)[number]>(folders);
   }),
+
+  findWithPwd: t.procedure.query(async () => {
+    return await prisma.folder.findMany({
+      where: { password: { not: "" } },
+    });
+  }),
+
+  deleteWithNotConnectImage: t.procedure.mutation(
+    folderCore.deleteWithNotConnectImage,
+  ),
 });
