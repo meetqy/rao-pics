@@ -51,16 +51,8 @@ export const sync = t.router({
       const caller = router.createCaller({});
       const pendings = (await caller.pending.get()) as Pending[];
 
-      try {
-        // 同步文件夹
-        const folders = handleFolder(join(input.libraryPath, "metadata.json"));
-        await syncFolder(folders, caller);
-        const config = await configCore.findUnique();
-        await folderCore.setPwdFolderShow(config?.pwdFolder ?? false);
-      } catch (e) {
-        // 每次同步首先同步文件夹，如果文件夹同步失败，直接返回
-        return false;
-      }
+      // 同步文件夹
+      await syncFolder(join(input.libraryPath, "metadata.json"));
 
       await syncImage(pendings);
 
@@ -93,18 +85,25 @@ export const sync = t.router({
   }),
 });
 
-export const syncFolder = async (
-  folders: ReturnType<typeof handleFolder>,
-  caller: ReturnType<typeof router.createCaller>,
-) => {
-  let count = 0;
-  for (const f of folders) {
-    count++;
-    await caller.folder.upsert(f);
-    ee.emit("sync.start", { status: "ok", type: "folder", data: f, count });
-  }
+export const syncFolder = async (path: string) => {
+  try {
+    const folders = handleFolder(path);
 
-  ee.emit("sync.start", { status: "completed", type: "folder" });
+    let count = 0;
+    for (const f of folders) {
+      count++;
+      await folderCore.upsert(f);
+      ee.emit("sync.start", { status: "ok", type: "folder", data: f, count });
+    }
+
+    const config = await configCore.findUnique();
+    await folderCore.setPwdFolderShow(config?.pwdFolder ?? false);
+
+    ee.emit("sync.start", { status: "completed", type: "folder" });
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
 };
 
 export const syncImage = async (pendings: Pending[]) => {

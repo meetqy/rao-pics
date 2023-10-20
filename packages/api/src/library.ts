@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import { join } from "path";
 import { observable } from "@trpc/server/observable";
 import chokidar from "chokidar";
 import { debounce } from "lodash";
@@ -9,6 +10,7 @@ import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
 import { router, updateLibraryPath } from "..";
+import { syncFolder } from "./sync";
 import { t } from "./utils";
 
 const ee = new EventEmitter();
@@ -102,7 +104,11 @@ export const library = t.router({
   watch: t.procedure.input(z.string()).mutation(({ input }) => {
     if (watcher) return;
 
-    watcher = chokidar.watch(input);
+    chokidar.watch(join(input, "metadata.json")).on("change", (path) => {
+      void syncFolder(path);
+    });
+
+    watcher = chokidar.watch(join(input, "images", "**", "metadata.json"));
     const caller = router.createCaller({});
     const paths = new Set<{ path: string; type: PendingTypeEnum }>();
 

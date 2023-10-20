@@ -39,7 +39,7 @@ const Index = () => {
     },
 
     onSuccess({ path }) {
-      addWatchLibrary.mutate(`${path}/images/**/metadata.json`);
+      addWatchLibrary.mutate(path);
       void utils.library.findUnique.invalidate();
     },
   });

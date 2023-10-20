@@ -55,7 +55,7 @@ async function initWatchLibrary() {
 
   const { path } = res;
   if (res.type === "eagle") {
-    await caller.library.watch(join(path, "images/**/metadata.json"));
+    await caller.library.watch(path);
   }
 }
 

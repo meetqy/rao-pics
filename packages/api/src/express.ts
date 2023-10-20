@@ -68,6 +68,9 @@ export const startExpressServer = async () => {
   });
 };
 
+/**
+ * express.static 需要更新 path
+ */
 export const updateLibraryPath = async () => {
   const caller = router.createCaller({});
   library = await caller.library.findUnique();

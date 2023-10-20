@@ -20,7 +20,7 @@ export const folderInput = {
     pid: z.string().optional(),
     password: z.string().optional(),
     passwordTips: z.string().optional(),
-    show: z.boolean().optional().default(true),
+    show: z.boolean().default(true).optional(),
   }),
 
   setPwdFolderShow: z.boolean(),
