@@ -1,15 +1,17 @@
 import { EventEmitter } from "events";
 import { join } from "path";
+import * as Sentry from "@sentry/node";
 import { observable } from "@trpc/server/observable";
 import { z } from "zod";
 
+import { prisma } from "@rao-pics/db";
 import type { Pending } from "@rao-pics/db";
 
 import { router } from "../..";
 import { configCore } from "../config";
 import { folderCore } from "../folder";
 import { t } from "../utils";
-import { handleFolder } from "./folder";
+import { diffFolder, handleFolder } from "./folder";
 import { deleteImage, upsertImage } from "./image";
 
 const ee = new EventEmitter();
@@ -98,9 +100,30 @@ export const syncFolder = async (path: string) => {
     const config = await configCore.findUnique();
     await folderCore.setPwdFolderShow(config?.pwdFolder ?? false);
 
+    // 对比 folders 与 db 中的 folders，删除旧的
+    const oldFolders = await folderCore.find();
+    if (Array.isArray(oldFolders)) {
+      const diff = diffFolder(
+        folders.map((item) => item.id),
+        oldFolders.map((item) => item.id),
+      );
+
+      prisma.folder
+        .deleteMany({
+          where: {
+            id: {
+              in: diff.disconnect,
+            },
+          },
+        })
+        .catch((e) => {
+          Sentry.captureException(e);
+        });
+    }
+
     ee.emit("sync.start", { status: "completed", type: "folder" });
   } catch (e) {
-    console.error(e);
+    Sentry.captureException(e);
   }
 };
 
@@ -128,6 +151,8 @@ export const syncImage = async (pendings: Pending[]) => {
       // 删除 pending
       await router.createCaller({}).pending.delete(p.path);
     } catch (e) {
+      Sentry.captureException(e);
+
       ee.emit("sync.start", {
         status: "error",
         type: "image",

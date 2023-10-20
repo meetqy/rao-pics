@@ -20,6 +20,7 @@
     "@rao-pics/constant": "workspace:*",
     "@rao-pics/db": "workspace:*",
     "@rao-pics/utils": "workspace:*",
+    "@sentry/node": "^7.74.1",
     "@trpc/client": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "chokidar": "^3.5.3",

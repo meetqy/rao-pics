@@ -27,7 +27,7 @@ export const folderInput = {
 };
 
 export const folderCore = {
-  find: async (input: z.infer<typeof folderInput.find>) => {
+  find: async (input?: z.infer<typeof folderInput.find>) => {
     if (input?.id) {
       return await prisma.folder.findUnique({
         where: { id: input.id, show: true },
