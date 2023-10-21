@@ -104,11 +104,16 @@ export const library = t.router({
   watch: t.procedure.input(z.string()).mutation(({ input }) => {
     if (watcher) return;
 
+    setTimeout(() => {
+      ee.emit("watch", { status: "start" });
+    }, 1000);
+
     chokidar.watch(join(input, "metadata.json")).on("change", (path) => {
       void syncFolder(path);
     });
 
     watcher = chokidar.watch(join(input, "images", "**", "metadata.json"));
+
     const caller = router.createCaller({});
     const paths = new Set<{ path: string; type: PendingTypeEnum }>();
 
@@ -128,6 +133,7 @@ export const library = t.router({
           });
         }
       }
+
       paths.clear();
       ee.emit("watch", { status: "completed" });
     }, 1000);
@@ -149,7 +155,7 @@ export const library = t.router({
 
   onWatch: t.procedure.subscription(() => {
     interface T {
-      status: "ok" | "completed" | "error";
+      status: "ok" | "completed" | "error" | "start";
       data?: { path: string; type: PendingTypeEnum };
       message?: string;
       count: number;
