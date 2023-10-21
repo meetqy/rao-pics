@@ -32,6 +32,7 @@ process.env.VERSION = app.getVersion();
 Sentry.init({
   dsn: "https://66785ab164164bf9bc05591a0c431557@o4505321607397376.ingest.sentry.io/4506081497251840",
   debug: IS_DEV,
+  environment: IS_DEV ? "development" : "production",
   integrations: [new CaptureConsole()],
 });
 
