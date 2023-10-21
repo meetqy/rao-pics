@@ -62,15 +62,22 @@ const UnsyncPage = () => {
             <div className="card-wrapper mt-4 w-full">
               {data?.map((item, index) => (
                 <div className="card-row compact" key={index}>
-                  <div className="w-1/4">{item.type}</div>
+                  <div className="w-1/4 capitalize">
+                    {item.type === "unknown" ? "unkonwn error" : item.type}
+                  </div>
                   <div className="flex w-3/4 items-center justify-end">
                     <span
                       className="flex cursor-pointer items-center"
                       title={item.path}
-                      onClick={() => window.shell.showItemInFolder(item.path)}
+                      onClick={() => {
+                        void window.dialog.showErrorBox(
+                          item.path,
+                          item.message,
+                        );
+                      }}
                       aria-hidden="true"
                     >
-                      <span className="text-base-content/60">
+                      <span className="text-base-content/50">
                         {item.path
                           .replace(libPath, "")
                           .replace("/metadata.json", "")}

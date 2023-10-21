@@ -15,6 +15,7 @@ export const imageInput = {
       .object({
         modificationTime: z.enum(["asc", "desc"]).optional(),
         mtime: z.enum(["asc", "desc"]).optional(),
+        name: z.enum(["asc", "desc"]).optional(),
       })
       .optional()
       .default({ modificationTime: "desc" }),

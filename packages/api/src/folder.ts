@@ -27,7 +27,7 @@ export const folderInput = {
 };
 
 export const folderCore = {
-  find: async (input: z.infer<typeof folderInput.find>) => {
+  find: async (input?: z.infer<typeof folderInput.find>) => {
     if (input?.id) {
       return await prisma.folder.findUnique({
         where: { id: input.id, show: true },
@@ -109,14 +109,6 @@ export const folderCore = {
       },
     });
   },
-
-  deleteWithNotConnectImage: async () =>
-    await prisma.folder.deleteMany({
-      where: {
-        images: { none: {} },
-        pid: null,
-      },
-    }),
 };
 
 export const folder = t.router({
@@ -134,7 +126,7 @@ export const folder = t.router({
 
   findTree: t.procedure.query(async () => {
     const folders = await prisma.folder.findMany({
-      where: { password: "" },
+      where: { show: true },
       select: {
         id: true,
         pid: true,
@@ -152,8 +144,4 @@ export const folder = t.router({
       where: { password: { not: "" } },
     });
   }),
-
-  deleteWithNotConnectImage: t.procedure.mutation(
-    folderCore.deleteWithNotConnectImage,
-  ),
 });

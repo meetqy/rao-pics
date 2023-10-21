@@ -3,7 +3,8 @@ import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
-import * as Sentry from "@sentry/electron";
+import { CaptureConsole } from "@sentry/integrations";
+import * as Sentry from "@sentry/node";
 import getPort, { portNumbers } from "get-port";
 import ip from "ip";
 
@@ -26,6 +27,7 @@ process.env.VERSION = app.getVersion();
 Sentry.init({
   dsn: "https://66785ab164164bf9bc05591a0c431557@o4505321607397376.ingest.sentry.io/4506081497251840",
   debug: IS_DEV,
+  integrations: [new CaptureConsole()],
 });
 
 const controller = new AbortController();
