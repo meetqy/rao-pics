@@ -697,7 +697,10 @@ describe("image module", () => {
         });
       }
 
-      const res = await caller.image.find({ limit: 24 });
+      const res = await caller.image.find({
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
       expect(res.data).toHaveLength(24);
       expect(res.nextCursor).toEqual(`/path/to/image0.jpg`);
 
