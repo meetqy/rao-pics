@@ -85,6 +85,8 @@ export const imageCore = {
     if (path) {
       return prisma.image.delete({ where: { path } });
     }
+
+    return null;
   },
 };
 
