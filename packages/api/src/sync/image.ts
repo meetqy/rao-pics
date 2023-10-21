@@ -94,11 +94,3 @@ export const upsertImage = async (p: Pending, timeout = 3000) => {
 
   return image;
 };
-
-export const deleteImage = async (p: Pending) => {
-  const caller = router.createCaller({});
-
-  await caller.image.deleteByUnique({
-    path: p.path,
-  });
-};

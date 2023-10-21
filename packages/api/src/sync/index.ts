@@ -7,12 +7,12 @@ import { z } from "zod";
 import { prisma } from "@rao-pics/db";
 import type { Pending } from "@rao-pics/db";
 
-import { router } from "../..";
+import { router, routerCore } from "../..";
 import { configCore } from "../config";
 import { folderCore } from "../folder";
 import { t } from "../utils";
 import { diffFolder, handleFolder } from "./folder";
-import { deleteImage, upsertImage } from "./image";
+import { upsertImage } from "./image";
 
 const ee = new EventEmitter();
 
@@ -143,7 +143,12 @@ export const syncImage = async (pendings: Pending[]) => {
           ee.emit("sync.start", { status: "ok", type: "image", count });
           break;
         case "delete":
-          await deleteImage(p);
+          routerCore.image
+            .deleteByUnique({ path: p.path })
+            .catch((e) =>
+              Sentry.captureMessage((e as Error).message, "warning"),
+            );
+
           ee.emit("sync.start", { status: "ok", type: "image", count });
           break;
       }

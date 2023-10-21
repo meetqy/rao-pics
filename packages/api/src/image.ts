@@ -20,11 +20,20 @@ export const imageInput = {
       .optional()
       .default({ modificationTime: "desc" }),
   }),
+
   findUnique: z.object({
     id: z.number().optional(),
     path: z.string().optional(),
     includes: z.enum(["tags", "colors", "folders"]).array().optional(),
   }),
+
+  deleteByUnique: z
+    .object({ id: z.number().optional(), path: z.string().optional() })
+    .partial()
+    .refine(
+      (input) => !!input.id || !!input.path,
+      "id or path either one is required",
+    ),
 };
 
 export const imageCore = {
@@ -64,6 +73,18 @@ export const imageCore = {
         folders: includes?.includes("folders"),
       },
     });
+  },
+
+  deleteByUnique: async (input: z.infer<typeof imageInput.findUnique>) => {
+    const { id, path } = input;
+
+    if (id) {
+      return prisma.image.delete({ where: { id } });
+    }
+
+    if (path) {
+      return prisma.image.delete({ where: { path } });
+    }
   },
 };
 
@@ -195,28 +216,8 @@ export const image = t.router({
     }),
 
   deleteByUnique: t.procedure
-    .input(
-      z
-        .object({ id: z.number().optional(), path: z.string().optional() })
-        .partial()
-        .refine(
-          (input) => !!input.id || !!input.path,
-          "id or path either one is required",
-        ),
-    )
-    .mutation(async ({ input }) => {
-      const { id, path } = input;
-
-      if (id) {
-        return prisma.image.delete({ where: { id } });
-      }
-
-      if (path) {
-        return prisma.image.delete({ where: { path } });
-      }
-
-      return null;
-    }),
+    .input(imageInput.deleteByUnique)
+    .mutation(({ input }) => imageCore.deleteByUnique(input)),
 
   /**
    * 查询时不返回
