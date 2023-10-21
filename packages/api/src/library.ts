@@ -101,55 +101,78 @@ export const library = t.router({
   /**
    * 监听 Library 变化
    */
-  watch: t.procedure.input(z.string()).mutation(({ input }) => {
-    if (watcher) return;
+  watch: t.procedure
+    .input(
+      z.object({
+        path: z.string(),
+        isReload: z.boolean().optional(),
+      }),
+    )
+    .mutation(({ input }) => {
+      const { path: libraryPath, isReload } = input;
+      if (watcher) return;
 
-    chokidar.watch(join(input, "metadata.json")).on("change", (path) => {
-      void syncFolder(path);
-    });
-
-    watcher = chokidar.watch(join(input, "images", "**", "metadata.json"));
-    const caller = router.createCaller({});
-    const paths = new Set<{ path: string; type: PendingTypeEnum }>();
-
-    const start = debounce(async () => {
-      let count = 0;
-      for (const path of paths) {
-        count++;
-        try {
-          await caller.pending.upsert(path);
-          ee.emit("watch", { status: "ok", data: path, count });
-        } catch (e) {
-          ee.emit("watch", {
-            status: "error",
-            data: path,
-            count,
-            message: (e as Error).message,
-          });
-        }
+      // 第二次开启应用，需要等待一段时间，否则 onWatch 监听不到 start
+      if (isReload) {
+        setTimeout(() => {
+          ee.emit("watch", { status: "start" });
+        }, 1000);
+      } else {
+        ee.emit("watch", { status: "start" });
       }
-      paths.clear();
-      ee.emit("watch", { status: "completed" });
-    }, 1000);
 
-    return watcher
-      .on("add", (path) => {
-        paths.add({ path, type: "create" });
-        void start();
-      })
-      .on("change", (path) => {
-        paths.add({ path, type: "update" });
-        void start();
-      })
-      .on("unlink", (path) => {
-        paths.add({ path, type: "delete" });
-        void start();
-      });
-  }),
+      chokidar
+        .watch(join(libraryPath, "metadata.json"))
+        .on("change", (path) => {
+          void syncFolder(path);
+        });
+
+      watcher = chokidar.watch(
+        join(libraryPath, "images", "**", "metadata.json"),
+      );
+
+      const caller = router.createCaller({});
+      const paths = new Set<{ path: string; type: PendingTypeEnum }>();
+
+      const start = debounce(async () => {
+        let count = 0;
+        for (const path of paths) {
+          count++;
+          try {
+            await caller.pending.upsert(path);
+            ee.emit("watch", { status: "ok", data: path, count });
+          } catch (e) {
+            ee.emit("watch", {
+              status: "error",
+              data: path,
+              count,
+              message: (e as Error).message,
+            });
+          }
+        }
+
+        paths.clear();
+        ee.emit("watch", { status: "completed" });
+      }, 1000);
+
+      return watcher
+        .on("add", (path) => {
+          paths.add({ path, type: "create" });
+          void start();
+        })
+        .on("change", (path) => {
+          paths.add({ path, type: "update" });
+          void start();
+        })
+        .on("unlink", (path) => {
+          paths.add({ path, type: "delete" });
+          void start();
+        });
+    }),
 
   onWatch: t.procedure.subscription(() => {
     interface T {
-      status: "ok" | "completed" | "error";
+      status: "ok" | "completed" | "error" | "start";
       data?: { path: string; type: PendingTypeEnum };
       message?: string;
       count: number;

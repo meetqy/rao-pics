@@ -72,7 +72,10 @@ async function initWatchLibrary() {
 
   const { path } = res;
   if (res.type === "eagle") {
-    await caller.library.watch(path);
+    await caller.library.watch({
+      path,
+      isReload: true,
+    });
   }
 }
 
@@ -148,6 +151,7 @@ async function createWindow() {
   if (IS_DEV && process.env.ELECTRON_RENDERER_URL) {
     await migrate();
     void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
+    mainWindow.webContents.openDevTools();
   } else {
     // 创建 db.sqlite 文件
     createDbPath(join(process.resourcesPath, "extraResources", "db.sqlite"));

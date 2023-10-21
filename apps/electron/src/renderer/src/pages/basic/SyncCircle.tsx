@@ -2,8 +2,12 @@ import { useState } from "react";
 import { useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
 
+type Status = "completed" | "error" | "ok" | "start";
+
 interface SyncCircleProps {
   pendingCount: number;
+  onListenData?: (status: Status) => void;
+  onSyncData?: (status: Status) => void;
 }
 
 const languages = {
@@ -24,12 +28,16 @@ const languages = {
   },
 };
 
-export function SyncCircle({ pendingCount }: SyncCircleProps) {
+export function SyncCircle({
+  pendingCount,
+  onListenData,
+  onSyncData,
+}: SyncCircleProps) {
   const utils = trpc.useContext();
   const { lang } = useLanguage(languages);
 
   const [data, setData] = useState<{
-    status: "completed" | "error" | "ok";
+    status: Status;
     count: number;
     type: "folder" | "reading" | "image";
   }>();
@@ -37,11 +45,13 @@ export function SyncCircle({ pendingCount }: SyncCircleProps) {
   // 监听资源库变化
   trpc.library.onWatch.useSubscription(undefined, {
     onData: (data) => {
+      onListenData?.(data.status);
+
       if (data.status === "completed") {
         setTimeout(() => {
           void utils.library.invalidate();
           setData(undefined);
-        }, 500);
+        }, 100);
 
         return;
       } else if (data.status === "error") {
@@ -59,6 +69,7 @@ export function SyncCircle({ pendingCount }: SyncCircleProps) {
   // 监听同步变化
   trpc.sync.onStart.useSubscription(undefined, {
     onData: (data) => {
+      onSyncData?.(data.status);
       if (data.status === "completed") {
         setTimeout(() => {
           void utils.library.invalidate();
@@ -73,7 +84,7 @@ export function SyncCircle({ pendingCount }: SyncCircleProps) {
       setData({
         status: data.status,
         count: data.count,
-        type: "folder",
+        type: data.type,
       });
     },
   });
