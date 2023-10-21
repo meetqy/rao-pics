@@ -8,7 +8,12 @@ import * as Sentry from "@sentry/node";
 import getPort, { portNumbers } from "get-port";
 import ip from "ip";
 
-import { router, startExpressServer, stopExpressServer } from "@rao-pics/api";
+import {
+  getCaller,
+  router,
+  startExpressServer,
+  stopExpressServer,
+} from "@rao-pics/api";
 import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
@@ -49,6 +54,16 @@ async function initConfig() {
     ip: ip.address(),
   });
 }
+
+// 窗口获取焦点时更新 ip
+app.on("browser-window-focus", () => {
+  const caller = getCaller();
+  caller.config
+    .upsert({
+      ip: ip.address(),
+    })
+    .catch(Sentry.captureException);
+});
 
 async function initWatchLibrary() {
   const caller = router.createCaller({});
