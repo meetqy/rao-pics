@@ -72,7 +72,10 @@ async function initWatchLibrary() {
 
   const { path } = res;
   if (res.type === "eagle") {
-    await caller.library.watch(path);
+    await caller.library.watch({
+      path,
+      isReload: true,
+    });
   }
 }
 

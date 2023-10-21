@@ -64,14 +64,12 @@ const languages = {
   },
 };
 
-let T: ReturnType<typeof setTimeout> | null = null;
-
 const BasicPage = () => {
   const { lang } = useLanguage(languages);
   const utils = trpc.useContext();
 
   // 同步中、初始化中 禁用按钮
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   const { data: config } = trpc.config.findUnique.useQuery();
 
@@ -81,17 +79,6 @@ const BasicPage = () => {
       console.error(err);
     },
   });
-
-  if (disabled) {
-    if (T) {
-      clearTimeout(T);
-      T = null;
-    }
-
-    T = setTimeout(() => {
-      setDisabled(false);
-    }, 1000);
-  }
 
   const onBeforeDeleteLibrary = () => {
     window.dialog
@@ -208,8 +195,20 @@ const BasicPage = () => {
           <div className="flex w-1/2 justify-center">
             <SyncCircle
               pendingCount={library?.pendingCount ?? 0}
-              onListenData={(status) => setDisabled(status !== "completed")}
-              onSyncData={(status) => setDisabled(status !== "completed")}
+              onListenData={(status) => {
+                if (status === "completed") {
+                  setDisabled(false);
+                } else {
+                  !disabled && setDisabled(true);
+                }
+              }}
+              onSyncData={(status) => {
+                if (status === "completed") {
+                  setDisabled(false);
+                } else {
+                  !disabled && setDisabled(true);
+                }
+              }}
             />
           </div>
           <div className="w-1/2">
