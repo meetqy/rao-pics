@@ -7,6 +7,7 @@ export interface SettingType {
     modificationTime?: "asc" | "desc";
   };
   openFolderIds: string[];
+  count: number;
 }
 
 export const defaultSetting: SettingType = {
@@ -15,6 +16,7 @@ export const defaultSetting: SettingType = {
     modificationTime: "desc",
   },
   openFolderIds: [],
+  count: 0,
 };
 
 const settingAtom = atom({

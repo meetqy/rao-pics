@@ -11,6 +11,9 @@ interface Folder {
   description: string | null;
   passwordTips: string | null;
   children?: Folder[];
+  _count: {
+    images: number;
+  };
 }
 
 interface FileTreeProps {
@@ -25,17 +28,24 @@ function FolderTree({ data }: FileTreeProps) {
 
   const Document = ({ data }: { data: Folder }) => {
     return (
-      <li>
-        <span
+      <li className="flex justify-between">
+        <div
+          className="flex justify-between"
           aria-hidden="true"
           onClick={(e) => {
             e.stopPropagation();
             void router.push(`/${layout}/${data.id}`);
           }}
         >
-          <FolderMinusIcon className="h-5 w-5" />
-          {data.name}
-        </span>
+          <span className="flex items-center">
+            <FolderMinusIcon className="mr-1 h-5 w-5" />
+            {data.name}
+          </span>
+
+          <span className="text-sm font-normal text-base-content/30">
+            {data._count.images}
+          </span>
+        </div>
       </li>
     );
   };

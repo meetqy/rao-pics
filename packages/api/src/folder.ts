@@ -134,6 +134,7 @@ export const folder = t.router({
         name: true,
         description: true,
         passwordTips: true,
+        _count: { select: { images: true } },
       },
     });
 

@@ -231,15 +231,17 @@ export const image = t.router({
       const limit = input?.limit ?? 50;
       const { cursor, includes, orderBy } = input ?? {};
 
-      const images = await prisma.image.findMany({
-        where: {
-          // 回收站的素材不显示
-          isDeleted: false,
-          // 文件夹显示的素材不显示
-          folders: {
-            every: { show: true },
-          },
+      const where = {
+        // 回收站的素材不显示
+        isDeleted: false,
+        // 文件夹显示的素材不显示
+        folders: {
+          every: { show: true },
         },
+      };
+
+      const images = await prisma.image.findMany({
+        where,
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
         orderBy,
@@ -257,9 +259,12 @@ export const image = t.router({
         nextCursor = nextImage!.path;
       }
 
+      const count = await prisma.image.count({ where });
+
       return {
         data: images,
         nextCursor,
+        count,
       };
     }),
 

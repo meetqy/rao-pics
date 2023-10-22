@@ -112,10 +112,16 @@ const Setting = () => {
                 <li>
                   <Link
                     href={`/${setting.layout}`}
-                    className="flex items-center"
+                    className="flex justify-between"
                   >
-                    <WalletIcon className="h-5 w-5" />
-                    全部
+                    <span className="flex items-center">
+                      <WalletIcon className="mr-1 h-5 w-5" />
+                      全部
+                    </span>
+
+                    <span className=" text-sm text-base-content/30">
+                      {setting.count}
+                    </span>
                   </Link>
                 </li>
                 {config?.trash && (

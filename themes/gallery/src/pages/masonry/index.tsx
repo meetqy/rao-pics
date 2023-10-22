@@ -19,14 +19,14 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 import { settingSelector } from "~/states/setting";
 
 function Home() {
   const limit = 50;
   const containerRef = useRef(null);
-  const setting = useRecoilValue(settingSelector);
+  const [setting, setSetting] = useRecoilState(settingSelector);
 
   const [windowWidth, windowHeight] = useWindowSize();
   const { offset, width } = useContainerPosition(containerRef, [
@@ -43,6 +43,17 @@ function Home() {
   );
 
   const pages = imageQuery.data?.pages;
+  const count = imageQuery.data?.pages[0]?.count;
+
+  useEffect(() => {
+    if (count) {
+      setSetting((prev) => ({
+        ...prev,
+        count,
+      }));
+    }
+  }, [count, setSetting]);
+
   const images = useMemo(() => {
     const result = pages?.map((page) => {
       return page.data.map((image) => {
