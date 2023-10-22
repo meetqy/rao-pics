@@ -1,6 +1,0 @@
--- AlterTable
-ALTER TABLE "Config" ADD COLUMN "pwdFolder" BOOLEAN DEFAULT false;
-ALTER TABLE "Config" ADD COLUMN "trash" BOOLEAN DEFAULT false;
-
--- AlterTable
-ALTER TABLE "Image" ADD COLUMN "modificationTime" DATETIME DEFAULT CURRENT_TIMESTAMP;
