@@ -127,6 +127,7 @@ export const folder = t.router({
   findTree: t.procedure.query(async () => {
     const folders = await prisma.folder.findMany({
       where: { show: true },
+      orderBy: { id: "desc" },
       select: {
         id: true,
         pid: true,
