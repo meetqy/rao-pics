@@ -54,6 +54,19 @@
 - [Docker](https://github.com/rao-pics/docker) - 支持 Eagle，素材库过大，同步会有些卡
 - [Eagle Api](https://github.com/meetqy/eagle-api) - 让你的 eagle 拥有 api 查询能力，基于 json-server
 
+## 截图
+
+iPhone - 目前已支持 PWA 可直接保存为 App
+
+| <img alt="移动端 pwa 瀑布流演示" src="screenshot/mobile-1.png"/> | <img alt="移动端 pwa 菜单展示" src="screenshot/mobile-2.png"/> | <img alt="移动端 pwa 自适应展示" src="screenshot/mobile-3.png"/> |
+| ---------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------- |
+
+PC
+
+| <img alt="PC 端 菜单展示 light 模式" src="screenshot/pc-1.png"/>   | <img src="screenshot/pc-2.png" alt="PC 端 瀑布流演示 dark 模式" /> |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| <img alt="PC 端 自适应展示 light 模式" src="screenshot/pc-3.png"/> | <img alt="PC 端 菜单展示 dark 模式" src="screenshot/pc-4.png"/>    |
+
 ## Repobeats
 
 <img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
