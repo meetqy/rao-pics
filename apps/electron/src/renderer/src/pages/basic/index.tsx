@@ -1,12 +1,12 @@
 import { useState } from "react";
 import {
-  ChevronRightIcon,
   ClockIcon,
   EyeIcon,
   FolderIcon,
   PhotoIcon,
 } from "@heroicons/react/24/outline";
 import Content from "@renderer/components/Content";
+import Row from "@renderer/components/Row";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
@@ -115,80 +115,74 @@ const BasicPage = () => {
     <Content title={<Title>{lang.title}</Title>}>
       <div className="px-4">
         <div className="card-wrapper">
-          <div className="card-row">
-            <span>
-              <FolderIcon className="h-5 w-5" />
+          <Row
+            left={
+              <>
+                <FolderIcon className="h-5 w-5" />
+                <span className="ml-2">{lang.file_path}</span>
+              </>
+            }
+            right={library?.path + "/123123/123/123"}
+            onRightClick={() => {
+              if (library) {
+                window.shell.showItemInFolder(library.path);
+              }
+            }}
+          />
 
-              <span className="ml-2">{lang.file_path}</span>
-            </span>
+          <Row
+            left={
+              <>
+                <ClockIcon className="h-5 w-5" />
+                <span className="ml-2 flex items-center">{lang.last_time}</span>
+              </>
+            }
+            right={
+              library?.lastSyncTime?.toLocaleString("zh", { hour12: false }) ??
+              lang.un_sync
+            }
+          />
 
-            <span
-              className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content"
-              aria-hidden="true"
-              onClick={() => {
-                if (library) {
-                  window.shell.showItemInFolder(library.path);
-                }
-              }}
-            >
-              <span>{library?.path}</span>
-              <ChevronRightIcon className="right-svg" />
-            </span>
-          </div>
-
-          <div className="card-row">
-            <span>
-              <ClockIcon className="h-5 w-5" />
-
-              <span className="ml-2 flex items-center">{lang.last_time}</span>
-            </span>
-
-            <span className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content">
-              {library?.lastSyncTime?.toLocaleString("zh", { hour12: false }) ??
-                lang.un_sync}
-            </span>
-          </div>
-
-          <div className="card-row">
-            <span>
-              <PhotoIcon className="h-5 w-5" />
-
-              <span className="ml-2">{lang.sync_count}</span>
-            </span>
-
-            <span className="font-mono">
-              <span className="text-success">{library?.syncCount ?? 0}</span>
-              <span className="mx-1 text-base-content/60">｜</span>
-              <span className="text-warning">{library?.unSyncCount ?? 0}</span>
-            </span>
-          </div>
+          <Row
+            left={
+              <>
+                <PhotoIcon className="h-5 w-5" />
+                <span className="ml-2">{lang.sync_count}</span>
+              </>
+            }
+            right={
+              <>
+                <span className="text-success">{library?.syncCount ?? 0}</span>
+                <span className="mx-1 text-base-content/60">｜</span>
+                <span className="text-warning">
+                  {library?.unSyncCount ?? 0}
+                </span>
+              </>
+            }
+          />
         </div>
 
         <div className="card-wrapper mt-4">
-          <div className="card-row">
-            <span>
-              <div className="rounded-md bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 text-white">
-                <EyeIcon className="h-4 w-4" />
-              </div>
-
-              <span className="ml-2 flex items-center">{lang.preview}</span>
-            </span>
-
-            <span
-              aria-hidden="true"
-              onClick={() => {
-                void window.shell.openExternal(
-                  `http://${config?.ip}:${config?.clientPort}`,
-                );
-              }}
-              className="cursor-pointer font-mono text-base-content/60 transition-colors hover:text-base-content"
-            >
-              {config && (
+          <Row
+            left={
+              <>
+                <div className="rounded-md bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 text-white">
+                  <EyeIcon className="h-4 w-4" />
+                </div>
+                <span className="ml-2 flex items-center">{lang.preview}</span>
+              </>
+            }
+            right={
+              config && (
                 <span>{`http://${config.ip}:${config.clientPort}`}</span>
-              )}
-              <ChevronRightIcon className="right-svg" />
-            </span>
-          </div>
+              )
+            }
+            onRightClick={() => {
+              void window.shell.openExternal(
+                `http://${config?.ip}:${config?.clientPort}`,
+              );
+            }}
+          />
         </div>
 
         <div className="mt-4 flex py-3">
