@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import Content from "@renderer/components/Content";
+import Row from "@renderer/components/Row";
 import Title from "@renderer/components/Title";
 import { useDebounce, useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
@@ -61,31 +61,21 @@ const UnsyncPage = () => {
           {data.length > 0 ? (
             <div className="card-wrapper mt-4 w-full">
               {data?.map((item, index) => (
-                <div className="card-row compact" key={index}>
-                  <div className="w-1/4 capitalize">
-                    {item.type === "unknown" ? "unkonwn error" : item.type}
-                  </div>
-                  <div className="flex w-3/4 items-center justify-end">
-                    <span
-                      className="flex cursor-pointer items-center"
-                      title={item.path}
-                      onClick={() => {
-                        void window.dialog.showErrorBox(
-                          item.path,
-                          item.message,
-                        );
-                      }}
-                      aria-hidden="true"
-                    >
-                      <span className="text-base-content/50">
-                        {item.path
-                          .replace(libPath, "")
-                          .replace("/metadata.json", "")}
-                      </span>
-                      <ChevronRightIcon className="right-svg" />
+                <Row
+                  key={index}
+                  compact
+                  left={
+                    <span className="capitalize">
+                      {item.type === "unknown" ? "unkonwn error" : item.type}
                     </span>
-                  </div>
-                </div>
+                  }
+                  right={item.path
+                    .replace(libPath, "")
+                    .replace("/metadata.json", "")}
+                  onRightClick={() => {
+                    void window.dialog.showErrorBox(item.path, item.message);
+                  }}
+                />
               ))}
             </div>
           ) : (
