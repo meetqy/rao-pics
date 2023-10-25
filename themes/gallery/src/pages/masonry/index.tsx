@@ -19,7 +19,6 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
-import type { SlideData } from "photoswipe";
 import { useRecoilState } from "recoil";
 
 import { settingSelector } from "~/states/setting";

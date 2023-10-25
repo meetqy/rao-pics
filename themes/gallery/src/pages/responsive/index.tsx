@@ -75,6 +75,8 @@ function Home() {
           width: image.width,
           height: image.height,
           ext: image.ext as unknown as typeof EXT,
+          type: VIDEO_EXT.includes(image.ext) ? "video" : "image",
+          msrc: thumbnailPath,
         };
       });
     });
@@ -131,23 +133,13 @@ function Home() {
     },
   );
 
-  useEffect(() => {
-    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
-      gallery: "#photo-swipe-lightbox",
-      children: "a",
-      pswpModule: () => import("photoswipe"),
-      loop: false,
-    });
+  const lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
+    pswpModule: () => import("photoswipe"),
+    loop: false,
+  });
 
-    initLightboxVideoPlugin(lightbox);
-
-    lightbox.init();
-
-    return () => {
-      lightbox?.destroy();
-      lightbox = null;
-    };
-  }, []);
+  initLightboxVideoPlugin(lightbox);
+  lightbox.init();
 
   return (
     <main className="p-2 md:p-3" id="photo-swipe-lightbox">
@@ -190,6 +182,15 @@ function Home() {
                         top: `${box.top}px`,
                         left: `${box.left}px`,
                         backgroundColor: image.bgColor + "7F",
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+
+                        const curIndex = images?.findIndex(
+                          (item) => item.id === image.id,
+                        );
+
+                        lightbox.loadAndOpen(curIndex ?? 0, images ?? []);
                       }}
                     >
                       <Image src={image.thumbnailPath} layout="fill" />
