@@ -19,6 +19,7 @@ import { trpc } from "~/utils/trpc";
 
 import "photoswipe/style.css";
 
+import type { SlideData } from "photoswipe";
 import { useRecoilState } from "recoil";
 
 import { settingSelector } from "~/states/setting";
@@ -105,23 +106,15 @@ function Home() {
     },
     { minimumBatchSize: limit },
   );
-  useEffect(() => {
-    let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
-      gallery: "#photo-swipe-lightbox",
-      children: "a",
-      pswpModule: () => import("photoswipe"),
-      loop: false,
-    });
 
-    initLightboxVideoPlugin(lightbox);
-
-    lightbox.init();
-
-    return () => {
-      lightbox?.destroy();
-      lightbox = null;
-    };
+  const lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
+    pswpModule: () => import("photoswipe"),
+    loop: false,
   });
+
+  initLightboxVideoPlugin(lightbox);
+
+  lightbox.init();
 
   return (
     <main className="p-2 md:p-3" id="photo-swipe-lightbox">
@@ -133,7 +126,7 @@ function Home() {
         containerRef={containerRef}
         items={images ?? []}
         itemKey={(data) => data.id}
-        render={({ data, width: w }) => {
+        render={({ data, width: w, index }) => {
           const m = data.width / w;
           const h = data.height / m;
 
@@ -141,6 +134,7 @@ function Home() {
             <a
               className="relative block rounded shadow"
               href={data.src}
+              data-pswp-index={index}
               data-pswp-width={data.width}
               data-pswp-height={data.height}
               data-pswp-type={VIDEO_EXT.includes(data.ext) ? "video" : "image"}
@@ -150,6 +144,30 @@ function Home() {
               }}
               target="_blank"
               rel="noreferrer"
+              onClick={(e) => {
+                e.preventDefault();
+                const domeA = [
+                  ...document.querySelectorAll("#photo-swipe-lightbox a"),
+                ];
+
+                const dataSource = domeA
+                  .sort((a, b) => {
+                    return (
+                      Number(a.getAttribute("data-pswp-index")) -
+                      Number(b.getAttribute("data-pswp-index"))
+                    );
+                  })
+                  .map((dom) => {
+                    return {
+                      src: dom.getAttribute("href"),
+                      width: Number(dom.getAttribute("data-pswp-width")),
+                      height: Number(dom.getAttribute("data-pswp-height")),
+                      type: dom.getAttribute("data-pswp-type"),
+                    } as SlideData;
+                  });
+
+                lightbox.loadAndOpen(index, dataSource);
+              }}
             >
               <Image
                 src={data.thumbnailPath}
