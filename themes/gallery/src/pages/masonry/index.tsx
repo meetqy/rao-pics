@@ -69,10 +69,12 @@ function Home() {
           id: image.id,
           src,
           thumbnailPath,
+          msrc: thumbnailPath,
           bgColor: numberToHex(image.colors?.[0]?.rgb ?? 0),
           width: image.width,
           height: image.height,
           ext: image.ext as unknown as typeof EXT,
+          type: VIDEO_EXT.includes(image.ext) ? "video" : "image",
         };
       });
     });
@@ -113,7 +115,6 @@ function Home() {
   });
 
   initLightboxVideoPlugin(lightbox);
-
   lightbox.init();
 
   return (
@@ -134,10 +135,6 @@ function Home() {
             <a
               className="relative block rounded shadow"
               href={data.src}
-              data-pswp-index={index}
-              data-pswp-width={data.width}
-              data-pswp-height={data.height}
-              data-pswp-type={VIDEO_EXT.includes(data.ext) ? "video" : "image"}
               style={{
                 backgroundColor: data.bgColor + "7F",
                 height: h,
@@ -146,27 +143,8 @@ function Home() {
               rel="noreferrer"
               onClick={(e) => {
                 e.preventDefault();
-                const domeA = [
-                  ...document.querySelectorAll("#photo-swipe-lightbox a"),
-                ];
 
-                const dataSource = domeA
-                  .sort((a, b) => {
-                    return (
-                      Number(a.getAttribute("data-pswp-index")) -
-                      Number(b.getAttribute("data-pswp-index"))
-                    );
-                  })
-                  .map((dom) => {
-                    return {
-                      src: dom.getAttribute("href"),
-                      width: Number(dom.getAttribute("data-pswp-width")),
-                      height: Number(dom.getAttribute("data-pswp-height")),
-                      type: dom.getAttribute("data-pswp-type"),
-                    } as SlideData;
-                  });
-
-                lightbox.loadAndOpen(index, dataSource);
+                lightbox.loadAndOpen(index, images ?? []);
               }}
             >
               <Image
