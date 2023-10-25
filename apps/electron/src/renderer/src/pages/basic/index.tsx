@@ -10,6 +10,7 @@ import Row from "@renderer/components/Row";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
 import { trpc } from "@renderer/utils/trpc";
+import { QRCodeSVG } from "qrcode.react";
 
 import { SyncCircle } from "./SyncCircle";
 
@@ -162,7 +163,7 @@ const BasicPage = () => {
           />
         </div>
 
-        <div className="card-wrapper mt-4">
+        <div className="card-wrapper relative mt-4">
           <Row
             left={
               <>
@@ -174,7 +175,21 @@ const BasicPage = () => {
             }
             right={
               config && (
-                <span>{`http://${config.ip}:${config.clientPort}`}</span>
+                <div className="dropdown-hover dropdown">
+                  <div
+                    role="button"
+                    tabIndex={0}
+                  >{`http://${config.ip}:${config.clientPort}`}</div>
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    className="dropdown-content right-0 rounded-md bg-base-100 p-4 shadow-md"
+                  >
+                    <QRCodeSVG
+                      value={`http://${config.ip}:${config.clientPort}`}
+                    />
+                  </div>
+                </div>
               )
             }
             onRightClick={() => {

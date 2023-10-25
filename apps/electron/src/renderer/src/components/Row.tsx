@@ -2,7 +2,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   left?: React.ReactNode;
-  right?: React.ReactNode;
+  right?: React.ReactNode | string;
   onLeftClick?: () => void;
   onRightClick?: () => void;
   compact?: boolean;
@@ -24,7 +24,13 @@ export const Row = (props: Props) => {
         aria-hidden="true"
         onClick={props.onRightClick}
       >
-        <div className={`w-4/5 truncate text-right`}>{props.right}</div>
+        <div
+          className={`w-4/5 text-right ${
+            typeof props.right === "string" ? "truncate" : ""
+          }`}
+        >
+          {props.right}
+        </div>
 
         {props.onRightClick && <ChevronRightIcon className="ml-1 h-4 w-4" />}
       </div>
