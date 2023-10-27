@@ -43,7 +43,7 @@
 
 - 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate)，如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao) 支持作者 😘😘😘
 - 如果你喜欢 Rao.Pics，可以在 Github Star，更欢迎 [推荐](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) 给你志同道合的朋友使用
-- 可以关注我的 [Twitter](https://twitter.com/meetqy) 获取到最新的消息，或添加微信 `-meetqy-` 拉你入群**（记得备注以下 GITHUB 哟）**
+- 可以关注我的 [Twitter](https://twitter.com/meetqy) 获取到最新的消息，或添加微信 `-meetqy-` 拉你入群 **（记得备注以下 GITHUB 哟）**
 
 ---
 
