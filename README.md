@@ -29,6 +29,19 @@
     <img width='49.5%' src="https://github.com/meetqy/rao-pics/assets/18411315/644f81bb-b444-42c3-ae53-e2a2399a1e03" alt="rao.pics screenshot4"/>
 </div>
 
+---
+
+<p align="center">
+    :white_check_mark: 立即下载：
+    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.6/Rao.Pics-1.0.0-alpha.6-arm64.dmg">MAC M1</a>
+    <span> </span>·:runner:·<span> </span>
+    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.6/Rao.Pics-1.0.0-alpha.6.dmg">MAC INTER</a>
+    <span> </span>·:runner:·<span> </span>
+    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.6/Rao.Pics.Setup.1.0.0-alpha.6.exe">WINDOWS</a>
+</p>
+
+---
+
 ## 特点
 
 - 🎨 30 多种配色随意切换，还可以自定义主题，总有一款适合你
