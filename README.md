@@ -33,11 +33,11 @@
 
 <p align="center">
     :white_check_mark: 立即下载：
-    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.6/Rao.Pics-1.0.0-alpha.6-arm64.dmg">MAC M1</a>
+    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.7/Rao.Pics-1.0.0-alpha.7-arm64.dmg">MAC M1</a>
     <span> </span>·:runner:·<span> </span>
-    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.6/Rao.Pics-1.0.0-alpha.6.dmg">MAC INTER</a>
+    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.7/Rao.Pics-1.0.0-alpha.7.dmg">MAC INTER</a>
     <span> </span>·:runner:·<span> </span>
-    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.6/Rao.Pics.Setup.1.0.0-alpha.6.exe">WINDOWS</a>
+    <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.7/Rao.Pics.Setup.1.0.0-alpha.7.exe">WINDOWS</a>
 </p>
 
 ---
