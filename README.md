@@ -9,7 +9,7 @@
         <img width="196" src="./icons/logo.svg" alt="rao.pics logo"/>
     </a>
     <h1 align="center">Rao Pics</h1>
-    <p align="center">帮助你远程访问 Eagle、Pixcall、Billfish 的素材库。</p>
+    <p align="center">帮助你远程访问 Eagle、Pixcall、Billfish 的素材库</p>
     <p align="center">
         <a href="https://codecov.io/gh/meetqy/rao-pics" target="_blank"><img alt="codecov" src="https://codecov.io/gh/meetqy/rao-pics/graph/badge.svg?token=G9UG6SEOZK"/></a>
         <a href="https://github.com/rao-pics/core/blob/main/LICENSE" target="_blank"><img alt="License" src="https://img.shields.io/github/license/rao-pics/core"/></a>
@@ -43,7 +43,7 @@
 
 - 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate)，如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao) 支持作者 😘😘😘
 - 如果你喜欢 Rao.Pics，可以在 Github Star，更欢迎 [推荐](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) 给你志同道合的朋友使用
-- 可以关注我的 [Twitter](https://twitter.com/meetqy) 获取到最新的消息，或添加微信 `-meetqy-` 拉你入群
+- 可以关注我的 [Twitter](https://twitter.com/meetqy) 获取到最新的消息，或添加微信 `-meetqy-` 拉你入群**（记得备注以下 GITHUB 哟）**
 
 ---
 
