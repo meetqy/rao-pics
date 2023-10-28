@@ -15,12 +15,13 @@ import { settingSelector } from "~/states/setting";
 import { trpc } from "~/utils/trpc";
 import FolderTree from "./FolderTree";
 import styles from "./index.module.css";
+import PasswordModal from "./PasswordModal";
 
 const Setting = () => {
   const router = useRouter();
   const [setting, setSetting] = useRecoilState(settingSelector);
-  const { data: config } = trpc.config.findUnique.useQuery();
 
+  const { data: config } = trpc.config.findUnique.useQuery();
   const { data: folderTree } = trpc.folder.findTree.useQuery();
 
   const handleLayoutChange = async (layout: SettingType["layout"]) => {
