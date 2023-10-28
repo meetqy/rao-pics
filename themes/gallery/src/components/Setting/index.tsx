@@ -15,7 +15,6 @@ import { settingSelector } from "~/states/setting";
 import { trpc } from "~/utils/trpc";
 import FolderTree from "./FolderTree";
 import styles from "./index.module.css";
-import PasswordModal from "./PasswordModal";
 
 const Setting = () => {
   const router = useRouter();
