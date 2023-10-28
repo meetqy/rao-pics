@@ -18,7 +18,7 @@ export const folderInput = {
     name: z.string(),
     description: z.string().optional(),
     pid: z.string().optional(),
-    password: z.string().optional(),
+    password: z.string().nullish().optional(),
     passwordTips: z.string().optional(),
     show: z.boolean().default(true).optional(),
   }),
@@ -66,6 +66,10 @@ export const folderCore = {
         show: input.show,
       },
     });
+
+    if (!input.password) {
+      input.password = null;
+    }
 
     return await prisma.folder.upsert({
       where: { id: input.id },
@@ -134,11 +138,19 @@ export const folder = t.router({
         name: true,
         description: true,
         passwordTips: true,
+        password: true,
         _count: { select: { images: true } },
       },
     });
 
-    return flatToTree<(typeof folders)[number]>(folders);
+    return flatToTree<(typeof folders)[number]>(
+      folders.map((item) => {
+        if (item.password) {
+          item.password = "***";
+        }
+        return item;
+      }),
+    );
   }),
 
   findWithPwd: t.procedure.query(async () => {

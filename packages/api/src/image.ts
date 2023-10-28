@@ -276,18 +276,33 @@ export const image = t.router({
       imageInput.find.merge(
         z.object({
           id: z.string(),
+          password: z.string().optional(),
         }),
       ),
     )
     .query(async ({ input }) => {
       const limit = input?.limit ?? 50;
-      const { cursor, includes, orderBy, id } = input ?? {};
+      const { cursor, includes, orderBy, id, password } = input ?? {};
+
+      const res = await prisma.folder.findUnique({
+        where: {
+          id,
+          password: password ?? null,
+        },
+      });
+
+      if (!res) {
+        return { data: [], nextCursor: undefined };
+      }
 
       const images = await prisma.image.findMany({
         where: {
           folders: {
-            some: {
-              OR: [{ id }, { pid: id }],
+            every: {
+              AND: [
+                { OR: [{ id }, { pid: id }] },
+                { password: password ?? undefined },
+              ],
             },
           },
         },

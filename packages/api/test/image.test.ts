@@ -733,4 +733,90 @@ describe("image module", () => {
       expect(res.data[0]).toHaveProperty("colors");
     });
   });
+
+  describe("findByFolderId", () => {
+    beforeEach(async () => {
+      await prisma.image.deleteMany();
+      await prisma.folder.deleteMany();
+    });
+
+    it("should find all images", async () => {
+      const folder = await caller.folder.upsert({
+        name: "folder",
+        id: "1",
+      });
+
+      for (let i = 0; i < 25; i++) {
+        await caller.image.upsert({
+          path: `/path/to/image${i}.jpg`,
+          name: `image${i}.jpg`,
+          size: 1024,
+          ext: "jpg",
+          width: 800,
+          height: 600,
+          mtime: new Date(),
+          folders: {
+            connect: ["1"],
+          },
+        });
+      }
+
+      const res = await caller.image.findByFolderId({
+        id: folder.id,
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
+      expect(res.data).toHaveLength(24);
+      expect(res.nextCursor).toEqual(`/path/to/image0.jpg`);
+
+      const res2 = await caller.image.findByFolderId({
+        id: folder.id,
+        limit: 24,
+        cursor: res.nextCursor,
+      });
+      expect(res2.data).toHaveLength(1);
+      expect(res2.nextCursor).toEqual(undefined);
+    });
+
+    it("find image by folder password", async () => {
+      const folder = await caller.folder.upsert({
+        name: "folder",
+        id: "123",
+        password: "123456",
+        show: true,
+      });
+
+      for (let i = 0; i < 5; i++) {
+        await caller.image.upsert({
+          path: `/path/to/image${i}.jpg`,
+          name: `image${i}.jpg`,
+          size: 1024,
+          ext: "jpg",
+          width: 800,
+          height: 600,
+          mtime: new Date(),
+          folders: {
+            connect: ["123"],
+          },
+        });
+      }
+
+      const res = await caller.image.findByFolderId({
+        id: folder.id,
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
+
+      expect(res.data).toHaveLength(0);
+
+      const res2 = await caller.image.findByFolderId({
+        id: folder.id,
+        password: "123456",
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
+
+      expect(res2.data).toHaveLength(5);
+    });
+  });
 });
