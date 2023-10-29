@@ -7,7 +7,6 @@ import {
 import { useRecoilState } from "recoil";
 
 import { settingSelector } from "~/states/setting";
-import PasswordModal from "./PasswordModal";
 
 interface Folder {
   name: string;
@@ -91,16 +90,6 @@ function FolderTree({ data }: FileTreeProps) {
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-
-                if (data.password === "***") {
-                  return PasswordModal.open({
-                    passwordTips: "nsfw",
-                    onOk: (password, setVisible) => {
-                      console.log(password);
-                      setVisible(false);
-                    },
-                  });
-                }
 
                 if (folderId === data.id) {
                   return;
