@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import type { Prisma } from "@rao-pics/db";
@@ -292,7 +293,10 @@ export const image = t.router({
       });
 
       if (!res) {
-        return { data: [], nextCursor: undefined };
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "无权限访问该文件夹",
+        });
       }
 
       const images = await prisma.image.findMany({

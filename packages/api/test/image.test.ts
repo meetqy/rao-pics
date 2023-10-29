@@ -801,13 +801,13 @@ describe("image module", () => {
         });
       }
 
-      const res = await caller.image.findByFolderId({
-        id: folder.id,
-        limit: 24,
-        orderBy: { name: "desc" },
-      });
-
-      expect(res.data).toHaveLength(0);
+      await expect(() =>
+        caller.image.findByFolderId({
+          id: folder.id,
+          limit: 24,
+          orderBy: { name: "desc" },
+        }),
+      ).rejects.toThrowError("无权限访问该文件夹");
 
       const res2 = await caller.image.findByFolderId({
         id: folder.id,
