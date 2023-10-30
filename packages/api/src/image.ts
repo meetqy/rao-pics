@@ -301,12 +301,10 @@ export const image = t.router({
 
       const images = await prisma.image.findMany({
         where: {
+          isDeleted: false,
           folders: {
-            every: {
-              AND: [
-                { OR: [{ id }, { pid: id }] },
-                { password: password ?? undefined },
-              ],
+            some: {
+              AND: [{ id }, { password: password ?? undefined }],
             },
           },
         },
