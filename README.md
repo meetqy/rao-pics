@@ -40,6 +40,12 @@
     <a href="https://github.com/meetqy/rao-pics/releases/download/v1.0.0-alpha.7/Rao.Pics.Setup.1.0.0-alpha.7.exe">WINDOWS</a>
 </p>
 
+> 如果在macOS上安装后无法打开，报错不受信任或者移到垃圾箱，执行下面命令后再启动即可：
+>
+> ```sh
+> sudo xattr -d com.apple.quarantine /Applications/Rao\ Pics.app
+> ```
+
 ---
 
 ## 特点
