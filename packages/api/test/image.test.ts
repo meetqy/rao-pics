@@ -818,5 +818,130 @@ describe("image module", () => {
 
       expect(res2.data).toHaveLength(5);
     });
+
+    it("find image but is'not in trash folder.", async () => {
+      const folder = await caller.folder.upsert({
+        name: "folder",
+        id: "123",
+        password: "123456",
+        show: true,
+      });
+
+      for (let i = 0; i < 20; i++) {
+        await caller.image.upsert({
+          path: `/path/to/image${i}.jpg`,
+          name: `image${i}.jpg`,
+          size: 1024,
+          ext: "jpg",
+          width: 800,
+          height: 600,
+          mtime: new Date(),
+          isDeleted: i % 2 === 0,
+          folders: {
+            connect: ["123"],
+          },
+        });
+      }
+
+      const res = await caller.image.findByFolderId({
+        id: folder.id,
+        password: "123456",
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
+
+      expect(res.data).toHaveLength(10);
+    });
+
+    it("find image and two folder", async () => {
+      await caller.folder.upsert({
+        name: "unsplash",
+        id: "unsplash",
+        show: true,
+      });
+
+      await caller.folder.upsert({
+        name: "daisyui",
+        id: "daisyui",
+        show: true,
+      });
+
+      for (let i = 0; i < 20; i++) {
+        await caller.image.upsert({
+          path: `/path/to/image${i}.jpg`,
+          name: `image${i}.jpg`,
+          size: 1024,
+          ext: "jpg",
+          width: 800,
+          height: 600,
+          mtime: new Date(),
+          folders: {
+            connect: i % 2 === 0 ? ["unsplash"] : ["daisyui"],
+          },
+        });
+      }
+
+      const res = await caller.image.findByFolderId({
+        id: "unsplash",
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
+
+      expect(res.data).toHaveLength(10);
+
+      const res2 = await caller.image.findByFolderId({
+        id: "daisyui",
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
+
+      expect(res2.data).toHaveLength(10);
+    });
+
+    it("find image and child folder", async () => {
+      await caller.folder.upsert({
+        name: "unsplash",
+        id: "unsplash",
+        show: true,
+      });
+
+      await caller.folder.upsert({
+        name: "apple",
+        id: "apple",
+        pid: "unsplash",
+        show: true,
+      });
+
+      for (let i = 0; i < 20; i++) {
+        await caller.image.upsert({
+          path: `/path/to/image${i}.jpg`,
+          name: `image${i}.jpg`,
+          size: 1024,
+          ext: "jpg",
+          width: 800,
+          height: 600,
+          mtime: new Date(),
+          folders: {
+            connect: i % 2 === 0 ? ["unsplash"] : ["apple"],
+          },
+        });
+      }
+
+      const res1 = await caller.image.findByFolderId({
+        id: "unsplash",
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
+
+      expect(res1.data).toHaveLength(10);
+
+      const res2 = await caller.image.findByFolderId({
+        id: "apple",
+        limit: 24,
+        orderBy: { name: "desc" },
+      });
+
+      expect(res2.data).toHaveLength(10);
+    });
   });
 });
