@@ -1,9 +1,5 @@
 import { useRouter } from "next/router";
-import {
-  FolderMinusIcon,
-  FolderOpenIcon,
-  LockClosedIcon,
-} from "@heroicons/react/24/outline";
+import { FolderMinusIcon, FolderOpenIcon } from "@heroicons/react/24/outline";
 import { useRecoilState } from "recoil";
 
 import { settingSelector } from "~/states/setting";
@@ -13,8 +9,6 @@ interface Folder {
   id: string;
   pid: string | null;
   description: string | null;
-  passwordTips: string | null;
-  password: string | null;
   children?: Folder[];
   _count: {
     images: number;
@@ -47,11 +41,7 @@ function FolderTree({ data }: FileTreeProps) {
           }}
         >
           <span className="flex items-center">
-            {data.password ? (
-              <LockClosedIcon className="mr-1 h-5 w-5" />
-            ) : (
-              <FolderMinusIcon className="mr-1 h-5 w-5" />
-            )}
+            {<FolderMinusIcon className="mr-1 h-5 w-5" />}
 
             {data.name}
           </span>
@@ -99,11 +89,7 @@ function FolderTree({ data }: FileTreeProps) {
               }}
             />
             <div className="flex flex-1 items-center">
-              {data.password ? (
-                <LockClosedIcon className="mr-1 h-5 w-5" />
-              ) : (
-                <FolderOpenIcon className="mr-1 h-5 w-5" />
-              )}
+              {<FolderOpenIcon className="mr-1 h-5 w-5" />}
 
               {data.name}
             </div>
