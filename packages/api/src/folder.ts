@@ -137,20 +137,11 @@ export const folder = t.router({
         pid: true,
         name: true,
         description: true,
-        passwordTips: true,
-        password: true,
         _count: { select: { images: true } },
       },
     });
 
-    return flatToTree<(typeof folders)[number]>(
-      folders.map((item) => {
-        if (item.password) {
-          item.password = "***";
-        }
-        return item;
-      }),
-    );
+    return flatToTree<(typeof folders)[number]>(folders);
   }),
 
   findWithPwd: t.procedure.query(async () => {
