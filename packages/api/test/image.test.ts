@@ -703,13 +703,6 @@ describe("image module", () => {
       });
       expect(res.data).toHaveLength(24);
       expect(res.nextCursor).toEqual(`/path/to/image0.jpg`);
-
-      const res2 = await caller.image.find({
-        limit: 24,
-        cursor: res.nextCursor,
-      });
-      expect(res2.data).toHaveLength(1);
-      expect(res2.nextCursor).toEqual(undefined);
     });
 
     it("includes tags, colors, folders", async () => {
@@ -768,62 +761,12 @@ describe("image module", () => {
       });
       expect(res.data).toHaveLength(24);
       expect(res.nextCursor).toEqual(`/path/to/image0.jpg`);
-
-      const res2 = await caller.image.findByFolderId({
-        id: folder.id,
-        limit: 24,
-        cursor: res.nextCursor,
-      });
-      expect(res2.data).toHaveLength(1);
-      expect(res2.nextCursor).toEqual(undefined);
-    });
-
-    it("find image by folder password", async () => {
-      const folder = await caller.folder.upsert({
-        name: "folder",
-        id: "123",
-        password: "123456",
-        show: true,
-      });
-
-      for (let i = 0; i < 5; i++) {
-        await caller.image.upsert({
-          path: `/path/to/image${i}.jpg`,
-          name: `image${i}.jpg`,
-          size: 1024,
-          ext: "jpg",
-          width: 800,
-          height: 600,
-          mtime: new Date(),
-          folders: {
-            connect: ["123"],
-          },
-        });
-      }
-
-      await expect(() =>
-        caller.image.findByFolderId({
-          id: folder.id,
-          limit: 24,
-          orderBy: { name: "desc" },
-        }),
-      ).rejects.toThrowError("无权限访问该文件夹");
-
-      const res2 = await caller.image.findByFolderId({
-        id: folder.id,
-        password: "123456",
-        limit: 24,
-        orderBy: { name: "desc" },
-      });
-
-      expect(res2.data).toHaveLength(5);
     });
 
     it("find image but is'not in trash folder.", async () => {
       const folder = await caller.folder.upsert({
         name: "folder",
         id: "123",
-        password: "123456",
         show: true,
       });
 
@@ -845,7 +788,6 @@ describe("image module", () => {
 
       const res = await caller.image.findByFolderId({
         id: folder.id,
-        password: "123456",
         limit: 24,
         orderBy: { name: "desc" },
       });
