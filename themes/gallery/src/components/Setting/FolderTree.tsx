@@ -19,6 +19,18 @@ interface FileTreeProps {
   data: Folder[];
 }
 
+// 递归计算文件夹总数
+function countFolder(data: Folder[]): number {
+  let count = 0;
+  data.forEach((item) => {
+    count += item._count.images;
+    if (item.children?.length) {
+      count += countFolder(item.children);
+    }
+  });
+  return count;
+}
+
 function FolderTree({ data }: FileTreeProps) {
   const [setting, setSetting] = useRecoilState(settingSelector);
   const router = useRouter();
@@ -56,12 +68,15 @@ function FolderTree({ data }: FileTreeProps) {
 
   // 父级文件夹
   const FolderRoot = ({ data }: { data: Folder }) => {
-    const allCount = data.children?.reduce((a, b) => a + b._count.images, 0);
+    const childCount = countFolder(data.children ?? []);
+    const allCount = data._count.images + (childCount ?? 0);
+
+    const open = openFolderIds.includes(data.id);
 
     return (
       <li>
         <details
-          open={openFolderIds.includes(data.id)}
+          open={open}
           aria-hidden="true"
           onClick={(e) => {
             e.stopPropagation();
@@ -93,7 +108,9 @@ function FolderTree({ data }: FileTreeProps) {
 
               {data.name}
             </div>
-            <span className="text-sm text-base-content/30">{allCount}</span>
+            <span className="text-sm text-base-content/30">
+              {open ? data._count.images : allCount}
+            </span>
           </summary>
           <ul>
             {data.children?.map((item) => {
