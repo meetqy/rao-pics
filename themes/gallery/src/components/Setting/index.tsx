@@ -126,9 +126,18 @@ const Setting = () => {
                 </li>
                 {config?.trash && (
                   <li>
-                    <Link href={`/${setting.layout}/trash`}>
-                      <TrashIcon className="h-5 w-5" />
-                      回收站
+                    <Link
+                      href={`/${setting.layout}/trash`}
+                      className="flex justify-between"
+                    >
+                      <span className="flex items-center">
+                        <TrashIcon className="h-5 w-5" />
+                        回收站
+                      </span>
+
+                      <span className="text-sm text-base-content/30">
+                        {setting.trashCount}
+                      </span>
                     </Link>
                   </li>
                 )}

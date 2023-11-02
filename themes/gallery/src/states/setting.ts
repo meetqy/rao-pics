@@ -8,6 +8,7 @@ export interface SettingType {
   };
   openFolderIds: string[];
   count: number;
+  trashCount: number;
 }
 
 export const defaultSetting: SettingType = {
@@ -17,6 +18,7 @@ export const defaultSetting: SettingType = {
   },
   openFolderIds: [],
   count: 0,
+  trashCount: 0,
 };
 
 const settingAtom = atom({
