@@ -9,10 +9,15 @@ import { t } from "./utils";
 export const folderInput = {
   find: z
     .object({
-      id: z.string().optional(),
       pid: z.string().optional(),
     })
     .optional(),
+
+  findUnique: z.object({
+    id: z.string(),
+    include: z.enum(["children"]).array().optional(),
+  }),
+
   upsert: z.object({
     id: z.string(),
     name: z.string(),
@@ -27,13 +32,47 @@ export const folderInput = {
 };
 
 export const folderCore = {
-  find: async (input?: z.infer<typeof folderInput.find>) => {
-    if (input?.id) {
-      return await prisma.folder.findUnique({
-        where: { id: input.id, show: true },
+  findUnique: async (input: z.infer<typeof folderInput.findUnique>) => {
+    const includeFirstImage = {
+      images: {
+        where: { isDeleted: false },
+        take: 1,
+      },
+    };
+
+    const folder = await prisma.folder.findUnique({
+      where: { id: input.id, show: true },
+      include: includeFirstImage,
+    });
+
+    if (!folder) return null;
+
+    const findChildren = (pid: string) => {
+      return prisma.folder.findMany({
+        where: { pid: pid, show: true },
+        include: {
+          images: {
+            where: { isDeleted: false },
+            take: 1,
+          },
+          _count: { select: { images: true } },
+        },
       });
+    };
+
+    let children: Awaited<ReturnType<typeof findChildren>> = [];
+
+    if (input.include?.includes("children")) {
+      children = await findChildren(input.id);
     }
 
+    return {
+      ...folder,
+      children,
+    };
+  },
+
+  find: async (input?: z.infer<typeof folderInput.find>) => {
     if (input?.pid) {
       return await prisma.folder.findMany({
         where: { pid: input.pid, show: true },
@@ -119,6 +158,14 @@ export const folder = t.router({
   upsert: t.procedure
     .input(folderInput.upsert)
     .mutation(async ({ input }) => folderCore.upsert(input)),
+
+  /**
+   * 根据 id 查询文件夹
+   * include: [children] 返回子文件夹的的第一个素材，包含素材总数
+   */
+  findUnique: t.procedure
+    .input(folderInput.findUnique)
+    .query(async ({ input }) => folderCore.findUnique(input)),
 
   find: t.procedure
     .input(folderInput.find)

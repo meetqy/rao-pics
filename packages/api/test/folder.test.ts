@@ -27,7 +27,7 @@ describe("folder module", () => {
 
       expect(result).toMatchObject(input);
 
-      const dbItem = await caller.folder.find({
+      const dbItem = await caller.folder.findUnique({
         id: input.id,
       });
 
@@ -51,7 +51,7 @@ describe("folder module", () => {
 
       expect(result).toMatchObject(input);
 
-      const dbItem = await caller.folder.find({ id: input.id });
+      const dbItem = await caller.folder.findUnique({ id: input.id });
 
       expect(dbItem).toMatchObject(input);
     });
@@ -93,7 +93,7 @@ describe("folder module", () => {
 
       await caller.folder.upsert(input);
 
-      const result = await caller.folder.find({ id: input.id });
+      const result = await caller.folder.findUnique({ id: input.id });
 
       expect(result).toMatchObject(input);
     });
@@ -139,7 +139,7 @@ describe("folder module", () => {
 
       await caller.folder.upsert(input);
 
-      const result = await caller.folder.find({ id: input.id });
+      const result = await caller.folder.findUnique({ id: input.id });
 
       expect(result).toBeNull();
     });
@@ -158,7 +158,7 @@ describe("folder module", () => {
 
       await caller.folder.setPwdFolderShow(true);
 
-      const result = await caller.folder.find({ id: input.id });
+      const result = await caller.folder.findUnique({ id: input.id });
 
       expect(result).toMatchObject({
         id: input.id,

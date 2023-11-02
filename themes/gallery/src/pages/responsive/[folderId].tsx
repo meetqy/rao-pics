@@ -23,6 +23,7 @@ import "photoswipe/style.css";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
 
+import ChildFolderCardList from "~/components/ChildFolderCardList";
 import { settingSelector } from "~/states/setting";
 
 type JustifyLayoutResult = ReturnType<typeof justifyLayout>;
@@ -38,6 +39,8 @@ function Home() {
     windowHeight,
   ]);
 
+  const folderId = router.query.folderId as string;
+
   const { data: config } = trpc.config.findUnique.useQuery();
 
   const imageQuery = trpc.image.findByFolderId.useInfiniteQuery(
@@ -45,7 +48,7 @@ function Home() {
       limit,
       includes: ["colors"],
       orderBy: setting.orderBy,
-      id: router.query.folderId as string,
+      id: folderId,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -198,6 +201,8 @@ function Home() {
           );
         }}
       />
+
+      {pages?.[0]?.count === 0 && <ChildFolderCardList folderId={folderId} />}
     </main>
   );
 }

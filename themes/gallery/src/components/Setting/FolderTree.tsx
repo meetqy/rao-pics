@@ -59,7 +59,7 @@ function FolderTree({ data }: FileTreeProps) {
           </span>
 
           <span className="text-sm font-normal text-base-content/30">
-            {data._count.images}
+            {data._count.images || null}
           </span>
         </div>
       </li>
@@ -109,7 +109,7 @@ function FolderTree({ data }: FileTreeProps) {
               {data.name}
             </div>
             <span className="text-sm text-base-content/30">
-              {open ? data._count.images : allCount}
+              {open ? data._count.images || null : allCount || null}
             </span>
           </summary>
           <ul>

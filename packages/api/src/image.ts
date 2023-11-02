@@ -277,15 +277,17 @@ export const image = t.router({
       const limit = input?.limit ?? 50;
       const { cursor, includes, orderBy, id } = input ?? {};
 
-      const images = await prisma.image.findMany({
-        where: {
-          isDeleted: false,
-          folders: {
-            some: {
-              AND: [{ id }, { show: true }],
-            },
+      const where = {
+        isDeleted: false,
+        folders: {
+          some: {
+            id,
           },
         },
+      };
+
+      const images = await prisma.image.findMany({
+        where,
         take: limit + 1,
         cursor: cursor ? { path: cursor } : undefined,
         orderBy,
@@ -303,9 +305,12 @@ export const image = t.router({
         nextCursor = nextImage!.path;
       }
 
+      const count = await prisma.image.count({ where });
+
       return {
         data: images,
         nextCursor,
+        count,
       };
     }),
 
