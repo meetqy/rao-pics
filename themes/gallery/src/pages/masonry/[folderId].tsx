@@ -22,6 +22,7 @@ import "photoswipe/style.css";
 import { useRouter } from "next/router";
 import { useRecoilValue } from "recoil";
 
+import ChildFolderCardList from "~/components/ChildFolderCardList";
 import { settingSelector } from "~/states/setting";
 
 function Home() {
@@ -29,6 +30,8 @@ function Home() {
   const containerRef = useRef(null);
   const setting = useRecoilValue(settingSelector);
   const router = useRouter();
+
+  const folderId = router.query.folderId as string;
 
   const [windowWidth, windowHeight] = useWindowSize();
   const { offset, width } = useContainerPosition(containerRef, [
@@ -42,7 +45,7 @@ function Home() {
       limit,
       includes: ["colors"],
       orderBy: setting.orderBy,
-      id: router.query.folderId as string,
+      id: folderId,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -128,7 +131,7 @@ function Home() {
         height={windowHeight}
         containerRef={containerRef}
         items={images ?? []}
-        // itemKey={(data) => data.id}
+        itemKey={(data) => data.id}
         render={({ data, width: w }) => {
           const m = data.width / w;
           const h = data.height / m;
@@ -156,6 +159,8 @@ function Home() {
           );
         }}
       />
+
+      {pages?.[0]?.count === 0 && <ChildFolderCardList folderId={folderId} />}
     </main>
   );
 }

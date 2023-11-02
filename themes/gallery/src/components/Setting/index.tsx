@@ -51,12 +51,12 @@ const Setting = () => {
         <div className="drawer-content">
           <label
             htmlFor="my-drawer"
-            className={`drawer-button glass btn-md btn-circle btn fixed left-3 top-3 transition-all duration-200 ease-in`}
+            className={`drawer-button glass btn-md btn-circle btn fixed left-3 top-3 z-50 transition-all duration-200 ease-in`}
           >
             <AdjustmentsHorizontalIcon className="h-6 w-6" />
           </label>
         </div>
-        <div className="drawer-side">
+        <div className="drawer-side z-50">
           <label
             htmlFor="my-drawer"
             aria-label="close sidebar"
@@ -136,7 +136,7 @@ const Setting = () => {
                       </span>
 
                       <span className="text-sm text-base-content/30">
-                        {setting.trashCount}
+                        {setting.trashCount || null}
                       </span>
                     </Link>
                   </li>
