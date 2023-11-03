@@ -76,7 +76,7 @@ async function initWatchLibrary() {
   if (res.type === "eagle") {
     await caller.library.watch({
       path,
-      isDelay: true,
+      isReload: true,
       isStartDiffLibrary: config?.startDiffLibrary ?? false,
     });
   }

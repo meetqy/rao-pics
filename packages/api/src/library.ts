@@ -105,18 +105,17 @@ export const library = t.router({
     .input(
       z.object({
         path: z.string(),
-        // 是否需要等待一段时间，否则 onWatch 监听不到 start（第二次启动应用）
-        isDelay: z.boolean().optional(),
+        // 重启应用，需要等待一段时间，否则 onWatch 监听不到 emit start
+        isReload: z.boolean().optional(),
         // 和数据库中的 isStartDiffLibrary 一样
         isStartDiffLibrary: z.boolean().optional(),
       }),
     )
     .mutation(({ input }) => {
-      const { path: libraryPath, isDelay } = input;
+      const { path: libraryPath, isReload, isStartDiffLibrary } = input;
       if (watcher) return;
 
-      // 第二次开启应用，需要等待一段时间，否则 onWatch 监听不到 start
-      if (isDelay) {
+      if (isReload) {
         setTimeout(() => {
           ee.emit("watch", { status: "start" });
         }, 1000);
@@ -172,7 +171,8 @@ export const library = t.router({
           void start();
         })
         .on("ready", () => {
-          if (!input.isStartDiffLibrary) {
+          // 重启时对比资源库  关闭
+          if (!isStartDiffLibrary && isReload) {
             paths.clear();
             void start();
           }
