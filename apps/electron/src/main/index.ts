@@ -69,13 +69,15 @@ app.on("browser-window-focus", () => {
 async function initWatchLibrary() {
   const caller = router.createCaller({});
   const res = await caller.library.findUnique();
+  const config = await caller.config.findUnique();
   if (!res) return;
 
   const { path } = res;
   if (res.type === "eagle") {
     await caller.library.watch({
       path,
-      isReload: true,
+      isDelay: true,
+      isStartDiffLibrary: config?.startDiffLibrary ?? false,
     });
   }
 }

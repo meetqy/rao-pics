@@ -10,23 +10,25 @@ datasource db {
 
 model Config {
   // config
-  name       String   @id @unique
+  name             String   @id @unique
   // zh-cn、en-us、zh-tw
-  language   String
+  language         String
   // 配色
-  color      String?
+  color            String?
   // 主题
-  theme      String?
+  theme            String?
   // port: 9100-9300
-  serverPort Int?
+  serverPort       Int?
   // port: 9301-9500
-  clientPort Int?
+  clientPort       Int?
   // 当前 IP
-  ip         String?
+  ip               String?
   // 显示回收站
-  trash      Boolean? @default(false)
+  trash            Boolean? @default(false)
   // 显示加密文件夹
-  pwdFolder  Boolean? @default(false)
+  pwdFolder        Boolean? @default(false)
+  // 启动时对比资源库
+  startDiffLibrary Boolean? @default(false)
 }
 
 model Library {

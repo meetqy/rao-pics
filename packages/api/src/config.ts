@@ -16,6 +16,7 @@ export const configInput = {
     ip: z.string().optional(),
     pwdFolder: z.boolean().optional(),
     trash: z.boolean().optional(),
+    startDiffLibrary: z.boolean().optional(),
   }),
 };
 
