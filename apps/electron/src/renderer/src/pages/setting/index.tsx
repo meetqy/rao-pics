@@ -1,4 +1,5 @@
 import {
+  ArrowsRightLeftIcon,
   FolderMinusIcon,
   // FolderMinusIcon,
   LanguageIcon,
@@ -19,27 +20,36 @@ const languages = {
     language_title: "语言",
     language_desc: "选择语言",
     trash: "回收站",
+    startDiffLibrary: "启动时对比资源库",
     pwd_folder: "加密文件夹",
     show: "显示",
     hide: "不显示",
+    open: "开启",
+    close: "关闭",
   },
   "en-us": {
     title: "General",
     language_title: "Language",
     language_desc: "Select language",
     trash: "Trash",
+    startDiffLibrary: "Diff library at startup",
     pwd_folder: "Password Folder",
     show: "Show",
     hide: "Hide",
+    open: "Open",
+    close: "Close",
   },
   "zh-tw": {
     title: "通用",
     language_title: "語言",
     language_desc: "選擇語言",
     trash: "回收站",
+    startDiffLibrary: "啟動時對比資源庫",
     pwd_folder: "加密文件夾",
     show: "顯示",
     hide: "不顯示",
+    open: "開啟",
+    close: "關閉",
   },
 };
 
@@ -94,6 +104,7 @@ const SettingPage = () => {
           </div>
         </div>
 
+        {/* 显示相关 */}
         <div className="card-wrapper mt-4">
           <div className="card-row">
             <div>
@@ -136,6 +147,31 @@ const SettingPage = () => {
               >
                 <option value={0}>{lang.hide}</option>
                 <option value={1}>{lang.show}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="card-wrapper mt-4">
+          <div className="card-row">
+            <div>
+              <ArrowsRightLeftIcon className="h-5 w-5" />
+
+              <span className="ml-2">{lang.startDiffLibrary}</span>
+            </div>
+
+            <div>
+              <select
+                className="custom-select"
+                value={config?.startDiffLibrary ? 1 : 0}
+                onChange={(e) => {
+                  configUpsert.mutate({
+                    startDiffLibrary: Number(e.target.value) === 1,
+                  });
+                }}
+              >
+                <option value={0}>{lang.close}</option>
+                <option value={1}>{lang.open}</option>
               </select>
             </div>
           </div>

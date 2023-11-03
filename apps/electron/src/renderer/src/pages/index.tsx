@@ -7,7 +7,7 @@ import { PRODUCT_NAME } from "@rao-pics/constant";
 
 const languages = {
   "zh-cn": {
-    desc: `帮助你跨设备访问 Eagle、Pixcall、Billfish 的素材资源，<br/><span class="font-medium text-primary">30+</span>外观随意切换，还可以自定义主题。`,
+    desc: `帮助你远程访问 Eagle、Pixcall、Billfish 的素材资源，<br/><span class="font-medium text-primary">30+</span>外观随意切换，还可以自定义主题。`,
     btn: "添加资源库",
     add_error: "添加资源库失败",
     watch_error: "读取资源失败",

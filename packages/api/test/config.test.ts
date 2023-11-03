@@ -16,6 +16,7 @@ const defaultConfig = {
   clientPort: null,
   pwdFolder: false,
   trash: false,
+  startDiffLibrary: false,
 };
 
 describe("config module", () => {
