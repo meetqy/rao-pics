@@ -54,7 +54,7 @@ const ChildFolderCardList = ({ folderId }: { folderId: string }) => {
           if (!image)
             return (
               <Card key={child.id}>
-                <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-neutral object-contain object-center pb-14 transition-all ease-in-out group-hover:scale-125">
+                <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-neutral pb-14 transition-all ease-in-out">
                   <LightBulbIcon className="h-24 w-24 text-base-100" />
                 </div>
               </Card>
@@ -71,7 +71,7 @@ const ChildFolderCardList = ({ folderId }: { folderId: string }) => {
             <Card key={child.id}>
               <Image
                 src={thumbnailPath}
-                className="absolute left-0 top-0 h-full w-full object-contain object-center transition-all ease-in-out group-hover:scale-150"
+                className="absolute left-0 top-0 h-full w-full object-cover object-center transition-all ease-in-out"
                 layout="fill"
               />
             </Card>
