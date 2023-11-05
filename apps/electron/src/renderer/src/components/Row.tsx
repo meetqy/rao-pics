@@ -25,7 +25,7 @@ export const Row = (props: Props) => {
         onClick={props.onRightClick}
       >
         <div
-          className={`w-4/5 text-right ${
+          className={`w-4/5 max-w-[400px] text-right ${
             typeof props.right === "string" ? "truncate" : ""
           }`}
         >

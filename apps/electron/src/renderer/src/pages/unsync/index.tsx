@@ -36,7 +36,7 @@ const UnsyncPage = () => {
     orderBy: "desc",
   });
 
-  const libPath = `${lib.data?.path}/images/`;
+  const libPath = lib.data?.path ?? "";
 
   const data = logQuery.data?.data ?? [];
 
@@ -69,11 +69,13 @@ const UnsyncPage = () => {
                       {item.type === "unknown" ? "unkonwn error" : item.type}
                     </span>
                   }
-                  right={item.path
-                    .replace(libPath, "")
-                    .replace("/metadata.json", "")}
+                  right={item.path.replace(libPath, "")}
                   onRightClick={() => {
-                    void window.dialog.showErrorBox(item.path, item.message);
+                    if (item.type === "unknown") {
+                      void window.dialog.showErrorBox(item.path, item.message);
+                    } else {
+                      void window.shell.showItemInFolder(item.path);
+                    }
                   }}
                 />
               ))}
