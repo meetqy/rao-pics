@@ -222,13 +222,17 @@ const BasicPage = () => {
           </div>
           <div className="w-1/2">
             <div className="m-auto flex h-full w-5/6 flex-col justify-center">
-              <button
-                disabled={disabled}
-                className="btn-neutral btn"
-                onClick={onClickSync}
-              >
-                {lang.btn_sync}
-              </button>
+              {config?.autoSync ? (
+                <button className="btn-disabled btn">已开启自动同步</button>
+              ) : (
+                <button
+                  disabled={disabled}
+                  className="btn-neutral btn"
+                  onClick={onClickSync}
+                >
+                  {lang.btn_sync}
+                </button>
+              )}
               <button
                 disabled={disabled}
                 className="btn-error btn-outline btn mt-4"
