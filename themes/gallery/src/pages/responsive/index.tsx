@@ -181,7 +181,7 @@ function Home() {
                         position: "absolute",
                         top: `${box.top}px`,
                         left: `${box.left}px`,
-                        backgroundColor: image.bgColor + "7F",
+                        backgroundColor: image.bgColor + "0C",
                       }}
                       onClick={(e) => {
                         e.preventDefault();

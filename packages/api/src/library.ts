@@ -155,6 +155,12 @@ export const library = t.router({
 
         paths.clear();
         ee.emit("watch", { status: "completed" });
+
+        const config = await caller.config.findUnique();
+        // 自动同步开启
+        if (config?.autoSync) {
+          await caller.sync.start({ libraryPath });
+        }
       }, 1000);
 
       return watcher

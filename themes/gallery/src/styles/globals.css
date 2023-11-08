@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply overflow-x-hidden bg-base-100;
+  @apply select-none overflow-x-hidden bg-base-100;
 }

@@ -29,6 +29,8 @@ model Config {
   pwdFolder        Boolean? @default(false)
   // 启动时对比资源库
   startDiffLibrary Boolean? @default(false)
+  // 自动同步
+  autoSync         Boolean? @default(false)
 }
 
 model Library {

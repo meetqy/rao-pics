@@ -1,4 +1,5 @@
 import {
+  ArrowPathIcon,
   ArrowsRightLeftIcon,
   FolderMinusIcon,
   // FolderMinusIcon,
@@ -26,6 +27,7 @@ const languages = {
     hide: "不显示",
     open: "开启",
     close: "关闭",
+    autoSync: "自动同步",
   },
   "en-us": {
     title: "General",
@@ -38,6 +40,7 @@ const languages = {
     hide: "Hide",
     open: "Open",
     close: "Close",
+    autoSync: "Auto Sync",
   },
   "zh-tw": {
     title: "通用",
@@ -50,6 +53,7 @@ const languages = {
     hide: "不顯示",
     open: "開啟",
     close: "關閉",
+    autoSync: "自動同步",
   },
 };
 
@@ -167,6 +171,29 @@ const SettingPage = () => {
                 onChange={(e) => {
                   configUpsert.mutate({
                     startDiffLibrary: Number(e.target.value) === 1,
+                  });
+                }}
+              >
+                <option value={0}>{lang.close}</option>
+                <option value={1}>{lang.open}</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="card-row">
+            <div>
+              <ArrowPathIcon className="h-5 w-5" />
+
+              <span className="ml-2">{lang.autoSync}</span>
+            </div>
+
+            <div>
+              <select
+                className="custom-select"
+                value={config?.autoSync ? 1 : 0}
+                onChange={(e) => {
+                  configUpsert.mutate({
+                    autoSync: Number(e.target.value) === 1,
                   });
                 }}
               >

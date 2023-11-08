@@ -17,6 +17,7 @@ const defaultConfig = {
   pwdFolder: false,
   trash: false,
   startDiffLibrary: false,
+  autoSync: false,
 };
 
 describe("config module", () => {
