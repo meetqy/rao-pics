@@ -144,7 +144,7 @@ function Home() {
               data-pswp-height={data.height}
               data-pswp-type={VIDEO_EXT.includes(data.ext) ? "video" : "image"}
               style={{
-                backgroundColor: data.bgColor + "7F",
+                backgroundColor: data.bgColor + "0C",
                 height: h,
               }}
               target="_blank"

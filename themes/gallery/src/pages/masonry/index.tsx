@@ -135,7 +135,7 @@ function Home() {
               className="relative block rounded shadow"
               href={data.src}
               style={{
-                backgroundColor: data.bgColor + "7F",
+                backgroundColor: data.bgColor + "0C",
                 height: h,
               }}
               target="_blank"
