@@ -8,11 +8,11 @@ if (process.env.NODE_ENV === "development") {
 const config = {
   reactStrictMode: true,
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@rao-pics/api", "@rao-pics/db", "@rao-pics/utils"],
+  transpilePackages: ["@rao-pics/api", "@rao-pics/utils"],
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
-  output: "standalone",
+  output: "export",
   images: {
     unoptimized: true,
   },

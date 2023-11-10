@@ -1,6 +1,7 @@
 import type { IncomingMessage, Server, ServerResponse } from "http";
 import { join } from "path";
 import * as trpcExpress from "@trpc/server/adapters/express";
+import cros from "cors";
 import express from "express";
 
 import type { Library } from "@rao-pics/db";
@@ -25,19 +26,7 @@ export const startExpressServer = async () => {
 
   if (!port) throw new Error("serverPort is not defined");
 
-  app.use((_req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Authorization,X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method",
-    );
-    res.header(
-      "Access-Control-Allow-Methods",
-      "GET, POST, OPTIONS, PATCH, PUT, DELETE",
-    );
-    res.header("Allow", "GET, POST, PATCH, OPTIONS, PUT, DELETE");
-    next();
-  });
+  app.use(cros({ origin: "*" }));
 
   app.use(
     "/trpc",

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { RecoilRoot, useRecoilState } from "recoil";
@@ -9,6 +9,10 @@ import type { SettingType } from "~/states/setting";
 import { defaultSetting, settingSelector } from "~/states/setting";
 
 import "~/styles/globals.css";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink, httpLink } from "@trpc/client";
+import SuperJSON from "superjson";
 
 import { trpc } from "~/utils/trpc";
 
@@ -51,4 +55,26 @@ function App({ Component, pageProps }: AppProps) {
   );
 }
 
-export default trpc.withTRPC(App);
+const Trpc = (appProps: AppProps) => {
+  const [queryClient] = useState(() => new QueryClient());
+  const [trpcClient] = useState(() =>
+    trpc.createClient({
+      transformer: SuperJSON,
+      links: [
+        httpBatchLink({
+          url: "http://localhost:9100/trpc",
+        }),
+      ],
+    }),
+  );
+
+  return (
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <App {...appProps} />
+      </QueryClientProvider>
+    </trpc.Provider>
+  );
+};
+
+export default Trpc;

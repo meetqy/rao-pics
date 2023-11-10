@@ -23,14 +23,12 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
-    "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/utils": "workspace:^",
     "@react-hook/window-size": "^3.1.1",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tanstack/react-query": "^4.32.6",
     "@trpc/client": "^10.37.1",
-    "@trpc/next": "^10.38.1",
     "@trpc/react-query": "^10.37.1",
     "@trpc/server": "^10.37.1",
     "justified-layout": "^4.1.0",
@@ -43,6 +41,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@rao-pics/api": "workspace:^",
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tailwind-config": "workspace:*",
