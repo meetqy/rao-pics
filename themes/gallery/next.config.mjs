@@ -16,6 +16,12 @@ const config = {
   images: {
     unoptimized: true,
   },
+  // exportPathMap: () => ({
+  //   "/": { page: "/" },
+  //   "/masonry": { page: "/masonry" },
+  //   "/responsive": { page: "/responsive" },
+  // }),
+  trailingSlash: true,
 };
 
 export default config;

@@ -13,7 +13,11 @@ let server: Server<typeof IncomingMessage, typeof ServerResponse> | undefined;
 let libraryPath: string | undefined;
 let library: Library | null;
 
-export const startExpressServer = async () => {
+interface StartExpressServerArgs {
+  use?: (app: ReturnType<typeof express>, exp: typeof express) => void;
+}
+
+export const startExpressServer = async (args?: StartExpressServerArgs) => {
   if (server) return;
 
   const app = express();
@@ -51,6 +55,8 @@ export const startExpressServer = async () => {
       );
     }
   });
+
+  args?.use?.(app, express);
 
   server = app.listen(port, () => {
     console.log(`express server is listening on http://localhost:${port}`);

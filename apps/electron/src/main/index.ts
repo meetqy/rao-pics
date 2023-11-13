@@ -84,7 +84,16 @@ async function initWatchLibrary() {
 
 const mainWindowReadyToShow = async () => {
   const config = await initConfig();
-  await startExpressServer();
+
+  await startExpressServer({
+    use(app, express) {
+      app.use(
+        express.static(
+          join(process.resourcesPath, "extraResources", "themes", "gallery"),
+        ),
+      );
+    },
+  });
   await initWatchLibrary();
 
   const { clientPort } = config;
