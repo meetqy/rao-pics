@@ -384,6 +384,9 @@ importers:
       '@rao-pics/eslint-config':
         specifier: workspace:^
         version: link:../../tooling/eslint
+      '@rao-pics/tailwind-config':
+        specifier: workspace:^
+        version: link:../../tooling/tailwind
       '@rao-pics/tsconfig':
         specifier: workspace:^
         version: link:../../tooling/typescript
