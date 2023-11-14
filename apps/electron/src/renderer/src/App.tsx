@@ -1,10 +1,10 @@
-import { TRPCReactProvider } from "@rao-pics/trpc/src/TRPCReactProvider";
+import { TRPCReactProvider } from "@rao-pics/trpc";
 
 import Layout from "./Layout";
 
 function App() {
   return (
-    <TRPCReactProvider electron>
+    <TRPCReactProvider>
       <Layout />
     </TRPCReactProvider>
   );

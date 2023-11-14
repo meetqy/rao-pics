@@ -46,7 +46,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/db
       '@rao-pics/trpc':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/trpc
       '@sentry/integrations':
         specifier: ^7.74.1
@@ -305,69 +305,8 @@ importers:
         specifier: ^0.34.2
         version: 0.34.2(@vitest/ui@0.34.3)
 
-  packages/electron-trpc:
-    dependencies:
-      debug:
-        specifier: ^4.3.4
-        version: 4.3.4
-      electron:
-        specifier: '>19.0.0'
-        version: 24.6.5
-    devDependencies:
-      '@tanstack/react-query':
-        specifier: ^5.8.3
-        version: 5.8.3(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client':
-        specifier: next
-        version: 11.0.0-alpha-next-2023-11-11-17-32-01.100(@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100)
-      '@trpc/server':
-        specifier: next
-        version: 11.0.0-alpha-next-2023-11-11-17-32-01.100
-      '@types/debug':
-        specifier: ^4.1.8
-        version: 4.1.8
-      '@types/node':
-        specifier: ^20.3.1
-        version: 20.9.0
-      '@vitest/coverage-v8':
-        specifier: ^0.34.0
-        version: 0.34.3(vitest@0.34.2)
-      builtin-modules:
-        specifier: ^3.3.0
-        version: 3.3.0
-      dts-bundle-generator:
-        specifier: ^8.0.1
-        version: 8.1.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      superjson:
-        specifier: ^1.12.3
-        version: 1.13.1
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-      vite:
-        specifier: ^4.3.9
-        version: 4.5.0(@types/node@20.9.0)
-      vite-plugin-commonjs-externals:
-        specifier: ^0.1.3
-        version: 0.1.3(vite@4.5.0)
-      vitest:
-        specifier: ^0.34.0
-        version: 0.34.2(@vitest/ui@0.34.3)
-      zod:
-        specifier: ^3.21.4
-        version: 3.22.2
-
   packages/trpc:
     dependencies:
-      '@rao-pics/api':
-        specifier: workspace:*
-        version: link:../api
       '@tanstack/react-query':
         specifier: ^5.8.3
         version: 5.8.3(react-dom@18.2.0)(react@18.2.0)
@@ -377,9 +316,6 @@ importers:
       '@trpc/react-query':
         specifier: next
         version: 11.0.0-alpha-next-2023-11-11-17-32-01.100(@tanstack/react-query@5.8.3)(@trpc/client@11.0.0-alpha-next-2023-11-11-17-32-01.100)(@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100)(react-dom@18.2.0)(react@18.2.0)
-      electron-trpc:
-        specifier: ^0.5.2
-        version: 0.5.2(@trpc/client@11.0.0-alpha-next-2023-11-11-17-32-01.100)(electron@24.6.5)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -387,6 +323,9 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@rao-pics/api':
+        specifier: workspace:*
+        version: link:../api
       '@rao-pics/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
@@ -396,6 +335,9 @@ importers:
       '@rao-pics/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      electron:
+        specifier: 24.6.5
+        version: 24.6.5
 
   packages/utils:
     devDependencies:
@@ -1980,6 +1922,7 @@ packages:
 
   /@tanstack/query-core@5.8.3:
     resolution: {integrity: sha512-SWFMFtcHfttLYif6pevnnMYnBvxKf3C+MHMH7bevyYfpXpTMsLB9O6nNGBdWSoPwnZRXFNyNeVZOw25Wmdasow==}
+    dev: false
 
   /@tanstack/query-devtools@5.8.2:
     resolution: {integrity: sha512-xzI5LpmCSed2/plSu1ujfYadkOay9AADTzQ7U3aGYXHgBkKJ5pZrcTVuK3SHHpuqsD+mNmpzq8jU8omfOsFLxg==}
@@ -2031,6 +1974,7 @@ packages:
       '@tanstack/query-core': 5.8.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
@@ -2051,6 +1995,7 @@ packages:
       '@trpc/server': 11.0.0-alpha-next-2023-11-11-17-32-01.100+a69ae8503
     dependencies:
       '@trpc/server': 11.0.0-alpha-next-2023-11-11-17-32-01.100
+    dev: false
 
   /@trpc/react-query@10.37.1(@tanstack/react-query@4.32.6)(@trpc/client@10.37.1)(@trpc/server@10.37.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-TbOOPp0fZVaKfaeEyDoV8QeTHW1vgPTbfOs0uSQ4AzBXqXPu+9v1B44z8GGRJSdUxuOX9pG/6Ap5Kx8PQ3eF+Q==}
@@ -2091,6 +2036,7 @@ packages:
   /@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100:
     resolution: {integrity: sha512-cKN5EongO/s0cc0bSJwHhy+sKsvVknOhclVh8BrkvJdDzRtuzuiHbDe9pLBYo+9jdNk7AVyivZAuyntWbx1lSw==}
     engines: {node: '>=18.0.0'}
+    dev: false
 
   /@types/body-parser@1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
@@ -2222,17 +2168,12 @@ packages:
 
   /@types/node@18.17.6:
     resolution: {integrity: sha512-fGmT/P7z7ecA6bv/ia5DlaWCH4YeZvAQMNpUhrJjtAhOhZfoxS1VLUgU2pdk63efSjQaOJWdXMuAJsws+8I6dg==}
+    dev: true
 
   /@types/node@18.18.9:
     resolution: {integrity: sha512-0f5klcuImLnG4Qreu9hPj/rEfFq6YRc5n2mAjSsH+ec/mJL+3voBH0+8T7o8RpFjH7ovc+TRsL/c7OYIQsPTfQ==}
     dependencies:
       undici-types: 5.26.5
-
-  /@types/node@20.9.0:
-    resolution: {integrity: sha512-nekiGu2NDb1BcVofVcEKMIwzlx4NjHlcjhoxxKBNLtz15Y1z7MYf549DFvkHSId02Ax6kGwWntIBPC3l/JZcmw==}
-    dependencies:
-      undici-types: 5.26.5
-    dev: true
 
   /@types/plist@3.0.2:
     resolution: {integrity: sha512-ULqvZNGMv0zRFvqn8/4LSPtnmN4MfhlPNtJCTpKuIIxGVGZ2rYWzFXrvEBoh9CVyqSE7D6YFRJ1hydLHI6kbWw==}
@@ -3008,11 +2949,6 @@ packages:
       - supports-color
     dev: true
 
-  /builtin-modules@3.3.0:
-    resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
-    engines: {node: '>=6'}
-    dev: true
-
   /bundle-name@3.0.0:
     resolution: {integrity: sha512-PKA4BeSvBpQKQ8iPOGCSiell+N8P+Tf1DlwqmYhpe2gAhKPHn8EYOxVT+ShuGmhg8lN8XiSlS80yiExKXrURlw==}
     engines: {node: '>=12'}
@@ -3239,6 +3175,7 @@ packages:
     engines: {node: '>=12.13'}
     dependencies:
       is-what: 4.1.9
+    dev: false
 
   /core-util-is@1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
@@ -3555,15 +3492,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /dts-bundle-generator@8.1.2:
-    resolution: {integrity: sha512-/yvy9Xw0cfFodA8n6jEq8/COZ/WXgJtPabnLBAzIfP/TfxWbD/0a0dvfqNHneNqswQrH0kUcaAfGJC9UNvH97w==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-    dependencies:
-      typescript: 5.2.2
-      yargs: 17.7.2
-    dev: true
-
   /ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
@@ -3681,7 +3609,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@electron/get': 2.0.2
-      '@types/node': 18.17.6
+      '@types/node': 18.18.9
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -3785,10 +3713,6 @@ packages:
       iterator.prototype: 1.1.0
       safe-array-concat: 1.0.0
     dev: false
-
-  /es-module-lexer@1.4.1:
-    resolution: {integrity: sha512-cXLGjP0c4T3flZJKQSuziYoq7MlT+rnvfZjfp7h+I7K9BNX54kP9nyWvdbwjQ4u1iWbOL4u96fgeZLToQlZC7w==}
-    dev: true
 
   /es-set-tostringtag@2.0.1:
     resolution: {integrity: sha512-g3OMbtlwY3QewlqAiMLI47KywjWZoEytKr8pf6iTC8uJq5bIAH52Z9pnQ8pVL6whrCto53JZDuUIsifGeLorTg==}
@@ -5023,6 +4947,7 @@ packages:
   /is-what@4.1.9:
     resolution: {integrity: sha512-I3FU0rkVvwhgLLEs6iITwZ/JaLXe7tQcHyzupXky8jigt1vu4KM0UOqDr963j36JRvJ835EATVIm6MnGz/i1/g==}
     engines: {node: '>=12.13'}
+    dev: false
 
   /is-wsl@2.2.0:
     resolution: {integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==}
@@ -6758,6 +6683,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       copy-anything: 3.0.4
+    dev: false
 
   /superjson@2.2.0:
     resolution: {integrity: sha512-vSr6kwT/LY3T1+JaZllIGFp5+qEYyCw/s6EMgR8TulTwRbKETuVIqN4RTurPBTU/HlEpP0ytN3srB2vjjeBRoQ==}
@@ -7274,17 +7200,6 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-commonjs-externals@0.1.3(vite@4.5.0):
-    resolution: {integrity: sha512-Oi2RPo0jJP3pLPPM1Dj5s7PDfCh1t/NiJfyvKL3rgVIfRTyAno9bZng0MBtNY8eeSRR54SlnLFPa7YuvI4k1ZA==}
-    peerDependencies:
-      vite: ^4.3.9
-    dependencies:
-      acorn: 8.10.0
-      es-module-lexer: 1.4.1
-      magic-string: 0.30.2
-      vite: 4.5.0(@types/node@20.9.0)
-    dev: true
-
   /vite@4.4.2(@types/node@18.17.6):
     resolution: {integrity: sha512-zUcsJN+UvdSyHhYa277UHhiJ3iq4hUBwHavOpsNUGsTgjBeoBlK8eDt+iT09pBq0h9/knhG/SPrZiM7cGmg7NA==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -7350,42 +7265,6 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.17.6
-      esbuild: 0.18.20
-      postcss: 8.4.31
-      rollup: 3.28.0
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: true
-
-  /vite@4.5.0(@types/node@20.9.0):
-    resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 20.9.0
       esbuild: 0.18.20
       postcss: 8.4.31
       rollup: 3.28.0
@@ -7627,3 +7506,4 @@ packages:
 
   /zod@3.22.2:
     resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
+    dev: false

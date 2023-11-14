@@ -1,7 +1,6 @@
 import cp from "child_process";
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
-import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
 import { CaptureConsole } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
@@ -174,7 +173,6 @@ async function createWindow() {
 
   await mainWindowReadyToShow();
 
-  createIPCHandler({ router, windows: [mainWindow] });
   createCustomIPCHandle();
   createMenu(mainWindow);
   createTray(mainWindow);
