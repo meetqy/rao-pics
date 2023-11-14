@@ -54,18 +54,6 @@ importers:
       '@sentry/node':
         specifier: ^7.74.1
         version: 7.74.1
-      '@tanstack/react-query':
-        specifier: ^5.8.1
-        version: 5.8.3(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client':
-        specifier: next
-        version: 11.0.0-alpha-next-2023-11-11-17-32-01.100(@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100)
-      '@trpc/react-query':
-        specifier: next
-        version: 11.0.0-alpha-next-2023-11-11-17-32-01.100(@tanstack/react-query@5.8.3)(@trpc/client@11.0.0-alpha-next-2023-11-11-17-32-01.100)(@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100)(react-dom@18.2.0)(react@18.2.0)
-      electron-trpc:
-        specifier: ^0.5.2
-        version: 0.5.2(@trpc/client@11.0.0-alpha-next-2023-11-11-17-32-01.100)(electron@24.6.5)
       electron-updater:
         specifier: ^5.3.0
         version: 5.3.0
@@ -81,9 +69,6 @@ importers:
       qrcode.react:
         specifier: ^3.1.0
         version: 3.1.0(react@18.2.0)
-      superjson:
-        specifier: 2.2.0
-        version: 2.2.0
     devDependencies:
       '@electron-toolkit/tsconfig':
         specifier: ^1.0.1
@@ -453,9 +438,6 @@ importers:
       recoil:
         specifier: ^0.7.7
         version: 0.7.7(react-dom@18.2.0)(react@18.2.0)
-      superjson:
-        specifier: 2.2.0
-        version: 2.2.0
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -3549,20 +3531,6 @@ packages:
 
   /electron-to-chromium@1.4.490:
     resolution: {integrity: sha512-6s7NVJz+sATdYnIwhdshx/N/9O6rvMxmhVoDSDFdj6iA45gHR8EQje70+RYsF4GeB+k0IeNSBnP7yG9ZXJFr7A==}
-
-  /electron-trpc@0.5.2(@trpc/client@11.0.0-alpha-next-2023-11-11-17-32-01.100)(electron@24.6.5):
-    resolution: {integrity: sha512-lJTeTwrd/E1C3VGFvdSBQggdmdDeHGrrpnuiB1e3bQR/1f91HmprySMygs9e4i12+CLqR+RIyKTQWLKCNjy5/Q==}
-    peerDependencies:
-      '@trpc/client': '>10.0.0'
-      '@trpc/server': '>10.0.0'
-      electron: '>19.0.0'
-    dependencies:
-      '@trpc/client': 11.0.0-alpha-next-2023-11-11-17-32-01.100(@trpc/server@11.0.0-alpha-next-2023-11-11-17-32-01.100)
-      debug: 4.3.4
-      electron: 24.6.5
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /electron-updater@5.3.0:
     resolution: {integrity: sha512-iKEr7yQBcvnQUPnSDYGSWC9t0eF2YbZWeYYYZzYxdl+HiRejXFENjYMnYjoOm2zxyD6Cr2JTHZhp9pqxiXuCOw==}

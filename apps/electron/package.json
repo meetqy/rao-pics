@@ -34,16 +34,11 @@
     "@rao-pics/trpc": "workspace:^",
     "@sentry/integrations": "^7.74.1",
     "@sentry/node": "^7.74.1",
-    "@tanstack/react-query": "^5.8.1",
-    "@trpc/client": "next",
-    "@trpc/react-query": "next",
-    "electron-trpc": "^0.5.2",
     "electron-updater": "^5.3.0",
     "get-port": "^7.0.0",
     "ip": "^1.1.8",
     "lodash": "^4.17.21",
-    "qrcode.react": "^3.1.0",
-    "superjson": "2.2.0"
+    "qrcode.react": "^3.1.0"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
