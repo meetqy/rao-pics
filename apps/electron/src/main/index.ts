@@ -10,12 +10,13 @@ import ip from "ip";
 import {
   getCaller,
   router,
-  startExpressServer,
+  // startExpressServer,
   stopExpressServer,
 } from "@rao-pics/api";
 import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
+import { startServer } from "@rao-pics/server";
 
 import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
@@ -84,15 +85,16 @@ async function initWatchLibrary() {
 const mainWindowReadyToShow = async () => {
   const config = await initConfig();
 
-  await startExpressServer({
-    use(app, express) {
-      app.use(
-        express.static(
-          join(process.resourcesPath, "extraResources", "themes", "gallery"),
-        ),
-      );
-    },
-  });
+  await startServer();
+  // await startExpressServer({
+  //   use(app, express) {
+  //     app.use(
+  //       express.static(
+  //         join(process.resourcesPath, "extraResources", "themes", "gallery"),
+  //       ),
+  //     );
+  //   },
+  // });
   await initWatchLibrary();
 
   const { clientPort } = config;

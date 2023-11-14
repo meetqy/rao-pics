@@ -19,6 +19,7 @@ export default defineConfig({
           "@rao-pics/api",
           "@rao-pics/constant",
           "@rao-pics/trpc",
+          "@rao-pics/server",
 
           // package.json => type:module 的依赖，electron 中需要打包到代码中
           "get-port",
