@@ -67,7 +67,7 @@ const languages = {
 
 const BasicPage = () => {
   const { lang } = useLanguage(languages);
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
 
   // 同步中、初始化中 禁用按钮
   const [disabled, setDisabled] = useState(false);

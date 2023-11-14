@@ -1,0 +1,4 @@
+{
+  "extends": "@rao-pics/tsconfig/base.json",
+  "include": ["src"]
+}
