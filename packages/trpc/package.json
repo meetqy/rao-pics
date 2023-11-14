@@ -26,7 +26,6 @@
     "@rao-pics/api": "workspace:*",
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
-    "@rao-pics/tsconfig": "workspace:*",
-    "electron": "24.6.5"
+    "@rao-pics/tsconfig": "workspace:*"
   }
 }

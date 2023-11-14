@@ -320,9 +320,6 @@ importers:
       '@rao-pics/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      electron:
-        specifier: 24.6.5
-        version: 24.6.5
 
   packages/utils:
     devDependencies:
