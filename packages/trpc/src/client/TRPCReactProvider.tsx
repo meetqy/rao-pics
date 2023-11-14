@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { ipcLink } from "electron-trpc/renderer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import SuperJSON from "superjson";
 
+import { ipcLink } from "../renderer";
 import { trpc } from "./trpc";
 
 export function TRPCReactProvider(props: {

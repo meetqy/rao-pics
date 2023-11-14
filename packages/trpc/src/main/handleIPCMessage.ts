@@ -1,13 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import type { IpcMainEvent } from "electron";
 import { TRPCError } from "@trpc/server";
 import type { AnyRouter, inferRouterContext } from "@trpc/server";
+import type { Unsubscribable } from "@trpc/server/observable";
+import { isObservable } from "@trpc/server/observable";
 import type { TRPCResponseMessage } from "@trpc/server/rpc";
-import type { IpcMainEvent } from "electron";
-import { isObservable, Unsubscribable } from "@trpc/server/observable";
 import { getErrorShape, transformTRPCResponse } from "@trpc/server/shared";
-import { getTRPCErrorFromUnknown } from "./utils";
-import { CreateContextOptions } from "./types";
+
 import { ELECTRON_TRPC_CHANNEL } from "../constants";
-import { ETRPCRequest } from "../types";
+import type { ETRPCRequest } from "../types";
+import type { CreateContextOptions } from "./types";
+import { getTRPCErrorFromUnknown } from "./utils";
 
 export async function handleIPCMessage<TRouter extends AnyRouter>({
   router,
@@ -19,7 +24,7 @@ export async function handleIPCMessage<TRouter extends AnyRouter>({
 }: {
   router: TRouter;
   createContext?: (
-    opts: CreateContextOptions
+    opts: CreateContextOptions,
   ) => Promise<inferRouterContext<TRouter>>;
   internalId: string;
   message: ETRPCRequest;
@@ -38,6 +43,7 @@ export async function handleIPCMessage<TRouter extends AnyRouter>({
   }
 
   const { type, input: serializedInput, path, id } = message.operation;
+
   const input = serializedInput
     ? router._def._config.transformer.input.deserialize(serializedInput)
     : undefined;
@@ -48,12 +54,12 @@ export async function handleIPCMessage<TRouter extends AnyRouter>({
     if (event.sender.isDestroyed()) return;
     event.reply(
       ELECTRON_TRPC_CHANNEL,
-      transformTRPCResponse(router._def._config, response)
+      transformTRPCResponse(router._def._config, response),
     );
   };
 
   try {
-    const result = await router.createCaller({
+    const result = router.createCaller({
       ctx,
       path,
       procedures: router._def.procedures,

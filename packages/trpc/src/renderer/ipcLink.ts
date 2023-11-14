@@ -1,35 +1,45 @@
-import { Operation, TRPCClientError, TRPCLink } from '@trpc/client';
-import type { AnyRouter, inferRouterContext, ProcedureType } from '@trpc/server';
-import type { TRPCResponseMessage } from '@trpc/server/rpc';
-import type { RendererGlobalElectronTRPC } from '../types';
-import { observable, Observer } from '@trpc/server/observable';
-import { transformResult } from './utils';
-import debug from 'debug';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import type { Operation, TRPCLink } from "@trpc/client";
+import { TRPCClientError } from "@trpc/client";
+import type {
+  AnyRouter,
+  inferRouterContext,
+  ProcedureType,
+} from "@trpc/server";
+import type { Observer } from "@trpc/server/observable";
+import { observable } from "@trpc/server/observable";
+import type { TRPCResponseMessage } from "@trpc/server/rpc";
+import debug from "debug";
 
-const log = debug('electron-trpc:renderer:ipcLink');
+import type { RendererGlobalElectronTRPC } from "../types";
+import { transformResult } from "./utils";
 
-type IPCCallbackResult<TRouter extends AnyRouter = AnyRouter> = TRPCResponseMessage<
-  unknown,
-  inferRouterContext<TRouter>
->;
+const log = debug("electron-trpc:renderer:ipcLink");
+
+type IPCCallbackResult<TRouter extends AnyRouter = AnyRouter> =
+  TRPCResponseMessage<unknown, inferRouterContext<TRouter>>;
 
 type IPCCallbacks<TRouter extends AnyRouter = AnyRouter> = Observer<
   IPCCallbackResult<TRouter>,
   TRPCClientError<TRouter>
 >;
 
-type IPCRequest = {
+interface IPCRequest {
   type: ProcedureType;
   callbacks: IPCCallbacks;
   op: Operation;
-};
+}
 
 const getElectronTRPC = () => {
-  const electronTRPC: RendererGlobalElectronTRPC = (globalThis as any).electronTRPC;
+  const electronTRPC: RendererGlobalElectronTRPC = (globalThis as any)
+    .electronTRPC;
 
   if (!electronTRPC) {
     throw new Error(
-      'Could not find `electronTRPC` global. Check that `exposeElectronTPRC` has been called in your preload file.'
+      "Could not find `electronTRPC` global. Check that `exposeElectronTPRC` has been called in your preload file.",
     );
   }
 
@@ -47,7 +57,7 @@ class IPCClient {
   }
 
   #handleResponse(response: TRPCResponseMessage) {
-    log('handling response', response);
+    log("handling response", response);
     const request = response.id && this.#pendingRequests.get(response.id);
     if (!request) {
       return;
@@ -55,7 +65,7 @@ class IPCClient {
 
     request.callbacks.next(response);
 
-    if ('result' in response && response.result.type === 'stopped') {
+    if ("result" in response && response.result.type === "stopped") {
       request.callbacks.complete();
     }
   }
@@ -69,7 +79,7 @@ class IPCClient {
       op,
     });
 
-    this.#electronTRPC.sendMessage({ method: 'request', operation: op });
+    this.#electronTRPC.sendMessage({ method: "request", operation: op });
 
     return () => {
       const callbacks = this.#pendingRequests.get(id)?.callbacks;
@@ -78,10 +88,10 @@ class IPCClient {
 
       callbacks?.complete();
 
-      if (type === 'subscription') {
+      if (type === "subscription") {
         this.#electronTRPC.sendMessage({
           id,
-          method: 'subscription.stop',
+          method: "subscription.stop",
         });
       }
     };
@@ -106,7 +116,9 @@ export function ipcLink<TRouter extends AnyRouter>(): TRPCLink<TRouter> {
           complete() {
             if (!isDone) {
               isDone = true;
-              observer.error(TRPCClientError.from(new Error('Operation ended prematurely')));
+              observer.error(
+                TRPCClientError.from(new Error("Operation ended prematurely")),
+              );
             } else {
               observer.complete();
             }
@@ -121,7 +133,7 @@ export function ipcLink<TRouter extends AnyRouter>(): TRPCLink<TRouter> {
 
             observer.next({ result: transformed.result });
 
-            if (op.type !== 'subscription') {
+            if (op.type !== "subscription") {
               isDone = true;
               unsubscribe();
               observer.complete();
