@@ -4,7 +4,7 @@ import "~/styles/globals.css";
 
 import { RecoilRoot } from "recoil";
 
-import { TRPCReactProvider } from "./_components/TRPCReactProvider";
+import { TRPCReactProvider } from "@rao-pics/trpc";
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (

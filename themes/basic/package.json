@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@rao-pics/constant": "workspace:^",
+    "@rao-pics/trpc": "workspace:^",
     "@rao-pics/utils": "workspace:^",
     "@react-hook/window-size": "^3.1.1",
     "@t3-oss/env-nextjs": "^0.7.1",
