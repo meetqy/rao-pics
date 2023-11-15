@@ -1,14 +1,11 @@
-import cp from "child_process";
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
 import { CaptureConsole } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
-import getPort, { portNumbers } from "get-port";
 import ip from "ip";
 
 import { closeServer, router, startServer } from "@rao-pics/api";
-import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
 
@@ -31,24 +28,6 @@ Sentry.init({
 });
 
 const controller = new AbortController();
-const { signal } = controller;
-
-// 获取端口
-async function initConfig() {
-  const caller = router.createCaller({});
-  const config = await caller.config.findUnique();
-
-  const serverPort =
-    config?.serverPort ?? (await getPort({ port: portNumbers(9100, 9300) }));
-  const clientPort =
-    config?.clientPort ?? (await getPort({ port: portNumbers(9301, 9500) }));
-
-  return await caller.config.upsert({
-    serverPort,
-    clientPort,
-    ip: ip.address(),
-  });
-}
 
 // 窗口获取焦点时更新 ip
 app.on("browser-window-focus", () => {
@@ -77,34 +56,8 @@ async function initWatchLibrary() {
 }
 
 const mainWindowReadyToShow = async () => {
-  const config = await initConfig();
-
   await startServer();
   await initWatchLibrary();
-
-  const { clientPort } = config;
-
-  if (!clientPort) return;
-
-  if (!IS_DEV) {
-    const child = cp.fork(
-      join(
-        process.resourcesPath,
-        "themes",
-        config?.theme ?? DEFAULT_THEME,
-        "server.js",
-      ),
-      ["child"],
-      {
-        env: { PORT: clientPort.toString(), HOSTNAME: "0.0.0.0" },
-        signal,
-      },
-    );
-
-    child.on("error", (e) => {
-      console.error(e);
-    });
-  }
 };
 
 async function createWindow() {

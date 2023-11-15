@@ -20,7 +20,6 @@ export default defineConfig({
           "@rao-pics/trpc",
 
           // package.json => type:module 的依赖，electron 中需要打包到代码中
-          "get-port",
           "superjson",
         ],
         include: [

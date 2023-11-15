@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-import { DEFAULT_THEME } from "@rao-pics/constant";
 import { prisma } from "@rao-pics/db";
 
 import { folderCore } from "./folder";
@@ -40,13 +39,7 @@ export const configCore = {
     return await prisma.config.upsert({
       where: { name: "config" },
       update: input,
-      create: {
-        ...input,
-        name: "config",
-        language: input.language ?? "zh-cn",
-        color: input.color ?? "light",
-        theme: input.theme ?? DEFAULT_THEME,
-      },
+      create: input,
     });
   },
 };

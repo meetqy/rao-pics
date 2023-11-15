@@ -33,6 +33,7 @@
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "@types/justified-layout": "^4.1.1",
     "masonic": "^3.7.0",
     "next": "^14.0.2",
     "photoswipe": "^5.4.0",

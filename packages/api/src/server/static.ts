@@ -6,9 +6,9 @@
 
 import path from "path";
 import cors from "@fastify/cors";
+import fastifyStatic from "@fastify/static";
 import fastify from "fastify";
 
-import { DEFAULT_THEME } from "@rao-pics/constant";
 import type { Library } from "@rao-pics/db";
 
 import { routerCore } from "../..";
@@ -26,17 +26,33 @@ export const startStaticServer = async () => {
 
   const config = await routerCore.config.findUnique();
   if (config) {
-    await server.register(import("@fastify/static"), {
-      root: path.join(
-        process.resourcesPath,
-        "extraResources",
-        "themes",
-        config.theme ?? DEFAULT_THEME,
-      ),
+    void server.register((instance, opts, next) => {
+      void instance.register(fastifyStatic, {
+        root: path.join(
+          process.resourcesPath,
+          "extraResources",
+          "themes",
+          config.theme,
+        ),
+      });
+
+      next();
     });
   }
 
-  await server.listen({ port: 61122 });
+  const libray = await routerCore.library.findUnique();
+  if (libray) {
+    void server.register((instance, opts, next) => {
+      void instance.register(fastifyStatic, {
+        root: path.join(libray.path, "images"),
+        prefix: "/static",
+      });
+
+      next();
+    });
+  }
+
+  await server.listen({ port: config?.clientPort });
   const res = server.server.address();
 
   server.log.info(

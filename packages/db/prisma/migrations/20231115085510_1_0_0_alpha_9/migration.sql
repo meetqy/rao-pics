@@ -1,12 +1,16 @@
 -- CreateTable
 CREATE TABLE "Config" (
-    "name" TEXT NOT NULL PRIMARY KEY,
-    "language" TEXT NOT NULL,
-    "color" TEXT,
-    "theme" TEXT,
-    "serverPort" INTEGER,
-    "clientPort" INTEGER,
-    "ip" TEXT
+    "name" TEXT NOT NULL PRIMARY KEY DEFAULT 'config',
+    "language" TEXT NOT NULL DEFAULT 'zh-cn',
+    "color" TEXT NOT NULL DEFAULT 'light',
+    "theme" TEXT NOT NULL DEFAULT 'gallery',
+    "serverPort" INTEGER NOT NULL DEFAULT 61121,
+    "clientPort" INTEGER NOT NULL DEFAULT 61122,
+    "ip" TEXT NOT NULL DEFAULT 'localhost',
+    "trash" BOOLEAN NOT NULL DEFAULT false,
+    "pwdFolder" BOOLEAN NOT NULL DEFAULT false,
+    "startDiffLibrary" BOOLEAN NOT NULL DEFAULT false,
+    "autoSync" BOOLEAN NOT NULL DEFAULT false
 );
 
 -- CreateTable
@@ -33,6 +37,7 @@ CREATE TABLE "Image" (
     "createdTime" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateTime" DATETIME NOT NULL,
     "mtime" DATETIME NOT NULL,
+    "modificationTime" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "ext" TEXT NOT NULL,
     "width" INTEGER NOT NULL,
     "height" INTEGER NOT NULL,

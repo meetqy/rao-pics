@@ -1,11 +1,6 @@
 import { z } from "zod";
 
 /**
- * 默认主题
- */
-export const DEFAULT_THEME = "gallery";
-
-/**
  * 项目名称
  */
 export const PRODUCT_NAME = "Rao Pics";
