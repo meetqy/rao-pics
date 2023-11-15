@@ -1,7 +1,6 @@
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
-import { CaptureConsole } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
 import ip from "ip";
 
@@ -20,12 +19,12 @@ process.env.VERSION = app.getVersion();
 /**
  * Sentry init
  */
-Sentry.init({
-  dsn: "https://66785ab164164bf9bc05591a0c431557@o4505321607397376.ingest.sentry.io/4506081497251840",
-  debug: IS_DEV,
-  environment: IS_DEV ? "development" : "production",
-  integrations: [new CaptureConsole()],
-});
+if (!IS_DEV) {
+  Sentry.init({
+    dsn: "https://66785ab164164bf9bc05591a0c431557@o4505321607397376.ingest.sentry.io/4506081497251840",
+    environment: "production",
+  });
+}
 
 const controller = new AbortController();
 
