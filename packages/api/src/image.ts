@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
-import { getCaller } from "..";
+import { router } from "..";
 import { t } from "./utils";
 
 export const imageInput = {
@@ -212,7 +212,8 @@ export const image = t.router({
       }
 
       // 清除日志中的错误信息
-      await getCaller().log.delete(res.path);
+      const caller = router.createCaller({});
+      await caller.log.delete(res.path);
 
       return res;
     }),

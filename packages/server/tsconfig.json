@@ -1,8 +1,0 @@
-{
-  "extends": "@rao-pics/tsconfig/base.json",
-  "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
-  },
-  "include": ["*.ts", "src", "test"],
-  "exclude": ["node_modules", "coverage"]
-}

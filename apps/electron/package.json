@@ -31,7 +31,6 @@
     "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/db": "workspace:*",
-    "@rao-pics/server": "workspace:^",
     "@rao-pics/trpc": "workspace:^",
     "@sentry/integrations": "^7.74.1",
     "@sentry/node": "^7.74.1",

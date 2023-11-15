@@ -2,7 +2,7 @@ import { color } from "./src/color";
 import { config, configCore } from "./src/config";
 import { folder, folderCore } from "./src/folder";
 import { image, imageCore } from "./src/image";
-import { library } from "./src/library";
+import { library, libraryCore } from "./src/library";
 import { log } from "./src/log";
 import { pending } from "./src/pending";
 import { sync } from "./src/sync";
@@ -25,22 +25,9 @@ export const routerCore = {
   config: configCore,
   folder: folderCore,
   image: imageCore,
+  library: libraryCore,
 };
 
 export type AppRouter = typeof router;
 export { t } from "./src/utils";
-export * from "./src/express";
-
-let caller: ReturnType<typeof router.createCaller>;
-
-/**
- * router.createCaller()
- * @returns
- */
-export const getCaller = () => {
-  if (!caller) {
-    caller = router.createCaller({});
-  }
-
-  return caller;
-};
+export * from "./src/server";

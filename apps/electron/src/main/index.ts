@@ -7,16 +7,10 @@ import * as Sentry from "@sentry/node";
 import getPort, { portNumbers } from "get-port";
 import ip from "ip";
 
-import {
-  getCaller,
-  router,
-  // startExpressServer,
-  stopExpressServer,
-} from "@rao-pics/api";
+import { closeServer, router, startServer } from "@rao-pics/api";
 import { DEFAULT_THEME } from "@rao-pics/constant";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
-import { startServer } from "@rao-pics/server";
 
 import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
@@ -58,7 +52,7 @@ async function initConfig() {
 
 // 窗口获取焦点时更新 ip
 app.on("browser-window-focus", () => {
-  const caller = getCaller();
+  const caller = router.createCaller({});
   caller.config
     .upsert({
       ip: ip.address(),
@@ -86,15 +80,6 @@ const mainWindowReadyToShow = async () => {
   const config = await initConfig();
 
   await startServer();
-  // await startExpressServer({
-  //   use(app, express) {
-  //     app.use(
-  //       express.static(
-  //         join(process.resourcesPath, "extraResources", "themes", "gallery"),
-  //       ),
-  //     );
-  //   },
-  // });
   await initWatchLibrary();
 
   const { clientPort } = config;
@@ -230,7 +215,7 @@ app.on("quit", () => {
   // 关闭子进程
   controller.abort();
   // 关闭静态服务器
-  stopExpressServer();
+  void closeServer();
 
   if (PLATFORM != "darwin") {
     app.quit();
