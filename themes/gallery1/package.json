@@ -1,0 +1,52 @@
+{
+  "name": "@rao-pics/gallery",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "next build",
+    "clean": "git clean -xdf .next .turbo node_modules",
+    "dev": "next dev -H 0.0.0.0",
+    "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
+    "lint": "next lint",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "prettier": "@rao-pics/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@rao-pics/eslint-config/base",
+      "@rao-pics/eslint-config/nextjs",
+      "@rao-pics/eslint-config/react"
+    ],
+    "root": true
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.0.18",
+    "@rao-pics/constant": "workspace:^",
+    "@rao-pics/utils": "workspace:^",
+    "@react-hook/window-size": "^3.1.1",
+    "@t3-oss/env-nextjs": "^0.6.1",
+    "@tanstack/react-query": "^4.32.6",
+    "@trpc/client": "^10.37.1",
+    "@trpc/react-query": "^10.37.1",
+    "@trpc/server": "^10.37.1",
+    "justified-layout": "^4.1.0",
+    "masonic": "^3.7.0",
+    "next": "^13.4.19",
+    "photoswipe": "^5.4.0",
+    "react": "18.2.0",
+    "recoil": "^0.7.7",
+    "superjson": "1.13.1",
+    "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@rao-pics/api": "workspace:^",
+    "@rao-pics/eslint-config": "workspace:*",
+    "@rao-pics/prettier-config": "workspace:*",
+    "@rao-pics/tailwind-config": "workspace:*",
+    "@rao-pics/tsconfig": "workspace:*",
+    "@types/justified-layout": "^4.1.1",
+    "@types/react-window": "^1.8.6"
+  }
+}

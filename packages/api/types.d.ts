@@ -22,3 +22,12 @@ export interface Palette {
   ratio: number;
   $$hashKey?: string;
 }
+
+declare global {
+  namespace NodeJS {
+    interface Process {
+      /** @type Electron process.resourcesPath */
+      resourcesPath: string;
+    }
+  }
+}

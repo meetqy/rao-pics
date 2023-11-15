@@ -8,7 +8,10 @@ import path from "path";
 import cors from "@fastify/cors";
 import fastify from "fastify";
 
+import { DEFAULT_THEME } from "@rao-pics/constant";
 import type { Library } from "@rao-pics/db";
+
+import { routerCore } from "../..";
 
 let server: ReturnType<typeof fastify> | undefined;
 
@@ -20,6 +23,18 @@ export const startStaticServer = async () => {
   void server.register(cors, {
     origin: "*",
   });
+
+  const config = await routerCore.config.findUnique();
+  if (config) {
+    await server.register(import("@fastify/static"), {
+      root: path.join(
+        process.resourcesPath,
+        "extraResources",
+        "themes",
+        config.theme ?? DEFAULT_THEME,
+      ),
+    });
+  }
 
   await server.listen({ port: 61122 });
   const res = server.server.address();

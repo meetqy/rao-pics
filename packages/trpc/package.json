@@ -25,6 +25,8 @@
     "@rao-pics/api": "workspace:*",
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
-    "@rao-pics/tsconfig": "workspace:*"
+    "@rao-pics/tsconfig": "workspace:*",
+    "@types/node": "^18.17.6",
+    "@types/react": "^18.2.20"
   }
 }
