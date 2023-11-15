@@ -30,7 +30,7 @@ export const startMainServer = async () => {
   await server.listen({ port: 61121 });
   const res = server.server.address();
 
-  server.log.info(
+  console.log(
     `TRPC API Server listening on ${typeof res === "string" ? res : res?.port}`,
   );
 };

@@ -10,7 +10,7 @@ import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
 import { router } from "..";
-import { updateStaticRoute } from "./server";
+import { restartClientServer } from "./server";
 import { syncFolder } from "./sync";
 import { t } from "./utils";
 
@@ -59,7 +59,7 @@ export const library = t.router({
       },
     });
 
-    await updateStaticRoute(lib);
+    await restartClientServer();
 
     return lib;
   }),
@@ -98,7 +98,7 @@ export const library = t.router({
       prisma.color.deleteMany(),
     ]);
 
-    await updateStaticRoute(null);
+    await restartClientServer();
 
     return result;
   }),
