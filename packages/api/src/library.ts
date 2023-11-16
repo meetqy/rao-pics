@@ -20,11 +20,12 @@ let watcher: chokidar.FSWatcher | null = null;
 
 export const libraryCore = {
   findUnique: async () => {
-    const [library, pendingCount, syncCount, unSyncCount] =
+    const [library, pendingCount, syncCount, trashCount, unSyncCount] =
       await prisma.$transaction([
         prisma.library.findFirst(),
         prisma.pending.count(),
         prisma.image.count(),
+        prisma.image.count({ where: { isDeleted: true } }),
         prisma.log.count(),
       ]);
 
@@ -35,6 +36,7 @@ export const libraryCore = {
       pendingCount,
       syncCount,
       unSyncCount,
+      trashCount,
     };
   },
 };

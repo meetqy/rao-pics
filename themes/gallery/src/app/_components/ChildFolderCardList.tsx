@@ -30,7 +30,7 @@ const ChildFolderCardList = ({ folderId }: { folderId: string }) => {
             return (
               <div
                 onClick={() => {
-                  void router.push(`/${layout}/${child.id}`);
+                  void router.push(`/${layout}?m=${child.id}`);
                 }}
                 aria-hidden
                 key={child.id}
