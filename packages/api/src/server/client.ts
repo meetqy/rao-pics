@@ -25,6 +25,10 @@ export const startClientServer = async () => {
   const config = await routerCore.config.findUnique();
   if (!config) return;
 
+  server.get("/common/config", (_req, reply) => {
+    return reply.send(config);
+  });
+
   await server.register(fastifyStatic, {
     root: path.join(
       process.resourcesPath,
