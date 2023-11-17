@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { exposeElectronTRPC } from "electron-trpc/main";
 import { electronAPI } from "@electron-toolkit/preload";
 
 // Custom APIs for renderer
@@ -36,8 +35,6 @@ if (process.contextIsolated) {
       showItemInFolder: (path: string) =>
         ipcRenderer.invoke("shell.showItemInFolder", path),
     });
-
-    exposeElectronTRPC();
   } catch (error) {
     console.error(error);
   }

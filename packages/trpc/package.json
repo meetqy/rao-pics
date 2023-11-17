@@ -1,0 +1,32 @@
+{
+  "name": "@rao-pics/trpc",
+  "version": "0.0.1",
+  "main": "./src/index.ts",
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules"
+  },
+  "prettier": "@rao-pics/prettier-config",
+  "eslintConfig": {
+    "extends": [
+      "@rao-pics/eslint-config/base",
+      "@rao-pics/eslint-config/nextjs",
+      "@rao-pics/eslint-config/react"
+    ],
+    "root": true
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.8.3",
+    "@trpc/client": "next",
+    "@trpc/react-query": "next",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@rao-pics/api": "workspace:*",
+    "@rao-pics/eslint-config": "workspace:*",
+    "@rao-pics/prettier-config": "workspace:*",
+    "@rao-pics/tsconfig": "workspace:*",
+    "@types/node": "^18.17.6",
+    "@types/react": "^18.2.20"
+  }
+}

@@ -27,7 +27,7 @@ const languages = {
 };
 
 const Index = () => {
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
 
   const { lang } = useLanguage(languages);
 

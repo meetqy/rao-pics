@@ -34,33 +34,11 @@ const BaseConfig = {
       to: "extraResources",
       filter: ["db.sqlite", "migrations/**/*", "!migrations/.version"],
     },
-    ...copyTheme("gallery"),
+    {
+      from: join(__dirname, "../../../", "themes", "gallery", "out"),
+      to: "extraResources/themes/gallery",
+    },
   ],
 };
-
-function copyTheme(name) {
-  // 主题目录
-  const project = join(__dirname, "../../../", "themes", name);
-  const to = `themes/${name}`;
-
-  return [
-    {
-      from: join(project, ".next/standalone/node_modules"),
-      to: `${to}/node_modules`,
-    },
-    {
-      from: join(project, ".next/standalone/themes", name),
-      to,
-    },
-    {
-      from: join(project, "public"),
-      to: `${to}/public`,
-    },
-    {
-      from: join(project, ".next", "static"),
-      to: `${to}/.next/static`,
-    },
-  ];
-}
 
 module.exports = BaseConfig;

@@ -10,9 +10,6 @@
   ],
   "compilerOptions": {
     "composite": true,
-    // FIXME: @rao-pics/electron The inferred type of 'trpc' cannot be named without a reference to
-    // https://github.com/microsoft/TypeScript/issues/42873
-    "preserveSymlinks": true,
     "baseUrl": ".",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "paths": {

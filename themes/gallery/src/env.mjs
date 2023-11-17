@@ -6,11 +6,6 @@ export const env = createEnv({
     PORT: z.coerce.number().default(3000),
   },
   /**
-   * Specify your server-side environment variables schema here. This way you can ensure the app isn't
-   * built with invalid env vars.
-   */
-  server: {},
-  /**
    * Specify your client-side environment variables schema here.
    * For them to be exposed to the client, prefix them with `NEXT_PUBLIC_`.
    */
@@ -22,6 +17,7 @@ export const env = createEnv({
    */
   runtimeEnv: {
     PORT: process.env.PORT,
+    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:
     !!process.env.CI ||

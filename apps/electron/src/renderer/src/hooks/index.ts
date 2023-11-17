@@ -8,7 +8,7 @@ type Language = "zh-cn" | "en-us" | "zh-tw";
  * @param languages language object template
  */
 export function useLanguage<T>(languages: T) {
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
 
   const { data: config } = trpc.config.findUnique.useQuery();
 

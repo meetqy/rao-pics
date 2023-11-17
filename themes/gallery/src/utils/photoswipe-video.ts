@@ -1,3 +1,5 @@
+"use client";
+
 import type PhotoSwipeLightbox from "photoswipe/dist/types/lightbox/lightbox";
 import type Content from "photoswipe/dist/types/slide/content";
 

@@ -9,7 +9,8 @@ import type { PendingTypeEnum } from "@rao-pics/constant";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
 
-import { router, updateLibraryPath } from "..";
+import { router } from "..";
+import { restartClientServer } from "./server";
 import { syncFolder } from "./sync";
 import { t } from "./utils";
 
@@ -17,13 +18,14 @@ const ee = new EventEmitter();
 
 let watcher: chokidar.FSWatcher | null = null;
 
-export const library = t.router({
-  findUnique: t.procedure.query(async () => {
-    const [library, pendingCount, syncCount, unSyncCount] =
+export const libraryCore = {
+  findUnique: async () => {
+    const [library, pendingCount, syncCount, trashCount, unSyncCount] =
       await prisma.$transaction([
         prisma.library.findFirst(),
         prisma.pending.count(),
         prisma.image.count(),
+        prisma.image.count({ where: { isDeleted: true } }),
         prisma.log.count(),
       ]);
 
@@ -34,8 +36,13 @@ export const library = t.router({
       pendingCount,
       syncCount,
       unSyncCount,
+      trashCount,
     };
-  }),
+  },
+};
+
+export const library = t.router({
+  findUnique: t.procedure.query(libraryCore.findUnique),
 
   add: t.procedure.input(z.string()).mutation(async ({ input }) => {
     if (!input.endsWith(".library")) {
@@ -54,7 +61,7 @@ export const library = t.router({
       },
     });
 
-    await updateLibraryPath();
+    await restartClientServer();
 
     return lib;
   }),
@@ -93,7 +100,7 @@ export const library = t.router({
       prisma.color.deleteMany(),
     ]);
 
-    await updateLibraryPath();
+    await restartClientServer();
 
     return result;
   }),

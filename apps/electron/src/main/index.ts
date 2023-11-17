@@ -1,20 +1,10 @@
-import cp from "child_process";
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
-import { createIPCHandler } from "electron-trpc/main";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
-import { CaptureConsole } from "@sentry/integrations";
 import * as Sentry from "@sentry/node";
-import getPort, { portNumbers } from "get-port";
 import ip from "ip";
 
-import {
-  getCaller,
-  router,
-  startExpressServer,
-  stopExpressServer,
-} from "@rao-pics/api";
-import { DEFAULT_THEME } from "@rao-pics/constant";
+import { closeServer, router, startServer } from "@rao-pics/api";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
 
@@ -29,36 +19,18 @@ process.env.VERSION = app.getVersion();
 /**
  * Sentry init
  */
-Sentry.init({
-  dsn: "https://66785ab164164bf9bc05591a0c431557@o4505321607397376.ingest.sentry.io/4506081497251840",
-  debug: IS_DEV,
-  environment: IS_DEV ? "development" : "production",
-  integrations: [new CaptureConsole()],
-});
-
-const controller = new AbortController();
-const { signal } = controller;
-
-// 获取端口
-async function initConfig() {
-  const caller = router.createCaller({});
-  const config = await caller.config.findUnique();
-
-  const serverPort =
-    config?.serverPort ?? (await getPort({ port: portNumbers(9100, 9300) }));
-  const clientPort =
-    config?.clientPort ?? (await getPort({ port: portNumbers(9301, 9500) }));
-
-  return await caller.config.upsert({
-    serverPort,
-    clientPort,
-    ip: ip.address(),
+if (!IS_DEV) {
+  Sentry.init({
+    dsn: "https://66785ab164164bf9bc05591a0c431557@o4505321607397376.ingest.sentry.io/4506081497251840",
+    environment: "production",
   });
 }
 
+const controller = new AbortController();
+
 // 窗口获取焦点时更新 ip
 app.on("browser-window-focus", () => {
-  const caller = getCaller();
+  const caller = router.createCaller({});
   caller.config
     .upsert({
       ip: ip.address(),
@@ -83,33 +55,8 @@ async function initWatchLibrary() {
 }
 
 const mainWindowReadyToShow = async () => {
-  const config = await initConfig();
-  await startExpressServer();
+  await startServer();
   await initWatchLibrary();
-
-  const { clientPort } = config;
-
-  if (!clientPort) return;
-
-  if (!IS_DEV) {
-    const child = cp.fork(
-      join(
-        process.resourcesPath,
-        "themes",
-        config?.theme ?? DEFAULT_THEME,
-        "server.js",
-      ),
-      ["child"],
-      {
-        env: { PORT: clientPort.toString(), HOSTNAME: "0.0.0.0" },
-        signal,
-      },
-    );
-
-    child.on("error", (e) => {
-      console.error(e);
-    });
-  }
 };
 
 async function createWindow() {
@@ -165,7 +112,6 @@ async function createWindow() {
 
   await mainWindowReadyToShow();
 
-  createIPCHandler({ router, windows: [mainWindow] });
   createCustomIPCHandle();
   createMenu(mainWindow);
   createTray(mainWindow);
@@ -221,7 +167,7 @@ app.on("quit", () => {
   // 关闭子进程
   controller.abort();
   // 关闭静态服务器
-  stopExpressServer();
+  void closeServer();
 
   if (PLATFORM != "darwin") {
     app.quit();
