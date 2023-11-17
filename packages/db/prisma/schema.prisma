@@ -18,9 +18,9 @@ model Config {
   // 主题
   theme            String  @default("gallery")
   // 服务器 API 端口
-  serverPort       Int     @default(61121)
+  serverPort       Int     @default(61122)
   // Library 资源 / 主题端口
-  clientPort       Int     @default(61122)
+  clientPort       Int     @default(61121)
   // 当前 IP
   ip               String  @default("localhost")
   // 显示回收站
