@@ -32,6 +32,7 @@ export const startClientServer = async () => {
       "themes",
       config.theme,
     ),
+    redirect: true,
   });
 
   const libray = await routerCore.library.findUnique();

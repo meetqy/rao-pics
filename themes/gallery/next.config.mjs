@@ -11,6 +11,7 @@ const config = {
   typescript: { ignoreBuildErrors: true },
   output: "export",
   images: { unoptimized: true },
+  trailingSlash: true,
 };
 
 export default config;
