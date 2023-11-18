@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.pswp__img {
+  @apply !bg-transparent;
+}

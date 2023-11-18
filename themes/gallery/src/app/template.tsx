@@ -7,11 +7,19 @@ import { trpc } from "@rao-pics/trpc";
 
 import type { SettingType } from "~/states/setting";
 import { defaultSetting, settingSelector } from "~/states/setting";
+import Setting from "./_components/Setting";
 
-export default function Page({ children }: { children: React.ReactNode }) {
+export default function Template({ children }: { children: React.ReactNode }) {
   const [, setSetting] = useRecoilState(settingSelector);
 
   const { data: lib } = trpc.library.findUnique.useQuery();
+  const { data: config } = trpc.config.findUnique.useQuery();
+
+  useEffect(() => {
+    if (config) {
+      document.querySelector("html")?.setAttribute("data-theme", config.color);
+    }
+  }, [config]);
 
   useEffect(() => {
     const local = localStorage.getItem("setting");
@@ -24,5 +32,10 @@ export default function Page({ children }: { children: React.ReactNode }) {
     });
   }, [setSetting, lib]);
 
-  return children;
+  return (
+    <>
+      {children}
+      <Setting />
+    </>
+  );
 }

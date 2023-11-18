@@ -82,6 +82,9 @@ const colorScheme = [
   ["night", "dark,angle"],
   ["coffee", "dark,angle"],
   ["winter", "light,angle"],
+  ["dim", "dark,right-angle"],
+  ["nord", "light,angle"],
+  ["sunset", "dark,angle"],
 ];
 
 const languages = {
@@ -126,7 +129,7 @@ const ColorPage = () => {
               {tags.map((item) => (
                 <input
                   key={item.name}
-                  className="btn-sm join-item btn"
+                  className="btn btn-sm join-item"
                   type="radio"
                   name="options"
                   checked={item.name === tag}

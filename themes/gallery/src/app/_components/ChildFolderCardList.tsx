@@ -55,7 +55,7 @@ const ChildFolderCardList = ({ folderId }: { folderId: string }) => {
             return (
               <Card key={child.id}>
                 <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-neutral pb-14 transition-all ease-in-out">
-                  <LightBulbIcon className="h-24 w-24 text-base-100" />
+                  <LightBulbIcon className="h-24 w-24 text-neutral-content" />
                 </div>
               </Card>
             );

@@ -1,23 +1,25 @@
-"use client";
-
 import "~/styles/globals.css";
 
-import { RecoilRoot } from "recoil";
+import type { Metadata } from "next";
 
-import { TRPCReactProvider } from "@rao-pics/trpc";
+import {
+  RecoilRootWrapper,
+  TRPCReactProviderWrapper,
+} from "./_components/LayoutWrapper";
 
-import Setting from "./_components/Setting";
+export const metadata: Metadata = {
+  title: "Gallery",
+  description: "RAO.PICS 默认主题",
+  manifest: "/manifest.json",
+};
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en">
       <body>
-        <RecoilRoot>
-          <TRPCReactProvider>
-            {props.children}
-            <Setting />
-          </TRPCReactProvider>
-        </RecoilRoot>
+        <RecoilRootWrapper>
+          <TRPCReactProviderWrapper>{props.children}</TRPCReactProviderWrapper>
+        </RecoilRootWrapper>
       </body>
     </html>
   );
