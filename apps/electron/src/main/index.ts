@@ -4,7 +4,7 @@ import { electronApp, optimizer } from "@electron-toolkit/utils";
 import * as Sentry from "@sentry/node";
 import ip from "ip";
 
-import { closeServer, router, startServer } from "@rao-pics/api";
+import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
 
@@ -55,6 +55,9 @@ async function initWatchLibrary() {
 }
 
 const mainWindowReadyToShow = async () => {
+  // 初始化 config
+  await routerCore.config.upsert({});
+
   await startServer();
   await initWatchLibrary();
 };
