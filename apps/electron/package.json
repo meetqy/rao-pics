@@ -1,6 +1,6 @@
 {
   "name": "@rao-pics/electron",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0-alpha.10",
   "description": "Preview photos and medias on any device",
   "homepage": "https://rao.pics",
   "author": {
@@ -9,7 +9,7 @@
   },
   "main": "./out/main/index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=prodcution pnpm typecheck && electron-vite build",
+    "build": "pnpm typecheck && electron-vite build",
     "build:mac": "node ./electron-builder/mac.cjs",
     "build:win": "node ./electron-builder/win.cjs",
     "clean": "git clean -xdf node_modules out releases .turbo",
@@ -17,7 +17,7 @@
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "postinstall": "electron-builder install-app-deps",
     "lint": "eslint .",
-    "releases": "cross-env NODE_ENV=prodcution git clean -xdf releases && pnpm build && pnpm build:mac && pnpm build:win",
+    "releases": "git clean -xdf releases && pnpm build && pnpm build:mac && pnpm build:win",
     "start": "electron-vite preview",
     "typecheck": "pnpm typecheck:node && pnpm typecheck:web",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",

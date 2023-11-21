@@ -1,15 +1,16 @@
 import { resolve } from "path";
 import { defineConfig, externalizeDepsPlugin } from "electron-vite";
-// import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react";
 
-// const IS_DEV = process.env.NODE_ENV === "development";
-// const IS_TEST_BUILDER = process.env.IS_TEST_BUILDER === "true";
+const IS_DEV = process.env.NODE_ENV != "production";
 
 export default defineConfig({
   main: {
     build: {
-      sourcemap: process.env.NODE_ENV === "production" ? true : "inline",
+      sourcemap: IS_DEV ? "inline" : true,
+    },
+    esbuild: {
+      drop: IS_DEV ? undefined : ["console", "debugger"],
     },
     plugins: [
       externalizeDepsPlugin({
@@ -28,17 +29,6 @@ export default defineConfig({
           "chokidar",
         ],
       }),
-
-      // !IS_DEV &&
-      //   !IS_TEST_BUILDER &&
-      //   sentryVitePlugin({
-      //     org: "meetqy",
-      //     project: "rao-pics",
-      //     // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
-      //     // and need `project:releases` and `org:read` scopes
-      //     authToken:
-      //       "7979f62cdaee7ba46204863b5777bec04eed627ccb7a2c5d32262ad3a04672e7",
-      //   }),
     ],
   },
   preload: {

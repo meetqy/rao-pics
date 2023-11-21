@@ -1,10 +1,10 @@
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
-import { electronApp, optimizer } from "@electron-toolkit/utils";
+import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import ip from "ip";
 
 import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
-import { exit, IS_DEV, PLATFORM } from "@rao-pics/constant/server";
+import { exit, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
 import { RLogger } from "@rao-pics/rlog";
 
@@ -90,7 +90,7 @@ async function createWindow() {
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
-  if (IS_DEV && process.env.ELECTRON_RENDERER_URL) {
+  if (is.dev && process.env.ELECTRON_RENDERER_URL) {
     await migrate();
     void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
     mainWindow.webContents.openDevTools();
@@ -128,13 +128,13 @@ app
 
     await createWindow();
 
-    throw Error("测试错误");
-
     RLogger.info(
       `[app.whenReady] NODE_ENV: ${
         process.env.NODE_ENV ?? "development"
       }, APP_VERSION: ${process.env.APP_VERSION ?? "0.0.0"}`,
     );
+
+    // throw Error("测试错误");
 
     app.on("activate", function () {
       // On macOS it's common to re-create a window in the app when the

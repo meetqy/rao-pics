@@ -1,8 +1,15 @@
 import { homedir } from "os";
 import { join } from "path";
 import { app } from "electron";
+import { is } from "@electron-toolkit/utils";
 
 import { PRODUCT_NAME } from ".";
+
+/**
+ * 是否为开发环境，不要通过 process.env.NODE_ENV 判断
+ * 直接调用此变量
+ */
+export const IS_DEV = is.dev;
 
 /**
  * 退出程序
@@ -11,11 +18,6 @@ export const exit = () => {
   process.env.QUITE = "true";
   app.quit();
 };
-
-/**
- * 是否是开发环境
- */
-export const IS_DEV = process.env.NODE_ENV != "production";
 
 /**
  * 当前平台
@@ -31,37 +33,23 @@ const formatDirPath = (dir: string) => {
 };
 
 /**
- * sqlite.db 存放目录，不同的系统存放目录不同
+ * App UserData 数据存放目录，不同的系统存放目录不同
  */
-const DB_DIRS = {
-  darwin: formatDirPath(
-    join(homedir(), "Library", "Caches", PRODUCT_NAME, "db.sqlite"),
-  ),
-  win32: formatDirPath(
-    join(homedir(), "AppData", "Local", PRODUCT_NAME, "db.sqlite"),
-  ),
-  linux: formatDirPath(join(homedir(), ".cache", PRODUCT_NAME, "db.sqlite")),
+const APP_USERDATA_DIRS = {
+  darwin: formatDirPath(join(homedir(), "Library", "Caches", PRODUCT_NAME)),
+  win32: formatDirPath(join(homedir(), "AppData", "Local", PRODUCT_NAME)),
+  linux: formatDirPath(join(homedir(), ".cache", PRODUCT_NAME)),
 } as { [key in NodeJS.Platform]: string };
 
 /**
  * 当前系统的数据库文件存放路径
  */
-export const DB_PATH = DB_DIRS[PLATFORM];
-
-/**
- * 数据库版本存放目录
- */
-const DB_MIGRATION_VERSION_FILES = {
-  darwin: formatDirPath(
-    join(homedir(), "Library", "Caches", PRODUCT_NAME, ".version"),
-  ),
-  win32: formatDirPath(
-    join(homedir(), "AppData", "Local", PRODUCT_NAME, ".version"),
-  ),
-  linux: formatDirPath(join(homedir(), ".cache", PRODUCT_NAME, ".version")),
-} as { [key in NodeJS.Platform]: string };
+export const DB_PATH = join(APP_USERDATA_DIRS[PLATFORM], "db.sqlite");
 
 /**
  * 当前系统数据库版本存放路径
  */
-export const DB_MIGRATION_VERSION_FILE = DB_MIGRATION_VERSION_FILES[PLATFORM];
+export const DB_MIGRATION_VERSION_FILE = join(
+  APP_USERDATA_DIRS[PLATFORM],
+  ".version",
+);

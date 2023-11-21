@@ -1,16 +1,16 @@
 import { app, dialog } from "electron";
+import * as Sentry from "@sentry/electron/main";
 import chalk from "chalk";
-import Rollbar from "rollbar";
+
+import { IS_DEV } from "@rao-pics/constant/server";
 
 chalk.level = 1;
 
-const rollbar = new Rollbar({
-  accessToken: "0a07f7fe474d459dbd146553f5d202a0",
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-  environment: process.env.NODE_ENV ?? "development",
-  codeVersion: app.getVersion(),
-  reportLevel: "warning",
+Sentry.init({
+  dsn: "https://7137c0892ff3c6cbbb382c934839063b@o4506262672310272.ingest.sentry.io/4506262676045824",
+  debug: process.env.NODE_ENV != "production",
+  environment: IS_DEV ? "development" : "production",
+  release: app.getVersion(),
 });
 
 /**
@@ -20,13 +20,12 @@ const rollbar = new Rollbar({
 export const RLogger = {
   info: (message: string) => {
     console.log(chalk.blue("ℹ " + message));
-    rollbar.info(message);
   },
 
   error: (e: string | Error, alert?: boolean, type?: string) => {
     const message = e instanceof Error ? e.message : JSON.stringify(e);
     console.log(chalk.red("✖ " + message));
-    rollbar.error(message);
+    Sentry.captureException(e);
 
     const t = type ? `[${type}]` : "";
 
@@ -37,6 +36,5 @@ export const RLogger = {
 
   warning: (message: string) => {
     console.log(chalk.yellow("⚠ " + message));
-    rollbar.warning(message);
   },
 };

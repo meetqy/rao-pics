@@ -20,6 +20,7 @@
     ]
   },
   "dependencies": {
+    "@electron-toolkit/utils": "^1.0.2",
     "zod": "^3.22.2"
   },
   "devDependencies": {
