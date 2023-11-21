@@ -128,8 +128,6 @@ app
 
     await createWindow();
 
-    throw new Error("test");
-
     RLogger.info(
       `[app.whenReady] NODE_ENV: ${
         process.env.NODE_ENV ?? "development"

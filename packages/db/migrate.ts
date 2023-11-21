@@ -59,9 +59,9 @@ const runSql = async (
       await sql;
     } catch (e) {
       if (e instanceof Error) {
-        // if (e.message.includes("already exists")) {
-        //   return RLogger.warning(e.message, "runSql");
-        // }
+        if (e.message.includes("already exists")) {
+          return RLogger.warning(e.message, "runSql");
+        }
 
         throw e;
       }
