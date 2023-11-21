@@ -7,6 +7,7 @@ import ip from "ip";
 import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
+import { RLogger } from "@rao-pics/rlog";
 
 import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
@@ -35,7 +36,7 @@ app.on("browser-window-focus", () => {
     .upsert({
       ip: ip.address(),
     })
-    .catch(Sentry.captureException);
+    .catch((e) => RLogger().error(e as Error));
 });
 
 async function initWatchLibrary() {
@@ -138,6 +139,7 @@ app
     });
 
     await createWindow();
+    RLogger().info("app.whenReady");
 
     app.on("activate", function () {
       // On macOS it's common to re-create a window in the app when the
