@@ -1,5 +1,5 @@
 import { join } from "path";
-import { app, BrowserWindow, dialog, shell } from "electron";
+import { app, BrowserWindow, shell } from "electron";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import ip from "ip";
 
@@ -162,19 +162,14 @@ app.on("before-quit", (e) => {
 });
 
 app.on("quit", () => {
-  // 关闭子进程
-  controller.abort();
   // 关闭静态服务器
   void closeServer();
+  // 关闭子进程
+  controller.abort();
 
   if (PLATFORM != "darwin") {
     app.quit();
   }
-});
-
-// Catch all error.
-process.on("uncaughtException", (error) => {
-  dialog.showErrorBox("Error", error.message);
 });
 
 // In this file you can include the rest of your app"s specific main process
