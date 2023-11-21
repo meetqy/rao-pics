@@ -1,11 +1,10 @@
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { electronApp, optimizer } from "@electron-toolkit/utils";
-import * as Sentry from "@sentry/node";
 import ip from "ip";
 
 import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
-import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
+import { exit, IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
 import { RLogger } from "@rao-pics/rlog";
 
@@ -15,28 +14,17 @@ import createMenu from "./src/menu";
 import createTray from "./src/tray";
 
 /** 当前版本 */
-process.env.VERSION = app.getVersion();
-
-/**
- * Sentry init
- */
-if (!IS_DEV) {
-  Sentry.init({
-    dsn: "https://66785ab164164bf9bc05591a0c431557@o4505321607397376.ingest.sentry.io/4506081497251840",
-    environment: "production",
-  });
-}
+process.env.APP_VERSION = app.getVersion();
 
 const controller = new AbortController();
 
 // 窗口获取焦点时更新 ip
 app.on("browser-window-focus", () => {
   const caller = router.createCaller({});
-  caller.config
-    .upsert({
-      ip: ip.address(),
-    })
-    .catch((e) => RLogger().error(e as Error));
+  caller.config.upsert({
+    ip: ip.address(),
+  });
+  // .catch((e) => RLogger().error(e as Error));
 });
 
 async function initWatchLibrary() {
@@ -139,7 +127,14 @@ app
     });
 
     await createWindow();
-    RLogger().info("app.whenReady");
+
+    throw Error("测试错误");
+
+    RLogger.info(
+      `[app.whenReady] NODE_ENV: ${
+        process.env.NODE_ENV ?? "development"
+      }, APP_VERSION: ${process.env.APP_VERSION ?? "0.0.0"}`,
+    );
 
     app.on("activate", function () {
       // On macOS it's common to re-create a window in the app when the
@@ -148,9 +143,8 @@ app
     });
   })
   .catch((e) => {
-    if (e instanceof Error) {
-      dialog.showErrorBox("Error [app.whenReady]", e.message);
-    }
+    RLogger.error(e as Error, true, "app.whenReady");
+    exit();
   });
 
 // Quit when all windows are closed, except on macOS. There, it's common

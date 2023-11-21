@@ -1,12 +1,21 @@
 import { homedir } from "os";
 import { join } from "path";
+import { app } from "electron";
 
 import { PRODUCT_NAME } from ".";
 
 /**
+ * 退出程序
+ */
+export const exit = () => {
+  process.env.QUITE = "true";
+  app.quit();
+};
+
+/**
  * 是否是开发环境
  */
-export const IS_DEV = process.env.NODE_ENV === "development";
+export const IS_DEV = process.env.NODE_ENV != "production";
 
 /**
  * 当前平台

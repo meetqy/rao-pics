@@ -28,6 +28,7 @@
     "@rao-pics/tsconfig": "workspace:*",
     "@types/node": "^18.17.6",
     "cross-env": "^7.0.3",
+    "electron": "25.9.4",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6"
   }
