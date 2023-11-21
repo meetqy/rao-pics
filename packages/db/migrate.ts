@@ -58,7 +58,15 @@ const runSql = async (
     try {
       await sql;
     } catch (e) {
-      console.error(e);
+      if (e instanceof Error) {
+        // if (e.message.includes("already exists")) {
+        //   return RLogger.warning(e.message, "runSql");
+        // }
+
+        throw e;
+      }
+
+      throw e;
     }
   }
 };
@@ -92,10 +100,10 @@ export const migrate = async (appMigrationsPath?: string) => {
   } catch (e) {
     if (e instanceof Error) {
       if (e.message.includes("duplicate column name")) {
-        return console.error("migrate error: ", e.message);
+        return RLogger.warning(e.message, "migrate");
       }
-
-      throw e;
     }
+
+    throw e;
   }
 };

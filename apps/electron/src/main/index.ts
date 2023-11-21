@@ -7,7 +7,6 @@ import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
 import { PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
 import { RLogger } from "@rao-pics/rlog";
-import { exit } from "@rao-pics/utils/server";
 
 import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
@@ -21,11 +20,11 @@ const controller = new AbortController();
 
 // 窗口获取焦点时更新 ip
 app.on("browser-window-focus", () => {
-  const caller = router.createCaller({});
-  caller.config.upsert({
-    ip: ip.address(),
-  });
-  // .catch((e) => RLogger().error(e as Error));
+  routerCore.config
+    .upsert({
+      ip: ip.address(),
+    })
+    .catch(RLogger.warning);
 });
 
 async function initWatchLibrary() {
@@ -129,13 +128,13 @@ app
 
     await createWindow();
 
+    throw new Error("test");
+
     RLogger.info(
       `[app.whenReady] NODE_ENV: ${
         process.env.NODE_ENV ?? "development"
       }, APP_VERSION: ${process.env.APP_VERSION ?? "0.0.0"}`,
     );
-
-    // throw Error("测试错误");
 
     app.on("activate", function () {
       // On macOS it's common to re-create a window in the app when the
@@ -145,7 +144,8 @@ app
   })
   .catch((e) => {
     RLogger.error(e as Error, true, "app.whenReady");
-    exit();
+    process.env.QUITE = "true";
+    app.exit();
   });
 
 // Quit when all windows are closed, except on macOS. There, it's common

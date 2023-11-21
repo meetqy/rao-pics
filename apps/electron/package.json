@@ -33,7 +33,6 @@
     "@rao-pics/db": "workspace:*",
     "@rao-pics/rlog": "workspace:^",
     "@rao-pics/trpc": "workspace:^",
-    "@rao-pics/utils": "workspace:^",
     "@sentry/integrations": "^7.74.1",
     "@sentry/node": "^7.74.1",
     "electron-updater": "^5.3.0",

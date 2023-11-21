@@ -51,9 +51,6 @@ importers:
       '@rao-pics/trpc':
         specifier: workspace:^
         version: link:../../packages/trpc
-      '@rao-pics/utils':
-        specifier: workspace:^
-        version: link:../../packages/utils
       '@sentry/integrations':
         specifier: ^7.74.1
         version: 7.74.1
