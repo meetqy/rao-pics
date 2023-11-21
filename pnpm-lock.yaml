@@ -51,6 +51,9 @@ importers:
       '@rao-pics/trpc':
         specifier: workspace:^
         version: link:../../packages/trpc
+      '@rao-pics/utils':
+        specifier: workspace:^
+        version: link:../../packages/utils
       '@sentry/integrations':
         specifier: ^7.74.1
         version: 7.74.1
@@ -261,9 +264,6 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
-      electron:
-        specifier: 25.9.4
-        version: 25.9.4
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -417,6 +417,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      electron:
+        specifier: 25.9.4
+        version: 25.9.4
       eslint:
         specifier: ^8.47.0
         version: 8.47.0

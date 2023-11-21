@@ -1,6 +1,5 @@
 import { homedir } from "os";
 import { join } from "path";
-import { app } from "electron";
 import { is } from "@electron-toolkit/utils";
 
 import { PRODUCT_NAME } from ".";
@@ -10,14 +9,6 @@ import { PRODUCT_NAME } from ".";
  * 直接调用此变量
  */
 export const IS_DEV = is.dev;
-
-/**
- * 退出程序
- */
-export const exit = () => {
-  process.env.QUITE = "true";
-  app.quit();
-};
 
 /**
  * 当前平台

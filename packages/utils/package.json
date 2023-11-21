@@ -6,6 +6,10 @@
     ".": "./index.ts"
   },
   "main": "./index.ts",
+  "files": [
+    "index.ts",
+    "server.ts"
+  ],
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
@@ -26,6 +30,7 @@
     "@vitest/coverage-v8": "^0.34.3",
     "@vitest/ui": "^0.34.3",
     "cross-env": "^7.0.3",
+    "electron": "25.9.4",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6",
     "vitest": "^0.34.2"

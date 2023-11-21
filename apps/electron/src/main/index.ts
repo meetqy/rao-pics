@@ -4,9 +4,10 @@ import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import ip from "ip";
 
 import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
-import { exit, PLATFORM } from "@rao-pics/constant/server";
+import { PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate } from "@rao-pics/db";
 import { RLogger } from "@rao-pics/rlog";
+import { exit } from "@rao-pics/utils/server";
 
 import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
