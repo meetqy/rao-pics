@@ -1,11 +1,11 @@
 import { join } from "path";
-import { app, BrowserWindow, shell } from "electron";
+import { app, BrowserWindow, dialog, shell } from "electron";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import ip from "ip";
 
 import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
 import { PLATFORM } from "@rao-pics/constant/server";
-import { createDbPath, migrate } from "@rao-pics/db";
+import { createDbPath, migrate, prisma } from "@rao-pics/db";
 import { RLogger } from "@rao-pics/rlog";
 
 import { hideDock } from "./src/dock";
@@ -22,24 +22,6 @@ RLogger.info(
   }`,
   "main",
 );
-
-const controller = new AbortController();
-
-// 窗口获取焦点时更新 ip
-app.on("browser-window-focus", () => {
-  (async () => {
-    const config = await routerCore.config.upsert({
-      ip: ip.address(),
-    });
-
-    RLogger.info(
-      `update config success, ip: ${config.ip}`,
-      "browser-window-focus",
-    );
-  })().catch((e) => {
-    RLogger.error(e as Error, true, "browser-window-focus");
-  });
-});
 
 async function initWatchLibrary() {
   const caller = router.createCaller({});
@@ -107,6 +89,34 @@ async function createWindow() {
       e.preventDefault();
       mainWindow.hide();
     }
+  });
+
+  mainWindow.on("focus", () => {
+    (async () => {
+      const newIp = ip.address();
+      const config = await routerCore.config.findUnique();
+
+      if (config?.ip === newIp) return;
+
+      await routerCore.config.upsert({
+        ip: ip.address(),
+      });
+
+      RLogger.info(`update config success, ip: ${newIp}`, "mainWindow focus");
+
+      void dialog
+        .showMessageBox({
+          type: "info",
+          title: "提示",
+          message: "检测到 IP 地址发生变化，需要重新加载。",
+          buttons: ["确定"],
+        })
+        .then(() => {
+          mainWindow.reload();
+        });
+    })().catch((e) => {
+      RLogger.error(e as Error, true, "mainWindow focus");
+    });
   });
 
   // HMR for renderer base on electron-vite cli.
@@ -179,8 +189,7 @@ app.on("before-quit", (e) => {
 app.on("quit", () => {
   // 关闭静态服务器
   void closeServer();
-  // 关闭子进程
-  controller.abort();
+  void prisma.$disconnect();
 
   if (PLATFORM != "darwin") {
     app.quit();

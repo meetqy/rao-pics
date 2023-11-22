@@ -75,8 +75,6 @@ const BasicPage = () => {
 
   const { data: config } = trpc.config.findUnique.useQuery();
 
-  console.log(config);
-
   const { data: library } = trpc.library.findUnique.useQuery();
   const onStartSync = trpc.sync.start.useMutation({
     onError: (err) => {
