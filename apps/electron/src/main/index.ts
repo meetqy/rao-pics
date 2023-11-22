@@ -199,13 +199,15 @@ app.on("before-quit", (e) => {
 });
 
 app.on("quit", () => {
-  // 关闭静态服务器
-  void closeServer();
-  void prisma.$disconnect();
+  void (async () => {
+    // 关闭静态服务器
+    await closeServer();
+    await prisma.$disconnect();
 
-  if (PLATFORM != "darwin") {
-    app.quit();
-  }
+    if (PLATFORM != "darwin") {
+      app.quit();
+    }
+  })();
 });
 
 // In this file you can include the rest of your app"s specific main process
