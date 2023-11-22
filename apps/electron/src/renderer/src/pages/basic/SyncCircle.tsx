@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLanguage } from "@renderer/hooks";
-import { trpc } from "@renderer/utils/trpc";
+
+import { trpc } from "@rao-pics/trpc";
 
 type Status = "completed" | "error" | "ok" | "start";
 

@@ -1,12 +1,13 @@
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
-import { electronApp, optimizer } from "@electron-toolkit/utils";
-import * as Sentry from "@sentry/node";
+import { electronApp, is, optimizer } from "@electron-toolkit/utils";
+import * as Sentry from "@sentry/electron";
 import ip from "ip";
 
 import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
-import { createDbPath, migrate } from "@rao-pics/db";
+import { createDbPath, migrate, prisma } from "@rao-pics/db";
+import { RLogger } from "@rao-pics/rlog";
 
 import { hideDock } from "./src/dock";
 import { createCustomIPCHandle } from "./src/ipc";
@@ -14,29 +15,20 @@ import createMenu from "./src/menu";
 import createTray from "./src/tray";
 
 /** 当前版本 */
-process.env.VERSION = app.getVersion();
+process.env.APP_VERSION = app.getVersion();
 
-/**
- * Sentry init
- */
-if (!IS_DEV) {
-  Sentry.init({
-    dsn: "https://66785ab164164bf9bc05591a0c431557@o4505321607397376.ingest.sentry.io/4506081497251840",
-    environment: "production",
-  });
-}
-
-const controller = new AbortController();
-
-// 窗口获取焦点时更新 ip
-app.on("browser-window-focus", () => {
-  const caller = router.createCaller({});
-  caller.config
-    .upsert({
-      ip: ip.address(),
-    })
-    .catch(Sentry.captureException);
+Sentry.init({
+  dsn: "https://a5a843cd51513a6b55c1f638d39748af@o4506262672310272.ingest.sentry.io/4506263938203648",
+  debug: IS_DEV,
+  environment: IS_DEV ? "development" : "production",
 });
+
+RLogger.info(
+  `NODE_ENV: ${process.env.NODE_ENV ?? "development"}, APP_VERSION: ${
+    process.env.APP_VERSION ?? "0.0.0"
+  }`,
+  "main",
+);
 
 async function initWatchLibrary() {
   const caller = router.createCaller({});
@@ -56,7 +48,14 @@ async function initWatchLibrary() {
 
 const mainWindowReadyToShow = async () => {
   // 初始化 config
-  await routerCore.config.upsert({});
+  const config = await routerCore.config.upsert({
+    ip: ip.address(),
+  });
+
+  RLogger.info(
+    `init config success, ip: ${config.ip}, clientPort: ${config.clientPort}, serverPort: ${config.serverPort}`,
+    "mainWindowReadyToShow",
+  );
 
   await startServer();
   await initWatchLibrary();
@@ -99,9 +98,39 @@ async function createWindow() {
     }
   });
 
+  mainWindow.on("focus", () => {
+    (async () => {
+      const newIp = ip.address();
+      const config = await routerCore.config.findUnique();
+
+      if (config?.ip === newIp) return;
+
+      await routerCore.config.upsert({
+        ip: ip.address(),
+      });
+
+      RLogger.info(`update config success, ip: ${newIp}`, "mainWindow focus");
+
+      void dialog
+        .showMessageBox({
+          type: "info",
+          title: "提示",
+          message: "检测到 IP 地址发生变化，需要重新加载。",
+          buttons: ["确定"],
+        })
+        .then(() => {
+          mainWindow.reload();
+        });
+    })().catch((e) => {
+      RLogger.error(e as Error, "mainWindow focus", (t, msg) => {
+        dialog.showErrorBox(`${t}`, msg);
+      });
+    });
+  });
+
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
-  if (IS_DEV && process.env.ELECTRON_RENDERER_URL) {
+  if (is.dev && process.env.ELECTRON_RENDERER_URL) {
     await migrate();
     void mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
     mainWindow.webContents.openDevTools();
@@ -146,9 +175,12 @@ app
     });
   })
   .catch((e) => {
-    if (e instanceof Error) {
-      dialog.showErrorBox("Error [app.whenReady]", e.message);
-    }
+    RLogger.error(e as Error, "app.whenReady", (t, msg) => {
+      dialog.showErrorBox(`${t}`, msg);
+
+      process.env.QUITE = "true";
+      app.exit();
+    });
   });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -167,19 +199,13 @@ app.on("before-quit", (e) => {
 });
 
 app.on("quit", () => {
-  // 关闭子进程
-  controller.abort();
   // 关闭静态服务器
   void closeServer();
+  void prisma.$disconnect();
 
   if (PLATFORM != "darwin") {
     app.quit();
   }
-});
-
-// Catch all error.
-process.on("uncaughtException", (error) => {
-  dialog.showErrorBox("Error", error.message);
 });
 
 // In this file you can include the rest of your app"s specific main process

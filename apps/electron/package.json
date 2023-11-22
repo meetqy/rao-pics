@@ -1,6 +1,6 @@
 {
   "name": "@rao-pics/electron",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0-alpha.10",
   "description": "Preview photos and medias on any device",
   "homepage": "https://rao.pics",
   "author": {
@@ -9,7 +9,7 @@
   },
   "main": "./out/main/index.js",
   "scripts": {
-    "build": "npm run typecheck && electron-vite build",
+    "build": "pnpm typecheck && electron-vite build",
     "build:mac": "node ./electron-builder/mac.cjs",
     "build:win": "node ./electron-builder/win.cjs",
     "clean": "git clean -xdf node_modules out releases .turbo",
@@ -31,9 +31,10 @@
     "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/db": "workspace:*",
+    "@rao-pics/rlog": "workspace:^",
     "@rao-pics/trpc": "workspace:^",
+    "@sentry/electron": "^4.14.0",
     "@sentry/integrations": "^7.74.1",
-    "@sentry/node": "^7.74.1",
     "electron-updater": "^5.3.0",
     "ip": "^1.1.8",
     "lodash": "^4.17.21",

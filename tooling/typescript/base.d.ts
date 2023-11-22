@@ -1,6 +1,13 @@
 export {};
 
 declare global {
+  interface ProcessEnv {
+    /**
+     * App 版本号 (apps/electron => package.json 中的 version)
+     */
+    APP_VERSION: string;
+  }
+
   interface ReadonlyArray<T> {
     /**
      * Determines whether an array includes a certain element, returning true or false as appropriate.

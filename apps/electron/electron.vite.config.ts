@@ -1,15 +1,20 @@
 import { resolve } from "path";
 import { defineConfig, externalizeDepsPlugin } from "electron-vite";
-// import { sentryVitePlugin } from "@sentry/vite-plugin";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react";
 
-// const IS_DEV = process.env.NODE_ENV === "development";
-// const IS_TEST_BUILDER = process.env.IS_TEST_BUILDER === "true";
+const IS_DEV = process.env.NODE_ENV != "production";
+
+process.env.SENTRY_AUTH_TOKEN =
+  "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";
 
 export default defineConfig({
   main: {
     build: {
-      sourcemap: process.env.NODE_ENV === "production" ? true : "inline",
+      sourcemap: IS_DEV ? "inline" : true,
+    },
+    esbuild: {
+      drop: IS_DEV ? undefined : ["console", "debugger"],
     },
     plugins: [
       externalizeDepsPlugin({
@@ -18,6 +23,7 @@ export default defineConfig({
           "@rao-pics/api",
           "@rao-pics/constant",
           "@rao-pics/trpc",
+          "@rao-pics/rlog",
 
           // package.json => type:module 的依赖，electron 中需要打包到代码中
           "superjson",
@@ -28,16 +34,12 @@ export default defineConfig({
         ],
       }),
 
-      // !IS_DEV &&
-      //   !IS_TEST_BUILDER &&
-      //   sentryVitePlugin({
-      //     org: "meetqy",
-      //     project: "rao-pics",
-      //     // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
-      //     // and need `project:releases` and `org:read` scopes
-      //     authToken:
-      //       "7979f62cdaee7ba46204863b5777bec04eed627ccb7a2c5d32262ad3a04672e7",
-      //   }),
+      !IS_DEV &&
+        sentryVitePlugin({
+          org: "raopics",
+          project: "electron",
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+        }),
     ],
   },
   preload: {

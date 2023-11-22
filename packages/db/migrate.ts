@@ -2,6 +2,7 @@ import { join } from "path";
 import fs from "fs-extra";
 
 import { DB_MIGRATION_VERSION_FILE, IS_DEV } from "@rao-pics/constant/server";
+import { RLogger } from "@rao-pics/rlog";
 
 import type { prisma } from ".";
 
@@ -32,6 +33,13 @@ const runSql = async (
   latestVersion: string,
   file: string,
 ) => {
+  const path = join(migratesPath, latestVersion, "migration.sql");
+
+  if (!fs.existsSync(path)) {
+    RLogger.info(`migrate: ${path} not exists`);
+    return;
+  }
+
   const sqls = fs
     .readFileSync(join(migratesPath, latestVersion, "migration.sql"), "utf-8")
     .split(";\n")
@@ -50,7 +58,15 @@ const runSql = async (
     try {
       await sql;
     } catch (e) {
-      console.error(e);
+      if (e instanceof Error) {
+        if (e.message.includes("already exists")) {
+          return RLogger.warning(e.message, "runSql");
+        }
+
+        throw e;
+      }
+
+      throw e;
     }
   }
 };
@@ -84,10 +100,10 @@ export const migrate = async (appMigrationsPath?: string) => {
   } catch (e) {
     if (e instanceof Error) {
       if (e.message.includes("duplicate column name")) {
-        return console.error("migrate error: ", e.message);
+        return RLogger.warning(e.message, "migrate");
       }
-
-      throw e;
     }
+
+    throw e;
   }
 };

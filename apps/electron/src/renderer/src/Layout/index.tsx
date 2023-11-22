@@ -1,8 +1,9 @@
 import { useState } from "react";
 
+import { trpc } from "@rao-pics/trpc";
+
 import { useColor, useLanguage } from "../hooks";
 import Index from "../pages/index";
-import { trpc } from "../utils/trpc";
 import LayoutAside from "./aside";
 import LayoutContent from "./content";
 

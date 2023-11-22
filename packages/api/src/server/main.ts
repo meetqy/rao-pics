@@ -7,6 +7,8 @@ import ws from "@fastify/websocket";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import fastify from "fastify";
 
+import { RLogger } from "@rao-pics/rlog";
+
 import { router, routerCore } from "../..";
 import { createContext } from "../utils";
 
@@ -21,10 +23,11 @@ void server.register(cors, {
 void server.register(ws);
 
 export const startMainServer = async () => {
-  const config = await routerCore.config.findUnique();
+  let config = await routerCore.config.findUnique();
   if (!config) return;
 
-  server.get("/common/config", (_req, reply) => {
+  server.get("/common/config", async (_req, reply) => {
+    config = await routerCore.config.findUnique();
     return reply.send(config);
   });
 
@@ -35,10 +38,10 @@ export const startMainServer = async () => {
   });
 
   await server.listen({ port: config.serverPort, host: "0.0.0.0" });
-  const res = server.server.address();
 
-  console.log(
-    `TRPC API Server listening on ${typeof res === "string" ? res : res?.port}`,
+  RLogger.info(
+    `api server listening on http://${config.ip}:${config.serverPort}`,
+    "startMainServer",
   );
 };
 

@@ -28,11 +28,15 @@ export const checkedImage = async (path: string, timeout = 3000) => {
   try {
     data = readJsonSync(path) as Metadata;
   } catch (e) {
-    throw new Error("[json-error] read json error");
+    throw new Error("[json-error] read json error", {
+      cause: "sync_error",
+    });
   }
 
   if (!EXT.includes(data.ext)) {
-    throw new Error("[unsupported-ext] not support file type");
+    throw new Error("[unsupported-ext] not support file type", {
+      cause: "sync_error",
+    });
   }
 
   return {

@@ -1,11 +1,12 @@
 import { EventEmitter } from "events";
 import { join } from "path";
-import * as Sentry from "@sentry/node";
+import { TRPCError } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 
 import { prisma } from "@rao-pics/db";
 import type { Pending } from "@rao-pics/db";
+import { RLogger } from "@rao-pics/rlog";
 
 import { router, routerCore } from "../..";
 import { configCore } from "../config";
@@ -117,13 +118,13 @@ export const syncFolder = async (path: string) => {
           },
         })
         .catch((e) => {
-          Sentry.captureException(e);
+          RLogger.error(e, "syncFolder deleteMany");
         });
     }
 
     ee.emit("sync.start", { status: "completed", type: "folder" });
   } catch (e) {
-    Sentry.captureException(e);
+    RLogger.error(e, "syncFolder");
   }
 };
 
@@ -146,7 +147,7 @@ export const syncImage = async (pendings: Pending[]) => {
           routerCore.image
             .deleteByUnique({ path: p.path })
             .catch((e) =>
-              Sentry.captureMessage((e as Error).message, "warning"),
+              RLogger.warning<typeof e>(e, "syncImage deleteByUnique"),
             );
 
           ee.emit("sync.start", { status: "ok", type: "image", count });
@@ -156,8 +157,6 @@ export const syncImage = async (pendings: Pending[]) => {
       // 删除 pending
       await router.createCaller({}).pending.delete(p.path);
     } catch (e) {
-      Sentry.captureException(e);
-
       ee.emit("sync.start", {
         status: "error",
         type: "image",
@@ -183,6 +182,26 @@ export const syncImage = async (pendings: Pending[]) => {
       }
 
       await router.createCaller({}).pending.delete(p.path);
+
+      if (e instanceof Error) {
+        // 自定义 sync_error 无需上报
+        if (e.cause === "sync_error") {
+          RLogger.warning(e, "syncImage sync_error");
+          continue;
+        }
+
+        // ZodError 类型错误 无需上报
+        if (e instanceof TRPCError && e.cause instanceof ZodError) {
+          RLogger.warning(e.cause, "syncImage ZodError");
+          continue;
+        }
+
+        RLogger.error(e, "syncImage");
+        continue;
+      }
+
+      RLogger.error<typeof e>(e, "syncImage");
+      continue;
     }
   }
 
