@@ -1,6 +1,7 @@
 import { homedir } from "os";
 import { join } from "path";
-import { is } from "@electron-toolkit/utils";
+
+// import { is } from "@electron-toolkit/utils";
 
 import { PRODUCT_NAME } from ".";
 
@@ -8,7 +9,7 @@ import { PRODUCT_NAME } from ".";
  * 是否为开发环境，不要通过 process.env.NODE_ENV 判断
  * 直接调用此变量
  */
-export const IS_DEV = is.dev;
+export const IS_DEV = process.env.NODE_ENV === "development";
 
 /**
  * 当前平台

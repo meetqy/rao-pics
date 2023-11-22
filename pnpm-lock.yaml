@@ -51,6 +51,9 @@ importers:
       '@rao-pics/trpc':
         specifier: workspace:^
         version: link:../../packages/trpc
+      '@sentry/electron':
+        specifier: ^4.14.0
+        version: 4.14.0
       '@sentry/integrations':
         specifier: ^7.74.1
         version: 7.74.1
@@ -236,9 +239,6 @@ importers:
 
   packages/constant:
     dependencies:
-      '@electron-toolkit/utils':
-        specifier: ^1.0.2
-        version: 1.0.2(electron@25.9.4)
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -310,12 +310,6 @@ importers:
 
   packages/rlog:
     dependencies:
-      '@rao-pics/constant':
-        specifier: workspace:^
-        version: link:../constant
-      '@sentry/electron':
-        specifier: ^4.14.0
-        version: 4.14.0
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -332,6 +326,9 @@ importers:
       '@rao-pics/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      '@sentry/electron':
+        specifier: ^4.14.0
+        version: 4.14.0
       '@vitest/coverage-v8':
         specifier: ^0.34.3
         version: 0.34.3(vitest@0.34.2)
@@ -341,9 +338,6 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
-      electron:
-        specifier: 25.9.4
-        version: 25.9.4
       eslint:
         specifier: ^8.47.0
         version: 8.53.0
@@ -1712,7 +1706,6 @@ packages:
       '@sentry/types': 7.74.0
       '@sentry/utils': 7.74.0
       tslib: 2.6.2
-    dev: false
 
   /@sentry-internal/tracing@7.74.1:
     resolution: {integrity: sha512-nNaiZreQxCitG2PzYPaC7XtyA9OMsETGYMKAtiK4p62/uTmeYbsBva9BoNx1XeiHRwbrVQYRMKQ9nV5e2jS4/A==}
@@ -1734,7 +1727,6 @@ packages:
       '@sentry/types': 7.74.0
       '@sentry/utils': 7.74.0
       tslib: 2.6.2
-    dev: false
 
   /@sentry/bundler-plugin-core@2.7.1:
     resolution: {integrity: sha512-ZC/B/7FzzgGpux2t54B2ioXudlq60MHMVPaUeuFzWwxmxiArrV4uBXcp18RMW5ns4biik5WBAD72vbsoloBfIQ==}
@@ -1776,7 +1768,6 @@ packages:
       '@sentry/types': 7.74.0
       '@sentry/utils': 7.74.0
       tslib: 2.6.2
-    dev: false
 
   /@sentry/core@7.74.1:
     resolution: {integrity: sha512-LvEhOSfdIvwkr+PdlrT/aA/iOLhkXrSkvjqAQyogE4ddCWeYfS0NoirxNt1EaxMBAWKhYZRqzkA7WA4LDLbzlA==}
@@ -1799,7 +1790,6 @@ packages:
       tslib: 2.6.2
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@sentry/integrations@7.74.1:
     resolution: {integrity: sha512-Q7chPehHpHB4WOQ1J/X6NiN2ptiqJMmxtL+6wHumzIAyrjup3c9XekR83qEs8zpqYJAlb/4MUlwd9fPbkhGXnQ==}
@@ -1826,7 +1816,6 @@ packages:
       tslib: 2.6.2
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@sentry/node@7.74.1:
     resolution: {integrity: sha512-aMUQ2LFZF64FBr+cgjAqjT4OkpYBIC9lyWI8QqjEHqNho5+LGu18/iVrJPD4fgs4UhGdCuAiQjpC36MbmnIDZA==}
@@ -1851,7 +1840,6 @@ packages:
       '@sentry/core': 7.74.0
       '@sentry/types': 7.74.0
       '@sentry/utils': 7.74.0
-    dev: false
 
   /@sentry/types@7.68.0:
     resolution: {integrity: sha512-5J2pH1Pjx/029zTm3CNY9MaE8Aui81nG7JCtlMp7uEfQ//9Ja4d4Sliz/kV4ARbkIKUZerSgaRAm3xCy5XOXLg==}
@@ -1861,7 +1849,6 @@ packages:
   /@sentry/types@7.74.0:
     resolution: {integrity: sha512-rI5eIRbUycWjn6s6o3yAjjWtIvYSxZDdnKv5je2EZINfLKcMPj1dkl6wQd2F4y7gLfD/N6Y0wZYIXC3DUdJQQg==}
     engines: {node: '>=8'}
-    dev: false
 
   /@sentry/types@7.74.1:
     resolution: {integrity: sha512-2jIuPc+YKvXqZETwr2E8VYnsH1zsSUR/wkIvg1uTVeVNyoowJv+YsOtCdeGyL2AwiotUBSPKu7O1Lz0kq5rMOQ==}
@@ -1881,7 +1868,6 @@ packages:
     dependencies:
       '@sentry/types': 7.74.0
       tslib: 2.6.2
-    dev: false
 
   /@sentry/utils@7.74.1:
     resolution: {integrity: sha512-qUsqufuHYcy5gFhLZslLxA5kcEOkkODITXW3c7D+x+8iP/AJqa8v8CeUCVNS7RetHCuIeWAbbTClC4c411EwQg==}
@@ -3245,7 +3231,6 @@ packages:
   /deepmerge@4.3.0:
     resolution: {integrity: sha512-z2wJZXrmeHdvYJp/Ux55wIjqo81G5Bp4c+oELTW+7ar6SogWHajt5a9gO3s3IDaGSAXjDk0vlQKN3rms8ab3og==}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /default-browser-id@3.0.0:
     resolution: {integrity: sha512-OZ1y3y0SqSICtE8DE4S8YOE9UZOJ8wO16fKWVP5J1Qz42kV9jcnMVFrEE/noXb/ss3Q4pZIH79kxofzyNNtUNA==}

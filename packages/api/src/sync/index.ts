@@ -118,13 +118,13 @@ export const syncFolder = async (path: string) => {
           },
         })
         .catch((e) => {
-          RLogger.error(e, false, "syncFolder deleteMany");
+          RLogger.error(e, "syncFolder deleteMany");
         });
     }
 
     ee.emit("sync.start", { status: "completed", type: "folder" });
   } catch (e) {
-    RLogger.error(e, false, "syncFolder");
+    RLogger.error(e, "syncFolder");
   }
 };
 
@@ -196,11 +196,11 @@ export const syncImage = async (pendings: Pending[]) => {
           continue;
         }
 
-        RLogger.error(e, false, "syncImage");
+        RLogger.error(e, "syncImage");
         continue;
       }
 
-      RLogger.error<typeof e>(e, false, "syncImage");
+      RLogger.error<typeof e>(e, "syncImage");
       continue;
     }
   }

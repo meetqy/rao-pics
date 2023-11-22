@@ -1,10 +1,11 @@
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
+import * as Sentry from "@sentry/electron";
 import ip from "ip";
 
 import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
-import { PLATFORM } from "@rao-pics/constant/server";
+import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
 import { createDbPath, migrate, prisma } from "@rao-pics/db";
 import { RLogger } from "@rao-pics/rlog";
 
@@ -15,6 +16,12 @@ import createTray from "./src/tray";
 
 /** 当前版本 */
 process.env.APP_VERSION = app.getVersion();
+
+Sentry.init({
+  dsn: "https://a5a843cd51513a6b55c1f638d39748af@o4506262672310272.ingest.sentry.io/4506263938203648",
+  debug: IS_DEV,
+  environment: IS_DEV ? "development" : "production",
+});
 
 RLogger.info(
   `NODE_ENV: ${process.env.NODE_ENV ?? "development"}, APP_VERSION: ${
@@ -115,7 +122,9 @@ async function createWindow() {
           mainWindow.reload();
         });
     })().catch((e) => {
-      RLogger.error(e as Error, true, "mainWindow focus");
+      RLogger.error(e as Error, "mainWindow focus", (t, msg) => {
+        dialog.showErrorBox(`${t}`, msg);
+      });
     });
   });
 
@@ -166,9 +175,12 @@ app
     });
   })
   .catch((e) => {
-    RLogger.error(e as Error, true, "app.whenReady");
-    process.env.QUITE = "true";
-    app.exit();
+    RLogger.error(e as Error, "app.whenReady", (t, msg) => {
+      dialog.showErrorBox(`${t}`, msg);
+
+      process.env.QUITE = "true";
+      app.exit();
+    });
   });
 
 // Quit when all windows are closed, except on macOS. There, it's common
