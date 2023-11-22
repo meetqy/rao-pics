@@ -3,7 +3,8 @@ import Content from "@renderer/components/Content";
 import Row from "@renderer/components/Row";
 import Title from "@renderer/components/Title";
 import { useDebounce, useLanguage } from "@renderer/hooks";
-import { trpc } from "@renderer/utils/trpc";
+
+import { trpc } from "@rao-pics/trpc";
 
 const languages = {
   "zh-cn": {

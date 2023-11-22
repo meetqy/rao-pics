@@ -23,10 +23,11 @@ void server.register(cors, {
 void server.register(ws);
 
 export const startMainServer = async () => {
-  const config = await routerCore.config.findUnique();
+  let config = await routerCore.config.findUnique();
   if (!config) return;
 
-  server.get("/common/config", (_req, reply) => {
+  server.get("/common/config", async (_req, reply) => {
+    config = await routerCore.config.findUnique();
     return reply.send(config);
   });
 

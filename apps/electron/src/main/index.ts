@@ -27,11 +27,18 @@ const controller = new AbortController();
 
 // 窗口获取焦点时更新 ip
 app.on("browser-window-focus", () => {
-  routerCore.config
-    .upsert({
+  (async () => {
+    const config = await routerCore.config.upsert({
       ip: ip.address(),
-    })
-    .catch(RLogger.warning);
+    });
+
+    RLogger.info(
+      `update config success, ip: ${config.ip}`,
+      "browser-window-focus",
+    );
+  })().catch((e) => {
+    RLogger.error(e as Error, true, "browser-window-focus");
+  });
 });
 
 async function initWatchLibrary() {

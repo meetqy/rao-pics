@@ -9,8 +9,9 @@ import Content from "@renderer/components/Content";
 import Row from "@renderer/components/Row";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
-import { trpc } from "@renderer/utils/trpc";
 import { QRCodeSVG } from "qrcode.react";
+
+import { trpc } from "@rao-pics/trpc";
 
 import { SyncCircle } from "./SyncCircle";
 
@@ -73,6 +74,8 @@ const BasicPage = () => {
   const [disabled, setDisabled] = useState(false);
 
   const { data: config } = trpc.config.findUnique.useQuery();
+
+  console.log(config);
 
   const { data: library } = trpc.library.findUnique.useQuery();
   const onStartSync = trpc.sync.start.useMutation({

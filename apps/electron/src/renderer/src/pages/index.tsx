@@ -1,9 +1,9 @@
 import Content from "@renderer/components/Content";
 import Title from "@renderer/components/Title";
 import { useLanguage } from "@renderer/hooks";
-import { trpc } from "@renderer/utils/trpc";
 
 import { PRODUCT_NAME } from "@rao-pics/constant";
+import { trpc } from "@rao-pics/trpc";
 
 const languages = {
   "zh-cn": {

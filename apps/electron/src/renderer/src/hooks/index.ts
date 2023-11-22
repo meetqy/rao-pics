@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { trpc } from "@renderer/utils/trpc";
+
+import { trpc } from "@rao-pics/trpc";
 
 type Language = "zh-cn" | "en-us" | "zh-tw";
 
