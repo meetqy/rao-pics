@@ -54,9 +54,6 @@ importers:
       '@sentry/integrations':
         specifier: ^7.74.1
         version: 7.74.1
-      '@sentry/node':
-        specifier: ^7.74.1
-        version: 7.74.1
       electron-updater:
         specifier: ^5.3.0
         version: 5.3.0
@@ -1725,6 +1722,7 @@ packages:
       '@sentry/types': 7.74.1
       '@sentry/utils': 7.74.1
       tslib: 2.6.2
+    dev: true
 
   /@sentry/browser@7.74.0:
     resolution: {integrity: sha512-Njr8216Z1dFUcl6NqBOk20dssK9SjoVddY74Xq+Q4p3NfXBG3lkMcACXor7SFoJRZXq8CZWGS13Cc5KwViRw4g==}
@@ -1844,6 +1842,7 @@ packages:
       tslib: 2.6.2
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@sentry/replay@7.74.0:
     resolution: {integrity: sha512-GoYa3cHTTFVI/J1cnZ0i4X128mf/JljaswO3PWNTe2k3lSHq/LM5aV0keClRvwM0W8hlix8oOTT06nnenOUmmw==}
