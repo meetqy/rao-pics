@@ -16,6 +16,13 @@ import createTray from "./src/tray";
 /** 当前版本 */
 process.env.APP_VERSION = app.getVersion();
 
+RLogger.info(
+  `NODE_ENV: ${process.env.NODE_ENV ?? "development"}, APP_VERSION: ${
+    process.env.APP_VERSION ?? "0.0.0"
+  }`,
+  "main",
+);
+
 const controller = new AbortController();
 
 // 窗口获取焦点时更新 ip
@@ -134,13 +141,6 @@ app
     });
 
     await createWindow();
-
-    RLogger.info(
-      `NODE_ENV: ${process.env.NODE_ENV ?? "development"}, APP_VERSION: ${
-        process.env.APP_VERSION ?? "0.0.0"
-      }`,
-      "app.whenReady",
-    );
 
     app.on("activate", function () {
       // On macOS it's common to re-create a window in the app when the

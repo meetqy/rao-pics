@@ -39,7 +39,7 @@ export const startMainServer = async () => {
   await server.listen({ port: config.serverPort, host: "0.0.0.0" });
 
   RLogger.info(
-    `api server listening on http://${config.ip}:${config.serverPort}}`,
+    `api server listening on http://${config.ip}:${config.serverPort}`,
     "startMainServer",
   );
 };

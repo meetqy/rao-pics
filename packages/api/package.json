@@ -24,7 +24,6 @@
     "@rao-pics/db": "workspace:*",
     "@rao-pics/rlog": "workspace:*",
     "@rao-pics/utils": "workspace:*",
-    "@sentry/node": "^7.74.1",
     "@trpc/server": "next",
     "chokidar": "^3.5.3",
     "cors": "^2.8.5",

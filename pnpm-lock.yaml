@@ -169,9 +169,6 @@ importers:
       '@rao-pics/utils':
         specifier: workspace:*
         version: link:../utils
-      '@sentry/node':
-        specifier: ^7.74.1
-        version: 7.74.1
       '@trpc/server':
         specifier: next
         version: 11.0.0-alpha-next-2023-11-21-11-13-12.106

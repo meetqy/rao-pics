@@ -54,7 +54,7 @@ export const startClientServer = async () => {
   await server.listen({ port: config.clientPort, host: "0.0.0.0" });
 
   RLogger.info(
-    `client server listening on http://${config.ip}:${config.clientPort}}`,
+    `client server listening on http://${config.ip}:${config.clientPort}`,
     "startClientServer",
   );
 };
