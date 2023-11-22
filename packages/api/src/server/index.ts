@@ -1,5 +1,5 @@
-import { startClientServer } from "./client";
-import { startMainServer } from "./main";
+import { closeClientServer, startClientServer } from "./client";
+import { closeMainServer, startMainServer } from "./main";
 
 export * from "./main";
 export * from "./client";
@@ -10,5 +10,5 @@ export const startServer = async () => {
 };
 
 export const closeServer = async () => {
-  await Promise.all([startMainServer(), startClientServer()]);
+  await Promise.all([closeClientServer(), closeMainServer()]);
 };
