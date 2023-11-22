@@ -22,6 +22,7 @@
     "@fastify/websocket": "^8.2.0",
     "@rao-pics/constant": "workspace:*",
     "@rao-pics/db": "workspace:*",
+    "@rao-pics/rlog": "workspace:*",
     "@rao-pics/utils": "workspace:*",
     "@sentry/node": "^7.74.1",
     "@trpc/server": "next",

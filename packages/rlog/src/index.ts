@@ -19,7 +19,7 @@ Sentry.init({
 export const RLogger = {
   info: (message: string, type?: string) => {
     const t = type ? `[${type}]` : "";
-    console.log(chalk.blue(`ℹ ${t} ${message}`));
+    console.log(chalk.blue(`ℹ ${t} ${chalk.dim(message)}`));
   },
 
   error: (e: string | Error, alert?: boolean, type?: string) => {

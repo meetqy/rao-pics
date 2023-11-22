@@ -9,6 +9,8 @@ import cors from "@fastify/cors";
 import fastifyStatic from "@fastify/static";
 import fastify from "fastify";
 
+import { RLogger } from "@rao-pics/rlog";
+
 import { routerCore } from "../..";
 
 let server: ReturnType<typeof fastify> | undefined;
@@ -50,10 +52,10 @@ export const startClientServer = async () => {
   });
 
   await server.listen({ port: config.clientPort, host: "0.0.0.0" });
-  const res = server.server.address();
 
-  console.log(
-    `Static Server listening on ${typeof res === "string" ? res : res?.port}`,
+  RLogger.info(
+    `client server listening on http://${config.ip}:${config.clientPort}}`,
+    "startClientServer",
   );
 };
 

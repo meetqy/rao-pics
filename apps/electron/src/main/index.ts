@@ -45,7 +45,14 @@ async function initWatchLibrary() {
 
 const mainWindowReadyToShow = async () => {
   // 初始化 config
-  await routerCore.config.upsert({});
+  const config = await routerCore.config.upsert({
+    ip: ip.address(),
+  });
+
+  RLogger.info(
+    `init config success, ip: ${config.ip}, clientPort: ${config.clientPort}, serverPort: ${config.serverPort}`,
+    "mainWindowReadyToShow",
+  );
 
   await startServer();
   await initWatchLibrary();
@@ -129,9 +136,10 @@ app
     await createWindow();
 
     RLogger.info(
-      `[app.whenReady] NODE_ENV: ${
-        process.env.NODE_ENV ?? "development"
-      }, APP_VERSION: ${process.env.APP_VERSION ?? "0.0.0"}`,
+      `NODE_ENV: ${process.env.NODE_ENV ?? "development"}, APP_VERSION: ${
+        process.env.APP_VERSION ?? "0.0.0"
+      }`,
+      "app.whenReady",
     );
 
     app.on("activate", function () {

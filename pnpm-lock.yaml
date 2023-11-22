@@ -163,6 +163,9 @@ importers:
       '@rao-pics/db':
         specifier: workspace:*
         version: link:../db
+      '@rao-pics/rlog':
+        specifier: workspace:*
+        version: link:../rlog
       '@rao-pics/utils':
         specifier: workspace:*
         version: link:../utils
