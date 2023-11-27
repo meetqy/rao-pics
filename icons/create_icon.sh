@@ -133,3 +133,8 @@ mv "./${OUT_ICON_NAME}_shadow_rounded.icns" "./icons/${OUT_ICON_NAME}.icns"
 mv "./${OUT_ICON_NAME}_shadow_rounded.iconset" "./icons/${OUT_ICON_NAME}_shadow_rounded"
 mv "./${OUT_ICON_NAME}_rounded.iconset" "./icons/${OUT_ICON_NAME}_rounded"
 mv "./${OUT_ICON_NAME}.iconset" "./icons/${OUT_ICON_NAME}"
+
+npx electron-icon-builder --input=./icons/icon_shadow_rounded/icon_512x512@2x.png --output=./platform
+
+mv ./platform/icons/mac/icon.icns ../apps/electron/build/icon.icns
+mv ./platform/icons/win/icon.ico ../apps/electron/build/icon.ico

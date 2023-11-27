@@ -19,7 +19,6 @@ const AppConfig = {
     identity: null,
     entitlementsInherit: "build/entitlements.mac.plist",
     category: "public.app-category.photography",
-    icon: "resources/icon.icns",
     darkModeSupport: true,
     target: {
       target: isTestBuilder ? "dir" : "dmg",

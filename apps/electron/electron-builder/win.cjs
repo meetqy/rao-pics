@@ -14,7 +14,6 @@ const AppConfig = {
   ...BaseConfig,
 
   win: {
-    icon: "resources/icon.png",
     target: {
       target: isTestBuilder ? "dir" : "nsis",
       arch: ["x64"],
