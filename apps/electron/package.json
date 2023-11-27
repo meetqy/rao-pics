@@ -1,7 +1,7 @@
 {
   "name": "@rao-pics/electron",
-  "version": "1.0.0-alpha.10",
-  "description": "Preview photos and medias on any device",
+  "version": "1.0.0",
+  "description": "远程访问 Eagle 素材资源库",
   "homepage": "https://rao.pics",
   "author": {
     "name": "meetqy",
