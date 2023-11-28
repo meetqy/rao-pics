@@ -1,9 +1,3 @@
-<p align="center">
-    <strong>
-        v1.0.0-alpha 是测试版 BUG 比较多，建议使用稳定版 <a href="https://github.com/meetqy/rao-pics/releases/tag/v0.7.16">v0.7.16</a>
-    </strong>
-</p>
-
 <div align="center">
     <a href="https://rao.pics" target="_blank">
         <img width="196" src="./icons/logo.svg" alt="rao.pics logo"/>
@@ -60,10 +54,10 @@
 
 ## 默认主题 Gallery
 
-iPhone - 目前已支持 WEB PWA 可直接将网页保存为 App
+目前已支持 WEB PWA 可直接将网页保存为 App
 
-| <img alt="移动端 pwa 瀑布流演示" src="screenshot/mobile-1.png"/> | <img alt="移动端 pwa 菜单展示" src="screenshot/mobile-2.png"/> | <img alt="移动端 pwa 自适应展示" src="screenshot/mobile-3.png"/> |
-| ---------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------- |
+| <img alt="移动端 pwa 瀑布流演示" src="screenshot/mobile-1.png"/> 瀑布流 | <img alt="移动端 pwa 菜单展示" src="screenshot/mobile-2.png"/> 菜单 | <img alt="移动端 pwa 自适应展示" src="screenshot/mobile-3.png"/> 自适应 |
+| :---------------------------------------------------------------------: | :-----------------------------------------------------------------: | :---------------------------------------------------------------------: |
 
 PC
 
