@@ -1,9 +1,3 @@
-<p align="center">
-    <strong>
-        v1.0.0-alpha 是测试版 BUG 比较多，建议使用稳定版 <a href="https://github.com/meetqy/rao-pics/releases/tag/v0.7.16">v0.7.16</a>
-    </strong>
-</p>
-
 <div align="center">
     <a href="https://rao.pics" target="_blank">
         <img width="196" src="./icons/logo.svg" alt="rao.pics logo"/>
@@ -58,6 +52,19 @@
 - 📌 默认主题支持 PWA，你可以保存为应用，无需每次打开浏览器
 - 🎊 无需依赖管理软件，也能访问素材，甚至可以部署在 Windows/MacOS 服务器上
 
+## 默认主题 Gallery
+
+目前已支持 WEB PWA 可直接将网页保存为 App
+
+| <img alt="移动端 pwa 瀑布流演示" src="screenshot/mobile-1.png"/> 瀑布流 | <img alt="移动端 pwa 菜单展示" src="screenshot/mobile-2.png"/> 菜单 | <img alt="移动端 pwa 自适应展示" src="screenshot/mobile-3.png"/> 自适应 |
+| :---------------------------------------------------------------------: | :-----------------------------------------------------------------: | :---------------------------------------------------------------------: |
+
+PC
+
+| <img alt="PC 端 菜单展示 light 模式" src="screenshot/pc-1.png"/>   | <img src="screenshot/pc-2.png" alt="PC 端 瀑布流演示 dark 模式" /> |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| <img alt="PC 端 自适应展示 light 模式" src="screenshot/pc-3.png"/> | <img alt="PC 端 菜单展示 dark 模式" src="screenshot/pc-4.png"/>    |
+
 ## ❤️ 支持
 
 - 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate)，如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao) 支持作者 😘😘😘
@@ -66,26 +73,15 @@
 
 ---
 
-<a href="https://afdian.net/a/raopics" target="_blank" title="爱发电（RaoPics）"><img width="72" src="https://static.afdiancdn.com/static/img/logo/logo.png" /></a>
+<a href="https://eagle.sjv.io/rao">
+    <img src="./screenshot/eagle.svg" width="96" alt="eagle app" />
+</a>
 
 ## 其他版本
 
 - [Electron 0.7.16](https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma) - 初代 Electron App
 - [Docker](https://github.com/rao-pics/docker) - 支持 Eagle，素材库过大，同步会有些卡
 - [Eagle Api](https://github.com/meetqy/eagle-api) - 让你的 eagle 拥有 api 查询能力，基于 json-server
-
-## 默认主题 Gallery 演示
-
-iPhone - 目前已支持 WEB PWA 可直接将网页保存为 App
-
-| <img alt="移动端 pwa 瀑布流演示" src="screenshot/mobile-1.png"/> | <img alt="移动端 pwa 菜单展示" src="screenshot/mobile-2.png"/> | <img alt="移动端 pwa 自适应展示" src="screenshot/mobile-3.png"/> |
-| ---------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------- |
-
-PC
-
-| <img alt="PC 端 菜单展示 light 模式" src="screenshot/pc-1.png"/>   | <img src="screenshot/pc-2.png" alt="PC 端 瀑布流演示 dark 模式" /> |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| <img alt="PC 端 自适应展示 light 模式" src="screenshot/pc-3.png"/> | <img alt="PC 端 菜单展示 dark 模式" src="screenshot/pc-4.png"/>    |
 
 ## Repobeats
 

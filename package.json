@@ -28,7 +28,8 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "electron-icon-builder": "^2.0.1"
   },
   "packageManager": "pnpm@8.6.12",
   "engines": {
