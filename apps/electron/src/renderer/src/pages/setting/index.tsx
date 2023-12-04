@@ -2,13 +2,13 @@ import {
   ArrowPathIcon,
   ArrowsRightLeftIcon,
   FolderMinusIcon,
-  // FolderMinusIcon,
   LanguageIcon,
+  LinkIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import Content from "@renderer/components/Content";
 import Title from "@renderer/components/Title";
-import { useLanguage } from "@renderer/hooks";
+import { useLanguage, useSite } from "@renderer/hooks";
 
 import { LANGUAGE } from "@rao-pics/constant";
 import { trpc } from "@rao-pics/trpc";
@@ -58,7 +58,7 @@ const languages = {
 };
 
 const SettingPage = () => {
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
 
   const configUpsert = trpc.config.upsert.useMutation({
     onSuccess() {
@@ -75,6 +75,8 @@ const SettingPage = () => {
     text: LANGUAGE[item] as keyof typeof LANGUAGE,
     value: item,
   }));
+
+  const site = useSite();
 
   return (
     <Content title={<Title>{lang.title}</Title>}>
@@ -156,6 +158,7 @@ const SettingPage = () => {
           </div>
         </div>
 
+        {/* 同步相关 */}
         <div className="card-wrapper mt-4">
           <div className="card-row">
             <div>
@@ -200,6 +203,30 @@ const SettingPage = () => {
                 <option value={0}>{lang.close}</option>
                 <option value={1}>{lang.open}</option>
               </select>
+            </div>
+          </div>
+        </div>
+
+        {/* 自定义域名 */}
+        <div className="card-wrapper mt-4">
+          <div className="card-row">
+            <div>
+              <LinkIcon className="h-5 w-5" />
+
+              <span className="ml-2">自定义网址</span>
+            </div>
+
+            <div className="flex w-1/2">
+              <input
+                defaultValue={site}
+                onBlur={(e) => {
+                  configUpsert.mutate({
+                    clientSite: e.target.value,
+                  });
+                }}
+                className="input-ghost input input-sm w-full text-right focus:outline-none"
+                placeholder="自定义访问地址"
+              />
             </div>
           </div>
         </div>

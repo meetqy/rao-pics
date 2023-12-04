@@ -17,5 +17,5 @@ export const TRPCReactProviderWrapper = ({
 }: {
   children: React.ReactNode;
 }) => {
-  return <TRPCReactProvider>{children}</TRPCReactProvider>;
+  return <TRPCReactProvider client>{children}</TRPCReactProvider>;
 };

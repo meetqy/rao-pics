@@ -12,6 +12,7 @@ export const configInput = {
     color: z.string().optional(),
     serverPort: z.number().optional(),
     clientPort: z.number().optional(),
+    clientSite: z.string().optional(),
     ip: z.string().optional(),
     pwdFolder: z.boolean().optional(),
     trash: z.boolean().optional(),

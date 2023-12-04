@@ -8,7 +8,7 @@ import {
 import Content from "@renderer/components/Content";
 import Row from "@renderer/components/Row";
 import Title from "@renderer/components/Title";
-import { useLanguage } from "@renderer/hooks";
+import { useLanguage, useSite } from "@renderer/hooks";
 import { QRCodeSVG } from "qrcode.react";
 
 import { trpc } from "@rao-pics/trpc";
@@ -81,6 +81,8 @@ const BasicPage = () => {
       console.error(err);
     },
   });
+
+  const site = useSite();
 
   const onBeforeDeleteLibrary = () => {
     window.dialog
@@ -177,26 +179,21 @@ const BasicPage = () => {
             right={
               config && (
                 <div className="dropdown-hover dropdown">
-                  <div
-                    role="button"
-                    tabIndex={0}
-                  >{`http://${config.ip}:${config.clientPort}`}</div>
+                  <div role="button" tabIndex={0}>
+                    {site}
+                  </div>
                   <div
                     role="button"
                     tabIndex={0}
                     className="dropdown-content right-0 rounded-md bg-base-100 p-4 shadow-md"
                   >
-                    <QRCodeSVG
-                      value={`http://${config.ip}:${config.clientPort}`}
-                    />
+                    <QRCodeSVG value={site} />
                   </div>
                 </div>
               )
             }
             onRightClick={() => {
-              void window.shell.openExternal(
-                `http://${config?.ip}:${config?.clientPort}`,
-              );
+              void window.shell.openExternal(site);
             }}
           />
         </div>
