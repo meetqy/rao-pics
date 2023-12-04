@@ -14,6 +14,7 @@ const defaultConfig = {
   ip: "localhost",
   serverPort: 61122,
   clientPort: 61121,
+  clientSite: null,
   pwdFolder: false,
   trash: false,
   startDiffLibrary: false,
