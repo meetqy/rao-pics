@@ -26,9 +26,15 @@ const formatDirPath = (dir: string) => {
  * App UserData 数据存放目录，不同的系统存放目录不同
  */
 const APP_USERDATA_DIRS = {
-  darwin: formatDirPath(join(homedir(), "Library", "Caches", PRODUCT_NAME)),
-  win32: formatDirPath(join(homedir(), "AppData", "Local", PRODUCT_NAME)),
-  linux: formatDirPath(join(homedir(), ".cache", PRODUCT_NAME)),
+  darwin: IS_DEV
+    ? join(__dirname, "..", "db", "prisma", "migrations")
+    : formatDirPath(join(homedir(), "Library", "Caches", PRODUCT_NAME)),
+  win32: IS_DEV
+    ? join(__dirname, "..", "db", "prisma", "migrations")
+    : formatDirPath(join(homedir(), "AppData", "Local", PRODUCT_NAME)),
+  linux: IS_DEV
+    ? join(__dirname, "..", "db", "prisma", "migrations")
+    : formatDirPath(join(homedir(), ".cache", PRODUCT_NAME)),
 } as { [key in NodeJS.Platform]: string };
 
 /**

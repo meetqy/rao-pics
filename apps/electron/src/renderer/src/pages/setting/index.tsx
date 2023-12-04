@@ -1,9 +1,11 @@
 import {
   ArrowPathIcon,
   ArrowsRightLeftIcon,
+  DevicePhoneMobileIcon,
   FolderMinusIcon,
   LanguageIcon,
   LinkIcon,
+  ServerIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import Content from "@renderer/components/Content";
@@ -14,6 +16,8 @@ import { LANGUAGE } from "@rao-pics/constant";
 import { trpc } from "@rao-pics/trpc";
 
 import "./index.css";
+
+import Row from "@renderer/components/Row";
 
 const languages = {
   "zh-cn": {
@@ -28,6 +32,9 @@ const languages = {
     open: "开启",
     close: "关闭",
     autoSync: "自动同步",
+    site: "自定义域名",
+    webPort: "网页端口",
+    serverPort: "服务端口",
   },
   "en-us": {
     title: "General",
@@ -41,6 +48,9 @@ const languages = {
     open: "Open",
     close: "Close",
     autoSync: "Auto Sync",
+    site: "Custom Domain",
+    webPort: "Web Port",
+    serverPort: "Server Port",
   },
   "zh-tw": {
     title: "通用",
@@ -54,6 +64,9 @@ const languages = {
     open: "開啟",
     close: "關閉",
     autoSync: "自動同步",
+    site: "自定義域名",
+    webPort: "網頁端口",
+    serverPort: "服務端口",
   },
 };
 
@@ -80,15 +93,17 @@ const SettingPage = () => {
 
   return (
     <Content title={<Title>{lang.title}</Title>}>
-      <div className="px-4">
+      <div className="px-4 pb-4">
+        {/* 语言 */}
         <div className="card-wrapper">
-          <div className="card-row">
-            <div>
-              <LanguageIcon className="h-5 w-5" />
-              <span className="ml-2">{lang.language_title}</span>
-            </div>
-
-            <div>
+          <Row
+            left={
+              <>
+                <LanguageIcon className="h-5 w-5" />
+                <span className="ml-2">{lang.language_title}</span>
+              </>
+            }
+            right={
               <select
                 onChange={(e) => {
                   const value = e.target.value as keyof typeof languages;
@@ -98,7 +113,7 @@ const SettingPage = () => {
                   }
                 }}
                 value={language}
-                className="custom-select"
+                className="custom-select w-auto"
               >
                 {items.map((item) => (
                   <option key={item.value} value={item.value}>
@@ -106,22 +121,22 @@ const SettingPage = () => {
                   </option>
                 ))}
               </select>
-            </div>
-          </div>
+            }
+          />
         </div>
 
         {/* 显示相关 */}
         <div className="card-wrapper mt-4">
-          <div className="card-row">
-            <div>
-              <TrashIcon className="h-5 w-5" />
-
-              <span className="ml-2">{lang.trash}</span>
-            </div>
-
-            <div>
+          <Row
+            left={
+              <>
+                <TrashIcon className="h-5 w-5" />
+                <span className="ml-2">{lang.trash}</span>
+              </>
+            }
+            right={
               <select
-                className="custom-select"
+                className="custom-select w-auto"
                 value={config?.trash ? 1 : 0}
                 onChange={(e) => {
                   configUpsert.mutate({
@@ -132,18 +147,19 @@ const SettingPage = () => {
                 <option value={0}>{lang.hide}</option>
                 <option value={1}>{lang.show}</option>
               </select>
-            </div>
-          </div>
+            }
+          />
 
-          <div className="card-row">
-            <div>
-              <FolderMinusIcon className="h-5 w-5" />
-              <span className="ml-2">{lang.pwd_folder}</span>
-            </div>
-
-            <div>
+          <Row
+            left={
+              <>
+                <FolderMinusIcon className="h-5 w-5" />
+                <span className="ml-2">{lang.pwd_folder}</span>
+              </>
+            }
+            right={
               <select
-                className="custom-select"
+                className="custom-select w-auto"
                 value={config?.pwdFolder ? 1 : 0}
                 onChange={(e) => {
                   configUpsert.mutate({
@@ -154,22 +170,22 @@ const SettingPage = () => {
                 <option value={0}>{lang.hide}</option>
                 <option value={1}>{lang.show}</option>
               </select>
-            </div>
-          </div>
+            }
+          />
         </div>
 
         {/* 同步相关 */}
         <div className="card-wrapper mt-4">
-          <div className="card-row">
-            <div>
-              <ArrowsRightLeftIcon className="h-5 w-5" />
-
-              <span className="ml-2">{lang.startDiffLibrary}</span>
-            </div>
-
-            <div>
+          <Row
+            left={
+              <>
+                <ArrowsRightLeftIcon className="h-5 w-5" />
+                <span className="ml-2">{lang.startDiffLibrary}</span>
+              </>
+            }
+            right={
               <select
-                className="custom-select"
+                className="custom-select w-auto"
                 value={config?.startDiffLibrary ? 1 : 0}
                 onChange={(e) => {
                   configUpsert.mutate({
@@ -180,19 +196,18 @@ const SettingPage = () => {
                 <option value={0}>{lang.close}</option>
                 <option value={1}>{lang.open}</option>
               </select>
-            </div>
-          </div>
-
-          <div className="card-row">
-            <div>
-              <ArrowPathIcon className="h-5 w-5" />
-
-              <span className="ml-2">{lang.autoSync}</span>
-            </div>
-
-            <div>
+            }
+          />
+          <Row
+            left={
+              <>
+                <ArrowPathIcon className="h-5 w-5" />
+                <span className="ml-2">{lang.autoSync}</span>
+              </>
+            }
+            right={
               <select
-                className="custom-select"
+                className="custom-select w-auto"
                 value={config?.autoSync ? 1 : 0}
                 onChange={(e) => {
                   configUpsert.mutate({
@@ -203,20 +218,20 @@ const SettingPage = () => {
                 <option value={0}>{lang.close}</option>
                 <option value={1}>{lang.open}</option>
               </select>
-            </div>
-          </div>
+            }
+          />
         </div>
 
         {/* 自定义域名 */}
         <div className="card-wrapper mt-4">
-          <div className="card-row">
-            <div>
-              <LinkIcon className="h-5 w-5" />
-
-              <span className="ml-2">自定义网址</span>
-            </div>
-
-            <div className="flex w-1/2">
+          <Row
+            left={
+              <>
+                <LinkIcon className="h-5 w-5" />
+                <span className="ml-2 flex items-center">{lang.site}</span>
+              </>
+            }
+            right={
               <input
                 defaultValue={site}
                 onBlur={(e) => {
@@ -224,11 +239,33 @@ const SettingPage = () => {
                     clientSite: e.target.value,
                   });
                 }}
-                className="input-ghost input input-sm w-full text-right focus:outline-none"
-                placeholder="自定义访问地址"
+                className="input-ghost input input-sm w-full !pr-0 text-right font-mono transition-all focus:!pr-4 focus:outline-none"
+                placeholder="eg: https://desktop.rao.pics"
               />
-            </div>
-          </div>
+            }
+          />
+
+          <Row
+            left={
+              <>
+                <DevicePhoneMobileIcon className="h-5 w-5" />
+                <span className="ml-2 flex items-center">{lang.webPort}</span>
+              </>
+            }
+            right={config?.clientPort}
+          />
+
+          <Row
+            left={
+              <>
+                <ServerIcon className="h-5 w-5" />
+                <span className="ml-2 flex items-center">
+                  {lang.serverPort}
+                </span>
+              </>
+            }
+            right={config?.serverPort}
+          />
         </div>
       </div>
     </Content>

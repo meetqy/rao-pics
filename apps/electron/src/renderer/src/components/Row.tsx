@@ -11,7 +11,7 @@ interface Props {
 export const Row = (props: Props) => {
   return (
     <div className={`card-row ${props.compact ? "compact" : ""}`}>
-      <div className="w-1/4" aria-hidden="true" onClick={props.onLeftClick}>
+      <div className="w-1/3" aria-hidden="true" onClick={props.onLeftClick}>
         {props.left}
       </div>
 

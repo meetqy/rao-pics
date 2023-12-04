@@ -50,7 +50,8 @@ export const TRPCReactProvider = (props: {
 function Core({ children, site }: { children: React.ReactNode; site: string }) {
   const [queryClient] = useState(() => new QueryClient());
 
-  const host = site.replace(/http(s):\/\//, "");
+  // 匹配 http:// 或 https://
+  const host = site.replace(/https?:\/\//g, "");
 
   const [wsClient] = useState(() =>
     createWSClient({ url: `ws://${host}/trpc` }),
@@ -63,7 +64,7 @@ function Core({ children, site }: { children: React.ReactNode; site: string }) {
         splitLink({
           condition: (op) => op.type === "subscription",
           true: wsLink({ client: wsClient }),
-          false: httpLink({ url: `${host}/trpc` }),
+          false: httpLink({ url: `${site}/trpc` }),
         }),
       ],
     }),
