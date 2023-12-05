@@ -83,6 +83,11 @@ PC
 - [Docker](https://github.com/rao-pics/docker) - 支持 Eagle，素材库过大，同步会有些卡
 - [Eagle Api](https://github.com/meetqy/eagle-api) - 让你的 eagle 拥有 api 查询能力，基于 json-server
 
-## Repobeats
+## ❤️ 鸣谢
 
 <img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
+
+---
+
+| <a href="https://www.jetbrains.com/zh-cn/community/opensource/#support"><img width="100" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" /></a> | <a href="https://developer.mend.io/github/meetqy/rao-pics"><img src="https://developer.mend.io/assets/mend-logo.svg" width="100"/></a> |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
