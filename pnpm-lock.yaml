@@ -89,7 +89,7 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/tailwind
       '@rao-pics/tsconfig':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../../tooling/typescript
       '@sentry/vite-plugin':
         specifier: ^2.7.1
