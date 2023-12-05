@@ -2,35 +2,6 @@ import { useEffect, useState } from "react";
 
 import { trpc } from "@rao-pics/trpc";
 
-type Language = "zh-cn" | "en-us" | "zh-tw";
-
-/**
- * Language hook
- * @param languages language object template
- */
-export function useLanguage<T>(languages: T) {
-  const utils = trpc.useUtils();
-
-  const { data: config } = trpc.config.findUnique.useQuery();
-
-  const setLanguage = trpc.config.upsert.useMutation({
-    onSuccess: () => {
-      void utils.config.invalidate();
-    },
-  });
-
-  const language = (config?.language ?? "zh-cn") as keyof T;
-
-  return {
-    lang: languages[language],
-    language,
-    setLanguage: (lang: Language) =>
-      setLanguage.mutate({
-        language: lang,
-      }),
-  };
-}
-
 /**
  * 外观 hook
  */
