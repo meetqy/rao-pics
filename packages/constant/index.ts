@@ -6,15 +6,6 @@ import { z } from "zod";
 export const PRODUCT_NAME = "Rao Pics";
 
 /**
- * 语言
- */
-export const LANGUAGE = {
-  "zh-cn": "中文简体",
-  "zh-tw": "中文繁体",
-  "en-us": "English",
-};
-
-/**
  * pending type 枚举 Zod
  */
 export const PendingTypeEnumZod = z.enum(["create", "update", "delete"]);
