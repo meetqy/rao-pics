@@ -12,7 +12,7 @@ interface ItemProps {
 const Item = ({ color, onClick, active = false }: ItemProps) => {
   return (
     <div
-      className={`overflow-hidden rounded border border-base-content/20 hover:border-base-content/40 ${
+      className={`overflow-hidden rounded-box border border-base-content/20 hover:border-base-content/40 ${
         active ? "outline outline-2" : ""
       }`}
       data-set-theme={color}
@@ -58,7 +58,7 @@ const colorScheme = [
   ["cupcake", "light,angle"],
   ["bumblebee", "light,angle"],
   ["emerald", "light,angle"],
-  ["corporate", "light,right-angle"],
+  ["corporate", "light,angle"],
   ["synthwave", "dark,angle"],
   ["retro", "light,angle"],
   ["cyberpunk", "neutral,right-angle"],
@@ -67,22 +67,22 @@ const colorScheme = [
   ["garden", "light,angle"],
   ["forest", "dark,angle"],
   ["aqua", "neutral,angle"],
-  ["lofi", "light,right-angle"],
+  ["lofi", "light,angle"],
   ["pastel", "light,angle"],
   ["fantasy", "light,angle"],
-  ["wireframe", "light,right-angle"],
+  ["wireframe", "light,angle"],
   ["black", "dark,right-angle"],
   ["luxury", "dark,angle"],
   ["dracula", "dark,angle"],
   ["cmyk", "light,angle"],
   ["autumn", "light,angle"],
-  ["business", "dark,right-angle"],
+  ["business", "dark,angle"],
   ["acid", "light,angle"],
   ["lemonade", "light,angle"],
   ["night", "dark,angle"],
   ["coffee", "dark,angle"],
   ["winter", "light,angle"],
-  ["dim", "dark,right-angle"],
+  ["dim", "dark,angle"],
   ["nord", "light,angle"],
   ["sunset", "dark,angle"],
 ];
