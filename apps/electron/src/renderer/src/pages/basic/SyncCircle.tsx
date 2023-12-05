@@ -71,10 +71,21 @@ export function SyncCircle({
   });
 
   const Description = () => {
-    let text = "等待同步";
+    let text = "待同步数";
 
-    if (data?.type === "reading") text = "读取中...";
-    else if (["image", "folder"].includes(data?.type ?? "")) text = "同步中...";
+    const { type = "" } = data ?? {};
+
+    switch (type) {
+      case "reading":
+        text = "读取中...";
+        break;
+      case "image":
+        text = "同步图片";
+        break;
+      case "folder":
+        text = "同步中...";
+        break;
+    }
 
     return (
       <p className="text-center text-xs text-neutral-content/70">{text}</p>
@@ -92,7 +103,7 @@ export function SyncCircle({
         } as React.CSSProperties
       }
     >
-      <p className="truncate text-center font-mono text-lg font-medium text-neutral-content">
+      <p className="truncate text-center font-mono text-lg font-medium text-info">
         {data?.count ?? pendingCount}
       </p>
 

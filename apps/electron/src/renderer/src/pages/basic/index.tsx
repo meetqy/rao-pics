@@ -18,9 +18,6 @@ import { SyncCircle } from "./SyncCircle";
 const BasicPage = () => {
   const utils = trpc.useUtils();
 
-  // 同步中、初始化中 禁用按钮
-  const [disabled, setDisabled] = useState(false);
-
   const { data: config } = trpc.config.findUnique.useQuery();
 
   const { data: library } = trpc.library.findUnique.useQuery();
@@ -28,6 +25,12 @@ const BasicPage = () => {
     onError: (err) => {
       console.error(err);
     },
+  });
+
+  // 同步中、初始化中 禁用按钮
+  const [disabled, setDisabled] = useState({
+    sync: library?.pendingCount === 0,
+    delete: false,
   });
 
   const site = useSite();
@@ -61,6 +64,26 @@ const BasicPage = () => {
         libraryPath: library.path,
       });
     }
+  };
+
+  const SyncButton = () => {
+    if (config?.autoSync) {
+      return (
+        <button className="btn" disabled>
+          已开启自动同步
+        </button>
+      );
+    }
+
+    return (
+      <button
+        disabled={disabled.sync}
+        className="btn-neutral btn"
+        onClick={onClickSync}
+      >
+        {library?.pendingCount ? "同步" : "无需同步"}
+      </button>
+    );
   };
 
   return (
@@ -152,35 +175,25 @@ const BasicPage = () => {
               pendingCount={library?.pendingCount ?? 0}
               onListenData={(status) => {
                 if (status === "completed") {
-                  setDisabled(false);
+                  setDisabled({ sync: false, delete: false });
                 } else {
-                  !disabled && setDisabled(true);
+                  setDisabled({ sync: true, delete: true });
                 }
               }}
               onSyncData={(status) => {
                 if (status === "completed") {
-                  setDisabled(false);
+                  setDisabled({ sync: false, delete: false });
                 } else {
-                  !disabled && setDisabled(true);
+                  setDisabled({ sync: true, delete: true });
                 }
               }}
             />
           </div>
           <div className="w-1/2">
             <div className="m-auto flex h-full w-5/6 flex-col justify-center">
-              {config?.autoSync ? (
-                <button className="btn-disabled btn">已开启自动同步</button>
-              ) : (
-                <button
-                  disabled={disabled}
-                  className="btn-neutral btn"
-                  onClick={onClickSync}
-                >
-                  同步
-                </button>
-              )}
+              <SyncButton />
               <button
-                disabled={disabled}
+                disabled={disabled.delete}
                 className="btn-error btn-outline btn mt-4"
                 onClick={onBeforeDeleteLibrary}
               >
