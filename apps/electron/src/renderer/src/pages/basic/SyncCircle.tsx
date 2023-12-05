@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLanguage } from "@renderer/hooks";
 
 import { trpc } from "@rao-pics/trpc";
 
@@ -11,31 +10,12 @@ interface SyncCircleProps {
   onSyncData?: (status: Status) => void;
 }
 
-const languages = {
-  "zh-cn": {
-    pending: "等待同步",
-    reading: "读取中...",
-    syncing: "同步中...",
-  },
-  "en-us": {
-    pending: "Pending",
-    reading: "Reading...",
-    syncing: "Syncing...",
-  },
-  "zh-tw": {
-    pending: "等待同步",
-    reading: "讀取中...",
-    syncing: "同步中...",
-  },
-};
-
 export function SyncCircle({
   pendingCount,
   onListenData,
   onSyncData,
 }: SyncCircleProps) {
   const utils = trpc.useUtils();
-  const { lang } = useLanguage(languages);
 
   const [data, setData] = useState<{
     status: Status;
@@ -91,12 +71,10 @@ export function SyncCircle({
   });
 
   const Description = () => {
-    let text = lang.pending;
+    let text = "等待同步";
 
-    if (data?.type === "reading") text = lang.reading;
-    else if (data?.type === "image" || data?.type === "folder") {
-      text = lang.syncing;
-    }
+    if (data?.type === "reading") text = "读取中...";
+    else if (["image", "folder"].includes(data?.type ?? "")) text = "同步中...";
 
     return (
       <p className="text-center text-xs text-neutral-content/70">{text}</p>
