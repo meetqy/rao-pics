@@ -4,7 +4,7 @@
   "packageRules": [
     {
       "matchPackagePatterns": ["^@rao-pics/"],
-      "enabled": false
+      "enabled": true
     }
   ],
   "updateInternalDeps": true,
