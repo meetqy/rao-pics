@@ -30,7 +30,7 @@ const UnsyncPage = () => {
               <input
                 type="text"
                 placeholder="ID、路径搜索"
-                className="input input-sm flex-1"
+                className="input input-sm flex-1 transition-all"
                 value={keywords}
                 onChange={(e) => setKeywords(e.target.value)}
               />

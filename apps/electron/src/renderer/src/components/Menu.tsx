@@ -23,7 +23,7 @@ const Menu = ({ current, onChange }: MenuProps) => {
         </svg>
       ),
       badge: null,
-      text: "基礎信息",
+      text: "基础信息",
     },
     {
       icon: (
