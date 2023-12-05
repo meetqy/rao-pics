@@ -32,10 +32,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^2.0.0
-        version: 2.0.0(electron@25.9.4)
+        version: 2.0.0(electron@25.9.7)
       '@electron-toolkit/utils':
         specifier: ^1.0.2
-        version: 1.0.2(electron@25.9.4)
+        version: 1.0.2(electron@25.9.7)
       '@heroicons/react':
         specifier: ^2.0.18
         version: 2.0.18(react@18.2.0)
@@ -113,8 +113,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(vite@4.4.2)
       electron:
-        specifier: 25.9.4
-        version: 25.9.4
+        specifier: 25.9.7
+        version: 25.9.7
       electron-builder:
         specifier: 24.9.1
         version: 24.9.1
@@ -406,8 +406,8 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       electron:
-        specifier: 25.9.4
-        version: 25.9.4
+        specifier: 25.9.7
+        version: 25.9.7
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -921,12 +921,12 @@ packages:
       ajv-keywords: 3.5.2(ajv@6.12.6)
     dev: true
 
-  /@electron-toolkit/preload@2.0.0(electron@25.9.4):
+  /@electron-toolkit/preload@2.0.0(electron@25.9.7):
     resolution: {integrity: sha512-zpZDzbqJTZQC5d4LRs2EKruKWnqah+T75s+niBYFemYLtiW5TTZcWi3Q8UxHqnwTudDMuWJb233aaS2yjx3Xiw==}
     peerDependencies:
       electron: '>=13.0.0'
     dependencies:
-      electron: 25.9.4
+      electron: 25.9.7
     dev: false
 
   /@electron-toolkit/tsconfig@1.0.1(@types/node@18.17.6):
@@ -937,12 +937,12 @@ packages:
       '@types/node': 18.17.6
     dev: true
 
-  /@electron-toolkit/utils@1.0.2(electron@25.9.4):
+  /@electron-toolkit/utils@1.0.2(electron@25.9.7):
     resolution: {integrity: sha512-EHqVijVPdjBJBivxJH5E/Gu6Dzd5GfoUH0Ilbtx+EQarwaeJLPLxRM5DzD54uuhs1b8TGDI7uMYmcJW2CKrijg==}
     peerDependencies:
       electron: '>=13.0.0'
     dependencies:
-      electron: 25.9.4
+      electron: 25.9.7
       jszip: 3.10.1
     dev: false
 
@@ -4031,8 +4031,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@25.9.4:
-    resolution: {integrity: sha512-5pDU8a7o7ZIPTZHAqjflGMq764Favdsc271KXrAT3oWvFTHs5Ve9+IOt5EUVPrwvC2qRWKpCIEM47WzwkTlENQ==}
+  /electron@25.9.7:
+    resolution: {integrity: sha512-8aejD8NricfzeoUflPPpDU7M6yEppQyASoZBT7qgiKnEy6+M3SgetZNEmkoHMGK/NNxP8GcO5lRuvCyegI1mig==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
