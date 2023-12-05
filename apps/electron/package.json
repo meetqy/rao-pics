@@ -46,7 +46,7 @@
     "@rao-pics/eslint-config": "workspace:^",
     "@rao-pics/prettier-config": "workspace:^",
     "@rao-pics/tailwind-config": "workspace:*",
-    "@rao-pics/tsconfig": "^0.1.0",
+    "@rao-pics/tsconfig": "workspace:*",
     "@sentry/vite-plugin": "^2.7.1",
     "@types/ip": "^1.1.0",
     "@types/lodash": "^4.14.197",
