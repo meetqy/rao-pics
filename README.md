@@ -3,7 +3,7 @@
         <img width="196" src="./icons/logo.svg" alt="rao.pics logo"/>
     </a>
     <h1 align="center">Rao Pics</h1>
-    <p align="center">帮助你远程访问 Eagle、Pixcall、Billfish 的素材库</p>
+    <p align="center">帮助你远程访问 Eagle 的素材库</p>
     <p align="center">
         <a href="https://codecov.io/gh/meetqy/rao-pics" target="_blank"><img alt="codecov" src="https://codecov.io/gh/meetqy/rao-pics/graph/badge.svg?token=G9UG6SEOZK"/></a>
         <a href="https://github.com/rao-pics/core/blob/main/LICENSE" target="_blank"><img alt="License" src="https://img.shields.io/github/license/rao-pics/core"/></a>

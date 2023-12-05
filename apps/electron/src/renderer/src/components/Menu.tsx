@@ -1,34 +1,9 @@
-import { useLanguage } from "@renderer/hooks";
-
 interface MenuProps {
   current?: number;
   onChange?: (index: number) => void;
 }
 
-const languages = {
-  "zh-cn": {
-    menu0: "基础信息",
-    menu1: "未同步记录",
-    menu2: "通用",
-    menu3: "外观",
-  },
-  "en-us": {
-    menu0: "Basic Information",
-    menu1: "Unsynced Records",
-    menu2: "General",
-    menu3: "Color Schemes",
-  },
-  "zh-tw": {
-    menu0: "基礎信息",
-    menu1: "未同步記錄",
-    menu2: "通用",
-    menu3: "外觀",
-  },
-};
-
 const Menu = ({ current, onChange }: MenuProps) => {
-  const { lang } = useLanguage(languages);
-
   const menuItems = [
     {
       icon: (
@@ -48,7 +23,7 @@ const Menu = ({ current, onChange }: MenuProps) => {
         </svg>
       ),
       badge: null,
-      text: lang.menu0,
+      text: "基础信息",
     },
     {
       icon: (
@@ -68,7 +43,7 @@ const Menu = ({ current, onChange }: MenuProps) => {
         </svg>
       ),
       badget: null,
-      text: lang.menu1,
+      text: "未同步记录",
     },
     {
       className: "mt-4",
@@ -94,7 +69,7 @@ const Menu = ({ current, onChange }: MenuProps) => {
         </svg>
       ),
       badge: null,
-      text: lang.menu2,
+      text: "通用",
     },
     {
       icon: (
@@ -112,7 +87,7 @@ const Menu = ({ current, onChange }: MenuProps) => {
         </svg>
       ),
       badge: null,
-      text: lang.menu3,
+      text: "外观",
     },
   ];
 

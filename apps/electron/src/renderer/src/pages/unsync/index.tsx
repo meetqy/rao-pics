@@ -2,31 +2,11 @@ import { useState } from "react";
 import Content from "@renderer/components/Content";
 import Row from "@renderer/components/Row";
 import Title from "@renderer/components/Title";
-import { useDebounce, useLanguage } from "@renderer/hooks";
+import { useDebounce } from "@renderer/hooks";
 
 import { trpc } from "@rao-pics/trpc";
 
-const languages = {
-  "zh-cn": {
-    title: "未同步记录",
-    input_placeholder: "ID、路径搜索",
-    empty: "暂无记录",
-  },
-  "en-us": {
-    title: "Unsynced Records",
-    input_placeholder: "ID、Path Search",
-    empty: "No Records",
-  },
-  "zh-tw": {
-    title: "未同步記錄",
-    input_placeholder: "ID、路徑搜索",
-    empty: "暫無記錄",
-  },
-};
-
 const UnsyncPage = () => {
-  const { lang } = useLanguage(languages);
-
   const [keywords, setKeywords] = useState("");
   const debounceKeywords = useDebounce(keywords, 300);
   const lib = trpc.library.findUnique.useQuery();
@@ -42,15 +22,15 @@ const UnsyncPage = () => {
   const data = logQuery.data?.data ?? [];
 
   return (
-    <Content title={<Title>{lang.title}</Title>}>
+    <Content title={<Title>未同步记录</Title>}>
       <div className="pb-4">
         <div className="sticky left-0 top-0 z-10 px-4">
           <div className={`card-wrapper h-14 overflow-hidden transition-all`}>
             <div className="card-row relative items-center">
               <input
                 type="text"
-                placeholder={lang.input_placeholder}
-                className="input input-sm flex-1"
+                placeholder="ID、路径搜索"
+                className="input input-sm flex-1 transition-all"
                 value={keywords}
                 onChange={(e) => setKeywords(e.target.value)}
               />
@@ -98,7 +78,7 @@ const UnsyncPage = () => {
                 />
               </svg>
 
-              <p>{lang.empty}</p>
+              <p>暂无记录</p>
             </div>
           )}
         </div>
