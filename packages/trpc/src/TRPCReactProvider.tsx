@@ -1,41 +1,58 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createWSClient, httpLink, splitLink, wsLink } from "@trpc/client";
 import SuperJSON from "superjson";
 
 import { trpc } from "./trpc";
 
-export const TRPCReactProvider = (props: { children: React.ReactNode }) => {
-  const [host, setHost] = useState<string>();
+export const TRPCReactProvider = (props: {
+  children: React.ReactNode;
+  /** 只需要在主题（客户端）使用自定义域名，electron 中不需要 */
+  client?: boolean;
+}) => {
+  const [site, setSite] = useState<string>();
+  /**
+   * Fetch 配置信息
+   * @param url
+   * @returns
+   */
+  const fetchConfig = useCallback(
+    (url: string) =>
+      fetch(url)
+        // Prod
+        .then((res) => res.json())
+        .then(
+          (data: { ip: string; serverPort: number; clientSite?: string }) => {
+            const { ip, serverPort, clientSite } = data;
+            if (clientSite && props.client) return setSite(clientSite);
+
+            setSite(`http://${ip}:${serverPort}`);
+          },
+        ),
+    [props.client],
+  );
 
   useEffect(() => {
     const getConfig = () => {
-      fetch("/common/config")
-        // Prod
-        .then((res) => res.json())
-        .then((data: { ip: string; serverPort: number }) => {
-          const { ip, serverPort } = data;
-          setHost(`${ip}:${serverPort}`);
-        })
-        .catch(() => {
-          // Dev
-          void fetch("http://localhost:61122/common/config")
-            .then((res) => res.json())
-            .then((data: { ip: string; serverPort: number }) => {
-              const { ip, serverPort } = data;
-              setHost(`${ip}:${serverPort}`);
-            });
-        });
+      // Prod
+      fetchConfig("/common/config").catch(() => {
+        // Dev
+        void fetchConfig("http://localhost:61122/common/config");
+      });
     };
 
     void getConfig();
-  }, []);
+  }, [fetchConfig]);
 
-  return host && <Core host={host}>{props.children}</Core>;
+  return site && <Core site={site}>{props.children}</Core>;
 };
 
-function Core({ children, host }: { children: React.ReactNode; host: string }) {
+function Core({ children, site }: { children: React.ReactNode; site: string }) {
   const [queryClient] = useState(() => new QueryClient());
+
+  // 匹配 http:// 或 https://
+  const host = site.replace(/https?:\/\//g, "");
+
   const [wsClient] = useState(() =>
     createWSClient({ url: `ws://${host}/trpc` }),
   );
@@ -47,7 +64,7 @@ function Core({ children, host }: { children: React.ReactNode; host: string }) {
         splitLink({
           condition: (op) => op.type === "subscription",
           true: wsLink({ client: wsClient }),
-          false: httpLink({ url: `http://${host}/trpc` }),
+          false: httpLink({ url: `${site}/trpc` }),
         }),
       ],
     }),
