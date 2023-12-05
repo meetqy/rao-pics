@@ -1,8 +1,5 @@
 name: CodeCov
 
-ignore:
-  - "**/package.json"
-
 on:
   pull_request:
     branches: ["main"]
