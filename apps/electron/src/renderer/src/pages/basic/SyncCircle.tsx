@@ -34,7 +34,7 @@ export function SyncCircle({
   onListenData,
   onSyncData,
 }: SyncCircleProps) {
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
   const { lang } = useLanguage(languages);
 
   const [data, setData] = useState<{

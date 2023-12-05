@@ -35,7 +35,7 @@ export function useLanguage<T>(languages: T) {
  * 外观 hook
  */
 export function useColor() {
-  const utils = trpc.useContext();
+  const utils = trpc.useUtils();
   const { data: config } = trpc.config.findUnique.useQuery();
 
   const setColor = trpc.config.upsert.useMutation({
