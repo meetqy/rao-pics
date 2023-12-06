@@ -26,7 +26,6 @@
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tsconfig": "workspace:*",
-    "@vitest/ui": "^1.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6",
