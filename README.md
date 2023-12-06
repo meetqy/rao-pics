@@ -28,11 +28,11 @@
 ---
 
 <p align="center">
-    :white_check_mark: 立即下载：
+    ✅ Download now: 立即下载
     <a href="https://github.com/meetqy/rao-pics/releases/latest">MAC M1</a>
-    <span> </span>·:runner:·<span> </span>
+    <span> </span>·🚶·<span> </span>
     <a href="https://github.com/meetqy/rao-pics/releases/latest">MAC INTER</a>
-    <span> </span>·:runner:·<span> </span>
+    <span> </span>·🚶·<span> </span>
     <a href="https://github.com/meetqy/rao-pics/releases/latest">WINDOWS</a>
 </p>
 
