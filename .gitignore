@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+
 # icons
 icons/icons
 icons/platform
@@ -34,7 +35,7 @@ expo-env.d.ts
 build
 
 # misc
-.DS_Store
+**/.DS_Store
 *.pem
 
 # debug

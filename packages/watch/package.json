@@ -28,7 +28,6 @@
     "@rao-pics/tsconfig": "workspace:*",
     "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
-    "typescript": "^5.1.6",
-    "vitest": "^1.0.0"
+    "typescript": "^5.1.6"
   }
 }
