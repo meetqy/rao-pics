@@ -28,7 +28,7 @@
 ---
 
 <p align="center">
-    ✅ Download now: 立即下载
+    ✅ 立即下载: 
     <a href="https://github.com/meetqy/rao-pics/releases/latest">MAC M1</a>
     <span> </span>·🚶·<span> </span>
     <a href="https://github.com/meetqy/rao-pics/releases/latest">MAC INTER</a>
