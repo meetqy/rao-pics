@@ -26,7 +26,7 @@
   "prettier": "@rao-pics/prettier-config",
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
-    "@electron-toolkit/utils": "^1.0.2",
+    "@electron-toolkit/utils": "^2.0.0",
     "@heroicons/react": "^2.0.18",
     "@rao-pics/api": "workspace:^",
     "@rao-pics/constant": "workspace:^",
