@@ -21,6 +21,9 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
     devDependencies:
+      '@vitest/ui':
+        specifier: ^1.0.0
+        version: 1.0.1(vitest@1.0.1)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -343,7 +346,7 @@ importers:
         version: 5.2.2
       vitest:
         specifier: ^1.0.0
-        version: 1.0.1(@vitest/ui@1.0.1)
+        version: 1.0.1(@types/node@18.17.6)(@vitest/ui@1.0.1)
 
   packages/trpc:
     dependencies:
@@ -410,7 +413,7 @@ importers:
         version: 5.1.6
       vitest:
         specifier: ^1.0.0
-        version: 1.0.1(@vitest/ui@1.0.1)
+        version: 1.0.1(@types/node@18.17.6)(@vitest/ui@1.0.1)
 
   packages/watch:
     dependencies:
@@ -444,7 +447,7 @@ importers:
         version: 5.1.6
       vitest:
         specifier: ^1.0.0
-        version: 1.0.1(@vitest/ui@1.0.1)
+        version: 1.0.1(@types/node@18.17.6)(@vitest/ui@1.0.1)
 
   themes/gallery:
     dependencies:
@@ -8787,63 +8790,6 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.17.6
-      '@vitest/expect': 1.0.1
-      '@vitest/runner': 1.0.1
-      '@vitest/snapshot': 1.0.1
-      '@vitest/spy': 1.0.1
-      '@vitest/ui': 1.0.1(vitest@1.0.1)
-      '@vitest/utils': 1.0.1
-      acorn-walk: 8.3.0
-      cac: 6.7.14
-      chai: 4.3.10
-      debug: 4.3.4
-      execa: 8.0.1
-      local-pkg: 0.5.0
-      magic-string: 0.30.5
-      pathe: 1.1.1
-      picocolors: 1.0.0
-      std-env: 3.6.0
-      strip-literal: 1.3.0
-      tinybench: 2.5.1
-      tinypool: 0.8.1
-      vite: 5.0.5(@types/node@18.17.6)
-      vite-node: 1.0.1(@types/node@18.17.6)
-      why-is-node-running: 2.2.2
-    transitivePeerDependencies:
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
-  /vitest@1.0.1(@vitest/ui@1.0.1):
-    resolution: {integrity: sha512-MHsOj079S28hDsvdDvyD1pRj4dcS51EC5Vbe0xvOYX+WryP8soiK2dm8oULi+oA/8Xa/h6GoJEMTmcmBy5YM+Q==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    peerDependencies:
-      '@edge-runtime/vm': '*'
-      '@types/node': ^18.0.0 || >=20.0.0
-      '@vitest/browser': ^1.0.0
-      '@vitest/ui': ^1.0.0
-      happy-dom: '*'
-      jsdom: '*'
-    peerDependenciesMeta:
-      '@edge-runtime/vm':
-        optional: true
-      '@types/node':
-        optional: true
-      '@vitest/browser':
-        optional: true
-      '@vitest/ui':
-        optional: true
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-    dependencies:
       '@vitest/expect': 1.0.1
       '@vitest/runner': 1.0.1
       '@vitest/snapshot': 1.0.1
