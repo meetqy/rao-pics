@@ -30,6 +30,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      dotenv-cli:
+        specifier: ^7.3.0
+        version: 7.3.0
       electron-icon-builder:
         specifier: ^2.0.1
         version: 2.0.1
@@ -41,10 +44,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^2.0.0
-        version: 2.0.0(electron@25.9.7)
+        version: 2.0.0(electron@25.9.4)
       '@electron-toolkit/utils':
         specifier: ^2.0.0
-        version: 2.0.1(electron@25.9.7)
+        version: 2.0.1(electron@25.9.4)
       '@heroicons/react':
         specifier: ^2.0.18
         version: 2.0.18(react@18.2.0)
@@ -120,10 +123,10 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.3
-        version: 4.0.3(vite@5.0.5)
+        version: 4.0.3(vite@4.5.1)
       electron:
-        specifier: 25.9.7
-        version: 25.9.7
+        specifier: 25.9.4
+        version: 25.9.4
       electron-builder:
         specifier: 24.9.1
         version: 24.9.1
@@ -132,7 +135,7 @@ importers:
         version: 3.2.0
       electron-vite:
         specifier: ^1.0.25
-        version: 1.0.25(vite@5.0.5)
+        version: 1.0.25(vite@4.5.1)
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -152,8 +155,8 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
       vite:
-        specifier: ^5.0.0
-        version: 5.0.5(@types/node@18.17.6)
+        specifier: ^4.4.2
+        version: 4.5.1(@types/node@18.17.6)
 
   packages/api:
     dependencies:
@@ -918,12 +921,12 @@ packages:
       ajv-keywords: 3.5.2(ajv@6.12.6)
     dev: true
 
-  /@electron-toolkit/preload@2.0.0(electron@25.9.7):
+  /@electron-toolkit/preload@2.0.0(electron@25.9.4):
     resolution: {integrity: sha512-zpZDzbqJTZQC5d4LRs2EKruKWnqah+T75s+niBYFemYLtiW5TTZcWi3Q8UxHqnwTudDMuWJb233aaS2yjx3Xiw==}
     peerDependencies:
       electron: '>=13.0.0'
     dependencies:
-      electron: 25.9.7
+      electron: 25.9.4
     dev: false
 
   /@electron-toolkit/tsconfig@1.0.1(@types/node@18.17.6):
@@ -934,12 +937,12 @@ packages:
       '@types/node': 18.17.6
     dev: true
 
-  /@electron-toolkit/utils@2.0.1(electron@25.9.7):
+  /@electron-toolkit/utils@2.0.1(electron@25.9.4):
     resolution: {integrity: sha512-3nnjd3D1NIjxdzNrvR5fkJ3kbJNbRkpHppv0/pSbMX6I0DaBzpPXeSfDYuJJKzZrAc3CmGcJa0MU4+AjEOlT4g==}
     peerDependencies:
       electron: '>=13.0.0'
     dependencies:
-      electron: 25.9.7
+      electron: 25.9.4
     dev: false
 
   /@electron/asar@3.2.4:
@@ -2978,7 +2981,7 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@vitejs/plugin-react@4.0.3(vite@5.0.5):
+  /@vitejs/plugin-react@4.0.3(vite@4.5.1):
     resolution: {integrity: sha512-pwXDog5nwwvSIzwrvYYmA2Ljcd/ZNlcsSG2Q9CNDBwnsd55UGAyr2doXtB5j+2uymRCnCfExlznzzSFbBRcoCg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -2988,7 +2991,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.10)
       react-refresh: 0.14.0
-      vite: 5.0.5(@types/node@18.17.6)
+      vite: 4.5.1(@types/node@18.17.6)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4290,7 +4293,7 @@ packages:
       - supports-color
     dev: false
 
-  /electron-vite@1.0.25(vite@5.0.5):
+  /electron-vite@1.0.25(vite@4.5.1):
     resolution: {integrity: sha512-qdqLWfxP1aW7kXQUx8hw9aKrFTjb5dRl866V+Y58cAdt1iF8iAigJj2hRw5oBbUbtT2RmrtX+3ikCgV+AmAYVw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -4307,10 +4310,22 @@ packages:
       esbuild: 0.18.20
       magic-string: 0.30.2
       picocolors: 1.0.0
-      vite: 5.0.5(@types/node@18.17.6)
+      vite: 4.5.1(@types/node@18.17.6)
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /electron@25.9.4:
+    resolution: {integrity: sha512-5pDU8a7o7ZIPTZHAqjflGMq764Favdsc271KXrAT3oWvFTHs5Ve9+IOt5EUVPrwvC2qRWKpCIEM47WzwkTlENQ==}
+    engines: {node: '>= 12.20.55'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@electron/get': 2.0.2
+      '@types/node': 18.18.9
+      extract-zip: 2.0.1
+    transitivePeerDependencies:
+      - supports-color
 
   /electron@25.9.7:
     resolution: {integrity: sha512-8aejD8NricfzeoUflPPpDU7M6yEppQyASoZBT7qgiKnEy6+M3SgetZNEmkoHMGK/NNxP8GcO5lRuvCyegI1mig==}
@@ -4323,6 +4338,7 @@ packages:
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -7605,6 +7621,14 @@ packages:
       sprintf-js: 1.1.2
     optional: true
 
+  /rollup@3.29.4:
+    resolution: {integrity: sha512-oWzmBZwvYrU0iJHtDmhsm662rC15FRXmcjCk1xD771dFDx5jJ02ufAQQTn0etB2emNk4J9EZg/yWKpsn9BWGRw==}
+    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
   /rollup@4.6.1:
     resolution: {integrity: sha512-jZHaZotEHQaHLgKr8JnQiDT1rmatjgKlMekyksz+yk9jt/8z9quNjnKNRoaM0wd9DC2QKXjmWWuDYtM3jfF8pQ==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -8639,7 +8663,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.5(@types/node@18.17.6)
+      vite: 5.0.5
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -8651,7 +8675,43 @@ packages:
       - terser
     dev: true
 
-  /vite@5.0.5(@types/node@18.17.6):
+  /vite@4.5.1(@types/node@18.17.6):
+    resolution: {integrity: sha512-AXXFaAJ8yebyqzoNB9fu2pHoo/nWX+xZlaRwoeYUxEqBO+Zj4msE5G+BhGBll9lYEKv9Hfks52PAF2X7qDYXQA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.17.6
+      esbuild: 0.18.20
+      postcss: 8.4.32
+      rollup: 3.29.4
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
+  /vite@5.0.5:
     resolution: {integrity: sha512-OekeWqR9Ls56f3zd4CaxzbbS11gqYkEiBtnWFFgYR2WV8oPJRRKq0mpskYy/XaoCL3L7VINDhqqOMNDiYdGvGg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -8679,7 +8739,6 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.17.6
       esbuild: 0.19.8
       postcss: 8.4.32
       rollup: 4.6.1
@@ -8731,7 +8790,7 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.5(@types/node@18.17.6)
+      vite: 5.0.5
       vite-node: 1.0.1
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
