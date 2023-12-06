@@ -1,4 +1,4 @@
-| 中文简体 | [English](./README-EN.md) |
+中文简体 | [English](./README-EN.md)
 
 <div align="center">
     <a href="https://rao.pics" target="_blank">
