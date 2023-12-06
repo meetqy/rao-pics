@@ -11,7 +11,7 @@
     "clean": "git clean -xdf .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=development vitest --single-thread",
+    "test": "cross-env NODE_ENV=development vitest --poolOptions.threads.singleThread",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@rao-pics/prettier-config",
@@ -24,7 +24,6 @@
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tsconfig": "workspace:*",
-    "@vitest/coverage-v8": "^1.0.0",
     "@vitest/ui": "^1.0.0",
     "cross-env": "^7.0.3",
     "electron": "25.9.7",

@@ -329,9 +329,6 @@ importers:
       '@sentry/electron':
         specifier: ^4.14.0
         version: 4.14.0
-      '@vitest/coverage-v8':
-        specifier: ^1.0.0
-        version: 1.0.1(vitest@1.0.1)
       '@vitest/ui':
         specifier: ^1.0.0
         version: 1.0.1(vitest@1.0.1)
@@ -396,9 +393,6 @@ importers:
       '@rao-pics/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      '@vitest/coverage-v8':
-        specifier: ^1.0.0
-        version: 1.0.1(vitest@1.0.1)
       '@vitest/ui':
         specifier: ^1.0.0
         version: 1.0.1(vitest@1.0.1)
@@ -436,9 +430,6 @@ importers:
       '@rao-pics/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      '@vitest/coverage-v8':
-        specifier: ^1.0.0
-        version: 1.0.1(vitest@1.0.1)
       '@vitest/ui':
         specifier: ^1.0.0
         version: 1.0.1(vitest@1.0.1)

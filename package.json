@@ -16,8 +16,8 @@
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "releases": "pnpm -F db build && pnpm -F gallery build && pnpm -F electron releases",
-    "test": "cross-env NODE_ENV=development vitest run --coverage.enabled  --single-thread",
-    "test:ui": "cross-env NODE_ENV=development vitest --ui --coverage.enabled --single-thread",
+    "test": "cross-env NODE_ENV=development vitest run --coverage.enabled  --poolOptions.threads.singleThread",
+    "test:ui": "cross-env NODE_ENV=development vitest --ui --coverage.enabled --poolOptions.threads.singleThread",
     "typecheck": "turbo typecheck"
   },
   "prettier": "@rao-pics/prettier-config",
