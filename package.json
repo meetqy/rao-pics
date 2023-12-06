@@ -16,8 +16,8 @@
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache'",
     "releases": "pnpm -F db build && pnpm -F gallery build && pnpm -F electron releases",
-    "test": "cross-env NODE_ENV=development vitest run --coverage.enabled  --single-thread",
-    "test:ui": "cross-env NODE_ENV=development vitest --ui --coverage.enabled --single-thread",
+    "test": "cross-env NODE_ENV=development vitest run --coverage.enabled",
+    "test:ui": "cross-env NODE_ENV=development vitest --ui --coverage.enabled",
     "typecheck": "turbo typecheck"
   },
   "prettier": "@rao-pics/prettier-config",
@@ -28,8 +28,11 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^1.0.1",
+    "@vitest/ui": "^1.0.0",
     "cross-env": "^7.0.3",
-    "electron-icon-builder": "^2.0.1"
+    "electron-icon-builder": "^2.0.1",
+    "vitest": "^1.0.1"
   },
   "packageManager": "pnpm@8.11.0",
   "engines": {
