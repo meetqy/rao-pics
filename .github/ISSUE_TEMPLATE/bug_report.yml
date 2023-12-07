@@ -1,37 +1,38 @@
-name: 🐞 Bug Report
-description: Create a bug report to help us improve
+name: 🐞 提交 Bug
+description: 创建一个 bug 报告来帮助我们改进
 title: "bug: "
-labels: ["🐞❔ unconfirmed bug"]
+labels: ["Bug"]
 body:
-  - type: textarea
+  - type: dropdown
+    id: systems
     attributes:
-      label: Provide environment information
-      description: |
-        Run this command in your project root and paste the results in a code block:
-        ```bash
-        npx envinfo --system --binaries
-        ```
+      label: 提供系统信息
+      description: 选择你使用的系统
+      options:
+        - Windows
+        - MacOS Arm
+        - MacOS Inter
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Describe the bug
-      description: A clear and concise description of the bug, as well as what you expected to happen when encountering it.
+      label: 描述bug
+      description: 清晰而简明地描述bug，以及在遇到bug时您期望发生的情况。
     validations:
       required: true
   - type: input
     attributes:
-      label: Link to reproduction
-      description: Please provide a link to a reproduction of the bug. Issues without a reproduction repo may be ignored.
+      label: 复现链接
+      description: 请提供一个复现bug的链接。没有复现仓库的问题可能会被忽略。
     validations:
       required: true
   - type: textarea
     attributes:
-      label: To reproduce
-      description: Describe how to reproduce your bug. Steps, code snippets, reproduction repos etc.
+      label: 复现步骤
+      description: 描述如何复现您的bug。包括步骤、代码片段、复现仓库等。
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Additional information
-      description: Add any other information related to the bug here, screenshots if applicable.
+      label: 附加信息
+      description: 在这里添加与bug相关的任何其他信息，如果适用，还可以包括屏幕截图。
