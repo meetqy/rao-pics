@@ -152,11 +152,6 @@ export const syncImage = async (pendings: Pending[]) => {
           ee.emit("sync.start", { status: "ok", type: "image", count });
           break;
       }
-
-      // 删除 pending
-      routerCore.pending.delete(p.path).catch((e) => {
-        RLogger.warning(e, "syncImage delete pending");
-      });
     } catch (e) {
       ee.emit("sync.start", {
         status: "error",
@@ -181,10 +176,7 @@ export const syncImage = async (pendings: Pending[]) => {
         });
       }
 
-      routerCore.pending.delete(p.path).catch((e) => {
-        RLogger.warning(e, "syncImage delete pending catch");
-      });
-
+      // continue; 当 return 使用
       if (e instanceof Error) {
         // 自定义 sync_error 无需上报
         if (e.cause === "sync_error") {
@@ -203,7 +195,11 @@ export const syncImage = async (pendings: Pending[]) => {
       }
 
       RLogger.error<typeof e>(e, "syncImage");
-      continue;
+    } finally {
+      // 删除 pending
+      routerCore.pending.delete(p.path).catch((e) => {
+        RLogger.warning(e, "syncImage delete pending");
+      });
     }
   }
 

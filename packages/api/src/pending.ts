@@ -30,11 +30,7 @@ export const pendingCore = {
   },
 
   delete: async (input: string) => {
-    /**
-     * 使用 delete 会报错，未知原因
-     * https://github.com/prisma/prisma/issues/11789#issuecomment-1826888961
-     */
-    return await prisma.pending.deleteMany({ where: { path: input } });
+    return await prisma.pending.delete({ where: { path: input } });
   },
 };
 
