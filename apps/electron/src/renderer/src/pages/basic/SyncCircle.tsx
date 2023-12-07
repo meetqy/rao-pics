@@ -6,13 +6,19 @@ type Status = "completed" | "error" | "ok" | "start";
 
 interface SyncCircleProps {
   pendingCount: number;
-  onListenData?: (status: Status) => void;
+  /**
+   * 读取中
+   */
+  onReadData?: (status: Status) => void;
+  /**
+   * 同步中
+   */
   onSyncData?: (status: Status) => void;
 }
 
 export function SyncCircle({
   pendingCount,
-  onListenData,
+  onReadData,
   onSyncData,
 }: SyncCircleProps) {
   const utils = trpc.useUtils();
@@ -26,7 +32,7 @@ export function SyncCircle({
   // 监听资源库变化
   trpc.library.onWatch.useSubscription(undefined, {
     onData: (data) => {
-      onListenData?.(data.status);
+      onReadData?.(data.status);
 
       if (data.status === "completed") {
         setTimeout(() => {
