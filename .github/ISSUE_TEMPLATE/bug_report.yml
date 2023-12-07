@@ -14,16 +14,20 @@ body:
         - MacOS Inter
     validations:
       required: true
-  - type: textarea
+  - type: input
     attributes:
-      label: 描述bug
-      description: 清晰而简明地描述bug，以及在遇到bug时您期望发生的情况。
+      label: 软件版本
+      description: 右键点击状态栏图标 => 关于, 可以查看当前所使用的版本
     validations:
       required: true
   - type: input
     attributes:
-      label: 复现链接
-      description: 请提供一个复现bug的链接。没有复现仓库的问题可能会被忽略。
+      label: 系统版本
+      description: 提供系统版本可以帮助我们更加快速定位问题
+  - type: textarea
+    attributes:
+      label: 描述bug
+      description: 清晰而简明地描述bug，以及在遇到bug时您期望发生的情况。
     validations:
       required: true
   - type: textarea
