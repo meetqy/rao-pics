@@ -3,8 +3,8 @@ import { config, configCore } from "./src/config";
 import { folder, folderCore } from "./src/folder";
 import { image, imageCore } from "./src/image";
 import { library, libraryCore } from "./src/library";
-import { log } from "./src/log";
-import { pending } from "./src/pending";
+import { log, logCore } from "./src/log";
+import { pending, pendingCore } from "./src/pending";
 import { sync } from "./src/sync";
 import { tag } from "./src/tag";
 import { t } from "./src/utils";
@@ -26,6 +26,8 @@ export const routerCore = {
   folder: folderCore,
   image: imageCore,
   library: libraryCore,
+  pending: pendingCore,
+  log: logCore,
 };
 
 export type AppRouter = typeof router;

@@ -18,6 +18,12 @@ const ee = new EventEmitter();
 
 let watcher: chokidar.FSWatcher | null = null;
 
+export const libraryInput = {
+  update: z.object({
+    lastSyncTime: z.date().optional(),
+  }),
+};
+
 export const libraryCore = {
   findUnique: async () => {
     const [library, pendingCount, syncCount, trashCount, unSyncCount] =
@@ -38,6 +44,18 @@ export const libraryCore = {
       unSyncCount,
       trashCount,
     };
+  },
+
+  update: async (input: z.infer<(typeof libraryInput)["update"]>) => {
+    const json: Prisma.LibraryUpdateManyMutationInput = {};
+
+    if (input.lastSyncTime) {
+      json.lastSyncTime = input.lastSyncTime;
+    }
+
+    return await prisma.library.updateMany({
+      data: json,
+    });
   },
 };
 
@@ -67,22 +85,8 @@ export const library = t.router({
   }),
 
   update: t.procedure
-    .input(
-      z.object({
-        lastSyncTime: z.date().optional(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      const json: Prisma.LibraryUpdateManyMutationInput = {};
-
-      if (input.lastSyncTime) {
-        json.lastSyncTime = input.lastSyncTime;
-      }
-
-      return await prisma.library.updateMany({
-        data: json,
-      });
-    }),
+    .input(libraryInput.update)
+    .mutation(async ({ input }) => libraryCore.update(input)),
 
   delete: t.procedure.mutation(async () => {
     if (watcher) {

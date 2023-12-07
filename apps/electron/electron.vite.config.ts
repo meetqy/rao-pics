@@ -11,7 +11,7 @@ process.env.SENTRY_AUTH_TOKEN =
 export default defineConfig({
   main: {
     build: {
-      sourcemap: IS_DEV ? "inline" : true,
+      sourcemap: !IS_DEV,
     },
     esbuild: {
       drop: IS_DEV ? undefined : ["console", "debugger"],
