@@ -8,7 +8,6 @@ import { z } from "zod";
 import type { PendingTypeEnum } from "@rao-pics/constant";
 import type { Prisma } from "@rao-pics/db";
 import { prisma } from "@rao-pics/db";
-import { RLogger } from "@rao-pics/rlog";
 
 import { router } from "..";
 import { restartClientServer } from "./server";
@@ -131,11 +130,11 @@ export const library = t.router({
         ee.emit("watch", { status: "start" });
       }
 
-      // chokidar
-      //   .watch(join(libraryPath, "metadata.json"))
-      //   .on("change", (path) => {
-      //     void syncFolder(path);
-      //   });
+      chokidar
+        .watch(join(libraryPath, "metadata.json"))
+        .on("change", (path) => {
+          void syncFolder(path);
+        });
 
       watcher = chokidar.watch(
         join(libraryPath, "images", "**", "metadata.json"),
