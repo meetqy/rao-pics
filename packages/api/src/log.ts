@@ -5,22 +5,28 @@ import { prisma } from "@rao-pics/db";
 
 import { t } from "./utils";
 
+export const logInput = {
+  upsert: z.object({
+    path: z.string(),
+    type: LogTypeEnumZod,
+    message: z.string(),
+  }),
+};
+
+export const logCore = {
+  upsert: async (input: z.infer<(typeof logInput)["upsert"]>) => {
+    return await prisma.log.upsert({
+      where: { path: input.path },
+      create: input,
+      update: input,
+    });
+  },
+};
+
 export const log = t.router({
   upsert: t.procedure
-    .input(
-      z.object({
-        path: z.string(),
-        type: LogTypeEnumZod,
-        message: z.string(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      return await prisma.log.upsert({
-        where: { path: input.path },
-        create: input,
-        update: input,
-      });
-    }),
+    .input(logInput.upsert)
+    .mutation(async ({ input }) => logCore.upsert(input)),
 
   delete: t.procedure.input(z.string()).mutation(async ({ input }) => {
     return await prisma.log.deleteMany({ where: { path: input } });

@@ -8,7 +8,7 @@ import { prisma } from "@rao-pics/db";
 import type { Pending } from "@rao-pics/db";
 import { RLogger } from "@rao-pics/rlog";
 
-import { router, routerCore } from "../..";
+import { routerCore } from "../..";
 import { configCore } from "../config";
 import { folderCore } from "../folder";
 import { t } from "../utils";
@@ -51,8 +51,7 @@ export const sync = t.router({
       }),
     )
     .mutation(async ({ input }) => {
-      const caller = router.createCaller({});
-      const pendings = (await caller.pending.get()) as Pending[];
+      const pendings = (await routerCore.pending.get()) as Pending[];
 
       // 同步文件夹
       await syncFolder(join(input.libraryPath, "metadata.json"));
@@ -60,7 +59,7 @@ export const sync = t.router({
       await syncImage(pendings);
 
       // 同步完成自动更新 library lastSyncTime
-      await caller.library.update({ lastSyncTime: new Date() });
+      await routerCore.library.update({ lastSyncTime: new Date() });
       return true;
     }),
 
@@ -155,7 +154,9 @@ export const syncImage = async (pendings: Pending[]) => {
       }
 
       // 删除 pending
-      await router.createCaller({}).pending.delete(p.path);
+      routerCore.pending.delete(p.path).catch((e) => {
+        RLogger.warning(e, "syncImage delete pending");
+      });
     } catch (e) {
       ee.emit("sync.start", {
         status: "error",
@@ -165,23 +166,24 @@ export const syncImage = async (pendings: Pending[]) => {
       });
 
       const errorMsg = (e as Error).message.match(/\[(?<type>.*)\]/);
-      const caller = router.createCaller({});
       if (errorMsg) {
         const type = errorMsg[0].replace(/\[|\]/g, "");
-        await caller.log.upsert({
+        await routerCore.log.upsert({
           path: p.path,
           type: type as never,
           message: (e as Error).message,
         });
       } else {
-        await caller.log.upsert({
+        await routerCore.log.upsert({
           path: p.path,
           type: "unknown",
           message: (e as Error).stack ?? JSON.stringify(e),
         });
       }
 
-      await router.createCaller({}).pending.delete(p.path);
+      routerCore.pending.delete(p.path).catch((e) => {
+        RLogger.warning(e, "syncImage delete pending catch");
+      });
 
       if (e instanceof Error) {
         // 自定义 sync_error 无需上报
