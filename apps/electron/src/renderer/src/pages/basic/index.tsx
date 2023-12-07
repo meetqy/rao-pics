@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ClockIcon,
   EyeIcon,
@@ -15,6 +15,15 @@ import { trpc } from "@rao-pics/trpc";
 
 import { SyncCircle } from "./SyncCircle";
 
+const BtnStatus = {
+  1: { disabled: true, text: "无需同步", allowDeleted: true },
+  2: { disabled: false, text: "同步", allowDeleted: true },
+  3: { disabled: true, text: "同步中...", allowDeleted: false },
+  4: { disabled: true, text: "读取中...", allowDeleted: false },
+  5: { disabled: true, text: "已开启自动同步", allowDeleted: true },
+  6: { disabled: true, text: "初始化中...", allowDeleted: false },
+};
+
 const BasicPage = () => {
   const utils = trpc.useUtils();
 
@@ -27,11 +36,16 @@ const BasicPage = () => {
     },
   });
 
-  // 同步中、初始化中 禁用按钮
-  const [disabled, setDisabled] = useState({
-    sync: library?.pendingCount === 0,
-    delete: false,
-  });
+  const [btnState, setBtnState] = useState<keyof typeof BtnStatus>(6);
+  const btn = BtnStatus[btnState];
+
+  useEffect(() => {
+    if (config?.autoSync) {
+      return setBtnState(5);
+    }
+
+    setBtnState(library && library.pendingCount > 0 ? 2 : 1);
+  }, [library, config]);
 
   const site = useSite();
 
@@ -57,34 +71,6 @@ const BasicPage = () => {
       void utils.library.invalidate();
     },
   });
-
-  const onClickSync = async () => {
-    if (library) {
-      await onStartSync.mutateAsync({
-        libraryPath: library.path,
-      });
-    }
-  };
-
-  const SyncButton = () => {
-    if (config?.autoSync) {
-      return (
-        <button className="btn" disabled>
-          已开启自动同步
-        </button>
-      );
-    }
-
-    return (
-      <button
-        disabled={disabled.sync}
-        className="btn-neutral btn"
-        onClick={onClickSync}
-      >
-        {library?.pendingCount ? "同步" : "无需同步"}
-      </button>
-    );
-  };
 
   return (
     <Content title={<Title>基础信息</Title>}>
@@ -149,7 +135,7 @@ const BasicPage = () => {
             }
             right={
               config && (
-                <div className="dropdown-hover dropdown">
+                <div className="dropdown dropdown-hover">
                   <div role="button" tabIndex={0}>
                     {site}
                   </div>
@@ -173,28 +159,48 @@ const BasicPage = () => {
           <div className="flex w-1/2 justify-center">
             <SyncCircle
               pendingCount={library?.pendingCount ?? 0}
-              onListenData={(status) => {
+              onReadData={(status) => {
+                // 读取中
                 if (status === "completed") {
-                  setDisabled({ sync: false, delete: false });
+                  setBtnState(2);
                 } else {
-                  setDisabled({ sync: true, delete: true });
+                  btnState != 4 && setBtnState(4);
                 }
               }}
               onSyncData={(status) => {
+                // 同步中
                 if (status === "completed") {
-                  setDisabled({ sync: false, delete: false });
+                  setBtnState(1);
                 } else {
-                  setDisabled({ sync: true, delete: true });
+                  btnState != 3 && setBtnState(3);
                 }
               }}
             />
           </div>
           <div className="w-1/2">
             <div className="m-auto flex h-full w-5/6 flex-col justify-center">
-              <SyncButton />
               <button
-                disabled={disabled.delete}
-                className="btn-error btn-outline btn mt-4"
+                className="btn btn-neutral"
+                disabled={btn.disabled}
+                onClick={() => {
+                  if (library) {
+                    setBtnState(3);
+
+                    onStartSync
+                      .mutateAsync({
+                        libraryPath: library.path,
+                      })
+                      .catch((e) => {
+                        console.error(e);
+                      });
+                  }
+                }}
+              >
+                {btn.text}
+              </button>
+              <button
+                disabled={!btn.allowDeleted}
+                className="btn btn-outline btn-error mt-4"
                 onClick={onBeforeDeleteLibrary}
               >
                 移除
