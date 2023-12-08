@@ -67,6 +67,16 @@ PC
 - 📌 The default theme supports PWA, you can save it as an app without opening the browser every time
 - 🎊 Can access materials without relying on management software, and can even be deployed on Windows/MacOS servers
 
+## Contribution
+
+We welcome anyone interested in helping to improve RaoPics to contribute. If you want to contribute, there are several ways to participate:
+
+### Bug Fixes and Improvements
+
+Bug Fixes: If you find a bug, please create a pull request with a clear description of the problem and the solution. Quick entry => [🐞 提交 Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
+
+Improvements: Have an idea to improve RaoPics? Please create an issue first to discuss why this improvement is needed. Quick entry => [🛠 提需求](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
+
 ## Supported
 
 - This project has joined the [Eagle Affiliate Program](https://eagle.cool/affiliate). If you happen to want to purchase [Eagle App - Essential tool for image collection and management](https://eagle.sjv.io/rao), you can click [Buy](https://eagle.sjv.io/rao) to support the author 😘😘😘
