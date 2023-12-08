@@ -71,9 +71,9 @@ PC
 
 我们欢迎任何有兴趣帮助改进 RaoPics 的人士贡献。如果你想贡献，有几种方式可以参与：
 
-**Bug 修复**： 如果发现 bug，请创建一个带有清晰描述问题及解决方法的拉取请求。快速入口 => [🐞 提交 Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
+- Bug 修复： 如果发现 bug，请创建一个带有清晰描述问题及解决方法的拉取请求。快速入口 => [🐞 提交 Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
 
-**改进**： 有改进 RaoPics 的想法吗？请先创建一个问题来讨论为什么需要这个改进。快速入口 => [🛠 提需求](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
+- 改进： 有改进 RaoPics 的想法吗？请先创建一个问题来讨论为什么需要这个改进。快速入口 => [🛠 提需求](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
 
 ## 构建
 
