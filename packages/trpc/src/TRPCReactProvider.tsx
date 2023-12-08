@@ -36,12 +36,15 @@ export const TRPCReactProvider = (props: {
     const getConfig = () => {
       // Prod
       fetchConfig("/common/config").catch(() => {
+        const { hostname } = location;
         // Dev
-        void fetchConfig("http://localhost:61122/common/config");
+        void fetchConfig(`http://${hostname}:61122/common/config`);
       });
     };
 
-    void getConfig();
+    if (window) {
+      void getConfig();
+    }
   }, [fetchConfig]);
 
   return site && <Core site={site}>{props.children}</Core>;
