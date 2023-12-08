@@ -44,16 +44,6 @@
 
 ---
 
-## 特点
-
-- 🎨 30 多种配色随意切换，还可以自定义主题，总有一款适合你
-- 🔌 增量更新和实时同步，速度很快，无需等待
-- 🔐 不会修改你的任何文件，通过读取生成索引，即使误操作，也不会对元数据造成任何伤害
-- 🔸 很简单，你只需要点点点，就可以在其他设备上查看素材
-- 📱 同时支持手机、平板、PC
-- 📌 默认主题支持 PWA，你可以保存为应用，无需每次打开浏览器
-- 🎊 无需依赖管理软件，也能访问素材，甚至可以部署在 Windows/MacOS 服务器上
-
 ## 默认主题 Gallery
 
 目前已支持 WEB PWA 可直接将网页保存为 App
@@ -67,7 +57,17 @@ PC
 | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
 | <img alt="PC 端 自适应展示 light 模式" src="screenshot/pc-3.png"/> | <img alt="PC 端 菜单展示 dark 模式" src="screenshot/pc-4.png"/>    |
 
-## ❤️ 支持
+## 特点
+
+- 🎨 30 多种配色随意切换，还可以自定义主题，总有一款适合你
+- 🔌 增量更新和实时同步，速度很快，无需等待
+- 🔐 不会修改你的任何文件，通过读取生成索引，即使误操作，也不会对元数据造成任何伤害
+- 🔸 很简单，你只需要点点点，就可以在其他设备上查看素材
+- 📱 同时支持手机、平板、PC
+- 📌 默认主题支持 PWA，你可以保存为应用，无需每次打开浏览器
+- 🎊 无需依赖管理软件，也能访问素材，甚至可以部署在 Windows/MacOS 服务器上
+
+## 赞助
 
 - 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate)，如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao) 支持作者 😘😘😘
 - 如果你喜欢 Rao.Pics，可以在 Github Star，更欢迎 [推荐](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) 给你志同道合的朋友使用
@@ -79,13 +79,15 @@ PC
     <img src="./screenshot/eagle.svg" width="96" alt="eagle app" />
 </a>
 
-## 其他版本
+## 许可证
 
-- [Electron 0.7.16](https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma) - 初代 Electron App
-- [Docker](https://github.com/rao-pics/docker) - 支持 Eagle，素材库过大，同步会有些卡
-- [Eagle Api](https://github.com/meetqy/eagle-api) - 让你的 eagle 拥有 api 查询能力，基于 json-server
+RAO-PICS 是一个免费的开源项目，使用 [AGPL-3.0](./LICENSE) 协议。如果您要在与 GNU GPL 许可证 v3 兼容的许可证下创建开源应用程序，则可以根据 GPLv3 的条款使用该项目。
 
-## ❤️ 鸣谢
+### 附加协议（商业许可证）
+
+如果您将该项目用于任何商业行为，请联系我购买商业许可证，以确保您的源代码属于您自己。联系方式：meetqy@icloud.com
+
+## 感谢
 
 <img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
 

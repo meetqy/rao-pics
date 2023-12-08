@@ -44,16 +44,6 @@
 
 ---
 
-## Features
-
-- 🎨 Over 30 color schemes to choose from, and you can also customize the theme to suit your preferences
-- 🔌 Incremental updates and real-time synchronization, fast and no waiting required
-- 🔐 Does not modify any of your files, generates indexes by reading, even if there is a mistake, it will not cause any harm to the metadata
-- 🔸 Very simple, you just need to click, and you can view materials on other devices
-- 📱 Supports mobile phones, tablets, and PCs at the same time
-- 📌 The default theme supports PWA, you can save it as an app without opening the browser every time
-- 🎊 Can access materials without relying on management software, and can even be deployed on Windows/MacOS servers
-
 ## Default Theme Gallery
 
 Currently supports WEB PWA, you can directly save the webpage as an app
@@ -67,7 +57,17 @@ PC
 | --------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | <img alt="PC adaptive display light mode" src="screenshot/pc-3.png"/> | <img alt="PC menu display dark mode" src="screenshot/pc-4.png"/>             |
 
-## ❤️ Support
+## Features
+
+- 🎨 Over 30 color schemes to choose from, and you can also customize the theme to suit your preferences
+- 🔌 Incremental updates and real-time synchronization, fast and no waiting required
+- 🔐 Does not modify any of your files, generates indexes by reading, even if there is a mistake, it will not cause any harm to the metadata
+- 🔸 Very simple, you just need to click, and you can view materials on other devices
+- 📱 Supports mobile phones, tablets, and PCs at the same time
+- 📌 The default theme supports PWA, you can save it as an app without opening the browser every time
+- 🎊 Can access materials without relying on management software, and can even be deployed on Windows/MacOS servers
+
+## Supported
 
 - This project has joined the [Eagle Affiliate Program](https://eagle.cool/affiliate). If you happen to want to purchase [Eagle App - Essential tool for image collection and management](https://eagle.sjv.io/rao), you can click [Buy](https://eagle.sjv.io/rao) to support the author 😘😘😘
 - If you like Rao.Pics, you can star it on GitHub, and it is even more welcome to [recommend](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) it to like-minded friends
@@ -79,13 +79,15 @@ PC
     <img src="./screenshot/eagle.svg" width="96" alt="eagle app" />
 </a>
 
-## Other Versions
+## License
 
-- [Electron 0.7.16](https://github.com/meetqy/rao-pics/tree/turbo-electron-prisma) - Original Electron App
-- [Docker](https://github.com/rao-pics/docker) - Supports Eagle, the material library is large, and synchronization may be a bit slow
-- [Eagle Api](https://github.com/meetqy/eagle-api) - Gives your eagle the ability to query through API, based on json-server
+RAO-PICS is a free open source project, using the AGPL-3.0 license. If you want to create an open source application under a license compatible with GNU GPL license v3, you can use this project according to the terms of GPLv3.
 
-## ❤️ Acknowledgements
+### Additional Agreement (Commercial License)
+
+If you use this project for any commercial behavior, please contact me to purchase a commercial license to ensure that your source code belongs to you. Contact: meetqy@icloud.com
+
+## Thanks
 
 <img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
 
