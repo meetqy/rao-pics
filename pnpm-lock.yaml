@@ -442,9 +442,12 @@ importers:
       '@rao-pics/utils':
         specifier: workspace:^
         version: link:../../packages/utils
-      '@react-hook/window-size':
-        specifier: ^3.1.1
-        version: 3.1.1(react@18.2.0)
+      '@react-hook/debounce':
+        specifier: ^4.0.0
+        version: 4.0.0(react@18.2.0)
+      '@react-hook/event':
+        specifier: ^1.2.6
+        version: 1.2.6(react@18.2.0)
       '@t3-oss/env-nextjs':
         specifier: ^0.7.1
         version: 0.7.1(typescript@5.2.2)(zod@3.22.2)
@@ -2219,6 +2222,15 @@ packages:
 
   /@react-hook/debounce@3.0.0(react@18.2.0):
     resolution: {integrity: sha512-ir/kPrSfAzY12Gre0sOHkZ2rkEmM4fS5M5zFxCi4BnCeXh2nvx9Ujd+U4IGpKCuPA+EQD0pg1eK2NGLvfWejag==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      '@react-hook/latest': 1.0.3(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@react-hook/debounce@4.0.0(react@18.2.0):
+    resolution: {integrity: sha512-706Xcg+KKWHk9BuZQUQ0ZQKp9zhv3/MbqFenWVfHcynYpSGRVwQTzJRGvPxvsdtXxJv+HfgKTY/O/hEejakwmA==}
     peerDependencies:
       react: '>=16.8'
     dependencies:
