@@ -73,7 +73,7 @@ function FolderTree({ data }: FileTreeProps) {
     const childCount = countFolder(data.children ?? []);
     const allCount = data._count.images + (childCount ?? 0);
 
-    const open = openFolderIds.includes(data.id);
+    const open = openFolderIds?.includes(data.id);
 
     return (
       <li>
