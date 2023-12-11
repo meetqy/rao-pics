@@ -2,7 +2,6 @@
 
 import { useMemo, useRef } from "react";
 import Image from "next/legacy/image";
-import { useWindowSize } from "@react-hook/window-size";
 import justifyLayout from "justified-layout";
 import {
   MasonryScroller,
@@ -18,6 +17,8 @@ import type { EXT } from "@rao-pics/constant";
 import initLightboxVideoPlugin from "~/utils/photoswipe-video";
 
 import "photoswipe/style.css";
+
+import { useWindowSize } from "~/hooks/useWindowSize";
 
 type JustifyLayoutResult = ReturnType<typeof justifyLayout>;
 
@@ -43,6 +44,7 @@ function Responsive({ children, images, onLoadMore }: Props) {
   const limit = 50;
   const containerRef = useRef(null);
   const [windowWidth, windowHeight] = useWindowSize();
+
   const { offset, width } = useContainerPosition(containerRef, [
     windowWidth,
     windowHeight,

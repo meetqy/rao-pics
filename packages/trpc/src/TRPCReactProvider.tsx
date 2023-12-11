@@ -37,7 +37,12 @@ export const TRPCReactProvider = (props: {
       // Prod
       fetchConfig("/common/config").catch(() => {
         // Dev
-        void fetchConfig("http://localhost:61122/common/config");
+        fetchConfig(`http://localhost:61122/common/config`).catch(() => {
+          const { hostname } = window.location;
+
+          // 开发环境 IP 访问
+          void fetchConfig(`http://${hostname}:61122/common/config`);
+        });
       });
     };
 

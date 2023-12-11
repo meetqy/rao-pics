@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import Image from "next/legacy/image";
-import { useWindowSize } from "@react-hook/window-size";
 import {
   MasonryScroller,
   useContainerPosition,
@@ -16,6 +15,8 @@ import type { EXT } from "@rao-pics/constant";
 import initLightboxVideoPlugin from "~/utils/photoswipe-video";
 
 import "photoswipe/style.css";
+
+import { useWindowSize } from "~/hooks/useWindowSize";
 
 interface Props {
   images?: {
@@ -38,8 +39,8 @@ interface Props {
 function Masonry({ children, onLoadMore, images }: Props) {
   const limit = 50;
   const containerRef = useRef(null);
-
   const [windowWidth, windowHeight] = useWindowSize();
+
   const { offset, width } = useContainerPosition(containerRef, [
     windowWidth,
     windowHeight,
@@ -71,7 +72,7 @@ function Masonry({ children, onLoadMore, images }: Props) {
         onRender={onRender}
         positioner={positioner}
         offset={offset}
-        height={windowHeight}
+        height={500}
         containerRef={containerRef}
         items={images ?? []}
         itemKey={(data) => data.id}
