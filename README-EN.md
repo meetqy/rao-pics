@@ -28,7 +28,7 @@
 ---
 
 <p align="center">
-    ✅ Download now:
+    ✅ Download now: 
     <a href="https://github.com/meetqy/rao-pics/releases/latest">MAC M1</a>
     <span> </span>·🚶·<span> </span>
     <a href="https://github.com/meetqy/rao-pics/releases/latest">MAC INTER</a>
@@ -36,7 +36,7 @@
     <a href="https://github.com/meetqy/rao-pics/releases/latest">WINDOWS</a>
 </p>
 
-> If you are unable to open it after installation on macOS, getting an error of untrusted or moved to the trash, execute the following command and then start again:
+> If you are unable to open it after installing on macOS, getting an error of untrusted or moved to the trash, execute the following command and then start it again:
 >
 > ```sh
 > sudo xattr -d com.apple.quarantine /Applications/Rao\ Pics.app
@@ -46,7 +46,7 @@
 
 ## Default Theme Gallery
 
-Currently supports WEB PWA, you can directly save the webpage as an app
+Currently supports WEB PWA, you can directly save the webpage as an App
 
 | <img alt="Mobile PWA waterfall demonstration" src="screenshot/mobile-1.png"/> Waterfall | <img alt="Mobile PWA menu display" src="screenshot/mobile-2.png"/> Menu | <img alt="Mobile PWA adaptive display" src="screenshot/mobile-3.png"/> Adaptive |
 | :-------------------------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
@@ -59,27 +59,58 @@ PC
 
 ## Features
 
-- 🎨 Over 30 color schemes to choose from, and you can also customize the theme to suit your preferences
+- 🎨 Over 30 color schemes to choose from, you can also customize your own theme, there is always one that suits you
 - 🔌 Incremental updates and real-time synchronization, fast and no waiting required
 - 🔐 Does not modify any of your files, generates indexes by reading, even if there is a mistake, it will not cause any harm to the metadata
-- 🔸 Very simple, you just need to click, and you can view materials on other devices
+- 🔸 Very simple, you just need to click, and you can view the materials on other devices
 - 📱 Supports mobile phones, tablets, and PCs at the same time
 - 📌 The default theme supports PWA, you can save it as an app without opening the browser every time
 - 🎊 Can access materials without relying on management software, and can even be deployed on Windows/MacOS servers
 
 ## Contribution
 
-We welcome anyone interested in helping to improve RaoPics to contribute. If you want to contribute, there are several ways to participate:
+We welcome anyone interested in helping to improve RaoPics. If you want to contribute, there are several ways to participate:
 
-- Bug Fixes: If you find a bug, please create a pull request with a clear description of the problem and the solution. Quick entry => [🐞 提交 Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
+- Bug fixes: If you find a bug, please create a pull request with a clear description of the problem and the solution. Quick entry => [🐞 Submit Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
 
-- Improvements: Have an idea to improve RaoPics? Please create an issue first to discuss why this improvement is needed. Quick entry => [🛠 提需求](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
+- Improvements: Do you have any ideas to improve RaoPics? Please create an issue first to discuss why this improvement is needed. Quick entry => [🛠 Feature Request](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
 
-## Supported
+## Build
 
-- This project has joined the [Eagle Affiliate Program](https://eagle.cool/affiliate). If you happen to want to purchase [Eagle App - Essential tool for image collection and management](https://eagle.sjv.io/rao), you can click [Buy](https://eagle.sjv.io/rao) to support the author 😘😘😘
-- If you like Rao.Pics, you can star it on GitHub, and it is even more welcome to [recommend](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) it to like-minded friends
-- You can follow me on [Twitter](https://twitter.com/meetqy) to get the latest news, or add WeChat `-meetqy-` to join the group **(remember to mention GITHUB)**
+These commands are for maintainers only.
+
+**Environment Information**
+
+- nodejs >= `v18.17.1`
+- pnpm >= `8.7.6`
+
+**Pull the code**
+
+```
+git clone https://github.com/meetqy/rao-pics.git
+```
+
+**Install Dependencies**
+
+Install dependencies using pnpm
+
+```
+pnpm i
+```
+
+**Run**
+
+`pnpm dev` will run three projects simultaneously: `packages/db`, `themes/gallery`, `apps/electron`
+
+```
+pnpm dev
+```
+
+## Support the Author
+
+- This project has joined the [Eagle Affiliate Program](https://eagle.cool/affiliate). If you happen to want to purchase [Eagle App - Essential Tool for Image Collection and Management](https://eagle.sjv.io/rao), you can click [here](https://eagle.sjv.io/rao) to support the author 😘😘😘
+- If you like Rao.Pics, you can star it on GitHub and even [share](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) it with like-minded friends
+- You can follow me on [Twitter](https://twitter.com/meetqy) to get the latest updates or add me on WeChat `-meetqy-` to join the group **(Remember to mention GITHUB in the note)**
 
 ---
 
@@ -89,13 +120,13 @@ We welcome anyone interested in helping to improve RaoPics to contribute. If you
 
 ## License
 
-RAO-PICS is a free open source project, using the AGPL-3.0 license. If you want to create an open source application under a license compatible with GNU GPL license v3, you can use this project according to the terms of GPLv3.
+RAO-PICS is a free and open-source project licensed under the [AGPL-3.0](./LICENSE) license. If you want to create open-source applications under a license compatible with the GNU GPL v3, you can use this project under the terms of GPLv3.
 
-### Additional Agreement (Commercial License)
+### Additional License (Commercial License)
 
-If you use this project for any commercial behavior, please contact me to purchase a commercial license to ensure that your source code belongs to you. Contact: meetqy@icloud.com
+If you use this project for any commercial purposes, please contact me to purchase a commercial license to ensure that your source code belongs to you. Contact: meetqy@icloud.com
 
-## Thanks
+## Acknowledgements
 
 <img src="https://repobeats.axiom.co/api/embed/e9735009c7d58372e055f2875a36283f25a60540.svg" width="100%"  alt="repobeats"/>
 

@@ -79,18 +79,18 @@ PC
 
 这些命令仅供维护人员使用。
 
-### 环境信息
+**环境信息**
 
 - nodejs >= `v18.17.1`
 - pnpm >= `8.7.6`
 
-### 拉取代码
+**拉取代码**
 
 ```
 git clone https://github.com/meetqy/rao-pics.git
 ```
 
-### 安装依赖
+**安装依赖**
 
 使用 pnpm 安装 依赖
 
@@ -98,7 +98,7 @@ git clone https://github.com/meetqy/rao-pics.git
 pnpm i
 ```
 
-### 运行
+**运行**
 
 `pnpm dev` 会同时运行三个项目分别为：`packages/db`、`themes/gallery`、`apps/electron`
 
@@ -106,7 +106,7 @@ pnpm i
 pnpm dev
 ```
 
-## 赞助
+## 支持作者
 
 - 本项目已加入 [Eagle 联盟营销计划](https://eagle.cool/affiliate)，如果你正好想要购买 [Eagle App - 图片收集及管理必备工具](https://eagle.sjv.io/rao)，可以点击 [购买](https://eagle.sjv.io/rao) 支持作者 😘😘😘
 - 如果你喜欢 Rao.Pics，可以在 Github Star，更欢迎 [推荐](https://twitter.com/intent/tweet?text=View%20Images%20on%20Any%20device.https://github.com/rao-pics/core) 给你志同道合的朋友使用
