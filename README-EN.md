@@ -54,8 +54,8 @@ Currently supports WEB PWA, which allows you to save the webpage as an app.
 PC
 
 | <img alt="PC menu display light mode" src="https://i.imgur.com/CMB0JRg.png"/>     | <img src="https://i.imgur.com/aVACzP3.png" alt="PC waterfall demo dark mode" /> |
-| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --- |
-| <img alt="PC adaptive display light mode" src="https://i.imgur.com/jkTaBlI.png"/> | <img alt="PC menu display dark mode" src="https://i.imgur.com/GnfKRM5.png"/>    |     |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| <img alt="PC adaptive display light mode" src="https://i.imgur.com/jkTaBlI.png"/> | <img alt="PC menu display dark mode" src="https://i.imgur.com/GnfKRM5.png"/>    |
 
 ## Features
 
