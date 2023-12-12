@@ -4,7 +4,15 @@
     <a href="https://rao.pics" target="_blank">
         <img width="196" src="./icons/logo.svg" alt="rao.pics logo"/>
     </a>
-    <h1 align="center">Rao Pics</h1>
+    <h1 align="center">
+        <span style="color:#ef4444">R</span>
+        <span style="color:#f97316">a</span>
+        <span style="color:#eab308">o</span>.
+        <span style="color:#22c55e">P</span>
+        <span style="color:#06b6d4">i</span>
+        <span style="color:#3b82f6">c</span>
+        <span style="color:#8b5cf6">s</span>
+    </h1>
     <p align="center">帮助你远程访问 Eagle 的素材库</p>
     <p align="center">
         <a href="https://codecov.io/gh/meetqy/rao-pics" target="_blank"><img alt="codecov" src="https://codecov.io/gh/meetqy/rao-pics/graph/badge.svg?token=G9UG6SEOZK"/></a>
@@ -48,14 +56,14 @@
 
 目前已支持 WEB PWA 可直接将网页保存为 App
 
-| <img alt="移动端 pwa 瀑布流演示" src="screenshot/mobile-1.png"/> 瀑布流 | <img alt="移动端 pwa 菜单展示" src="screenshot/mobile-2.png"/> 菜单 | <img alt="移动端 pwa 自适应展示" src="screenshot/mobile-3.png"/> 自适应 |
-| :---------------------------------------------------------------------: | :-----------------------------------------------------------------: | :---------------------------------------------------------------------: |
+| <img alt="移动端 pwa 瀑布流演示" src="https://i.imgur.com/vzHAKA6.png"/> 瀑布流 | <img alt="移动端 pwa 菜单展示" src="https://i.imgur.com/WrX7Rnn.png"/> 菜单 | <img alt="移动端 pwa 自适应展示" src="https://i.imgur.com/VOOOvR7.png"/> 自适应 |
+| :-----------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
 
 PC
 
-| <img alt="PC 端 菜单展示 light 模式" src="screenshot/pc-1.png"/>   | <img src="screenshot/pc-2.png" alt="PC 端 瀑布流演示 dark 模式" /> |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| <img alt="PC 端 自适应展示 light 模式" src="screenshot/pc-3.png"/> | <img alt="PC 端 菜单展示 dark 模式" src="screenshot/pc-4.png"/>    |
+| <img alt="PC 端 菜单展示 light 模式" src="https://i.imgur.com/CMB0JRg.png"/>   | <img src="https://i.imgur.com/aVACzP3.png" alt="PC 端 瀑布流演示 dark 模式" /> |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| <img alt="PC 端 自适应展示 light 模式" src="https://i.imgur.com/jkTaBlI.png"/> | <img alt="PC 端 菜单展示 dark 模式" src="https://i.imgur.com/GnfKRM5.png"/>    |
 
 ## 特点
 
