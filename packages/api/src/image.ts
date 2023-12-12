@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { z } from "zod";
 
 import type { Prisma } from "@rao-pics/db";
@@ -89,6 +90,11 @@ export const imageCore = {
     return null;
   },
 };
+
+/**
+ * 临时存储 imageIds 用于随机查询并分页
+ */
+let _imageIdsTemp: { id: number }[] = [];
 
 export const image = t.router({
   /**
@@ -222,6 +228,61 @@ export const image = t.router({
     .input(imageInput.deleteByUnique)
     .mutation(({ input }) => imageCore.deleteByUnique(input)),
 
+  findShuffle: t.procedure
+    .input(
+      z
+        .object({
+          limit: z.number().min(1).max(100).optional(),
+          cursor: z.string().nullish(),
+          includes: z.enum(["tags", "colors", "folders"]).array().optional(),
+        })
+        .optional(),
+    )
+    .query(async ({ input }) => {
+      const page = Number(input?.cursor ?? 1);
+      const limit = input?.limit ?? 50;
+
+      if (page === 1) {
+        const imageIds = await prisma.image.findMany({
+          where: {
+            isDeleted: false,
+            folders: {
+              every: { show: true },
+            },
+          },
+          select: { id: true },
+        });
+
+        _imageIdsTemp = _.shuffle(imageIds);
+      }
+
+      const items = _imageIdsTemp.slice((page - 1) * limit, page * limit);
+
+      const data = await prisma.image.findMany({
+        where: {
+          id: {
+            in: items.map((item) => item.id),
+          },
+        },
+        include: {
+          tags: input?.includes?.includes("tags"),
+          colors: input?.includes?.includes("colors"),
+          folders: input?.includes?.includes("folders"),
+        },
+      });
+
+      let nextCursor: string | undefined = undefined;
+      if (page * limit < _imageIdsTemp.length) {
+        nextCursor = String(page + 1);
+      }
+
+      return {
+        data,
+        count: _imageIdsTemp.length,
+        nextCursor,
+      };
+    }),
+
   /**
    * 查询时不返回
    * 回收站 和 不显示文件夹中的素材
@@ -235,7 +296,7 @@ export const image = t.router({
       const where = {
         // 回收站的素材不显示
         isDeleted: false,
-        // 文件夹显示的素材不显示
+        // 设置文件夹为显示状态的的素材才显示
         folders: {
           every: { show: true },
         },
