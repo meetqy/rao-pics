@@ -10,12 +10,14 @@ import type { SettingType } from "~/states/setting";
 export const getImageQuery = (
   m: string | null,
   orderBy: SettingType["orderBy"],
+  random?: boolean,
 ) => {
   const limit = 50;
 
   let find: ReturnType<typeof trpc.image.find.useInfiniteQuery> | undefined;
   let findTrash:
     | ReturnType<typeof trpc.image.findTrash.useInfiniteQuery>
+    | ReturnType<typeof trpc.image.findShuffle.useInfiniteQuery>
     | undefined;
   let findByFolderId:
     | ReturnType<typeof trpc.image.findByFolderId.useInfiniteQuery>
@@ -23,12 +25,21 @@ export const getImageQuery = (
 
   if (!m) {
     if (!find) {
-      find = trpc.image.find.useInfiniteQuery(
-        { limit, includes: ["colors"], orderBy },
-        {
-          getNextPageParam: (lastPage) => lastPage.nextCursor,
-        },
-      );
+      if (random) {
+        find = trpc.image.findShuffle.useInfiniteQuery(
+          { limit, includes: ["colors"], orderBy },
+          {
+            getNextPageParam: (lastPage) => lastPage.nextCursor,
+          },
+        );
+      } else {
+        find = trpc.image.find.useInfiniteQuery(
+          { limit, includes: ["colors"], orderBy },
+          {
+            getNextPageParam: (lastPage) => lastPage.nextCursor,
+          },
+        );
+      }
     }
 
     return find;

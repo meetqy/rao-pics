@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRecoilState } from "recoil";
 
+import { IconShuffle } from "~/icons/Icon-Shuffle";
 import type { SettingType } from "~/states/setting";
 import { settingSelector } from "~/states/setting";
 import { trpc } from "~/utils/trpc";
@@ -123,6 +124,27 @@ const Setting = () => {
                       {setting.count}
                     </span>
                   </Link>
+                </li>
+                <li>
+                  <div className="flex justify-between active:!bg-transparent active:!text-inherit">
+                    <span className="flex items-center">
+                      <IconShuffle className="mr-1 h-5 w-5" />
+                      随机模式
+                    </span>
+
+                    <input
+                      type="checkbox"
+                      className="toggle toggle-primary"
+                      checked={setting.shuffle}
+                      onChange={(e) => {
+                        setSetting((prev) => ({
+                          ...prev,
+                          shuffle: e.target.checked,
+                        }));
+                        router.refresh();
+                      }}
+                    />
+                  </div>
                 </li>
                 {config?.trash && (
                   <li>

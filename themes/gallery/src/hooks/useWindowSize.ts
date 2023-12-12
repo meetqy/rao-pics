@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useState } from "react";
 import { useDebounce } from "@react-hook/debounce";
 import useEvent from "@react-hook/event";
 
@@ -12,6 +12,8 @@ export interface DebouncedWindowSizeOptions {
 }
 
 const win = typeof window === "undefined" ? null : window;
+const wv =
+  win && typeof win.visualViewport !== "undefined" ? win.visualViewport : null;
 
 const getSize = () =>
   [
@@ -24,21 +26,25 @@ export const useWindowSize = (
 ): readonly [number, number] => {
   const { wait, leading, initialWidth = 0, initialHeight = 0 } = options;
   const [size, setDebouncedSize] = useDebounce<readonly [number, number]>(
-    /* istanbul ignore next */
     typeof document === "undefined" ? [initialWidth, initialHeight] : getSize,
     wait,
     leading,
   );
 
-  const wn = useMemo(() => win?.innerWidth, []);
+  const [wn, setWn] = useState<number>(getSize()[0]);
 
   const setSize = (): void => {
-    if (window.innerWidth != wn) {
-      setDebouncedSize(getSize());
+    const s = getSize();
+    if (s[0] !== wn) {
+      setWn(s[0]);
+      setDebouncedSize(s);
     }
   };
 
   useEvent(win, "resize", setSize);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useEvent(wv, "resize", setSize);
   useEvent(win, "orientationchange", setSize);
 
   return size;
