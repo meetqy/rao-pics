@@ -46,16 +46,16 @@
 
 ## Default Theme Gallery
 
-Currently supports WEB PWA, you can directly save the webpage as an App
+Currently supports WEB PWA, which allows you to save the webpage as an app.
 
-| <img alt="Mobile PWA waterfall demonstration" src="screenshot/mobile-1.png"/> Waterfall | <img alt="Mobile PWA menu display" src="screenshot/mobile-2.png"/> Menu | <img alt="Mobile PWA adaptive display" src="screenshot/mobile-3.png"/> Adaptive |
-| :-------------------------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| <img alt="Mobile PWA waterfall demo" src="https://i.imgur.com/vzHAKA6.png"/> Waterfall | <img alt="Mobile PWA menu display" src="https://i.imgur.com/WrX7Rnn.png"/> Menu | <img alt="Mobile PWA adaptive display" src="https://i.imgur.com/VOOOvR7.png"/> Adaptive |
+| :------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: |
 
 PC
 
-| <img alt="PC menu display light mode" src="screenshot/pc-1.png"/>     | <img src="screenshot/pc-2.png" alt="PC waterfall demonstration dark mode" /> |
-| --------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| <img alt="PC adaptive display light mode" src="screenshot/pc-3.png"/> | <img alt="PC menu display dark mode" src="screenshot/pc-4.png"/>             |
+| <img alt="PC menu display light mode" src="https://i.imgur.com/CMB0JRg.png"/>     | <img src="https://i.imgur.com/aVACzP3.png" alt="PC waterfall demo dark mode" /> |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | --- |
+| <img alt="PC adaptive display light mode" src="https://i.imgur.com/jkTaBlI.png"/> | <img alt="PC menu display dark mode" src="https://i.imgur.com/GnfKRM5.png"/>    |     |
 
 ## Features
 
