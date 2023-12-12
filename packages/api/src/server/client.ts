@@ -1,7 +1,7 @@
 /**
- * 静态服务器
- * 1. 主题
- * 2. libray 资源
+ * 静态服务器包含
+ * - 主题
+ * - library 资源
  */
 
 import path from "path";
@@ -51,6 +51,10 @@ export const startClientServer = async () => {
     root: path.join(libray.path, "images"),
     prefix: "/static/",
     decorateReply: false,
+  });
+
+  server.setNotFoundHandler((_req, reply) => {
+    return reply.sendFile("404.html");
   });
 
   await server.listen({ port: config.clientPort, host: "0.0.0.0" });
