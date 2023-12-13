@@ -119,6 +119,7 @@ convert './icon_512x512@2x.png' \
     \( +clone -resize  x32 -write './icon_32x32.png'      +delete \) \
     \( +clone -resize  x64 -write './icon_32x32@2x.png'   +delete \) \
     \( +clone -resize x128 -write './icon_128x128.png'    +delete \) \
+    \( +clone -resize x192 -write './icon_192x192.png'    +delete \) \
     \( +clone -resize x256 -write './icon_128x128@2x.png' +delete \) \
     \( +clone -resize x256 -write './icon_256x256.png'    +delete \) \
     \( +clone -resize x512 -write './icon_256x256@2x.png' +delete \) \
