@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "Gallery",
     description: "RAO.PICS 默认主题",
     start_url: "/",
-    display: "minimal-ui",
+    display: "standalone",
     icons: [
       {
         src: "/icon_192x192.png",
