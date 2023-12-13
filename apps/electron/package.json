@@ -3,6 +3,10 @@
   "version": "1.0.0-alpha.11",
   "description": "远程访问 Eagle 素材资源",
   "homepage": "https://rao.pics",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meetqy/rao-pics.git"
+  },
   "author": {
     "name": "meetqy",
     "email": "meetqy@qq.com"
@@ -10,8 +14,8 @@
   "main": "./out/main/index.js",
   "scripts": {
     "build": "pnpm typecheck && pnpm with-env electron-vite build",
-    "build:mac": "node ./electron-builder/mac.cjs",
-    "build:win": "node ./electron-builder/win.cjs",
+    "build:mac": "pnpm with-env node ./electron-builder/mac.cjs",
+    "build:win": "pnpm with-env node ./electron-builder/win.cjs",
     "clean": "git clean -xdf node_modules out releases .turbo",
     "dev": "pnpm with-env electron-vite dev",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",

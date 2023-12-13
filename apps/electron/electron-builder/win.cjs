@@ -25,6 +25,8 @@ const AppConfig = {
         filter: ["**/*", "!**/*.node", "**/query_engine-windows.dll.node"],
       },
     ],
+    publish: ["github"],
+    publisherName: ["meetqy"],
   },
 };
 

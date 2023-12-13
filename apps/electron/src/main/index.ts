@@ -1,5 +1,6 @@
 import { join } from "path";
 import { app, BrowserWindow, dialog, shell } from "electron";
+import { autoUpdater } from "electron-updater";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import * as Sentry from "@sentry/electron";
 import ip from "ip";
@@ -21,6 +22,11 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN,
   debug: IS_DEV,
   environment: IS_DEV ? "development" : "production",
+});
+
+/** 检查更新 */
+autoUpdater.checkForUpdatesAndNotify().catch((e) => {
+  RLogger.warning(e as Error, "autoUpdater.checkForUpdatesAndNotify");
 });
 
 RLogger.info(
