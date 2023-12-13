@@ -3,6 +3,7 @@ import { app, BrowserWindow, dialog, shell } from "electron";
 import { electronApp, is, optimizer } from "@electron-toolkit/utils";
 import * as Sentry from "@sentry/electron";
 import ip from "ip";
+import { updateElectronApp, UpdateSourceType } from "update-electron-app";
 
 import { closeServer, router, routerCore, startServer } from "@rao-pics/api";
 import { IS_DEV, PLATFORM } from "@rao-pics/constant/server";
@@ -18,10 +19,13 @@ import createTray from "./src/tray";
 process.env.APP_VERSION = app.getVersion();
 
 Sentry.init({
-  dsn: "https://a5a843cd51513a6b55c1f638d39748af@o4506262672310272.ingest.sentry.io/4506263938203648",
+  dsn: process.env.SENTRY_DSN,
   debug: IS_DEV,
   environment: IS_DEV ? "development" : "production",
 });
+
+// 更新应用
+updateElectronApp();
 
 RLogger.info(
   `NODE_ENV: ${process.env.NODE_ENV ?? "development"}, APP_VERSION: ${

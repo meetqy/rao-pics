@@ -5,9 +5,6 @@ import react from "@vitejs/plugin-react";
 
 const IS_DEV = process.env.NODE_ENV != "production";
 
-process.env.SENTRY_AUTH_TOKEN =
-  "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";
-
 export default defineConfig({
   main: {
     build: {

@@ -8,8 +8,11 @@
     "topo": {
       "dependsOn": ["^topo"]
     },
-    "releases": {},
+    "releases": {
+      "cache": false
+    },
     "build": {
+      "cache": false,
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts", ".expo/**"]
     },
