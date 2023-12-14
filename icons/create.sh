@@ -3,7 +3,7 @@
 set -eo pipefail
 
 # Config
-SOURCE_FILE_PATH='./1024x1024.png' # has to be of size 1024x1024 px
+SOURCE_FILE_PATH='./logo.png' # has to be of size 1024x1024 px
 OUT_ICON_NAME='icon'
 
 rm -rf "./${OUT_ICON_NAME}.iconset"
@@ -86,6 +86,7 @@ convert './icon_512x512@2x.png' \
     \( +clone -resize  x32 -write './icon_32x32.png'      +delete \) \
     \( +clone -resize  x64 -write './icon_32x32@2x.png'   +delete \) \
     \( +clone -resize x128 -write './icon_128x128.png'    +delete \) \
+    \( +clone -resize x192 -write './icon_192x192.png'    +delete \) \
     \( +clone -resize x256 -write './icon_128x128@2x.png' +delete \) \
     \( +clone -resize x256 -write './icon_256x256.png'    +delete \) \
     \( +clone -resize x512 -write './icon_256x256@2x.png' +delete \) \
@@ -99,6 +100,7 @@ convert './icon_512x512@2x.png' \
     \( +clone -resize  x32 -write './icon_32x32.png'      +delete \) \
     \( +clone -resize  x64 -write './icon_32x32@2x.png'   +delete \) \
     \( +clone -resize x128 -write './icon_128x128.png'    +delete \) \
+    \( +clone -resize x192 -write './icon_192x192.png'    +delete \) \
     \( +clone -resize x256 -write './icon_128x128@2x.png' +delete \) \
     \( +clone -resize x256 -write './icon_256x256.png'    +delete \) \
     \( +clone -resize x512 -write './icon_256x256@2x.png' +delete \) \
@@ -112,6 +114,7 @@ convert './icon_512x512@2x.png' \
     \( +clone -resize  x32 -write './icon_32x32.png'      +delete \) \
     \( +clone -resize  x64 -write './icon_32x32@2x.png'   +delete \) \
     \( +clone -resize x128 -write './icon_128x128.png'    +delete \) \
+    \( +clone -resize x192 -write './icon_192x192.png'    +delete \) \
     \( +clone -resize x256 -write './icon_128x128@2x.png' +delete \) \
     \( +clone -resize x256 -write './icon_256x256.png'    +delete \) \
     \( +clone -resize x512 -write './icon_256x256@2x.png' +delete \) \
@@ -132,5 +135,10 @@ done
 
 convert $ICON_FILES "${OUT_ICON_NAME}_shadow_rounded.ico"
 
+# copy to electron
 cp "./${OUT_ICON_NAME}_shadow_rounded.icns" ../apps/electron/build/icon.icns
 cp "./${OUT_ICON_NAME}_shadow_rounded.ico" ../apps/electron/build/icon.ico
+
+# copy to gallery
+cp "./${OUT_ICON_NAME}_rounded.iconset/icon_512x512.png" ../themes/gallery/public/icon_512x512.png
+cp "./${OUT_ICON_NAME}_rounded.iconset/icon_192x192.png" ../themes/gallery/public/icon_192x192.png

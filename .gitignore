@@ -3,7 +3,7 @@
 
 # icons
 icons/*
-!icons/1024x1024.png
+!icons/logo*.png
 !icons/create.sh
 !icons/logo.svg
 !icons/index.html
