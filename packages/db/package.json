@@ -24,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "@prisma/client": "5.6.0",
+    "@prisma/client": "5.7.0",
     "@rao-pics/constant": "workspace:^",
     "@rao-pics/rlog": "workspace:^",
     "fs-extra": "^11.1.1"
