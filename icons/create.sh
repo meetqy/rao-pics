@@ -3,10 +3,20 @@
 set -eo pipefail
 
 # Config
-SOURCE_FILE_PATH='./1024x1024.png' # has to be of size 1024x1024 px
+SOURCE_FILE_PATH='./logo.png' # has to be of size 1024x1024 px
 OUT_ICON_NAME='icon'
 
-rm -rf ./icons
+rm -rf "./${OUT_ICON_NAME}.iconset"
+rm -rf "./${OUT_ICON_NAME}_shadow_rounded.iconset"
+rm -rf "./${OUT_ICON_NAME}_rounded.iconset"
+
+sizes=(
+  16x16
+  32x32
+  128x128
+  256x256
+  512x512
+)
 
 
 # The "design" and magic numbers below are derived from Apple's macOS app icon
@@ -27,19 +37,10 @@ if ! hash convert 2>/dev/null || ! hash iconutil 2>/dev/null; then
     exit 1
 fi
 
-
-# Prepare an iconset folder
 mkdir "./${OUT_ICON_NAME}.iconset"
 mkdir "./${OUT_ICON_NAME}_shadow_rounded.iconset"
 mkdir "./${OUT_ICON_NAME}_rounded.iconset"
 
-
-# Add rounded corners to the 1024px image.
-#
-# This works by:
-# 1. Generating a black square (1024 px) with rounded corners (radius 234 px)
-#    on transparent background, via `-size [...] xc:none -draw [...]`
-# 2. Applying the square as a mask to the the source image, via `-matte [...]`
 convert "${SOURCE_FILE_PATH}" \
     -matte \( \
         -size 1024x1024 xc:none -draw "roundrectangle 0,0,1024,1024,234,234" \
@@ -50,16 +51,9 @@ convert "${SOURCE_FILE_PATH}" \
 
 convert "${SOURCE_FILE_PATH}" \
     -resize 824x824 \
-    "./${OUT_ICON_NAME}.iconset/temp_1024.png"    
+    "./${OUT_ICON_NAME}.iconset/temp_1024.png"  
 
 
-# Apply sizing and add shadow to the 1024px image.
-#
-# This works by:
-# 1. Resizing to 'icon grid size' (824px), via `-resize`
-# 2. Adding padding (100px) to get 'outer bounding box' size,
-#    via `-bordercolor none -border [...]`
-# 3. Adding shadow, via `+clone -background black -shadow [...]`
 convert "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png" \
     -resize 824x824 \
     -bordercolor none -border 100x100 \
@@ -81,6 +75,7 @@ convert "./${OUT_ICON_NAME}.iconset/temp_1024.png" \
 # Remove temporary file
 rm "./${OUT_ICON_NAME}.iconset/temp_1024_rounded.png"
 rm "./${OUT_ICON_NAME}.iconset/temp_1024.png"
+
 
 # Generate all sizes.
 # 16/32/128/256/512, each single & double resolution
@@ -129,13 +124,21 @@ cd '..'
 # Convert to .icns format and remove iconset
 iconutil -c icns "./${OUT_ICON_NAME}_shadow_rounded.iconset"
 
-mkdir icons
-mv "./${OUT_ICON_NAME}_shadow_rounded.icns" "./icons/${OUT_ICON_NAME}.icns"
-mv "./${OUT_ICON_NAME}_shadow_rounded.iconset" "./icons/${OUT_ICON_NAME}_shadow_rounded"
-mv "./${OUT_ICON_NAME}_rounded.iconset" "./icons/${OUT_ICON_NAME}_rounded"
-mv "./${OUT_ICON_NAME}.iconset" "./icons/${OUT_ICON_NAME}"
 
-npx electron-icon-builder --input=./icons/icon_shadow_rounded/icon_512x512@2x.png --output=./platform
+# Generate .ico file for windows
+ICON_FILES=""
+ICONSET_FOLDER="./${OUT_ICON_NAME}_shadow_rounded.iconset"
+for size in "${sizes[@]}"; do
+  ICON_FILES="$ICON_FILES $ICONSET_FOLDER/icon_${size}.png"
+  ICON_FILES="$ICON_FILES $ICONSET_FOLDER/icon_${size}@2x.png"
+done
 
-mv ./platform/icons/mac/icon.icns ../apps/electron/build/icon.icns
-mv ./platform/icons/win/icon.ico ../apps/electron/build/icon.ico
+convert $ICON_FILES "${OUT_ICON_NAME}_shadow_rounded.ico"
+
+# copy to electron
+cp "./${OUT_ICON_NAME}_shadow_rounded.icns" ../apps/electron/build/icon.icns
+cp "./${OUT_ICON_NAME}_shadow_rounded.ico" ../apps/electron/build/icon.ico
+
+# copy to gallery
+cp "./${OUT_ICON_NAME}_rounded.iconset/icon_512x512.png" ../themes/gallery/public/icon_512x512.png
+cp "./${OUT_ICON_NAME}_rounded.iconset/icon_192x192.png" ../themes/gallery/public/icon_192x192.png

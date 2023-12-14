@@ -2,8 +2,13 @@
 
 
 # icons
-icons/icons
-icons/platform
+icons/*
+!icons/logo*.png
+!icons/create.sh
+!icons/logo.svg
+!icons/index.html
+themes/gallery/public/icon_*.png
+apps/electron/build/icon.*
 
 .idea
 
@@ -31,9 +36,6 @@ dist/
 releases/
 expo-env.d.ts
 
-# production
-build
-
 # misc
 **/.DS_Store
 *.pem
@@ -56,3 +58,5 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+
