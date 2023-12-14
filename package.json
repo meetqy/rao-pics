@@ -32,7 +32,6 @@
     "@vitest/ui": "^1.0.0",
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.3.0",
-    "electron-icon-builder": "^2.0.1",
     "vitest": "^1.0.1"
   },
   "packageManager": "pnpm@8.11.0",

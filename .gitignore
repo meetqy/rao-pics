@@ -2,8 +2,11 @@
 
 
 # icons
-icons/icons
-icons/platform
+icons
+!icons/1024x1024.png
+!icons/create.sh
+!icons/logo.svg
+!icons/index.html
 
 .idea
 
