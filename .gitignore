@@ -2,7 +2,7 @@
 
 
 # icons
-icons
+icons/*
 !icons/1024x1024.png
 !icons/create.sh
 !icons/logo.svg
