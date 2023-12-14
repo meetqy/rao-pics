@@ -13,7 +13,7 @@
         <span style="color:#3b82f6">c</span>
         <span style="color:#8b5cf6">s</span>
     </h1>
-    <p align="center">帮助你远程访问 Eagle 的素材库</p>
+    <p align="center">帮助你远程访问 Eagle App 的素材库</p>
     <p align="center">
         <a href="https://codecov.io/gh/meetqy/rao-pics" target="_blank"><img alt="codecov" src="https://codecov.io/gh/meetqy/rao-pics/graph/badge.svg?token=G9UG6SEOZK"/></a>
         <a href="https://github.com/rao-pics/core/blob/main/LICENSE" target="_blank"><img alt="License" src="https://img.shields.io/github/license/rao-pics/core"/></a>
@@ -65,23 +65,23 @@ PC
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | <img alt="PC 端 自适应展示 light 模式" src="https://i.imgur.com/jkTaBlI.png"/> | <img alt="PC 端 菜单展示 dark 模式" src="https://i.imgur.com/GnfKRM5.png"/>    |
 
-## 特点
+## 特色亮点
 
-- 🎨 30 多种配色随意切换，还可以自定义主题，总有一款适合你
-- 🔌 增量更新和实时同步，速度很快，无需等待
-- 🔐 不会修改你的任何文件，通过读取生成索引，即使误操作，也不会对元数据造成任何伤害
-- 🔸 很简单，你只需要点点点，就可以在其他设备上查看素材
-- 📱 同时支持手机、平板、PC
-- 📌 默认主题支持 PWA，你可以保存为应用，无需每次打开浏览器
-- 🎊 无需依赖管理软件，也能访问素材，甚至可以部署在 Windows/MacOS 服务器上
+- 🎨 30+ 种精心挑选的配色方案供您随心切换，还可自定义主题，让您个性定制
+- 🔌 增量更新与实时同步，速度飞快，无需漫长等待
+- 🔐 严防误操作，无需担心文件修改，通过读取生成索引，确保元数据安全无损
+- 🔸 简单易用，使用简单几步即可在任何设备上高效查看素材
+- 📱 完美支持手机、平板和 PC，随时随地畅享
+- 📌 默认主题支持 PWA，一键保存为应用，无需每次打开浏览器都重新输入地址
+- 🎊 无需任何额外管理软件，轻松访问素材，可轻松部署于 Windows/MacOS 服务器上
 
-## 贡献
+## 参与贡献
 
-我们欢迎任何有兴趣帮助改进 RaoPics 的人士贡献。如果你想贡献，有几种方式可以参与：
+我们欢迎对 Rao.Pics 感兴趣的任何人士做出贡献。如果您有兴趣参与贡献，有几种方式可以参与：
 
-- Bug 修复： 如果发现 bug，请创建一个带有清晰描述问题及解决方法的拉取请求。快速入口 => [🐞 提交 Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
+- Bug 修复：如果您发现了任何 bug，请创建一个拉取请求，清晰描述问题并提供解决方案。快速通道 => [🐞 提交 Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
 
-- 改进： 有改进 RaoPics 的想法吗？请先创建一个问题来讨论为什么需要这个改进。快速入口 => [🛠 提需求](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
+- 改进：如果您对RaoPics有改进的建议，请先创建一个问题讨论为什么需要这个改进。快速通道 => [🛠 提需求](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
 
 ## 构建
 
@@ -128,11 +128,11 @@ pnpm dev
 
 ## 许可证
 
-RAO-PICS 是一个免费的开源项目，使用 [AGPL-3.0](./LICENSE) 协议。如果您要在与 GNU GPL 许可证 v3 兼容的许可证下创建开源应用程序，则可以根据 GPLv3 的条款使用该项目。
+Rao.Pics 是一个免费的开源项目，采用 AGPL-3.0 许可证。如果您计划以与 GNU GPL v3 兼容的许可证创建开源应用程序，则可以根据 GPLv3 许可证的条款使用该项目。
 
 ### 附加协议（商业许可证）
 
-如果您将该项目用于任何商业行为，请联系我购买商业许可证，以确保您的源代码属于您自己。联系方式：meetqy@icloud.com
+如果您计划将该项目用于商业用途，请联系我购买商业许可证，确保您对源代码的所有权。联系方式：meetqy@icloud.com
 
 ## 感谢
 

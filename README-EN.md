@@ -4,7 +4,7 @@
     <a href="https://rao.pics" target="_blank">
         <img width="196" src="./icons/logo.svg" alt="rao.pics logo"/>
     </a>
-    <h1 align="center">Rao Pics</h1>
+    <h1 align="center">Rao.Pics</h1>
     <p align="center">Helps you remotely access Eagle's material library</p>
     <p align="center">
         <a href="https://codecov.io/gh/meetqy/rao-pics" target="_blank"><img alt="codecov" src="https://codecov.io/gh/meetqy/rao-pics/graph/badge.svg?token=G9UG6SEOZK"/></a>
@@ -120,7 +120,7 @@ pnpm dev
 
 ## License
 
-RAO-PICS is a free and open-source project licensed under the [AGPL-3.0](./LICENSE) license. If you want to create open-source applications under a license compatible with the GNU GPL v3, you can use this project under the terms of GPLv3.
+Rao.Pics is a free and open-source project licensed under the [AGPL-3.0](./LICENSE) license. If you want to create open-source applications under a license compatible with the GNU GPL v3, you can use this project under the terms of GPLv3.
 
 ### Additional License (Commercial License)
 
