@@ -17,7 +17,7 @@ const Layout = () => {
   return (
     <div
       data-theme={color}
-      className="flex h-screen w-screen overflow-hidden rounded bg-base-100 text-sm"
+      className="flex h-screen w-screen overflow-hidden rounded-box bg-base-100 text-sm"
     >
       {/* aside */}
       <LayoutAside

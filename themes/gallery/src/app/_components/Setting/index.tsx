@@ -64,7 +64,7 @@ const Setting = () => {
             className="drawer-overlay"
           ></label>
           <div className="min-h-full w-80 bg-base-100 p-4 md:w-96">
-            <div className="rounded-md border border-base-content/10 bg-base-200/30 px-4">
+            <div className="rounded-box border border-base-content/10 bg-base-200/30 px-4">
               <div className={styles.row}>
                 <span className={styles.rowTitle}>
                   <AdjustmentsVerticalIcon className="mr-1 h-5 w-5" />
@@ -108,7 +108,7 @@ const Setting = () => {
               </div>
             </div>
 
-            <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30">
+            <div className="relative mt-4 rounded-box border border-base-content/10 bg-base-200/30">
               <ul className="menu font-mono text-base">
                 <li>
                   <Link
@@ -120,7 +120,7 @@ const Setting = () => {
                       全部
                     </span>
 
-                    <span className=" text-sm text-base-content/30">
+                    <span className="text-sm text-base-content/30">
                       {setting.count}
                     </span>
                   </Link>
@@ -166,7 +166,7 @@ const Setting = () => {
               </ul>
             </div>
 
-            <div className="relative mt-4 rounded-md border border-base-content/10 bg-base-200/30">
+            <div className="relative mt-4 rounded-box border border-base-content/10 bg-base-200/30">
               {folderTree && <FolderTree data={folderTree} />}
             </div>
           </div>

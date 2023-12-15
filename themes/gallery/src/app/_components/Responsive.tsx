@@ -133,7 +133,7 @@ function Responsive({ children, images, onLoadMore }: Props) {
                       }
                       target="_blank"
                       rel="noreferrer"
-                      className="relative block overflow-hidden rounded shadow"
+                      className="relative block overflow-hidden rounded-box shadow"
                       style={{
                         width: `${box.width}px`,
                         height: `${box.height}px`,
