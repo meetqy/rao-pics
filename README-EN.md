@@ -69,11 +69,11 @@ PC
 
 ## Contribution
 
-We welcome anyone interested in helping to improve RaoPics. If you want to contribute, there are several ways to participate:
+We welcome anyone interested in helping to improve Rao.Pics. If you want to contribute, there are several ways to participate:
 
 - Bug fixes: If you find a bug, please create a pull request with a clear description of the problem and the solution. Quick entry => [🐞 Submit Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
 
-- Improvements: Do you have any ideas to improve RaoPics? Please create an issue first to discuss why this improvement is needed. Quick entry => [🛠 Feature Request](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
+- Improvements: Do you have any ideas to improve Rao.Pics? Please create an issue first to discuss why this improvement is needed. Quick entry => [🛠 Feature Request](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
 
 ## Build
 
