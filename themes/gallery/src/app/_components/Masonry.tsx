@@ -82,7 +82,7 @@ function Masonry({ children, onLoadMore, images }: Props) {
 
           return (
             <a
-              className="relative block rounded shadow"
+              className="relative block rounded-box shadow"
               href={data.src}
               style={{
                 backgroundColor: data.bgColor + "0C",
@@ -99,7 +99,7 @@ function Masonry({ children, onLoadMore, images }: Props) {
               <Image
                 src={data.thumbnailPath}
                 layout="fill"
-                className="rounded"
+                className="rounded-box"
               />
             </a>
           );

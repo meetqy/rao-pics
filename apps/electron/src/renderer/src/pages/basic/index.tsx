@@ -127,7 +127,7 @@ const BasicPage = () => {
           <Row
             left={
               <>
-                <div className="rounded-md bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 text-white">
+                <div className="rounded-box bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 text-white">
                   <EyeIcon className="h-4 w-4" />
                 </div>
                 <span className="ml-2 flex items-center">预览</span>
@@ -142,7 +142,7 @@ const BasicPage = () => {
                   <div
                     role="button"
                     tabIndex={0}
-                    className="dropdown-content right-0 rounded-md bg-base-100 p-4 shadow-md"
+                    className="dropdown-content right-0 rounded-box bg-base-100 p-4 shadow-md"
                   >
                     <QRCodeSVG value={site} />
                   </div>

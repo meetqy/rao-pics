@@ -30,18 +30,18 @@ const Item = ({ color, onClick, active = false }: ItemProps) => {
             <div className="font-bold capitalize">{color}</div>
 
             <div className="flex flex-wrap gap-1">
-              <div className="flex aspect-square w-5 items-center justify-center rounded bg-primary lg:w-6">
+              <div className="flex aspect-square w-5 items-center justify-center rounded-box bg-primary lg:w-6">
                 <div className="text-sm font-bold text-primary-content">A</div>
               </div>
-              <div className="flex aspect-square w-5 items-center justify-center rounded bg-secondary lg:w-6">
+              <div className="flex aspect-square w-5 items-center justify-center rounded-box bg-secondary lg:w-6">
                 <div className="text-sm font-bold text-secondary-content">
                   B
                 </div>
               </div>
-              <div className="flex aspect-square w-5 items-center justify-center rounded bg-accent lg:w-6">
+              <div className="flex aspect-square w-5 items-center justify-center rounded-box bg-accent lg:w-6">
                 <div className="text-sm font-bold text-accent-content">C</div>
               </div>
-              <div className="flex aspect-square w-5 items-center justify-center rounded bg-neutral lg:w-6">
+              <div className="flex aspect-square w-5 items-center justify-center rounded-box bg-neutral lg:w-6">
                 <div className="text-sm font-bold text-neutral-content">D</div>
               </div>
             </div>
@@ -112,7 +112,7 @@ const ColorPage = () => {
               {tags.map((item) => (
                 <input
                   key={item.name}
-                  className="btn btn-sm join-item"
+                  className="btn join-item btn-sm"
                   type="radio"
                   name="options"
                   checked={item.name === tag}

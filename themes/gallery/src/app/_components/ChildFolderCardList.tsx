@@ -34,9 +34,9 @@ const ChildFolderCardList = ({ folderId }: { folderId: string }) => {
               }}
               aria-hidden
               key={child.id}
-              className="group relative flex aspect-square w-full cursor-pointer items-end justify-center overflow-hidden rounded-md border border-base-content/10 bg-base-200/30 p-2"
+              className="group relative flex aspect-square w-full cursor-pointer items-end justify-center overflow-hidden rounded-box border border-base-content/10 bg-base-200/30 p-2"
             >
-              <div className="relative z-10 w-full overflow-hidden rounded-md bg-base-100/70 py-2 text-center backdrop-blur-sm">
+              <div className="relative z-10 w-full overflow-hidden rounded-box bg-base-100/70 py-2 text-center backdrop-blur-sm">
                 <p className="text-base font-medium">{child.name}</p>
                 <p className="mt-1 text-xs text-base-content/70">
                   {child._count.images
