@@ -27,9 +27,6 @@ export const RLogger = {
     const message = e instanceof Error ? e.message : JSON.stringify(e);
 
     console.log(chalk.red(`✖ ${t} ${message}`));
-    void import("@sentry/electron").then((Sentry) => {
-      Sentry.captureException(e);
-    });
 
     callback?.(t, message);
   },
