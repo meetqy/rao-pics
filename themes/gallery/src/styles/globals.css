@@ -12,14 +12,6 @@
   }
 }
 
-body::-webkit-scrollbar {
-  @apply w-2;
-}
-
-body::-webkit-scrollbar-track {
-  @apply bg-base-200;
-}
-
-body::-webkit-scrollbar-thumb {
-  @apply rounded-box bg-primary/50;
+body {
+  @apply scrollbar-thin scrollbar-track-base-200 scrollbar-thumb-primary/50 scrollbar-track-rounded-box scrollbar-thumb-rounded-box;
 }
