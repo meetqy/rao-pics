@@ -52,7 +52,7 @@ const Setting = () => {
         <div className="drawer-content">
           <label
             htmlFor="my-drawer"
-            className={`btn btn-circle btn-neutral drawer-button fixed left-3 top-3 z-50 opacity-20 transition-all ease-in hover:opacity-100`}
+            className={`btn btn-circle btn-primary drawer-button fixed left-3 top-3 z-50 opacity-50 transition-all ease-in hover:opacity-100 hover:shadow-lg`}
           >
             <AdjustmentsHorizontalIcon className="h-6 w-6" />
           </label>

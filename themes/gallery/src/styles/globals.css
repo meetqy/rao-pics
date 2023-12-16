@@ -11,3 +11,7 @@
     height: -webkit-fill-available;
   }
 }
+
+body {
+  @apply scrollbar-thin scrollbar-track-base-200 scrollbar-thumb-primary/50 scrollbar-track-rounded-box scrollbar-thumb-rounded-box;
+}

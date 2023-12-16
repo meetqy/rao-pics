@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .scroll-y {
-  @apply overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-neutral/50 scrollbar-track-rounded scrollbar-thumb-rounded;
+  @apply overflow-y-auto scrollbar-thin scrollbar-track-base-200 scrollbar-thumb-primary/50 scrollbar-track-rounded-box scrollbar-thumb-rounded-box;
 }
 
 .card-wrapper {
