@@ -55,7 +55,7 @@
     "@sentry/vite-plugin": "^2.7.1",
     "@types/ip": "^1.1.0",
     "@types/lodash": "^4.14.197",
-    "@types/node": "^18.17.6",
+    "@types/node": "^20.0.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",

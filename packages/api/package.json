@@ -39,7 +39,7 @@
     "@rao-pics/tsconfig": "workspace:*",
     "@types/cors": "^2.8.16",
     "@types/lodash": "^4.14.197",
-    "@types/node": "^18.17.6",
+    "@types/node": "^20.0.0",
     "@types/ws": "^8.5.9",
     "cross-env": "^7.0.3",
     "eslint": "^8.47.0",

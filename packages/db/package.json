@@ -33,7 +33,7 @@
     "@rao-pics/eslint-config": "workspace:*",
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tsconfig": "workspace:*",
-    "@types/node": "^18.17.6",
+    "@types/node": "^20.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
     "prisma": "^5.6.0",
