@@ -80,7 +80,7 @@ PC
 以 `Nginx` 作为示例，假设需要自定义的域名为：`desktop.rao.pics`
 
 1. 在 App/设置 中，填写 `https://desktop.rao.pics`。
-2. nginx 中配置
+2. Nginx 中配置
 
 ```nginx
 server {

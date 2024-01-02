@@ -67,44 +67,37 @@ PC
 - 📌 The default theme supports PWA, you can save it as an app without opening the browser every time
 - 🎊 Can access materials without relying on management software, and can even be deployed on Windows/MacOS servers
 
-## Contribution
+## Custom Domain
 
-We welcome anyone interested in helping to improve Rao.Pics. If you want to contribute, there are several ways to participate:
+Using `Nginx` as an example, let's say you want to customize the domain to `desktop.rao.pics`.
 
-- Bug fixes: If you find a bug, please create a pull request with a clear description of the problem and the solution. Quick entry => [🐞 Submit Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
+1. In the App/Settings, enter `https://desktop.rao.pics`.
+2. Configure Nginx as follows:
 
-- Improvements: Do you have any ideas to improve Rao.Pics? Please create an issue first to discuss why this improvement is needed. Quick entry => [🛠 Feature Request](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
+```nginx
+server {
+  listen 80;
+  server_name desktop.rao.pics;
 
-## Build
+  location / {
+    proxy_pass http://localhost:61121; # App/设置 中的网页端口
+    proxy_set_header Host $proxy_host;
+    proxy_set_header X-Real-Ip $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
 
-These commands are for maintainers only.
-
-**Environment Information**
-
-- nodejs >= `v18.17.1`
-- pnpm >= `8.7.6`
-
-**Pull the code**
-
-```
-git clone https://github.com/meetqy/rao-pics.git
-```
-
-**Install Dependencies**
-
-Install dependencies using pnpm
-
-```
-pnpm i
+  location /trpc {
+    proxy_pass http://localhost:61122; # App/设置 中的服务端口
+    proxy_set_header Host $proxy_host;
+    proxy_set_header X-Real-Ip $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
 ```
 
-**Run**
+## Contribute
 
-`pnpm dev` will run three projects simultaneously: `packages/db`, `themes/gallery`, `apps/electron`
-
-```
-pnpm dev
-```
+[贡献指南](./CONTRIBUTING.md)
 
 ## Support the Author
 
