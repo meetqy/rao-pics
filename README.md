@@ -75,44 +75,37 @@ PC
 - 📌 默认主题支持 PWA，一键保存为应用，无需每次打开浏览器都重新输入地址
 - 🎊 无需任何额外管理软件，轻松访问素材，可轻松部署于 Windows/MacOS 服务器上
 
+## 自定义域名
+
+以 `Nginx` 作为示例，假设需要自定义的域名为：`desktop.rao.pics`
+
+1. 在 App/设置 中，填写 `https://desktop.rao.pics`。
+2. nginx 中配置
+
+```nginx
+server {
+  listen 80;
+  server_name desktop.rao.pics;
+
+  location / {
+    proxy_pass http://localhost:61121; # App/设置 中的网页端口
+    proxy_set_header Host $proxy_host;
+    proxy_set_header X-Real-Ip $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+
+  location /trpc {
+    proxy_pass http://localhost:61122; # App/设置 中的服务端口
+    proxy_set_header Host $proxy_host;
+    proxy_set_header X-Real-Ip $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}
+```
+
 ## 参与贡献
 
-我们欢迎对 Rao.Pics 感兴趣的任何人士做出贡献。如果您有兴趣参与贡献，有几种方式可以参与：
-
-- Bug 修复：如果您发现了任何 bug，请创建一个拉取请求，清晰描述问题并提供解决方案。快速通道 => [🐞 提交 Bug](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=Bug&projects=&template=bug_report.yml&title=bug%3A+)
-
-- 改进：如果您对 Rao.Pics 有改进的建议，请先创建一个问题讨论为什么需要这个改进。快速通道 => [🛠 提需求](https://github.com/meetqy/rao-pics/issues/new?assignees=&labels=%E2%9C%A8+enhancement&projects=&template=feature_request.yml&title=feat%3A+)
-
-## 构建
-
-这些命令仅供维护人员使用。
-
-**环境信息**
-
-- nodejs >= `v18.17.1`
-- pnpm >= `8.7.6`
-
-**拉取代码**
-
-```
-git clone https://github.com/meetqy/rao-pics.git
-```
-
-**安装依赖**
-
-使用 pnpm 安装 依赖
-
-```
-pnpm i
-```
-
-**运行**
-
-`pnpm dev` 会同时运行三个项目分别为：`packages/db`、`themes/gallery`、`apps/electron`
-
-```
-pnpm dev
-```
+[贡献指南](./CONTRIBUTING.md)
 
 ## 支持作者
 
