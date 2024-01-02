@@ -30,7 +30,7 @@
   },
   "prettier": "@rao-pics/prettier-config",
   "dependencies": {
-    "@electron-toolkit/preload": "^2.0.0",
+    "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^2.0.0",
     "@heroicons/react": "^2.0.18",
     "@rao-pics/api": "workspace:^",
