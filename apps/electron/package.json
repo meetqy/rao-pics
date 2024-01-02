@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
-    "@electron/notarize": "^1.2.3",
+    "@electron/notarize": "^2.0.0",
     "@rao-pics/eslint-config": "workspace:^",
     "@rao-pics/prettier-config": "workspace:^",
     "@rao-pics/tailwind-config": "workspace:*",

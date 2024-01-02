@@ -86,8 +86,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1(@types/node@18.17.6)
       '@electron/notarize':
-        specifier: ^1.2.3
-        version: 1.2.3
+        specifier: ^2.0.0
+        version: 2.1.0
       '@rao-pics/eslint-config':
         specifier: workspace:^
         version: link:../../tooling/eslint
@@ -969,16 +969,6 @@ packages:
       global-agent: 3.0.0
     transitivePeerDependencies:
       - supports-color
-
-  /@electron/notarize@1.2.3:
-    resolution: {integrity: sha512-9oRzT56rKh5bspk3KpAVF8lPKHYQrBnRwcgiOeR0hdilVEQmszDaAu0IPCPrwwzJN0ugNs0rRboTreHMt/6mBQ==}
-    engines: {node: '>= 10.0.0'}
-    dependencies:
-      debug: 4.3.4
-      fs-extra: 9.1.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /@electron/notarize@2.1.0:
     resolution: {integrity: sha512-Q02xem1D0sg4v437xHgmBLxI2iz/fc0D4K7fiVWHa/AnW8o7D751xyKNXgziA6HrTOme9ul1JfWN5ark8WH1xA==}
