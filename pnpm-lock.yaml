@@ -84,7 +84,7 @@ importers:
     devDependencies:
       '@electron-toolkit/tsconfig':
         specifier: ^1.0.1
-        version: 1.0.1(@types/node@18.17.6)
+        version: 1.0.1(@types/node@20.10.6)
       '@electron/notarize':
         specifier: ^1.2.3
         version: 1.2.3
@@ -110,8 +110,8 @@ importers:
         specifier: ^4.14.197
         version: 4.14.197
       '@types/node':
-        specifier: ^18.17.6
-        version: 18.17.6
+        specifier: ^20.0.0
+        version: 20.10.6
       '@types/react':
         specifier: ^18.2.20
         version: 18.2.20
@@ -153,7 +153,7 @@ importers:
         version: 5.1.6
       vite:
         specifier: ^4.4.2
-        version: 4.5.1(@types/node@18.17.6)
+        version: 4.5.1(@types/node@20.10.6)
 
   packages/api:
     dependencies:
@@ -222,8 +222,8 @@ importers:
         specifier: ^4.14.197
         version: 4.14.197
       '@types/node':
-        specifier: ^18.17.6
-        version: 18.17.6
+        specifier: ^20.0.0
+        version: 20.10.6
       '@types/ws':
         specifier: ^8.5.9
         version: 8.5.9
@@ -253,8 +253,8 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
-        specifier: ^18.17.6
-        version: 18.17.6
+        specifier: ^20.0.0
+        version: 20.10.6
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -290,8 +290,8 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
-        specifier: ^18.17.6
-        version: 18.17.6
+        specifier: ^20.0.0
+        version: 20.10.6
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -364,8 +364,8 @@ importers:
         specifier: workspace:*
         version: link:../../tooling/typescript
       '@types/node':
-        specifier: ^18.17.6
-        version: 18.18.9
+        specifier: ^20.0.0
+        version: 20.10.6
       '@types/react':
         specifier: ^18.2.20
         version: 18.2.37
@@ -504,8 +504,8 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1
       '@types/node':
-        specifier: ^18.18.9
-        version: 18.18.9
+        specifier: ^20.0.0
+        version: 20.10.6
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
@@ -927,12 +927,12 @@ packages:
       electron: 25.9.5
     dev: false
 
-  /@electron-toolkit/tsconfig@1.0.1(@types/node@18.17.6):
+  /@electron-toolkit/tsconfig@1.0.1(@types/node@20.10.6):
     resolution: {integrity: sha512-M0Mol3odspvtCuheyujLNAW7bXq7KFNYVMRtpjFa4ZfES4MuklXBC7Nli/omvc+PRKlrklgAGx3l4VakjNo8jg==}
     peerDependencies:
       '@types/node': '*'
     dependencies:
-      '@types/node': 18.17.6
+      '@types/node': 20.10.6
     dev: true
 
   /@electron-toolkit/utils@2.0.1(electron@25.9.5):
@@ -2324,13 +2324,13 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 3.1.4
-      '@types/node': 18.18.9
+      '@types/node': 20.10.6
       '@types/responselike': 1.0.0
 
   /@types/cors@2.8.16:
     resolution: {integrity: sha512-Trx5or1Nyg1Fq138PCuWqoApzvoSLWzZ25ORBiHMbbUT42g578lH1GT4TwYDbiUOLFuDsCkfLneT2105fsFWGg==}
     dependencies:
-      '@types/node': 18.17.6
+      '@types/node': 20.10.6
     dev: true
 
   /@types/debug@4.1.8:
@@ -2353,7 +2353,7 @@ packages:
   /@types/fs-extra@9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
-      '@types/node': 18.18.9
+      '@types/node': 20.10.6
     dev: true
 
   /@types/http-cache-semantics@4.0.1:
@@ -2362,7 +2362,7 @@ packages:
   /@types/ip@1.1.0:
     resolution: {integrity: sha512-dwNe8gOoF70VdL6WJBwVHtQmAX4RMd62M+mAB9HQFjG1/qiCLM/meRy95Pd14FYBbEDwCq7jgJs89cHpLBu4HQ==}
     dependencies:
-      '@types/node': 18.17.6
+      '@types/node': 20.10.6
     dev: true
 
   /@types/istanbul-lib-coverage@2.0.4:
@@ -2384,7 +2384,7 @@ packages:
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.18.9
+      '@types/node': 20.10.6
 
   /@types/lodash@4.14.197:
     resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
@@ -2394,12 +2394,13 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
 
-  /@types/node@18.17.6:
-    resolution: {integrity: sha512-fGmT/P7z7ecA6bv/ia5DlaWCH4YeZvAQMNpUhrJjtAhOhZfoxS1VLUgU2pdk63efSjQaOJWdXMuAJsws+8I6dg==}
-    dev: true
-
   /@types/node@18.18.9:
     resolution: {integrity: sha512-0f5klcuImLnG4Qreu9hPj/rEfFq6YRc5n2mAjSsH+ec/mJL+3voBH0+8T7o8RpFjH7ovc+TRsL/c7OYIQsPTfQ==}
+    dependencies:
+      undici-types: 5.26.5
+
+  /@types/node@20.10.6:
+    resolution: {integrity: sha512-Vac8H+NlRNNlAmDfGUP7b5h/KA+AtWIzuXy0E6OyP8f1tCLYAtPvKRRDJjAPqhpCb0t6U2j7/xqAuLEebW2kiw==}
     dependencies:
       undici-types: 5.26.5
 
@@ -2407,7 +2408,7 @@ packages:
     resolution: {integrity: sha512-ULqvZNGMv0zRFvqn8/4LSPtnmN4MfhlPNtJCTpKuIIxGVGZ2rYWzFXrvEBoh9CVyqSE7D6YFRJ1hydLHI6kbWw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.18.9
+      '@types/node': 20.10.6
       xmlbuilder: 15.1.1
     dev: true
     optional: true
@@ -2451,7 +2452,7 @@ packages:
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.18.9
+      '@types/node': 20.10.6
 
   /@types/scheduler@0.16.3:
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
@@ -2470,14 +2471,14 @@ packages:
   /@types/ws@8.5.9:
     resolution: {integrity: sha512-jbdrY0a8lxfdTp/+r7Z4CkycbOFN8WX+IOchLJr3juT/xzbJ8URyTVSJ/hvNdadTgM1mnedb47n+Y31GsFnQlg==}
     dependencies:
-      '@types/node': 18.18.9
+      '@types/node': 20.10.6
     dev: true
 
   /@types/yauzl@2.10.0:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.18.9
+      '@types/node': 20.10.6
     optional: true
 
   /@typescript-eslint/eslint-plugin@6.3.0(@typescript-eslint/parser@6.3.0)(eslint@8.47.0)(typescript@5.1.6):
@@ -2626,7 +2627,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.10)
       react-refresh: 0.14.0
-      vite: 4.5.1(@types/node@18.17.6)
+      vite: 4.5.1(@types/node@20.10.6)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3776,7 +3777,7 @@ packages:
       esbuild: 0.18.20
       magic-string: 0.30.2
       picocolors: 1.0.0
-      vite: 4.5.1(@types/node@18.17.6)
+      vite: 4.5.1(@types/node@20.10.6)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -7434,7 +7435,7 @@ packages:
       - terser
     dev: true
 
-  /vite@4.5.1(@types/node@18.17.6):
+  /vite@4.5.1(@types/node@20.10.6):
     resolution: {integrity: sha512-AXXFaAJ8yebyqzoNB9fu2pHoo/nWX+xZlaRwoeYUxEqBO+Zj4msE5G+BhGBll9lYEKv9Hfks52PAF2X7qDYXQA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -7462,7 +7463,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.17.6
+      '@types/node': 20.10.6
       esbuild: 0.18.20
       postcss: 8.4.32
       rollup: 3.29.4
