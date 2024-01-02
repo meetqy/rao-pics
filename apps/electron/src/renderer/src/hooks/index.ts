@@ -45,21 +45,3 @@ export function useDebounce(value: string, delay = 500) {
 
   return debouncedValue;
 }
-
-/**
- * 获取站点地址
- * @returns 站点地址
- */
-export function useSite() {
-  const { data: config } = trpc.config.findUnique.useQuery();
-
-  if (config) {
-    if (config.clientSite) {
-      return config.clientSite;
-    }
-
-    return `http://${config.ip}:${config.clientPort}`;
-  }
-
-  return "";
-}

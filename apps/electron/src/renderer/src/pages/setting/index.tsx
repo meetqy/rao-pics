@@ -9,7 +9,6 @@ import {
 } from "@heroicons/react/24/outline";
 import Content from "@renderer/components/Content";
 import Title from "@renderer/components/Title";
-import { useSite } from "@renderer/hooks";
 
 import { trpc } from "@rao-pics/trpc";
 
@@ -27,8 +26,6 @@ const SettingPage = () => {
   });
 
   const { data: config } = trpc.config.findUnique.useQuery();
-
-  const site = useSite();
 
   return (
     <Content title={<Title>通用</Title>}>
@@ -141,14 +138,23 @@ const SettingPage = () => {
             }
             right={
               <input
-                defaultValue={site}
+                defaultValue={config?.clientSite ?? undefined}
                 onBlur={(e) => {
+                  const value = e.target.value.trim();
+                  // 校验域名
+                  if (value && !/^((https|http)?:\/\/)[^\s]+/.test(value)) {
+                    window.dialog.showErrorBox(
+                      "自定义域名",
+                      "请输入正确的域名",
+                    );
+                    return;
+                  }
                   configUpsert.mutate({
                     clientSite: e.target.value,
                   });
                 }}
-                className="input-ghost input input-sm w-full !pr-0 text-right font-mono transition-all focus:!pr-4 focus:outline-none"
-                placeholder="eg: https://desktop.rao.pics"
+                className="input input-ghost input-sm w-full !pr-0 text-right font-mono transition-all focus:!pr-4 focus:outline-none"
+                placeholder="输入域名，清空则使用默认值"
               />
             }
           />
