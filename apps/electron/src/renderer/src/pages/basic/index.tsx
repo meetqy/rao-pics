@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ClockIcon,
   EyeIcon,
@@ -8,7 +8,6 @@ import {
 import Content from "@renderer/components/Content";
 import Row from "@renderer/components/Row";
 import Title from "@renderer/components/Title";
-import { useSite } from "@renderer/hooks";
 import { QRCodeSVG } from "qrcode.react";
 
 import { trpc } from "@rao-pics/trpc";
@@ -47,7 +46,17 @@ const BasicPage = () => {
     setBtnState(library && library.pendingCount > 0 ? 2 : 1);
   }, [library, config]);
 
-  const site = useSite();
+  const site = useMemo(() => {
+    if (config) {
+      if (config.clientSite) {
+        return config.clientSite;
+      }
+
+      return `http://${config.ip}:${config.clientPort}`;
+    }
+
+    return "";
+  }, [config]);
 
   const onBeforeDeleteLibrary = () => {
     window.dialog
