@@ -41,10 +41,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^2.0.0
-        version: 2.0.0(electron@25.9.5)
+        version: 2.0.0(electron@28.2.3)
       '@electron-toolkit/utils':
         specifier: ^2.0.0
-        version: 2.0.1(electron@25.9.5)
+        version: 2.0.1(electron@28.2.3)
       '@heroicons/react':
         specifier: ^2.0.18
         version: 2.0.18(react@18.2.0)
@@ -122,8 +122,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(vite@4.5.1)
       electron:
-        specifier: 25.9.5
-        version: 25.9.5
+        specifier: 28.2.3
+        version: 28.2.3
       electron-builder:
         specifier: 24.9.1
         version: 24.9.1
@@ -385,8 +385,8 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       electron:
-        specifier: 25.9.7
-        version: 25.9.7
+        specifier: 28.2.3
+        version: 28.2.3
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -919,12 +919,12 @@ packages:
       ajv-keywords: 3.5.2(ajv@6.12.6)
     dev: true
 
-  /@electron-toolkit/preload@2.0.0(electron@25.9.5):
+  /@electron-toolkit/preload@2.0.0(electron@28.2.3):
     resolution: {integrity: sha512-zpZDzbqJTZQC5d4LRs2EKruKWnqah+T75s+niBYFemYLtiW5TTZcWi3Q8UxHqnwTudDMuWJb233aaS2yjx3Xiw==}
     peerDependencies:
       electron: '>=13.0.0'
     dependencies:
-      electron: 25.9.5
+      electron: 28.2.3
     dev: false
 
   /@electron-toolkit/tsconfig@1.0.1(@types/node@18.17.6):
@@ -935,12 +935,12 @@ packages:
       '@types/node': 18.17.6
     dev: true
 
-  /@electron-toolkit/utils@2.0.1(electron@25.9.5):
+  /@electron-toolkit/utils@2.0.1(electron@28.2.3):
     resolution: {integrity: sha512-3nnjd3D1NIjxdzNrvR5fkJ3kbJNbRkpHppv0/pSbMX6I0DaBzpPXeSfDYuJJKzZrAc3CmGcJa0MU4+AjEOlT4g==}
     peerDependencies:
       electron: '>=13.0.0'
     dependencies:
-      electron: 25.9.5
+      electron: 28.2.3
     dev: false
 
   /@electron/asar@3.2.4:
@@ -3781,8 +3781,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@25.9.5:
-    resolution: {integrity: sha512-gM7GXUSd3JVRcYbBnNOtZeNnE5MCJjtZTT8QyIxJvpQ0Dh9dz3hTuEL62dOwnMFW/l47ACQ6es/8qi01P4QGZA==}
+  /electron@28.2.3:
+    resolution: {integrity: sha512-he9nGphZo03ejDjYBXpmFVw0KBKogXvR2tYxE4dyYvnfw42uaFIBFrwGeenvqoEOfheJfcI0u4rFG6h3QxDwnA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -3792,19 +3792,6 @@ packages:
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
-
-  /electron@25.9.7:
-    resolution: {integrity: sha512-8aejD8NricfzeoUflPPpDU7M6yEppQyASoZBT7qgiKnEy6+M3SgetZNEmkoHMGK/NNxP8GcO5lRuvCyegI1mig==}
-    engines: {node: '>= 12.20.55'}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      '@electron/get': 2.0.2
-      '@types/node': 18.18.9
-      extract-zip: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
