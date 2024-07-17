@@ -34,7 +34,7 @@
     "dotenv-cli": "^7.3.0",
     "vitest": "^1.0.1"
   },
-  "packageManager": "pnpm@8.11.0",
+  "packageManager": "pnpm@8.15.9",
   "engines": {
     "node": ">=v18.17.0"
   }
