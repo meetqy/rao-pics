@@ -24,7 +24,7 @@
     "@rao-pics/prettier-config": "workspace:*",
     "@rao-pics/tsconfig": "workspace:*",
     "cross-env": "^7.0.3",
-    "electron": "25.9.7",
+    "electron": "25.9.8",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6"
   }
